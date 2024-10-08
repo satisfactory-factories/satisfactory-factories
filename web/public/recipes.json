@@ -17,7 +17,7 @@
             "AlienDNACapsule": "Alien DNA Capsule",
             "AlienPowerFuel": "Alien Power Matrix",
             "AlienProtein": "Hatcher Protein",
-            "AluminaSolution": "Unpackage Alumina Solution",
+            "AluminaSolution": "Alumina Solution",
             "AluminumCasing": "Aluminum Casing",
             "AluminumIngot": "Aluminum Ingot",
             "AluminumPlate": "Alclad Aluminum Sheet",
@@ -66,19 +66,16 @@
             "Gunpowder": "Black Powder",
             "GunpowderMK2": "Smokeless Powder",
             "HazmatFilter": "Iodine-Infused Filter",
-            "HeavyOilResidue": "Unpackage Heavy Oil Residue",
             "HighSpeedConnector": "High-Speed Connector",
             "HighSpeedWire": "Quickwire",
-            "IonizedFuel": "Unpackage Ionized Fuel",
+            "IonizedFuel": "Ionized Fuel",
             "IronIngot": "Iron Ingot",
             "IronPlate": "Iron Plate",
             "IronPlateReinforced": "Reinforced Iron Plate",
             "IronRod": "Iron Rod",
             "IronScrew": "Screw",
-            "LiquidBiofuel": "Unpackage Liquid Biofuel",
-            "LiquidFuel": "Unpackage Fuel",
-            "LiquidOil": "Unpackage Oil",
-            "LiquidTurboFuel": "Unpackage Turbofuel",
+            "LiquidBiofuel": "Liquid Biofuel",
+            "LiquidFuel": "Residual Fuel",
             "Medkit": "Nutritional Inhaler",
             "ModularFrame": "Modular Frame",
             "ModularFrameFused": "Fused Modular Frame",
@@ -86,8 +83,8 @@
             "ModularFrameLightweight": "Radio Control Unit",
             "Motor": "Motor",
             "MotorLightweight": "Turbo Motor",
-            "NitricAcid": "Unpackage Nitric Acid",
-            "NitrogenGas": "Unpackage Nitrogen Gas",
+            "NitricAcid": "Nitric Acid",
+            "NitrogenGas": "Nitrogen Gas",
             "NobeliskCluster": "Cluster Nobelisk",
             "NobeliskExplosive": "Nobelisk",
             "NobeliskGas": "Gas Nobelisk",
@@ -125,7 +122,7 @@
             "Rebar_Explosive": "Explosive Rebar",
             "Rebar_Spreadshot": "Shatter Rebar",
             "Rebar_Stunshot": "Stun Rebar",
-            "RocketFuel": "Unpackage Rocket Fuel",
+            "RocketFuel": "Rocket Fuel",
             "Rotor": "Rotor",
             "Rubber": "Residual Rubber",
             "SAMFluctuator": "SAM Fluctuator",
@@ -155,12 +152,11 @@
             "SteelPlateReinforced": "Encased Industrial Beam",
             "Stone": "Limestone",
             "Sulfur": "Sulfur",
-            "SulfuricAcid": "Unpackage Sulfuric Acid",
+            "SulfuricAcid": "Sulfuric Acid",
             "TemporalProcessor": "Neural-Quantum Processor",
             "TimeCrystal": "Time Crystal",
             "TurboFuel": "Packaged Turbofuel",
             "UraniumCell": "Encased Uranium Cell",
-            "Water": "Unpackage Water",
             "Wire": "Wire",
             "XmasBall1": "Red FICSMAS Ornament",
             "XmasBall2": "Blue FICSMAS Ornament",
@@ -174,6 +170,21 @@
         },
         "collectables": {
             "CrystalShard": "Power Shard"
+        },
+        "rawResources": {
+            "Coal": "Coal",
+            "LiquidOil": "Crude Oil",
+            "NitrogenGas": "Nitrogen Gas",
+            "OreBauxite": "Bauxite",
+            "OreCopper": "Copper Ore",
+            "OreGold": "Caterium Ore",
+            "OreIron": "Iron Ore",
+            "OreUranium": "Uranium",
+            "RawQuartz": "Raw Quartz",
+            "SAM": "SAM",
+            "Stone": "Limestone",
+            "Sulfur": "Sulfur",
+            "Water": "Water"
         }
     },
     "recipes": [
@@ -192,15 +203,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IronRod",
@@ -217,15 +228,15 @@
             "perMin": 15,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IngotIron",
@@ -242,15 +253,15 @@
             "perMin": 30,
             "producedIn": [
                 "smeltermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "smeltermk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_RocketFuel_Nitro",
@@ -282,7 +293,8 @@
                     "building": "blender",
                     "powerPerBuilding": 12.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "RocketFuel",
@@ -308,7 +320,8 @@
                     "building": "blender",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedRocketFuel",
@@ -334,7 +347,8 @@
                     "building": "packager",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageRocketFuel",
@@ -357,7 +371,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_IonizedFuel_Dark",
@@ -383,7 +398,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.00001
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "DarkEnergy",
@@ -406,7 +422,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.00001
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "QuantumEnergy",
@@ -425,7 +442,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.00001
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "DarkMatter",
@@ -451,7 +469,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SuperpositionOscillator",
@@ -483,7 +502,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "TemporalProcessor",
@@ -515,7 +535,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_12",
@@ -547,7 +568,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IonizedFuel",
@@ -573,7 +595,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 1.875
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedIonizedFuel",
@@ -599,7 +622,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageIonizedFuel",
@@ -622,7 +646,8 @@
                     "building": "packager",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_Diamond_Turbo",
@@ -648,7 +673,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.03333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "SAMFluctuator",
@@ -678,7 +704,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FicsiteMesh",
@@ -702,7 +729,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 1.3333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FicsiteIngot_Iron",
@@ -728,7 +756,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "TimeCrystal",
@@ -751,7 +780,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Diamond",
@@ -774,7 +804,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IngotSAM",
@@ -798,7 +829,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_10",
@@ -827,7 +859,8 @@
                     "building": "blender",
                     "powerPerBuilding": 18.75
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FicsiteIngot_AL",
@@ -853,7 +886,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FicsiteIngot_CAT",
@@ -879,7 +913,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Bauxite_Caterium",
@@ -905,7 +940,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Bauxite_Copper",
@@ -931,7 +967,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Caterium_Copper",
@@ -957,7 +994,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Caterium_Quartz",
@@ -983,7 +1021,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Coal_Iron",
@@ -1009,7 +1048,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Coal_Limestone",
@@ -1035,7 +1075,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Copper_Quartz",
@@ -1061,7 +1102,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Copper_Sulfur",
@@ -1087,7 +1129,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Iron_Limestone",
@@ -1113,7 +1156,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Limestone_Sulfur",
@@ -1139,7 +1183,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Nitrogen_Bauxite",
@@ -1165,7 +1210,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Nitrogen_Caterium",
@@ -1191,7 +1237,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Quartz_Bauxite",
@@ -1217,7 +1264,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Quartz_Coal",
@@ -1243,7 +1291,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Sulfur_Coal",
@@ -1269,7 +1318,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Sulfur_Iron",
@@ -1295,7 +1345,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Uranium_Bauxite",
@@ -1321,7 +1372,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.008333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_Turbofuel",
@@ -1347,7 +1399,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 6
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedTurboFuel",
@@ -1373,7 +1426,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageTurboFuel",
@@ -1396,7 +1450,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_Coal_1",
@@ -1419,7 +1474,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.4
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Coal_2",
@@ -1442,7 +1498,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.6666666666666666
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_EnrichedCoal",
@@ -1468,7 +1525,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 3
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "CircuitBoard",
@@ -1488,15 +1546,15 @@
             "perMin": 7.5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "LiquidFuel",
@@ -1519,7 +1577,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PetroleumCoke",
@@ -1542,7 +1601,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Plastic",
@@ -1565,7 +1625,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Rubber",
@@ -1588,7 +1649,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "ResidualFuel",
@@ -1611,7 +1673,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "ResidualPlastic",
@@ -1637,7 +1700,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "ResidualRubber",
@@ -1663,7 +1727,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_Diamond_Pink",
@@ -1689,7 +1754,8 @@
                     "building": "converter",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Diamond_Petroleum",
@@ -1712,7 +1778,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Diamond_OilBased",
@@ -1735,7 +1802,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.05
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Diamond_Cloudy",
@@ -1761,7 +1829,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_DarkMatter_Trap",
@@ -1787,7 +1856,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.05
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_DarkMatter_Crystallization",
@@ -1810,7 +1880,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_WetConcrete",
@@ -1836,7 +1907,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_TurboHeavyFuel",
@@ -1862,7 +1934,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelRod",
@@ -1885,7 +1958,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "SteelBeam",
@@ -1902,15 +1976,15 @@
             "perMin": 15,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SteelPipe",
@@ -1927,15 +2001,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IngotSteel",
@@ -1962,7 +2036,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 5.333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_2",
@@ -1988,7 +2063,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_SteelCanister",
@@ -2011,7 +2087,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "FluidCanister",
@@ -2028,15 +2105,15 @@
             "perMin": 60,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Fuel",
@@ -2062,7 +2139,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "LiquidBiofuel",
@@ -2088,7 +2166,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedBiofuel",
@@ -2114,7 +2193,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedCrudeOil",
@@ -2140,7 +2220,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedOilResidue",
@@ -2166,7 +2247,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedWater",
@@ -2192,7 +2274,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageBioFuel",
@@ -2215,7 +2298,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageFuel",
@@ -2238,7 +2322,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageOil",
@@ -2261,7 +2346,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageOilResidue",
@@ -2284,7 +2370,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageWater",
@@ -2307,7 +2394,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_SteamedCopperSheet",
@@ -2333,7 +2421,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_RubberConcrete",
@@ -2359,7 +2448,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1.6666666666666667
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_RecycledRubber",
@@ -2385,7 +2475,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_PureQuartzCrystal",
@@ -2411,7 +2502,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 4.285714285714286
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "QuartzCrystal",
@@ -2428,15 +2520,15 @@
             "perMin": 22.5,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 1.3333333333333333
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_PureIronIngot",
@@ -2462,7 +2554,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.3076923076923075
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_PureCopperIngot",
@@ -2488,7 +2581,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_PureCateriumIngot",
@@ -2514,7 +2608,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 30
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "PureAluminumIngot",
@@ -2537,7 +2632,8 @@
                     "building": "smeltermk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "AluminumCasing",
@@ -2554,15 +2650,15 @@
             "perMin": 60,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AluminumSheet",
@@ -2582,15 +2678,15 @@
             "perMin": 30,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AluminaSolution",
@@ -2616,7 +2712,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AluminumScrap",
@@ -2642,7 +2739,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedAlumina",
@@ -2668,7 +2766,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IngotAluminum",
@@ -2695,7 +2794,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Silica",
@@ -2712,15 +2812,15 @@
             "perMin": 37.5,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CrystalOscillator",
@@ -2743,15 +2843,15 @@
             "perMin": 1,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageAlumina",
@@ -2774,7 +2874,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_PolymerResin",
@@ -2797,7 +2898,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.3076923076923075
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_PlasticSmartPlating",
@@ -2826,7 +2928,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_HighSpeedWiring",
@@ -2855,7 +2958,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 13.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "EncasedIndustrialBeam",
@@ -2875,15 +2979,15 @@
             "perMin": 6,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Motor",
@@ -2903,15 +3007,15 @@
             "perMin": 5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Stator",
@@ -2931,15 +3035,15 @@
             "perMin": 5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_3",
@@ -2965,7 +3069,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AILimiter",
@@ -2985,15 +3090,15 @@
             "perMin": 5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_HeavyOilResidue",
@@ -3016,7 +3121,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_HeavyFlexibleFrame",
@@ -3048,7 +3154,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Computer",
@@ -3071,15 +3178,15 @@
             "perMin": 2.5,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "ModularFrameHeavy",
@@ -3105,15 +3212,15 @@
             "perMin": 2,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_4",
@@ -3142,7 +3249,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_5",
@@ -3174,7 +3282,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_FusedWire",
@@ -3200,7 +3309,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 0.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_FlexibleFramework",
@@ -3229,7 +3339,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ElectrodeCircuitBoard",
@@ -3255,7 +3366,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ElectroAluminumScrap",
@@ -3281,7 +3393,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 1.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_DilutedPackagedFuel",
@@ -3307,7 +3420,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CopperRotor",
@@ -3333,7 +3447,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "ModularFrame",
@@ -3353,15 +3468,15 @@
             "perMin": 2,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Rotor",
@@ -3381,15 +3496,15 @@
             "perMin": 4,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CopperSheet",
@@ -3406,15 +3521,15 @@
             "perMin": 10,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_1",
@@ -3440,7 +3555,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_CopperAlloyIngot",
@@ -3466,7 +3582,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 1.6
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CokeSteelIngot",
@@ -3492,7 +3609,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CoatedIronPlate",
@@ -3518,7 +3636,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CoatedIronCanister",
@@ -3544,7 +3663,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 3.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CoatedCable",
@@ -3570,7 +3690,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 3.3333333333333335
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_BoltedFrame",
@@ -3596,7 +3717,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_AdheredIronPlate",
@@ -3622,7 +3744,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_TurboPressureMotor",
@@ -3654,7 +3777,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "PlutoniumCell",
@@ -3674,15 +3798,15 @@
             "perMin": 5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PressureConversionCube",
@@ -3702,15 +3826,15 @@
             "perMin": 1,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "NitricAcid",
@@ -3739,7 +3863,8 @@
                     "building": "blender",
                     "powerPerBuilding": 25
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "NonFissileUranium",
@@ -3771,7 +3896,8 @@
                     "building": "blender",
                     "powerPerBuilding": 3.75
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CopperDust",
@@ -3788,15 +3914,15 @@
             "perMin": 50,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Plutonium",
@@ -3822,7 +3948,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.0033333333333333335
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PlutoniumFuelRod",
@@ -3854,7 +3981,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedNitricAcid",
@@ -3880,7 +4008,8 @@
                     "building": "packager",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_9",
@@ -3906,7 +4035,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageNitricAcid",
@@ -3929,7 +4059,8 @@
                     "building": "packager",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_TurboBlendFuel",
@@ -3961,7 +4092,8 @@
                     "building": "blender",
                     "powerPerBuilding": 12.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "UraniumCell",
@@ -3990,7 +4122,8 @@
                     "building": "blender",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CoolingSystem",
@@ -4022,7 +4155,8 @@
                     "building": "blender",
                     "powerPerBuilding": 75
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Battery",
@@ -4051,7 +4185,8 @@
                     "building": "blender",
                     "powerPerBuilding": 75
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "ComputerSuper",
@@ -4077,15 +4212,15 @@
             "perMin": 1.875,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "RadioControlUnit",
@@ -4108,15 +4243,15 @@
             "perMin": 2.5,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SulfuricAcid",
@@ -4142,7 +4277,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 6
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedSulfuricAcid",
@@ -4168,7 +4304,8 @@
                     "building": "packager",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_7",
@@ -4194,7 +4331,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "HighSpeedConnector",
@@ -4217,15 +4355,15 @@
             "perMin": 3.75,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageSulfuricAcid",
@@ -4248,7 +4386,8 @@
                     "building": "packager",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_SuperStateComputer",
@@ -4280,7 +4419,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "ElectromagneticControlRod",
@@ -4300,15 +4440,15 @@
             "perMin": 4,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "NuclearFuelRod",
@@ -4337,7 +4477,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_6",
@@ -4363,7 +4504,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_SloppyAlumina",
@@ -4389,7 +4531,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_RadioControlSystem",
@@ -4421,7 +4564,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 18.333333333333332
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_PlutoniumFuelUnit",
@@ -4447,7 +4591,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_OCSupercomputer",
@@ -4473,7 +4618,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "HeatSink",
@@ -4493,15 +4639,15 @@
             "perMin": 7.5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FusedModularFrame",
@@ -4530,7 +4676,8 @@
                     "building": "blender",
                     "powerPerBuilding": 75
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "GasTank",
@@ -4554,7 +4701,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PackagedNitrogen",
@@ -4580,7 +4728,8 @@
                     "building": "packager",
                     "powerPerBuilding": 10
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "UnpackageNitrogen",
@@ -4603,7 +4752,8 @@
                     "building": "packager",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_InstantScrap",
@@ -4635,7 +4785,8 @@
                     "building": "blender",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_InstantPlutoniumCell",
@@ -4661,7 +4812,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.005
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_HeatFusedFrame",
@@ -4693,7 +4845,8 @@
                     "building": "blender",
                     "powerPerBuilding": 75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_FertileUranium",
@@ -4725,7 +4878,8 @@
                     "building": "blender",
                     "powerPerBuilding": 3.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ElectricMotor",
@@ -4751,7 +4905,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_DilutedFuel",
@@ -4777,7 +4932,8 @@
                     "building": "blender",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CoolingDevice",
@@ -4806,7 +4962,8 @@
                     "building": "blender",
                     "powerPerBuilding": 37.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ClassicBattery",
@@ -4838,7 +4995,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 13.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_AutomatedMiner",
@@ -4862,7 +5020,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_AlcladCasing",
@@ -4888,7 +5047,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelPipe_Molded",
@@ -4914,7 +5074,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 3.2
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelPipe_Iron",
@@ -4937,7 +5098,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelCastedPlate",
@@ -4963,7 +5125,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 5.333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelBeam_Molded",
@@ -4989,7 +5152,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 1.7777777777777777
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_SteelBeam_Aluminum",
@@ -5012,7 +5176,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 1.3333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_AluminumRod",
@@ -5035,7 +5200,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.5714285714285714
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_AILimiter_Plastic",
@@ -5061,7 +5227,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Silica_Distilled",
@@ -5090,7 +5257,8 @@
                     "building": "blender",
                     "powerPerBuilding": 2.7777777777777777
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Quartz_Purified",
@@ -5116,7 +5284,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Quartz_Fused",
@@ -5142,7 +5311,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 0.8888888888888888
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_IronIngot_Leached",
@@ -5168,7 +5338,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 3
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_IronIngot_Basic",
@@ -5194,7 +5365,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 1.6
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CopperIngot_Tempered",
@@ -5220,7 +5392,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 1.3333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CopperIngot_Leached",
@@ -5246,7 +5419,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 1.3636363636363635
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CateriumIngot_Tempered",
@@ -5272,7 +5446,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 5.333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CateriumIngot_Leached",
@@ -5298,7 +5473,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Wire_2",
@@ -5321,7 +5497,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Wire_1",
@@ -5344,7 +5521,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.4444444444444444
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_UraniumCell_1",
@@ -5376,7 +5554,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 13.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "IngotCaterium",
@@ -5400,7 +5579,8 @@
                     "building": "smeltermk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_TurboMotor_1",
@@ -5432,7 +5612,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 18.333333333333332
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "MotorTurbo",
@@ -5458,15 +5639,15 @@
             "perMin": 1.875,
             "producedIn": [
                 "manufacturermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_8",
@@ -5498,7 +5679,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Alternate_Stator",
@@ -5524,7 +5706,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Silica",
@@ -5550,7 +5733,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 2.142857142857143
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Screw_2",
@@ -5573,7 +5757,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.07692307692307693
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Screw",
@@ -5596,7 +5781,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 0.2
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Rotor",
@@ -5622,7 +5808,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_EncasedIndustrialBeam",
@@ -5648,7 +5835,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ReinforcedIronPlate_2",
@@ -5674,7 +5862,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ReinforcedIronPlate_1",
@@ -5700,7 +5889,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_RadioControlUnit_1",
@@ -5729,7 +5919,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Quickwire",
@@ -5755,7 +5946,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1.25
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Plastic_1",
@@ -5781,7 +5973,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_NuclearFuelRod_1",
@@ -5813,7 +6006,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 18.333333333333332
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Motor_1",
@@ -5842,7 +6036,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 9.166666666666666
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ModularFrame",
@@ -5868,7 +6063,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_IngotSteel_2",
@@ -5894,7 +6090,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_IngotSteel_1",
@@ -5920,7 +6117,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 5.333333333333333
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_IngotIron",
@@ -5946,7 +6144,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 1.0666666666666667
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_HighSpeedConnector",
@@ -5975,7 +6174,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 27.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ModularFrameHeavy",
@@ -6007,7 +6207,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 18.333333333333332
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_HeatSink_1",
@@ -6033,7 +6234,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Gunpowder_1",
@@ -6059,7 +6261,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 2.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_ElectromagneticControlRod_1",
@@ -6085,7 +6288,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CrystalOscillator",
@@ -6114,7 +6318,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Concrete",
@@ -6140,7 +6345,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Computer_2",
@@ -6166,7 +6372,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Computer_1",
@@ -6195,7 +6402,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CircuitBoard_2",
@@ -6221,7 +6429,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 2.142857142857143
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_CircuitBoard_1",
@@ -6247,7 +6456,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 3
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Cable_2",
@@ -6273,7 +6483,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 1.3636363636363635
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Alternate_Cable_1",
@@ -6299,7 +6510,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 0.75
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Ficsonium",
@@ -6328,7 +6540,8 @@
                     "building": "hadroncollider",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FicsoniumFuelRod",
@@ -6360,7 +6573,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SingularityCell",
@@ -6392,7 +6606,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 5.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpaceElevatorPart_11",
@@ -6424,7 +6639,8 @@
                     "building": "manufacturermk1",
                     "powerPerBuilding": 55
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FilterHazmat",
@@ -6458,7 +6674,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Quickwire",
@@ -6475,15 +6692,15 @@
             "perMin": 60,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Biofuel",
@@ -6512,7 +6729,8 @@
                     "building": "automatedworkbench",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Protein_Hog",
@@ -6529,15 +6747,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Protein_Spitter",
@@ -6554,15 +6772,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Biomass_Mycelia",
@@ -6579,15 +6797,15 @@
             "perMin": 150,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PowerCrystalShard_1",
@@ -6604,15 +6822,15 @@
             "perMin": 7.5,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Gunpowder",
@@ -6643,7 +6861,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AlienPowerFuel",
@@ -6675,7 +6894,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Protein_Stinger",
@@ -6692,15 +6912,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Protein_Crab",
@@ -6717,15 +6937,15 @@
             "perMin": 20,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "AlienDNACapsule",
@@ -6742,15 +6962,15 @@
             "perMin": 10,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Biomass_AlienProtein",
@@ -6767,15 +6987,15 @@
             "perMin": 1500,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.04
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SpikedRebar",
@@ -6803,7 +7023,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CartridgeSmart",
@@ -6834,7 +7055,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Rebar_Stunshot",
@@ -6865,7 +7087,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "FilterGasMask",
@@ -6899,38 +7122,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
-        },
-        {
-            "id": "NobeliskGas",
-            "displayName": "Gas Nobelisk",
-            "ingredients": [
-                {
-                    "NobeliskExplosive": 1
-                },
-                {
-                    "GenericBiomass": 10
-                }
             ],
-            "product": {
-                "NobeliskGas": 1
-            },
-            "byProduct": {},
-            "perMin": 5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
+            "isAlternate": false
         },
         {
             "id": "Alternate_PolyesterFabric",
@@ -6956,7 +7149,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 30
                 }
-            ]
+            ],
+            "isAlternate": true
         },
         {
             "id": "Fabric",
@@ -6976,15 +7170,15 @@
             "perMin": 15,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "SyntheticPowerShard",
@@ -7016,7 +7210,8 @@
                     "building": "quantumencoder",
                     "powerPerBuilding": 0.1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PowerCrystalShard_3",
@@ -7033,15 +7228,15 @@
             "perMin": 12.5,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "PowerCrystalShard_2",
@@ -7058,46 +7253,15 @@
             "perMin": 10,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
-        },
-        {
-            "id": "NobeliskShockwave",
-            "displayName": "Pulse Nobelisk",
-            "ingredients": [
-                {
-                    "NobeliskExplosive": 5
-                },
-                {
-                    "CrystalOscillator": 1
-                }
             ],
-            "product": {
-                "NobeliskShockwave": 5
-            },
-            "byProduct": {},
-            "perMin": 5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 3
-                }
-            ]
+            "isAlternate": false
         },
         {
             "id": "Rebar_Spreadshot",
@@ -7128,7 +7292,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CartridgeChaos_Packaged",
@@ -7162,7 +7327,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CartridgeChaos",
@@ -7191,44 +7357,8 @@
                     "building": "blender",
                     "powerPerBuilding": 1.5
                 }
-            ]
-        },
-        {
-            "id": "NobeliskNuke",
-            "displayName": "Nuke Nobelisk",
-            "ingredients": [
-                {
-                    "NobeliskExplosive": 5
-                },
-                {
-                    "UraniumCell": 20
-                },
-                {
-                    "GunpowderMK2": 10
-                },
-                {
-                    "CircuitBoardHighSpeed": 6
-                }
             ],
-            "product": {
-                "NobeliskNuke": 1
-            },
-            "byProduct": {},
-            "perMin": 0.5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ]
+            "isAlternate": false
         },
         {
             "id": "Cartridge",
@@ -7259,7 +7389,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Rebar_Explosive",
@@ -7293,69 +7424,8 @@
                     "building": "bp_workshopcomponent",
                     "powerPerBuilding": 0
                 }
-            ]
-        },
-        {
-            "id": "NobeliskCluster",
-            "displayName": "Cluster Nobelisk",
-            "ingredients": [
-                {
-                    "NobeliskExplosive": 3
-                },
-                {
-                    "GunpowderMK2": 4
-                }
             ],
-            "product": {
-                "NobeliskCluster": 1
-            },
-            "byProduct": {},
-            "perMin": 2.5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
-        },
-        {
-            "id": "Nobelisk",
-            "displayName": "Nobelisk",
-            "ingredients": [
-                {
-                    "Gunpowder": 2
-                },
-                {
-                    "SteelPipe": 2
-                }
-            ],
-            "product": {
-                "NobeliskExplosive": 1
-            },
-            "byProduct": {},
-            "perMin": 10,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
+            "isAlternate": false
         },
         {
             "id": "GunpowderMK2",
@@ -7381,7 +7451,8 @@
                     "building": "oilrefinery",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Snowball",
@@ -7404,7 +7475,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasStar",
@@ -7430,7 +7502,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasWreath",
@@ -7456,7 +7529,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 7.5
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBallCluster",
@@ -7482,7 +7556,8 @@
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBall1",
@@ -7505,7 +7580,8 @@
                     "building": "smeltermk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBall2",
@@ -7528,7 +7604,8 @@
                     "building": "smeltermk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBall3",
@@ -7554,7 +7631,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 16
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBall4",
@@ -7580,7 +7658,8 @@
                     "building": "foundrymk1",
                     "powerPerBuilding": 16
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Snow",
@@ -7603,7 +7682,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBranch",
@@ -7626,7 +7706,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "XmasBow",
@@ -7649,7 +7730,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "CandyCane",
@@ -7672,34 +7754,8 @@
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
-        },
-        {
-            "id": "SpaceElevator",
-            "displayName": "Space Elevator",
-            "ingredients": [
-                {
-                    "Cement": 500
-                },
-                {
-                    "IronPlate": 250
-                },
-                {
-                    "IronRod": 400
-                },
-                {
-                    "Wire": 1500
-                }
             ],
-            "product": {
-                "SpaceElevator": 1
-            },
-            "byProduct": {},
-            "perMin": 60,
-            "producedIn": [
-                "factorygame"
-            ],
-            "powerPerBuilding": []
+            "isAlternate": false
         },
         {
             "id": "Biomass_Leaves",
@@ -7716,15 +7772,15 @@
             "perMin": 60,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.8
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Biomass_Wood",
@@ -7741,15 +7797,15 @@
             "perMin": 300,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 0.2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IronPlateReinforced",
@@ -7769,15 +7825,15 @@
             "perMin": 5,
             "producedIn": [
                 "assemblermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "assemblermk1",
                     "powerPerBuilding": 15
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Concrete",
@@ -7794,15 +7850,15 @@
             "perMin": 15,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Screw",
@@ -7819,15 +7875,15 @@
             "perMin": 40,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 1
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Cable",
@@ -7844,15 +7900,15 @@
             "perMin": 30,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 4
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "Wire",
@@ -7869,15 +7925,15 @@
             "perMin": 30,
             "producedIn": [
                 "constructormk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "constructormk1",
                     "powerPerBuilding": 2
                 }
-            ]
+            ],
+            "isAlternate": false
         },
         {
             "id": "IngotCopper",
@@ -7894,108 +7950,15 @@
             "perMin": 30,
             "producedIn": [
                 "smeltermk1",
-                "bp_workbenchcomponent",
-                "factorygame"
+                "bp_workbenchcomponent"
             ],
             "powerPerBuilding": [
                 {
                     "building": "smeltermk1",
                     "powerPerBuilding": 4
                 }
-            ]
-        },
-        {
-            "id": "Fireworks_01",
-            "displayName": "Sweet Fireworks",
-            "ingredients": [
-                {
-                    "XmasBranch": 6
-                },
-                {
-                    "CandyCane": 3
-                }
             ],
-            "product": {
-                "Fireworks_Projectile_01": 1
-            },
-            "byProduct": {},
-            "perMin": 2.5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
-        },
-        {
-            "id": "Fireworks_02",
-            "displayName": "Fancy Fireworks",
-            "ingredients": [
-                {
-                    "XmasBranch": 4
-                },
-                {
-                    "XmasBow": 3
-                }
-            ],
-            "product": {
-                "Fireworks_Projectile_02": 1
-            },
-            "byProduct": {},
-            "perMin": 2.5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
-        },
-        {
-            "id": "Fireworks_03",
-            "displayName": "Sparkly Fireworks",
-            "ingredients": [
-                {
-                    "XmasBranch": 3
-                },
-                {
-                    "Snow": 2
-                }
-            ],
-            "product": {
-                "Fireworks_Projectile_03": 1
-            },
-            "byProduct": {},
-            "perMin": 2.5,
-            "producedIn": [
-                "bp_workshopcomponent",
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                },
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ]
+            "isAlternate": false
         }
     ]
 }
