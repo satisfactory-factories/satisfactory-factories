@@ -13,188 +13,168 @@
         "constructormk1": 4
     },
     "parts": {
-        "AILimiter": "AI Limiter",
-        "AlienDNACapsule": "Alien DNA Capsule",
-        "AlienPowerFuel": "Alien Power Matrix",
-        "AluminaSolution": "Alumina Solution",
-        "AluminumCasing": "Aluminum Casing",
-        "AluminumScrap": "Aluminum Scrap",
-        "AluminumSheet": "Alclad Aluminum Sheet",
-        "Battery": "Battery",
-        "Bauxite_Caterium": "Bauxite (Caterium)",
-        "Bauxite_Copper": "Bauxite (Copper)",
-        "Biofuel": "Solid Biofuel",
-        "Biomass_AlienProtein": "Biomass (Alien Protein)",
-        "Biomass_Leaves": "Biomass (Leaves)",
-        "Biomass_Mycelia": "Biomass (Mycelia)",
-        "Biomass_Wood": "Biomass (Wood)",
-        "Cable": "Cable",
-        "CandyCane": "Candy Cane",
-        "Cartridge": "Rifle Ammo",
-        "CartridgeChaos": "Turbo Rifle Ammo",
-        "CartridgeChaos_Packaged": "Turbo Rifle Ammo",
-        "CartridgeSmart": "Homing Rifle Ammo",
-        "Caterium_Copper": "Caterium Ore (Copper)",
-        "Caterium_Quartz": "Caterium Ore (Quartz)",
-        "CircuitBoard": "Circuit Board",
-        "Coal_Iron": "Coal (Iron)",
-        "Coal_Limestone": "Coal (Limestone)",
-        "Computer": "Computer",
-        "ComputerSuper": "Supercomputer",
-        "Concrete": "Concrete",
-        "CoolingSystem": "Cooling System",
-        "CopperDust": "Copper Powder",
-        "CopperSheet": "Copper Sheet",
-        "Copper_Quartz": "Copper Ore (Quartz)",
-        "Copper_Sulfur": "Copper Ore (Sulfur)",
-        "CrystalOscillator": "Crystal Oscillator",
-        "DarkEnergy": "Dark Matter Residue",
-        "DarkMatter": "Dark Matter Crystal",
-        "Diamond": "Diamonds",
-        "ElectromagneticControlRod": "Electromagnetic Control Rod",
-        "EncasedIndustrialBeam": "Encased Industrial Beam",
-        "Fabric": "Fabric",
-        "FicsiteIngot_AL": "Ficsite Ingot (Aluminum)",
-        "FicsiteIngot_CAT": "Ficsite Ingot (Caterium)",
-        "FicsiteIngot_Iron": "Ficsite Ingot (Iron)",
-        "FicsiteMesh": "Ficsite Trigon",
-        "Ficsonium": "Ficsonium",
-        "FicsoniumFuelRod": "Ficsonium Fuel Rod",
-        "FilterGasMask": "Gas Filter",
-        "FilterHazmat": "Iodine-Infused Filter",
-        "Fireworks_01": "Sweet Fireworks",
-        "Fireworks_02": "Fancy Fireworks",
-        "Fireworks_03": "Sparkly Fireworks",
-        "FluidCanister": "Empty Canister",
-        "Fuel": "Packaged Fuel",
-        "FusedModularFrame": "Fused Modular Frame",
-        "GasTank": "Empty Fluid Tank",
-        "Gunpowder": "Black Powder",
-        "GunpowderMK2": "Smokeless Powder",
-        "HeatSink": "Heat Sink",
-        "HighSpeedConnector": "High-Speed Connector",
-        "IngotAluminum": "Aluminum Ingot",
-        "IngotCaterium": "Caterium Ingot",
-        "IngotCopper": "Copper Ingot",
-        "IngotIron": "Iron Ingot",
-        "IngotSAM": "Reanimated SAM",
-        "IngotSteel": "Steel Ingot",
-        "IonizedFuel": "Ionized Fuel",
-        "IronPlate": "Iron Plate",
-        "IronPlateReinforced": "Reinforced Iron Plate",
-        "IronRod": "Iron Rod",
-        "Iron_Limestone": "Iron Ore (Limestone)",
-        "Limestone_Sulfur": "Limestone (Sulfur)",
-        "LiquidBiofuel": "Liquid Biofuel",
-        "LiquidFuel": "Fuel",
-        "ModularFrame": "Modular Frame",
-        "ModularFrameHeavy": "Heavy Modular Frame",
-        "Motor": "Motor",
-        "MotorTurbo": "Turbo Motor",
-        "NitricAcid": "Nitric Acid",
-        "Nitrogen_Bauxite": "Nitrogen Gas (Bauxite)",
-        "Nitrogen_Caterium": "Nitrogen Gas (Caterium)",
-        "Nobelisk": "Nobelisk",
-        "NobeliskCluster": "Cluster Nobelisk",
-        "NobeliskGas": "Gas Nobelisk",
-        "NobeliskNuke": "Nuke Nobelisk",
-        "NobeliskShockwave": "Pulse Nobelisk",
-        "NonFissileUranium": "Non-Fissile Uranium",
-        "NuclearFuelRod": "Uranium Fuel Rod",
-        "PackagedAlumina": "Packaged Alumina Solution",
-        "PackagedBiofuel": "Packaged Liquid Biofuel",
-        "PackagedCrudeOil": "Packaged Oil",
-        "PackagedIonizedFuel": "Packaged Ionized Fuel",
-        "PackagedNitricAcid": "Packaged Nitric Acid",
-        "PackagedNitrogen": "Packaged Nitrogen Gas",
-        "PackagedOilResidue": "Packaged Heavy Oil Residue",
-        "PackagedRocketFuel": "Packaged Rocket Fuel",
-        "PackagedSulfuricAcid": "Packaged Sulfuric Acid",
-        "PackagedTurboFuel": "Packaged Turbofuel",
-        "PackagedWater": "Packaged Water",
-        "PetroleumCoke": "Petroleum Coke",
-        "Plastic": "Plastic",
-        "Plutonium": "Plutonium Pellet",
-        "PlutoniumCell": "Encased Plutonium Cell",
-        "PlutoniumFuelRod": "Plutonium Fuel Rod",
-        "PowerCrystalShard_1": "Power Shard (1)",
-        "PowerCrystalShard_2": "Power Shard (2)",
-        "PowerCrystalShard_3": "Power Shard (5)",
-        "PressureConversionCube": "Pressure Conversion Cube",
-        "Protein_Crab": "Hatcher Protein",
-        "Protein_Hog": "Hog Protein",
-        "Protein_Spitter": "Spitter Protein",
-        "Protein_Stinger": "Stinger Protein",
-        "PureAluminumIngot": "Alternate: Pure Aluminum Ingot",
-        "QuantumEnergy": "Excited Photonic Matter",
-        "QuartzCrystal": "Quartz Crystal",
-        "Quartz_Bauxite": "Raw Quartz (Bauxite)",
-        "Quartz_Coal": "Raw Quartz (Coal)",
-        "Quickwire": "Quickwire",
-        "RadioControlUnit": "Radio Control Unit",
-        "Rebar_Explosive": "Explosive Rebar",
-        "Rebar_Spreadshot": "Shatter Rebar",
-        "Rebar_Stunshot": "Stun Rebar",
-        "ResidualFuel": "Residual Fuel",
-        "ResidualPlastic": "Residual Plastic",
-        "ResidualRubber": "Residual Rubber",
-        "RocketFuel": "Rocket Fuel",
-        "Rotor": "Rotor",
-        "Rubber": "Rubber",
-        "SAMFluctuator": "SAM Fluctuator",
-        "Screw": "Screw",
-        "Silica": "Silica",
-        "SingularityCell": "Singularity Cell",
-        "Snow": "Actual Snow",
-        "Snowball": "Snowball",
-        "SpaceElevator": "Space Elevator",
-        "SpaceElevatorPart_1": "Smart Plating",
-        "SpaceElevatorPart_10": "Biochemical Sculptor",
-        "SpaceElevatorPart_11": "Ballistic Warp Drive",
-        "SpaceElevatorPart_12": "AI Expansion Server",
-        "SpaceElevatorPart_2": "Versatile Framework",
-        "SpaceElevatorPart_3": "Automated Wiring",
-        "SpaceElevatorPart_4": "Modular Engine",
-        "SpaceElevatorPart_5": "Adaptive Control Unit",
-        "SpaceElevatorPart_6": "Magnetic Field Generator",
-        "SpaceElevatorPart_7": "Assembly Director System",
-        "SpaceElevatorPart_8": "Thermal Propulsion Rocket",
-        "SpaceElevatorPart_9": "Nuclear Pasta",
-        "SpikedRebar": "Iron Rebar",
-        "Stator": "Stator",
-        "SteelBeam": "Steel Beam",
-        "SteelPipe": "Steel Pipe",
-        "Sulfur_Coal": "Sulfur (Coal)",
-        "Sulfur_Iron": "Sulfur (Iron)",
-        "SulfuricAcid": "Sulfuric Acid",
-        "SuperpositionOscillator": "Superposition Oscillator",
-        "SyntheticPowerShard": "Synthetic Power Shard",
-        "TemporalProcessor": "Neural-Quantum Processor",
-        "TimeCrystal": "Time Crystal",
-        "UnpackageAlumina": "Unpackage Alumina Solution",
-        "UnpackageBioFuel": "Unpackage Liquid Biofuel",
-        "UnpackageFuel": "Unpackage Fuel",
-        "UnpackageIonizedFuel": "Unpackage Ionized Fuel",
-        "UnpackageNitricAcid": "Unpackage Nitric Acid",
-        "UnpackageNitrogen": "Unpackage Nitrogen Gas",
-        "UnpackageOil": "Unpackage Oil",
-        "UnpackageOilResidue": "Unpackage Heavy Oil Residue",
-        "UnpackageRocketFuel": "Unpackage Rocket Fuel",
-        "UnpackageSulfuricAcid": "Unpackage Sulfuric Acid",
-        "UnpackageTurboFuel": "Unpackage Turbofuel",
-        "UnpackageWater": "Unpackage Water",
-        "UraniumCell": "Encased Uranium Cell",
-        "Uranium_Bauxite": "Uranium Ore (Bauxite)",
-        "Wire": "Wire",
-        "XmasBall1": "Red FICSMAS Ornament",
-        "XmasBall2": "Blue FICSMAS Ornament",
-        "XmasBall3": "Copper FICSMAS Ornament",
-        "XmasBall4": "Iron FICSMAS Ornament",
-        "XmasBallCluster": "FICSMAS Ornament Bundle",
-        "XmasBow": "FICSMAS Bow",
-        "XmasBranch": "FICSMAS Tree Branch",
-        "XmasStar": "FICSMAS Wonder Star",
-        "XmasWreath": "FICSMAS Decoration"
+        "parts": {
+            "AlienDNACapsule": "Alien DNA Capsule",
+            "AlienPowerFuel": "Alien Power Matrix",
+            "AlienProtein": "Hatcher Protein",
+            "AluminaSolution": "Unpackage Alumina Solution",
+            "AluminumCasing": "Aluminum Casing",
+            "AluminumIngot": "Aluminum Ingot",
+            "AluminumPlate": "Alclad Aluminum Sheet",
+            "AluminumPlateReinforced": "Heat Sink",
+            "AluminumScrap": "Aluminum Scrap",
+            "Battery": "Battery",
+            "Biofuel": "Solid Biofuel",
+            "Cable": "Cable",
+            "CandyCane": "Candy Cane",
+            "CartridgeChaos": "Turbo Rifle Ammo",
+            "CartridgeSmartProjectile": "Homing Rifle Ammo",
+            "CartridgeStandard": "Rifle Ammo",
+            "Cement": "Concrete",
+            "Chainsaw": "Chainsaw",
+            "CircuitBoard": "Circuit Board",
+            "CircuitBoardHighSpeed": "AI Limiter",
+            "Coal": "Coal (Limestone)",
+            "Computer": "Computer",
+            "ComputerSuper": "Supercomputer",
+            "CoolingSystem": "Cooling System",
+            "CopperDust": "Copper Powder",
+            "CopperIngot": "Copper Ingot",
+            "CopperSheet": "Copper Sheet",
+            "CrystalOscillator": "Crystal Oscillator",
+            "CrystalShard": "Synthetic Power Shard",
+            "DarkEnergy": "Dark Matter Residue",
+            "DarkMatter": "Dark Matter Crystal",
+            "Diamond": "Diamonds",
+            "ElectromagneticControlRod": "Electromagnetic Control Rod",
+            "Fabric": "Fabric",
+            "FicsiteIngot": "Ficsite Ingot (Caterium)",
+            "FicsiteMesh": "Ficsite Trigon",
+            "Ficsonium": "Ficsonium",
+            "FicsoniumFuelRod": "Ficsonium Fuel Rod",
+            "Filter": "Gas Filter",
+            "Fireworks_Projectile_01": "Sweet Fireworks",
+            "Fireworks_Projectile_02": "Fancy Fireworks",
+            "Fireworks_Projectile_03": "Sparkly Fireworks",
+            "FluidCanister": "Empty Canister",
+            "Fuel": "Packaged Fuel",
+            "GasTank": "Empty Fluid Tank",
+            "GenericBiomass": "Biomass (Wood)",
+            "GoldIngot": "Caterium Ingot",
+            "GolfCart": "Factory Cart™",
+            "GolfCartGold": "Golden Factory Cart™",
+            "Gunpowder": "Black Powder",
+            "GunpowderMK2": "Smokeless Powder",
+            "HazmatFilter": "Iodine-Infused Filter",
+            "HeavyOilResidue": "Unpackage Heavy Oil Residue",
+            "HighSpeedConnector": "High-Speed Connector",
+            "HighSpeedWire": "Quickwire",
+            "IonizedFuel": "Unpackage Ionized Fuel",
+            "IronIngot": "Iron Ingot",
+            "IronPlate": "Iron Plate",
+            "IronPlateReinforced": "Reinforced Iron Plate",
+            "IronRod": "Iron Rod",
+            "IronScrew": "Screw",
+            "LiquidBiofuel": "Unpackage Liquid Biofuel",
+            "LiquidFuel": "Unpackage Fuel",
+            "LiquidOil": "Unpackage Oil",
+            "LiquidTurboFuel": "Unpackage Turbofuel",
+            "Medkit": "Nutritional Inhaler",
+            "ModularFrame": "Modular Frame",
+            "ModularFrameFused": "Fused Modular Frame",
+            "ModularFrameHeavy": "Heavy Modular Frame",
+            "ModularFrameLightweight": "Radio Control Unit",
+            "Motor": "Motor",
+            "MotorLightweight": "Turbo Motor",
+            "NitricAcid": "Unpackage Nitric Acid",
+            "NitrogenGas": "Unpackage Nitrogen Gas",
+            "NobeliskCluster": "Cluster Nobelisk",
+            "NobeliskExplosive": "Nobelisk",
+            "NobeliskGas": "Gas Nobelisk",
+            "NobeliskNuke": "Nuke Nobelisk",
+            "NobeliskShockwave": "Pulse Nobelisk",
+            "NonFissibleUranium": "Non-Fissile Uranium",
+            "NuclearFuelRod": "Uranium Fuel Rod",
+            "OreBauxite": "Bauxite (Copper)",
+            "OreCopper": "Copper Ore (Sulfur)",
+            "OreGold": "Caterium Ore (Quartz)",
+            "OreIron": "Iron Ore (Limestone)",
+            "OreUranium": "Uranium Ore (Bauxite)",
+            "PackagedAlumina": "Packaged Alumina Solution",
+            "PackagedBiofuel": "Packaged Liquid Biofuel",
+            "PackagedIonizedFuel": "Packaged Ionized Fuel",
+            "PackagedNitricAcid": "Packaged Nitric Acid",
+            "PackagedNitrogenGas": "Packaged Nitrogen Gas",
+            "PackagedOil": "Packaged Oil",
+            "PackagedOilResidue": "Packaged Heavy Oil Residue",
+            "PackagedRocketFuel": "Packaged Rocket Fuel",
+            "PackagedSulfuricAcid": "Packaged Sulfuric Acid",
+            "PackagedWater": "Packaged Water",
+            "Parachute": "Parachute",
+            "PetroleumCoke": "Petroleum Coke",
+            "Plastic": "Residual Plastic",
+            "PlutoniumCell": "Encased Plutonium Cell",
+            "PlutoniumFuelRod": "Plutonium Fuel Rod",
+            "PlutoniumPellet": "Plutonium Pellet",
+            "PressureConversionCube": "Pressure Conversion Cube",
+            "QuantumEnergy": "Excited Photonic Matter",
+            "QuantumOscillator": "Superposition Oscillator",
+            "QuartzCrystal": "Quartz Crystal",
+            "RawQuartz": "Raw Quartz (Coal)",
+            "RebarGunProjectile": "Rebar Gun",
+            "Rebar_Explosive": "Explosive Rebar",
+            "Rebar_Spreadshot": "Shatter Rebar",
+            "Rebar_Stunshot": "Stun Rebar",
+            "RocketFuel": "Unpackage Rocket Fuel",
+            "Rotor": "Rotor",
+            "Rubber": "Residual Rubber",
+            "SAMFluctuator": "SAM Fluctuator",
+            "SAMIngot": "Reanimated SAM",
+            "Silica": "Silica",
+            "SingularityCell": "Singularity Cell",
+            "Snow": "Actual Snow",
+            "SnowballProjectile": "Snowball",
+            "SpaceElevator": "Space Elevator",
+            "SpaceElevatorPart_1": "Smart Plating",
+            "SpaceElevatorPart_10": "Biochemical Sculptor",
+            "SpaceElevatorPart_11": "Ballistic Warp Drive",
+            "SpaceElevatorPart_12": "AI Expansion Server",
+            "SpaceElevatorPart_2": "Versatile Framework",
+            "SpaceElevatorPart_3": "Automated Wiring",
+            "SpaceElevatorPart_4": "Modular Engine",
+            "SpaceElevatorPart_5": "Adaptive Control Unit",
+            "SpaceElevatorPart_6": "Magnetic Field Generator",
+            "SpaceElevatorPart_7": "Assembly Director System",
+            "SpaceElevatorPart_8": "Thermal Propulsion Rocket",
+            "SpaceElevatorPart_9": "Nuclear Pasta",
+            "SpikedRebar": "Iron Rebar",
+            "Stator": "Stator",
+            "SteelIngot": "Steel Ingot",
+            "SteelPipe": "Steel Pipe",
+            "SteelPlate": "Steel Beam",
+            "SteelPlateReinforced": "Encased Industrial Beam",
+            "Stone": "Limestone (Sulfur)",
+            "Sulfur": "Sulfur (Iron)",
+            "SulfuricAcid": "Unpackage Sulfuric Acid",
+            "TemporalProcessor": "Neural-Quantum Processor",
+            "TimeCrystal": "Time Crystal",
+            "TurboFuel": "Packaged Turbofuel",
+            "UraniumCell": "Encased Uranium Cell",
+            "Water": "Unpackage Water",
+            "Wire": "Wire",
+            "XmasBall1": "Red FICSMAS Ornament",
+            "XmasBall2": "Blue FICSMAS Ornament",
+            "XmasBall3": "Copper FICSMAS Ornament",
+            "XmasBall4": "Iron FICSMAS Ornament",
+            "XmasBallCluster": "FICSMAS Ornament Bundle",
+            "XmasBow": "FICSMAS Bow",
+            "XmasBranch": "FICSMAS Tree Branch",
+            "XmasStar": "FICSMAS Wonder Star",
+            "XmasWreath": "FICSMAS Decoration"
+        },
+        "collectables": {
+            "CrystalShard": "Power Shard (2)"
+        }
     },
     "recipes": [
         {
@@ -292,9 +272,7 @@
             "product": {
                 "RocketFuel": 6
             },
-            "byProduct": {
-                "CompactedCoal": 1
-            },
+            "byProduct": {},
             "perMin": 150,
             "producedIn": [
                 "blender"
@@ -320,9 +298,7 @@
             "product": {
                 "RocketFuel": 10
             },
-            "byProduct": {
-                "CompactedCoal": 1
-            },
+            "byProduct": {},
             "perMin": 100,
             "producedIn": [
                 "blender"
@@ -371,9 +347,7 @@
             "product": {
                 "RocketFuel": 2
             },
-            "byProduct": {
-                "GasTank": 1
-            },
+            "byProduct": {},
             "perMin": 120,
             "producedIn": [
                 "packager"
@@ -399,9 +373,7 @@
             "product": {
                 "IonizedFuel": 10000
             },
-            "byProduct": {
-                "CompactedCoal": 2
-            },
+            "byProduct": {},
             "perMin": 200000,
             "producedIn": [
                 "converter"
@@ -501,9 +473,7 @@
             "product": {
                 "QuantumOscillator": 1
             },
-            "byProduct": {
-                "DarkEnergy": 25000
-            },
+            "byProduct": {},
             "perMin": 5,
             "producedIn": [
                 "quantumencoder"
@@ -535,9 +505,7 @@
             "product": {
                 "TemporalProcessor": 1
             },
-            "byProduct": {
-                "DarkEnergy": 25000
-            },
+            "byProduct": {},
             "perMin": 3,
             "producedIn": [
                 "quantumencoder"
@@ -569,9 +537,7 @@
             "product": {
                 "SpaceElevatorPart_12": 1
             },
-            "byProduct": {
-                "DarkEnergy": 25000
-            },
+            "byProduct": {},
             "perMin": 4,
             "producedIn": [
                 "quantumencoder"
@@ -597,9 +563,7 @@
             "product": {
                 "IonizedFuel": 16
             },
-            "byProduct": {
-                "CompactedCoal": 2
-            },
+            "byProduct": {},
             "perMin": 40,
             "producedIn": [
                 "oilrefinery"
@@ -648,9 +612,7 @@
             "product": {
                 "IonizedFuel": 4
             },
-            "byProduct": {
-                "GasTank": 2
-            },
+            "byProduct": {},
             "perMin": 80,
             "producedIn": [
                 "packager"
@@ -1424,9 +1386,7 @@
             "product": {
                 "LiquidTurboFuel": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "packager"
@@ -1549,9 +1509,7 @@
             "product": {
                 "LiquidFuel": 4
             },
-            "byProduct": {
-                "PolymerResin": 3
-            },
+            "byProduct": {},
             "perMin": 40,
             "producedIn": [
                 "oilrefinery"
@@ -1597,9 +1555,7 @@
             "product": {
                 "Plastic": 2
             },
-            "byProduct": {
-                "HeavyOilResidue": 1000
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "oilrefinery"
@@ -1622,9 +1578,7 @@
             "product": {
                 "Rubber": 2
             },
-            "byProduct": {
-                "HeavyOilResidue": 2000
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "oilrefinery"
@@ -2251,9 +2205,7 @@
             "product": {
                 "LiquidBiofuel": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 60,
             "producedIn": [
                 "packager"
@@ -2276,9 +2228,7 @@
             "product": {
                 "LiquidFuel": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 60,
             "producedIn": [
                 "packager"
@@ -2301,9 +2251,7 @@
             "product": {
                 "LiquidOil": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 60,
             "producedIn": [
                 "packager"
@@ -2326,9 +2274,7 @@
             "product": {
                 "HeavyOilResidue": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "packager"
@@ -2351,9 +2297,7 @@
             "product": {
                 "Water": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 120,
             "producedIn": [
                 "packager"
@@ -2662,9 +2606,7 @@
             "product": {
                 "AluminaSolution": 12
             },
-            "byProduct": {
-                "Silica": 5
-            },
+            "byProduct": {},
             "perMin": 120,
             "producedIn": [
                 "oilrefinery"
@@ -2690,9 +2632,7 @@
             "product": {
                 "AluminumScrap": 6
             },
-            "byProduct": {
-                "Water": 2000
-            },
+            "byProduct": {},
             "perMin": 360,
             "producedIn": [
                 "oilrefinery"
@@ -2824,9 +2764,7 @@
             "product": {
                 "AluminaSolution": 2
             },
-            "byProduct": {
-                "FluidCanister": 2
-            },
+            "byProduct": {},
             "perMin": 120,
             "producedIn": [
                 "packager"
@@ -2849,9 +2787,7 @@
             "product": {
                 "PolymerResin": 13
             },
-            "byProduct": {
-                "HeavyOilResidue": 2000
-            },
+            "byProduct": {},
             "perMin": 130,
             "producedIn": [
                 "oilrefinery"
@@ -3070,9 +3006,7 @@
             "product": {
                 "HeavyOilResidue": 4
             },
-            "byProduct": {
-                "PolymerResin": 2
-            },
+            "byProduct": {},
             "perMin": 40,
             "producedIn": [
                 "oilrefinery"
@@ -3337,9 +3271,7 @@
             "product": {
                 "AluminumScrap": 20
             },
-            "byProduct": {
-                "Water": 7000
-            },
+            "byProduct": {},
             "perMin": 300,
             "producedIn": [
                 "oilrefinery"
@@ -3829,9 +3761,7 @@
             "product": {
                 "NonFissibleUranium": 20
             },
-            "byProduct": {
-                "Water": 6000
-            },
+            "byProduct": {},
             "perMin": 50,
             "producedIn": [
                 "blender"
@@ -3989,9 +3919,7 @@
             "product": {
                 "NitricAcid": 1
             },
-            "byProduct": {
-                "GasTank": 1
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "packager"
@@ -4052,9 +3980,7 @@
             "product": {
                 "UraniumCell": 5
             },
-            "byProduct": {
-                "SulfuricAcid": 2000
-            },
+            "byProduct": {},
             "perMin": 25,
             "producedIn": [
                 "blender"
@@ -4115,9 +4041,7 @@
             "product": {
                 "Battery": 1
             },
-            "byProduct": {
-                "Water": 1500
-            },
+            "byProduct": {},
             "perMin": 20,
             "producedIn": [
                 "blender"
@@ -4314,9 +4238,7 @@
             "product": {
                 "SulfuricAcid": 1
             },
-            "byProduct": {
-                "FluidCanister": 1
-            },
+            "byProduct": {},
             "perMin": 60,
             "producedIn": [
                 "packager"
@@ -4671,9 +4593,7 @@
             "product": {
                 "NitrogenGas": 4
             },
-            "byProduct": {
-                "GasTank": 1
-            },
+            "byProduct": {},
             "perMin": 240,
             "producedIn": [
                 "packager"
@@ -4705,9 +4625,7 @@
             "product": {
                 "AluminumScrap": 30
             },
-            "byProduct": {
-                "Water": 5000
-            },
+            "byProduct": {},
             "perMin": 300,
             "producedIn": [
                 "blender"
@@ -4797,9 +4715,7 @@
             "product": {
                 "NonFissibleUranium": 20
             },
-            "byProduct": {
-                "Water": 8000
-            },
+            "byProduct": {},
             "perMin": 100,
             "producedIn": [
                 "blender"
@@ -5164,9 +5080,7 @@
             "product": {
                 "Silica": 27
             },
-            "byProduct": {
-                "Water": 8000
-            },
+            "byProduct": {},
             "perMin": 270,
             "producedIn": [
                 "blender"
@@ -5192,9 +5106,7 @@
             "product": {
                 "QuartzCrystal": 15
             },
-            "byProduct": {
-                "DissolvedSilica": 12000
-            },
+            "byProduct": {},
             "perMin": 75,
             "producedIn": [
                 "oilrefinery"
@@ -6438,9 +6350,7 @@
             "product": {
                 "FicsoniumFuelRod": 1
             },
-            "byProduct": {
-                "DarkEnergy": 20000
-            },
+            "byProduct": {},
             "perMin": 2.5,
             "producedIn": [
                 "quantumencoder"
@@ -6755,9 +6665,7 @@
             "product": {
                 "AlienPowerFuel": 1
             },
-            "byProduct": {
-                "DarkEnergy": 24000
-            },
+            "byProduct": {},
             "perMin": 2.5,
             "producedIn": [
                 "quantumencoder"
@@ -7098,9 +7006,7 @@
             "product": {
                 "CrystalShard": 1
             },
-            "byProduct": {
-                "DarkEnergy": 12000
-            },
+            "byProduct": {},
             "perMin": 5,
             "producedIn": [
                 "quantumencoder"

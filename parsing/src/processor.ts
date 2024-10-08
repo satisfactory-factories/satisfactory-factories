@@ -39,9 +39,20 @@ function cleanInput(input: string): string {
 const blacklist = ["/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C"];
 const workshopComponentPath = "/Game/FactoryGame/Buildable/-Shared/WorkBench/BP_WorkshopComponent.BP_WorkshopComponent_C";
 
-// Function to extract parts
-function getParts(data: any[]): { [key: string]: string } {
+// Helper function to determine if an ingredient is a collectable (e.g., Power Slug)
+function isCollectable(ingredients: string): boolean {
+    const collectableDescriptors = [
+        "Desc_Crystal.Desc_Crystal_C",        // Blue Power Slug
+        "Desc_Crystal_mk2.Desc_Crystal_mk2_C", // Yellow Power Slug
+        "Desc_Crystal_mk3.Desc_Crystal_mk3_C"  // Purple Power Slug
+    ];
+    return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
+}
+
+// Function to extract parts, moving collectables to specialParts
+function getParts(data: any[]): { parts: { [key: string]: string }, collectables: { [key: string]: string } } {
     const parts: { [key: string]: string } = {};
+    const collectables: { [key: string]: string } = {};
 
     data
         .filter((entry: any) => entry.Classes)
@@ -53,21 +64,38 @@ function getParts(data: any[]): { [key: string]: string } {
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
 
-            const producedInBuildings = entry.mProducedIn.match(/"([^"]+)"/g)?.map((building: string) => building.replace(/"/g, ''));
-            if (producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath) return;
+            // Extract the part name
+            const productMatches = entry.mProduct
+                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
 
-            const partName = entry.ClassName.replace("Desc_", "").replace(/_C$/, "").replace("Recipe_", "");
-            const displayName = entry.mDisplayName;
-            if (!parts[partName]) parts[partName] = displayName;
+            if (productMatches) {
+                const partName = productMatches[1];  // Use the mProduct part name
+                const friendlyName = entry.mDisplayName;  // Use the friendly name
+
+                // Check if the part is a collectable (e.g., Power Slug)
+                if (isCollectable(entry.mIngredients)) {
+                    collectables[partName] = friendlyName;
+                } else {
+                    parts[partName] = friendlyName;
+                }
+            }
         });
 
-    // Sort the parts by key
-    return Object.keys(parts)
-      .sort()
-      .reduce((sortedObj: { [key: string]: string }, key: string) => {
-          sortedObj[key] = parts[key];
-          return sortedObj;
-      }, {});
+    // Sort the parts and collectables by key
+    return {
+        parts: Object.keys(parts)
+            .sort()
+            .reduce((sortedObj: { [key: string]: string }, key: string) => {
+                sortedObj[key] = parts[key];
+                return sortedObj;
+            }, {}),
+        collectables: Object.keys(collectables)
+            .sort()
+            .reduce((sortedObj: { [key: string]: string }, key: string) => {
+                sortedObj[key] = collectables[key];
+                return sortedObj;
+            }, {})
+    };
 }
 
 // Function to extract all buildings that produce something
@@ -134,11 +162,10 @@ function isLikelyFluid(building: string, amount: number, productName: string): b
     return (isFluidBuilding && amount > 100) || isGasProduct;
 }
 
-
-// Function to extract recipes
-// Function to extract recipes, adjusting for power consumption and handling liquid/gas items, and removing "build_" prefix in producedIn
 function getRecipes(data: any[], producingBuildings: { [key: string]: number }): any[] {
     const recipes: any[] = [];
+    const uniqueProductsSet = new Set<string>();
+
     data
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
@@ -146,8 +173,8 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
             if (!recipe.mProducedIn) return false;
             if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
             const producedInBuildings = recipe.mProducedIn.match(/"([^"]+)"/g)?.map((building: string) => building.replace(/"/g, ''));
-            if (producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath) return false;
-            return true;
+            return !(producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath);
+
         })
         .forEach((recipe: any) => {
             const ingredients = recipe.mIngredients
@@ -174,7 +201,7 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
 
             // Parse mProduct to extract both the product and byProduct
             const productMatches = recipe.mProduct
-                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g);
+                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
 
             let product = {};
             let byProduct = {};
@@ -194,6 +221,9 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                     }
 
                     product = { [productName]: productAmount };
+
+                    // Add to uniqueProductsSet to ensure unique products in parts
+                    uniqueProductsSet.add(productName);
                 }
 
                 // Handle the second product as byProduct, if present
@@ -202,7 +232,6 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                     if (byProductMatch) {
                         const byProductName = byProductMatch[1];
                         let byProductAmount = parseInt(byProductMatch[2], 10);
-
                         byProduct = { [byProductName]: byProductAmount };
                     }
                 }
@@ -249,9 +278,9 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                 powerPerBuilding  // Renamed to powerPerBuilding
             });
         });
+
     return recipes;
 }
-
 
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
