@@ -172,19 +172,58 @@
             "CrystalShard": "Power Shard"
         },
         "rawResources": {
-            "Coal": "Coal",
-            "LiquidOil": "Crude Oil",
-            "NitrogenGas": "Nitrogen Gas",
-            "OreBauxite": "Bauxite",
-            "OreCopper": "Copper Ore",
-            "OreGold": "Caterium Ore",
-            "OreIron": "Iron Ore",
-            "OreUranium": "Uranium",
-            "RawQuartz": "Raw Quartz",
-            "SAM": "SAM",
-            "Stone": "Limestone",
-            "Sulfur": "Sulfur",
-            "Water": "Water"
+            "OreIron": {
+                "name": "Iron Ore",
+                "limit": 92100
+            },
+            "Coal": {
+                "name": "Coal",
+                "limit": 42300
+            },
+            "Water": {
+                "name": "Water",
+                "limit": 9007199254740991
+            },
+            "NitrogenGas": {
+                "name": "Nitrogen Gas",
+                "limit": 12000
+            },
+            "Sulfur": {
+                "name": "Sulfur",
+                "limit": 10800
+            },
+            "SAM": {
+                "name": "SAM",
+                "limit": 10200
+            },
+            "OreBauxite": {
+                "name": "Bauxite",
+                "limit": 12300
+            },
+            "OreGold": {
+                "name": "Caterium Ore",
+                "limit": 15000
+            },
+            "OreCopper": {
+                "name": "Copper Ore",
+                "limit": 36900
+            },
+            "RawQuartz": {
+                "name": "Raw Quartz",
+                "limit": 13500
+            },
+            "Stone": {
+                "name": "Limestone",
+                "limit": 69900
+            },
+            "OreUranium": {
+                "name": "Uranium",
+                "limit": 2100
+            },
+            "LiquidOil": {
+                "name": "Crude Oil",
+                "limit": 12600
+            }
         }
     },
     "recipes": [

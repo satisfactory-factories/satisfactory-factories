@@ -51,7 +51,13 @@ function isCollectable(ingredients: string): boolean {
 }
 
 // Function to extract parts, moving collectables to specialParts
-function getParts(data: any[]): { parts: { [key: string]: string }, collectables: { [key: string]: string }, rawResources: { [key: string]: string } } {
+function getParts(
+    data: any[])
+    : {
+        parts: { [key: string]: string },
+        collectables: { [key: string]: string },
+        rawResources: { [key: string]: RawResource }
+    } {
     const parts: { [key: string]: string } = {};
     const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
@@ -103,12 +109,7 @@ function getParts(data: any[]): { parts: { [key: string]: string }, collectables
                 sortedObj[key] = collectables[key];
                 return sortedObj;
             }, {}),
-        rawResources: Object.keys(rawResources)
-            .sort()
-            .reduce((sortedObj: { [key: string]: string }, key: string) => {
-                sortedObj[key] = rawResources[key];
-                return sortedObj;
-            }, {}),
+        rawResources
     };
 }
 
@@ -308,9 +309,29 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
+interface RawResource {
+    name: string;
+    limit: number;
+}
+
 // Function to extract raw resources from the game data
-function getRawResources(data: any[]): { [key: string]: string } {
-    const rawResources: { [key: string]: string } = {};
+function getRawResources(data: any[]): { [key: string]: RawResource } {
+    const rawResources: { [key: string]: RawResource } = {};
+    const limits: {[key: string]: number } = {
+        "Coal": 42300,
+        "LiquidOil": 12600,
+        "NitrogenGas": 12000,
+        "OreBauxite": 12300,
+        "OreCopper": 36900,
+        "OreGold": 15000,
+        "OreIron": 92100,
+        "OreUranium": 2100,
+        "RawQuartz": 13500,
+        "SAM": 10200,
+        "Stone": 69900,
+        "Sulfur": 10800,
+        "Water": 9007199254740991,
+    }
 
     data
         .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
@@ -318,11 +339,17 @@ function getRawResources(data: any[]): { [key: string]: string } {
         .forEach((resource: any) => {
             const className = resource.ClassName
                 .replace('Desc_', '')
-                .replace(/_C$/, '');
+                .replace(/_C$/, '')
+                .toString();
             const displayName = resource.mDisplayName;
 
+            const data = {
+                name: displayName,
+                limit: limits[className] || 0
+            }
+
             if (className && displayName) {
-                rawResources[className] = displayName;
+                rawResources[className] = data;
             }
         });
 
