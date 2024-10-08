@@ -125,12 +125,18 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
 }
 
 // Helper function to check if a recipe is likely to be liquid based on building type and amount
-function isLikelyLiquid(building: string, amount: number): boolean {
+function isLikelyFluid(building: string, amount: number, productName: string): boolean {
     const fluidBuildings = ['build_waterpump', 'build_oilrefinery', 'build_packager', 'build_oilpump', 'build_blender'];
-    return fluidBuildings.includes(building.toLowerCase()) && amount > 100;
+    const gasProducts = ['nitrogengas', 'oxygengas', 'heliumgas'];  // Add any gas product names here
+    const isFluidBuilding = fluidBuildings.includes(building.toLowerCase());
+    const isGasProduct = gasProducts.includes(productName.toLowerCase());
+
+    return (isFluidBuilding && amount > 100) || isGasProduct;
 }
 
+
 // Function to extract recipes
+// Function to extract recipes, adjusting for power consumption and handling liquid/gas items, and removing "build_" prefix in producedIn
 function getRecipes(data: any[], producingBuildings: { [key: string]: number }): any[] {
     const recipes: any[] = [];
     data
@@ -140,8 +146,8 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
             if (!recipe.mProducedIn) return false;
             if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
             const producedInBuildings = recipe.mProducedIn.match(/"([^"]+)"/g)?.map((building: string) => building.replace(/"/g, ''));
-            return !(producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath);
-
+            if (producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath) return false;
+            return true;
         })
         .forEach((recipe: any) => {
             const ingredients = recipe.mIngredients
@@ -152,12 +158,12 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                         if (match) {
                             const partName = match[1];
                             let amount = parseInt(match[2], 10);
-                            // Check if this is a likely liquid based on building and amount
+                            // Check if this is a likely liquid or gas based on building and amount
                             const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
                                 ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
 
-                            if (isLikelyLiquid(producedIn, amount)) {
-                                amount = amount / 100;  // Divide by 100 for liquid amounts
+                            if (isLikelyFluid(producedIn, amount, partName)) {
+                                amount = amount / 1000;  // Divide by 1000 for liquids and gases
                             }
                             return { [partName]: amount };
                         }
@@ -166,33 +172,39 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                     .filter((ingredient: any) => ingredient !== null)
                 : [];
 
-            // Parse mProduct to extract the single product and byProduct
-            const productMatch = recipe.mProduct
-                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+            // Parse mProduct to extract both the product and byProduct
+            const productMatches = recipe.mProduct
+                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g);
 
             let product = {};
             let byProduct = {};
 
-            if (productMatch) {
-                const productName = productMatch[1];
-                let productAmount = parseInt(productMatch[2], 10);
+            if (productMatches && productMatches.length > 0) {
+                // Handle the first product
+                const primaryProductMatch = productMatches[0].match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+                if (primaryProductMatch) {
+                    const productName = primaryProductMatch[1];
+                    let productAmount = parseInt(primaryProductMatch[2], 10);
 
-                const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
-                    ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
+                    const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
+                        ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
 
-                if (isLikelyLiquid(producedIn, productAmount)) {
-                    productAmount = productAmount / 1000;  // Divide by 1000 for liquid amounts
+                    if (isLikelyFluid(producedIn, productAmount, productName)) {
+                        productAmount = productAmount / 1000;  // Divide by 1000 for liquid/gas amounts
+                    }
+
+                    product = { [productName]: productAmount };
                 }
 
-                product = { [productName]: productAmount };
+                // Handle the second product as byProduct, if present
+                if (productMatches.length > 1) {
+                    const byProductMatch = productMatches[1].match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+                    if (byProductMatch) {
+                        const byProductName = byProductMatch[1];
+                        let byProductAmount = parseInt(byProductMatch[2], 10);
 
-                // Check for byProducts in the case where more than one product exists
-                const byProductMatch = recipe.mProduct
-                    ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)?.[1];
-                if (byProductMatch) {
-                    const byProductName = byProductMatch[1];
-                    let byProductAmount = parseInt(byProductMatch[2], 10);
-                    byProduct = { [byProductName]: byProductAmount };
+                        byProduct = { [byProductName]: byProductAmount };
+                    }
                 }
             }
 
@@ -239,6 +251,7 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
         });
     return recipes;
 }
+
 
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
