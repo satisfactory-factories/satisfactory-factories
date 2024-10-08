@@ -1,0 +1,22 @@
+{
+  "name": "satisfactory-modular-facs-parsing",
+  "version": "1.0.0",
+  "description": "A module to parse Satisfactory recipe data into a structured JSON format.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js game-docs.json recipes.json",
+    "dev": "ts-node src/index.ts game-docs.json recipes.json"
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "iconv-lite": "^0.6.3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

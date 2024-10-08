@@ -1,0 +1,5911 @@
+{
+    "buildings": [
+        "bp_buildgun",
+        "build_constructormk1",
+        "bp_workbenchcomponent",
+        "factorygame",
+        "bp_workshopcomponent",
+        "build_smeltermk1",
+        "build_blender",
+        "build_packager",
+        "build_converter",
+        "build_hadroncollider",
+        "build_quantumencoder",
+        "build_oilrefinery",
+        "build_manufacturermk1",
+        "build_assemblermk1",
+        "build_foundrymk1",
+        "build_automatedworkbench"
+    ],
+    "parts": {
+        "IronPlate": "Iron Plate",
+        "IronRod": "Iron Rod",
+        "IngotIron": "Iron Ingot",
+        "RocketFuel": "Rocket Fuel",
+        "PackagedRocketFuel": "Packaged Rocket Fuel",
+        "UnpackageRocketFuel": "Unpackage Rocket Fuel",
+        "DarkEnergy": "Dark Matter Residue",
+        "QuantumEnergy": "Excited Photonic Matter",
+        "DarkMatter": "Dark Matter Crystal",
+        "SuperpositionOscillator": "Superposition Oscillator",
+        "TemporalProcessor": "Neural-Quantum Processor",
+        "SpaceElevatorPart_12": "AI Expansion Server",
+        "IonizedFuel": "Ionized Fuel",
+        "PackagedIonizedFuel": "Packaged Ionized Fuel",
+        "UnpackageIonizedFuel": "Unpackage Ionized Fuel",
+        "SAMFluctuator": "SAM Fluctuator",
+        "FicsiteMesh": "Ficsite Trigon",
+        "FicsiteIngot_Iron": "Ficsite Ingot (Iron)",
+        "TimeCrystal": "Time Crystal",
+        "Diamond": "Diamonds",
+        "IngotSAM": "Reanimated SAM",
+        "SpaceElevatorPart_10": "Biochemical Sculptor",
+        "FicsiteIngot_AL": "Ficsite Ingot (Aluminum)",
+        "FicsiteIngot_CAT": "Ficsite Ingot (Caterium)",
+        "Bauxite_Caterium": "Bauxite (Caterium)",
+        "Bauxite_Copper": "Bauxite (Copper)",
+        "Caterium_Copper": "Caterium Ore (Copper)",
+        "Caterium_Quartz": "Caterium Ore (Quartz)",
+        "Coal_Iron": "Coal (Iron)",
+        "Coal_Limestone": "Coal (Limestone)",
+        "Copper_Quartz": "Copper Ore (Quartz)",
+        "Copper_Sulfur": "Copper Ore (Sulfur)",
+        "Iron_Limestone": "Iron Ore (Limestone)",
+        "Limestone_Sulfur": "Limestone (Sulfur)",
+        "Nitrogen_Bauxite": "Nitrogen Gas (Bauxite)",
+        "Nitrogen_Caterium": "Nitrogen Gas (Caterium)",
+        "Quartz_Bauxite": "Raw Quartz (Bauxite)",
+        "Quartz_Coal": "Raw Quartz (Coal)",
+        "Sulfur_Coal": "Sulfur (Coal)",
+        "Sulfur_Iron": "Sulfur (Iron)",
+        "Uranium_Bauxite": "Uranium Ore (Bauxite)",
+        "PackagedTurboFuel": "Packaged Turbofuel",
+        "UnpackageTurboFuel": "Unpackage Turbofuel",
+        "CircuitBoard": "Circuit Board",
+        "LiquidFuel": "Fuel",
+        "PetroleumCoke": "Petroleum Coke",
+        "Plastic": "Plastic",
+        "Rubber": "Rubber",
+        "ResidualFuel": "Residual Fuel",
+        "ResidualPlastic": "Residual Plastic",
+        "ResidualRubber": "Residual Rubber",
+        "SteelBeam": "Steel Beam",
+        "SteelPipe": "Steel Pipe",
+        "IngotSteel": "Steel Ingot",
+        "SpaceElevatorPart_2": "Versatile Framework",
+        "FluidCanister": "Empty Canister",
+        "Fuel": "Packaged Fuel",
+        "LiquidBiofuel": "Liquid Biofuel",
+        "PackagedBiofuel": "Packaged Liquid Biofuel",
+        "PackagedCrudeOil": "Packaged Oil",
+        "PackagedOilResidue": "Packaged Heavy Oil Residue",
+        "PackagedWater": "Packaged Water",
+        "UnpackageBioFuel": "Unpackage Liquid Biofuel",
+        "UnpackageFuel": "Unpackage Fuel",
+        "UnpackageOil": "Unpackage Oil",
+        "UnpackageOilResidue": "Unpackage Heavy Oil Residue",
+        "UnpackageWater": "Unpackage Water",
+        "QuartzCrystal": "Quartz Crystal",
+        "PureAluminumIngot": "Alternate: Pure Aluminum Ingot",
+        "AluminumCasing": "Aluminum Casing",
+        "AluminumSheet": "Alclad Aluminum Sheet",
+        "AluminaSolution": "Alumina Solution",
+        "AluminumScrap": "Aluminum Scrap",
+        "PackagedAlumina": "Packaged Alumina Solution",
+        "IngotAluminum": "Aluminum Ingot",
+        "Silica": "Silica",
+        "CrystalOscillator": "Crystal Oscillator",
+        "UnpackageAlumina": "Unpackage Alumina Solution",
+        "EncasedIndustrialBeam": "Encased Industrial Beam",
+        "Motor": "Motor",
+        "Stator": "Stator",
+        "SpaceElevatorPart_3": "Automated Wiring",
+        "AILimiter": "AI Limiter",
+        "Computer": "Computer",
+        "ModularFrameHeavy": "Heavy Modular Frame",
+        "SpaceElevatorPart_4": "Modular Engine",
+        "SpaceElevatorPart_5": "Adaptive Control Unit",
+        "ModularFrame": "Modular Frame",
+        "Rotor": "Rotor",
+        "CopperSheet": "Copper Sheet",
+        "SpaceElevatorPart_1": "Smart Plating",
+        "PlutoniumCell": "Encased Plutonium Cell",
+        "PressureConversionCube": "Pressure Conversion Cube",
+        "NitricAcid": "Nitric Acid",
+        "NonFissileUranium": "Non-Fissile Uranium",
+        "CopperDust": "Copper Powder",
+        "Plutonium": "Plutonium Pellet",
+        "PlutoniumFuelRod": "Plutonium Fuel Rod",
+        "PackagedNitricAcid": "Packaged Nitric Acid",
+        "SpaceElevatorPart_9": "Nuclear Pasta",
+        "UnpackageNitricAcid": "Unpackage Nitric Acid",
+        "UraniumCell": "Encased Uranium Cell",
+        "CoolingSystem": "Cooling System",
+        "Battery": "Battery",
+        "ComputerSuper": "Supercomputer",
+        "RadioControlUnit": "Radio Control Unit",
+        "SulfuricAcid": "Sulfuric Acid",
+        "PackagedSulfuricAcid": "Packaged Sulfuric Acid",
+        "SpaceElevatorPart_7": "Assembly Director System",
+        "HighSpeedConnector": "High-Speed Connector",
+        "UnpackageSulfuricAcid": "Unpackage Sulfuric Acid",
+        "ElectromagneticControlRod": "Electromagnetic Control Rod",
+        "NuclearFuelRod": "Uranium Fuel Rod",
+        "SpaceElevatorPart_6": "Magnetic Field Generator",
+        "HeatSink": "Heat Sink",
+        "FusedModularFrame": "Fused Modular Frame",
+        "GasTank": "Empty Fluid Tank",
+        "PackagedNitrogen": "Packaged Nitrogen Gas",
+        "UnpackageNitrogen": "Unpackage Nitrogen Gas",
+        "IngotCaterium": "Caterium Ingot",
+        "MotorTurbo": "Turbo Motor",
+        "SpaceElevatorPart_8": "Thermal Propulsion Rocket",
+        "Ficsonium": "Ficsonium",
+        "FicsoniumFuelRod": "Ficsonium Fuel Rod",
+        "SingularityCell": "Singularity Cell",
+        "SpaceElevatorPart_11": "Ballistic Warp Drive",
+        "FilterHazmat": "Iodine-Infused Filter",
+        "Quickwire": "Quickwire",
+        "Biofuel": "Solid Biofuel",
+        "Protein_Hog": "Hog Protein",
+        "Protein_Spitter": "Spitter Protein",
+        "Biomass_Mycelia": "Biomass (Mycelia)",
+        "PowerCrystalShard_1": "Power Shard (1)",
+        "Gunpowder": "Black Powder",
+        "AlienPowerFuel": "Alien Power Matrix",
+        "Protein_Stinger": "Stinger Protein",
+        "Protein_Crab": "Hatcher Protein",
+        "AlienDNACapsule": "Alien DNA Capsule",
+        "Biomass_AlienProtein": "Biomass (Alien Protein)",
+        "SpikedRebar": "Iron Rebar",
+        "CartridgeSmart": "Homing Rifle Ammo",
+        "Rebar_Stunshot": "Stun Rebar",
+        "FilterGasMask": "Gas Filter",
+        "NobeliskGas": "Gas Nobelisk",
+        "Fabric": "Fabric",
+        "SyntheticPowerShard": "Synthetic Power Shard",
+        "PowerCrystalShard_3": "Power Shard (5)",
+        "PowerCrystalShard_2": "Power Shard (2)",
+        "NobeliskShockwave": "Pulse Nobelisk",
+        "Rebar_Spreadshot": "Shatter Rebar",
+        "CartridgeChaos_Packaged": "Turbo Rifle Ammo",
+        "CartridgeChaos": "Turbo Rifle Ammo",
+        "NobeliskNuke": "Nuke Nobelisk",
+        "Cartridge": "Rifle Ammo",
+        "Rebar_Explosive": "Explosive Rebar",
+        "NobeliskCluster": "Cluster Nobelisk",
+        "Nobelisk": "Nobelisk",
+        "GunpowderMK2": "Smokeless Powder",
+        "Snowball": "Snowball",
+        "XmasStar": "FICSMAS Wonder Star",
+        "XmasWreath": "FICSMAS Decoration",
+        "XmasBallCluster": "FICSMAS Ornament Bundle",
+        "XmasBall1": "Red FICSMAS Ornament",
+        "XmasBall2": "Blue FICSMAS Ornament",
+        "XmasBall3": "Copper FICSMAS Ornament",
+        "XmasBall4": "Iron FICSMAS Ornament",
+        "Snow": "Actual Snow",
+        "XmasBranch": "FICSMAS Tree Branch",
+        "XmasBow": "FICSMAS Bow",
+        "CandyCane": "Candy Cane",
+        "SpaceElevator": "Space Elevator",
+        "Biomass_Leaves": "Biomass (Leaves)",
+        "Biomass_Wood": "Biomass (Wood)",
+        "IronPlateReinforced": "Reinforced Iron Plate",
+        "Concrete": "Concrete",
+        "Screw": "Screw",
+        "Cable": "Cable",
+        "Wire": "Wire",
+        "IngotCopper": "Copper Ingot",
+        "Fireworks_01": "Sweet Fireworks",
+        "Fireworks_02": "Fancy Fireworks",
+        "Fireworks_03": "Sparkly Fireworks"
+    },
+    "recipes": [
+        {
+            "id": "IronPlate",
+            "displayName": "Iron Plate",
+            "ingredients": [
+                {
+                    "IronIngot": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "IronPlate": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "IronRod",
+            "displayName": "Iron Rod",
+            "ingredients": [
+                {
+                    "IronIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "IronRod": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "IngotIron",
+            "displayName": "Iron Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 1
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "IronIngot": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Alternate_RocketFuel_Nitro",
+            "displayName": "Alternate: Nitro Rocket Fuel",
+            "ingredients": [
+                {
+                    "LiquidFuel": 4000
+                },
+                {
+                    "NitrogenGas": 3000
+                },
+                {
+                    "Sulfur": 4
+                },
+                {
+                    "Coal": 2
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "RocketFuel": 6000
+            },
+            "perMin": 150000
+        },
+        {
+            "id": "RocketFuel",
+            "displayName": "Rocket Fuel",
+            "ingredients": [
+                {
+                    "LiquidTurboFuel": 6000
+                },
+                {
+                    "NitricAcid": 1000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "RocketFuel": 10000
+            },
+            "perMin": 100000
+        },
+        {
+            "id": "PackagedRocketFuel",
+            "displayName": "Packaged Rocket Fuel",
+            "ingredients": [
+                {
+                    "RocketFuel": 2000
+                },
+                {
+                    "GasTank": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedRocketFuel": 1
+            },
+            "perMin": 60
+        },
+        {
+            "id": "UnpackageRocketFuel",
+            "displayName": "Unpackage Rocket Fuel",
+            "ingredients": [
+                {
+                    "PackagedRocketFuel": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "RocketFuel": 2000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "Alternate_IonizedFuel_Dark",
+            "displayName": "Alternate: Dark-Ion Fuel",
+            "ingredients": [
+                {
+                    "PackagedRocketFuel": 12
+                },
+                {
+                    "DarkMatter": 4
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "IonizedFuel": 10000
+            },
+            "perMin": 200000
+        },
+        {
+            "id": "DarkEnergy",
+            "displayName": "Dark Matter Residue",
+            "ingredients": [
+                {
+                    "SAMIngot": 5
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "DarkEnergy": 10000
+            },
+            "perMin": 100000
+        },
+        {
+            "id": "QuantumEnergy",
+            "displayName": "Excited Photonic Matter",
+            "ingredients": [],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "QuantumEnergy": 10000
+            },
+            "perMin": 200000
+        },
+        {
+            "id": "DarkMatter",
+            "displayName": "Dark Matter Crystal",
+            "ingredients": [
+                {
+                    "Diamond": 1
+                },
+                {
+                    "DarkEnergy": 5000
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "DarkMatter": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "SuperpositionOscillator",
+            "displayName": "Superposition Oscillator",
+            "ingredients": [
+                {
+                    "DarkMatter": 6
+                },
+                {
+                    "CrystalOscillator": 1
+                },
+                {
+                    "AluminumPlate": 9
+                },
+                {
+                    "QuantumEnergy": 25000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "QuantumOscillator": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "TemporalProcessor",
+            "displayName": "Neural-Quantum Processor",
+            "ingredients": [
+                {
+                    "TimeCrystal": 5
+                },
+                {
+                    "ComputerSuper": 1
+                },
+                {
+                    "FicsiteMesh": 15
+                },
+                {
+                    "QuantumEnergy": 25000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "TemporalProcessor": 1
+            },
+            "perMin": 3
+        },
+        {
+            "id": "SpaceElevatorPart_12",
+            "displayName": "AI Expansion Server",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_6": 1
+                },
+                {
+                    "TemporalProcessor": 1
+                },
+                {
+                    "QuantumOscillator": 1
+                },
+                {
+                    "QuantumEnergy": 25000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "SpaceElevatorPart_12": 1
+            },
+            "perMin": 4
+        },
+        {
+            "id": "IonizedFuel",
+            "displayName": "Ionized Fuel",
+            "ingredients": [
+                {
+                    "RocketFuel": 16000
+                },
+                {
+                    "CrystalShard": 1
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "IonizedFuel": 16000
+            },
+            "perMin": 40000
+        },
+        {
+            "id": "PackagedIonizedFuel",
+            "displayName": "Packaged Ionized Fuel",
+            "ingredients": [
+                {
+                    "IonizedFuel": 4000
+                },
+                {
+                    "GasTank": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedIonizedFuel": 2
+            },
+            "perMin": 40
+        },
+        {
+            "id": "UnpackageIonizedFuel",
+            "displayName": "Unpackage Ionized Fuel",
+            "ingredients": [
+                {
+                    "PackagedIonizedFuel": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "IonizedFuel": 4000
+            },
+            "perMin": 80000
+        },
+        {
+            "id": "Alternate_Diamond_Turbo",
+            "displayName": "Alternate: Turbo Diamonds",
+            "ingredients": [
+                {
+                    "Coal": 30
+                },
+                {
+                    "TurboFuel": 2
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Diamond": 3
+            },
+            "perMin": 60
+        },
+        {
+            "id": "SAMFluctuator",
+            "displayName": "SAM Fluctuator",
+            "ingredients": [
+                {
+                    "SAMIngot": 6
+                },
+                {
+                    "Wire": 5
+                },
+                {
+                    "SteelPipe": 3
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "SAMFluctuator": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "FicsiteMesh",
+            "displayName": "Ficsite Trigon",
+            "ingredients": [
+                {
+                    "FicsiteIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "FicsiteMesh": 3
+            },
+            "perMin": 30
+        },
+        {
+            "id": "FicsiteIngot_Iron",
+            "displayName": "Ficsite Ingot (Iron)",
+            "ingredients": [
+                {
+                    "SAMIngot": 4
+                },
+                {
+                    "IronIngot": 24
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "FicsiteIngot": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "TimeCrystal",
+            "displayName": "Time Crystal",
+            "ingredients": [
+                {
+                    "Diamond": 2
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "TimeCrystal": 1
+            },
+            "perMin": 6
+        },
+        {
+            "id": "Diamond",
+            "displayName": "Diamonds",
+            "ingredients": [
+                {
+                    "Coal": 20
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Diamond": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "IngotSAM",
+            "displayName": "Reanimated SAM",
+            "ingredients": [
+                {
+                    "SAM": 4
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "SAMIngot": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "SpaceElevatorPart_10",
+            "displayName": "Biochemical Sculptor",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_7": 1
+                },
+                {
+                    "FicsiteMesh": 80
+                },
+                {
+                    "Water": 20000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "SpaceElevatorPart_10": 4
+            },
+            "perMin": 2
+        },
+        {
+            "id": "FicsiteIngot_AL",
+            "displayName": "Ficsite Ingot (Aluminum)",
+            "ingredients": [
+                {
+                    "SAMIngot": 2
+                },
+                {
+                    "AluminumIngot": 4
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "FicsiteIngot": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "FicsiteIngot_CAT",
+            "displayName": "Ficsite Ingot (Caterium)",
+            "ingredients": [
+                {
+                    "SAMIngot": 3
+                },
+                {
+                    "GoldIngot": 4
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "FicsiteIngot": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "Bauxite_Caterium",
+            "displayName": "Bauxite (Caterium)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreGold": 15
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreBauxite": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Bauxite_Copper",
+            "displayName": "Bauxite (Copper)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreCopper": 18
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreBauxite": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Caterium_Copper",
+            "displayName": "Caterium Ore (Copper)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreCopper": 15
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreGold": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Caterium_Quartz",
+            "displayName": "Caterium Ore (Quartz)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "RawQuartz": 12
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreGold": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Coal_Iron",
+            "displayName": "Coal (Iron)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreIron": 18
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Coal": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Coal_Limestone",
+            "displayName": "Coal (Limestone)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Stone": 36
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Coal": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Copper_Quartz",
+            "displayName": "Copper Ore (Quartz)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "RawQuartz": 10
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreCopper": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Copper_Sulfur",
+            "displayName": "Copper Ore (Sulfur)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Sulfur": 12
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreCopper": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Iron_Limestone",
+            "displayName": "Iron Ore (Limestone)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Stone": 24
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreIron": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Limestone_Sulfur",
+            "displayName": "Limestone (Sulfur)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Sulfur": 2
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Stone": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Nitrogen_Bauxite",
+            "displayName": "Nitrogen Gas (Bauxite)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreBauxite": 10
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "NitrogenGas": 12000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "Nitrogen_Caterium",
+            "displayName": "Nitrogen Gas (Caterium)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreGold": 12
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "NitrogenGas": 12000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "Quartz_Bauxite",
+            "displayName": "Raw Quartz (Bauxite)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreBauxite": 10
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "RawQuartz": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Quartz_Coal",
+            "displayName": "Raw Quartz (Coal)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Coal": 24
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "RawQuartz": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Sulfur_Coal",
+            "displayName": "Sulfur (Coal)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "Coal": 20
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Sulfur": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Sulfur_Iron",
+            "displayName": "Sulfur (Iron)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreIron": 30
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Sulfur": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Uranium_Bauxite",
+            "displayName": "Uranium Ore (Bauxite)",
+            "ingredients": [
+                {
+                    "SAMIngot": 1
+                },
+                {
+                    "OreBauxite": 48
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "OreUranium": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Alternate_Turbofuel",
+            "displayName": "Turbofuel",
+            "ingredients": [
+                {
+                    "LiquidFuel": 6000
+                },
+                {
+                    "CompactedCoal": 4
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "LiquidTurboFuel": 5000
+            },
+            "perMin": 18750
+        },
+        {
+            "id": "PackagedTurboFuel",
+            "displayName": "Packaged Turbofuel",
+            "ingredients": [
+                {
+                    "LiquidTurboFuel": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "TurboFuel": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "UnpackageTurboFuel",
+            "displayName": "Unpackage Turbofuel",
+            "ingredients": [
+                {
+                    "TurboFuel": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "LiquidTurboFuel": 2000
+            },
+            "perMin": 20000
+        },
+        {
+            "id": "Alternate_Coal_1",
+            "displayName": "Alternate: Charcoal",
+            "ingredients": [
+                {
+                    "Wood": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "Coal": 10
+            },
+            "perMin": 150
+        },
+        {
+            "id": "Alternate_Coal_2",
+            "displayName": "Alternate: Biocoal",
+            "ingredients": [
+                {
+                    "GenericBiomass": 5
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "Coal": 6
+            },
+            "perMin": 45
+        },
+        {
+            "id": "Alternate_EnrichedCoal",
+            "displayName": "Alternate: Compacted Coal",
+            "ingredients": [
+                {
+                    "Coal": 5
+                },
+                {
+                    "Sulfur": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "CompactedCoal": 5
+            },
+            "perMin": 25
+        },
+        {
+            "id": "CircuitBoard",
+            "displayName": "Circuit Board",
+            "ingredients": [
+                {
+                    "CopperSheet": 2
+                },
+                {
+                    "Plastic": 4
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CircuitBoard": 1
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "LiquidFuel",
+            "displayName": "Fuel",
+            "ingredients": [
+                {
+                    "LiquidOil": 6000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "LiquidFuel": 4000
+            },
+            "perMin": 40000
+        },
+        {
+            "id": "PetroleumCoke",
+            "displayName": "Petroleum Coke",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 4000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "PetroleumCoke": 12
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Plastic",
+            "displayName": "Plastic",
+            "ingredients": [
+                {
+                    "LiquidOil": 3000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Plastic": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Rubber",
+            "displayName": "Rubber",
+            "ingredients": [
+                {
+                    "LiquidOil": 3000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Rubber": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "ResidualFuel",
+            "displayName": "Residual Fuel",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 6000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "LiquidFuel": 4000
+            },
+            "perMin": 40000
+        },
+        {
+            "id": "ResidualPlastic",
+            "displayName": "Residual Plastic",
+            "ingredients": [
+                {
+                    "PolymerResin": 6
+                },
+                {
+                    "Water": 2000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Plastic": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "ResidualRubber",
+            "displayName": "Residual Rubber",
+            "ingredients": [
+                {
+                    "PolymerResin": 4
+                },
+                {
+                    "Water": 4000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Rubber": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Alternate_Diamond_Pink",
+            "displayName": "Alternate: Pink Diamonds",
+            "ingredients": [
+                {
+                    "Coal": 8
+                },
+                {
+                    "QuartzCrystal": 3
+                }
+            ],
+            "producedIn": [
+                "build_converter"
+            ],
+            "product": {
+                "Diamond": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "Alternate_Diamond_Petroleum",
+            "displayName": "Alternate: Petroleum Diamonds",
+            "ingredients": [
+                {
+                    "PetroleumCoke": 24
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Diamond": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Alternate_Diamond_OilBased",
+            "displayName": "Alternate: Oil-Based Diamonds",
+            "ingredients": [
+                {
+                    "LiquidOil": 10000
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Diamond": 2
+            },
+            "perMin": 40
+        },
+        {
+            "id": "Alternate_Diamond_Cloudy",
+            "displayName": "Alternate: Cloudy Diamonds",
+            "ingredients": [
+                {
+                    "Coal": 12
+                },
+                {
+                    "Stone": 24
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Diamond": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Alternate_DarkMatter_Trap",
+            "displayName": "Alternate: Dark Matter Trap",
+            "ingredients": [
+                {
+                    "TimeCrystal": 1
+                },
+                {
+                    "DarkEnergy": 5000
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "DarkMatter": 2
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_DarkMatter_Crystallization",
+            "displayName": "Alternate: Dark Matter Crystallization",
+            "ingredients": [
+                {
+                    "DarkEnergy": 10000
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "DarkMatter": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Alternate_WetConcrete",
+            "displayName": "Alternate: Wet Concrete",
+            "ingredients": [
+                {
+                    "Stone": 6
+                },
+                {
+                    "Water": 5000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Cement": 4
+            },
+            "perMin": 80
+        },
+        {
+            "id": "Alternate_TurboHeavyFuel",
+            "displayName": "Alternate: Turbo Heavy Fuel",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 5000
+                },
+                {
+                    "CompactedCoal": 4
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "LiquidTurboFuel": 4000
+            },
+            "perMin": 30000
+        },
+        {
+            "id": "Alternate_SteelRod",
+            "displayName": "Alternate: Steel Rod",
+            "ingredients": [
+                {
+                    "SteelIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "IronRod": 4
+            },
+            "perMin": 48
+        },
+        {
+            "id": "SteelBeam",
+            "displayName": "Steel Beam",
+            "ingredients": [
+                {
+                    "SteelIngot": 4
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "SteelPlate": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "SteelPipe",
+            "displayName": "Steel Pipe",
+            "ingredients": [
+                {
+                    "SteelIngot": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "SteelPipe": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "IngotSteel",
+            "displayName": "Steel Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 3
+                },
+                {
+                    "Coal": 3
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "SteelIngot": 3
+            },
+            "perMin": 45
+        },
+        {
+            "id": "SpaceElevatorPart_2",
+            "displayName": "Versatile Framework",
+            "ingredients": [
+                {
+                    "ModularFrame": 1
+                },
+                {
+                    "SteelPlate": 12
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_2": 2
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_SteelCanister",
+            "displayName": "Alternate: Steel Canister",
+            "ingredients": [
+                {
+                    "SteelIngot": 4
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "FluidCanister": 4
+            },
+            "perMin": 40
+        },
+        {
+            "id": "FluidCanister",
+            "displayName": "Empty Canister",
+            "ingredients": [
+                {
+                    "Plastic": 2
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "FluidCanister": 4
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Fuel",
+            "displayName": "Packaged Fuel",
+            "ingredients": [
+                {
+                    "LiquidFuel": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "Fuel": 2
+            },
+            "perMin": 40
+        },
+        {
+            "id": "LiquidBiofuel",
+            "displayName": "Liquid Biofuel",
+            "ingredients": [
+                {
+                    "Biofuel": 6
+                },
+                {
+                    "Water": 3000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "LiquidBiofuel": 4000
+            },
+            "perMin": 60000
+        },
+        {
+            "id": "PackagedBiofuel",
+            "displayName": "Packaged Liquid Biofuel",
+            "ingredients": [
+                {
+                    "LiquidBiofuel": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedBiofuel": 2
+            },
+            "perMin": 40
+        },
+        {
+            "id": "PackagedCrudeOil",
+            "displayName": "Packaged Oil",
+            "ingredients": [
+                {
+                    "LiquidOil": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedOil": 2
+            },
+            "perMin": 30
+        },
+        {
+            "id": "PackagedOilResidue",
+            "displayName": "Packaged Heavy Oil Residue",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedOilResidue": 2
+            },
+            "perMin": 30
+        },
+        {
+            "id": "PackagedWater",
+            "displayName": "Packaged Water",
+            "ingredients": [
+                {
+                    "Water": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedWater": 2
+            },
+            "perMin": 60
+        },
+        {
+            "id": "UnpackageBioFuel",
+            "displayName": "Unpackage Liquid Biofuel",
+            "ingredients": [
+                {
+                    "PackagedBiofuel": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "LiquidBiofuel": 2000
+            },
+            "perMin": 60000
+        },
+        {
+            "id": "UnpackageFuel",
+            "displayName": "Unpackage Fuel",
+            "ingredients": [
+                {
+                    "Fuel": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "LiquidFuel": 2000
+            },
+            "perMin": 60000
+        },
+        {
+            "id": "UnpackageOil",
+            "displayName": "Unpackage Oil",
+            "ingredients": [
+                {
+                    "PackagedOil": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "LiquidOil": 2000
+            },
+            "perMin": 60000
+        },
+        {
+            "id": "UnpackageOilResidue",
+            "displayName": "Unpackage Heavy Oil Residue",
+            "ingredients": [
+                {
+                    "PackagedOilResidue": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "HeavyOilResidue": 2000
+            },
+            "perMin": 20000
+        },
+        {
+            "id": "UnpackageWater",
+            "displayName": "Unpackage Water",
+            "ingredients": [
+                {
+                    "PackagedWater": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "Water": 2000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "Alternate_SteamedCopperSheet",
+            "displayName": "Alternate: Steamed Copper Sheet",
+            "ingredients": [
+                {
+                    "CopperIngot": 3
+                },
+                {
+                    "Water": 3000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "CopperSheet": 3
+            },
+            "perMin": 22.5
+        },
+        {
+            "id": "Alternate_RubberConcrete",
+            "displayName": "Alternate: Rubber Concrete",
+            "ingredients": [
+                {
+                    "Stone": 10
+                },
+                {
+                    "Rubber": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Cement": 9
+            },
+            "perMin": 90
+        },
+        {
+            "id": "Alternate_RecycledRubber",
+            "displayName": "Alternate: Recycled Rubber",
+            "ingredients": [
+                {
+                    "Plastic": 6
+                },
+                {
+                    "LiquidFuel": 6000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Rubber": 12
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_PureQuartzCrystal",
+            "displayName": "Alternate: Pure Quartz Crystal",
+            "ingredients": [
+                {
+                    "RawQuartz": 9
+                },
+                {
+                    "Water": 5000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "QuartzCrystal": 7
+            },
+            "perMin": 52.5
+        },
+        {
+            "id": "QuartzCrystal",
+            "displayName": "Quartz Crystal",
+            "ingredients": [
+                {
+                    "RawQuartz": 5
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "QuartzCrystal": 3
+            },
+            "perMin": 22.5
+        },
+        {
+            "id": "Alternate_PureIronIngot",
+            "displayName": "Alternate: Pure Iron Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 7
+                },
+                {
+                    "Water": 4000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "IronIngot": 13
+            },
+            "perMin": 65
+        },
+        {
+            "id": "Alternate_PureCopperIngot",
+            "displayName": "Alternate: Pure Copper Ingot",
+            "ingredients": [
+                {
+                    "OreCopper": 6
+                },
+                {
+                    "Water": 4000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "CopperIngot": 15
+            },
+            "perMin": 37.5
+        },
+        {
+            "id": "Alternate_PureCateriumIngot",
+            "displayName": "Alternate: Pure Caterium Ingot",
+            "ingredients": [
+                {
+                    "OreGold": 2
+                },
+                {
+                    "Water": 2000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "GoldIngot": 1
+            },
+            "perMin": 12
+        },
+        {
+            "id": "PureAluminumIngot",
+            "displayName": "Alternate: Pure Aluminum Ingot",
+            "ingredients": [
+                {
+                    "AluminumScrap": 2
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1"
+            ],
+            "product": {
+                "AluminumIngot": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "AluminumCasing",
+            "displayName": "Aluminum Casing",
+            "ingredients": [
+                {
+                    "AluminumIngot": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AluminumCasing": 2
+            },
+            "perMin": 60
+        },
+        {
+            "id": "AluminumSheet",
+            "displayName": "Alclad Aluminum Sheet",
+            "ingredients": [
+                {
+                    "AluminumIngot": 3
+                },
+                {
+                    "CopperIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AluminumPlate": 3
+            },
+            "perMin": 30
+        },
+        {
+            "id": "AluminaSolution",
+            "displayName": "Alumina Solution",
+            "ingredients": [
+                {
+                    "OreBauxite": 12
+                },
+                {
+                    "Water": 18000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "AluminaSolution": 12000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "AluminumScrap",
+            "displayName": "Aluminum Scrap",
+            "ingredients": [
+                {
+                    "AluminaSolution": 4000
+                },
+                {
+                    "Coal": 2
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "AluminumScrap": 6
+            },
+            "perMin": 360
+        },
+        {
+            "id": "PackagedAlumina",
+            "displayName": "Packaged Alumina Solution",
+            "ingredients": [
+                {
+                    "AluminaSolution": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedAlumina": 2
+            },
+            "perMin": 120
+        },
+        {
+            "id": "IngotAluminum",
+            "displayName": "Aluminum Ingot",
+            "ingredients": [
+                {
+                    "AluminumScrap": 6
+                },
+                {
+                    "Silica": 5
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "AluminumIngot": 4
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Silica",
+            "displayName": "Silica",
+            "ingredients": [
+                {
+                    "RawQuartz": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Silica": 5
+            },
+            "perMin": 37.5
+        },
+        {
+            "id": "CrystalOscillator",
+            "displayName": "Crystal Oscillator",
+            "ingredients": [
+                {
+                    "QuartzCrystal": 36
+                },
+                {
+                    "Cable": 28
+                },
+                {
+                    "IronPlateReinforced": 5
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CrystalOscillator": 2
+            },
+            "perMin": 1
+        },
+        {
+            "id": "UnpackageAlumina",
+            "displayName": "Unpackage Alumina Solution",
+            "ingredients": [
+                {
+                    "PackagedAlumina": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "AluminaSolution": 2000
+            },
+            "perMin": 120000
+        },
+        {
+            "id": "Alternate_PolymerResin",
+            "displayName": "Alternate: Polymer Resin",
+            "ingredients": [
+                {
+                    "LiquidOil": 6000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "PolymerResin": 13
+            },
+            "perMin": 130
+        },
+        {
+            "id": "Alternate_PlasticSmartPlating",
+            "displayName": "Alternate: Plastic Smart Plating",
+            "ingredients": [
+                {
+                    "IronPlateReinforced": 1
+                },
+                {
+                    "Rotor": 1
+                },
+                {
+                    "Plastic": 3
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_1": 2
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_HighSpeedWiring",
+            "displayName": "Alternate: Automated Speed Wiring",
+            "ingredients": [
+                {
+                    "Stator": 2
+                },
+                {
+                    "Wire": 40
+                },
+                {
+                    "HighSpeedConnector": 1
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_3": 4
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "EncasedIndustrialBeam",
+            "displayName": "Encased Industrial Beam",
+            "ingredients": [
+                {
+                    "SteelPlate": 3
+                },
+                {
+                    "Cement": 6
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "SteelPlateReinforced": 1
+            },
+            "perMin": 6
+        },
+        {
+            "id": "Motor",
+            "displayName": "Motor",
+            "ingredients": [
+                {
+                    "Rotor": 2
+                },
+                {
+                    "Stator": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Motor": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Stator",
+            "displayName": "Stator",
+            "ingredients": [
+                {
+                    "SteelPipe": 3
+                },
+                {
+                    "Wire": 8
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Stator": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "SpaceElevatorPart_3",
+            "displayName": "Automated Wiring",
+            "ingredients": [
+                {
+                    "Stator": 1
+                },
+                {
+                    "Cable": 20
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_3": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "AILimiter",
+            "displayName": "AI Limiter",
+            "ingredients": [
+                {
+                    "CopperSheet": 5
+                },
+                {
+                    "HighSpeedWire": 20
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CircuitBoardHighSpeed": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_HeavyOilResidue",
+            "displayName": "Alternate: Heavy Oil Residue",
+            "ingredients": [
+                {
+                    "LiquidOil": 3000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "HeavyOilResidue": 4000
+            },
+            "perMin": 40000
+        },
+        {
+            "id": "Alternate_HeavyFlexibleFrame",
+            "displayName": "Alternate: Heavy Flexible Frame",
+            "ingredients": [
+                {
+                    "ModularFrame": 5
+                },
+                {
+                    "SteelPlateReinforced": 3
+                },
+                {
+                    "Rubber": 20
+                },
+                {
+                    "IronScrew": 104
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "ModularFrameHeavy": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "Computer",
+            "displayName": "Computer",
+            "ingredients": [
+                {
+                    "CircuitBoard": 4
+                },
+                {
+                    "Cable": 8
+                },
+                {
+                    "Plastic": 16
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Computer": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "ModularFrameHeavy",
+            "displayName": "Heavy Modular Frame",
+            "ingredients": [
+                {
+                    "ModularFrame": 5
+                },
+                {
+                    "SteelPipe": 20
+                },
+                {
+                    "SteelPlateReinforced": 5
+                },
+                {
+                    "IronScrew": 120
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "ModularFrameHeavy": 1
+            },
+            "perMin": 2
+        },
+        {
+            "id": "SpaceElevatorPart_4",
+            "displayName": "Modular Engine",
+            "ingredients": [
+                {
+                    "Motor": 2
+                },
+                {
+                    "Rubber": 15
+                },
+                {
+                    "SpaceElevatorPart_1": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_4": 1
+            },
+            "perMin": 1
+        },
+        {
+            "id": "SpaceElevatorPart_5",
+            "displayName": "Adaptive Control Unit",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_3": 5
+                },
+                {
+                    "CircuitBoard": 5
+                },
+                {
+                    "ModularFrameHeavy": 1
+                },
+                {
+                    "Computer": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_5": 1
+            },
+            "perMin": 1
+        },
+        {
+            "id": "Alternate_FusedWire",
+            "displayName": "Alternate: Fused Wire",
+            "ingredients": [
+                {
+                    "CopperIngot": 4
+                },
+                {
+                    "GoldIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Wire": 30
+            },
+            "perMin": 90
+        },
+        {
+            "id": "Alternate_FlexibleFramework",
+            "displayName": "Alternate: Flexible Framework",
+            "ingredients": [
+                {
+                    "ModularFrame": 1
+                },
+                {
+                    "SteelPlate": 6
+                },
+                {
+                    "Rubber": 8
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_2": 2
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "Alternate_ElectrodeCircuitBoard",
+            "displayName": "Alternate: Electrode Circuit Board",
+            "ingredients": [
+                {
+                    "Rubber": 4
+                },
+                {
+                    "PetroleumCoke": 8
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "CircuitBoard": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_ElectroAluminumScrap",
+            "displayName": "Alternate: Electrode Aluminum Scrap",
+            "ingredients": [
+                {
+                    "AluminaSolution": 12000
+                },
+                {
+                    "PetroleumCoke": 4
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "AluminumScrap": 20
+            },
+            "perMin": 300
+        },
+        {
+            "id": "Alternate_DilutedPackagedFuel",
+            "displayName": "Alternate: Diluted Packaged Fuel",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 1000
+                },
+                {
+                    "PackagedWater": 2
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Fuel": 2
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_CopperRotor",
+            "displayName": "Alternate: Copper Rotor",
+            "ingredients": [
+                {
+                    "CopperSheet": 6
+                },
+                {
+                    "IronScrew": 52
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Rotor": 3
+            },
+            "perMin": 11.25
+        },
+        {
+            "id": "ModularFrame",
+            "displayName": "Modular Frame",
+            "ingredients": [
+                {
+                    "IronPlateReinforced": 3
+                },
+                {
+                    "IronRod": 12
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "ModularFrame": 2
+            },
+            "perMin": 2
+        },
+        {
+            "id": "Rotor",
+            "displayName": "Rotor",
+            "ingredients": [
+                {
+                    "IronRod": 5
+                },
+                {
+                    "IronScrew": 25
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Rotor": 1
+            },
+            "perMin": 4
+        },
+        {
+            "id": "CopperSheet",
+            "displayName": "Copper Sheet",
+            "ingredients": [
+                {
+                    "CopperIngot": 2
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CopperSheet": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "SpaceElevatorPart_1",
+            "displayName": "Smart Plating",
+            "ingredients": [
+                {
+                    "IronPlateReinforced": 1
+                },
+                {
+                    "Rotor": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_1": 1
+            },
+            "perMin": 2
+        },
+        {
+            "id": "Alternate_CopperAlloyIngot",
+            "displayName": "Alternate: Copper Alloy Ingot",
+            "ingredients": [
+                {
+                    "OreCopper": 5
+                },
+                {
+                    "OreIron": 5
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "CopperIngot": 10
+            },
+            "perMin": 100
+        },
+        {
+            "id": "Alternate_CokeSteelIngot",
+            "displayName": "Alternate: Coke Steel Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 15
+                },
+                {
+                    "PetroleumCoke": 15
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "SteelIngot": 20
+            },
+            "perMin": 100
+        },
+        {
+            "id": "Alternate_CoatedIronPlate",
+            "displayName": "Alternate: Coated Iron Plate",
+            "ingredients": [
+                {
+                    "IronIngot": 5
+                },
+                {
+                    "Plastic": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "IronPlate": 10
+            },
+            "perMin": 75
+        },
+        {
+            "id": "Alternate_CoatedIronCanister",
+            "displayName": "Alternate: Coated Iron Canister",
+            "ingredients": [
+                {
+                    "IronPlate": 2
+                },
+                {
+                    "CopperSheet": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "FluidCanister": 4
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_CoatedCable",
+            "displayName": "Alternate: Coated Cable",
+            "ingredients": [
+                {
+                    "Wire": 5
+                },
+                {
+                    "HeavyOilResidue": 2000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Cable": 9
+            },
+            "perMin": 67.5
+        },
+        {
+            "id": "Alternate_BoltedFrame",
+            "displayName": "Alternate: Bolted Frame",
+            "ingredients": [
+                {
+                    "IronPlateReinforced": 3
+                },
+                {
+                    "IronScrew": 56
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "ModularFrame": 2
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_AdheredIronPlate",
+            "displayName": "Alternate: Adhered Iron Plate",
+            "ingredients": [
+                {
+                    "IronPlate": 3
+                },
+                {
+                    "Rubber": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "IronPlateReinforced": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "Alternate_TurboPressureMotor",
+            "displayName": "Alternate: Turbo Pressure Motor",
+            "ingredients": [
+                {
+                    "Motor": 4
+                },
+                {
+                    "PressureConversionCube": 1
+                },
+                {
+                    "PackagedNitrogenGas": 24
+                },
+                {
+                    "Stator": 8
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "MotorLightweight": 2
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "PlutoniumCell",
+            "displayName": "Encased Plutonium Cell",
+            "ingredients": [
+                {
+                    "PlutoniumPellet": 2
+                },
+                {
+                    "Cement": 4
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "PlutoniumCell": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "PressureConversionCube",
+            "displayName": "Pressure Conversion Cube",
+            "ingredients": [
+                {
+                    "ModularFrameFused": 1
+                },
+                {
+                    "ModularFrameLightweight": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "PressureConversionCube": 1
+            },
+            "perMin": 1
+        },
+        {
+            "id": "NitricAcid",
+            "displayName": "Nitric Acid",
+            "ingredients": [
+                {
+                    "NitrogenGas": 12000
+                },
+                {
+                    "Water": 3000
+                },
+                {
+                    "IronPlate": 1
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "NitricAcid": 3000
+            },
+            "perMin": 30000
+        },
+        {
+            "id": "NonFissileUranium",
+            "displayName": "Non-Fissile Uranium",
+            "ingredients": [
+                {
+                    "NuclearWaste": 15
+                },
+                {
+                    "Silica": 10
+                },
+                {
+                    "NitricAcid": 6000
+                },
+                {
+                    "SulfuricAcid": 6000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "NonFissibleUranium": 20
+            },
+            "perMin": 50
+        },
+        {
+            "id": "CopperDust",
+            "displayName": "Copper Powder",
+            "ingredients": [
+                {
+                    "CopperIngot": 30
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CopperDust": 5
+            },
+            "perMin": 50
+        },
+        {
+            "id": "Plutonium",
+            "displayName": "Plutonium Pellet",
+            "ingredients": [
+                {
+                    "NonFissibleUranium": 100
+                },
+                {
+                    "NuclearWaste": 25
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "PlutoniumPellet": 30
+            },
+            "perMin": 30
+        },
+        {
+            "id": "PlutoniumFuelRod",
+            "displayName": "Plutonium Fuel Rod",
+            "ingredients": [
+                {
+                    "PlutoniumCell": 30
+                },
+                {
+                    "SteelPlate": 18
+                },
+                {
+                    "ElectromagneticControlRod": 6
+                },
+                {
+                    "AluminumPlateReinforced": 10
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "PlutoniumFuelRod": 1
+            },
+            "perMin": 0.25
+        },
+        {
+            "id": "PackagedNitricAcid",
+            "displayName": "Packaged Nitric Acid",
+            "ingredients": [
+                {
+                    "NitricAcid": 1000
+                },
+                {
+                    "GasTank": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedNitricAcid": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "SpaceElevatorPart_9",
+            "displayName": "Nuclear Pasta",
+            "ingredients": [
+                {
+                    "CopperDust": 200
+                },
+                {
+                    "PressureConversionCube": 1
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "SpaceElevatorPart_9": 1
+            },
+            "perMin": 0.5
+        },
+        {
+            "id": "UnpackageNitricAcid",
+            "displayName": "Unpackage Nitric Acid",
+            "ingredients": [
+                {
+                    "PackagedNitricAcid": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "NitricAcid": 1000
+            },
+            "perMin": 20000
+        },
+        {
+            "id": "Alternate_TurboBlendFuel",
+            "displayName": "Alternate: Turbo Blend Fuel",
+            "ingredients": [
+                {
+                    "LiquidFuel": 2000
+                },
+                {
+                    "HeavyOilResidue": 4000
+                },
+                {
+                    "Sulfur": 3
+                },
+                {
+                    "PetroleumCoke": 3
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "LiquidTurboFuel": 6000
+            },
+            "perMin": 45000
+        },
+        {
+            "id": "UraniumCell",
+            "displayName": "Encased Uranium Cell",
+            "ingredients": [
+                {
+                    "OreUranium": 10
+                },
+                {
+                    "Cement": 3
+                },
+                {
+                    "SulfuricAcid": 8000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "UraniumCell": 5
+            },
+            "perMin": 25
+        },
+        {
+            "id": "CoolingSystem",
+            "displayName": "Cooling System",
+            "ingredients": [
+                {
+                    "AluminumPlateReinforced": 2
+                },
+                {
+                    "Rubber": 2
+                },
+                {
+                    "Water": 5000
+                },
+                {
+                    "NitrogenGas": 25000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "CoolingSystem": 1
+            },
+            "perMin": 6
+        },
+        {
+            "id": "Battery",
+            "displayName": "Battery",
+            "ingredients": [
+                {
+                    "SulfuricAcid": 2500
+                },
+                {
+                    "AluminaSolution": 2000
+                },
+                {
+                    "AluminumCasing": 1
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "Battery": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "ComputerSuper",
+            "displayName": "Supercomputer",
+            "ingredients": [
+                {
+                    "Computer": 4
+                },
+                {
+                    "CircuitBoardHighSpeed": 2
+                },
+                {
+                    "HighSpeedConnector": 3
+                },
+                {
+                    "Plastic": 28
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "ComputerSuper": 1
+            },
+            "perMin": 1.875
+        },
+        {
+            "id": "RadioControlUnit",
+            "displayName": "Radio Control Unit",
+            "ingredients": [
+                {
+                    "AluminumCasing": 32
+                },
+                {
+                    "CrystalOscillator": 1
+                },
+                {
+                    "Computer": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "ModularFrameLightweight": 2
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "SulfuricAcid",
+            "displayName": "Sulfuric Acid",
+            "ingredients": [
+                {
+                    "Sulfur": 5
+                },
+                {
+                    "Water": 5000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "SulfuricAcid": 5000
+            },
+            "perMin": 50000
+        },
+        {
+            "id": "PackagedSulfuricAcid",
+            "displayName": "Packaged Sulfuric Acid",
+            "ingredients": [
+                {
+                    "SulfuricAcid": 2000
+                },
+                {
+                    "FluidCanister": 2
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedSulfuricAcid": 2
+            },
+            "perMin": 40
+        },
+        {
+            "id": "SpaceElevatorPart_7",
+            "displayName": "Assembly Director System",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_5": 2
+                },
+                {
+                    "ComputerSuper": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_7": 1
+            },
+            "perMin": 0.75
+        },
+        {
+            "id": "HighSpeedConnector",
+            "displayName": "High-Speed Connector",
+            "ingredients": [
+                {
+                    "HighSpeedWire": 56
+                },
+                {
+                    "Cable": 10
+                },
+                {
+                    "CircuitBoard": 1
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "HighSpeedConnector": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "UnpackageSulfuricAcid",
+            "displayName": "Unpackage Sulfuric Acid",
+            "ingredients": [
+                {
+                    "PackagedSulfuricAcid": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "SulfuricAcid": 1000
+            },
+            "perMin": 60000
+        },
+        {
+            "id": "Alternate_SuperStateComputer",
+            "displayName": "Alternate: Super-State Computer",
+            "ingredients": [
+                {
+                    "Computer": 3
+                },
+                {
+                    "ElectromagneticControlRod": 1
+                },
+                {
+                    "Battery": 10
+                },
+                {
+                    "Wire": 25
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "ComputerSuper": 1
+            },
+            "perMin": 2.4
+        },
+        {
+            "id": "ElectromagneticControlRod",
+            "displayName": "Electromagnetic Control Rod",
+            "ingredients": [
+                {
+                    "Stator": 3
+                },
+                {
+                    "CircuitBoardHighSpeed": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "ElectromagneticControlRod": 2
+            },
+            "perMin": 4
+        },
+        {
+            "id": "NuclearFuelRod",
+            "displayName": "Uranium Fuel Rod",
+            "ingredients": [
+                {
+                    "UraniumCell": 50
+                },
+                {
+                    "SteelPlateReinforced": 3
+                },
+                {
+                    "ElectromagneticControlRod": 5
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "NuclearFuelRod": 1
+            },
+            "perMin": 0.4
+        },
+        {
+            "id": "SpaceElevatorPart_6",
+            "displayName": "Magnetic Field Generator",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_2": 5
+                },
+                {
+                    "ElectromagneticControlRod": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_6": 2
+            },
+            "perMin": 1
+        },
+        {
+            "id": "Alternate_SloppyAlumina",
+            "displayName": "Alternate: Sloppy Alumina",
+            "ingredients": [
+                {
+                    "OreBauxite": 10
+                },
+                {
+                    "Water": 10000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "AluminaSolution": 12000
+            },
+            "perMin": 240000
+        },
+        {
+            "id": "Alternate_RadioControlSystem",
+            "displayName": "Alternate: Radio Control System",
+            "ingredients": [
+                {
+                    "CrystalOscillator": 1
+                },
+                {
+                    "CircuitBoard": 10
+                },
+                {
+                    "AluminumCasing": 60
+                },
+                {
+                    "Rubber": 30
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "ModularFrameLightweight": 3
+            },
+            "perMin": 4.5
+        },
+        {
+            "id": "Alternate_PlutoniumFuelUnit",
+            "displayName": "Alternate: Plutonium Fuel Unit",
+            "ingredients": [
+                {
+                    "PlutoniumCell": 20
+                },
+                {
+                    "PressureConversionCube": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "PlutoniumFuelRod": 1
+            },
+            "perMin": 0.5
+        },
+        {
+            "id": "Alternate_OCSupercomputer",
+            "displayName": "Alternate: OC Supercomputer",
+            "ingredients": [
+                {
+                    "ModularFrameLightweight": 2
+                },
+                {
+                    "CoolingSystem": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "ComputerSuper": 1
+            },
+            "perMin": 3
+        },
+        {
+            "id": "HeatSink",
+            "displayName": "Heat Sink",
+            "ingredients": [
+                {
+                    "AluminumPlate": 5
+                },
+                {
+                    "CopperSheet": 3
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AluminumPlateReinforced": 1
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "FusedModularFrame",
+            "displayName": "Fused Modular Frame",
+            "ingredients": [
+                {
+                    "ModularFrameHeavy": 1
+                },
+                {
+                    "AluminumCasing": 50
+                },
+                {
+                    "NitrogenGas": 25000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "ModularFrameFused": 1
+            },
+            "perMin": 1.5
+        },
+        {
+            "id": "GasTank",
+            "displayName": "Empty Fluid Tank",
+            "ingredients": [
+                {
+                    "AluminumIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "GasTank": 1
+            },
+            "perMin": 60
+        },
+        {
+            "id": "PackagedNitrogen",
+            "displayName": "Packaged Nitrogen Gas",
+            "ingredients": [
+                {
+                    "NitrogenGas": 4000
+                },
+                {
+                    "GasTank": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "PackagedNitrogenGas": 1
+            },
+            "perMin": 60
+        },
+        {
+            "id": "UnpackageNitrogen",
+            "displayName": "Unpackage Nitrogen Gas",
+            "ingredients": [
+                {
+                    "PackagedNitrogenGas": 1
+                }
+            ],
+            "producedIn": [
+                "build_packager"
+            ],
+            "product": {
+                "NitrogenGas": 4000
+            },
+            "perMin": 240000
+        },
+        {
+            "id": "Alternate_InstantScrap",
+            "displayName": "Alternate: Instant Scrap",
+            "ingredients": [
+                {
+                    "OreBauxite": 15
+                },
+                {
+                    "Coal": 10
+                },
+                {
+                    "SulfuricAcid": 5000
+                },
+                {
+                    "Water": 6000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "AluminumScrap": 30
+            },
+            "perMin": 300
+        },
+        {
+            "id": "Alternate_InstantPlutoniumCell",
+            "displayName": "Alternate: Instant Plutonium Cell",
+            "ingredients": [
+                {
+                    "NonFissibleUranium": 150
+                },
+                {
+                    "AluminumCasing": 20
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "PlutoniumCell": 20
+            },
+            "perMin": 10
+        },
+        {
+            "id": "Alternate_HeatFusedFrame",
+            "displayName": "Alternate: Heat-Fused Frame",
+            "ingredients": [
+                {
+                    "ModularFrameHeavy": 1
+                },
+                {
+                    "AluminumIngot": 50
+                },
+                {
+                    "NitricAcid": 8000
+                },
+                {
+                    "LiquidFuel": 10000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "ModularFrameFused": 1
+            },
+            "perMin": 3
+        },
+        {
+            "id": "Alternate_FertileUranium",
+            "displayName": "Alternate: Fertile Uranium",
+            "ingredients": [
+                {
+                    "OreUranium": 5
+                },
+                {
+                    "NuclearWaste": 5
+                },
+                {
+                    "NitricAcid": 3000
+                },
+                {
+                    "SulfuricAcid": 5000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "NonFissibleUranium": 20
+            },
+            "perMin": 100
+        },
+        {
+            "id": "Alternate_ElectricMotor",
+            "displayName": "Alternate: Electric Motor",
+            "ingredients": [
+                {
+                    "ElectromagneticControlRod": 1
+                },
+                {
+                    "Rotor": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Motor": 2
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "Alternate_DilutedFuel",
+            "displayName": "Alternate: Diluted Fuel",
+            "ingredients": [
+                {
+                    "HeavyOilResidue": 5000
+                },
+                {
+                    "Water": 10000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "LiquidFuel": 10000
+            },
+            "perMin": 100000
+        },
+        {
+            "id": "Alternate_CoolingDevice",
+            "displayName": "Alternate: Cooling Device",
+            "ingredients": [
+                {
+                    "AluminumPlateReinforced": 4
+                },
+                {
+                    "Motor": 1
+                },
+                {
+                    "NitrogenGas": 24000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "CoolingSystem": 2
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_ClassicBattery",
+            "displayName": "Alternate: Classic Battery",
+            "ingredients": [
+                {
+                    "Sulfur": 6
+                },
+                {
+                    "AluminumPlate": 7
+                },
+                {
+                    "Plastic": 8
+                },
+                {
+                    "Wire": 12
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "Battery": 4
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Alternate_AutomatedMiner",
+            "displayName": "Alternate: Automated Miner",
+            "ingredients": [
+                {
+                    "SteelPipe": 4
+                },
+                {
+                    "IronPlate": 4
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {},
+            "perMin": 1
+        },
+        {
+            "id": "Alternate_AlcladCasing",
+            "displayName": "Alternate: Alclad Casing",
+            "ingredients": [
+                {
+                    "AluminumIngot": 20
+                },
+                {
+                    "CopperIngot": 10
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "AluminumCasing": 15
+            },
+            "perMin": 112.5
+        },
+        {
+            "id": "Alternate_SteelPipe_Molded",
+            "displayName": "Alternate: Molded Steel Pipe",
+            "ingredients": [
+                {
+                    "SteelIngot": 5
+                },
+                {
+                    "Cement": 3
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "SteelPipe": 5
+            },
+            "perMin": 50
+        },
+        {
+            "id": "Alternate_SteelPipe_Iron",
+            "displayName": "Alternate: Iron Pipe",
+            "ingredients": [
+                {
+                    "IronIngot": 20
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "SteelPipe": 5
+            },
+            "perMin": 25
+        },
+        {
+            "id": "Alternate_SteelCastedPlate",
+            "displayName": "Alternate: Steel Cast Plate",
+            "ingredients": [
+                {
+                    "IronIngot": 1
+                },
+                {
+                    "SteelIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "IronPlate": 3
+            },
+            "perMin": 45
+        },
+        {
+            "id": "Alternate_SteelBeam_Molded",
+            "displayName": "Alternate: Molded Beam",
+            "ingredients": [
+                {
+                    "SteelIngot": 24
+                },
+                {
+                    "Cement": 16
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "SteelPlate": 9
+            },
+            "perMin": 45
+        },
+        {
+            "id": "Alternate_SteelBeam_Aluminum",
+            "displayName": "Alternate: Aluminum Beam",
+            "ingredients": [
+                {
+                    "AluminumIngot": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "SteelPlate": 3
+            },
+            "perMin": 22.5
+        },
+        {
+            "id": "Alternate_AluminumRod",
+            "displayName": "Alternate: Aluminum Rod",
+            "ingredients": [
+                {
+                    "AluminumIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "IronRod": 7
+            },
+            "perMin": 52.5
+        },
+        {
+            "id": "Alternate_AILimiter_Plastic",
+            "displayName": "Alternate: Plastic AI Limiter",
+            "ingredients": [
+                {
+                    "HighSpeedWire": 30
+                },
+                {
+                    "Plastic": 7
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "CircuitBoardHighSpeed": 2
+            },
+            "perMin": 8
+        },
+        {
+            "id": "Alternate_Silica_Distilled",
+            "displayName": "Alternate: Distilled Silica",
+            "ingredients": [
+                {
+                    "DissolvedSilica": 12000
+                },
+                {
+                    "Stone": 5
+                },
+                {
+                    "Water": 10000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "Silica": 27
+            },
+            "perMin": 270
+        },
+        {
+            "id": "Alternate_Quartz_Purified",
+            "displayName": "Alternate: Quartz Purification",
+            "ingredients": [
+                {
+                    "RawQuartz": 24
+                },
+                {
+                    "NitricAcid": 2000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "QuartzCrystal": 15
+            },
+            "perMin": 75
+        },
+        {
+            "id": "Alternate_Quartz_Fused",
+            "displayName": "Alternate: Fused Quartz Crystal",
+            "ingredients": [
+                {
+                    "RawQuartz": 25
+                },
+                {
+                    "Coal": 12
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "QuartzCrystal": 18
+            },
+            "perMin": 54
+        },
+        {
+            "id": "Alternate_IronIngot_Leached",
+            "displayName": "Alternate: Leached Iron ingot",
+            "ingredients": [
+                {
+                    "OreIron": 5
+                },
+                {
+                    "SulfuricAcid": 1000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "IronIngot": 10
+            },
+            "perMin": 100
+        },
+        {
+            "id": "Alternate_IronIngot_Basic",
+            "displayName": "Alternate: Basic Iron Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 5
+                },
+                {
+                    "Stone": 8
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "IronIngot": 10
+            },
+            "perMin": 50
+        },
+        {
+            "id": "Alternate_CopperIngot_Tempered",
+            "displayName": "Alternate: Tempered Copper Ingot",
+            "ingredients": [
+                {
+                    "OreCopper": 5
+                },
+                {
+                    "PetroleumCoke": 8
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "CopperIngot": 12
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_CopperIngot_Leached",
+            "displayName": "Alternate: Leached Copper Ingot",
+            "ingredients": [
+                {
+                    "OreCopper": 9
+                },
+                {
+                    "SulfuricAcid": 5000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "CopperIngot": 22
+            },
+            "perMin": 110
+        },
+        {
+            "id": "Alternate_CateriumIngot_Tempered",
+            "displayName": "Alternate: Tempered Caterium Ingot",
+            "ingredients": [
+                {
+                    "OreGold": 6
+                },
+                {
+                    "PetroleumCoke": 2
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "GoldIngot": 3
+            },
+            "perMin": 22.5
+        },
+        {
+            "id": "Alternate_CateriumIngot_Leached",
+            "displayName": "Alternate: Leached Caterium Ingot",
+            "ingredients": [
+                {
+                    "OreGold": 9
+                },
+                {
+                    "SulfuricAcid": 5000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "GoldIngot": 6
+            },
+            "perMin": 36
+        },
+        {
+            "id": "Alternate_Wire_2",
+            "displayName": "Alternate: Caterium Wire",
+            "ingredients": [
+                {
+                    "GoldIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "Wire": 8
+            },
+            "perMin": 120
+        },
+        {
+            "id": "Alternate_Wire_1",
+            "displayName": "Alternate: Iron Wire",
+            "ingredients": [
+                {
+                    "IronIngot": 5
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "Wire": 9
+            },
+            "perMin": 22.5
+        },
+        {
+            "id": "Alternate_UraniumCell_1",
+            "displayName": "Alternate: Infused Uranium Cell",
+            "ingredients": [
+                {
+                    "OreUranium": 5
+                },
+                {
+                    "Silica": 3
+                },
+                {
+                    "Sulfur": 5
+                },
+                {
+                    "HighSpeedWire": 15
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "UraniumCell": 4
+            },
+            "perMin": 20
+        },
+        {
+            "id": "IngotCaterium",
+            "displayName": "Caterium Ingot",
+            "ingredients": [
+                {
+                    "OreGold": 3
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1",
+                "bp_workbenchcomponent"
+            ],
+            "product": {
+                "GoldIngot": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "Alternate_TurboMotor_1",
+            "displayName": "Alternate: Turbo Electric Motor",
+            "ingredients": [
+                {
+                    "Motor": 7
+                },
+                {
+                    "ModularFrameLightweight": 9
+                },
+                {
+                    "ElectromagneticControlRod": 5
+                },
+                {
+                    "Rotor": 7
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "MotorLightweight": 3
+            },
+            "perMin": 2.8125
+        },
+        {
+            "id": "MotorTurbo",
+            "displayName": "Turbo Motor",
+            "ingredients": [
+                {
+                    "CoolingSystem": 4
+                },
+                {
+                    "ModularFrameLightweight": 2
+                },
+                {
+                    "Motor": 4
+                },
+                {
+                    "Rubber": 24
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "MotorLightweight": 1
+            },
+            "perMin": 1.875
+        },
+        {
+            "id": "SpaceElevatorPart_8",
+            "displayName": "Thermal Propulsion Rocket",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_4": 5
+                },
+                {
+                    "MotorLightweight": 2
+                },
+                {
+                    "CoolingSystem": 6
+                },
+                {
+                    "ModularFrameFused": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_8": 2
+            },
+            "perMin": 1
+        },
+        {
+            "id": "Alternate_Stator",
+            "displayName": "Alternate: Quickwire Stator",
+            "ingredients": [
+                {
+                    "SteelPipe": 4
+                },
+                {
+                    "HighSpeedWire": 15
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Stator": 2
+            },
+            "perMin": 8
+        },
+        {
+            "id": "Alternate_Silica",
+            "displayName": "Alternate: Cheap Silica",
+            "ingredients": [
+                {
+                    "RawQuartz": 3
+                },
+                {
+                    "Stone": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Silica": 7
+            },
+            "perMin": 52.5
+        },
+        {
+            "id": "Alternate_Screw_2",
+            "displayName": "Alternate: Steel Screw",
+            "ingredients": [
+                {
+                    "SteelPlate": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "IronScrew": 52
+            },
+            "perMin": 260
+        },
+        {
+            "id": "Alternate_Screw",
+            "displayName": "Alternate: Cast Screw",
+            "ingredients": [
+                {
+                    "IronIngot": 5
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "IronScrew": 20
+            },
+            "perMin": 50
+        },
+        {
+            "id": "Alternate_Rotor",
+            "displayName": "Alternate: Steel Rotor",
+            "ingredients": [
+                {
+                    "SteelPipe": 2
+                },
+                {
+                    "Wire": 6
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Rotor": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_EncasedIndustrialBeam",
+            "displayName": "Alternate: Encased Industrial Pipe",
+            "ingredients": [
+                {
+                    "SteelPipe": 6
+                },
+                {
+                    "Cement": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "SteelPlateReinforced": 1
+            },
+            "perMin": 4
+        },
+        {
+            "id": "Alternate_ReinforcedIronPlate_2",
+            "displayName": "Alternate: Stitched Iron Plate",
+            "ingredients": [
+                {
+                    "IronPlate": 10
+                },
+                {
+                    "Wire": 20
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "IronPlateReinforced": 3
+            },
+            "perMin": 5.625
+        },
+        {
+            "id": "Alternate_ReinforcedIronPlate_1",
+            "displayName": "Alternate: Bolted Iron Plate",
+            "ingredients": [
+                {
+                    "IronPlate": 18
+                },
+                {
+                    "IronScrew": 50
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "IronPlateReinforced": 3
+            },
+            "perMin": 15
+        },
+        {
+            "id": "Alternate_RadioControlUnit_1",
+            "displayName": "Alternate: Radio Connection Unit",
+            "ingredients": [
+                {
+                    "AluminumPlateReinforced": 4
+                },
+                {
+                    "HighSpeedConnector": 2
+                },
+                {
+                    "QuartzCrystal": 12
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "ModularFrameLightweight": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "Alternate_Quickwire",
+            "displayName": "Alternate: Fused Quickwire",
+            "ingredients": [
+                {
+                    "GoldIngot": 1
+                },
+                {
+                    "CopperIngot": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "HighSpeedWire": 12
+            },
+            "perMin": 90
+        },
+        {
+            "id": "Alternate_Plastic_1",
+            "displayName": "Alternate: Recycled Plastic",
+            "ingredients": [
+                {
+                    "Rubber": 6
+                },
+                {
+                    "LiquidFuel": 6000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Plastic": 12
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_NuclearFuelRod_1",
+            "displayName": "Alternate: Uranium Fuel Unit",
+            "ingredients": [
+                {
+                    "UraniumCell": 100
+                },
+                {
+                    "ElectromagneticControlRod": 10
+                },
+                {
+                    "CrystalOscillator": 3
+                },
+                {
+                    "Rotor": 10
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "NuclearFuelRod": 3
+            },
+            "perMin": 0.6000000000000001
+        },
+        {
+            "id": "Alternate_Motor_1",
+            "displayName": "Alternate: Rigor Motor",
+            "ingredients": [
+                {
+                    "Rotor": 3
+                },
+                {
+                    "Stator": 3
+                },
+                {
+                    "CrystalOscillator": 1
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "Motor": 6
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "Alternate_ModularFrame",
+            "displayName": "Alternate: Steeled Frame",
+            "ingredients": [
+                {
+                    "IronPlateReinforced": 2
+                },
+                {
+                    "SteelPipe": 10
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "ModularFrame": 3
+            },
+            "perMin": 3
+        },
+        {
+            "id": "Alternate_IngotSteel_2",
+            "displayName": "Alternate: Compacted Steel Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 2
+                },
+                {
+                    "CompactedCoal": 1
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "SteelIngot": 4
+            },
+            "perMin": 10
+        },
+        {
+            "id": "Alternate_IngotSteel_1",
+            "displayName": "Alternate: Solid Steel Ingot",
+            "ingredients": [
+                {
+                    "IronIngot": 2
+                },
+                {
+                    "Coal": 2
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "SteelIngot": 3
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Alternate_IngotIron",
+            "displayName": "Alternate: Iron Alloy Ingot",
+            "ingredients": [
+                {
+                    "OreIron": 8
+                },
+                {
+                    "OreCopper": 2
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "IronIngot": 15
+            },
+            "perMin": 75
+        },
+        {
+            "id": "Alternate_HighSpeedConnector",
+            "displayName": "Alternate: Silicon High-Speed Connector",
+            "ingredients": [
+                {
+                    "HighSpeedWire": 60
+                },
+                {
+                    "Silica": 25
+                },
+                {
+                    "CircuitBoard": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "HighSpeedConnector": 2
+            },
+            "perMin": 3
+        },
+        {
+            "id": "Alternate_ModularFrameHeavy",
+            "displayName": "Alternate: Heavy Encased Frame",
+            "ingredients": [
+                {
+                    "ModularFrame": 8
+                },
+                {
+                    "SteelPlateReinforced": 10
+                },
+                {
+                    "SteelPipe": 36
+                },
+                {
+                    "Cement": 22
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "ModularFrameHeavy": 3
+            },
+            "perMin": 2.8125
+        },
+        {
+            "id": "Alternate_HeatSink_1",
+            "displayName": "Alternate: Heat Exchanger",
+            "ingredients": [
+                {
+                    "AluminumCasing": 3
+                },
+                {
+                    "Rubber": 3
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "AluminumPlateReinforced": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "Alternate_Gunpowder_1",
+            "displayName": "Alternate: Fine Black Powder",
+            "ingredients": [
+                {
+                    "Sulfur": 1
+                },
+                {
+                    "CompactedCoal": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Gunpowder": 6
+            },
+            "perMin": 45
+        },
+        {
+            "id": "Alternate_ElectromagneticControlRod_1",
+            "displayName": "Alternate: Electromagnetic Connection Rod",
+            "ingredients": [
+                {
+                    "Stator": 2
+                },
+                {
+                    "HighSpeedConnector": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "ElectromagneticControlRod": 2
+            },
+            "perMin": 8
+        },
+        {
+            "id": "Alternate_CrystalOscillator",
+            "displayName": "Alternate: Insulated Crystal Oscillator",
+            "ingredients": [
+                {
+                    "QuartzCrystal": 10
+                },
+                {
+                    "Rubber": 7
+                },
+                {
+                    "CircuitBoardHighSpeed": 1
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "CrystalOscillator": 1
+            },
+            "perMin": 1.875
+        },
+        {
+            "id": "Alternate_Concrete",
+            "displayName": "Alternate: Fine Concrete",
+            "ingredients": [
+                {
+                    "Silica": 3
+                },
+                {
+                    "Stone": 12
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Cement": 10
+            },
+            "perMin": 50
+        },
+        {
+            "id": "Alternate_Computer_2",
+            "displayName": "Alternate: Crystal Computer",
+            "ingredients": [
+                {
+                    "CircuitBoard": 3
+                },
+                {
+                    "CrystalOscillator": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Computer": 2
+            },
+            "perMin": 3.3333333333333335
+        },
+        {
+            "id": "Alternate_Computer_1",
+            "displayName": "Alternate: Caterium Computer",
+            "ingredients": [
+                {
+                    "CircuitBoard": 4
+                },
+                {
+                    "HighSpeedWire": 14
+                },
+                {
+                    "Rubber": 6
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "Computer": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "Alternate_CircuitBoard_2",
+            "displayName": "Alternate: Caterium Circuit Board",
+            "ingredients": [
+                {
+                    "Plastic": 10
+                },
+                {
+                    "HighSpeedWire": 30
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "CircuitBoard": 7
+            },
+            "perMin": 8.75
+        },
+        {
+            "id": "Alternate_CircuitBoard_1",
+            "displayName": "Alternate: Silicon Circuit Board",
+            "ingredients": [
+                {
+                    "CopperSheet": 11
+                },
+                {
+                    "Silica": 11
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "CircuitBoard": 5
+            },
+            "perMin": 12.5
+        },
+        {
+            "id": "Alternate_Cable_2",
+            "displayName": "Alternate: Quickwire Cable",
+            "ingredients": [
+                {
+                    "HighSpeedWire": 3
+                },
+                {
+                    "Rubber": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Cable": 11
+            },
+            "perMin": 27.5
+        },
+        {
+            "id": "Alternate_Cable_1",
+            "displayName": "Alternate: Insulated Cable",
+            "ingredients": [
+                {
+                    "Wire": 9
+                },
+                {
+                    "Rubber": 6
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Cable": 20
+            },
+            "perMin": 100
+        },
+        {
+            "id": "Ficsonium",
+            "displayName": "Ficsonium",
+            "ingredients": [
+                {
+                    "PlutoniumWaste": 1
+                },
+                {
+                    "SingularityCell": 1
+                },
+                {
+                    "DarkEnergy": 20000
+                }
+            ],
+            "producedIn": [
+                "build_hadroncollider"
+            ],
+            "product": {
+                "Ficsonium": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "FicsoniumFuelRod",
+            "displayName": "Ficsonium Fuel Rod",
+            "ingredients": [
+                {
+                    "Ficsonium": 2
+                },
+                {
+                    "ElectromagneticControlRod": 2
+                },
+                {
+                    "FicsiteMesh": 40
+                },
+                {
+                    "QuantumEnergy": 20000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "FicsoniumFuelRod": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "SingularityCell",
+            "displayName": "Singularity Cell",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_9": 1
+                },
+                {
+                    "DarkMatter": 20
+                },
+                {
+                    "IronPlate": 100
+                },
+                {
+                    "Cement": 200
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SingularityCell": 10
+            },
+            "perMin": 10
+        },
+        {
+            "id": "SpaceElevatorPart_11",
+            "displayName": "Ballistic Warp Drive",
+            "ingredients": [
+                {
+                    "SpaceElevatorPart_8": 1
+                },
+                {
+                    "SingularityCell": 5
+                },
+                {
+                    "QuantumOscillator": 2
+                },
+                {
+                    "DarkMatter": 40
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "SpaceElevatorPart_11": 1
+            },
+            "perMin": 1
+        },
+        {
+            "id": "FilterHazmat",
+            "displayName": "Iodine-Infused Filter",
+            "ingredients": [
+                {
+                    "Filter": 1
+                },
+                {
+                    "HighSpeedWire": 8
+                },
+                {
+                    "AluminumCasing": 1
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "HazmatFilter": 1
+            },
+            "perMin": 3.75
+        },
+        {
+            "id": "Quickwire",
+            "displayName": "Quickwire",
+            "ingredients": [
+                {
+                    "GoldIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "HighSpeedWire": 5
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Biofuel",
+            "displayName": "Solid Biofuel",
+            "ingredients": [
+                {
+                    "GenericBiomass": 8
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "build_automatedworkbench"
+            ],
+            "product": {
+                "Biofuel": 4
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Protein_Hog",
+            "displayName": "Hog Protein",
+            "ingredients": [
+                {
+                    "HogParts": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AlienProtein": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Protein_Spitter",
+            "displayName": "Spitter Protein",
+            "ingredients": [
+                {
+                    "SpitterParts": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AlienProtein": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Biomass_Mycelia",
+            "displayName": "Biomass (Mycelia)",
+            "ingredients": [
+                {
+                    "Mycelia": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "GenericBiomass": 10
+            },
+            "perMin": 150
+        },
+        {
+            "id": "PowerCrystalShard_1",
+            "displayName": "Power Shard (1)",
+            "ingredients": [
+                {
+                    "Crystal": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CrystalShard": 1
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "Gunpowder",
+            "displayName": "Black Powder",
+            "ingredients": [
+                {
+                    "Coal": 1
+                },
+                {
+                    "Sulfur": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "Gunpowder": 2
+            },
+            "perMin": 30
+        },
+        {
+            "id": "AlienPowerFuel",
+            "displayName": "Alien Power Matrix",
+            "ingredients": [
+                {
+                    "SAMFluctuator": 5
+                },
+                {
+                    "CrystalShard": 3
+                },
+                {
+                    "QuantumOscillator": 3
+                },
+                {
+                    "QuantumEnergy": 24000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "AlienPowerFuel": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "Protein_Stinger",
+            "displayName": "Stinger Protein",
+            "ingredients": [
+                {
+                    "StingerParts": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AlienProtein": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Protein_Crab",
+            "displayName": "Hatcher Protein",
+            "ingredients": [
+                {
+                    "HatcherParts": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AlienProtein": 1
+            },
+            "perMin": 20
+        },
+        {
+            "id": "AlienDNACapsule",
+            "displayName": "Alien DNA Capsule",
+            "ingredients": [
+                {
+                    "AlienProtein": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "AlienDNACapsule": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "Biomass_AlienProtein",
+            "displayName": "Biomass (Alien Protein)",
+            "ingredients": [
+                {
+                    "AlienProtein": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "GenericBiomass": 100
+            },
+            "perMin": 1500
+        },
+        {
+            "id": "SpikedRebar",
+            "displayName": "Iron Rebar",
+            "ingredients": [
+                {
+                    "IronRod": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "SpikedRebar": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "CartridgeSmart",
+            "displayName": "Homing Rifle Ammo",
+            "ingredients": [
+                {
+                    "CartridgeStandard": 20
+                },
+                {
+                    "HighSpeedConnector": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "CartridgeSmartProjectile": 10
+            },
+            "perMin": 25
+        },
+        {
+            "id": "Rebar_Stunshot",
+            "displayName": "Stun Rebar",
+            "ingredients": [
+                {
+                    "SpikedRebar": 1
+                },
+                {
+                    "HighSpeedWire": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "Rebar_Stunshot": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "FilterGasMask",
+            "displayName": "Gas Filter",
+            "ingredients": [
+                {
+                    "Fabric": 2
+                },
+                {
+                    "Coal": 4
+                },
+                {
+                    "IronPlate": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "Filter": 1
+            },
+            "perMin": 7.5
+        },
+        {
+            "id": "NobeliskGas",
+            "displayName": "Gas Nobelisk",
+            "ingredients": [
+                {
+                    "NobeliskExplosive": 1
+                },
+                {
+                    "GenericBiomass": 10
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "NobeliskGas": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Alternate_PolyesterFabric",
+            "displayName": "Alternate: Polyester Fabric",
+            "ingredients": [
+                {
+                    "PolymerResin": 1
+                },
+                {
+                    "Water": 1000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "Fabric": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Fabric",
+            "displayName": "Fabric",
+            "ingredients": [
+                {
+                    "Mycelia": 1
+                },
+                {
+                    "GenericBiomass": 5
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Fabric": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "SyntheticPowerShard",
+            "displayName": "Synthetic Power Shard",
+            "ingredients": [
+                {
+                    "TimeCrystal": 2
+                },
+                {
+                    "DarkMatter": 2
+                },
+                {
+                    "QuartzCrystal": 12
+                },
+                {
+                    "QuantumEnergy": 12000
+                }
+            ],
+            "producedIn": [
+                "build_quantumencoder"
+            ],
+            "product": {
+                "CrystalShard": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "PowerCrystalShard_3",
+            "displayName": "Power Shard (5)",
+            "ingredients": [
+                {
+                    "Crystal_mk3": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CrystalShard": 5
+            },
+            "perMin": 12.5
+        },
+        {
+            "id": "PowerCrystalShard_2",
+            "displayName": "Power Shard (2)",
+            "ingredients": [
+                {
+                    "Crystal_mk2": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CrystalShard": 2
+            },
+            "perMin": 10
+        },
+        {
+            "id": "NobeliskShockwave",
+            "displayName": "Pulse Nobelisk",
+            "ingredients": [
+                {
+                    "NobeliskExplosive": 5
+                },
+                {
+                    "CrystalOscillator": 1
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "NobeliskShockwave": 5
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Rebar_Spreadshot",
+            "displayName": "Shatter Rebar",
+            "ingredients": [
+                {
+                    "SpikedRebar": 2
+                },
+                {
+                    "QuartzCrystal": 3
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "Rebar_Spreadshot": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "CartridgeChaos_Packaged",
+            "displayName": "Turbo Rifle Ammo",
+            "ingredients": [
+                {
+                    "CartridgeStandard": 25
+                },
+                {
+                    "AluminumCasing": 3
+                },
+                {
+                    "TurboFuel": 3
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "CartridgeChaos": 50
+            },
+            "perMin": 250
+        },
+        {
+            "id": "CartridgeChaos",
+            "displayName": "Turbo Rifle Ammo",
+            "ingredients": [
+                {
+                    "CartridgeStandard": 25
+                },
+                {
+                    "AluminumCasing": 3
+                },
+                {
+                    "LiquidTurboFuel": 3000
+                }
+            ],
+            "producedIn": [
+                "build_blender"
+            ],
+            "product": {
+                "CartridgeChaos": 50
+            },
+            "perMin": 250
+        },
+        {
+            "id": "NobeliskNuke",
+            "displayName": "Nuke Nobelisk",
+            "ingredients": [
+                {
+                    "NobeliskExplosive": 5
+                },
+                {
+                    "UraniumCell": 20
+                },
+                {
+                    "GunpowderMK2": 10
+                },
+                {
+                    "CircuitBoardHighSpeed": 6
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_manufacturermk1"
+            ],
+            "product": {
+                "NobeliskNuke": 1
+            },
+            "perMin": 0.5
+        },
+        {
+            "id": "Cartridge",
+            "displayName": "Rifle Ammo",
+            "ingredients": [
+                {
+                    "CopperSheet": 3
+                },
+                {
+                    "GunpowderMK2": 2
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "CartridgeStandard": 15
+            },
+            "perMin": 75
+        },
+        {
+            "id": "Rebar_Explosive",
+            "displayName": "Explosive Rebar",
+            "ingredients": [
+                {
+                    "SpikedRebar": 2
+                },
+                {
+                    "GunpowderMK2": 2
+                },
+                {
+                    "SteelPipe": 2
+                }
+            ],
+            "producedIn": [
+                "build_manufacturermk1",
+                "bp_workshopcomponent"
+            ],
+            "product": {
+                "Rebar_Explosive": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "NobeliskCluster",
+            "displayName": "Cluster Nobelisk",
+            "ingredients": [
+                {
+                    "NobeliskExplosive": 3
+                },
+                {
+                    "GunpowderMK2": 4
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "NobeliskCluster": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "Nobelisk",
+            "displayName": "Nobelisk",
+            "ingredients": [
+                {
+                    "Gunpowder": 2
+                },
+                {
+                    "SteelPipe": 2
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "NobeliskExplosive": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "GunpowderMK2",
+            "displayName": "Smokeless Powder",
+            "ingredients": [
+                {
+                    "Gunpowder": 2
+                },
+                {
+                    "HeavyOilResidue": 1000
+                }
+            ],
+            "producedIn": [
+                "build_oilrefinery"
+            ],
+            "product": {
+                "GunpowderMK2": 2
+            },
+            "perMin": 20
+        },
+        {
+            "id": "Snowball",
+            "displayName": "Snowball",
+            "ingredients": [
+                {
+                    "Snow": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "SnowballProjectile": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "XmasStar",
+            "displayName": "FICSMAS Wonder Star",
+            "ingredients": [
+                {
+                    "XmasWreath": 5
+                },
+                {
+                    "CandyCane": 20
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "XmasStar": 1
+            },
+            "perMin": 1
+        },
+        {
+            "id": "XmasWreath",
+            "displayName": "FICSMAS Decoration",
+            "ingredients": [
+                {
+                    "XmasBranch": 15
+                },
+                {
+                    "XmasBallCluster": 6
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "XmasWreath": 2
+            },
+            "perMin": 2
+        },
+        {
+            "id": "XmasBallCluster",
+            "displayName": "FICSMAS Ornament Bundle",
+            "ingredients": [
+                {
+                    "XmasBall3": 1
+                },
+                {
+                    "XmasBall4": 1
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1"
+            ],
+            "product": {
+                "XmasBallCluster": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "XmasBall1",
+            "displayName": "Red FICSMAS Ornament",
+            "ingredients": [
+                {
+                    "Gift": 1
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1"
+            ],
+            "product": {
+                "XmasBall1": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "XmasBall2",
+            "displayName": "Blue FICSMAS Ornament",
+            "ingredients": [
+                {
+                    "Gift": 1
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1"
+            ],
+            "product": {
+                "XmasBall2": 2
+            },
+            "perMin": 10
+        },
+        {
+            "id": "XmasBall3",
+            "displayName": "Copper FICSMAS Ornament",
+            "ingredients": [
+                {
+                    "XmasBall1": 2
+                },
+                {
+                    "CopperIngot": 2
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "XmasBall3": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "XmasBall4",
+            "displayName": "Iron FICSMAS Ornament",
+            "ingredients": [
+                {
+                    "XmasBall2": 3
+                },
+                {
+                    "IronIngot": 3
+                }
+            ],
+            "producedIn": [
+                "build_foundrymk1"
+            ],
+            "product": {
+                "XmasBall4": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Snow",
+            "displayName": "Actual Snow",
+            "ingredients": [
+                {
+                    "Gift": 5
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "Snow": 2
+            },
+            "perMin": 10
+        },
+        {
+            "id": "XmasBranch",
+            "displayName": "FICSMAS Tree Branch",
+            "ingredients": [
+                {
+                    "Gift": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "XmasBranch": 1
+            },
+            "perMin": 10
+        },
+        {
+            "id": "XmasBow",
+            "displayName": "FICSMAS Bow",
+            "ingredients": [
+                {
+                    "Gift": 2
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "XmasBow": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "CandyCane",
+            "displayName": "Candy Cane",
+            "ingredients": [
+                {
+                    "Gift": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1"
+            ],
+            "product": {
+                "CandyCane": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "SpaceElevator",
+            "displayName": "Space Elevator",
+            "ingredients": [
+                {
+                    "Cement": 500
+                },
+                {
+                    "IronPlate": 250
+                },
+                {
+                    "IronRod": 400
+                },
+                {
+                    "Wire": 1500
+                }
+            ],
+            "producedIn": [
+                "factorygame"
+            ],
+            "product": {
+                "SpaceElevator": 1
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Biomass_Leaves",
+            "displayName": "Biomass (Leaves)",
+            "ingredients": [
+                {
+                    "Leaves": 10
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "GenericBiomass": 5
+            },
+            "perMin": 60
+        },
+        {
+            "id": "Biomass_Wood",
+            "displayName": "Biomass (Wood)",
+            "ingredients": [
+                {
+                    "Wood": 4
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "GenericBiomass": 20
+            },
+            "perMin": 300
+        },
+        {
+            "id": "IronPlateReinforced",
+            "displayName": "Reinforced Iron Plate",
+            "ingredients": [
+                {
+                    "IronPlate": 6
+                },
+                {
+                    "IronScrew": 12
+                }
+            ],
+            "producedIn": [
+                "build_assemblermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "IronPlateReinforced": 1
+            },
+            "perMin": 5
+        },
+        {
+            "id": "Concrete",
+            "displayName": "Concrete",
+            "ingredients": [
+                {
+                    "Stone": 3
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Cement": 1
+            },
+            "perMin": 15
+        },
+        {
+            "id": "Screw",
+            "displayName": "Screw",
+            "ingredients": [
+                {
+                    "IronRod": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "IronScrew": 4
+            },
+            "perMin": 40
+        },
+        {
+            "id": "Cable",
+            "displayName": "Cable",
+            "ingredients": [
+                {
+                    "Wire": 2
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Cable": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Wire",
+            "displayName": "Wire",
+            "ingredients": [
+                {
+                    "CopperIngot": 1
+                }
+            ],
+            "producedIn": [
+                "build_constructormk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "Wire": 2
+            },
+            "perMin": 30
+        },
+        {
+            "id": "IngotCopper",
+            "displayName": "Copper Ingot",
+            "ingredients": [
+                {
+                    "OreCopper": 1
+                }
+            ],
+            "producedIn": [
+                "build_smeltermk1",
+                "bp_workbenchcomponent",
+                "factorygame"
+            ],
+            "product": {
+                "CopperIngot": 1
+            },
+            "perMin": 30
+        },
+        {
+            "id": "Fireworks_01",
+            "displayName": "Sweet Fireworks",
+            "ingredients": [
+                {
+                    "XmasBranch": 6
+                },
+                {
+                    "CandyCane": 3
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Fireworks_Projectile_01": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "Fireworks_02",
+            "displayName": "Fancy Fireworks",
+            "ingredients": [
+                {
+                    "XmasBranch": 4
+                },
+                {
+                    "XmasBow": 3
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Fireworks_Projectile_02": 1
+            },
+            "perMin": 2.5
+        },
+        {
+            "id": "Fireworks_03",
+            "displayName": "Sparkly Fireworks",
+            "ingredients": [
+                {
+                    "XmasBranch": 3
+                },
+                {
+                    "Snow": 2
+                }
+            ],
+            "producedIn": [
+                "bp_workshopcomponent",
+                "build_assemblermk1"
+            ],
+            "product": {
+                "Fireworks_Projectile_03": 1
+            },
+            "perMin": 2.5
+        }
+    ]
+}
