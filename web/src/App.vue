@@ -9,12 +9,12 @@
     <div v-else>
       <div>
         <h1>Planner</h1>
-        <planner :recipes="recipes"></planner>
+        <planner v-if="data.items" :recipes="data.recipes"></planner>
       </div>
       <h1>Available Recipes</h1>
       <button @click="toggleRecipeList">{{ showRecipeList ? 'Hide' : 'Show' }} Recipe List</button>
       <div v-if="showRecipeList">
-        <recipe-search :recipes="recipes" />
+        <recipe-search v-if="data.recipes" :recipes="data.recipes" />
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import RecipeSearch from './components/RecipeSearch.vue';
-import { Recipe } from './interfaces/Recipe';
 import Planner from "./components/Planner.vue";
+import {DataInterface} from "./interfaces/DataInterface.ts";
 
 export default defineComponent({
   name: 'App',
@@ -35,7 +35,7 @@ export default defineComponent({
   data() {
     return {
       loading: true,
-      recipes: [] as Recipe[],
+      data: {} as DataInterface,
       error: null as string | null,
       showRecipeList: false,
     };
@@ -51,11 +51,15 @@ export default defineComponent({
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const data = await response.json();
-      this.recipes = data.recipes.map((recipe: Recipe) => ({
-        ...recipe,
-        isAlternate: recipe.isAlternate ?? false,
-      }));
+      const data: DataInterface = await response.json();
+
+      console.log(data);
+
+      if (!data) {
+        throw new Error('No data received!');
+      }
+
+      this.data = data;
     } catch (error) {
       console.error('Error loading recipes:', error);
       this.error = error instanceof Error ? error.message : 'Unknown error';

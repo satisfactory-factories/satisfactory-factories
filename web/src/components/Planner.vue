@@ -2,6 +2,7 @@
   <div id="planner">
     <h1>Factory Planner</h1>
     <button @click="createGroup">Create New Group</button>
+    <button @click="clear" style="background-color: red">Clear (!)</button>
     <div v-for="(group, index) in groups" :key="index" class="group">
       <h3>Group {{ index + 1 }}</h3>
       <label>
@@ -13,7 +14,7 @@
         <div v-for="(recipe, recipeIndex) in group.recipes" :key="recipeIndex" class="recipe-entry">
           <label>
             Recipe:
-            <select v-model="recipe.id" @change="calculateWorldResources">
+            <select v-model="recipe.id" @change="calculateWorldInputs">
               <option v-for="recipeOption in recipes" :key="recipeOption.id" :value="recipeOption.id">
                 {{ recipeOption.displayName }}
               </option>
@@ -21,7 +22,7 @@
           </label>
           <label>
             Amount (/min):
-            <input type="number" v-model.number="recipe.amountPerMinute" @input="calculateWorldResources" />
+            <input type="number" v-model.number="recipe.amountPerMinute" @input="calculateWorldInputs" />
           </label>
         </div>
       </div>
@@ -117,9 +118,12 @@ export default defineComponent({
       },
       deep: true,
     },
-  },
-  created() {
-    this.extractWorldResources();
+    data: {
+      handler() {
+        this.generateWorldResources();
+      },
+      deep: true,
+    }
   },
   methods: {
     createGroup() {
@@ -128,6 +132,9 @@ export default defineComponent({
         recipes: [],
         inputs: [],
       });
+    },
+    clear() {
+      this.groups = [];
     },
     addRecipeToGroup(groupIndex: number) {
       this.groups[groupIndex].recipes.push({
@@ -150,8 +157,8 @@ export default defineComponent({
         })
         .filter(output => output);
     },
-    calculateWorldResources() {
-      console.log('Calculating world resources...');
+    calculateWorldInputs() {
+      console.log('Calculating world resources for groups...');
       this.groups.forEach(group => {
         group.inputs = group.inputs.filter(input => input.sourceType !== 'world');
 
@@ -179,9 +186,11 @@ export default defineComponent({
       });
       console.log('Groups after calculating world resources:', JSON.stringify(this.groups, null, 2));
     },
-    extractWorldResources() {
+    generateWorldResources() {
       console.log('Extracting world resources...');
       const ores = new Set<string>();
+
+      console.log(this.recipes);
       this.recipes.forEach(recipe => {
         Object.keys(recipe.ingredients).forEach(ingredient => {
           if (ingredient.toLowerCase().includes('ore')) {
@@ -200,7 +209,7 @@ export default defineComponent({
 .group {
   border: 1px solid #28a745;
   padding: 10px;
-  margin-bottom: 15px;
+  margin: 10px 0;
 }
 .recipe-entry {
   margin-top: 10px;
