@@ -305,7 +305,7 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
             });
         });
 
-    return recipes;
+    return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
 // Function to extract raw resources from the game data
@@ -337,7 +337,7 @@ async function processFile(inputFile: string, outputFile: string) {
         const data = JSON.parse(cleanedContent);
 
         // Get parts
-        const parts = getParts(data);
+        const items = getParts(data);
 
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
@@ -351,7 +351,7 @@ async function processFile(inputFile: string, outputFile: string) {
         // Construct the final JSON object
         const finalData = {
             buildings: buildingsPowerMap,  // Use buildingsPowerMap for building info
-            parts,
+            items,
             recipes
         };
 
