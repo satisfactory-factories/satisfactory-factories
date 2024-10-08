@@ -35,25 +35,6 @@ function cleanInput(input: string): string {
     return cleaned;
 }
 
-// Function to map game building class names to human-readable names
-const buildingMap: { [key: string]: string } = {
-    "AssemblerMk1": "assembler",
-    "ConstructorMk1": "constructor",
-    "ManufacturerMk1": "manufacturer",
-    // Add other mappings as needed
-};
-
-function mapProducedIn(buildingClass: string): string {
-    const matchedBuilding = buildingClass.match(/\/(.*?)\./);
-    if (matchedBuilding) {
-        const buildingKey = matchedBuilding[1]?.split('/').pop();  // Ensure buildingKey is defined
-        if (buildingKey) {
-            return buildingMap[buildingKey] || buildingKey.toLowerCase();
-        }
-    }
-    return buildingClass;
-}
-
 // Blacklist for excluding items produced by the Build Gun
 const blacklist = ["/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C"];
 const workshopComponentPath = "/Game/FactoryGame/Buildable/-Shared/WorkBench/BP_WorkshopComponent.BP_WorkshopComponent_C";
@@ -104,8 +85,7 @@ function getProducingBuildings(data: any[]): string[] {
                         const match = building.match(/\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/);
                         if (match) {
                             // Remove "build_" prefix if present
-                            const buildingName = match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
-                            return buildingName;
+                          return match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
                         }
                         return null;
                     })
@@ -134,12 +114,9 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
                 let buildingName = building.ClassName.replace(/_C$/, '').toLowerCase();
                 buildingName = buildingName.startsWith('build_') ? buildingName.replace('build_', '') : buildingName;
 
-                console.log(buildingName)
-
                 // Only include power data if the building is in the producingBuildings list
                 if (producingBuildings.includes(buildingName)) {
-                    const powerConsumption = parseFloat(building.mPowerConsumption) || 0;  // Default to 0 if undefined
-                    buildingsPowerMap[buildingName] = powerConsumption;
+                  buildingsPowerMap[buildingName] = parseFloat(building.mPowerConsumption) || 0;
                 }
             }
         });
@@ -153,8 +130,8 @@ function isLikelyLiquid(building: string, amount: number): boolean {
     return fluidBuildings.includes(building.toLowerCase()) && amount > 100;
 }
 
-// Function to extract recipes, adjusting for power consumption and liquid items, and removing "build_" prefix in producedIn
-function getRecipes(data: any[], parts: { [key: string]: string }, producingBuildings: { [key: string]: number }): any[] {
+// Function to extract recipes
+function getRecipes(data: any[], producingBuildings: { [key: string]: number }): any[] {
     const recipes: any[] = [];
     data
         .filter((entry: any) => entry.Classes)
@@ -163,8 +140,8 @@ function getRecipes(data: any[], parts: { [key: string]: string }, producingBuil
             if (!recipe.mProducedIn) return false;
             if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
             const producedInBuildings = recipe.mProducedIn.match(/"([^"]+)"/g)?.map((building: string) => building.replace(/"/g, ''));
-            if (producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath) return false;
-            return true;
+            return !(producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath);
+
         })
         .forEach((recipe: any) => {
             const ingredients = recipe.mIngredients
@@ -189,33 +166,38 @@ function getRecipes(data: any[], parts: { [key: string]: string }, producingBuil
                     .filter((ingredient: any) => ingredient !== null)
                 : [];
 
-            // Parse mProduct to extract multiple products
-            const productMatches = recipe.mProduct
-                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
-                ?.map((productStr: string) => {
-                    const match = productStr.match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
-                    if (match) {
-                        const productName = match[1];
-                        let amount = parseInt(match[2], 10);
-                        // Check if this is a likely liquid based on building and amount
-                        const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
-                            ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
+            // Parse mProduct to extract the single product and byProduct
+            const productMatch = recipe.mProduct
+                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
 
-                        if (isLikelyLiquid(producedIn, amount)) {
-                            amount = amount / 1000;  // Divide by 1000 for liquid amounts
-                        }
-                        return { [productName]: amount };
-                    }
-                    return null;
-                })
-                .filter((product: any) => product !== null) || [];
+            let product = {};
+            let byProduct = {};
 
-            // Separate product and byProducts
-            const primaryProduct = productMatches[0] || {};
-            const byProducts = productMatches.length > 1 ? productMatches.slice(1) : [];
+            if (productMatch) {
+                const productName = productMatch[1];
+                let productAmount = parseInt(productMatch[2], 10);
+
+                const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
+                    ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
+
+                if (isLikelyLiquid(producedIn, productAmount)) {
+                    productAmount = productAmount / 1000;  // Divide by 1000 for liquid amounts
+                }
+
+                product = { [productName]: productAmount };
+
+                // Check for byProducts in the case where more than one product exists
+                const byProductMatch = recipe.mProduct
+                    ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)?.[1];
+                if (byProductMatch) {
+                    const byProductName = byProductMatch[1];
+                    let byProductAmount = parseInt(byProductMatch[2], 10);
+                    byProduct = { [byProductName]: byProductAmount };
+                }
+            }
 
             // Ensure primary product's amount is a number
-            const productAmount = typeof Object.values(primaryProduct)[0] === 'number' ? Object.values(primaryProduct)[0] as number : 0;
+            const productAmount = typeof Object.values(product)[0] === 'number' ? Object.values(product)[0] as number : 0;
 
             // Calculate perMin for the primary product using the formula: perMin = (60 / duration) * productAmount
             const duration = parseFloat(recipe.mManufactoringDuration) || 0;  // Default to 0 if undefined
@@ -234,12 +216,12 @@ function getRecipes(data: any[], parts: { [key: string]: string }, producingBuil
                 }) || [];
 
             // Filter out redundant buildings like "bp_workbenchcomponent" and "factorygame"
-            const powerPerProductArray = producedIn
+            const powerPerBuilding = producedIn
                 .map((building: string) => {
                     const buildingPower = producingBuildings[building] || 0;  // Get building power from the producingBuildings map, default to 0
                     return {
                         building: building,
-                        powerPerProduct: perMin > 0 ? buildingPower / perMin : 0
+                        powerPerBuilding: perMin > 0 ? buildingPower / perMin : 0
                     };
                 })
                 .filter((item: { building: string }) => !['bp_workbenchcomponent', 'factorygame'].includes(item.building));  // Remove entries with these buildings
@@ -248,16 +230,15 @@ function getRecipes(data: any[], parts: { [key: string]: string }, producingBuil
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
                 displayName: recipe.mDisplayName,
                 ingredients,
-                product: primaryProduct,   // Primary product
-                byProducts,                // Byproducts (if any)
-                perMin,                    // Add perMin for the primary product
+                product,        // Singular primary product
+                byProduct,      // Singular byProduct (if any)
+                perMin,         // Add perMin for the primary product
                 producedIn,
-                powerPerProduct: powerPerProductArray  // Store power values for each building
+                powerPerBuilding  // Renamed to powerPerBuilding
             });
         });
     return recipes;
 }
-
 
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
@@ -272,13 +253,11 @@ async function processFile(inputFile: string, outputFile: string) {
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
 
-        console.log(producingBuildings)
-
         // Get power consumption for the producing buildings
         const buildingsPowerMap = getPowerConsumptionForBuildings(data, producingBuildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
-        const recipes = getRecipes(data, parts, buildingsPowerMap);
+        const recipes = getRecipes(data, buildingsPowerMap);
 
         // Construct the final JSON object
         const finalData = {
