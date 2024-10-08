@@ -170,6 +170,21 @@
         },
         "collectables": {
             "CrystalShard": "Power Shard"
+        },
+        "rawResources": {
+            "Coal": "Coal",
+            "LiquidOil": "Crude Oil",
+            "NitrogenGas": "Nitrogen Gas",
+            "OreBauxite": "Bauxite",
+            "OreCopper": "Copper Ore",
+            "OreGold": "Caterium Ore",
+            "OreIron": "Iron Ore",
+            "OreUranium": "Uranium",
+            "RawQuartz": "Raw Quartz",
+            "SAM": "SAM",
+            "Stone": "Limestone",
+            "Sulfur": "Sulfur",
+            "Water": "Water"
         }
     },
     "recipes": [

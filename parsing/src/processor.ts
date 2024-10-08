@@ -51,9 +51,10 @@ function isCollectable(ingredients: string): boolean {
 }
 
 // Function to extract parts, moving collectables to specialParts
-function getParts(data: any[]): { parts: { [key: string]: string }, collectables: { [key: string]: string } } {
+function getParts(data: any[]): { parts: { [key: string]: string }, collectables: { [key: string]: string }, rawResources: { [key: string]: string } } {
     const parts: { [key: string]: string } = {};
     const collectables: { [key: string]: string } = {};
+    const rawResources = getRawResources(data);
 
     data
         .filter((entry: any) => entry.Classes)
@@ -65,7 +66,7 @@ function getParts(data: any[]): { parts: { [key: string]: string }, collectables
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
 
-            // Check if it's an unpackaged recipe and skip it for parts
+            // Check if it's an unpackage recipe and skip it for parts
             if (entry.mDisplayName.includes("Unpackage")) return;
 
             // Extract the part name
@@ -101,7 +102,13 @@ function getParts(data: any[]): { parts: { [key: string]: string }, collectables
             .reduce((sortedObj: { [key: string]: string }, key: string) => {
                 sortedObj[key] = collectables[key];
                 return sortedObj;
-            }, {})
+            }, {}),
+        rawResources: Object.keys(rawResources)
+            .sort()
+            .reduce((sortedObj: { [key: string]: string }, key: string) => {
+                sortedObj[key] = rawResources[key];
+                return sortedObj;
+            }, {}),
     };
 }
 
@@ -223,9 +230,7 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
 
             let product = {};
             let byProduct = {};
-
-            // Ensure primary product's amount is a number
-            let productAmount = typeof Object.values(product)[0] === 'number' ? Object.values(product)[0] as number : 0;
+            let productAmount = 0;
 
             if (productMatches && productMatches.length > 0) {
                 // Handle the first product
@@ -258,22 +263,21 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                 }
             }
 
-
-            // Calculate perMin for the primary product using the formula: perMin = (60 / duration) * productAmount
-            const duration = parseFloat(recipe.mManufactoringDuration) || 0;  // Default to 0 if undefined
-            const perMin = duration > 0 ? (60 / duration) * productAmount : 0;
+            // Ensure primary product's amount is a number
+            const perMin = recipe.mManufactoringDuration && productAmount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * productAmount : 0;
 
             // Handle multiple building power values and remove "build_" prefix
             const producedIn = recipe.mProducedIn
                 .match(/\/([^\/]+)\./g)
                 ?.map((building: string) => {
-                    return building
-                        .replace(/\//g, '')
-                        .replace(/\./g, '')
-                        .toLowerCase()
-                        .replace('build_', '');
-                }).filter((building: string) => building != 'factorygame')
-            || []
+                    let buildingKey = building.replace(/\//g, '').replace(/\./g, '').toLowerCase();
+                    // Remove "build_" prefix if present
+                    if (buildingKey.startsWith('build_')) {
+                        buildingKey = buildingKey.replace('build_', '');
+                    }
+                    return buildingKey;
+                })
+                .filter((building: string) => building !== "factorygame") || [];
 
             // Filter out redundant buildings like "bp_workbenchcomponent" and "factorygame"
             const powerPerBuilding = producedIn
@@ -302,6 +306,27 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
         });
 
     return recipes;
+}
+
+// Function to extract raw resources from the game data
+function getRawResources(data: any[]): { [key: string]: string } {
+    const rawResources: { [key: string]: string } = {};
+
+    data
+        .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
+        .flatMap((entry: any) => entry.Classes)
+        .forEach((resource: any) => {
+            const className = resource.ClassName
+                .replace('Desc_', '')
+                .replace(/_C$/, '');
+            const displayName = resource.mDisplayName;
+
+            if (className && displayName) {
+                rawResources[className] = displayName;
+            }
+        });
+
+    return rawResources;
 }
 
 // Central function to process the file and generate the output
