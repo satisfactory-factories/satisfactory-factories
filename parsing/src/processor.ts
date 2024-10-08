@@ -61,6 +61,7 @@ const workshopComponentPath = "/Game/FactoryGame/Buildable/-Shared/WorkBench/BP_
 // Function to extract parts
 function getParts(data: any[]): { [key: string]: string } {
     const parts: { [key: string]: string } = {};
+
     data
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
@@ -78,11 +79,82 @@ function getParts(data: any[]): { [key: string]: string } {
             const displayName = entry.mDisplayName;
             if (!parts[partName]) parts[partName] = displayName;
         });
-    return parts;
+
+    // Sort the parts by key
+    return Object.keys(parts)
+      .sort()
+      .reduce((sortedObj: { [key: string]: string }, key: string) => {
+          sortedObj[key] = parts[key];
+          return sortedObj;
+      }, {});
 }
 
-// Function to extract recipes
-function getRecipes(data: any[], parts: { [key: string]: string }): any[] {
+// Function to extract all buildings that produce something
+function getProducingBuildings(data: any[]): string[] {
+    const producingBuildingsSet = new Set<string>();
+
+    data
+        .filter((entry: any) => entry.Classes)
+        .flatMap((entry: any) => entry.Classes)
+        .forEach((entry: any) => {
+            if (entry.mProducedIn) {
+                // Updated regex to capture building names inside quotes
+                const producedInBuildings = entry.mProducedIn.match(/\/([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/g)
+                    ?.map((building: string) => {
+                        const match = building.match(/\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/);
+                        if (match) {
+                            // Remove "build_" prefix if present
+                            const buildingName = match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
+                            return buildingName;
+                        }
+                        return null;
+                    })
+                    .filter((buildingName: string | null) => buildingName !== null);  // Filter out null values
+
+                if (producedInBuildings) {
+                    producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
+                }
+            }
+        });
+
+    return Array.from(producingBuildingsSet);  // Convert Set to an array
+}
+
+
+// Function to extract the power consumption for each producing building
+function getPowerConsumptionForBuildings(data: any[], producingBuildings: string[]): { [key: string]: number } {
+    const buildingsPowerMap: { [key: string]: number } = {};
+
+    data
+        .filter((entry: any) => entry.Classes)
+        .flatMap((entry: any) => entry.Classes)
+        .forEach((building: any) => {
+            if (building.ClassName && building.mPowerConsumption) {
+                // Normalize the building name by removing "_C" and lowercasing it
+                let buildingName = building.ClassName.replace(/_C$/, '').toLowerCase();
+                buildingName = buildingName.startsWith('build_') ? buildingName.replace('build_', '') : buildingName;
+
+                console.log(buildingName)
+
+                // Only include power data if the building is in the producingBuildings list
+                if (producingBuildings.includes(buildingName)) {
+                    const powerConsumption = parseFloat(building.mPowerConsumption) || 0;  // Default to 0 if undefined
+                    buildingsPowerMap[buildingName] = powerConsumption;
+                }
+            }
+        });
+
+    return buildingsPowerMap;
+}
+
+// Helper function to check if a recipe is likely to be liquid based on building type and amount
+function isLikelyLiquid(building: string, amount: number): boolean {
+    const fluidBuildings = ['build_waterpump', 'build_oilrefinery', 'build_packager', 'build_oilpump', 'build_blender'];
+    return fluidBuildings.includes(building.toLowerCase()) && amount > 100;
+}
+
+// Function to extract recipes, adjusting for power consumption and liquid items, and removing "build_" prefix in producedIn
+function getRecipes(data: any[], parts: { [key: string]: string }, producingBuildings: { [key: string]: number }): any[] {
     const recipes: any[] = [];
     data
         .filter((entry: any) => entry.Classes)
@@ -102,7 +174,14 @@ function getRecipes(data: any[], parts: { [key: string]: string }): any[] {
                         const match = ingredientStr.match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
                         if (match) {
                             const partName = match[1];
-                            const amount = parseInt(match[2], 10);
+                            let amount = parseInt(match[2], 10);
+                            // Check if this is a likely liquid based on building and amount
+                            const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
+                                ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
+
+                            if (isLikelyLiquid(producedIn, amount)) {
+                                amount = amount / 100;  // Divide by 100 for liquid amounts
+                            }
                             return { [partName]: amount };
                         }
                         return null;
@@ -110,45 +189,75 @@ function getRecipes(data: any[], parts: { [key: string]: string }): any[] {
                     .filter((ingredient: any) => ingredient !== null)
                 : [];
 
-            const producedIn = recipe.mProducedIn
-                .match(/\/(.*?)\./g)
-                ?.map((building: string) => mapProducedIn(building)) || [];
+            // Parse mProduct to extract multiple products
+            const productMatches = recipe.mProduct
+                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
+                ?.map((productStr: string) => {
+                    const match = productStr.match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+                    if (match) {
+                        const productName = match[1];
+                        let amount = parseInt(match[2], 10);
+                        // Check if this is a likely liquid based on building and amount
+                        const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
+                            ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
 
-            // Extract the product of the recipe
-            const productMatch = recipe.mProduct?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
-            const product = productMatch ? { [productMatch[1]]: parseInt(productMatch[2], 10) } : {};
-            const productAmount = parseInt(productMatch?.[2] || "1", 10); // Default to 1 if no product amount is given
+                        if (isLikelyLiquid(producedIn, amount)) {
+                            amount = amount / 1000;  // Divide by 1000 for liquid amounts
+                        }
+                        return { [productName]: amount };
+                    }
+                    return null;
+                })
+                .filter((product: any) => product !== null) || [];
 
-            // Calculate perMin using the formula: perMin = (60 / duration) * productAmount
+            // Separate product and byProducts
+            const primaryProduct = productMatches[0] || {};
+            const byProducts = productMatches.length > 1 ? productMatches.slice(1) : [];
+
+            // Ensure primary product's amount is a number
+            const productAmount = typeof Object.values(primaryProduct)[0] === 'number' ? Object.values(primaryProduct)[0] as number : 0;
+
+            // Calculate perMin for the primary product using the formula: perMin = (60 / duration) * productAmount
             const duration = parseFloat(recipe.mManufactoringDuration) || 0;  // Default to 0 if undefined
             const perMin = duration > 0 ? (60 / duration) * productAmount : 0;
+
+            // Handle multiple building power values and remove "build_" prefix
+            const producedIn = recipe.mProducedIn
+                .match(/\/([^\/]+)\./g)
+                ?.map((building: string) => {
+                    let buildingKey = building.replace(/\//g, '').replace(/\./g, '').toLowerCase();
+                    // Remove "build_" prefix if present
+                    if (buildingKey.startsWith('build_')) {
+                        buildingKey = buildingKey.replace('build_', '');
+                    }
+                    return buildingKey;
+                }) || [];
+
+            // Filter out redundant buildings like "bp_workbenchcomponent" and "factorygame"
+            const powerPerProductArray = producedIn
+                .map((building: string) => {
+                    const buildingPower = producingBuildings[building] || 0;  // Get building power from the producingBuildings map, default to 0
+                    return {
+                        building: building,
+                        powerPerProduct: perMin > 0 ? buildingPower / perMin : 0
+                    };
+                })
+                .filter((item: { building: string }) => !['bp_workbenchcomponent', 'factorygame'].includes(item.building));  // Remove entries with these buildings
 
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
                 displayName: recipe.mDisplayName,
                 ingredients,
+                product: primaryProduct,   // Primary product
+                byProducts,                // Byproducts (if any)
+                perMin,                    // Add perMin for the primary product
                 producedIn,
-                product,
-                perMin  // Add perMin to the recipe
+                powerPerProduct: powerPerProductArray  // Store power values for each building
             });
         });
     return recipes;
 }
-// Function to extract unique buildings
-function getBuildings(data: any[]): Set<string> {
-    const buildingsSet = new Set<string>();
-    data
-        .filter((entry: any) => entry.Classes)
-        .flatMap((entry: any) => entry.Classes)
-        .forEach((recipe: any) => {
-            if (recipe.mProducedIn) {
-                const producedIn = recipe.mProducedIn.match(/\/(.*?)\./g)
-                    ?.map((building: string) => mapProducedIn(building)) || [];
-                producedIn.forEach((building: string) => buildingsSet.add(building));  // Explicitly define type as string
-            }
-        });
-    return buildingsSet;
-}
+
 
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
@@ -157,14 +266,23 @@ async function processFile(inputFile: string, outputFile: string) {
         const cleanedContent = cleanInput(fileContent);
         const data = JSON.parse(cleanedContent);
 
-        // Get parts, recipes, and buildings
+        // Get parts
         const parts = getParts(data);
-        const recipes = getRecipes(data, parts);
-        const buildings = Array.from(getBuildings(data));
+
+        // Get an array of all buildings that produce something
+        const producingBuildings = getProducingBuildings(data);
+
+        console.log(producingBuildings)
+
+        // Get power consumption for the producing buildings
+        const buildingsPowerMap = getPowerConsumptionForBuildings(data, producingBuildings);
+
+        // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
+        const recipes = getRecipes(data, parts, buildingsPowerMap);
 
         // Construct the final JSON object
         const finalData = {
-            buildings,
+            buildings: buildingsPowerMap,  // Use buildingsPowerMap for building info
             parts,
             recipes
         };
@@ -173,13 +291,14 @@ async function processFile(inputFile: string, outputFile: string) {
         await fs.writeJson(path.resolve(outputFile), finalData, { spaces: 4 });
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
     } catch (error) {
-        if (error instanceof Error) {  // Type guard check for 'unknown' type
+        if (error instanceof Error) {
             console.error(`Error processing file: ${error.message}`);
         } else {
             console.error(`Error processing file: ${error}`);
         }
     }
 }
+
 
 // Export processFile for use
 export { processFile };
