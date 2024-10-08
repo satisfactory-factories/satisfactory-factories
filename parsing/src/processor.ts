@@ -36,8 +36,9 @@ function cleanInput(input: string): string {
 }
 
 // Blacklist for excluding items produced by the Build Gun
-const blacklist = ["/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C"];
-const workshopComponentPath = "/Game/FactoryGame/Buildable/-Shared/WorkBench/BP_WorkshopComponent.BP_WorkshopComponent_C";
+const blacklist = [
+  "/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C",
+];
 
 // Helper function to determine if an ingredient is a collectable (e.g., Power Slug)
 function isCollectable(ingredients: string): boolean {
@@ -64,13 +65,19 @@ function getParts(data: any[]): { parts: { [key: string]: string }, collectables
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
 
+            // Check if it's an unpackaged recipe and skip it for parts
+            if (entry.mDisplayName.includes("Unpackage")) return;
+
             // Extract the part name
             const productMatches = entry.mProduct
                 ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
 
             if (productMatches) {
                 const partName = productMatches[1];  // Use the mProduct part name
-                const friendlyName = entry.mDisplayName;  // Use the friendly name
+                let friendlyName = entry.mDisplayName;  // Use the friendly name
+
+                // Remove any text within brackets, including the brackets themselves
+                friendlyName = friendlyName.replace(/\s*\(.*?\)/g, '');
 
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
@@ -128,7 +135,6 @@ function getProducingBuildings(data: any[]): string[] {
     return Array.from(producingBuildingsSet);  // Convert Set to an array
 }
 
-
 // Function to extract the power consumption for each producing building
 function getPowerConsumptionForBuildings(data: any[], producingBuildings: string[]): { [key: string]: number } {
     const buildingsPowerMap: { [key: string]: number } = {};
@@ -172,9 +178,21 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
         .filter((recipe: any) => {
             if (!recipe.mProducedIn) return false;
             if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
-            const producedInBuildings = recipe.mProducedIn.match(/"([^"]+)"/g)?.map((building: string) => building.replace(/"/g, ''));
-            return !(producedInBuildings && producedInBuildings.length === 1 && producedInBuildings[0] === workshopComponentPath);
 
+            // Check if there's a building in the producingBuildings map that matches the recipe's producing building
+            const rawBuildingKey = recipe.mProducedIn.match(/\/([^\/]+)\./g);
+
+            if (!rawBuildingKey) {
+              return false;
+            }
+
+            // Check the array for "Build_", if one is found remove the build prefix
+            const buildingKey = rawBuildingKey[0].replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
+
+            if (producingBuildings[buildingKey]) {
+              console.log('Found building in producingBuildings map:', buildingKey);
+                return true;
+            }
         })
         .forEach((recipe: any) => {
             const ingredients = recipe.mIngredients
@@ -206,12 +224,15 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
             let product = {};
             let byProduct = {};
 
+            // Ensure primary product's amount is a number
+            let productAmount = typeof Object.values(product)[0] === 'number' ? Object.values(product)[0] as number : 0;
+
             if (productMatches && productMatches.length > 0) {
                 // Handle the first product
                 const primaryProductMatch = productMatches[0].match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
                 if (primaryProductMatch) {
                     const productName = primaryProductMatch[1];
-                    let productAmount = parseInt(primaryProductMatch[2], 10);
+                    productAmount = parseInt(primaryProductMatch[2], 10);
 
                     const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
                         ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
@@ -237,8 +258,6 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                 }
             }
 
-            // Ensure primary product's amount is a number
-            const productAmount = typeof Object.values(product)[0] === 'number' ? Object.values(product)[0] as number : 0;
 
             // Calculate perMin for the primary product using the formula: perMin = (60 / duration) * productAmount
             const duration = parseFloat(recipe.mManufactoringDuration) || 0;  // Default to 0 if undefined
@@ -248,24 +267,26 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
             const producedIn = recipe.mProducedIn
                 .match(/\/([^\/]+)\./g)
                 ?.map((building: string) => {
-                    let buildingKey = building.replace(/\//g, '').replace(/\./g, '').toLowerCase();
-                    // Remove "build_" prefix if present
-                    if (buildingKey.startsWith('build_')) {
-                        buildingKey = buildingKey.replace('build_', '');
-                    }
-                    return buildingKey;
-                }) || [];
+                    return building
+                        .replace(/\//g, '')
+                        .replace(/\./g, '')
+                        .toLowerCase()
+                        .replace('build_', '');
+                }).filter((building: string) => building != 'factorygame')
+            || []
 
             // Filter out redundant buildings like "bp_workbenchcomponent" and "factorygame"
             const powerPerBuilding = producedIn
+                .filter((building: string) => !['bp_workbenchcomponent', 'factorygame'].includes(building)) // Remove entries with these buildings
                 .map((building: string) => {
                     const buildingPower = producingBuildings[building] || 0;  // Get building power from the producingBuildings map, default to 0
                     return {
                         building: building,
-                        powerPerBuilding: perMin > 0 ? buildingPower / perMin : 0
+                        powerPerBuilding: productAmount > 0 ? buildingPower / productAmount : 0
                     };
-                })
-                .filter((item: { building: string }) => !['bp_workbenchcomponent', 'factorygame'].includes(item.building));  // Remove entries with these buildings
+                });
+
+            const isAlternate = recipe.mDisplayName.includes("Alternate");
 
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
@@ -275,7 +296,8 @@ function getRecipes(data: any[], producingBuildings: { [key: string]: number }):
                 byProduct,      // Singular byProduct (if any)
                 perMin,         // Add perMin for the primary product
                 producedIn,
-                powerPerBuilding  // Renamed to powerPerBuilding
+                powerPerBuilding,
+                isAlternate
             });
         });
 
@@ -319,7 +341,6 @@ async function processFile(inputFile: string, outputFile: string) {
         }
     }
 }
-
 
 // Export processFile for use
 export { processFile };
