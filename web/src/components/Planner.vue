@@ -92,7 +92,7 @@
           </label>
           <button @click="deleteOutput(outputIndex, group)" style="background-color: red">Del</button>
         </div>
-        <button @click="addRecipeToGroup(index)" style="background-color: dodgerblue">+</button>
+        <button @click="addEmptyOutput(index)" style="background-color: dodgerblue">+</button>
       </div>
       <div v-if="group.dependants.length > 0">
         <h3>Dependants</h3>
@@ -178,6 +178,44 @@ export default defineComponent({
     },
   },
   methods: {
+    clear() {
+      this.groups = [];
+      this.updateWorldRawResources();
+    },
+
+    // ==== GLOBALS
+    // Resets the world's raw resources counts according to the limits provided by the data.
+    generateRawResources() {
+      this.worldRawResources = {};
+
+      let ores = {} as { [key: string]: RawResource };
+
+      Object.keys(this.data.items.rawResources).forEach((name) => {
+        const resource = this.data.items.rawResources[name];
+        ores[name] = {
+          name: resource.name,
+          amount: resource.limit,
+        }
+      });
+
+      this.worldRawResources = ores;
+    },
+
+    // ==== HELPERS
+    isSatisfiedStyling(group: Group, requirement: string | number) {
+      return group.partsRequired[requirement].satisfied ? 'color: green' : 'color: red';
+    },
+    getPartDisplayName(part: string | number) {
+      return this.data.items.rawResources[part]?.name || this.data.items.parts[part];
+    },
+    groupStyling(group: Group) {
+      return {
+        border: `1px solid ${group.inputsSatisfied ? '#28a745' : '#dc3545'}`,
+        backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+      };
+    },
+
+    // ==== GROUPS
     createGroup() {
       this.groups.push({
         id: this.groups.length,
@@ -190,10 +228,6 @@ export default defineComponent({
         dependants: [],
       });
     },
-    clear() {
-      this.groups = [];
-      this.updateWorldRawResources();
-    },
     clearGroup(groupIndex: number) {
       this.groups.splice(groupIndex, 1);
       this.updateWorldRawResources();
@@ -201,34 +235,6 @@ export default defineComponent({
       // When a group is cleared, we need to trigger updates to all groups to ensure consistency.
       this.groups.forEach(group => this.updateGroup(group));
     },
-    isSatisfiedStyling(group: Group, requirement: string | number) {
-      return group.partsRequired[requirement].satisfied ? 'color: green' : 'color: red';
-    },
-    getPartDisplayName(part: string | number) {
-      return this.data.items.rawResources[part]?.name || this.data.items.parts[part];
-    },
-    addRecipeToGroup(groupIndex: number) {
-      this.groups[groupIndex].outputs.push({
-        id: '',
-        amount: 0,
-      });
-    },
-    addEmptyInput(group: Group) {
-      group.inputs.push({
-        groupId: 0,
-        outputPart: '',
-        amount: 0,
-      });
-    },
-    deleteInput(inputIndex: number, group: Group) {
-      group.inputs.splice(inputIndex, 1)
-      this.updateGroup(group)
-    },
-    deleteOutput(outputIndex: number, group: Group) {
-      group.outputs.splice(outputIndex, 1)
-      this.updateGroup(group);
-    },
-
     // This goes through the group and calculates if it needs to add any dependencies to other groups.
     calculateGroupDependencies(group: Group) {
       for (let input of group.inputs) {
@@ -263,7 +269,7 @@ export default defineComponent({
         }
       }
     },
-
+    // Gets the outputs of another group for dependencies
     getGroupOutputs(groupId: number | undefined): string[] {
       if (groupId !== 0 && !groupId) {
         console.error('Tried to get outputs for an undefined group ID.');
@@ -282,23 +288,6 @@ export default defineComponent({
         })
         .filter(output => output);
     },
-    // Resets the world's raw resources counts according to the limits provided by the data.
-    generateRawResources() {
-      this.worldRawResources = {};
-
-      let ores = {} as { [key: string]: RawResource };
-
-      Object.keys(this.data.items.rawResources).forEach((name) => {
-        const resource = this.data.items.rawResources[name];
-        ores[name] = {
-          name: resource.name,
-          amount: resource.limit,
-        }
-      });
-
-      this.worldRawResources = ores;
-    },
-
     updateGroup(group: Group) {
       this.updateWorldRawResources();
       this.updateGroupRequirements(group);
@@ -390,7 +379,6 @@ export default defineComponent({
         });
       });
     },
-
     // Calculate the inputs required to satisfy the group's parts requirements.
     checkGroupPartSatisfaction(group: Group) {
       // Calculate based on the inputs of the group if the requirements are satisfied.
@@ -424,12 +412,32 @@ export default defineComponent({
       // Now check if all requirements are satisfied.
       group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
     },
-    groupStyling(group: Group) {
-      return {
-        border: `1px solid ${group.inputsSatisfied ? '#28a745' : '#dc3545'}`,
-        backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
-      };
-    }
+
+    // ==== INPUTS
+    addEmptyInput(group: Group) {
+      group.inputs.push({
+        groupId: 0,
+        outputPart: '',
+        amount: 0,
+      });
+    },
+    deleteInput(inputIndex: number, group: Group) {
+      group.inputs.splice(inputIndex, 1)
+      this.updateGroup(group)
+    },
+
+    // ==== OUTPUTS
+    addEmptyOutput(groupIndex: number) {
+      this.groups[groupIndex].outputs.push({
+        id: '',
+        amount: 0,
+      });
+    },
+
+    deleteOutput(outputIndex: number, group: Group) {
+      group.outputs.splice(outputIndex, 1)
+      this.updateGroup(group);
+    },
   }
 });
 </script>
