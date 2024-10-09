@@ -9,7 +9,7 @@
     <div v-else>
       <div>
         <h1>Planner</h1>
-        <planner v-if="data.items" :recipes="data.recipes"></planner>
+        <planner v-if="data.items" :data="data"></planner>
       </div>
       <h1>Available Recipes</h1>
       <button @click="toggleRecipeList">{{ showRecipeList ? 'Hide' : 'Show' }} Recipe List</button>
