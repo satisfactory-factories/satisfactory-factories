@@ -21,6 +21,8 @@
         <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
       </div>
 
+      <!------------------>
+      <!-- Inputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h3>Inputs</h3>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
@@ -32,21 +34,19 @@
           </div>
         </div>
         <div v-for="(input, inputIndex) in group.inputs" :key="inputIndex">
-          <label>
-            <select v-model="input.groupId">
-              <option v-for="(otherGroup, otherIndex) in validGroupsForInputs"
-                      :key="otherIndex"
-                      :value="otherIndex"
-                      @change="updateGroup(group)"
-                      :disabled="otherIndex === index"
-              >
-                Group {{ otherIndex + 1 }} - {{ otherGroup.name }}
-              </option>
-            </select>
-          </label>
+          <select v-model="input.groupId">
+            <option v-for="(otherGroup, otherIndex) in validGroupsForInputs"
+                    :key="otherIndex"
+                    :value="otherIndex"
+                    @change="updateGroup(group)"
+                    :disabled="otherIndex === index"
+            >
+              {{ otherGroup.name }}
+            </option>
+          </select>
           <label>
             Output:
-            <select v-model="input.outputPart" @change="updateGroup(group)">
+            <select v-model="input.outputPart" @change="updateGroup(group)" style="margin-right: 5px">
               <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output" :disabled="output == input.groupId">
                 {{ getPartDisplayName(output) }}
               </option>
@@ -61,6 +61,8 @@
         <button :disabled="validGroupsForInputs.length < 2" @click="addEmptyInput(group)" style="background-color: dodgerblue">+ <span v-if="groups.length < 2">(Add another group!)</span></button>
       </div>
 
+      <!------------------>
+      <!-- Satisfaction -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h3>Satisfaction</h3>
         <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
@@ -74,17 +76,17 @@
         </div>
       </div>
 
+      <!------------------>
+      <!-- Outputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h3>Outputs</h3>
         <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
+          <select v-model="output.id" @change="updateGroup(group)" style="margin-right: 5px">
+            <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
+              {{ recipeOption.displayName }}
+            </option>
+          </select>
           <label>
-            <select v-model="output.id" @change="updateGroup(group)">
-              <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
-                {{ recipeOption.displayName }}
-              </option>
-            </select>
-          </label>
-          <label style="margin-left: 10px">
             <input type="number" v-model.number="output.amount" @input="updateGroup(group)" min="1" />
             /min
           </label>
@@ -101,7 +103,6 @@
     </div>
     <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
   </div>
-
 </template>
 
 <script lang="ts">
