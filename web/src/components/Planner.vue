@@ -30,7 +30,12 @@
           <label>
             Group:
             <select v-model="input.groupId">
-              <option v-for="(otherGroup, otherIndex) in groups" :key="otherIndex" :value="otherIndex" :disabled="otherIndex === index">
+              <option v-for="(otherGroup, otherIndex) in groups"
+                      :key="otherIndex"
+                      :value="otherIndex"
+                      @change="updateGroup(group)"
+                      :disabled="otherIndex === index"
+              >
                 Group {{ otherIndex + 1 }} - {{ otherGroup.name }}
               </option>
             </select>
@@ -44,12 +49,12 @@
             </select>
           </label>
           <label>
-            <input type="number" v-model.number="input.amountPerMinute" @change="updateGroup(group)" min="0" />
+            <input type="number" v-model.number="input.amount" @change="updateGroup(group)" min="0" />
             /min
           </label>
           <button @click="group.inputs.splice(inputIndex, 1)" style="background-color: red">Del</button>
         </div>
-        <button :disabled="groups.length < 2" @click="addInputToGroup(index)">Add Input <span v-if="groups.length < 2">(Add another group!)</span></button>
+        <button :disabled="groups.length < 2" @click="addEmptyInput(group)">Add Input <span v-if="groups.length < 2">(Add another group!)</span></button>
       </div>
 
       <div>
@@ -62,21 +67,29 @@
       <div style="margin-bottom: 15px">
         <h3>Outputs <button @click="addRecipeToGroup(index)" style="background-color: dodgerblue">+</button></h3>
 
-        <div v-for="(recipe, recipeIndex) in group.recipes" :key="recipeIndex" class="recipe-entry">
+        <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
           <label>
-            <select v-model="recipe.id" @change="updateGroup(group)">
+            <select v-model="output.id" @change="updateGroup(group)">
               <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
                 {{ recipeOption.displayName }}
               </option>
             </select>
           </label>
           <label style="margin-left: 10px">
-            <input type="number" v-model.number="recipe.amountPerMinute" @input="updateGroup(group)" min="0" />
+            <input type="number" v-model.number="output.amount" @input="updateGroup(group)" min="1" />
             /min
           </label>
+          <button @click="deleteOutput(outputIndex, group)" style="background-color: red">Del</button>
+        </div>
+      </div>
+      <div v-if="group.dependants.length > 0">
+        <h3>Dependants</h3>
+        <div v-for="(dependant, dependantIndex) in group.dependants" :key="dependantIndex">
+          <p>Group {{ dependant.groupId + 1 }} - {{ getPartDisplayName(dependant.outputPart) }}: {{ dependant.amount }}/m</p>
         </div>
       </div>
     </div>
+    <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
   </div>
 
 </template>
@@ -88,16 +101,17 @@ import {DataInterface} from "../interfaces/DataInterface.ts";
 interface Group {
   id: number;
   name: string;
-  recipes: Array<{
-    id: string;
-    amountPerMinute: number;
-  }>;
   inputs: Array<{
-    resource?: string;
-    groupId?: number;
-    outputPart?: string;
-    amountPerMinute: number;
+    groupId: number;
+    outputPart: string;
+    amount: number;
     // Holds the resources required to fulfil the inputs.
+  }>;
+  outputs: { [key: string]: { amount: number } };
+  dependants: Array<{
+    groupId: number;
+    outputPart: string;
+    amount: number;
   }>;
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
@@ -105,6 +119,7 @@ interface Group {
     name: string;
     amount: number;
   }>;
+
 }
 
 export interface RawResource {
@@ -143,11 +158,12 @@ export default defineComponent({
       this.groups.push({
         id: this.groups.length,
         name: '',
-        recipes: [],
+        outputs: [],
         inputs: [],
         partsRequired: {},
         inputsSatisfied: false,
         rawResources: [],
+        dependants: [],
       });
     },
     clear() {
@@ -165,19 +181,56 @@ export default defineComponent({
       return this.data.items.rawResources[part]?.name || this.data.items.parts[part];
     },
     addRecipeToGroup(groupIndex: number) {
-      this.groups[groupIndex].recipes.push({
+      this.groups[groupIndex].outputs.push({
         id: '',
-        amountPerMinute: 0,
+        amount: 0,
       });
     },
-    addInputToGroup(groupIndex: number) {
-      this.groups[groupIndex].inputs.push({
-        groupId: groupIndex,
-        amountPerMinute: 0,
+    addEmptyInput(group: Group) {
+      group.inputs.push({
+        groupId: 0,
+        outputPart: '',
+        amount: 0,
       });
     },
-    addDependency(group1: Group, group2: Group, part: string) {
+    deleteOutput(outputIndex: number, group: Group) {
+      group.outputs.splice(outputIndex, 1)
+      this.updateGroup(group);
+    },
 
+    // This goes through the group and calculates if it needs to add any dependencies to other groups.
+    calculateGroupDependencies(group: Group) {
+      for (let input of group.inputs) {
+        const otherGroup = this.groups[input.groupId];
+
+        if (!otherGroup) {
+          console.warn(`Group with ID ${input.groupId} not found or was not defined yet.`);
+          return;
+        }
+
+        // To prevent orphaning, delete all dependencies of the source group from the destination group.
+        otherGroup.dependants = otherGroup.dependants.filter(dependant => dependant.groupId !== group.id);
+
+        const output = otherGroup.outputs[input.outputPart];
+
+        if (!output) {
+          console.warn(`Part ${input.outputPart} not found in group ${input.groupId} or was not defined yet.`);
+          return;
+        }
+
+        // Check if the dependency already exists.
+        const existingDependency = group.dependants.find(dependant => dependant.groupId === input.groupId && dependant.outputPart === input.outputPart);
+
+        if (existingDependency) {
+          existingDependency.amount = input.amount;
+        } else {
+          otherGroup.dependants.push({
+            groupId: group.groupId,
+            outputPart: input.outputPart,
+            amount: input.amount,
+          });
+        }
+      }
     },
 
     getGroupOutputs(groupId: number | undefined): string[] {
@@ -191,7 +244,7 @@ export default defineComponent({
         console.error('Tried to get outputs for a group that does not exist:', groupId);
         return [];
       }
-      return group.recipes
+      return group.outputs
         .map(recipe => {
           const recipeData = this.data.recipes.find(r => r.id === recipe.id);
           return recipeData ? Object.keys(recipeData.product)[0] : '';
@@ -219,6 +272,7 @@ export default defineComponent({
       this.updateWorldRawResources();
       this.updateGroupRequirements(group);
       this.checkGroupPartSatisfaction(group);
+      this.calculateGroupDependencies(group);
     },
     // This function calculates the world resources available after each group has consumed Raw Resources.
     // This is done here globally as it loops all groups. It is not appropriate to be done on group updates.
@@ -226,41 +280,34 @@ export default defineComponent({
       // Generate fresh world resources as a baseline for calculation.
       this.generateRawResources();
 
-      // Loop through each group to calculate inputs.
+      // Loop through each group's outputs to calculate usage of raw resources.
       this.groups.forEach(group => {
-        // Filter out previous 'world' inputs before recalculating.
-        group.recipes.forEach(recipeEntry => {
-          const recipe = this.data.recipes.find(r => r.id === recipeEntry.id);
+        group.outputs.forEach(output => {
+          const recipe = this.data.recipes.find(r => r.id === output.id);
           if (!recipe) {
-            console.warn(`Recipe with ID ${recipeEntry.id} not found.`);
+            console.error(`Recipe with ID ${output.id} not found.`);
             return;
           }
 
           // Loop through each ingredient in the recipe (array of objects).
-          recipe.ingredients.forEach(ingredientObject => {
+          recipe.ingredients.forEach(ingredient => {
             // Extract the ingredient name and amount.
-            const [ingredientKey, ingredientAmount] = Object.entries(ingredientObject)[0];
+            const [ingredientId, ingredientAmount] = Object.entries(ingredient)[0];
 
             if (isNaN(ingredientAmount)) {
-              console.warn(`Invalid ingredient amount for ingredient ${ingredientKey}. Skipping.`);
+              console.warn(`Invalid ingredient amount for ingredient ${ingredientId}. Skipping.`);
               return;
             }
 
-            if (this.worldRawResources[ingredientKey]) {
-              const resource = this.worldRawResources[ingredientKey];
-
-              if (!resource) {
-                console.warn(`World resource for ingredient ${ingredientKey} not found.`);
-                return;
-              }
-
-              // Update the world resource by reducing the available amount.
-              const updatedAmount = resource.amount - (ingredientAmount * recipeEntry.amountPerMinute);
-              this.worldRawResources[ingredientKey] = {
-                name: resource.name,
-                amount: updatedAmount,
-              };
+            if (!this.worldRawResources[ingredientId]) {
+              console.warn(`World resource for ingredient ${ingredientId} not found.`);
+              return;
             }
+
+            const resource = this.worldRawResources[ingredientId];
+
+            // Update the world resource by reducing the available amount.
+            this.worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * output.amount)
           });
         });
       });
@@ -271,17 +318,17 @@ export default defineComponent({
       group.partsRequired = {};
 
       // First loop the recipes of the group to get the total number of parts we want to build.
-      group.recipes.forEach(recipe => {
-        const recipeData = this.data.recipes.find(r => r.id === recipe.id);
-        if (!recipeData) {
-          console.error(`Recipe with ID ${recipe.id} not found.`);
+      group.outputs.forEach(output => {
+        const recipe = this.data.recipes.find(r => r.id === output.id);
+        if (!recipe) {
+          console.error(`Recipe with ID ${output.id} not found.`);
           return;
         }
 
         // Loop through each ingredient in the recipe.
-        recipeData.ingredients.forEach(ingredientObject => {
+        recipe.ingredients.forEach(ingredientPart => {
           // Extract the ingredient name and amount.
-          const [part, partAmount] = Object.entries(ingredientObject)[0];
+          const [part, partAmount] = Object.entries(ingredientPart)[0];
 
           if (isNaN(partAmount)) {
             console.warn(`Invalid ingredient amount for ingredient ${part}. Skipping.`);
@@ -302,7 +349,7 @@ export default defineComponent({
           const existingPartAmount = group.partsRequired[part].amountNeeded || 0;
 
           // Update the amount required with the new amount.
-          group.partsRequired[part].amountNeeded = parseInt((partAmount * recipe.amountPerMinute) + existingPartAmount)
+          group.partsRequired[part].amountNeeded = parseInt((partAmount * output.amount) + existingPartAmount)
 
           // If raw, automatically mark it as satisfied and also update the supply.
           if (isRaw) {
