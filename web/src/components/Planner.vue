@@ -3,7 +3,7 @@
     <h1>Factory Planner</h1>
 
     <h2>World ores available</h2>
-    <div v-for="ore in worldResources" :key=ore>{{ ore }}</div>
+    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>
 
     <button @click="createGroup">Create New Group</button>
     <button @click="clear" style="background-color: red">Clear (!)</button>
@@ -14,26 +14,10 @@
         Group Name:
         <input type="text" v-model="group.name" />
       </label>
+      <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
+
       <div>
-        <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
-        <button @click="addRecipeToGroup(index)">Add Output</button>
-        <div v-for="(recipe, recipeIndex) in group.recipes" :key="recipeIndex" class="recipe-entry">
-          <label>
-            Item:
-            <select v-model="recipe.id" @change="updateGroup(group)">
-              <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
-                {{ recipeOption.displayName }}
-              </option>
-            </select>
-          </label>
-          <label>
-            /min:
-            <input type="number" v-model.number="recipe.amountPerMinute" @input="updateGroup(group)" />
-          </label>
-        </div>
-      </div>
-      <div>
-        <button :disabled="groups.length < 2" @click="addInputToGroup(index)">Add Input Group <span v-if="groups.length < 2">(Add another group!)</span></button>
+        <h3>Inputs</h3>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
           <div v-if="group.rawResources.length > 0">
             <p>Raw Resources:</p>
@@ -42,7 +26,7 @@
             </div>
           </div>
         </div>
-        <div v-for="(input, inputIndex) in group.inputs" :key="inputIndex" class="input-entry">
+        <div v-for="(input, inputIndex) in group.inputs" :key="inputIndex">
           <label>
             Group:
             <select v-model="input.groupId">
@@ -54,21 +38,46 @@
           <label>
             Output:
             <select v-model="input.outputPart" @change="updateGroup(group)">
-              <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output">
+              <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output" :disabled="group.id === input.groupId">
                 {{ output }}
               </option>
             </select>
           </label>
           <label>
-            Amount (/min):
-            <input type="number" v-model.number="input.amountPerMinute" @change="updateGroup(group)" />
+            <input type="number" v-model.number="input.amountPerMinute" @change="updateGroup(group)" min="0" />
+            /min
           </label>
           <button @click="group.inputs.splice(inputIndex, 1)" style="background-color: red">Del</button>
         </div>
+        <button :disabled="groups.length < 2" @click="addInputToGroup(index)">Add Input <span v-if="groups.length < 2">(Add another group!)</span></button>
       </div>
-    <pre style="text-align: left">{{ JSON.stringify(group, null, 2) }}</pre>    </div>
+
+      <div>
+        <h3>Requirements</h3>
+        <div v-for="(part, partIndex) in group.partsRequired" :key="partIndex">
+          <p :style="isSatisfiedStyling(group, partIndex)">{{ getPartDisplayName(partIndex) }}: {{ part.amountSupplied }}/{{ part.amountNeeded }}</p>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 15px">
+        <h3>Outputs <button @click="addRecipeToGroup(index)" style="background-color: dodgerblue">+</button></h3>
+
+        <div v-for="(recipe, recipeIndex) in group.recipes" :key="recipeIndex" class="recipe-entry">
+          <label>
+            <select v-model="recipe.id" @change="updateGroup(group)">
+              <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
+                {{ recipeOption.displayName }}
+              </option>
+            </select>
+          </label>
+          <label style="margin-left: 10px">
+            <input type="number" v-model.number="recipe.amountPerMinute" @input="updateGroup(group)" min="0" />
+            /min
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
-      <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
 
 </template>
 
@@ -98,7 +107,7 @@ interface Group {
   }>;
 }
 
-export interface WorldResource {
+export interface RawResource {
   name: string;
   amount: number;
 }
@@ -114,12 +123,12 @@ export default defineComponent({
   data() {
     return {
       groups: JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Group[],
-      worldResources: {} as Map<string, WorldResource>
+      worldRawResources: {} as { [key: string]: RawResource },
     }
   },
   created() {
     this.generateRawResources();
-    this.calculateRemainingRawResources();
+    this.updateWorldRawResources();
   },
   watch: {
     groups: {
@@ -143,9 +152,17 @@ export default defineComponent({
     },
     clear() {
       this.groups = [];
+      this.updateWorldRawResources();
     },
     clearGroup(groupIndex: number) {
       this.groups.splice(groupIndex, 1);
+      this.updateWorldRawResources();
+    },
+    isSatisfiedStyling(group: Group, requirement: string | number) {
+      return group.partsRequired[requirement].satisfied ? 'color: green' : 'color: red';
+    },
+    getPartDisplayName(part: string | number) {
+      return this.data.items.rawResources[part]?.name || this.data.items.parts[part];
     },
     addRecipeToGroup(groupIndex: number) {
       this.groups[groupIndex].recipes.push({
@@ -159,8 +176,11 @@ export default defineComponent({
         amountPerMinute: 0,
       });
     },
+    addDependency(group1: Group, group2: Group, part: string) {
+
+    },
+
     getGroupOutputs(groupId: number | undefined): string[] {
-      console.log(groupId)
       if (groupId !== 0 && !groupId) {
         console.error('Tried to get outputs for an undefined group ID.');
         return [];
@@ -178,18 +198,33 @@ export default defineComponent({
         })
         .filter(output => output);
     },
+    // Resets the world's raw resources counts according to the limits provided by the data.
+    generateRawResources() {
+      this.worldRawResources = {};
+
+      let ores = {} as { [key: string]: RawResource };
+
+      Object.keys(this.data.items.rawResources).forEach((name) => {
+        const resource = this.data.items.rawResources[name];
+        ores[name] = {
+          name: resource.name,
+          amount: resource.limit,
+        }
+      });
+
+      this.worldRawResources = ores;
+    },
 
     updateGroup(group: Group) {
-      this.calculateRemainingRawResources();
+      this.updateWorldRawResources();
       this.updateGroupRequirements(group);
-      this.calculateRequirementsSatisfaction(group);
+      this.checkGroupPartSatisfaction(group);
     },
     // This function calculates the world resources available after each group has consumed Raw Resources.
-    calculateRemainingRawResources() {
+    // This is done here globally as it loops all groups. It is not appropriate to be done on group updates.
+    updateWorldRawResources() {
       // Generate fresh world resources as a baseline for calculation.
       this.generateRawResources();
-
-      console.log('Calculating raw resource usage for groups...');
 
       // Loop through each group to calculate inputs.
       this.groups.forEach(group => {
@@ -211,8 +246,8 @@ export default defineComponent({
               return;
             }
 
-            if (this.worldResources.has(ingredientKey)) {
-              const resource = this.worldResources.get(ingredientKey);
+            if (this.worldRawResources[ingredientKey]) {
+              const resource = this.worldRawResources[ingredientKey];
 
               if (!resource) {
                 console.warn(`World resource for ingredient ${ingredientKey} not found.`);
@@ -221,110 +256,95 @@ export default defineComponent({
 
               // Update the world resource by reducing the available amount.
               const updatedAmount = resource.amount - (ingredientAmount * recipeEntry.amountPerMinute);
-              this.worldResources.set(ingredientKey, {
+              this.worldRawResources[ingredientKey] = {
                 name: resource.name,
                 amount: updatedAmount,
-              });
+              };
             }
           });
         });
       });
-      console.log('Groups after calculating world resources:', JSON.stringify(this.groups, null, 2));
-    },
-    generateRawResources() {
-      if (this.worldResources.size > 0) this.worldResources.clear();
-
-      console.log('Setting up world resources...');
-      const ores = new Map<string, WorldResource>();
-
-      console.log(this.data.items.rawResources);
-      Object.keys(this.data.items.rawResources).forEach((name) => {
-        const resource = this.data.items.rawResources[name];
-        ores.set(name, {
-          name: resource.name,
-          amount: resource.limit,
-        })
-      });
-
-      this.worldResources = ores;
-      console.log('World resources:', this.worldResources);
     },
 
     updateGroupRequirements(group: Group) {
-      console.log('Resolving input requirements for group:', group);
-
-      // First blow away the current requirements so we don't get addative results.
+      // First reset the current requirements, so we don't get additive results.
       group.partsRequired = {};
 
       // First loop the recipes of the group to get the total number of parts we want to build.
       group.recipes.forEach(recipe => {
         const recipeData = this.data.recipes.find(r => r.id === recipe.id);
         if (!recipeData) {
-          console.warn(`Recipe with ID ${recipe.id} not found.`);
+          console.error(`Recipe with ID ${recipe.id} not found.`);
           return;
         }
 
-        console.log('Recipe data:', recipeData);
-
-        // Loop through each ingredient in the recipe (array of objects).
+        // Loop through each ingredient in the recipe.
         recipeData.ingredients.forEach(ingredientObject => {
           // Extract the ingredient name and amount.
-          const [ingredientKey, ingredientAmount] = Object.entries(ingredientObject)[0];
+          const [part, partAmount] = Object.entries(ingredientObject)[0];
 
-          console.log('Looking at part', ingredientKey, 'with amount', ingredientAmount);
-
-          if (isNaN(ingredientAmount)) {
-            console.warn(`Invalid ingredient amount for ingredient ${ingredientKey}. Skipping.`);
+          if (isNaN(partAmount)) {
+            console.warn(`Invalid ingredient amount for ingredient ${part}. Skipping.`);
             return;
           }
 
-          // Update the group's input to reflect world resource usage.
-          // Use a plain object for partsRequired to ensure Vue reactivity.
-          if (!group.partsRequired[ingredientKey]) {
-            group.partsRequired[ingredientKey] = {
-              amountOriginal: 0,
-              amount: 0,
+          // Update the group's input of parts.
+          if (!group.partsRequired[part]) {
+            group.partsRequired[part] = {
+              amountNeeded: 0,
+              amountSupplied: 0,
               satisfied: false,
             };
           }
 
-          const existingPartAmount = group.partsRequired[ingredientKey] || 0;
-          const newAmount = ingredientAmount * recipe.amountPerMinute + existingPartAmount.amount;
+          const isRaw = !!this.data.items.rawResources[part];
 
-          // Update partsRequired with the new amount.
-          group.partsRequired[ingredientKey].amount = newAmount
-          group.partsRequired[ingredientKey].amountOriginal = newAmount
+          const existingPartAmount = group.partsRequired[part].amountNeeded || 0;
 
-          console.log('Updated group partsRequired:', group.partsRequired);
+          // Update the amount required with the new amount.
+          group.partsRequired[part].amountNeeded = parseInt((partAmount * recipe.amountPerMinute) + existingPartAmount)
+
+          // If raw, automatically mark it as satisfied and also update the supply.
+          if (isRaw) {
+            group.partsRequired[part].satisfied = true;
+            group.partsRequired[part].amountSupplied = group.partsRequired[part].amountNeeded;
+          }
         });
       });
     },
 
     // Calculate the inputs required to satisfy the group's parts requirements.
-    calculateRequirementsSatisfaction(group: Group) {
-      // Create a copy of the group.partsRequired object to avoid modifying the original.
-      const runningRequirements = { ...group.partsRequired };
-
+    checkGroupPartSatisfaction(group: Group) {
       // Calculate based on the inputs of the group if the requirements are satisfied.
-      Object.keys(runningRequirements).forEach(part => {
-        // Check if the part is satisfied by the inputs.
-        const input = group.inputs.find(input => input.outputPart === part);
-        if (!input) {
-          console.log('Part', part, 'not satisfied by any input.');
+      Object.keys(group.inputs).forEach(input => {
+        const part = group.inputs[input].outputPart;
+        const requirement = group.partsRequired[part];
+
+        if (!requirement) {
+          console.error(`Part ${part} not found in requirements.`);
           return;
         }
 
-        // Check if the input amount is enough to satisfy the requirement.
-        runningRequirements[part].amount -= input.amountPerMinute;
+        // How get the amount of supply provided by the input
+        requirement.amountSupplied += group.inputs[input].amountPerMinute
 
-        if (runningRequirements[part].amount <= 0) {
-          console.log('Input', input, 'satisfies requirement for part', part);
-          runningRequirements[part].satisfied = true;
+        // Check if the input amount is enough to satisfy the requirement.
+        const satisfied = requirement.amountSupplied >=requirement.amountNeeded;
+
+        if (satisfied) {
+         requirement.satisfied = true;
+        }
+
+        console.log('requirement', requirement)
+
+        // If the part has 0 requirements it is technically satisfied
+        if (requirement.amountNeeded == 0) {
+          requirement.satisfied = true;
         }
       });
 
-      // Now check if all requirements are satisfied, each one should be 0 or less. Depending on if that is so, set a key called "satisfied" on each requirement.
-      group.inputsSatisfied = Object.keys(runningRequirements).every(part => runningRequirements[part].amount <= 0);
+      // Now check if all requirements are satisfied.
+      group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
     }
   },
 });
