@@ -5,11 +5,20 @@
 <!--    <h2>World ores available</h2>-->
 <!--    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>-->
 
-    <h2>Todo</h2>
-    <p>- When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</p>
+    <div>
+      <h2>Todo</h2>
+      <div style="text-align: left">
+        <ul>
+          <li>When output is added, define the recipe used to create the item, this is required for the Satisfaction, which is then required to produce demand.</li>
+          <li>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</li>
+          <li>Dependencies</li>
+        </ul>
+      </div>
+    </div>
 
     <button @click="createGroup">Create New Group</button>
-    <button @click="clear" style="background-color: red">Clear (!)</button>
+    <button @click="clearAll" style="background-color: red">Clear (!)</button>
+    <button @click="setTemplate" style="background-color: green">Template</button>
 
     <div v-for="(group, index) in groups" :key="index" class="group" :style="groupStyling(group)">
       <div style="margin-bottom: 15px;">
@@ -82,8 +91,8 @@
         <h3>Outputs</h3>
         <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
           <select v-model="output.id" @change="updateGroup(group)" style="margin-right: 5px">
-            <option v-for="recipeOption in data.recipes" :key="recipeOption.id" :value="recipeOption.id">
-              {{ recipeOption.displayName }}
+            <option v-for="(part, key) in data.items.parts" :key="part" :value="key">
+              {{ part }}
             </option>
           </select>
           <label>
@@ -94,14 +103,23 @@
         </div>
         <button @click="addEmptyOutput(index)" style="background-color: dodgerblue">+</button>
       </div>
-      <div v-if="group.dependants.length > 0">
+
+      <!------------------>
+      <!-- Dependencies -->
+      <div v-if="getGroupDependencies(group).length > 0">
         <h3>Dependants</h3>
-        <div v-for="(dependant, dependantIndex) in group.dependants" :key="dependantIndex">
-          <p>Group {{ dependant.groupId + 1 }} - {{ getPartDisplayName(dependant.outputPart) }}: {{ dependant.amount }}/m</p>
-        </div>
+        <p v-for="(dependant, dependantIndex) in getGroupDependencies(group)" :key="dependantIndex">
+          {{ this.groups[dependant.groupId].name }} - {{ getPartDisplayName(dependant.part) }}: {{ dependant.amount }} /min
+        </p>
       </div>
     </div>
-    <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
+    <div>
+      Groups:
+        <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
+      Dependencies:
+        <pre style="text-align: left">{{ JSON.stringify(dependencies, null, 2) }}</pre>
+
+    </div>
   </div>
 </template>
 
@@ -119,17 +137,19 @@ interface Group {
     // Holds the resources required to fulfil the inputs.
   }>;
   outputs: { [key: string]: { amount: number } };
-  dependants: Array<{
-    groupId: number;
-    outputPart: string;
-    amount: number;
-  }>;
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
   rawResources: Array<{
     name: string;
     amount: number;
   }>;
+}
+
+interface GroupDependency {
+  outputGroupId: number;
+  inputGroupId: number;
+  outputPart: string;
+  outputAmount: number;
 }
 
 export interface RawResource {
@@ -149,6 +169,7 @@ export default defineComponent({
     return {
       groups: JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Group[],
       worldRawResources: {} as { [key: string]: RawResource },
+      dependencies: JSON.parse(localStorage.getItem('factoryDependencies') || '[]') as GroupDependency[],
     }
   },
   created() {
@@ -176,10 +197,17 @@ export default defineComponent({
       },
       deep: true,
     },
+    dependencies: {
+      handler() {
+        localStorage.setItem('factoryDependencies', JSON.stringify(this.dependencies));
+      },
+      deep: true,
+    },
   },
   methods: {
-    clear() {
+    clearAll() {
       this.groups = [];
+      this.dependencies = [];
       this.updateWorldRawResources();
     },
 
@@ -200,6 +228,69 @@ export default defineComponent({
 
       this.worldRawResources = ores;
     },
+    calculateDependencies() {
+      console.log('Calculating dependencies');
+      const newDependencies: { [key: string]: GroupDependency[] } = {};
+
+      this.groups.forEach(group => {
+        group.inputs.forEach(input => {
+          const dependency = {
+            groupId: group.id,
+            part: input.outputPart,
+            amount: input.amount,
+          };
+
+          // Create an array for the group ID if it doesn't exist
+          if (!newDependencies[input.groupId]) {
+            newDependencies[input.groupId] = {
+              links: [],
+            };
+          }
+
+          // Add the dependency to the appropriate group
+          newDependencies[input.groupId].links.push(dependency);
+        });
+      });
+
+      // Now loop the links and calculate the total demand upon each part within the group
+      Object.keys(newDependencies).forEach(groupDepId => {
+        const groupDependency = newDependencies[groupDepId];
+        groupDependency.links.forEach(link => {
+          const part = link.part;
+
+          const depGroup = this.groups[link.groupId];
+          const depGroupInput = depGroup.inputs.find(input => input.outputPart === part);
+
+          // Now we know what the dependant group wants from our group, lets add it as a demand
+
+          if (!newDependencies[groupDepId].metrics) {
+            newDependencies[groupDepId].metrics = {};
+          }
+
+          const thisGroup = this.groups[groupDepId];
+
+          console.log('This group:', thisGroup);
+          console.log('part:', part);
+
+
+          // Figure out the supply by looking at our group's outputs
+          const supply = thisGroup.outputs.find(output => output.id === part)?.amount || 0;
+
+          newDependencies[groupDepId].metrics[part] = {
+            part,
+            demand: depGroupInput?.amount || 0,
+            supply,
+          }
+        });
+      });
+
+
+      console.log('Dependencies:', newDependencies);
+
+      // Replace the existing dependencies with the new ones
+      this.dependencies = newDependencies;
+      console.log(this.dependencies);
+    },
 
     // ==== HELPERS
     isSatisfiedStyling(group: Group, requirement: string | number) {
@@ -214,6 +305,56 @@ export default defineComponent({
         backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
+    setTemplate() {
+      this.groups = [
+        {
+          "id": 0,
+          "name": "Iron Ingot",
+          "outputs": [
+            {
+              "id": "IronIngot",
+              "amount": 300
+            }
+          ],
+          "inputs": [],
+          "partsRequired": {
+            "OreIron": {
+              "amountNeeded": 300,
+              "amountSupplied": 300,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        },
+        {
+          "id": 1,
+          "name": "Iron Plates",
+          "outputs": [
+            {
+              "id": "IronPlate",
+              "amount": 300
+            }
+          ],
+          "inputs": [
+            {
+              "groupId": 0,
+              "outputPart": "IronIngot",
+              "amount": 900
+            }
+          ],
+          "partsRequired": {
+            "IronIngot": {
+              "amountNeeded": 900,
+              "amountSupplied": 900,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        }
+      ];
+    },
 
     // ==== GROUPS
     createGroup() {
@@ -225,7 +366,6 @@ export default defineComponent({
         partsRequired: {},
         inputsSatisfied: false,
         rawResources: [],
-        dependants: [],
       });
     },
     clearGroup(groupIndex: number) {
@@ -234,40 +374,6 @@ export default defineComponent({
 
       // When a group is cleared, we need to trigger updates to all groups to ensure consistency.
       this.groups.forEach(group => this.updateGroup(group));
-    },
-    // This goes through the group and calculates if it needs to add any dependencies to other groups.
-    calculateGroupDependencies(group: Group) {
-      for (let input of group.inputs) {
-        const otherGroup = this.groups[input.groupId];
-
-        if (!otherGroup) {
-          console.warn(`Group with ID ${input.groupId} not found or was not defined yet.`);
-          return;
-        }
-
-        // To prevent orphaning, delete all dependencies of the source group from the destination group.
-        otherGroup.dependants = otherGroup.dependants.filter(dependant => dependant.groupId !== group.id);
-
-        const output = otherGroup.outputs[input.outputPart];
-
-        if (!output) {
-          console.warn(`Part ${input.outputPart} not found in group ${input.groupId} or was not defined yet.`);
-          return;
-        }
-
-        // Check if the dependency already exists.
-        const existingDependency = group.dependants.find(dependant => dependant.groupId === input.groupId && dependant.outputPart === input.outputPart);
-
-        if (existingDependency) {
-          existingDependency.amount = input.amount;
-        } else {
-          otherGroup.dependants.push({
-            groupId: group.groupId,
-            outputPart: input.outputPart,
-            amount: input.amount,
-          });
-        }
-      }
     },
     // Gets the outputs of another group for dependencies
     getGroupOutputs(groupId: number | undefined): string[] {
@@ -282,17 +388,14 @@ export default defineComponent({
         return [];
       }
       return group.outputs
-        .map(recipe => {
-          const recipeData = this.data.recipes.find(r => r.id === recipe.id);
-          return recipeData ? Object.keys(recipeData.product)[0] : '';
-        })
-        .filter(output => output);
+        .map(output => output.id)
+        .filter(output => !!output);
     },
     updateGroup(group: Group) {
       this.updateWorldRawResources();
       this.updateGroupRequirements(group);
       this.checkGroupPartSatisfaction(group);
-      this.calculateGroupDependencies(group);
+      this.calculateDependencies();
     },
     // This function calculates the world resources available after each group has consumed Raw Resources.
     // This is done here globally as it loops all groups. It is not appropriate to be done on group updates.
@@ -320,7 +423,6 @@ export default defineComponent({
             }
 
             if (!this.worldRawResources[ingredientId]) {
-              console.warn(`World resource for ingredient ${ingredientId} not found.`);
               return;
             }
 
@@ -401,8 +503,6 @@ export default defineComponent({
          requirement.satisfied = true;
         }
 
-        console.log('requirement', requirement)
-
         // If the part has 0 requirements it is technically satisfied
         if (requirement.amountNeeded == 0) {
           requirement.satisfied = true;
@@ -411,6 +511,9 @@ export default defineComponent({
 
       // Now check if all requirements are satisfied.
       group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
+    },
+    getGroupDependencies(group: Group) {
+      return this.dependencies[group.id] ?? [];
     },
 
     // ==== INPUTS
