@@ -2,13 +2,16 @@
   <div id="planner">
     <h1>Factory Planner</h1>
 
-    <h2>World ores available</h2>
-    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>
+<!--    <h2>World ores available</h2>-->
+<!--    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>-->
+
+    <h2>Todo</h2>
+    <p>- When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</p>
 
     <button @click="createGroup">Create New Group</button>
     <button @click="clear" style="background-color: red">Clear (!)</button>
 
-    <div v-for="(group, index) in groups" :key="index" class="group">
+    <div v-for="(group, index) in groups" :key="index" class="group" :style="groupStyling(group)">
       <div style="margin-bottom: 15px;">
         <h3 style="margin-top: 0">Group {{ index + 1 }}</h3>
         <label>
@@ -30,9 +33,8 @@
         </div>
         <div v-for="(input, inputIndex) in group.inputs" :key="inputIndex">
           <label>
-            Group:
             <select v-model="input.groupId">
-              <option v-for="(otherGroup, otherIndex) in groups"
+              <option v-for="(otherGroup, otherIndex) in validGroupsForInputs"
                       :key="otherIndex"
                       :value="otherIndex"
                       @change="updateGroup(group)"
@@ -45,8 +47,8 @@
           <label>
             Output:
             <select v-model="input.outputPart" @change="updateGroup(group)">
-              <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output" :disabled="group.id === input.groupId">
-                {{ output }}
+              <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output" :disabled="output == input.groupId">
+                {{ getPartDisplayName(output) }}
               </option>
             </select>
           </label>
@@ -54,13 +56,19 @@
             <input type="number" v-model.number="input.amount" @change="updateGroup(group)" min="0" />
             /min
           </label>
-          <button @click="group.inputs.splice(inputIndex, 1)" style="background-color: red">Del</button>
+          <button @click="deleteInput(inputIndex, group)" style="background-color: red">Del</button>
         </div>
-        <button :disabled="groups.length < 2" @click="addEmptyInput(group)">+ <span v-if="groups.length < 2">(Add another group!)</span></button>
+        <button :disabled="validGroupsForInputs.length < 2" @click="addEmptyInput(group)" style="background-color: dodgerblue">+ <span v-if="groups.length < 2">(Add another group!)</span></button>
       </div>
 
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
-        <h3>Requirements</h3>
+        <h3>Satisfaction</h3>
+        <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
+        <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 14px">
+          All entries are listed as [supply/demand].<br>
+          Supply is created by adding inputs to the factory.<br>
+          Raw resources (e.g. Iron Ore) don't require inputs. It is assumed you'll supply them sufficently.
+        </p>
         <div v-for="(part, partIndex) in group.partsRequired" :key="partIndex" style="text-align: left">
           <p :style="isSatisfiedStyling(group, partIndex)">{{ getPartDisplayName(partIndex) }}: {{ part.amountSupplied }}/{{ part.amountNeeded }} /min</p>
         </div>
@@ -121,7 +129,6 @@ interface Group {
     name: string;
     amount: number;
   }>;
-
 }
 
 export interface RawResource {
@@ -146,6 +153,20 @@ export default defineComponent({
   created() {
     this.generateRawResources();
     this.updateWorldRawResources();
+  },
+  computed: {
+    validGroupsForInputs() {
+      return this.groups.filter((group) => {
+        const groupOutputs = Object.keys(group.outputs);
+        if (groupOutputs.length === 0) {
+          return false
+        }
+
+        // If all group outputs are not valid, the group is not valid.
+        // Validity means each output has an ID and an amount more than 0.
+        return groupOutputs.every(output => group.outputs[output].id && group.outputs[output].amount > 0);
+      });
+    },
   },
   watch: {
     groups: {
@@ -175,6 +196,9 @@ export default defineComponent({
     clearGroup(groupIndex: number) {
       this.groups.splice(groupIndex, 1);
       this.updateWorldRawResources();
+
+      // When a group is cleared, we need to trigger updates to all groups to ensure consistency.
+      this.groups.forEach(group => this.updateGroup(group));
     },
     isSatisfiedStyling(group: Group, requirement: string | number) {
       return group.partsRequired[requirement].satisfied ? 'color: green' : 'color: red';
@@ -194,6 +218,10 @@ export default defineComponent({
         outputPart: '',
         amount: 0,
       });
+    },
+    deleteInput(inputIndex: number, group: Group) {
+      group.inputs.splice(inputIndex, 1)
+      this.updateGroup(group)
     },
     deleteOutput(outputIndex: number, group: Group) {
       group.outputs.splice(outputIndex, 1)
@@ -375,10 +403,10 @@ export default defineComponent({
         }
 
         // How get the amount of supply provided by the input
-        requirement.amountSupplied += group.inputs[input].amountPerMinute
+        requirement.amountSupplied += group.inputs[input].amount
 
         // Check if the input amount is enough to satisfy the requirement.
-        const satisfied = requirement.amountSupplied >=requirement.amountNeeded;
+        const satisfied = requirement.amountSupplied >= requirement.amountNeeded;
 
         if (satisfied) {
          requirement.satisfied = true;
@@ -394,8 +422,14 @@ export default defineComponent({
 
       // Now check if all requirements are satisfied.
       group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
+    },
+    groupStyling(group: Group) {
+      return {
+        border: `1px solid ${group.inputsSatisfied ? '#28a745' : '#dc3545'}`,
+        backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+      };
     }
-  },
+  }
 });
 </script>
 
