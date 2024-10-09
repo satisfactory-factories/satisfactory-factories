@@ -9,14 +9,16 @@
     <button @click="clear" style="background-color: red">Clear (!)</button>
 
     <div v-for="(group, index) in groups" :key="index" class="group">
-      <h3>Group {{ index + 1 }}</h3>
-      <label>
-        Group Name:
-        <input type="text" v-model="group.name" />
-      </label>
-      <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
+      <div style="margin-bottom: 15px;">
+        <h3 style="margin-top: 0">Group {{ index + 1 }}</h3>
+        <label>
+          Group Name:
+          <input type="text" v-model="group.name" />
+        </label>
+        <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
+      </div>
 
-      <div>
+      <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h3>Inputs</h3>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
           <div v-if="group.rawResources.length > 0">
@@ -54,19 +56,18 @@
           </label>
           <button @click="group.inputs.splice(inputIndex, 1)" style="background-color: red">Del</button>
         </div>
-        <button :disabled="groups.length < 2" @click="addEmptyInput(group)">Add Input <span v-if="groups.length < 2">(Add another group!)</span></button>
+        <button :disabled="groups.length < 2" @click="addEmptyInput(group)">+ <span v-if="groups.length < 2">(Add another group!)</span></button>
       </div>
 
-      <div>
+      <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h3>Requirements</h3>
-        <div v-for="(part, partIndex) in group.partsRequired" :key="partIndex">
-          <p :style="isSatisfiedStyling(group, partIndex)">{{ getPartDisplayName(partIndex) }}: {{ part.amountSupplied }}/{{ part.amountNeeded }}</p>
+        <div v-for="(part, partIndex) in group.partsRequired" :key="partIndex" style="text-align: left">
+          <p :style="isSatisfiedStyling(group, partIndex)">{{ getPartDisplayName(partIndex) }}: {{ part.amountSupplied }}/{{ part.amountNeeded }} /min</p>
         </div>
       </div>
 
-      <div style="margin-bottom: 15px">
-        <h3>Outputs <button @click="addRecipeToGroup(index)" style="background-color: dodgerblue">+</button></h3>
-
+      <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
+        <h3>Outputs</h3>
         <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
           <label>
             <select v-model="output.id" @change="updateGroup(group)">
@@ -81,6 +82,7 @@
           </label>
           <button @click="deleteOutput(outputIndex, group)" style="background-color: red">Del</button>
         </div>
+        <button @click="addRecipeToGroup(index)" style="background-color: dodgerblue">+</button>
       </div>
       <div v-if="group.dependants.length > 0">
         <h3>Dependants</h3>
@@ -400,13 +402,13 @@ export default defineComponent({
 <style scoped>
 .group {
   border: 1px solid #28a745;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 15px 10px;
+  margin: 15px 0;
 }
 .recipe-entry {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .input-entry {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 </style>
