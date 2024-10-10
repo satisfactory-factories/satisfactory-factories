@@ -33,7 +33,11 @@
       <!-- Products -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h2>Products</h2>
-        <p>Products are created within the factory. Products are first used internally, and any surplus is then handled in Outputs.</p>
+        <p style="font-size: 14px">
+          Products that are created within the factory. Products are first used to fulfil recipes internally, and any surplus is then shown in Outputs for export or sinking.<br>
+          e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an Output (and the Screws).<br>
+          This way you know exactly how much of a part you need to make to fulfil both the factory itself and any other factories that use this one as an Input.
+        </p>
         <div v-for="(product, productIndex) in group.products" :key="productIndex" class="recipe-entry">
           <select v-model="product.id" @change="updateGroup(group)" style="margin-right: 5px">
             <option v-for="(part, key) in data.items.parts" :key="key" :value="key">
@@ -58,7 +62,7 @@
       <!-- Inputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h2>Inputs</h2>
-        <p style="font-size: 12px">
+        <p style="font-size: 14px">
           Raw resources (e.g. Iron Ore) don't require inputs. It is assumed you'll supply them sufficiently.
         </p>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
@@ -106,7 +110,7 @@
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h2>Satisfaction</h2>
         <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
-        <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 12px">
+        <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 14px">
           All entries are listed as [supply/demand].<br>
           Supply is created by adding inputs to the factory.
         </p>
