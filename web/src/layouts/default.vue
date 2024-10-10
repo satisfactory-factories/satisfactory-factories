@@ -1,13 +1,12 @@
 <template>
   <v-app>
+    <navigation />
     <v-main>
       <router-view />
     </v-main>
-
-    <AppFooter />
+    <app-footer />
   </v-app>
 </template>
 
-<script lang="ts" setup>
-  //
+<script setup lang="ts">
 </script>

@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <v-app-bar-title>Factory Planner</v-app-bar-title>
     <v-card-title v-if="loading" class="loading-screen">
       Loading all the things...
     </v-card-title>
