@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <input type="text" v-model="searchTerm" placeholder="Search recipes..." />
-    <label>
-      <input type="checkbox" v-model="showAltRecipes" /> Show Alt. Recipes
-    </label>
-    <ul>
-      <recipe-search-item v-for="recipe in filteredRecipes" :key="recipe.id" :recipe="recipe" />
-    </ul>
-  </div>
+  <v-card title="Recipes">
+    <v-divider />
+    <v-card-text>
+      <v-text-field v-model="searchTerm" label="Search recipes..."></v-text-field>
+      <v-chip color="primary" @click="toggleAltRecipes" :variant="showAltRecipes ? 'flat' : 'outlined'" >Alt Recipes</v-chip>
+      <v-expansion-panels multiple>
+        <recipe-search-item v-for="recipe in filteredRecipes" :key="recipe.id" :recipe="recipe" />
+      </v-expansion-panels>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import RecipeSearchItem from './RecipeSearchItem.vue';
-import { Recipe } from '../interfaces/Recipe';
+import { Recipe } from '@/interfaces/Recipe';
 
 export default defineComponent({
   name: 'RecipeSearch',
@@ -44,6 +45,13 @@ export default defineComponent({
         filtered = filtered.filter(recipe => !recipe.isAlternate);
       }
       return filtered;
+    },
+  },
+  methods: {
+    toggleAltRecipes() {
+      this.showAltRecipes = !this.showAltRecipes;
+      console.log(this.showAltRecipes);
+
     },
   },
 });

@@ -1,18 +1,17 @@
 <template>
-  <div @click="toggleCollapse" class="collapsible-header">
-    <span><b>{{ recipe.displayName }}</b></span>
-    <span v-if="collapsed"> [+]</span>
-    <span v-else> [-]</span>
-  </div>
-  <div v-if="!collapsed" class="collapsible-content">
-    <recipe-item :recipe="recipe" />
-  </div>
+  <v-expansion-panel
+    :title="recipe.displayName"
+  >
+    <v-expansion-panel-text>
+      <recipe-item :recipe="recipe" />
+    </v-expansion-panel-text>
+  </v-expansion-panel>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import RecipeItem from './RecipeItem.vue';
-import {Recipe} from "../interfaces/Recipe.ts";
+import {Recipe} from "@/interfaces/Recipe";
 
 
 export default defineComponent({
@@ -26,29 +25,5 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      collapsed: true,
-    };
-  },
-  methods: {
-    toggleCollapse() {
-      this.collapsed = !this.collapsed;
-    },
-  },
 });
 </script>
-
-<style scoped>
-.collapsible-header {
-  cursor: pointer;
-  background-color: #f0f0f0;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 4px;
-}
-.collapsible-content {
-  padding-left: 20px;
-  margin-bottom: 10px;
-}
-</style>

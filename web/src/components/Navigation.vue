@@ -1,6 +1,6 @@
 <template>
   <v-toolbar dark>
-    <v-toolbar-title>Factory Planner</v-toolbar-title>
+    <v-toolbar-title><v-icon icon="fas fa-industry-alt"></v-icon> Factory Planner</v-toolbar-title>
     <template v-slot:extension>
       <v-tabs
         v-model="tab"
@@ -25,10 +25,10 @@
       return {
         tab: null,
         items: [
-          { title: 'Planner', icon: 'fas fas-home', href: "/" },
-          { title: 'Graph', icon: 'mdi-calendar', href: "/graph" },
-          { title: 'Recipes', icon: 'mdi-book-open', href: "/recipes" },
-          { title: 'Settings', icon: 'mdi-book-open', href: "/settings" },
+          { title: 'Planner', icon: 'fas fa-ruler-triangle', href: "/" },
+          { title: 'Graph', icon: 'fas fa-project-diagram', href: "/graph" },
+          { title: 'Recipes', icon: 'fas fa-hat-chef', href: "/recipes" },
+          { title: 'Settings', icon: 'fas fa-wrench', href: "/settings" },
         ],
       }
     },

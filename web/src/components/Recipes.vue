@@ -1,41 +1,25 @@
 <template>
-  <v-container>
-    <v-card-title v-if="loading" class="loading-screen">
-      Loading all the things...
-    </v-card-title>
-    <v-card-title v-else-if="error" class="error-screen">
-      Error loading recipes: {{ error }}
-    </v-card-title>
-    <v-card v-else>
-      <planner v-if="data.items" :data="data"></planner>
-    </v-card>
-
-  </v-container>
+  <v-card>
+    <recipe-search v-if="data.recipes" :recipes="data.recipes" />
+  </v-card>
 </template>
+
 <script lang="ts">
-import { defineComponent } from 'vue';
-import RecipeSearch from '@/components/RecipeSearch.vue';
-import Planner from "@/components/Planner.vue";
+import {defineComponent} from "vue";
+import RecipeSearch from "@/components/RecipeSearch.vue";
 import {DataInterface} from "@/interfaces/DataInterface";
 
 export default defineComponent({
-  name: 'App',
+  name: 'Recipes',
   components: {
     RecipeSearch,
-    Planner
   },
   data() {
     return {
       loading: true,
       data: {} as DataInterface,
       error: null as string | null,
-      showRecipeList: false,
     };
-  },
-  methods: {
-    toggleRecipeList() {
-      this.showRecipeList = !this.showRecipeList;
-    },
   },
   async mounted() {
     try {
@@ -61,18 +45,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.loading-screen {
-  font-size: 24px;
-  text-align: center;
-  margin-top: 50px;
-}
-
-.error-screen {
-  font-size: 24px;
-  text-align: center;
-  margin-top: 50px;
-  color: red;
-}
-</style>

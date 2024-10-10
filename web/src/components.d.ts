@@ -12,6 +12,7 @@ declare module 'vue' {
     Planner: typeof import('./components/Planner.vue')['default']
     PlannerRequests: typeof import('./components/PlannerRequests.vue')['default']
     RecipeItem: typeof import('./components/RecipeItem.vue')['default']
+    Recipes: typeof import('./components/Recipes.vue')['default']
     RecipeSearch: typeof import('./components/RecipeSearch.vue')['default']
     RecipeSearchItem: typeof import('./components/RecipeSearchItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
