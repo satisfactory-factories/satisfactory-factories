@@ -1,19 +1,23 @@
 <template>
-  <div id="planner">
-    <h1>Factory Planner</h1>
+  <v-card>
+    <v-card>
+      <v-card-title>Todo</v-card-title>
+      <v-card-text>
+        <v-list density="compact">
+          <v-list-item>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</v-list-item>
+          <v-list-item>Bug: The Requests is not correctly picking up they are being satisfied resulting in red text always. Probably broke the calculation somewhere.</v-list-item>
+        </v-list>
+      </v-card-text>
 
-    <h2>World ores available</h2>
-    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>
-
-    <div>
-      <h2>Todo</h2>
-      <div style="text-align: left">
-        <ul>
-          <li>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</li>
-          <li>Bug: The Requests is not correctly picking up they are being satisfied resulting in red text always. Probably broke the calculation somewhere.</li>
-        </ul>
-      </div>
-    </div>
+    </v-card>
+    <v-card>
+      <v-card-title>World ores available</v-card-title>
+      <v-card-text>
+        <v-list density="compact">
+          <v-list-item v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
 
     <button @click="createGroup">Create New Group</button>
     <button @click="clearAll" style="background-color: red">Clear (!)</button>
@@ -154,7 +158,7 @@
         <pre style="text-align: left">{{ JSON.stringify(dependencies, null, 2) }}</pre>
 
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts">
