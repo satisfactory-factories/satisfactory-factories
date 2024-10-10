@@ -8,9 +8,11 @@
       >
         <v-tab
           v-for="item in items"
+          :to="item.href"
           :key="item"
-          :text="item"
-          :value="item"
+          :prepend-icon="item.icon"
+          :text="item.title"
+          :value="item.href"
         ></v-tab>
       </v-tabs>
     </template>
@@ -23,7 +25,10 @@
       return {
         tab: null,
         items: [
-          'Factories', 'Visualizer', 'Statistics', 'Settings'
+          { title: 'Planner', icon: 'fas fas-home', href: "/" },
+          { title: 'Graph', icon: 'mdi-calendar', href: "/graph" },
+          { title: 'Recipes', icon: 'mdi-book-open', href: "/recipes" },
+          { title: 'Settings', icon: 'mdi-book-open', href: "/settings" },
         ],
       }
     },
