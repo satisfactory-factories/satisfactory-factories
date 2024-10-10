@@ -2,17 +2,15 @@
   <div id="planner">
     <h1>Factory Planner</h1>
 
-<!--    <h2>World ores available</h2>-->
-<!--    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>-->
+    <h2>World ores available</h2>
+    <div v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{ ore.amount }}</div>
 
     <div>
       <h2>Todo</h2>
       <div style="text-align: left">
         <ul>
-          <li>When output is added, define the recipe used to create the item, this is required for the Satisfaction, which is then required to produce demand.</li>
-          <li>Prevent demands of the same part being asked from the same factory group. E.g. Factory Group 1 asking for 2x Iron Ingots at 700 and 200 each.</li>
           <li>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</li>
-          <li>Dependencies</li>
+          <li>Bug: The Requests is not correctly picking up they are being satisfied resulting in red text always. Probably broke the calculation somewhere.</li>
         </ul>
       </div>
     </div>
@@ -26,15 +24,43 @@
         <h3 style="margin-top: 0">Group {{ index + 1 }}</h3>
         <label>
           Group Name:
-          <input type="text" v-model="group.name" />
+          <input type="text" v-model.lazy="group.name"/>
         </label>
         <button @click="clearGroup(group.id)" style="background-color: red">Delete Group (!)</button>
+      </div>
+
+      <!------------------>
+      <!-- Products -->
+      <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
+        <h2>Products</h2>
+        <p>Products are created within the factory. Products are first used internally, and any surplus is then handled in Outputs.</p>
+        <div v-for="(product, productIndex) in group.products" :key="productIndex" class="recipe-entry">
+          <select v-model="product.id" @change="updateGroup(group)" style="margin-right: 5px">
+            <option v-for="(part, key) in data.items.parts" :key="key" :value="key">
+              {{ part }}
+            </option>
+          </select>
+          <select v-model="product.recipe" @change="updateGroup(group)" style="margin-right: 5px">
+            <option v-for="recipe in getRecipesForPart(product.id)" :key="recipe.id" :value="recipe.id">
+              {{ recipe.displayName }}
+            </option>
+          </select>
+          <label>
+            <input type="number" v-model.number="product.amount" @input="updateGroup(group)" min="1" />
+            /min
+          </label>
+          <button @click="deleteProduct(productIndex, group)" style="background-color: red">Del</button>
+        </div>
+        <button @click="addEmptyProduct(index)" style="background-color: dodgerblue">+</button>
       </div>
 
       <!------------------>
       <!-- Inputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h2>Inputs</h2>
+        <p style="font-size: 12px">
+          Raw resources (e.g. Iron Ore) don't require inputs. It is assumed you'll supply them sufficiently.
+        </p>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
           <div v-if="group.rawResources.length > 0">
             <p>Raw Resources:</p>
@@ -57,13 +83,17 @@
           <label>
             Output:
             <select v-model="input.outputPart" @change="updateGroup(group)" style="margin-right: 5px">
-              <option v-for="output in getGroupOutputs(input.groupId)" :key="output" :value="output" :disabled="output == input.groupId">
+              <option v-for="output in getGroupOutputs(input.groupId)"
+                      :key="output"
+                      :value="output"
+                      :disabled="output == input.groupId || isOutputSelected(output, inputIndex, group)"
+              >
                 {{ getPartDisplayName(output) }}
               </option>
             </select>
           </label>
           <label>
-            <input type="number" v-model.number="input.amount" @change="updateGroup(group)" min="0" />
+            <input type="number" v-model.number="input.amount" @input="updateGroup(group)" min="0" />
             /min
           </label>
           <button @click="deleteInput(inputIndex, group)" style="background-color: red">Del</button>
@@ -76,45 +106,38 @@
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
         <h2>Satisfaction</h2>
         <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
-        <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 14px">
+        <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 12px">
           All entries are listed as [supply/demand].<br>
-          Supply is created by adding inputs to the factory.<br>
-          Raw resources (e.g. Iron Ore) don't require inputs. It is assumed you'll supply them sufficently.
+          Supply is created by adding inputs to the factory.
         </p>
         <div v-for="(part, partIndex) in group.partsRequired" :key="partIndex" style="text-align: left">
           <p :style="isSatisfiedStyling(group, partIndex)">{{ getPartDisplayName(partIndex) }}: {{ part.amountSupplied }}/{{ part.amountNeeded }} /min</p>
         </div>
       </div>
 
+
       <!------------------>
       <!-- Outputs -->
-      <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
+      <div v-if="group.surplus && Object.keys(group.surplus).length > 0" style="margin-top: 15px; border-top: 1px solid #ccc">
         <h2>Outputs</h2>
-        <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
-          <select v-model="output.id" @change="updateGroup(group)" style="margin-right: 5px">
-            <option v-for="(part, key) in data.items.parts" :key="part" :value="key">
-              {{ part }}
-            </option>
-          </select>
-           <select v-model="output.recipe" @change="updateGroup(group)" style="margin-right: 5px">
-            <option v-for="recipe in getRecipesForPart(output.id)" :key="recipe.id" :value="recipe.id">
-              {{ recipe.displayName }}
-            </option>
-          </select>
+        <div v-for="(surplusAmount, part) in group.surplus" :key="part" style="text-align: left">
+          <p>{{ getPartDisplayName(part) }} Surplus: {{ surplusAmount }}/min</p>
           <label>
-            <input type="number" v-model.number="output.amount" @input="updateGroup(group)" min="1" />
-            /min
+            <input type="radio" v-model="group.surplusHandling[part]" value="export" @change="updateGroup(group)" />
+            Export
           </label>
-          <button @click="deleteOutput(outputIndex, group)" style="background-color: red">Del</button>
+          <label>
+            <input type="radio" v-model="group.surplusHandling[part]" value="sink" @change="updateGroup(group)" />
+            Sink (delete)
+          </label>
         </div>
-        <button @click="addEmptyOutput(index)" style="background-color: dodgerblue">+</button>
       </div>
 
       <!------------------>
       <!-- Dependencies -->
-      <div v-if="getGroupDependencies(group).demandedBy">
-        <h2>Demands</h2>
-        <planner-demands :dependency="getGroupDependencies(group)" :groups="groups" :data="data" />
+      <div v-if="getGroupDependencies(group).requestedBy">
+        <h2>Requests</h2>
+        <planner-requests :requests="getGroupDependencies(group)" :groups="groups" :data="data" />
       </div>
     </div>
 
@@ -141,15 +164,17 @@ interface Group {
     groupId: number;
     outputPart: string;
     amount: number;
-    // Holds the resources required to fulfil the inputs.
   }>;
-  outputs: GroupOutput[];
+  products: GroupProduct[];
+  outputs: GroupProduct[];
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
   rawResources: Array<{
     name: string;
     amount: number;
   }>;
+  surplus: { [key: string]: number }; // Surplus products
+  surplusHandling: { [key: string]: 'export' | 'sink' }; // How to handle surplus
 }
 
 interface GroupDependency {
@@ -159,7 +184,7 @@ interface GroupDependency {
   outputAmount: number;
 }
 
-interface GroupOutput {
+interface GroupProduct {
   id: string;
   recipe: string;
   amount: number;
@@ -170,11 +195,11 @@ export interface RawResource {
   amount: number;
 }
 
-import PlannerDemands from "./PlannerDemands.vue";
+import PlannerRequests from "./PlannerRequests.vue";
 export default defineComponent({
   name: 'Planner',
   components: {
-    PlannerDemands
+    PlannerRequests
   },
   props: {
     data: {
@@ -196,14 +221,14 @@ export default defineComponent({
   computed: {
     validGroupsForInputs() {
       return this.groups.filter((group) => {
-        const groupOutputs = Object.keys(group.outputs);
+        const groupOutputs = Object.keys(group.products);
         if (groupOutputs.length === 0) {
           return false
         }
 
-        // If all group outputs are not valid, the group is not valid.
+        // If all group products are not valid, the group is not valid.
         // Validity means each output has an ID and an amount more than 0.
-        return groupOutputs.every(output => group.outputs[output].id && group.outputs[output].amount > 0);
+        return groupOutputs.every(output => group.products[output].id && group.products[output].amount > 0);
       });
     },
   },
@@ -248,68 +273,71 @@ export default defineComponent({
     calculateDependencies() {
       const newDependencies: { [key: string]: any } = {};
 
-      // Iterate through groups to build the initial dependencies with demands
+      // Iterate through groups to build the initial dependencies with requests
       this.groups.forEach(group => {
         group.inputs.forEach(input => {
-          const dependency = {
+          const request = {
             part: input.outputPart,
             amount: input.amount,
           };
 
-          // Create an entry for the group that is being demanded from if it doesn't exist
+          // Create an entry for the group that is being requested from if it doesn't exist
           if (!newDependencies[input.groupId]) {
             newDependencies[input.groupId] = {
-              demandedBy: {},
+              requestedBy: {},
               metrics: {},
             };
           }
 
-          // Create demands array for the specific group relationship if it doesn't exist
-          if (!newDependencies[input.groupId].demandedBy[group.id]) {
-            newDependencies[input.groupId].demandedBy[group.id] = [];
+          // Create requests array for the specific group relationship if it doesn't exist
+          if (!newDependencies[input.groupId].requestedBy[group.id]) {
+            newDependencies[input.groupId].requestedBy[group.id] = [];
           }
 
-          // Add the dependency to the appropriate group
-          newDependencies[input.groupId].demandedBy[group.id].push(dependency);
+          // Add the requests to the appropriate group
+          newDependencies[input.groupId].requestedBy[group.id].push(request);
         });
       });
 
-      // Now loop through the dependencies and calculate the total demand upon each part within the group
+      // Now loop through the dependencies and calculate the total requests upon each part within the group
       Object.keys(newDependencies).forEach(groupDepId => {
         const groupDependency = newDependencies[groupDepId];
 
-        Object.keys(groupDependency.demandedBy).forEach(depGroupId => {
-          const depGroup = groupDependency.demandedBy[depGroupId];
-          depGroup.forEach(demand => {
-            const part = demand.part;
+        Object.keys(groupDependency.requestedBy).forEach(depGroupId => {
+          const depGroup = groupDependency.requestedBy[depGroupId];
+          depGroup.forEach(request => {
+            const part = request.part;
 
             if (!groupDependency.metrics[part]) {
               groupDependency.metrics[part] = {
                 part,
-                demand: 0,
+                request: 0,
                 supply: 0,
-                isDemandSatisfied: false,
+                isRequestSatisfied: false,
               };
             }
 
-            groupDependency.metrics[part].demand += demand.amount;
+            groupDependency.metrics[part].request += request.amount;
           });
         });
 
-        // Calculate the supply and whether the demand is satisfied
+        // Calculate the supply and whether the request is satisfied
         const thisGroup = this.groups[groupDepId];
-        thisGroup.outputs.forEach(output => {
-          if (groupDependency.metrics[output.id]) {
-            groupDependency.metrics[output.id].supply = output.amount;
-            groupDependency.metrics[output.id].isDemandSatisfied =
-              output.amount >= groupDependency.metrics[output.id].demand;
+
+        console.log(thisGroup)
+        Object.keys(thisGroup.surplus).forEach(product => {
+          const amount = thisGroup.surplus[product]; // Get the amount of the product from the surplus object
+
+
+          if (groupDependency.metrics[product]) {
+            groupDependency.metrics[product].supply = amount;
+            groupDependency.metrics[product].isRequestSatisfied = amount >= groupDependency.metrics[product].request;
           }
         });
       });
 
       // Replace the existing dependencies with the new ones
       this.dependencies = newDependencies;
-      console.log(this.dependencies);
     },
 
     // ==== HELPERS
@@ -337,11 +365,13 @@ export default defineComponent({
       this.groups.push({
         id: this.groups.length,
         name: '',
-        outputs: [],
+        products: [],
         inputs: [],
         partsRequired: {},
         inputsSatisfied: false,
         rawResources: [],
+        surplus: {},
+        surplusHandling: {},
       });
     },
     clearGroup(groupIndex: number) {
@@ -351,19 +381,19 @@ export default defineComponent({
       // When a group is cleared, we need to trigger updates to all groups to ensure consistency.
       this.groups.forEach(group => this.updateGroup(group));
     },
-    // Gets the outputs of another group for dependencies
+    // Gets the products of another group for dependencies
     getGroupOutputs(groupId: number | undefined): string[] {
       if (groupId !== 0 && !groupId) {
-        console.error('Tried to get outputs for an undefined group ID.');
+        console.error('Tried to get products for an undefined group ID.');
         return [];
       }
       const group = this.groups[groupId];
 
       if (!group) {
-        console.error('Tried to get outputs for a group that does not exist:', groupId);
+        console.error('Tried to get products for a group that does not exist:', groupId);
         return [];
       }
-      return group.outputs
+      return group.products
         .map(output => output.id)
         .filter(output => !!output);
     },
@@ -379,10 +409,10 @@ export default defineComponent({
       // Generate fresh world resources as a baseline for calculation.
       this.generateRawResources();
 
-      // Loop through each group's outputs to calculate usage of raw resources.
+      // Loop through each group's products to calculate usage of raw resources.
       this.groups.forEach(group => {
-        group.outputs.forEach(output => {
-          const recipe = this.data.recipes.find(r => r.id === output.id);
+        group.products.forEach(output => {
+          const recipe = this.data.recipes.find(r => r.id === output.recipe);
           if (!recipe) {
             console.error(`Recipe with ID ${output.id} not found.`);
             return;
@@ -412,28 +442,25 @@ export default defineComponent({
     },
 
     updateGroupRequirements(group: Group) {
-      // First reset the current requirements, so we don't get additive results.
       group.partsRequired = {};
+      group.surplus = {};
 
-      // First loop the recipes of the group to get the total number of parts we want to build.
-      group.outputs.forEach(output => {
-        const recipe = this.data.recipes.find(r => r.id === output.recipe);
+      // First loop through each product and add it to internal requirements and surplus.
+      group.products.forEach(product => {
+        const recipe = this.data.recipes.find(r => r.id === product.recipe);
         if (!recipe) {
-          console.error(`Recipe with ID ${output.id} not found.`);
+          console.error(`Recipe with ID ${product.recipe} not found.`);
           return;
         }
 
-        // Loop through each ingredient in the recipe.
+        // Calculate the ingredients needed to make this product.
         recipe.ingredients.forEach(ingredientPart => {
-          // Extract the ingredient name and amount.
           const [part, partAmount] = Object.entries(ingredientPart)[0];
-
           if (isNaN(partAmount)) {
             console.warn(`Invalid ingredient amount for ingredient ${part}. Skipping.`);
             return;
           }
 
-          // Update the group's input of parts.
           if (!group.partsRequired[part]) {
             group.partsRequired[part] = {
               amountNeeded: 0,
@@ -442,21 +469,45 @@ export default defineComponent({
             };
           }
 
+          // Update the group's input requirements.
+          group.partsRequired[part].amountNeeded += partAmount * product.amount;
+
+          // If it's a raw resource, mark it as fully supplied.
           const isRaw = !!this.data.items.rawResources[part];
-
-          const existingPartAmount = group.partsRequired[part].amountNeeded || 0;
-
-          // Update the amount required with the new amount.
-          group.partsRequired[part].amountNeeded = parseInt((partAmount * output.amount) + existingPartAmount)
-
-          // If raw, automatically mark it as satisfied and also update the supply.
           if (isRaw) {
-            group.partsRequired[part].satisfied = true;
             group.partsRequired[part].amountSupplied = group.partsRequired[part].amountNeeded;
+            group.partsRequired[part].satisfied = true;
+          }
+        });
+
+        // Any remaining product that is not used internally is surplus.
+        if (!group.surplus[product.id]) {
+          group.surplus[product.id] = 0;
+        }
+
+        group.surplus[product.id] += product.amount;
+      });
+
+      // Satisfy internal requirements with existing group products (like screws from iron rods).
+      Object.keys(group.partsRequired).forEach(part => {
+        const requirement = group.partsRequired[part];
+
+        group.products.forEach(product => {
+          if (product.id === part) {
+            const usedAmount = Math.min(product.amount, requirement.amountNeeded - requirement.amountSupplied);
+            requirement.amountSupplied += usedAmount;
+
+            // Reduce surplus amount accordingly.
+            if (group.surplus[product.id]) {
+              group.surplus[product.id] = Math.max(0, group.surplus[product.id] - usedAmount);
+            }
+
+            requirement.satisfied = requirement.amountSupplied >= requirement.amountNeeded;
           }
         });
       });
     },
+
     // Calculate the inputs required to satisfy the group's parts requirements.
     checkGroupPartSatisfaction(group: Group) {
       // Calculate based on the inputs of the group if the requirements are satisfied.
@@ -489,7 +540,6 @@ export default defineComponent({
       group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
     },
     getGroupDependencies(group: Group) {
-      console.log(`Getting dependencies for group ${group.id}`);
       return this.dependencies[group.id] ?? {};
     },
 
@@ -506,17 +556,20 @@ export default defineComponent({
       this.updateGroup(group)
     },
 
-    // ==== OUTPUTS
-    addEmptyOutput(groupIndex: number) {
-      this.groups[groupIndex].outputs.push({
+    // ==== PRODUCTS
+    addEmptyProduct(groupIndex: number) {
+      this.groups[groupIndex].products.push({
         id: '',
         amount: 0,
       });
     },
-
-    deleteOutput(outputIndex: number, group: Group) {
-      group.outputs.splice(outputIndex, 1)
+    deleteProduct(outputIndex: number, group: Group) {
+      group.products.splice(outputIndex, 1)
       this.updateGroup(group);
+    },
+    isOutputSelected(output, currentInputIndex, group: Group) {
+      // Check if the output is already selected by another input, except the current one
+      return group.inputs.some((input, index) => index !== currentInputIndex && input.outputPart === output);
     },
 
     setTemplate() {
@@ -524,7 +577,7 @@ export default defineComponent({
         {
           "id": 0,
           "name": "Iron Ingot Fac",
-          "outputs": [
+          "products": [
             {
               "id": "IronIngot",
               "amount": 1000,
@@ -545,7 +598,7 @@ export default defineComponent({
         {
           "id": 1,
           "name": "Iron MegaFac",
-          "outputs": [
+          "products": [
             {
               "id": "IronPlate",
               "amount": 200,
@@ -577,7 +630,7 @@ export default defineComponent({
         {
           "id": 2,
           "name": "Screws",
-          "outputs": [
+          "products": [
             {
               "id": "IronScrew",
               "amount": 1000,
@@ -604,7 +657,7 @@ export default defineComponent({
         {
           "id": 3,
           "name": "RIPs",
-          "outputs": [
+          "products": [
             {
               "id": "IronPlateReinforced",
               "amount": 20,
