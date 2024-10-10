@@ -10,6 +10,7 @@
       <div style="text-align: left">
         <ul>
           <li>When output is added, define the recipe used to create the item, this is required for the Satisfaction, which is then required to produce demand.</li>
+          <li>Prevent demands of the same part being asked from the same factory group. E.g. Factory Group 1 asking for 2x Iron Ingots at 700 and 200 each.</li>
           <li>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</li>
           <li>Dependencies</li>
         </ul>
@@ -33,7 +34,7 @@
       <!------------------>
       <!-- Inputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
-        <h3>Inputs</h3>
+        <h2>Inputs</h2>
         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex" class="input-entry">
           <div v-if="group.rawResources.length > 0">
             <p>Raw Resources:</p>
@@ -73,7 +74,7 @@
       <!------------------>
       <!-- Satisfaction -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
-        <h3>Satisfaction</h3>
+        <h2>Satisfaction</h2>
         <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
         <p v-if="Object.keys(group.partsRequired.length > 0)" style="font-size: 14px">
           All entries are listed as [supply/demand].<br>
@@ -88,11 +89,16 @@
       <!------------------>
       <!-- Outputs -->
       <div style="margin-bottom: 15px; border-top: 1px solid #ccc">
-        <h3>Outputs</h3>
+        <h2>Outputs</h2>
         <div v-for="(output, outputIndex) in group.outputs" :key="outputIndex" class="recipe-entry">
           <select v-model="output.id" @change="updateGroup(group)" style="margin-right: 5px">
             <option v-for="(part, key) in data.items.parts" :key="part" :value="key">
               {{ part }}
+            </option>
+          </select>
+           <select v-model="output.recipe" @change="updateGroup(group)" style="margin-right: 5px">
+            <option v-for="recipe in getRecipesForPart(output.id)" :key="recipe.id" :value="recipe.id">
+              {{ recipe.displayName }}
             </option>
           </select>
           <label>
@@ -106,13 +112,14 @@
 
       <!------------------>
       <!-- Dependencies -->
-      <div v-if="getGroupDependencies(group).length > 0">
-        <h3>Dependants</h3>
-        <p v-for="(dependant, dependantIndex) in getGroupDependencies(group)" :key="dependantIndex">
-          {{ this.groups[dependant.groupId].name }} - {{ getPartDisplayName(dependant.part) }}: {{ dependant.amount }} /min
-        </p>
+      <div v-if="getGroupDependencies(group).demandedBy">
+        <h2>Demands</h2>
+        <planner-demands :dependency="getGroupDependencies(group)" :groups="groups" :data="data" />
       </div>
     </div>
+
+
+    <!-- Debugging -->
     <div>
       Groups:
         <pre style="text-align: left">{{ JSON.stringify(groups, null, 2) }}</pre>
@@ -136,7 +143,7 @@ interface Group {
     amount: number;
     // Holds the resources required to fulfil the inputs.
   }>;
-  outputs: { [key: string]: { amount: number } };
+  outputs: GroupOutput[];
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
   rawResources: Array<{
@@ -152,13 +159,23 @@ interface GroupDependency {
   outputAmount: number;
 }
 
+interface GroupOutput {
+  id: string;
+  recipe: string;
+  amount: number;
+}
+
 export interface RawResource {
   name: string;
   amount: number;
 }
 
+import PlannerDemands from "./PlannerDemands.vue";
 export default defineComponent({
   name: 'Planner',
+  components: {
+    PlannerDemands
+  },
   props: {
     data: {
       type: Object as PropType<DataInterface>,
@@ -229,63 +246,66 @@ export default defineComponent({
       this.worldRawResources = ores;
     },
     calculateDependencies() {
-      console.log('Calculating dependencies');
-      const newDependencies: { [key: string]: GroupDependency[] } = {};
+      const newDependencies: { [key: string]: any } = {};
 
+      // Iterate through groups to build the initial dependencies with demands
       this.groups.forEach(group => {
         group.inputs.forEach(input => {
           const dependency = {
-            groupId: group.id,
             part: input.outputPart,
             amount: input.amount,
           };
 
-          // Create an array for the group ID if it doesn't exist
+          // Create an entry for the group that is being demanded from if it doesn't exist
           if (!newDependencies[input.groupId]) {
             newDependencies[input.groupId] = {
-              links: [],
+              demandedBy: {},
+              metrics: {},
             };
           }
 
+          // Create demands array for the specific group relationship if it doesn't exist
+          if (!newDependencies[input.groupId].demandedBy[group.id]) {
+            newDependencies[input.groupId].demandedBy[group.id] = [];
+          }
+
           // Add the dependency to the appropriate group
-          newDependencies[input.groupId].links.push(dependency);
+          newDependencies[input.groupId].demandedBy[group.id].push(dependency);
         });
       });
 
-      // Now loop the links and calculate the total demand upon each part within the group
+      // Now loop through the dependencies and calculate the total demand upon each part within the group
       Object.keys(newDependencies).forEach(groupDepId => {
         const groupDependency = newDependencies[groupDepId];
-        groupDependency.links.forEach(link => {
-          const part = link.part;
 
-          const depGroup = this.groups[link.groupId];
-          const depGroupInput = depGroup.inputs.find(input => input.outputPart === part);
+        Object.keys(groupDependency.demandedBy).forEach(depGroupId => {
+          const depGroup = groupDependency.demandedBy[depGroupId];
+          depGroup.forEach(demand => {
+            const part = demand.part;
 
-          // Now we know what the dependant group wants from our group, lets add it as a demand
+            if (!groupDependency.metrics[part]) {
+              groupDependency.metrics[part] = {
+                part,
+                demand: 0,
+                supply: 0,
+                isDemandSatisfied: false,
+              };
+            }
 
-          if (!newDependencies[groupDepId].metrics) {
-            newDependencies[groupDepId].metrics = {};
-          }
+            groupDependency.metrics[part].demand += demand.amount;
+          });
+        });
 
-          const thisGroup = this.groups[groupDepId];
-
-          console.log('This group:', thisGroup);
-          console.log('part:', part);
-
-
-          // Figure out the supply by looking at our group's outputs
-          const supply = thisGroup.outputs.find(output => output.id === part)?.amount || 0;
-
-          newDependencies[groupDepId].metrics[part] = {
-            part,
-            demand: depGroupInput?.amount || 0,
-            supply,
+        // Calculate the supply and whether the demand is satisfied
+        const thisGroup = this.groups[groupDepId];
+        thisGroup.outputs.forEach(output => {
+          if (groupDependency.metrics[output.id]) {
+            groupDependency.metrics[output.id].supply = output.amount;
+            groupDependency.metrics[output.id].isDemandSatisfied =
+              output.amount >= groupDependency.metrics[output.id].demand;
           }
         });
       });
-
-
-      console.log('Dependencies:', newDependencies);
 
       // Replace the existing dependencies with the new ones
       this.dependencies = newDependencies;
@@ -299,61 +319,17 @@ export default defineComponent({
     getPartDisplayName(part: string | number) {
       return this.data.items.rawResources[part]?.name || this.data.items.parts[part];
     },
+
     groupStyling(group: Group) {
       return {
         border: `1px solid ${group.inputsSatisfied ? '#28a745' : '#dc3545'}`,
         backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
-    setTemplate() {
-      this.groups = [
-        {
-          "id": 0,
-          "name": "Iron Ingot",
-          "outputs": [
-            {
-              "id": "IronIngot",
-              "amount": 300
-            }
-          ],
-          "inputs": [],
-          "partsRequired": {
-            "OreIron": {
-              "amountNeeded": 300,
-              "amountSupplied": 300,
-              "satisfied": true
-            }
-          },
-          "inputsSatisfied": true,
-          "rawResources": []
-        },
-        {
-          "id": 1,
-          "name": "Iron Plates",
-          "outputs": [
-            {
-              "id": "IronPlate",
-              "amount": 300
-            }
-          ],
-          "inputs": [
-            {
-              "groupId": 0,
-              "outputPart": "IronIngot",
-              "amount": 900
-            }
-          ],
-          "partsRequired": {
-            "IronIngot": {
-              "amountNeeded": 900,
-              "amountSupplied": 900,
-              "satisfied": true
-            }
-          },
-          "inputsSatisfied": true,
-          "rawResources": []
-        }
-      ];
+    getRecipesForPart(part: string) {
+      return this.data.recipes.filter((recipe) => {
+        return recipe.product[part] || undefined
+      });
     },
 
     // ==== GROUPS
@@ -441,7 +417,7 @@ export default defineComponent({
 
       // First loop the recipes of the group to get the total number of parts we want to build.
       group.outputs.forEach(output => {
-        const recipe = this.data.recipes.find(r => r.id === output.id);
+        const recipe = this.data.recipes.find(r => r.id === output.recipe);
         if (!recipe) {
           console.error(`Recipe with ID ${output.id} not found.`);
           return;
@@ -513,7 +489,8 @@ export default defineComponent({
       group.inputsSatisfied = Object.keys(group.partsRequired).every(part => group.partsRequired[part].satisfied);
     },
     getGroupDependencies(group: Group) {
-      return this.dependencies[group.id] ?? [];
+      console.log(`Getting dependencies for group ${group.id}`);
+      return this.dependencies[group.id] ?? {};
     },
 
     // ==== INPUTS
@@ -540,6 +517,128 @@ export default defineComponent({
     deleteOutput(outputIndex: number, group: Group) {
       group.outputs.splice(outputIndex, 1)
       this.updateGroup(group);
+    },
+
+    setTemplate() {
+      this.groups = [
+        {
+          "id": 0,
+          "name": "Iron Ingot Fac",
+          "outputs": [
+            {
+              "id": "IronIngot",
+              "amount": 1000,
+              "recipe": "IngotIron"
+            }
+          ],
+          "inputs": [],
+          "partsRequired": {
+            "OreIron": {
+              "amountNeeded": 1000,
+              "amountSupplied": 1000,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        },
+        {
+          "id": 1,
+          "name": "Iron MegaFac",
+          "outputs": [
+            {
+              "id": "IronPlate",
+              "amount": 200,
+              "recipe": "IronPlate"
+            },
+            {
+              "id": "IronRod",
+              "amount": 100,
+              "recipe": "IronRod"
+            }
+          ],
+          "inputs": [
+            {
+              "groupId": 0,
+              "outputPart": "IronIngot",
+              "amount": 700
+            }
+          ],
+          "partsRequired": {
+            "IronIngot": {
+              "amountNeeded": 700,
+              "amountSupplied": 700,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        },
+        {
+          "id": 2,
+          "name": "Screws",
+          "outputs": [
+            {
+              "id": "IronScrew",
+              "amount": 1000,
+              "recipe": "Screw"
+            }
+          ],
+          "inputs": [
+            {
+              "groupId": 1,
+              "outputPart": "IronRod",
+              "amount": 1000
+            }
+          ],
+          "partsRequired": {
+            "IronRod": {
+              "amountNeeded": 1000,
+              "amountSupplied": 1000,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        },
+        {
+          "id": 3,
+          "name": "RIPs",
+          "outputs": [
+            {
+              "id": "IronPlateReinforced",
+              "amount": 20,
+              "recipe": "IronPlateReinforced"
+            }
+          ],
+          "inputs": [
+            {
+              "groupId": 1,
+              "outputPart": "IronPlate",
+              "amount": 120
+            },
+            {
+              "groupId": 2,
+              "outputPart": "IronScrew",
+              "amount": 240
+            }
+          ],
+          "partsRequired": {
+            "IronPlate": {
+              "amountNeeded": 120,
+              "amountSupplied": 120,
+              "satisfied": true
+            },
+            "IronScrew": {
+              "amountNeeded": 240,
+              "amountSupplied": 240,
+              "satisfied": true
+            }
+          },
+          "inputsSatisfied": true,
+          "rawResources": []
+        }
+      ]
     },
   }
 });
