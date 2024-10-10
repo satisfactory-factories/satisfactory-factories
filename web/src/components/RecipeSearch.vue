@@ -2,7 +2,7 @@
   <v-card title="Recipes">
     <v-divider />
     <v-card-text>
-      <v-text-field v-model="searchTerm" label="Search recipes..."></v-text-field>
+      <v-text-field v-model="searchTerm" label="Recipe name"></v-text-field>
       <v-chip color="primary" @click="toggleAltRecipes" :variant="showAltRecipes ? 'flat' : 'outlined'" >Alt Recipes</v-chip>
       <v-expansion-panels multiple>
         <recipe-search-item v-for="recipe in filteredRecipes" :key="recipe.id" :recipe="recipe" />
