@@ -4,7 +4,6 @@
     <template v-slot:extension>
       <v-tabs
         v-model="tab"
-        align-tabs="title"
       >
         <v-tab
           v-for="item in items"
