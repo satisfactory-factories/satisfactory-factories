@@ -241,6 +241,7 @@
                       <v-radio label="Export" value="export" class="mr-4"></v-radio>
                       <v-radio label="Sink" value="sink"></v-radio>
                     </v-radio-group>
+                    <segmented-bar :requests="requests" :max-value="surplusAmount" />
                   </v-list-item>
                 </v-list>
               </div>
@@ -311,15 +312,17 @@ export interface RawResource {
 }
 
 import PlannerRequests from "./PlannerRequests.vue";
+import SegmentedBar from "@/components/SegmentedBar.vue";
 export default defineComponent({
   name: 'Planner',
   components: {
+    SegmentedBar,
     PlannerRequests
   },
   props: {
     data: {
       type: Object as PropType<DataInterface>,
-      required: true,
+      required: true
     },
   },
   data() {
@@ -327,6 +330,20 @@ export default defineComponent({
       groups: JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Group[],
       worldRawResources: {} as { [key: string]: RawResource },
       dependencies: JSON.parse(localStorage.getItem('factoryDependencies') || '[]') as GroupDependency[],
+      requests: [
+        {
+          factory: 'Factory 1',
+          amount: 500,
+        },
+        {
+          factory: 'Factory 2',
+          amount: 50,
+        },
+        {
+          factory: 'Factory 3',
+          amount: 25,
+        },
+      ],
     }
   },
   created() {

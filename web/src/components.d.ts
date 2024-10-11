@@ -18,5 +18,6 @@ declare module 'vue' {
     RecipeSearchItem: typeof import('./components/RecipeSearchItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SegmentedBar: typeof import('./components/SegmentedBar.vue')['default']
   }
 }
