@@ -29,9 +29,9 @@
     <v-row align-content="center">
       <v-col>
         <v-btn-group>
-          <v-btn color="primary" @click="createGroup" prepend-icon="fas fa-plus" ripple>Create New Group</v-btn>
+          <v-btn color="primary" @click="createGroup" prepend-icon="fas fa-plus" ripple>Create New Factory</v-btn>
           <v-btn color="green" @click="setTemplate" prepend-icon="fas fa-clipboard-list" ripple>Template</v-btn>
-          <v-btn color="red" @click="clearAll" prepend-icon="fas fa-trash">Clear</v-btn>
+          <v-btn color="red" @click="confirmDelete('Are you really sure? This will delete literally everything!') && clearAll()" prepend-icon="fas fa-trash">Clear</v-btn>
         </v-btn-group>
       </v-col>
     </v-row>
@@ -41,61 +41,53 @@
     :key="index"
   >
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12">
         <v-card :style="groupStyling(group)">
           <v-row style="padding: 16px">
             <v-col class="text-h4">
               <i class="fas fa-industry"></i> <input v-model="group.name" @input="updateGroup(group)" placeholder="Group Name" class="w-auto"/>
             </v-col>
             <v-col align-self="center" class="text-right">
-              <v-btn color="red" prepend-icon="fas fa-trash" variant="outlined" @click="clearGroup(index)">Delete Group</v-btn>
+              <v-btn color="primary" v-show="!group.hidden" prepend-icon="fas fa-eye-slash" variant="outlined" @click="group.hidden = true">Hide</v-btn>
+              <v-btn color="primary" v-show="group.hidden" prepend-icon="fas fa-eye" variant="outlined" @click="group.hidden = false">Show</v-btn>
+              <v-btn color="red" class="ml-4" prepend-icon="fas fa-trash" variant="outlined" @click="confirmDelete() && clearGroup(group)">Delete Group</v-btn>
             </v-col>
           </v-row>
           <v-divider thickness="2px" color="white"></v-divider>
-          <v-card-text>
+          <v-card-text v-show="!group.hidden">
             <!------------------>
             <!-- Products -->
             <h1 class="text-h5 mb-4"><i class="fas fa-box"></i> Products</h1>
-            <p class="text-caption mb-4">
-              Products that are created within the factory. Products are first used to fulfil recipes internally, and any surplus is then shown in Outputs for export or sinking.<br>
+            <p class="text-body-2">
+              <i class="fas fa-info-circle" /> Products that are created within the factory. Products are first used to fulfil recipes internally, and any surplus is then shown in Outputs for export or sinking.<br>
               e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an Output (and the Screws).<br>
               This way you know exactly how much of a part you need to make to fulfil both the factory itself and any other factories that use this one as an Input.
             </p>
             <v-row v-for="(product, productIndex) in group.products" :key="productIndex" style="padding: 0; margin: 10px 0">
               <v-autocomplete
                 label="Item"
-                :items="autocompleteItems"
+                :items="autocompletePartItems"
                 v-model="product.id"
                 variant="outlined"
                 @update:modelValue="updateProductSelection(product, group)"
                 hide-details
                 max-width="400px"
-                style="margin-right: 10px"
+                prepend-icon="fas fa-cube"
+                style="margin-right: 25px"
               >
-                <template v-slot:item="{ item, props }">
-                  <v-list-item v-bind="props" prepend-icon="fas fa-cube" :title="item.title" />
-                </template>
-                <template v-slot:selection="{ item, props }">
-                  <v-list-item v-bind="props" prepend-icon="fas fa-cube" :title="item.title" />
-                </template>
               </v-autocomplete>
               <v-autocomplete
                 label="Recipe"
-                :items="getRecipesForPartAutoselectFormatted(product.id)"
+                :items="getRecipesForPartsSelectorFormatted(product.id)"
                 :disabled="!product.id"
                 v-model="product.recipe"
                 variant="outlined"
                 @update:modelValue="updateGroup(group)"
                 hide-details
                 max-width="400px"
+                prepend-icon="fas fa-hat-chef"
                 style="margin-right: 10px"
               >
-                <template v-slot:item="{ item, props }">
-                  <v-list-item v-bind="props" prepend-icon="fas fa-hat-chef" :title="item.title" />
-                </template>
-                <template v-slot:selection="{ item, props }">
-                  <v-list-item v-bind="props" prepend-icon="fas fa-hat-chef" :title="item.title" />
-                </template>
               </v-autocomplete>
               <v-text-field
                 label="Amount"
@@ -116,52 +108,61 @@
             <!-- Imports -->
             <h1 class="text-h5 mb-4"><i class="fas fa-arrow-to-right" /> Imports</h1>
             <p class="text-body-2">
-              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) don't require import. It is assumed you'll supply them sufficiently.
+              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) don't require defining as imports. It is assumed you'll supply them sufficiently.
             </p>
             <div v-for="(inputIndex) in group.rawResources" :key="inputIndex">
-              <div v-if="group.rawResources.length > 0">
-                <p>Raw Resources:</p>
-                <div v-for="(resource, resourceIndex) in group.rawResources" :key="resourceIndex">
-                  <p>{{ resource.name }}: {{ resource.amount }}/m</p>
-                </div>
+              <p>Raw Resources:</p>
+              <div v-for="(resource, resourceIndex) in group.rawResources" :key="resourceIndex">
+                <p>{{ resource.name }}: {{ resource.amount }}/m</p>
               </div>
             </div>
-            <div v-for="(input, inputIndex) in group.inputs" :key="inputIndex">
-              <select v-model="input.groupId">
-                <option v-for="(otherGroup, otherIndex) in validGroupsForInputs"
-                        :key="otherIndex"
-                        :value="otherIndex"
-                        @change="updateGroup(group)"
-                        :disabled="otherIndex === index"
-                >
-                  {{ otherGroup.name }}
-                </option>
-              </select>
-              <label>
-                Output:
-                <select v-model="input.outputPart" @change="updateGroup(group)" style="margin-right: 5px">
-                  <option v-for="output in getGroupOutputs(input.groupId)"
-                          :key="output"
-                          :value="output"
-                          :disabled="output == input.groupId || isOutputSelected(output, inputIndex, group)"
-                  >
-                    {{ getPartDisplayName(output) }}
-                  </option>
-                </select>
-              </label>
-              <label>
-                <input type="number" v-model.number="input.amount" @input="updateGroup(group)" min="0" />
-                /min
-              </label>
-              <button @click="deleteInput(inputIndex, group)" style="background-color: red">Del</button>
-            </div>
+            <v-row v-for="(input, inputIndex) in group.inputs" :key="inputIndex" style="padding: 0; margin: 10px 0">
+              <v-autocomplete
+                label="Factory"
+                :items="autocompleteInputFactoriesForGroup(group)"
+                v-model="input.groupId"
+                variant="outlined"
+                @update:modelValue="updateGroup(group)"
+                hide-details
+                prepend-icon="fas fa-industry"
+                max-width="400px"
+                style="margin-right: 20px"
+              >
+              </v-autocomplete>
+              <v-autocomplete
+                label="Product"
+                :items="getGroupOutputsForAutocomplete(input.groupId)"
+                v-model="input.outputPart"
+                variant="outlined"
+                @update:modelValue="updateGroup(group)"
+                hide-details
+                prepend-icon="fas fa-cube"
+                max-width="400px"
+                style="margin-right: 20px">
+              </v-autocomplete>
+              <v-text-field
+                label="Amount"
+                v-model.number="input.amount"
+                type="number"
+                variant="outlined"
+                @input="updateGroup(group)"
+                hide-details
+                max-width="125px"
+                style="margin-right: 10px"
+              />
+              <v-btn
+                color="red"
+                rounded="0"
+                icon="fas fa-trash"
+                @click="deleteInput(inputIndex, group)" />
+            </v-row>
             <v-btn
               color="green"
               prepend-icon="fas fa-dolly"
               ripple
               @click="addEmptyInput(group)"
-              :disabled="validGroupsForInputs.length === 0"
-            >Add Import <span v-if="validGroupsForInputs.length === 0">(Add another group with Exports!)</span>
+              :disabled="validGroupsForInputs.length === 1"
+            >Add Import <span v-if="validGroupsForInputs.length === 1">(Add another Factory with Exports!)</span>
             </v-btn>
 
             <v-divider class="my-4" thickness="2px" color="white"></v-divider>
@@ -269,6 +270,7 @@ interface Group {
   }>;
   surplus: { [key: string]: number }; // Surplus products
   surplusHandling: { [key: string]: 'export' | 'sink' }; // How to handle surplus
+  hidden: boolean; // Whether to hide the card or not
 }
 
 interface GroupDependency {
@@ -325,7 +327,7 @@ export default defineComponent({
         return groupOutputs.every(output => group.products[output].id && group.products[output].amount > 0);
       });
     },
-    autocompleteItems() {
+    autocompletePartItems() {
       return Object.entries(this.data.items.parts).map(([key, displayName]) => {
         return {
           value: key,               // The key to use as the value
@@ -349,6 +351,25 @@ export default defineComponent({
     },
   },
   methods: {
+    confirmDelete(message = 'Are you sure?') {
+      return confirm(message);
+
+    },
+    autocompleteInputFactoriesForGroup(group: Group) {
+      // Get the current list of all valid inputs
+      const validInputs = this.validGroupsForInputs;
+
+      // Filter the valid inputs by group that is not the current
+      const relevantInputs = validInputs.filter((input) => input.id !== group.id);
+
+      // Now create an array in the format of { title: 'group.name', value: 'groupid' }
+      return relevantInputs.map((input) => {
+        return {
+          title: input.name,
+          value: input.id,
+        };
+      });
+    },
     updateProductSelection(product, group: GroupProduct) {
       console.log('Product updated:', product, group);
       // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
@@ -361,10 +382,8 @@ export default defineComponent({
       }
       this.updateGroup(group)
     },
-    getSatisfactionIcon(satisfied) {
-      return satisfied ? 'fas fa-check' : 'fas fa-times-square';
-    },
     clearAll() {
+      console.log('clearAll');
       this.groups = [];
       this.dependencies = [];
       this.updateWorldRawResources();
@@ -476,7 +495,7 @@ export default defineComponent({
         return recipe.product[part] || undefined
       });
     },
-    getRecipesForPartAutoselectFormatted(part: string) {
+    getRecipesForPartsSelectorFormatted(part: string) {
       // Return each recipe in the format of { title: 'Recipe Name', value: 'Recipe ID' }
       return this.data.recipes
         .filter((recipe) => recipe.product[part] || undefined)
@@ -491,8 +510,8 @@ export default defineComponent({
     // ==== GROUPS
     createGroup() {
       this.groups.push({
-        id: this.groups.length,
-        name: '',
+        id: Math.floor(Math.random() * 10000),
+        name: 'A new factory',
         products: [],
         inputs: [],
         partsRequired: {},
@@ -500,6 +519,7 @@ export default defineComponent({
         rawResources: [],
         surplus: {},
         surplusHandling: {},
+        hidden: false,
       });
     },
     clearGroup(groupIndex: number) {
@@ -510,20 +530,33 @@ export default defineComponent({
       this.groups.forEach(group => this.updateGroup(group));
     },
     // Gets the products of another group for dependencies
-    getGroupOutputs(groupId: number | undefined): string[] {
+    getGroupOutputsForAutocomplete(groupId: number | undefined): string[] {
       if (groupId !== 0 && !groupId) {
         console.error('Tried to get products for an undefined group ID.');
         return [];
       }
-      const group = this.groups[groupId];
 
-      if (!group) {
+      // Get the group by ID, we can't use [ref]
+      const group = this.groups.find(group => group.id === groupId);
+
+      if (!group || !group.id) {
         console.error('Tried to get products for a group that does not exist:', groupId);
         return [];
       }
-      return group.products
-        .map(output => output.id)
-        .filter(output => !!output);
+
+      if (Object.values(group.products).length === 0) {
+        console.error('Tried to get outputs of a group with no products.');
+        return [];
+      }
+
+      // Ensure that we're not returning the same factory as requested, and return as an array for rendering.
+      // It must be in the format of [ { title: 'Item Name', value: 'Item ID' } ]
+      return Object.keys(group.surplus).map((item) => {
+        return {
+          title: this.getPartDisplayName(item),
+          value: item,
+        };
+      });
     },
     updateGroup(group: Group) {
       this.updateWorldRawResources();
