@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container max-width="1100">
     <v-row>
       <v-col>
         <v-card>
@@ -7,8 +7,9 @@
           <v-card-text>
             <v-list density="compact">
               <v-list-item>When a group is deleted, the dependants are not properly updated. Need to check if inputs are still valid and if not delete them.</v-list-item>
-              <v-list-item>Bug: The Requests is not correctly picking up they are being satisfied resulting in red text always. Probably broke the calculation somewhere.</v-list-item>
-              <v-list-item>Bug: Imports are not correctly showing raw resources.</v-list-item>
+              <v-list-item>Feat: If user attempts to set an output which has dependants to sink, warn the user first because it's potentially destructive as we remove the invalid inputs.</v-list-item>
+              <v-list-item>Feat: Display resource utilisation by factory. Display next to each output, with a bar split up by requests and remainder "waste" or sunk.</v-list-item>
+              <v-list-item>Feat: Enable to sink remainder, or sink entire output.</v-list-item>
             </v-list>
           </v-card-text>
         </v-card>
@@ -29,8 +30,8 @@
     <v-row align-content="center">
       <v-col>
         <v-btn-group>
-          <v-btn color="primary" @click="createGroup" prepend-icon="fas fa-plus" ripple>Create New Factory</v-btn>
-          <v-btn color="green" @click="setTemplate" prepend-icon="fas fa-clipboard-list" ripple>Template</v-btn>
+          <v-btn color="primary" @click="createGroup" prepend-icon="fas fa-plus" ripple>Add Factory</v-btn>
+          <v-btn color="green" @click="confirmDelete('Are you sure? This will replace your factories with the demo example!') && setTemplate()" prepend-icon="fas fa-clipboard-list" ripple>Show Demo</v-btn>
           <v-btn color="red" @click="confirmDelete('Are you really sure? This will delete literally everything!') && clearAll()" prepend-icon="fas fa-trash">Clear</v-btn>
         </v-btn-group>
       </v-col>
@@ -39,6 +40,7 @@
   <v-container
     v-for="(group, index) in groups"
     :key="index"
+    max-width="1100"
   >
     <v-row>
       <v-col cols="12">
@@ -57,8 +59,8 @@
           <v-card-text v-show="!group.hidden">
             <!------------------>
             <!-- Products -->
-            <h1 class="text-h5 mb-4"><i class="fas fa-box"></i> Products</h1>
-            <p class="text-body-2">
+            <h1 class="text-h5 mb-4"><i class="fas fa-conveyor-belt-alt"></i> Products</h1>
+            <p class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Products that are created within the factory. Products are first used to fulfil recipes internally, and any surplus is then shown in Outputs for export or sinking.<br>
               e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an Output (and the Screws).<br>
               This way you know exactly how much of a part you need to make to fulfil both the factory itself and any other factories that use this one as an Input.
@@ -107,120 +109,143 @@
             <!------------------>
             <!-- Imports -->
             <h1 class="text-h5 mb-4"><i class="fas fa-arrow-to-right" /> Imports</h1>
-            <p class="text-body-2">
-              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) don't require defining as imports. It is assumed you'll supply them sufficiently.
-            </p>
-            <div v-for="(inputIndex) in group.rawResources" :key="inputIndex">
-              <p>Raw Resources:</p>
-              <div v-for="(resource, resourceIndex) in group.rawResources" :key="resourceIndex">
-                <p>{{ resource.name }}: {{ resource.amount }}/m</p>
-              </div>
-            </div>
-            <v-row v-for="(input, inputIndex) in group.inputs" :key="inputIndex" style="padding: 0; margin: 10px 0">
-              <v-autocomplete
-                label="Factory"
-                :items="autocompleteInputFactoriesForGroup(group)"
-                v-model="input.groupId"
-                variant="outlined"
-                @update:modelValue="updateGroup(group)"
-                hide-details
-                prepend-icon="fas fa-industry"
-                max-width="400px"
-                style="margin-right: 20px"
-              >
-              </v-autocomplete>
-              <v-autocomplete
-                label="Product"
-                :items="getGroupOutputsForAutocomplete(input.groupId)"
-                v-model="input.outputPart"
-                variant="outlined"
-                @update:modelValue="updateGroup(group)"
-                hide-details
-                prepend-icon="fas fa-cube"
-                max-width="400px"
-                style="margin-right: 20px">
-              </v-autocomplete>
-              <v-text-field
-                label="Amount"
-                v-model.number="input.amount"
-                type="number"
-                variant="outlined"
-                @input="updateGroup(group)"
-                hide-details
-                max-width="125px"
-                style="margin-right: 10px"
-              />
+            <div v-if="Object.keys(group.rawResources).length > 0 || Object.keys(group.partsRequired).length > 0">
+              <v-card class="mb-4 border" v-if="Object.keys(group.rawResources).length > 0">
+                <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
+                <v-card-text>
+                  <div v-for="(inputIndex) in group.rawResources" :key="inputIndex">
+                    <p class="text-body-2 mb-4">
+                      <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
+                    </p>
+                    <p class="text-body-1 mt-4" v-for="(resource, resourceIndex) in group.rawResources" :key="resourceIndex">
+                      <b>{{ resource.name }}</b>: {{ resource.amount }}/min
+                    </p>
+                  </div>
+                </v-card-text>
+              </v-card>
+              <v-row v-for="(input, inputIndex) in group.inputs" :key="inputIndex" style="padding: 0; margin: 10px 0">
+                <v-autocomplete
+                  label="Factory"
+                  :items="autocompleteInputFactoriesForGroup(group)"
+                  v-model="input.groupId"
+                  variant="outlined"
+                  @update:modelValue="updateGroup(group)"
+                  hide-details
+                  prepend-icon="fas fa-industry"
+                  max-width="400px"
+                  style="margin-right: 20px"
+                >
+                </v-autocomplete>
+                <v-autocomplete
+                  label="Product"
+                  :items="getGroupOutputsForAutocomplete(input.groupId)"
+                  v-model="input.outputPart"
+                  variant="outlined"
+                  @update:modelValue="updateGroup(group)"
+                  hide-details
+                  prepend-icon="fas fa-cube"
+                  max-width="400px"
+                  style="margin-right: 20px">
+                </v-autocomplete>
+                <v-text-field
+                  label="Amount"
+                  v-model.number="input.amount"
+                  type="number"
+                  variant="outlined"
+                  @input="updateGroup(group)"
+                  hide-details
+                  max-width="125px"
+                  style="margin-right: 10px"
+                />
+                <v-btn
+                  color="red"
+                  rounded="0"
+                  icon="fas fa-trash"
+                  @click="deleteInput(inputIndex, group)" />
+              </v-row>
               <v-btn
-                color="red"
-                rounded="0"
-                icon="fas fa-trash"
-                @click="deleteInput(inputIndex, group)" />
-            </v-row>
-            <v-btn
-              color="green"
-              prepend-icon="fas fa-dolly"
-              ripple
-              @click="addEmptyInput(group)"
-              :disabled="validGroupsForInputs.length === 1"
-            >Add Import <span v-if="validGroupsForInputs.length === 1">(Add another Factory with Exports!)</span>
-            </v-btn>
+                color="green"
+                prepend-icon="fas fa-dolly"
+                ripple
+                @click="addEmptyInput(group)"
+                :disabled="validGroupsForInputs.length === 0"
+                v-show="Object.keys(group.partsRequired).length > 0"
+              >Add Import <span v-if="validGroupsForInputs.length === 0">(Add another Factory with Exports!)</span>
+              </v-btn>
+            </div>
+            <p v-else class="text-body-1">Awaiting product selection.</p>
 
             <v-divider class="my-4" thickness="2px" color="white"></v-divider>
             <!------------------>
             <!-- Satisfaction -->
             <h2
               class="text-h5 mb-4"
-              :style="group.inputsSatisfied ? 'color: white' : 'color: red'"
+              v-show="group.inputsSatisfied"
             >
-              <i :class="group.inputsSatisfied ? 'fas fa-check' : 'fas fa-times-square'" /> Satisfaction
+              <i class="fas fa-check" />
+              Satisfaction
             </h2>
-            <p class="text-body-2">
-              <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding inputs to the factory.
-            </p>
-            <p v-if="Object.keys(group.partsRequired).length === 0">No requirements yet. Add an output!</p>
+            <h2
+              class="text-h5 mb-4"
+              style="color: red"
+              v-show="!group.inputsSatisfied"
+            >
+              <i class="fas fa-times-square" />
+              Satisfaction
+            </h2>
 
-            <v-list bg-color="transparent">
-              <v-list-item
-                v-for="(part, partIndex) in group.partsRequired"
-                :key="`${partIndex}-${part.satisfied}`"
-                :style="isSatisfiedStyling(group, partIndex)"
-              >
-                <template v-slot:prepend="{ item }" >
-                  <v-icon v-show="part.satisfied" icon="fas fa-check" />
-                  <v-icon v-show="!part.satisfied" icon="fas fa-times" />
-                </template>
-                <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountNeeded }} /min
-              </v-list-item>
-            </v-list>
+            <div v-if="Object.keys(group.partsRequired).length > 0">
+              <p class="text-body-2 mb-4">
+                <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding inputs to the factory.
+              </p>
 
+              <v-list bg-color="transparent">
+                <v-list-item
+                  v-for="(part, partIndex) in group.partsRequired"
+                  :key="`${partIndex}-${part.satisfied}`"
+                  :style="isSatisfiedStyling(group, partIndex)"
+                >
+                  <template v-slot:prepend="{ item }" >
+                    <v-icon v-show="part.satisfied" icon="fas fa-check" />
+                    <v-icon v-show="!part.satisfied" icon="fas fa-times" />
+                  </template>
+                  <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountNeeded }} /min
+                </v-list-item>
+              </v-list>
+            </div>
+            <p v-else class="text-body-1">Awaiting product selection or requirements outside of Raw Resources.</p>
             <v-divider class="my-4" thickness="2px" color="white"></v-divider>
 
             <!------------------>
-            <!-- Exports -->
-            <h2 class="text-h5 mb-4"><i class="fa fa-truck-container" /> Exports</h2>
+            <!-- Outputs -->
+            <h2 class="text-h5 mb-4"><i class="fa fa-truck-container" /> Outputs</h2>
 
-            <p class="text-body-2">
-              <i class="fas fa-info-circle" /> Surplus products are products that are created but not used internally. They can be exported to other factories or sunk.
-            </p>
-            <p class="text-body-1" v-if="group.surplus && Object.keys(group.surplus).length === 0">No surplus products yet. Add a product!</p>
+            <div v-if="group.products.length > 0">
+              <p class="text-body-2">
+                <i class="fas fa-info-circle" /> Surplus products are products that are created but not used internally. They can be exported to other factories or sunk.
+              </p>
+              <p class="text-body-1" v-if="group.surplus && Object.keys(group.surplus).length === 0">No surplus products yet. Add a product!</p>
 
-            <div v-if="group.surplus && Object.keys(group.surplus).length > 0">
-              <v-list bg-color="transparent">
-                <v-list-item v-for="(surplusAmount, part) in group.surplus" :key="part">
-                  <p class="text-body-1"><b>{{ getPartDisplayName(part) }}</b> surplus: {{ surplusAmount }}/min</p>
-                  <v-radio-group
-                    class="radio-fix d-inline"
-                    density="compact"
-                    inline
-                    v-model="group.surplusHandling[part]"
-                    @change="updateGroup(group)"
-                  >
-                    <v-radio label="Export" value="export" class="mr-4"></v-radio>
-                    <v-radio label="Sink" value="sink"></v-radio>
-                  </v-radio-group>
-                </v-list-item>
-              </v-list>
-           </div>
+              <div v-if="group.surplus && Object.keys(group.surplus).length > 0">
+                <v-list bg-color="transparent">
+                  <v-list-item v-for="(surplusAmount, part) in group.surplus" :key="part">
+                    <p class="text-body-1"><b>{{ getPartDisplayName(part) }}</b> surplus: {{ surplusAmount }}/min</p>
+                    <v-radio-group
+                      class="radio-fix d-inline"
+                      density="compact"
+                      hide-details
+                      inline
+                      v-model="group.surplusHandling[part]"
+                      @update:modelValue="updateGroup(group)"
+                    >
+                      <v-radio label="Export" value="export" class="mr-4"></v-radio>
+                      <v-radio label="Sink" value="sink"></v-radio>
+                    </v-radio-group>
+                  </v-list-item>
+                </v-list>
+              </div>
+            </div>
+            <p v-else class="text-body-1">Awaiting product selection.</p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -234,9 +259,6 @@
       <planner-requests :requests="getGroupDependencies(group)" :groups="groups" :data="data" />
     </div>
   </v-container>
-
-
-
 
   <!-- Debugging -->
   <div>
@@ -260,14 +282,11 @@ interface Group {
     outputPart: string;
     amount: number;
   }>;
-  products: GroupProduct[];
-  outputs: GroupProduct[];
+  products: Product[];
+  outputs: Product[];
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
-  rawResources: Array<{
-    name: string;
-    amount: number;
-  }>;
+  rawResources: RawResource[];
   surplus: { [key: string]: number }; // Surplus products
   surplusHandling: { [key: string]: 'export' | 'sink' }; // How to handle surplus
   hidden: boolean; // Whether to hide the card or not
@@ -280,7 +299,7 @@ interface GroupDependency {
   outputAmount: number;
 }
 
-interface GroupProduct {
+interface Product {
   id: string;
   recipe: string;
   amount: number;
@@ -319,6 +338,13 @@ export default defineComponent({
       return this.groups.filter((group) => {
         const groupOutputs = Object.keys(group.products);
         if (groupOutputs.length === 0) {
+          return false
+        }
+
+        // Check if the surplus for each factory is greater than 0
+        // Object looks like this { 'IronIngot': 1000, 'IronRod': 1000 }, if they are all set to 0 the factory is not valid.
+        const groupSurplus = Object.values(group.surplus);
+        if (groupSurplus.every(surplus => surplus === 0)) {
           return false
         }
 
@@ -370,12 +396,12 @@ export default defineComponent({
         };
       });
     },
-    updateProductSelection(product, group: GroupProduct) {
+    updateProductSelection(product, group: Product) {
       console.log('Product updated:', product, group);
       // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
       product.recipe = '';
 
-      // If there is only one recipe for the product just automaticly select it
+      // If there is only one recipe for the product just automatically select it
       const recipes = this.getRecipesForPart(product.id);
       if (recipes.length === 1) {
         product.recipe = recipes[0].id;
@@ -412,6 +438,23 @@ export default defineComponent({
       // Iterate through groups to build the initial dependencies with requests
       this.groups.forEach(group => {
         group.inputs.forEach(input => {
+          // Check if the input is actually still valid, if the user has set an resource to sink this is no longer valid.
+          // We do this by checking the requested group to see if the surplus is still there.
+          const requestedGroup = this.groups.find(g => g.id === input.groupId);
+
+          // We need to pick up on the following conditions:
+          // 1. The group is no longer valid (e.g. the user has set it to sink)
+          // 2. The group is valid but the product is no longer available, BUT not if it's undefined e.g. "" because the UI is still being edited.
+          if (!requestedGroup || !requestedGroup.surplus[input.outputPart] && input.outputPart !== "") {
+            console.warn('Input is no longer valid, removing it.', input);
+            // Remove the input from the group
+            group.inputs = group.inputs.filter(i => i !== input);
+
+            // Run the requirements check again just for this affected group
+            this.updateGroup(group);
+            return;
+          }
+
           const request = {
             part: input.outputPart,
             amount: input.amount,
@@ -437,6 +480,7 @@ export default defineComponent({
 
       // Now loop through the dependencies and calculate the total requests upon each part within the group
       Object.keys(newDependencies).forEach(groupDepId => {
+        console.log(groupDepId);
         const groupDependency = newDependencies[groupDepId];
 
         Object.keys(groupDependency.requestedBy).forEach(depGroupId => {
@@ -458,12 +502,10 @@ export default defineComponent({
         });
 
         // Calculate the supply and whether the request is satisfied
-        const thisGroup = this.groups[groupDepId];
+        const thisGroup = this.groups.find(group => group.id === parseInt(groupDepId));
 
-        console.log(thisGroup)
         Object.keys(thisGroup.surplus).forEach(product => {
           const amount = thisGroup.surplus[product]; // Get the amount of the product from the surplus object
-
 
           if (groupDependency.metrics[product]) {
             groupDependency.metrics[product].supply = amount;
@@ -486,8 +528,8 @@ export default defineComponent({
 
     groupStyling(group: Group) {
       return {
-        border: `1px solid ${group.inputsSatisfied ? '#28a745' : '#dc3545'}`,
-        backgroundColor: `${group.inputsSatisfied ? 'rgba(0, 66, 19, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+        border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+        backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
     getRecipesForPart(part: string) {
@@ -515,8 +557,8 @@ export default defineComponent({
         products: [],
         inputs: [],
         partsRequired: {},
-        inputsSatisfied: false,
-        rawResources: [],
+        inputsSatisfied: true,
+        rawResources: {},
         surplus: {},
         surplusHandling: {},
         hidden: false,
@@ -604,6 +646,7 @@ export default defineComponent({
 
     updateGroupRequirements(group: Group) {
       group.partsRequired = {};
+      group.rawResources = {};
       group.surplus = {};
 
       // First loop through each product and add it to internal requirements and surplus.
@@ -622,35 +665,60 @@ export default defineComponent({
             return;
           }
 
-          if (!group.partsRequired[part]) {
-            group.partsRequired[part] = {
-              amountNeeded: 0,
-              amountSupplied: 0,
-              satisfied: false,
-            };
-          }
-
-          // Update the group's input requirements.
-          group.partsRequired[part].amountNeeded += partAmount * product.amount;
-
-          // If it's a raw resource, mark it as fully supplied.
+          // If it's a raw resource, mark it as fully supplied and don't mark it as a part required.
           const isRaw = !!this.data.items.rawResources[part];
           if (isRaw) {
-            group.partsRequired[part].amountSupplied = group.partsRequired[part].amountNeeded;
-            group.partsRequired[part].satisfied = true;
+            if (!group.rawResources[part]) {
+              group.rawResources[part] = {
+                name: this.data.items.rawResources[part].name,
+                amount: 0,
+              };
+            }
+            group.rawResources[part].amount = partAmount * product.amount;
+            group.rawResources[part].satisfied = true;
+          } else {
+            if (!group.partsRequired[part]) {
+              group.partsRequired[part] = {
+                amountNeeded: 0,
+                amountSupplied: 0,
+                satisfied: true, // So we don't get a big red bot as soon as we add a product.
+              };
+            }
+
+            group.partsRequired[part].amountNeeded += partAmount * product.amount;
+
+            // Check satisfaction
+            if (!group.partsRequired[part].amountSupplied <= group.partsRequired[part].amountNeeded) {
+              group.partsRequired[part].satisfied = false;
+            }
           }
         });
 
         // Any remaining product that is not used internally is surplus.
         if (!group.surplus[product.id]) {
           group.surplus[product.id] = 0;
+
+          // If the handling isn't already set (so we don't blow it away again)
+          if (!group.surplusHandling[product.id]) {
+            group.surplusHandling[product.id] = 'export'; // Assume user will export it by default
+          }
         }
 
-        group.surplus[product.id] += product.amount;
+        // If the user has chosen to sink the resources, we don't need to calculate the surplus and zero it out
+        if (group.surplusHandling[product.id] === 'sink') {
+          group.surplus[product.id] = 0;
+        } else {
+          group.surplus[product.id] += product.amount;
+        }
       });
 
       // Satisfy internal requirements with existing group products (like screws from iron rods).
       Object.keys(group.partsRequired).forEach(part => {
+        // If it's raw, don't bother
+        if (!group.partsRequired[part]) {
+          return;
+        }
+
         const requirement = group.partsRequired[part];
 
         group.products.forEach(product => {
