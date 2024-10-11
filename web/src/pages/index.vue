@@ -1,15 +1,14 @@
 <template>
   <v-container>
-    <v-card-title v-if="loading" class="loading-screen">
-      Loading all the things...
-    </v-card-title>
-    <v-card-title v-else-if="error" class="error-screen">
-      Error loading recipes: {{ error }}
-    </v-card-title>
-    <v-card v-else>
-      <planner v-if="data.items" :data="data"></planner>
+    <v-card>
+       <v-card-title v-if="loading" class="loading-screen">
+          Loading all the things...
+        </v-card-title>
+        <v-card-title v-else-if="error" class="error-screen">
+          Error loading recipes: {{ error }}
+        </v-card-title>
     </v-card>
-
+    <planner v-if="data.items" :data="data"></planner>
   </v-container>
 </template>
 <script lang="ts">
