@@ -1,23 +1,56 @@
 <template>
   <v-container max-width="100%">
+    <!-- The Drawer for Mobile -->
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="d-md-none"
+      temporary
+    >
+      <planner-global-actions
+        @clear-all="clearAll"
+        @show-demo="showDemo"
+      />
+      <planner-factory-list
+        :groups="groups"
+        @create-group="createGroup"
+      />
+    </v-navigation-drawer>
     <v-row>
-      <v-col cols="2">
-        <planner-global-actions
-          @create-group="createGroup"
-          @clear-all="clearAll"
-          @show-demo="showDemo" />
-        <planner-factory-list :groups="groups" />
+      <!-- Sticky Sidebar for Desktop -->
+      <v-col class="d-none d-md-flex sticky-sidebar" cols="2">
+        <v-container class="pa-0">
+           <planner-global-actions
+            @clear-all="clearAll"
+            @show-demo="showDemo"
+          />
+          <planner-factory-list
+            :groups="groups"
+            @create-group="createGroup"
+          />
+        </v-container>
       </v-col>
-      <v-col cols="10">
+      <!-- Main Content Area -->
+      <v-col cols="12" md="10" class="border-s-md">
         <v-container>
+          <v-btn
+            class="d-md-none mb-4"
+            color="primary"
+            prepend-icon="mdi-menu"
+            @click="toggleDrawer"
+          >
+            Toggle Sidebar
+          </v-btn>
+
           <todo></todo>
-          <planner-world-resources :worldRawResources="worldRawResources" />
+          <planner-world-resources :worldRawResources="worldRawResources"/>
+
           <v-row
             v-for="(group, index) in groups"
             :key="index"
           >
             <v-col>
-              <v-card :style="groupStyling(group)" :id="group.id">
+              <v-card :id="group.id" :style="groupStyling(group)">
                 <v-row style="padding: 16px">
                   <v-col class="text-h4">
                     <i class="fas fa-industry"></i> <input v-model="group.name" class="w-auto"
@@ -296,10 +329,12 @@ import PlannerGlobalActions from "@/components/planner/PlannerGlobalActions.vue"
 import SegmentedBar from "@/components/SegmentedBar.vue";
 import {Group, GroupDependency, GroupProduct, WorldRawResource} from "@/interfaces/planner/Group";
 import {DataInterface} from "@/interfaces/DataInterface";
+import Todo from "@/components/planner/Todo.vue";
 
 export default defineComponent({
   name: 'Planner',
   components: {
+    Todo,
     SegmentedBar,
     PlannerGlobalActions,
   },
@@ -314,6 +349,7 @@ export default defineComponent({
       groups: JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Group[],
       worldRawResources: {} as { [key: string]: WorldRawResource },
       dependencies: JSON.parse(localStorage.getItem('factoryDependencies') || '[]') as GroupDependency[],
+      drawer: ref(false),
       requests: [
         {
           factory: 'Factory 1',
@@ -333,6 +369,11 @@ export default defineComponent({
   created() {
     this.worldRawResources = this.generateRawResources();
     this.updateWorldRawResources();
+
+    // Add a dummy factory if there isn't any
+    if (this.groups.length === 0) {
+      this.createGroup('My first factory');
+    }
   },
   computed: {
     validGroupsForInputs() {
@@ -378,6 +419,9 @@ export default defineComponent({
     },
   },
   methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    },
     confirmDelete(message = 'Are you sure?') {
       return confirm(message);
 
@@ -572,10 +616,10 @@ export default defineComponent({
     },
 
     // ==== GROUPS
-    createGroup() {
+    createGroup(name = 'A new factory') {
       this.groups.push({
         id: Math.floor(Math.random() * 10000),
-        name: 'A new factory',
+        name,
         products: [],
         inputs: [],
         partsRequired: {},
@@ -1003,5 +1047,13 @@ export default defineComponent({
   * {
     opacity: 100;
   }
+}
+.sticky-sidebar {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px;
 }
 </style>

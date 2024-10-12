@@ -2,13 +2,6 @@
   <v-row>
     <v-col>
       <v-btn
-        color="primary"
-        prepend-icon="fas fa-plus"
-        ripple @click="
-        $emit('create-group')">
-          Add Factory
-      </v-btn>
-      <v-btn
         color="green"
         prepend-icon="fas fa-clipboard-list"
         ripple @click="confirmDelete('Are you sure? This will replace your factories with the demo example!') && $emit('show-demo')">

@@ -33,7 +33,7 @@ import { ref, watch } from 'vue';
 import { WorldRawResource } from "@/interfaces/planner/Group";
 
 const props = defineProps<{
-  worldRawResources: WorldRawResource[];
+  worldRawResources: WorldRawResource;
 }>();
 
 // Initialize the 'hidden' ref based on the value in localStorage
