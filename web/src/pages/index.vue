@@ -1,5 +1,4 @@
 <template>
-  <v-container>
     <v-card>
        <v-card-title v-if="loading" class="loading-screen">
           Loading all the things...
@@ -9,7 +8,6 @@
         </v-card-title>
     </v-card>
     <planner v-if="data.items" :data="data"></planner>
-  </v-container>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -30,11 +28,6 @@ export default defineComponent({
       error: null as string | null,
       showRecipeList: false,
     };
-  },
-  methods: {
-    toggleRecipeList() {
-      this.showRecipeList = !this.showRecipeList;
-    },
   },
   async mounted() {
     try {
