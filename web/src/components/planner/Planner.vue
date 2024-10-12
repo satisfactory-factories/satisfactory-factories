@@ -8,8 +8,13 @@
       temporary
     >
       <planner-global-actions
+        class="pt-4"
         @clear-all="clearAll"
         @show-demo="showDemo"
+        @show-all="showHideAll('show')"
+        @hide-all="showHideAll('hide')"
+        @toggle-help-text="toggleHelp()"
+        :help-text-shown="helpText"
       />
       <v-divider thickness="2px" color="#ccc"></v-divider>
       <planner-factory-list
@@ -32,6 +37,8 @@
             @show-demo="showDemo"
             @show-all="showHideAll('show')"
             @hide-all="showHideAll('hide')"
+            @toggle-help-text="toggleHelp()"
+            :help-text-shown="helpText"
           />
           <v-divider thickness="2px" color="#ccc"></v-divider>
           <div>
@@ -82,7 +89,7 @@
                   <!------------------>
                   <!-- Products -->
                   <h1 class="text-h5 mb-4"><i class="fas fa-conveyor-belt-alt"></i> Products</h1>
-                  <p class="text-body-2 mb-4">
+                  <p class="text-body-2 mb-4" v-show="helpText">
                     <i class="fas fa-info-circle"/> Products that are created within the factory. Products are first
                     used to fulfil recipes internally, and any surplus is then shown in Outputs for export or
                     sinking.<br>
@@ -144,7 +151,7 @@
                       <v-card-title><i class="fas fa-hard-hat"/> Raw Resources</v-card-title>
                       <v-card-text>
                         <div v-for="(inputIndex) in group.rawResources" :key="inputIndex">
-                          <p class="text-body-2 mb-4">
+                          <p class="text-body-2 mb-4" v-show="helpText">
                             <i class="fas fa-info-circle"/> Raw resources (e.g. Iron Ore) aren't defined as imports. It
                             is assumed you'll supply them sufficiently.
                           </p>
@@ -229,7 +236,7 @@
                   </h2>
 
                   <div v-if="Object.keys(group.partsRequired).length > 0">
-                    <p class="text-body-2 mb-4">
+                    <p class="text-body-2 mb-4" v-show="helpText">
                       <i class="fas fa-info-circle"/> All entries are listed as [supply/demand]. Supply is created by
                       adding imports to the factory.
                     </p>
@@ -257,7 +264,7 @@
                   <h2 class="text-h5 mb-4"><i class="fa fa-truck-container"/> Outputs</h2>
 
                   <div v-if="group.products.length > 0">
-                    <p class="text-body-2 mb-4">
+                    <p class="text-body-2 mb-4" v-show="helpText">
                       <i class="fas fa-info-circle"/> Items listed below are the surplus of products available for
                       export. They can be exported to other factories or sunk. To set up an export, create a new factory
                       and use this factory as an import.
@@ -359,6 +366,7 @@ export default defineComponent({
       worldRawResources: {} as { [key: string]: WorldRawResource },
       dependencies: JSON.parse(localStorage.getItem('factoryDependencies') || '[]') as GroupDependency[],
       drawer: ref(false),
+      helpText: JSON.parse(localStorage.getItem('helpText') || true),
       requests: [
         {
           factory: 'Factory 1',
@@ -426,6 +434,12 @@ export default defineComponent({
       },
       deep: true,
     },
+    helpText: {
+      handler() {
+        localStorage.setItem('helpText', JSON.stringify(this.helpText));
+      },
+      deep: true,
+    },
   },
   methods: {
     toggleDrawer() {
@@ -436,6 +450,10 @@ export default defineComponent({
     },
     showHideAll(mode: 'show' | 'hide') {
       this.groups.forEach(group => group.hidden = mode === 'hide');
+    },
+    toggleHelp() {
+      console.log('Toggling help');
+      this.helpText = !this.helpText;
     },
     autocompleteInputFactoriesForGroup(group: Group) {
       // Get the current list of all valid inputs

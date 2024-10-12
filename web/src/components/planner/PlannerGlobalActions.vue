@@ -29,6 +29,15 @@
       </div>
       <div class="mb-2">
         <v-btn
+          color="blue"
+          prepend-icon="fas fa-info-circle"
+          variant="tonal"
+          @click="$emit('toggle-help-text')">
+            {{ helpTextShown ? "Hide" : "Show"}} Info Text
+        </v-btn>
+      </div>
+      <div class="mb-2">
+        <v-btn
           color="red"
           prepend-icon="fas fa-trash"
           variant="tonal"
@@ -46,6 +55,12 @@ export default defineComponent({
   methods: {
     confirmDelete(message: string): boolean {
       return confirm(message);
+    },
+  },
+  props: {
+    helpTextShown: {
+      type: Boolean,
+      required: true,
     },
   },
 });
