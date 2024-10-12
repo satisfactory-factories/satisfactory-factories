@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import {Group} from "@/interfaces/planner/Group";
+import {Factory} from "@/interfaces/planner/Factory";
 
 interface Product {
   id: string;
@@ -41,12 +41,12 @@ export default defineComponent({
   name: 'PlannerFactoryList',
   props: {
     groups: {
-      type: Array as PropType<Group[]>,
+      type: Array as PropType<Factory[]>,
       required: true,
     },
   },
   methods: {
-    groupStyling(group: Group) {
+    groupStyling(group: Factory) {
       return {
         border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
         backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
@@ -62,7 +62,7 @@ export default defineComponent({
 });
 </script>
 
-<style scss scoped>
+<style lang="scss" scoped>
 v-list-item {
   margin-bottom: 10px;
   :last-child {

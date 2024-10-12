@@ -1,4 +1,4 @@
-export interface Group {
+export interface Factory {
   id: number;
   name: string;
   inputs: Array<{
@@ -6,8 +6,8 @@ export interface Group {
     outputPart: string;
     amount: number;
   }>;
-  products: GroupProduct[];
-  outputs: GroupProduct[];
+  products: FactoryProduct[];
+  outputs: FactoryProduct[];
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
   rawResources: WorldRawResource[];
@@ -16,29 +16,30 @@ export interface Group {
   hidden: boolean; // Whether to hide the card or not
 }
 
-export interface GroupDependencyRequest {
-  part: string;
+export interface FactoryProduct {
+  id: string;
+  recipe: string;
   amount: number;
 }
 
-export interface GroupDependencyRequestMetrics {
+export interface FactoryDependency {
+  [key: string]: {
+    requestedBy: { [key: string]: FactoryDependencyRequest[] },
+    metrics: { [key: string]: FactoryDependencyMetrics },
+  };
+}
+
+export interface FactoryDependencyRequest {
+  part: string;
+  amount: number;
+  requestedBy: number;
+}
+
+export interface FactoryDependencyMetrics {
   part: string;
   request: number;
   supply: number;
   isRequestSatisfied: boolean;
-}
-
-export interface GroupDependency {
-  [key: string]: {
-    requestedBy: { [key: string]: GroupDependencyRequest[] },
-    metrics: { [key: string]: GroupDependencyRequestMetrics },
-  };
-}
-
-export interface GroupProduct {
-  id: string;
-  recipe: string;
-  amount: number;
 }
 
 export interface WorldRawResource {

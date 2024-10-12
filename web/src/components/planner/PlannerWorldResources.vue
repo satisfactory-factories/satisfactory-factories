@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { WorldRawResource } from "@/interfaces/planner/Group";
+import { WorldRawResource } from "@/interfaces/planner/Factory";
 
 const props = defineProps<{
   worldRawResources: WorldRawResource;

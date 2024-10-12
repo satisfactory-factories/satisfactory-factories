@@ -5,7 +5,7 @@
         <v-card-title>Todo</v-card-title>
         <v-card-text>
           <v-list density="compact">
-            <v-list-item>Bug: Delete group deletes wrong groups!</v-list-item>
+            <v-list-item>Bug: Delete group deletes wrong factories!</v-list-item>
             <v-list-item>Bug: When a group is deleted, the dependants are not properly updated. Need to check if
               inputs are still valid and if not delete them.
             </v-list-item>
