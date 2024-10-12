@@ -6,6 +6,7 @@
           @create-group="createGroup"
           @clear-all="clearAll"
           @show-demo="showDemo" />
+        <planner-factory-list :groups="groups" />
       </v-col>
       <v-col cols="10">
         <v-container>
@@ -49,7 +50,7 @@
             :key="index"
           >
             <v-col>
-              <v-card :style="groupStyling(group)">
+              <v-card :style="groupStyling(group)" :id="group.id">
                 <v-row style="padding: 16px">
                   <v-col class="text-h4">
                     <i class="fas fa-industry"></i> <input v-model="group.name" class="w-auto"

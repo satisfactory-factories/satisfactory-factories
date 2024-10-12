@@ -1,22 +1,14 @@
 <template>
-  <v-container>
-    <v-list>
-      <v-list-item v-for="(group, index) in groups" :key="group.id">
-        <v-card :style="groupStyling(group)" class="w-100">
-          <v-card-title>
-            <i class="fas fa-industry"></i>
-            <span class="ml-2">{{ group.name }}</span>
-          </v-card-title>
-          <v-card-text>
-            <p class="text-body-2">
-              Products: {{ group.products.length }}<br />
-              Satisfaction: <i :class="group.inputsSatisfied ? 'fas fa-check text-success' : 'fas fa-times text-danger'" />
-            </p>
-          </v-card-text>
-        </v-card>
-      </v-list-item>
-    </v-list>
-  </v-container>
+  <v-list class="mt-4" density="compact">
+    <v-list-item v-for="(group, index) in groups" :key="group.id">
+      <v-card :style="groupStyling(group)" class="w-100" @click="navigateToFactory(group.id)">
+        <v-card-title>
+          <i class="fas fa-industry"></i>
+          <span class="ml-2">{{ group.name }}</span>
+        </v-card-title>
+      </v-card>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script lang="ts">
@@ -43,12 +35,12 @@ export default defineComponent({
         backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
+    navigateToFactory(factoryId) {
+      const factoryElement = document.getElementById(`${factoryId}`);
+      if (factoryElement) {
+        factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
   },
 });
 </script>
-
-<style scoped>
-.v-list-item {
-  margin-bottom: 10px;
-}
-</style>
