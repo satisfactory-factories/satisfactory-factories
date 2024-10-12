@@ -196,7 +196,7 @@
 
             <div v-if="Object.keys(group.partsRequired).length > 0">
               <p class="text-body-2 mb-4">
-                <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding inputs to the factory.
+                <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding imports to the factory.
               </p>
 
               <v-list bg-color="transparent">
@@ -222,16 +222,35 @@
 
             <div v-if="group.products.length > 0">
               <p class="text-body-2">
-                <i class="fas fa-info-circle" /> Surplus products are products that are created but not used internally. They can be exported to other factories or sunk.
+                <i class="fas fa-info-circle" /> Items listed below are the surplus of products available for export. They can be exported to other factories or sunk. To set up an export, create a new factory and use this factory as an import.
               </p>
               <p class="text-body-1" v-if="group.surplus && Object.keys(group.surplus).length === 0">No surplus products yet. Add a product!</p>
 
               <div v-if="group.surplus && Object.keys(group.surplus).length > 0">
-                <v-list bg-color="transparent">
-                  <v-list-item v-for="(surplusAmount, part) in group.surplus" :key="part">
-                    <p class="text-body-1"><b>{{ getPartDisplayName(part) }}</b> surplus: {{ surplusAmount }}/min</p>
+                <v-card v-for="(surplusAmount, part) in group.surplus" :key="`${group.id}-${part}`" class="border-b" :style="requestStyling(getRequestMetricsForGroupByPart(group, part))">
+                  <v-card-title><b>{{ getPartDisplayName(part) }}</b></v-card-title>
+                  <v-card-text class="text-body-1">
+
+                    <p><b>Surplus</b>: {{ surplusAmount }}/min</p>
+                    <div v-if="getRequestsForGroupByProduct(group, part).length > 0">
+                      <p><b>Requests total</b>: {{getRequestMetricsForGroupByPart(group, part).request }}/min</p>
+                      <p>Status:
+                      <span v-if="getRequestMetricsForGroupByPart(group, part).isRequestSatisfied" style="color: green"><b>Satisfied</b></span>
+                      <span v-if="!getRequestMetricsForGroupByPart(group, part).isRequestSatisfied" style="color: red"><b>Shortage!</b></span>
+                    </p>
+                      <div class="my-4">
+                        <p class="text-h6"><b>Requesting factories:</b></p>
+                        <ul class="ml-4">
+                          <li v-for="request in getRequestsForGroupByProduct(group, part)" :key="request.group">
+                            <b>{{ findGroup(request.group).name }}</b>: {{ request.amount }}/min
+                          </li>
+                        </ul>
+                        <segmented-bar :requests="requests" :max-value="surplusAmount" />
+                      </div>
+                    </div>
+                    <p v-else>There are currently no requests upon this product.</p>
                     <v-radio-group
-                      class="radio-fix d-inline"
+                      class="radio-fix d-inline mb-4"
                       density="compact"
                       hide-details
                       inline
@@ -241,9 +260,8 @@
                       <v-radio label="Export" value="export" class="mr-4"></v-radio>
                       <v-radio label="Sink" value="sink"></v-radio>
                     </v-radio-group>
-                    <segmented-bar :requests="requests" :max-value="surplusAmount" />
-                  </v-list-item>
-                </v-list>
+                  </v-card-text>
+                </v-card>
               </div>
             </div>
             <p v-else class="text-body-1">Awaiting product selection.</p>
@@ -251,14 +269,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-
-    <!------------------>
-    <!-- Dependencies -->
-    <div v-if="getGroupDependencies(group).requestedBy">
-      <h2>Requests</h2>
-      <planner-requests :requests="getGroupDependencies(group)" :groups="groups" :data="data" />
-    </div>
   </v-container>
 
   <!-- Debugging -->
@@ -293,11 +303,21 @@ interface Group {
   hidden: boolean; // Whether to hide the card or not
 }
 
+interface GroupDependencyRequest {
+  part: string;
+  amount: number;
+}
+interface GroupDependencyRequestMetrics {
+  part: string;
+  request: number;
+  supply: number;
+  isRequestSatisfied: boolean;
+}
 interface GroupDependency {
-  outputGroupId: number;
-  inputGroupId: number;
-  outputPart: string;
-  outputAmount: number;
+  [key: string]: {
+    requestedBy: { [key: string]: GroupDependencyRequest[] },
+    metrics: { [key: string]: GroupDependencyRequestMetrics },
+  };
 }
 
 interface Product {
@@ -450,7 +470,7 @@ export default defineComponent({
       this.worldRawResources = ores;
     },
     calculateDependencies() {
-      const newDependencies: { [key: string]: any } = {};
+      const newDependencies: { [key: number]: any } = {};
 
       // Iterate through groups to build the initial dependencies with requests
       this.groups.forEach(group => {
@@ -549,6 +569,17 @@ export default defineComponent({
         backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
+    requestStyling(requestMetric: GroupDependencyRequestMetrics) {
+      console.log('Request metric:', requestMetric);
+
+      // If no requests, return nothing
+      if (Object.keys(requestMetric).length === 0) {
+        return {};
+      }
+      return {
+        backgroundColor: requestMetric.isRequestSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)',
+      }
+    },
     getRecipesForPart(part: string) {
       return this.data.recipes.filter((recipe) => {
         return recipe.product[part] || undefined
@@ -587,6 +618,13 @@ export default defineComponent({
 
       // When a group is cleared, we need to trigger updates to all groups to ensure consistency.
       this.groups.forEach(group => this.updateGroup(group));
+    },
+    findGroup(groupId: string | number): Group {
+      const group = this.groups.find(group => group.id === parseInt(groupId));
+      if (!group) {
+        throw new Error(`Group ${groupId} not found!`);
+      }
+      return group
     },
     // Gets the products of another group for dependencies
     getGroupOutputsForAutocomplete(groupId: number | undefined): string[] {
@@ -787,6 +825,40 @@ export default defineComponent({
     },
     getGroupDependencies(group: Group) {
       return this.dependencies[group.id] ?? {};
+    },
+
+    getRequestsForGroupByProduct(group: Group | string, part: string): GroupDependencyRequest[] {
+      // If sent an empty group, there's no request.
+      if (!group) {
+        return [];
+      }
+      // Return an object containing the requests of all factories requesting a particular part
+      // We need to get all requests set upon by other factories and check their part names
+      // If the part name matches the one we're looking for, we add it to the list.
+      const groupIdStr = group.id.toString() // JavaScript doing bullshit things
+      const groupRequests = this.dependencies[groupIdStr]?.requestedBy;
+
+      if (!groupRequests) {
+        return []
+      }
+
+      // Create a new object returning the requests for the specific part, injecting the group ID.
+      // They can only ever request one part from us, so return it as a flat array.
+      return Object.entries(groupRequests).map(([groupId, requests]) => {
+        return requests.filter(request => request.part === part).map(request => {
+          return {
+            ...request,
+            group: groupId,
+          };
+        });
+      }).flat();
+    },
+    getRequestMetricsForGroupByPart(group: Group, part: string): GroupDependencyRequestMetrics {
+      // Requests may be empty.
+      if (!group?.id) {
+        return {};
+      }
+      return this.dependencies[group.id.toString()].metrics[part] ?? {};
     },
 
     // ==== INPUTS
