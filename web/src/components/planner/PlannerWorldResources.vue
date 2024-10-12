@@ -4,7 +4,7 @@
       <v-card>
         <v-row style="padding: 16px">
           <v-col class="text-h4">
-            <i class="fas fa-globe"></i> World Resources
+            <i class="fas fa-globe"></i><span class="ml-3">World Resources</span>
           </v-col>
           <v-col align-self="center" class="text-right">
             <v-btn v-show="!hidden" color="primary" prepend-icon="fas fa-eye-slash" variant="outlined"

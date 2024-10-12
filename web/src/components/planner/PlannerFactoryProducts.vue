@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4"><i class="fas fa-conveyor-belt-alt"></i> Products</h1>
+    <h1 class="text-h5 mb-4">
+      <i class="fas fa-conveyor-belt-alt"></i>
+      <span class="ml-3">Products</span>
+    </h1>
     <p v-show="helpText" class="text-body-2 mb-4">
       <i class="fas fa-info-circle"/> Products that are created within the factory. Products are first
       used to fulfil recipes internally, and any surplus is then shown in Outputs for export or
@@ -52,13 +55,19 @@
       />
       <v-btn color="red" icon="fas fa-trash" rounded="0"
              @click="deleteProduct(productIndex, factory)"></v-btn>
-      <v-btn color="primary" prepend-icon="fas fa-cube" ripple variant="flat"
-             @click="addEmptyProduct(factory)">Add Product
-      </v-btn>
+
     </v-row>
+    <v-btn
+      color="primary"
+      prepend-icon="fas fa-cube"
+      ripple
+      variant="flat"
+      @click="addEmptyProduct(factory)"
+    >Add Product
+    </v-btn>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import {Factory, FactoryProduct} from "@/interfaces/planner/Factory";
 import {DataInterface} from "@/interfaces/DataInterface";
 

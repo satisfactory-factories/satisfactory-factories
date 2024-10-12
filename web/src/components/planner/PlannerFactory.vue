@@ -7,7 +7,7 @@
             <i class="fas fa-industry"></i>
             <input
               v-model="factory.name"
-              class="w-auto ml-4"
+              class="w-auto ml-3"
               placeholder="Factory Name"
               @input="updateFactory(factory)"
             />
@@ -80,7 +80,7 @@ const deleteFactory = inject('deleteFactory') as (factory: Factory) => void;
 
 const props = defineProps<{
   factory: Factory
-  dependencies: FactoryDependency[]
+  dependencies: FactoryDependency
   gameData: DataInterface
   helpText: boolean
 }>();

@@ -10,7 +10,7 @@ export interface Factory {
   outputs: FactoryProduct[];
   partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
   inputsSatisfied: boolean;
-  rawResources: WorldRawResource[];
+  rawResources: WorldRawResource;
   surplus: { [key: string]: number }; // Surplus products
   surplusHandling: { [key: string]: 'export' | 'sink' }; // How to handle surplus
   hidden: boolean; // Whether to hide the card or not
@@ -43,6 +43,8 @@ export interface FactoryDependencyMetrics {
 }
 
 export interface WorldRawResource {
-  name: string;
-  amount: number;
+  [key: string]: {
+    name: string;
+    amount: number;
+  }
 }
