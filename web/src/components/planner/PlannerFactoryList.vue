@@ -1,5 +1,5 @@
 <template>
-  <v-list class="mt-4" density="compact">
+  <v-list class="mt-4" density="compact" v-if="groups.length > 0">
     <v-list-item v-for="(group, index) in groups" :key="group.id">
       <v-card :style="groupStyling(group)" class="w-100" @click="navigateToFactory(group.id)">
         <v-card-title>
