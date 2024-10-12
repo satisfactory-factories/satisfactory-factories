@@ -2,19 +2,10 @@
   <v-container max-width="100%">
     <v-row>
       <v-col cols="2">
-        <v-row align-content="center">
-          <v-col>
-            <v-btn color="primary" prepend-icon="fas fa-plus" ripple @click="createGroup">Add Factory</v-btn>
-            <v-btn color="green"
-                   prepend-icon="fas fa-clipboard-list"
-                   ripple @click="confirmDelete('Are you sure? This will replace your factories with the demo example!') && setTemplate()">Show Demo
-            </v-btn>
-            <v-btn color="red"
-                   prepend-icon="fas fa-trash"
-                   @click="confirmDelete('Are you really sure? This will delete literally everything!') && clearAll()">Clear
-            </v-btn>
-          </v-col>
-        </v-row>
+        <planner-global-actions
+          @create-group="createGroup"
+          @clear-all="clearAll"
+          @show-demo="showDemo" />
       </v-col>
       <v-col cols="10">
         <v-container>
@@ -383,6 +374,7 @@ export interface RawResource {
   amount: number;
 }
 
+import PlannerGlobalActions from "@/components/planner/PlannerGlobalActions.vue";
 import PlannerRequests from "./PlannerRequests.vue";
 import SegmentedBar from "@/components/SegmentedBar.vue";
 
@@ -390,6 +382,7 @@ export default defineComponent({
   name: 'Planner',
   components: {
     SegmentedBar,
+    PlannerGlobalActions,
     PlannerRequests
   },
   props: {
@@ -958,7 +951,7 @@ export default defineComponent({
       return group.inputs.some((input, index) => index !== currentInputIndex && input.outputPart === output);
     },
 
-    setTemplate() {
+    showDemo() {
       this.groups = [
         {
           "id": 0,

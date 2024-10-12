@@ -10,6 +10,7 @@ declare module 'vue' {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
     Planner: typeof import('./components/Planner.vue')['default']
+    PlannerGlobalActions: typeof import('./components/planner/PlannerGlobalActions.vue')['default']
     PlannerGroup: typeof import('./components/PlannerGroup.vue')['default']
     PlannerRequests: typeof import('./components/PlannerRequests.vue')['default']
     RecipeItem: typeof import('./components/RecipeItem.vue')['default']
