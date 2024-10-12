@@ -10,41 +10,8 @@
       </v-col>
       <v-col cols="10">
         <v-container>
-          <v-row>
-            <v-col>
-              <v-card>
-                <v-card-title>Todo</v-card-title>
-                <v-card-text>
-                  <v-list density="compact">
-                    <v-list-item>Bug: Delete group deletes wrong groups!</v-list-item>
-                    <v-list-item>Bug: When a group is deleted, the dependants are not properly updated. Need to check if
-                      inputs are still valid and if not delete them.
-                    </v-list-item>
-                    <v-list-item>Feat: If user attempts to set an output which has dependants to sink, warn the user
-                      first because it's potentially destructive as we remove the invalid inputs.
-                    </v-list-item>
-                    <v-list-item>Feat: Complete request bar segments.</v-list-item>
-                    <v-list-item>Feat: Enable to sink remainder, or sink entire output.</v-list-item>
-                  </v-list>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-card>
-                <v-card-title>World ores available</v-card-title>
-                <v-card-text>
-                  <v-list density="compact">
-                    <v-list-item v-for="ore in worldRawResources" :key=ore.name>{{ ore.name }}: {{
-                        ore.amount
-                      }}
-                    </v-list-item>
-                  </v-list>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
+          <todo></todo>
+          <planner-world-resources :worldRawResources="worldRawResources" />
           <v-row
             v-for="(group, index) in groups"
             :key="index"
@@ -309,7 +276,6 @@
         </v-container>
       </v-col>
     </v-row>
-
   </v-container>
 
 
@@ -327,7 +293,6 @@
 import {defineComponent, PropType} from 'vue';
 
 import PlannerGlobalActions from "@/components/planner/PlannerGlobalActions.vue";
-import PlannerRequests from "./PlannerRequests.vue";
 import SegmentedBar from "@/components/SegmentedBar.vue";
 import {Group, GroupDependency, GroupProduct, WorldRawResource} from "@/interfaces/planner/Group";
 import {DataInterface} from "@/interfaces/DataInterface";
@@ -337,7 +302,6 @@ export default defineComponent({
   components: {
     SegmentedBar,
     PlannerGlobalActions,
-    PlannerRequests
   },
   props: {
     data: {

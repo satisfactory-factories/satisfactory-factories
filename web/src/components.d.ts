@@ -9,11 +9,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
-    Planner: typeof import('./components/Planner.vue')['default']
+    Planner: typeof import('./components/planner/Planner.vue')['default']
     PlannerFactoryList: typeof import('./components/planner/PlannerFactoryList.vue')['default']
     PlannerGlobalActions: typeof import('./components/planner/PlannerGlobalActions.vue')['default']
-    PlannerGroup: typeof import('./components/PlannerGroup.vue')['default']
-    PlannerRequests: typeof import('./components/PlannerRequests.vue')['default']
+    PlannerWorldResources: typeof import('./components/planner/PlannerWorldResources.vue')['default']
     RecipeItem: typeof import('./components/RecipeItem.vue')['default']
     Recipes: typeof import('./components/Recipes.vue')['default']
     RecipeSearch: typeof import('./components/RecipeSearch.vue')['default']
@@ -21,5 +20,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SegmentedBar: typeof import('./components/SegmentedBar.vue')['default']
+    Todo: typeof import('./components/planner/Todo.vue')['default']
   }
 }
