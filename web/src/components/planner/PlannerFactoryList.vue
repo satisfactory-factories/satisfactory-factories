@@ -18,48 +18,39 @@
       <v-btn
         color="primary"
         prepend-icon="fas fa-plus"
-        ripple @click="
-        $emit('create-group')">
-          Add Factory
+        ripple
+        @click="createFactory"
+      >
+        Add Factory
       </v-btn>
     </v-col>
   </v-row>
-
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import {Factory} from "@/interfaces/planner/Factory";
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import { Factory } from '@/interfaces/planner/Factory';
 
-interface Product {
-  id: string;
-  recipe: string;
-  amount: number;
-}
+const props = defineProps<{ groups: Factory[] }>();
+const emit = defineEmits<{ 'create-factory': () => void }>();
 
-export default defineComponent({
-  name: 'PlannerFactoryList',
-  props: {
-    groups: {
-      type: Array as PropType<Factory[]>,
-      required: true,
-    },
-  },
-  methods: {
-    groupStyling(group: Factory) {
-      return {
-        border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
-        backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
-      };
-    },
-    navigateToFactory(factoryId) {
-      const factoryElement = document.getElementById(`${factoryId}`);
-      if (factoryElement) {
-        factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    },
-  },
-});
+const groupStyling = (group: Factory) => {
+  return {
+    border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+    backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+  };
+};
+
+const navigateToFactory = (factoryId: string) => {
+  const factoryElement = document.getElementById(`${factoryId}`);
+  if (factoryElement) {
+    factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+const createFactory = () => {
+  emit('create-factory');
+};
 </script>
 
 <style lang="scss" scoped>

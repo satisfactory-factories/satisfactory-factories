@@ -1,62 +1,64 @@
 <template>
-  <v-col>
-    <v-card :id="factory.id" :style="factoryStyling(factory)">
-      <v-row style="padding: 16px">
-        <v-col class="text-h4">
-          <i class="fas fa-industry"></i>
-          <input
-            v-model="factory.name"
-            class="w-auto ml-4"
-            placeholder="Factory Name"
-            @input="updateFactory(factory)"
-          />
-        </v-col>
-        <v-col align-self="center" class="text-right">
-          <v-btn
-            v-show="!factory.hidden"
-            color="primary"
-            prepend-icon="fas fa-eye-slash"
-            variant="outlined"
-            @click="factory.hidden = true">Hide
-          </v-btn>
-          <v-btn
-            v-show="factory.hidden"
-            color="primary"
-            prepend-icon="fas fa-eye"
-            variant="outlined"
-            @click="factory.hidden = false">Show
-          </v-btn>
-          <v-btn
-            class="ml-4"
-            color="red"
-            prepend-icon="fas fa-trash"
-            variant="outlined"
-            @click="confirmDelete() && deleteFactory(factory)">Delete Factory
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-divider color="white" thickness="2px"></v-divider>
-      <v-card-text v-show="!factory.hidden">
-        <planner-factory-products
-          :factory="factory"
-          :gameData="gameData"
-          :help-text="helpText"
-          />
-<!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
-<!--        <planner-factory-imports-->
-<!--          :factory="factory"-->
-<!--        />-->
-<!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
-<!--        <planner-factory-outputs-->
-<!--          :factory="factory"-->
-<!--        />-->
-<!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
-<!--        <planner-factory-satisfaction-->
-<!--          :factory="factory"-->
-<!--        />-->
-      </v-card-text>
-    </v-card>
-  </v-col>
+  <v-row>
+    <v-col>
+      <v-card :id="factory.id" :style="factoryStyling(factory)">
+        <v-row style="padding: 16px">
+          <v-col class="text-h4">
+            <i class="fas fa-industry"></i>
+            <input
+              v-model="factory.name"
+              class="w-auto ml-4"
+              placeholder="Factory Name"
+              @input="updateFactory(factory)"
+            />
+          </v-col>
+          <v-col align-self="center" class="text-right">
+            <v-btn
+              v-show="!factory.hidden"
+              color="primary"
+              prepend-icon="fas fa-eye-slash"
+              variant="outlined"
+              @click="factory.hidden = true">Hide
+            </v-btn>
+            <v-btn
+              v-show="factory.hidden"
+              color="primary"
+              prepend-icon="fas fa-eye"
+              variant="outlined"
+              @click="factory.hidden = false">Show
+            </v-btn>
+            <v-btn
+              class="ml-4"
+              color="red"
+              prepend-icon="fas fa-trash"
+              variant="outlined"
+              @click="confirmDelete() && deleteFactory(factory)">Delete Factory
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-divider color="white" thickness="2px"></v-divider>
+        <v-card-text v-show="!factory.hidden">
+          <planner-factory-products
+            :factory="factory"
+            :gameData="gameData"
+            :help-text="helpText"
+            />
+  <!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
+  <!--        <planner-factory-imports-->
+  <!--          :factory="factory"-->
+  <!--        />-->
+  <!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
+  <!--        <planner-factory-outputs-->
+  <!--          :factory="factory"-->
+  <!--        />-->
+  <!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
+  <!--        <planner-factory-satisfaction-->
+  <!--          :factory="factory"-->
+  <!--        />-->
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
