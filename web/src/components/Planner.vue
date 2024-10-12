@@ -324,59 +324,12 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue';
-import {DataInterface} from "../interfaces/DataInterface.ts";
-
-interface Group {
-  id: number;
-  name: string;
-  inputs: Array<{
-    groupId: number;
-    outputPart: string;
-    amount: number;
-  }>;
-  products: Product[];
-  outputs: Product[];
-  partsRequired: { [key: string]: { amount: number, amountOriginal: number, satisfied: boolean } };
-  inputsSatisfied: boolean;
-  rawResources: RawResource[];
-  surplus: { [key: string]: number }; // Surplus products
-  surplusHandling: { [key: string]: 'export' | 'sink' }; // How to handle surplus
-  hidden: boolean; // Whether to hide the card or not
-}
-
-interface GroupDependencyRequest {
-  part: string;
-  amount: number;
-}
-
-interface GroupDependencyRequestMetrics {
-  part: string;
-  request: number;
-  supply: number;
-  isRequestSatisfied: boolean;
-}
-
-interface GroupDependency {
-  [key: string]: {
-    requestedBy: { [key: string]: GroupDependencyRequest[] },
-    metrics: { [key: string]: GroupDependencyRequestMetrics },
-  };
-}
-
-interface Product {
-  id: string;
-  recipe: string;
-  amount: number;
-}
-
-export interface RawResource {
-  name: string;
-  amount: number;
-}
 
 import PlannerGlobalActions from "@/components/planner/PlannerGlobalActions.vue";
 import PlannerRequests from "./PlannerRequests.vue";
 import SegmentedBar from "@/components/SegmentedBar.vue";
+import {Group, GroupDependency, GroupProduct, WorldRawResource} from "@/interfaces/planner/Group";
+import {DataInterface} from "@/interfaces/DataInterface";
 
 export default defineComponent({
   name: 'Planner',
@@ -394,7 +347,7 @@ export default defineComponent({
   data() {
     return {
       groups: JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Group[],
-      worldRawResources: {} as { [key: string]: RawResource },
+      worldRawResources: {} as { [key: string]: WorldRawResource },
       dependencies: JSON.parse(localStorage.getItem('factoryDependencies') || '[]') as GroupDependency[],
       requests: [
         {
@@ -413,7 +366,7 @@ export default defineComponent({
     }
   },
   created() {
-    this.generateRawResources();
+    this.worldRawResources = this.generateRawResources();
     this.updateWorldRawResources();
   },
   computed: {
@@ -479,7 +432,7 @@ export default defineComponent({
         };
       });
     },
-    updateProductSelection(product, group: Product) {
+    updateProductSelection(product: GroupProduct, group: Group) {
       // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
       product.recipe = '';
 
@@ -499,10 +452,10 @@ export default defineComponent({
 
     // ==== GLOBALS
     // Resets the world's raw resources counts according to the limits provided by the data.
-    generateRawResources() {
+    generateRawResources(): { [key: string]: WorldRawResource } {
       this.worldRawResources = {};
 
-      let ores = {} as { [key: string]: RawResource };
+      let ores = {} as { [key: string]: WorldRawResource };
 
       Object.keys(this.data.items.rawResources).forEach((name) => {
         const resource = this.data.items.rawResources[name];
@@ -512,10 +465,10 @@ export default defineComponent({
         }
       });
 
-      this.worldRawResources = ores;
+      return ores;
     },
-    calculateDependencies() {
-      const newDependencies: { [key: number]: any } = {};
+    calculateDependencies(): GroupDependency {
+      const newDependencies: GroupDependency = {};
 
       // Iterate through groups to build the initial dependencies with requests
       this.groups.forEach(group => {
@@ -596,7 +549,7 @@ export default defineComponent({
       });
 
       // Replace the existing dependencies with the new ones
-      this.dependencies = newDependencies;
+      return newDependencies;
     },
 
     // ==== HELPERS
@@ -715,13 +668,13 @@ export default defineComponent({
       this.updateWorldRawResources();
       this.updateGroupRequirements(group);
       this.checkGroupPartSatisfaction(group);
-      this.calculateDependencies();
+      this.dependencies = this.calculateDependencies();
     },
     // This function calculates the world resources available after each group has consumed Raw Resources.
     // This is done here globally as it loops all groups. It is not appropriate to be done on group updates.
-    updateWorldRawResources() {
+    updateWorldRawResources(): void {
       // Generate fresh world resources as a baseline for calculation.
-      this.generateRawResources();
+      this.worldRawResources = this.generateRawResources();
 
       // Loop through each group's products to calculate usage of raw resources.
       this.groups.forEach(group => {
