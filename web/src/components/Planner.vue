@@ -221,13 +221,18 @@
             <h2 class="text-h5 mb-4"><i class="fa fa-truck-container" /> Outputs</h2>
 
             <div v-if="group.products.length > 0">
-              <p class="text-body-2">
+              <p class="text-body-2 mb-4">
                 <i class="fas fa-info-circle" /> Items listed below are the surplus of products available for export. They can be exported to other factories or sunk. To set up an export, create a new factory and use this factory as an import.
               </p>
               <p class="text-body-1" v-if="group.surplus && Object.keys(group.surplus).length === 0">No surplus products yet. Add a product!</p>
 
               <div v-if="group.surplus && Object.keys(group.surplus).length > 0">
-                <v-card v-for="(surplusAmount, part) in group.surplus" :key="`${group.id}-${part}`" class="border-b" :style="requestStyling(getRequestMetricsForGroupByPart(group, part))">
+                <v-card
+                  v-for="(surplusAmount, part) in group.surplus"
+                  class="border-b"
+                  rounded="0"
+                  :key="`${group.id}-${part}`"
+                  :style="requestStyling(getRequestMetricsForGroupByPart(group, part))">
                   <v-card-title><b>{{ getPartDisplayName(part) }}</b></v-card-title>
                   <v-card-text class="text-body-1">
 
@@ -434,7 +439,6 @@ export default defineComponent({
       });
     },
     updateProductSelection(product, group: Product) {
-      console.log('Product updated:', product, group);
       // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
       product.recipe = '';
 
@@ -517,7 +521,6 @@ export default defineComponent({
 
       // Now loop through the dependencies and calculate the total requests upon each part within the group
       Object.keys(newDependencies).forEach(groupDepId => {
-        console.log(groupDepId);
         const groupDependency = newDependencies[groupDepId];
 
         Object.keys(groupDependency.requestedBy).forEach(depGroupId => {
@@ -564,21 +567,33 @@ export default defineComponent({
     },
 
     groupStyling(group: Group) {
+      const satisfied = group.inputsSatisfied && this.areAllRequestsSatisfiedForGroup(group);
+
       return {
-        border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
-        backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+        border: `1px solid ${satisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+        backgroundColor: `${satisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
       };
     },
     requestStyling(requestMetric: GroupDependencyRequestMetrics) {
-      console.log('Request metric:', requestMetric);
-
       // If no requests, return nothing
       if (Object.keys(requestMetric).length === 0) {
         return {};
       }
+
       return {
-        backgroundColor: requestMetric.isRequestSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)',
+        border: requestMetric.isRequestSatisfied ? '' : '1px solid red',
+        borderBottom: requestMetric.isRequestSatisfied ? '' : '1px solid red !important',
       }
+    },
+    areAllRequestsSatisfiedForGroup(group: Group) {
+      const requests = this.getGroupDependencies(group);
+
+      if (!requests || Object.keys(requests).length === 0) {
+        // No requests, assume satisfied
+        return true;
+      }
+
+      return Object.keys(requests.metrics).every(part => requests.metrics[part].isRequestSatisfied);
     },
     getRecipesForPart(part: string) {
       return this.data.recipes.filter((recipe) => {
@@ -855,7 +870,12 @@ export default defineComponent({
     },
     getRequestMetricsForGroupByPart(group: Group, part: string): GroupDependencyRequestMetrics {
       // Requests may be empty.
-      if (!group?.id) {
+      if (!group || !part || !group.id) {
+        return {};
+      }
+
+      // Dependency may be empty.
+      if (!this.dependencies[group.id.toString()]) {
         return {};
       }
       return this.dependencies[group.id.toString()].metrics[part] ?? {};
