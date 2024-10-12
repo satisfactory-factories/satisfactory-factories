@@ -11,6 +11,7 @@
         @clear-all="clearAll"
         @show-demo="showDemo"
       />
+      <v-divider thickness="2px" color="#ccc"></v-divider>
       <planner-factory-list
         :groups="groups"
         @create-group="createGroup"
@@ -20,14 +21,22 @@
       <!-- Sticky Sidebar for Desktop -->
       <v-col class="d-none d-md-flex sticky-sidebar" cols="2">
         <v-container class="pa-0">
-           <planner-global-actions
-            @clear-all="clearAll"
-            @show-demo="showDemo"
-          />
           <planner-factory-list
             :groups="groups"
             @create-group="createGroup"
           />
+          <v-divider thickness="2px" color="#ccc"></v-divider>
+          <planner-global-actions
+            class="pt-4"
+            @clear-all="clearAll"
+            @show-demo="showDemo"
+            @show-all="showHideAll('show')"
+            @hide-all="showHideAll('hide')"
+          />
+          <v-divider thickness="2px" color="#ccc"></v-divider>
+          <div>
+            Copyright
+          </div>
         </v-container>
       </v-col>
       <!-- Main Content Area -->
@@ -424,7 +433,9 @@ export default defineComponent({
     },
     confirmDelete(message = 'Are you sure?') {
       return confirm(message);
-
+    },
+    showHideAll(mode: 'show' | 'hide') {
+      this.groups.forEach(group => group.hidden = mode === 'hide');
     },
     autocompleteInputFactoriesForGroup(group: Group) {
       // Get the current list of all valid inputs
