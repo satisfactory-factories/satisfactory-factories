@@ -1,14 +1,14 @@
 import { Factory, FactoryDependency } from "@/interfaces/planner/Factory";
+import {DataInterface} from "@/interfaces/DataInterface";
 
-
-export const updateFactoryRequirements = (factory: Factory) => {
+export const updateFactoryRequirements = (factory: Factory, gameData: DataInterface) => {
   factory.partsRequired = {};
   factory.rawResources = {};
   factory.surplus = {};
 
   // First loop through each product and add it to internal requirements and surplus.
   factory.products.forEach(product => {
-    const recipe = props.gameData.recipes.find(r => r.id === product.recipe);
+    const recipe = gameData.recipes.find(r => r.id === product.recipe);
     if (!recipe) {
       console.error(`Recipe with ID ${product.recipe} not found.`);
       return;
@@ -23,11 +23,11 @@ export const updateFactoryRequirements = (factory: Factory) => {
       }
 
       // If it's a raw resource, mark it as fully supplied and don't mark it as a part required.
-      const isRaw = !!props.gameData.items.rawResources[part];
+      const isRaw = !!gameData.items.rawResources[part];
       if (isRaw) {
         if (!factory.rawResources[part]) {
           factory.rawResources[part] = {
-            name: props.gameData.items.rawResources[part].name,
+            name: gameData.items.rawResources[part].name,
             amount: 0,
           };
         }

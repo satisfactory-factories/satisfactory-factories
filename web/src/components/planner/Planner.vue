@@ -225,7 +225,7 @@ const deleteFactory = (factory: Factory) => {
 
 const updateFactory = (factory: Factory) => {
   updateWorldRawResources();
-  updateFactoryRequirements(factory);
+  updateFactoryRequirements(factory, props.gameData);
   updateFactorySatisfaction(factory);
   dependencies.value = calculateDependencies(factories);
 }
