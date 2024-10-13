@@ -349,4 +349,8 @@
     margin-right: 10px;
   }
 }
+
+.v-list-item__prepend {
+  padding-right: 10px;
+}
 </style>
