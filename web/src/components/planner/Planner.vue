@@ -187,13 +187,21 @@ const generateRawResources = (): { [key: string]: WorldRawResource } => {
   return ores;
 }
 
-const findFactory = (groupId: string | number): Factory => {
-  const factory = factories.find(group => group.id === parseInt(groupId));
+const findFactory = (factoryId: string | number): Factory | null => {
+  console.log('findFactory', factoryId);
+
+  if (!factoryId) {
+    console.warn('No factoryId provided to findFactory');
+    return null
+  }
+
+  // Ensure factoryId is parsed to a number to match factories array ids
+  const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10));
   if (!factory) {
-    throw new Error(`Group ${groupId} not found!`);
+    throw new Error(`Factory ${factoryId} not found!`);
   }
   return factory;
-}
+};
 
 const createFactory = (name = 'A new factory') => {
   factories.push({

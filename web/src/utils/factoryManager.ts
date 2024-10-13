@@ -133,12 +133,12 @@ export const calculateDependencies = (factories): FactoryDependency => {
     factory.inputs.forEach(input => {
       // Check if the input is actually still valid, if the user has set an resource to sink this is no longer valid.
       // We do this by checking the requested group to see if the surplus is still there.
-      const requestedGroup = factories.find(g => g.id === input.groupId);
+      const requestedFactory = factories.find(fac => fac.id === input.factoryId);
 
       // We need to pick up on the following conditions:
-      // 1. The group is no longer valid (e.g. the user has set it to sink)
-      // 2. The group is valid but the product is no longer available, BUT not if it's undefined e.g. "" because the UI is still being edited.
-      if (!requestedGroup || !requestedGroup.surplus[input.outputPart] && input.outputPart !== "") {
+      // 1. The factory is no longer valid (e.g. the user has set it to sink)
+      // 2. The factory is valid but the product is no longer available, BUT not if it's undefined e.g. "" because the UI is still being edited.
+      if (!requestedFactory || !requestedFactory.surplus[input.outputPart] && input.outputPart !== "") {
         console.warn('Input is no longer valid, removing it.', input);
         // Remove the input from the group
         factory.inputs = factory.inputs.filter(i => i !== input);
@@ -154,20 +154,20 @@ export const calculateDependencies = (factories): FactoryDependency => {
       };
 
       // Create an entry for the group that is being requested from if it doesn't exist
-      if (!newDependencies[input.groupId]) {
-        newDependencies[input.groupId] = {
+      if (!newDependencies[input.factoryId]) {
+        newDependencies[input.factoryId] = {
           requestedBy: {},
           metrics: {},
         };
       }
 
       // Create requests array for the specific group relationship if it doesn't exist
-      if (!newDependencies[input.groupId].requestedBy[factory.id]) {
-        newDependencies[input.groupId].requestedBy[factory.id] = [];
+      if (!newDependencies[input.factoryId].requestedBy[factory.id]) {
+        newDependencies[input.factoryId].requestedBy[factory.id] = [];
       }
 
       // Add the requests to the appropriate group
-      newDependencies[input.groupId].requestedBy[factory.id].push(request);
+      newDependencies[input.factoryId].requestedBy[factory.id].push(request);
     });
   });
 

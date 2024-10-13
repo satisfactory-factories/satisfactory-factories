@@ -43,10 +43,11 @@
             :gameData="gameData"
             :help-text="helpText"
             />
-  <!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
-  <!--        <planner-factory-imports-->
-  <!--          :factory="factory"-->
-  <!--        />-->
+          <v-divider class="my-4" color="white" thickness="2px"></v-divider>
+          <planner-factory-imports
+            :factory="factory"
+            :help-text="helpText"
+          />
   <!--        <v-divider class="my-4" color="white" thickness="2px"></v-divider>-->
   <!--        <planner-factory-outputs-->
   <!--          :factory="factory"-->
@@ -109,7 +110,4 @@ const areAllRequestsSatisfiedForFactory = (factory: Factory) =>  {
 const confirmDelete = (message = 'Are you sure?') => {
   return confirm(message);
 }
-
-
-
 </script>
