@@ -5,8 +5,8 @@
         <v-btn
           color="green"
           prepend-icon="fas fa-clipboard-list"
-          variant="tonal"
           ripple
+          variant="tonal"
           @click="confirmDelete('Are you sure? This will replace your factories with the demo example!') && emit('show-demo')"
         >
           Show Demo
@@ -14,8 +14,8 @@
       </div>
       <div class="mb-2">
         <v-btn
-          color="blue"
           class="mr-2"
+          color="blue"
           prepend-icon="fas fa-compress-arrows-alt"
           variant="tonal"
           @click="emit('hide-all')"
@@ -56,20 +56,20 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+  import { defineEmits, defineProps } from 'vue'
 
-const props = defineProps<{ helpTextShown: boolean }>();
-const emit = defineEmits<{
-  'show-demo': () => void;
-  'hide-all': () => void;
-  'show-all': () => void;
-  'toggle-help-text': () => void;
-  'clear-all': () => void;
-}>();
+  defineProps<{ helpTextShown: boolean }>()
+  const emit = defineEmits<{
+    'show-demo':() => void;
+    'hide-all': () => void;
+    'show-all': () => void;
+    'toggle-help-text': () => void;
+    'clear-all': () => void;
+  }>()
 
-const confirmDelete = (message: string): boolean => {
-  return confirm(message);
-};
+  const confirmDelete = (message: string): boolean => {
+    return confirm(message)
+  }
 </script>
 
 <style lang="scss" scoped>

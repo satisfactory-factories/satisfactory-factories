@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4"><i class="fas fa-arrow-to-right" /> Imports</h1>
+    <h1 class="text-h5 mb-4">
+      <i class="fas fa-arrow-to-right" />
+      <span class="ml-3">Imports</span>
+    </h1>
     <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partsRequired).length > 0">
       <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border">
         <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
@@ -23,7 +26,7 @@
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
         :key="inputIndex"
-        style="padding: 0; margin: 10px 0"
+        class="pa-0 my-2 mx-1 align-center selectors"
       >
         <v-autocomplete
           v-model="input.factoryId"
@@ -44,7 +47,6 @@
           label="Item"
           max-width="400px"
           prepend-icon="fas fa-cube"
-          style="margin-right: 20px"
           variant="outlined"
           @update:model-value="(newValue) => handleItemChange(newValue, factory, inputIndex)"
         />
@@ -53,15 +55,15 @@
           class="mr-2"
           hide-details
           label="Amount"
-          max-width="125px"
+          max-width="110px"
           type="number"
           variant="outlined"
           @input="updateFactory(factory)"
         />
         <v-btn
+          class="rounded"
           color="red"
           icon="fas fa-trash"
-          rounded="0"
           @click="deleteInput(inputIndex, factory)"
         />
       </v-row>

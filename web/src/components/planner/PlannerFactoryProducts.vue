@@ -16,7 +16,7 @@
     <v-row
       v-for="(product, productIndex) in factory.products"
       :key="productIndex"
-      style="padding: 0; margin: 10px 0"
+      class="pa-0 my-2 mx-1 align-center selectors"
     >
       <v-autocomplete
         v-model="product.id"
@@ -46,18 +46,17 @@
         class="mr-2"
         hide-details
         label="Amount"
-        max-width="125px"
+        max-width="110px"
         type="number"
         variant="outlined"
         @input="updateFactory(factory)"
       />
       <v-btn
+        class="rounded"
         color="red"
         icon="fas fa-trash"
-        rounded="0"
         @click="deleteProduct(productIndex, factory)"
       />
-
     </v-row>
     <v-btn
       color="primary"

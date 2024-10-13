@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <v-card :id="factory.id" :style="factoryStyling(factory)">
-        <v-row class="pa-4 pb-0 mb-0 border-b" style="background-color: #282828">
+        <v-row class="pa-4 pb-0 mb-0 border-b" :style="factoryHeaderStyling(factory)">
           <v-col class="text-h4">
             <i class="fas fa-industry" />
             <input
@@ -69,16 +69,7 @@
 <script setup lang="ts">
   import { defineProps } from 'vue'
   import { Factory, FactoryDependency } from '@/interfaces/planner/Factory'
-  import PlannerFactoryProducts from '@/components/planner/PlannerFactoryProducts.vue'
-  import PlannerFactoryImports from '@/components/planner/PlannerFactoryImports.vue'
-  import PlannerFactorySatisfaction from '@/components/planner/PlannerFactorySatisfaction.vue'
   import { DataInterface } from '@/interfaces/DataInterface'
-
-  const components = {
-    PlannerFactoryProducts,
-    PlannerFactoryImports,
-    PlannerFactorySatisfaction,
-  }
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
@@ -89,13 +80,20 @@
     gameData: DataInterface
     helpText: boolean
   }>()
-  const hidden = false
 
   const factoryStyling = (factory: Factory) => {
     const satisfied = factory.inputsSatisfied && areAllRequestsSatisfiedForFactory(factory)
 
     return {
       border: `1px solid ${satisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+      backgroundColor: `${satisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+    }
+  }
+
+  const factoryHeaderStyling = (factory: Factory) => {
+    const satisfied = factory.inputsSatisfied && areAllRequestsSatisfiedForFactory(factory)
+
+    return {
       backgroundColor: `${satisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
     }
   }

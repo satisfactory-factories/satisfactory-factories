@@ -338,3 +338,15 @@
   padding: 16px;
 }
 </style>
+
+<style lang="scss">
+.selectors {
+  &:last-of-type {
+    margin-bottom: 12px !important;
+  }
+
+  .v-input__prepend {
+    margin-right: 10px;
+  }
+}
+</style>

@@ -1,11 +1,15 @@
 <template>
   <v-row>
     <v-col>
-      <v-list density="compact" v-if="factories.length > 0">
+      <v-list v-if="factories.length > 0" density="compact">
         <v-list-item v-for="(factory) in factories" :key="factory.id">
-          <v-card :style="factoryStyling(factory)" class="w-100" @click="navigateToFactory(factory.id)">
+          <v-card
+            class="w-100"
+            :style="factoryStyling(factory)"
+            @click="navigateToFactory(factory.id)"
+          >
             <v-card-title>
-              <i class="fas fa-industry"></i>
+              <i class="fas fa-industry" />
               <span class="ml-2">{{ factory.name }}</span>
             </v-card-title>
           </v-card>
@@ -28,29 +32,29 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
-import { Factory } from '@/interfaces/planner/Factory';
+  import { defineEmits, defineProps } from 'vue'
+  import { Factory } from '@/interfaces/planner/Factory'
 
-const props = defineProps<{ factories: Factory[] }>();
-const emit = defineEmits<{ 'create-factory': () => void }>();
+  defineProps<{ factories: Factory[] }>()
+  const emit = defineEmits<{ 'createFactory':() => void }>()
 
-const factoryStyling = (factory: Factory) => {
-  return {
-    border: `1px solid ${factory.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
-    backgroundColor: `${factory.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
-  };
-};
-
-const navigateToFactory = (factoryId: string) => {
-  const factoryElement = document.getElementById(`${factoryId}`);
-  if (factoryElement) {
-    factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const factoryStyling = (factory: Factory) => {
+    return {
+      border: `1px solid ${factory.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+      backgroundColor: `${factory.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+    }
   }
-};
 
-const createFactory = () => {
-  emit('create-factory');
-};
+  const navigateToFactory = (factoryId: string) => {
+    const factoryElement = document.getElementById(`${factoryId}`)
+    if (factoryElement) {
+      factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  const createFactory = () => {
+    emit('createFactory')
+  }
 </script>
 
 <style lang="scss" scoped>
