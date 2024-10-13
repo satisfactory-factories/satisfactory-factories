@@ -1,12 +1,12 @@
 <template>
   <v-row>
     <v-col>
-      <v-list density="compact" v-if="groups.length > 0">
-        <v-list-item v-for="(group) in groups" :key="group.id">
-          <v-card :style="groupStyling(group)" class="w-100" @click="navigateToFactory(group.id)">
+      <v-list density="compact" v-if="factories.length > 0">
+        <v-list-item v-for="(factory) in factories" :key="factory.id">
+          <v-card :style="factoryStyling(factory)" class="w-100" @click="navigateToFactory(factory.id)">
             <v-card-title>
               <i class="fas fa-industry"></i>
-              <span class="ml-2">{{ group.name }}</span>
+              <span class="ml-2">{{ factory.name }}</span>
             </v-card-title>
           </v-card>
         </v-list-item>
@@ -31,13 +31,13 @@
 import { defineProps, defineEmits } from 'vue';
 import { Factory } from '@/interfaces/planner/Factory';
 
-const props = defineProps<{ groups: Factory[] }>();
+const props = defineProps<{ factories: Factory[] }>();
 const emit = defineEmits<{ 'create-factory': () => void }>();
 
-const groupStyling = (group: Factory) => {
+const factoryStyling = (factory: Factory) => {
   return {
-    border: `1px solid ${group.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
-    backgroundColor: `${group.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+    border: `1px solid ${factory.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
+    backgroundColor: `${factory.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
   };
 };
 

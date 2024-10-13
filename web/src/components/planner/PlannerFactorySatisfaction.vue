@@ -1,14 +1,14 @@
 <template>
   <div>
     <h2
-      v-show="group.inputsSatisfied"
+      v-show="factory.inputsSatisfied"
       class="text-h5 mb-4"
     >
       <i class="fas fa-check"/>
       Satisfaction
     </h2>
     <h2
-      v-show="!group.inputsSatisfied"
+      v-show="!factory.inputsSatisfied"
       class="text-h5 mb-4"
       style="color: red"
     >
@@ -16,7 +16,7 @@
       Satisfaction
     </h2>
 
-    <div v-if="Object.keys(group.partsRequired).length > 0">
+    <div v-if="Object.keys(factory.partsRequired).length > 0">
       <p v-show="helpText" class="text-body-2 mb-4">
         <i class="fas fa-info-circle"/> All entries are listed as [supply/demand]. Supply is created by
         adding imports to the factory.
@@ -24,9 +24,9 @@
 
       <v-list bg-color="transparent">
         <v-list-item
-          v-for="(part, partIndex) in group.partsRequired"
+          v-for="(part, partIndex) in factory.partsRequired"
           :key="`${partIndex}-${part.satisfied}`"
-          :style="isSatisfiedStyling(group, partIndex)"
+          :style="isSatisfiedStyling(factory, partIndex)"
         >
           <template v-slot:prepend="{ item }">
             <v-icon v-show="part.satisfied" icon="fas fa-check"/>
@@ -42,6 +42,13 @@
 </template>
 <script setup lang="ts">
 import {Factory} from "@/interfaces/planner/Factory";
+
+const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string;
+
+const props = defineProps<{
+  factory: Factory;
+  helpText: boolean;
+}>();
 
 const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
   return factory.partsRequired[requirement].satisfied ? 'color: green' : 'color: red';
