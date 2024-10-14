@@ -40,8 +40,8 @@
 
   const factoryStyling = (factory: Factory) => {
     return {
-      border: `1px solid ${factory.inputsSatisfied ? 'rgb(108, 108, 108)' : '#dc3545'}`,
-      backgroundColor: `${factory.inputsSatisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+      border: `1px solid ${factory.hasProblem ? '#dc3545' : 'rgb(108, 108, 108)'}`,
+      backgroundColor: `${factory.hasProblem ? 'rgba(140, 9, 21, 0.4)' : 'rgba(43, 43, 43, 0.4)'}`,
     }
   }
 

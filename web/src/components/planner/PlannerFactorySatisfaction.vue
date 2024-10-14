@@ -1,19 +1,27 @@
 <template>
   <div>
     <h2
-      v-show="factory.inputsSatisfied"
+      v-show="factory.requirementsSatisfied && Object.keys(factory.partRequirements).length > 0"
       class="text-h5 mb-4"
     >
       <i class="fas fa-check" />
       <span class="ml-3">Satisfaction</span>
     </h2>
     <h2
-      v-show="!factory.inputsSatisfied"
+      v-show="!factory.requirementsSatisfied"
       class="text-h5 mb-4"
       style="color: red"
     >
       <i class="fas fa-times" />
-      <span class="ml-5">Satisfaction</span>
+      <span class="ml-3">Satisfaction</span>
+    </h2>
+
+    <h2
+      v-show="factory.requirementsSatisfied && Object.keys(factory.partRequirements).length === 0"
+      class="text-h5 mb-4"
+    >
+      <i class="fas fa-question" />
+      <span class="ml-3">Satisfaction</span>
     </h2>
 
     <div v-if="Object.keys(factory.partRequirements).length > 0">

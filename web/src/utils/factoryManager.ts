@@ -140,6 +140,12 @@ export const calculateFactoryInputSupply = (factories: Factory[], factory: Facto
 
 // Calculate the remaining amount of parts required after all inputs and internal products are accounted for.
 export const calculateFactorySatisfaction = (factory: Factory) => {
+  // If factory has no products there is nothing for us to do, so mark as satisfied.
+  if (factory.products.length === 0) {
+    factory.requirementsSatisfied = true
+    return
+  }
+
   Object.keys(factory.products).forEach(productIndex => {
     const product = factory.products[productIndex]
     Object.keys(product.requirements).forEach(partIndex => {
@@ -158,7 +164,7 @@ export const calculateFactorySatisfaction = (factory: Factory) => {
     })
 
     // Now check if all requirements are satisfied and flag so if it is.
-    factory.inputsSatisfied = Object.keys(factory.partRequirements).every(part => factory.partRequirements[part].satisfied)
+    factory.requirementsSatisfied = Object.keys(factory.partRequirements).every(part => factory.partRequirements[part].satisfied)
   })
 }
 
@@ -253,4 +259,17 @@ export const calculateDependencyMetrics = (factories: Factory[]) => {
       })
     })
   })
+}
+
+export const calculateHasProblem = (factory: Factory) => {
+  factory.hasProblem = false
+
+  let hasProblem = false
+  // If any of the requirements are not satisfied, we have a problem.
+
+  if (!factory.requirementsSatisfied) {
+    hasProblem = true
+  }
+
+  factory.hasProblem = hasProblem
 }

@@ -47,7 +47,7 @@
           v-model.number="product.amount"
           class="mr-2"
           hide-details
-          label="Amount"
+          label="Qty /min"
           max-width="110px"
           type="number"
           variant="outlined"
@@ -78,15 +78,18 @@
           Internal
         </v-chip>
       </v-row>
-      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-9 mb-3">
+      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3">
         <div>
+          <span>Requires: </span>
           <v-chip
             v-for="(requirement, requirementIndex) in product.requirements"
             :key="`ingredients-${requirementIndex}`"
-            class="mr-2"
+            class="mr-2 border-md"
             color="primary"
+            style="border-color: rgb(0, 93, 167) !important"
+            variant="tonal"
           >
-            {{ getPartDisplayName(requirementIndex) }}: {{ requirement.amount }}/min
+            <b>{{ getPartDisplayName(requirementIndex) }}</b>: {{ requirement.amount }}/min
           </v-chip>
         </div>
       </v-row>

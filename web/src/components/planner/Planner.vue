@@ -24,7 +24,7 @@
     </v-navigation-drawer>
     <v-row>
       <!-- Sticky Sidebar for Desktop -->
-      <v-col class="d-none d-md-flex sticky-sidebar" cols="2">
+      <v-col class="d-none d-md-flex sticky-sidebar" cols="3">
         <v-container class="pa-0">
           <planner-factory-list
             :factories="factories"
@@ -47,7 +47,7 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-md" cols="12" md="10">
+      <v-col class="border-s-md" cols="12" md="9">
         <v-container>
           <v-btn
             class="d-md-none mb-4"
@@ -95,7 +95,7 @@
     calculateFactoryInputSupply,
     calculateFactoryInternalSupply,
     calculateFactoryRawSupply,
-    calculateFactorySatisfaction,
+    calculateFactorySatisfaction, calculateHasProblem,
     calculateProductRequirements,
     calculateSurplus,
   } from '@/utils/factoryManager'
@@ -203,12 +203,13 @@
       products: [],
       internalProducts: {},
       inputs: [],
-      inputsSatisfied: true,
       partRequirements: {},
+      requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       dependencies: {},
       rawResources: {},
       surplus: {},
       hidden: false,
+      hasProblem: false,
     })
   }
 
@@ -254,6 +255,9 @@
     // Check all other factories to see if they are affected by this factory change.
     calculateDependencies(factories)
     calculateDependencyMetrics(factories)
+
+    // Finally, set the flags for if the factory has any issues for display.
+    calculateHasProblem(factory)
   }
 
   const deleteFactory = (factory: Factory) => {

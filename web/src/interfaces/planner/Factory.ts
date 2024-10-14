@@ -67,4 +67,5 @@ export interface Factory {
   dependencies: FactoryDependency;
   rawResources: WorldRawResource;
   hidden: boolean; // Whether to hide the card or not
+  hasProblem: boolean
 }
