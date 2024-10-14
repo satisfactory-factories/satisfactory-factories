@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col class="last-child-no-margin">
       <div class="mb-2">
         <v-btn
           color="green"

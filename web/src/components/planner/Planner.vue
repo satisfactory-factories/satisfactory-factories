@@ -8,7 +8,7 @@
       temporary
     >
       <planner-global-actions
-        class="pt-4"
+        class="py-4"
         :help-text-shown="helpText"
         @clear-all="clearAll"
         @hide-all="showHideAll('hide')"
@@ -32,7 +32,7 @@
           />
           <v-divider color="#ccc" thickness="2px" />
           <planner-global-actions
-            class="pt-4"
+            class="py-2"
             :help-text-shown="helpText"
             @clear-all="clearAll"
             @hide-all="showHideAll('hide')"
@@ -333,5 +333,11 @@
 
 .v-list-item__prepend {
   padding-right: 10px;
+}
+
+.last-child-no-margin {
+  :last-child {
+    margin-bottom: 0 !important;
+  }
 }
 </style>
