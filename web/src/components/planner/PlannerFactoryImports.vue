@@ -90,7 +90,7 @@
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const validFactoriesForImports = inject('validFactoriesForImports') as ComputedRef<Factory[]>
 
-  const props = defineProps<{
+  defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
@@ -119,8 +119,8 @@
     return otherFactories.filter(f => {
       return (
         f.id === factory.inputs[inputIndex].factoryId ||
-        !factory.inputs.some(input => input.factoryId === f.id && input.outputPart === factory.inputs[inputIndex].outputPart && inputIndex !== inputIndex) &&
-        f.surplus[factory.inputs[inputIndex].outputPart] > 0
+        (!factory.inputs.some(input => input.factoryId === f.id && input.outputPart === factory.inputs[inputIndex].outputPart) &&
+          f.surplus[factory.inputs[inputIndex].outputPart] > 0)
       )
     }).map(f => {
       return {

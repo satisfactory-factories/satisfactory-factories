@@ -56,8 +56,4 @@
   const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
     return factory.partRequirements[requirement].satisfied ? 'color: green' : 'color: red'
   }
-
-  const getIconForPart = part => {
-    return part.satisfied ? 'fas fa-check' : 'fas fa-times'
-  }
 </script>

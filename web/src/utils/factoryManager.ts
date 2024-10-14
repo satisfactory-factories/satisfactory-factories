@@ -118,7 +118,7 @@ export const calculateFactoryInternalSupply = (factory: Factory, gameData: DataI
 }
 
 // Calculate the supply of parts via inputs. It is assumed that the input factories are supplying this factory at 100% efficiency, we then report shortages at the supplying factory so production can be increased there.
-export const calculateFactoryInputSupply = (factories: Factory[], factory: Factory, gameData: DataInterface) => {
+export const calculateFactoryInputSupply = (factories: Factory[], factory: Factory) => {
   factory.inputs.forEach(input => {
     const requestedFactory = factories.find(fac => fac.id === input.factoryId)
     if (!requestedFactory) {

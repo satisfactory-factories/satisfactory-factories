@@ -11,14 +11,12 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import RecipeSearch from '@/components/RecipeSearch.vue'
   import Planner from '@/components/planner/Planner.vue'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   export default defineComponent({
     name: 'App',
     components: {
-      RecipeSearch,
       Planner,
     },
     data () {

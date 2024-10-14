@@ -70,7 +70,7 @@
   const findFactory = inject('findFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
-  const props = defineProps<{
+  defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
