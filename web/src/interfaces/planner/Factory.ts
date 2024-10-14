@@ -1,6 +1,6 @@
 export interface PartRequirement {
   [key: string]: {
-    amountRequired: number;
+    amountRequired: number; // Total amount required by all products on the line
     amountSupplied: number; // Total amount of supply used for display purposes
     amountSuppliedViaInput: number; // This is the amount supplied by the inputs
     amountSuppliedViaInternal: number; // This is the amount supplied by internal products
@@ -15,7 +15,7 @@ export interface FactoryItem {
   recipe: string;
   amount: number;
   displayOrder: number;
-  requirements: PartRequirement;
+  requirements: { [key: string]: { amount: number }};
 }
 
 export interface FactorySurplusItem extends FactoryItem {
@@ -61,6 +61,7 @@ export interface Factory {
   }>;
   products: FactoryItem[];
   internalProducts: FactoryItem;
+  partRequirements: PartRequirement;
   requirementsSatisfied: boolean;
   surplus: FactorySurplusItem;
   dependencies: FactoryDependency;

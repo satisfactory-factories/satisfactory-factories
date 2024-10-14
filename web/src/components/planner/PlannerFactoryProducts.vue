@@ -86,7 +86,7 @@
             class="mr-2"
             color="primary"
           >
-            {{ getPartDisplayName(requirementIndex) }}: {{ requirement.amountRequired }}/min
+            {{ getPartDisplayName(requirementIndex) }}: {{ requirement.amount }}/min
           </v-chip>
         </div>
       </v-row>

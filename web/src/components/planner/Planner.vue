@@ -204,7 +204,7 @@
       internalProducts: {},
       inputs: [],
       inputsSatisfied: true,
-      requirements: {},
+      partRequirements: {},
       dependencies: {},
       rawResources: {},
       surplus: {},
@@ -249,7 +249,7 @@
     calculateFactorySatisfaction(factory)
 
     // Then we calculate the output state of the factory (including surplus etc)
-    calculateSurplus(factory, props.gameData)
+    calculateSurplus(factory)
 
     // Check all other factories to see if they are affected by this factory change.
     calculateDependencies(factories)

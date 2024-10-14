@@ -4,7 +4,7 @@
       <i class="fas fa-arrow-to-right" />
       <span class="ml-3">Imports</span>
     </h1>
-    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.requirements).length > 0">
+    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partRequirements).length > 0">
       <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border">
         <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
         <v-card-text>
@@ -66,7 +66,7 @@
         />
       </v-row>
       <v-btn
-        v-show="Object.keys(factory.requirements).length > 0"
+        v-show="Object.keys(factory.partRequirements).length > 0"
         color="green"
         :disabled="validFactoriesForImports.length === 0"
         prepend-icon="fas fa-dolly"

@@ -16,12 +16,12 @@
       <span class="ml-5">Satisfaction</span>
     </h2>
 
-    <div v-if="Object.keys(factory.requirements).length > 0">
+    <div v-if="Object.keys(factory.partRequirements).length > 0">
       <p v-show="helpText" class="text-body-2 mb-4">
         <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding imports to the factory or adding internal products.
       </p>
       <div
-        v-for="(part, partIndex) in factory.requirements"
+        v-for="(part, partIndex) in factory.partRequirements"
         :key="partIndex"
         class="text-body-1"
         :style="isSatisfiedStyling(factory, partIndex)"
@@ -54,7 +54,7 @@
   }>()
 
   const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
-    return factory.requirements[requirement].satisfied ? 'color: green' : 'color: red'
+    return factory.partRequirements[requirement].satisfied ? 'color: green' : 'color: red'
   }
 
   const getIconForPart = part => {
