@@ -13,7 +13,7 @@
 
       <div v-if="factory.surplus && Object.keys(factory.surplus).length > 0">
         <v-card
-          v-for="(surplusAmount, part) in factory.surplus"
+          v-for="(surplus, part) in factory.surplus"
           :key="`${factory.id}-${part}`"
           class="border-b output"
           rounded="0"
@@ -21,8 +21,7 @@
         >
           <v-card-title><b>{{ getPartDisplayName(part) }}</b></v-card-title>
           <v-card-text class="text-body-1">
-
-            <p><b>Surplus</b>: {{ surplusAmount }}/min</p>
+            <p><b>Surplus</b>: {{ surplus.amount }}/min</p>
             <div v-if="getRequestsForFactoryByProduct(factory, part).length > 0">
               <p><b>Requests total</b>: {{ getRequestMetricsForFactoryByPart(factory, part).request }}/min</p>
               <p>Status:
@@ -47,7 +46,7 @@
             </div>
             <p v-else>There are currently no requests upon this product.</p>
             <v-radio-group
-              v-model="factory.surplusHandling[part]"
+              v-model="surplus.surplusHandling"
               class="radio-fix d-inline mb-4"
               density="compact"
               hide-details
@@ -70,8 +69,6 @@
 
   const findFactory = inject('findFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
-  const getRequestsForFactoryByProduct = inject('getRequestsForFactoryByProduct') as (factory: Factory, part: string) => FactoryDependencyRequest[]
-  const getRequestMetricsForFactoryByPart = inject('getRequestMetricsForFactoryByPart') as (factory: Factory, part: string) => FactoryDependencyMetrics
 
   const props = defineProps<{
     factory: Factory;
@@ -90,8 +87,52 @@
     }
   }
 
-</script>
+  const getRequestsForFactoryByProduct = (
+    factory: Factory | string,
+    part: string
+  ): FactoryDependencyRequest[] => {
+    // If sent an empty factory, there's no request.
+    if (!factory) {
+      return []
+    }
+    // Return an object containing the requests of all factories requesting a particular part
+    // We need to get all requests set upon by other factories and check their part names
+    // If the part name matches the one we're looking for, we add it to the list.
+    const factoryIdStr = factory.id.toString() // JavaScript doing bullshit things
+    const factoryRequests = factory.dependencies[factoryIdStr]?.requestedBy
 
+    if (!factoryRequests) {
+      return []
+    }
+
+    // Create a new object returning the requests for the specific part, injecting the factory ID.
+    // They can only ever request one part from us, so return it as a flat array.
+    return Object.entries(factoryRequests).map(([factoryId, requests]) => {
+      return requests.filter(request => request.part === part).map(request => {
+        return {
+          ...request,
+          factory: factoryId,
+        }
+      })
+    }).flat()
+  }
+
+  const getRequestMetricsForFactoryByPart = (
+    factory: Factory,
+    part: string
+  ): FactoryDependencyMetrics => {
+    // Requests may be empty.
+    if (!factory || !part || !factory.id) {
+      return {}
+    }
+
+    // Dependency may be empty.
+    if (!factory.dependencies[factory.id.toString()]) {
+      return {}
+    }
+    return factory.dependencies[factory.id.toString()].metrics[part] ?? {}
+  }
+</script>
 <style lang="scss" scoped>
 .radio-fix {
   ::v-deep label {

@@ -11,7 +11,8 @@
       e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an
       Output (and the Screws).<br>
       This way you know exactly how much of a part you need to make to fulfil both the factory itself and
-      any other factories that use this one as an Input.
+      any other factories that use this one as an Input.<br>
+      An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.
     </p>
     <v-row
       v-for="(product, productIndex) in factory.products"
@@ -24,7 +25,7 @@
         hide-details
         :items="autocompletePartItems"
         label="Item"
-        max-width="400px"
+        max-width="300px"
         prepend-icon="fas fa-cube"
         variant="outlined"
         @update:model-value="updateProductSelection(product, factory)"
@@ -36,7 +37,7 @@
         hide-details
         :items="getRecipesForPartSelector(product.id)"
         label="Recipe"
-        max-width="400px"
+        max-width="300px"
         prepend-icon="fas fa-hat-chef"
         variant="outlined"
         @update:model-value="updateFactory(factory)"
@@ -57,6 +58,9 @@
         icon="fas fa-trash"
         @click="deleteProduct(productIndex, factory)"
       />
+      <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
+        Internal
+      </v-chip>
     </v-row>
     <v-btn
       color="primary"
@@ -69,7 +73,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Factory, FactoryProduct } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/Factory'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -84,6 +88,7 @@
     factory.products.push({
       id: '',
       amount: 0,
+      recipe: '',
     })
   }
 
@@ -103,8 +108,10 @@
       }
     })
     data.sort((a, b) => a.title.localeCompare(b.title))
+
     return data
   }
+
   const autocompletePartItems = autocompletePartItemsGenerator()
 
   const getRecipesForPart = (part: string) => {
@@ -112,27 +119,29 @@
       return recipe.product[part] || undefined
     })
   }
+
   const getRecipesForPartSelector = (part: string) => {
     // Return each recipe in the format of { title: 'Recipe Name', value: 'Recipe ID' }
-    return props.gameData.recipes
-      .filter(recipe => recipe.product[part] || undefined)
-      .map(recipe => {
-        return {
-          title: recipe.displayName,
-          value: recipe.id,
-        }
-      })
+    // If there's "Alternate" in the name, shorten it to "Alt" for display.
+    return getRecipesForPart(part).map(recipe => {
+      return {
+        title: recipe.displayName.replace('Alternate', 'Alt'),
+        value: recipe.id,
+      }
+    })
   }
 
-  const updateProductSelection = (product: FactoryProduct, group: Factory) => {
+  const updateProductSelection = (product: FactoryProduct, factory: Factory) => {
     // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
     product.recipe = ''
+    product.amount = 0
 
     // If there is only one recipe for the product just automatically select it
     const recipes = getRecipesForPart(product.id)
     if (recipes.length === 1) {
       product.recipe = recipes[0].id
     }
-    updateFactory(group)
+
+    updateFactory(factory)
   }
 </script>

@@ -68,15 +68,14 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory, FactoryDependency } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/Factory'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
 
-  const props = defineProps<{
+  defineProps<{
     factory: Factory
-    dependencies: FactoryDependency
     gameData: DataInterface
     helpText: boolean
   }>()
@@ -99,7 +98,7 @@
   }
 
   const areAllRequestsSatisfiedForFactory = (factory: Factory) => {
-    const requests = props.dependencies[factory.id] ?? {}
+    const requests = factory.dependants
 
     if (!requests || Object.keys(requests).length === 0) {
       // No requests, assume satisfied

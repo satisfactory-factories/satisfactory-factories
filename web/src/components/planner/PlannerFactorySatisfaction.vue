@@ -16,14 +16,12 @@
       <span class="ml-5">Satisfaction</span>
     </h2>
 
-    <div v-if="Object.keys(factory.partsRequired).length > 0">
+    <div v-if="Object.keys(factory.requirements).length > 0">
       <p v-show="helpText" class="text-body-2 mb-4">
-        <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by
-        adding imports to the factory.
+        <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding imports to the factory or adding internal products.
       </p>
-
       <div
-        v-for="(part, partIndex) in factory.partsRequired"
+        v-for="(part, partIndex) in factory.requirements"
         :key="partIndex"
         class="text-body-1"
         :style="isSatisfiedStyling(factory, partIndex)"
@@ -31,13 +29,13 @@
         <p v-if="part.satisfied">
           <v-icon icon="fas fa-check" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountNeeded }}/min
+            <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min
           </span>
         </p>
         <p v-else>
           <v-icon icon="fas fa-times" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountNeeded }}/min
+            <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min
           </span>
         </p>
       </div>
@@ -56,7 +54,7 @@
   }>()
 
   const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
-    return factory.partsRequired[requirement].satisfied ? 'color: green' : 'color: red'
+    return factory.requirements[requirement].satisfied ? 'color: green' : 'color: red'
   }
 
   const getIconForPart = part => {

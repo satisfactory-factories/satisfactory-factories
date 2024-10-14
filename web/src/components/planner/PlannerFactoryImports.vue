@@ -4,25 +4,27 @@
       <i class="fas fa-arrow-to-right" />
       <span class="ml-3">Imports</span>
     </h1>
-    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partsRequired).length > 0">
+    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.requirements).length > 0">
       <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border">
         <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
         <v-card-text>
           <div v-for="(inputIndex) in factory.rawResources" :key="inputIndex">
             <p v-show="helpText" class="text-body-2 mb-4">
-              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It
-              is assumed you'll supply them sufficiently.
+              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
             </p>
             <p
-              v-for="(resource, resourceIndex) in factory.rawResources"
-              :key="resourceIndex"
+              v-for="(resource, resourceKey) in factory.rawResources"
+              :key="resourceKey"
               class="text-body-1 mt-4"
             >
-              <b>{{ resource.name }}</b>: {{ resource.amount }}/min
+              <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }} /min
             </p>
           </div>
         </v-card-text>
       </v-card>
+      <p v-show="helpText" class="text-body-2 mb-4">
+        <i class="fas fa-info-circle" /> Imports are the resources needed to produce the factory's products and ensure its satisfaction. To set up imports, you select another factory and choose one of its outputs. This creates a "request" for that output. The selected factory must fulfill this request, and you'll be notified if it cannot meet the demand. All available outputs are listed in the Outputs section of the factory you choose.
+      </p>
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
         :key="inputIndex"
@@ -68,7 +70,7 @@
         />
       </v-row>
       <v-btn
-        v-show="Object.keys(factory.partsRequired).length > 0"
+        v-show="Object.keys(factory.requirements).length > 0"
         color="green"
         :disabled="validFactoriesForImports.length === 0"
         prepend-icon="fas fa-dolly"
@@ -162,7 +164,7 @@
       return []
     }
 
-    if (Object.values(factory.products).length === 0) {
+    if (factory.products.length === 0) {
       console.error('Tried to get outputs of a group with no products.')
       return []
     }

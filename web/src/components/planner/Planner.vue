@@ -63,7 +63,6 @@
           <planner-factory
             v-for="(factory) in factories"
             :key="factory.id"
-            :dependencies="dependencies"
             :factory="factory"
             :game-data="gameData"
             :help-text="helpText"
@@ -72,10 +71,7 @@
           <!-- Debugging -->
           <div class="mt-16">
             <h4 class="text-h5">DEBUG</h4>
-            Factories:
             <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>
-            Dependencies:
-            <pre style="text-align: left">{{ JSON.stringify(dependencies, null, 2) }}</pre>
           </div>
         </v-container>
       </v-col>
@@ -89,34 +85,31 @@
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
   import {
     Factory,
-    FactoryDependency,
-    FactoryDependencyMetrics,
-    FactoryDependencyRequest,
     WorldRawResource,
   } from '@/interfaces/planner/Factory'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
   import {
     calculateDependencies,
-    updateFactoryRequirements,
-    updateFactorySatisfaction,
+    calculateDependencyMetrics,
+    calculateFactoryInputSupply,
+    calculateFactoryInternalSupply,
+    calculateFactoryRawSupply,
+    calculateFactoryRequirements,
+    calculateFactorySatisfaction,
+    calculateSurplus,
   } from '@/utils/factoryManager'
 
   const props = defineProps<{ gameData: DataInterface }>()
 
   const factories = reactive<Factory[]>(JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Factory[])
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
-  const dependencies = reactive<FactoryDependency>(JSON.parse(localStorage.getItem('factoryDependencies') || '{}'))
   const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
   watch(factories, newValue => {
     localStorage.setItem('factoryGroups', JSON.stringify(newValue))
-  }, { deep: true })
-
-  watch(dependencies, newValue => {
-    localStorage.setItem('factoryDependencies', JSON.stringify(newValue))
   }, { deep: true })
 
   watch(helpText, newValue => {
@@ -126,17 +119,16 @@
   // Computed properties
   const validFactoriesForImports = computed(() => {
     return factories.filter(factory => {
-      const factoryOutputs = Object.keys(factory.products)
-      if (factoryOutputs.length === 0) {
-        return false
-      }
+      // Loop any records in factory.surplus and check they have amount > 0
+      console.log('surplus', factory.surplus)
 
-      const factorySurplus = Object.values(factory.surplus)
-      if (factorySurplus.every(surplus => surplus === 0)) {
-        return false
-      }
-
-      return factoryOutputs.every(output => factory.products[output].id && factory.products[output].amount > 0)
+      Object.keys(factory.surplus).forEach(part => {
+        console.log('part', part)
+        if (factory.surplus[part].amount > 0) {
+          return false
+        }
+      })
+      return true
     })
   })
 
@@ -148,10 +140,10 @@
 
     // Loop through each group's products to calculate usage of raw resources.
     factories.forEach(factory => {
-      factory.products.forEach(output => {
-        const recipe = props.gameData.recipes.find(r => r.id === output.recipe)
+      factory.products.forEach(product => {
+        const recipe = props.gameData.recipes.find(r => r.id === product.recipe)
         if (!recipe) {
-          console.error(`Recipe with ID ${output.id} not found.`)
+          console.error(`Recipe with ID ${product.id} not found.`)
           return
         }
 
@@ -172,7 +164,7 @@
           const resource = worldRawResources[ingredientId]
 
           // Update the world resource by reducing the available amount.
-          worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * output.amount)
+          worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * product.amount)
         })
       })
     })
@@ -214,14 +206,59 @@
       id: Math.floor(Math.random() * 10000),
       name,
       products: [],
+      internalProducts: {},
       inputs: [],
-      partsRequired: {},
       inputsSatisfied: true,
+      requirements: {},
+      dependencies: {},
       rawResources: {},
       surplus: {},
-      surplusHandling: {},
       hidden: false,
     })
+  }
+
+  // Scenario 1 (raw material use):
+  // - Products are comprised of raw resources e.g. Iron Ingots.
+  // - Iron ingots can be used internally. Raw resources can only be used to make Iron Ingots.
+  // - Iron ingots can be used in other factories, or internally by creating e.g. Iron Plates.
+  // Scenario 2 (imported product use):
+  // - Products are comprised of imported products e.g. Iron Ingots.
+  // - Iron Ingots are used internally to produce Iron Plates
+  // - Iron Ingots can also be used to produce Iron Rods.
+  // - Satisfaction for Iron Ingots must be calculated based on the requirements of Iron Plates and Iron Rods.
+  // - Both products can be used internally by e.g. screws (Ingots -> Rods -> Screws) and surplus of which can be exported.
+  // Scenario 3 (product not exported):
+  // - With the advent of the Dimensional Storage portal, we now have the likely use case of products not being shipped anywhere and being used by a combination of sinking and used by the DDU.
+  // - Users need to be able to mark the product as "sunk" in order to ensure there's less waste.
+  // - As soon as users mark a product as sunk, they need to be informed this is going to occur.
+  // Scenario 4 (product shipped to multiple factories):
+  // - A product of a factory (and it's surplus) can be distributed to multiple factories. We need to ensure the user is informed that the demands set upon the factory are not being met and they need to increase production to compensate.
+  const updateFactory = (factory: Factory) => {
+    updateWorldRawResources()
+
+    // We update the factory in layers of calculations. This makes it much easier to conceptualize.
+
+    // First we calculate what is required to make the products, without any injection of inputs etc.
+    calculateFactoryRequirements(factory, props.gameData)
+
+    // Calculate if we have products satisfied by raw resources
+    calculateFactoryRawSupply(factory, props.gameData)
+
+    // Calculate if we have any internal products that can be used to satisfy requirements
+    calculateFactoryInternalSupply(factory, props.gameData)
+
+    // Then we calculate the effect that inputs have on the requirements
+    calculateFactoryInputSupply(factories, factory, props.gameData)
+
+    // Then we calculate the satisfaction of the factory
+    calculateFactorySatisfaction(factory)
+
+    // Then we calculate the output state of the factory (including surplus etc)
+    calculateSurplus(factory, props.gameData)
+
+    // Check all other factories to see if they are affected by this factory change.
+    calculateDependencies(factories)
+    calculateDependencyMetrics(factories)
   }
 
   const deleteFactory = (factory: Factory) => {
@@ -237,17 +274,8 @@
     }
   }
 
-  const updateFactory = (factory: Factory) => {
-    updateWorldRawResources()
-    updateFactoryRequirements(factory, props.gameData)
-    updateFactorySatisfaction(factory)
-    dependencies.value = calculateDependencies(factories)
-  }
-
   const clearAll = () => {
-    console.log('clearAll')
     factories.length = 0
-    dependencies.length = 0
     updateWorldRawResources()
   }
 
@@ -272,46 +300,6 @@
     }
   }
 
-  const getRequestsForFactoryByProduct = (factory: Factory | string, part: string): FactoryDependencyRequest[] => {
-    // If sent an empty factory, there's no request.
-    if (!factory) {
-      return []
-    }
-    // Return an object containing the requests of all factories requesting a particular part
-    // We need to get all requests set upon by other factories and check their part names
-    // If the part name matches the one we're looking for, we add it to the list.
-    const factoryIdStr = factory.id.toString() // JavaScript doing bullshit things
-    const factoryRequests = dependencies[factoryIdStr]?.requestedBy
-
-    if (!factoryRequests) {
-      return []
-    }
-
-    // Create a new object returning the requests for the specific part, injecting the factory ID.
-    // They can only ever request one part from us, so return it as a flat array.
-    return Object.entries(factoryRequests).map(([factoryId, requests]) => {
-      return requests.filter(request => request.part === part).map(request => {
-        return {
-          ...request,
-          factory: factoryId,
-        }
-      })
-    }).flat()
-  }
-
-  const getRequestMetricsForFactoryByPart = (factory: Factory, part: string): FactoryDependencyMetrics => {
-    // Requests may be empty.
-    if (!factory || !part || !factory.id) {
-      return {}
-    }
-
-    // Dependency may be empty.
-    if (!dependencies[factory.id.toString()]) {
-      return {}
-    }
-    return dependencies[factory.id.toString()].metrics[part] ?? {}
-  }
-
   // Initialize during setup
   initializeFactories()
 
@@ -320,8 +308,6 @@
   provide('updateFactory', updateFactory)
   provide('deleteFactory', deleteFactory)
   provide('getPartDisplayName', getPartDisplayName)
-  provide('getRequestsForFactoryByProduct', getRequestsForFactoryByProduct)
-  provide('getRequestMetricsForFactoryByPart', getRequestMetricsForFactoryByPart)
 
   const showDemo = () => {
     console.log('showDemo')
