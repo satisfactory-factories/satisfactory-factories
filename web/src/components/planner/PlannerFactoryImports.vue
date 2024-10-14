@@ -8,15 +8,11 @@
       <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border">
         <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
         <v-card-text>
-          <div v-for="(inputIndex) in factory.rawResources" :key="inputIndex">
-            <p v-show="helpText" class="text-body-2 mb-4">
-              <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
-            </p>
-            <p
-              v-for="(resource, resourceKey) in factory.rawResources"
-              :key="resourceKey"
-              class="text-body-1 mt-4"
-            >
+          <p v-show="helpText" class="text-body-2 mb-4">
+            <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
+          </p>
+          <div v-for="(resource, resourceKey) in factory.rawResources" :key="resource">
+            <p class="text-body-1">
               <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }} /min
             </p>
           </div>
@@ -113,35 +109,25 @@
   }
 
   const validInputsForFactoriesAutocomplete = (factory: Factory, inputIndex: number) => {
-    // Get a list of selected factory IDs for this particular factory, excluding the current input's index
-    const selectedFactoryIds = factory.inputs
-      .filter((_, index) => index !== inputIndex) // Exclude the current input index from filtering
-      .map(input => input.factoryId)
+    // Get all factories that are not the current factory
+    const otherFactories = validFactoriesForImports.value.filter(f => f.id !== factory.id)
 
-    // Filter the valid import factories:
-    // 1. Exclude factories that are already selected by other inputs.
-    // 2. Exclude the current factory itself.
-    const validImportFactories = validFactoriesForImports.value.filter(
-      input => !selectedFactoryIds.includes(input.id) && input.id !== factory.id
-    )
-
-    // Inject a default option depending on whether there are valid factories available
-    if (validImportFactories.length === 0) {
-      validImportFactories.unshift({
-        id: 0,
-        name: 'No valid factories',
-      })
-    } else {
-      validImportFactories.unshift({
-        id: 0,
-        name: 'Select a Factory',
-      })
-    }
-
-    return validImportFactories.map(validFac => ({
-      title: validFac.name,
-      value: validFac.id,
-    }))
+    // Of the other factories, we need return factories that comply with the following rules:
+    // 1. The factory is already selected by this input. We need this in order to return the factory as an option and it won't be de-rendered.
+    // 2. The factory does not have an output we have already selected by this factory AND is not the same input index.
+    // 3. The factory has a valid amount of surplus.
+    return otherFactories.filter(f => {
+      return (
+        f.id === factory.inputs[inputIndex].factoryId ||
+        !factory.inputs.some(input => input.factoryId === f.id && input.outputPart === factory.inputs[inputIndex].outputPart && inputIndex !== inputIndex) &&
+        f.surplus[factory.inputs[inputIndex].outputPart] > 0
+      )
+    }).map(f => {
+      return {
+        title: f.name,
+        value: f.id,
+      }
+    })
   }
 
   // Gets the products of another factory for dependencies

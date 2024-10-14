@@ -14,54 +14,83 @@
       any other factories that use this one as an Input.<br>
       An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.
     </p>
-    <v-row
+    <div
       v-for="(product, productIndex) in factory.products"
       :key="productIndex"
-      class="pa-0 my-2 mx-1 align-center selectors"
+      class="px-4 my-2 border rounded bg-grey-darken-4"
     >
-      <v-autocomplete
-        v-model="product.id"
-        class="mr-6"
-        hide-details
-        :items="autocompletePartItems"
-        label="Item"
-        max-width="300px"
-        prepend-icon="fas fa-cube"
-        variant="outlined"
-        @update:model-value="updateProductSelection(product, factory)"
-      />
-      <v-autocomplete
-        v-model="product.recipe"
-        class="mr-2"
-        :disabled="!product.id"
-        hide-details
-        :items="getRecipesForPartSelector(product.id)"
-        label="Recipe"
-        max-width="300px"
-        prepend-icon="fas fa-hat-chef"
-        variant="outlined"
-        @update:model-value="updateFactory(factory)"
-      />
-      <v-text-field
-        v-model.number="product.amount"
-        class="mr-2"
-        hide-details
-        label="Amount"
-        max-width="110px"
-        type="number"
-        variant="outlined"
-        @input="updateFactory(factory)"
-      />
-      <v-btn
-        class="rounded"
-        color="red"
-        icon="fas fa-trash"
-        @click="deleteProduct(productIndex, factory)"
-      />
-      <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
-        Internal
-      </v-chip>
-    </v-row>
+      <v-row class="selectors align-center ml-0 mt-5 mb-4">
+        <v-autocomplete
+          v-model="product.id"
+          class="mr-6"
+          hide-details
+          :items="autocompletePartItems"
+          label="Item"
+          max-width="300px"
+          prepend-icon="fas fa-cube"
+          variant="outlined"
+          @update:model-value="updateProductSelection(product, factory)"
+        />
+        <v-autocomplete
+          v-model="product.recipe"
+          class="mr-2"
+          :disabled="!product.id"
+          hide-details
+          :items="getRecipesForPartSelector(product.id)"
+          label="Recipe"
+          max-width="300px"
+          prepend-icon="fas fa-hat-chef"
+          variant="outlined"
+          @update:model-value="updateFactory(factory)"
+        />
+        <v-text-field
+          v-model.number="product.amount"
+          class="mr-2"
+          hide-details
+          label="Amount"
+          max-width="110px"
+          type="number"
+          variant="outlined"
+          @input="updateFactory(factory)"
+        />
+        <v-btn
+          v-show="product.displayOrder !== 0"
+          class="rounded mr-1"
+          color="blue"
+          icon="fas fa-arrow-up"
+          @click="updateOrder('up', product)"
+        />
+        <v-btn
+          v-show="product.displayOrder !== factory.products.length - 1"
+          class="rounded"
+          color="blue"
+          icon="fas fa-arrow-down"
+          @click="updateOrder('down', product)"
+        />
+        <v-btn
+          class="ml-4 rounded"
+          color="red"
+          icon="fas fa-trash"
+          variant="outlined"
+          @click="deleteProduct(productIndex, factory)"
+        />
+        <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
+          Internal
+        </v-chip>
+      </v-row>
+      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-9 mb-3">
+        <div>
+          <v-chip
+            v-for="(requirement, requirementIndex) in product.requirements"
+            :key="`ingredients-${requirementIndex}`"
+            class="mr-2"
+            color="primary"
+          >
+            {{ getPartDisplayName(requirementIndex) }}: {{ requirement.amountRequired }}/min
+          </v-chip>
+        </div>
+      </v-row>
+    </div>
     <v-btn
       color="primary"
       prepend-icon="fas fa-cube"
@@ -76,6 +105,8 @@
   import { Factory } from '@/interfaces/planner/Factory'
   import { DataInterface } from '@/interfaces/DataInterface'
 
+  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
+
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
 
   const props = defineProps<{
@@ -89,11 +120,18 @@
       id: '',
       amount: 0,
       recipe: '',
+      displayOrder: factory.products.length,
+      requirements: {},
     })
   }
 
   const deleteProduct = (outputIndex: number, factory: Factory) => {
     factory.products.splice(outputIndex, 1)
+
+    // We need to loop through each one in order and fix their ordering with the running count
+    factory.products.forEach((product, index) => {
+      product.displayOrder = index
+    })
     updateFactory(factory)
   }
 
@@ -143,5 +181,26 @@
     }
 
     updateFactory(factory)
+  }
+
+  // Enables the user to move the order of the products up or down
+  const updateOrder = (direction: 'up' | 'down', product: FactoryProduct) => {
+    const index = props.factory.products.findIndex(p => p.displayOrder === product.displayOrder)
+    const newIndex = direction === 'up' ? index - 1 : index + 1
+
+    if (newIndex < 0 || newIndex >= props.factory.products.length) {
+      return
+    }
+
+    const otherProduct = props.factory.products.find(p => p.displayOrder === newIndex)
+    if (!otherProduct) {
+      return
+    }
+
+    const tempOrder = product.displayOrder
+    product.displayOrder = otherProduct.displayOrder
+    otherProduct.displayOrder = tempOrder
+
+    props.factory.products.sort((a, b) => a.displayOrder - b.displayOrder)
   }
 </script>

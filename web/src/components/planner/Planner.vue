@@ -95,8 +95,8 @@
     calculateFactoryInputSupply,
     calculateFactoryInternalSupply,
     calculateFactoryRawSupply,
-    calculateFactoryRequirements,
     calculateFactorySatisfaction,
+    calculateProductRequirements,
     calculateSurplus,
   } from '@/utils/factoryManager'
 
@@ -120,10 +120,7 @@
   const validFactoriesForImports = computed(() => {
     return factories.filter(factory => {
       // Loop any records in factory.surplus and check they have amount > 0
-      console.log('surplus', factory.surplus)
-
       Object.keys(factory.surplus).forEach(part => {
-        console.log('part', part)
         if (factory.surplus[part].amount > 0) {
           return false
         }
@@ -186,8 +183,6 @@
   }
 
   const findFactory = (factoryId: string | number): Factory | null => {
-    console.log('findFactory', factoryId)
-
     if (!factoryId) {
       console.warn('No factoryId provided to findFactory')
       return null
@@ -239,7 +234,7 @@
     // We update the factory in layers of calculations. This makes it much easier to conceptualize.
 
     // First we calculate what is required to make the products, without any injection of inputs etc.
-    calculateFactoryRequirements(factory, props.gameData)
+    calculateProductRequirements(factory, props.gameData)
 
     // Calculate if we have products satisfied by raw resources
     calculateFactoryRawSupply(factory, props.gameData)

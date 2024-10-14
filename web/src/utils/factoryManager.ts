@@ -1,12 +1,13 @@
 import { Factory, FactoryDependency } from '@/interfaces/planner/Factory'
 import { DataInterface } from '@/interfaces/DataInterface'
 
-export const calculateFactoryRequirements = (factory: Factory, gameData: DataInterface) => {
-  factory.requirements = {}
+export const calculateProductRequirements = (factory: Factory, gameData: DataInterface) => {
   factory.rawResources = {}
 
   // First loop through each product and calculate requirements.
   factory.products.forEach(product => {
+    product.requirements = {} // Prevents orphaning
+
     const recipe = gameData.recipes.find(r => r.id === product.recipe)
     if (!recipe) {
       console.error(`Recipe with ID ${product.recipe} not found.`)
@@ -35,8 +36,8 @@ export const calculateFactoryRequirements = (factory: Factory, gameData: DataInt
         }
       }
 
-      if (!factory.requirements[part]) {
-        factory.requirements[part] = {
+      if (!product.requirements[part]) {
+        product.requirements[part] = {
           amountRequired: 0,
           amountSupplied: 0,
           amountSuppliedViaInternal: 0,
@@ -48,7 +49,7 @@ export const calculateFactoryRequirements = (factory: Factory, gameData: DataInt
       }
 
       // Now add the amount required to the part. The rest are calculated later.
-      factory.requirements[part].amountRequired += partAmount * product.amount
+      product.requirements[part].amountRequired += partAmount * product.amount
     })
   })
 }
@@ -165,24 +166,7 @@ export const calculateSurplus = (factory: Factory, gameData) => {
     const recipe = gameData.recipes.find(r => r.id === product.recipe)
     if (!recipe) {
       console.error(`Recipe with ID ${product.recipe} not found.`)
-      return
     }
-
-    recipe.ingredients.forEach(ingredientPart => {
-      const [part] = Object.entries(ingredientPart)[0]
-
-      // If the part is a requirement, calculate the surplus.
-      if (factory.requirements[part].satisfied) {
-        if (!factory.surplus[product.id]) {
-          factory.surplus[product.id] = {
-            amount: 0,
-            surplusHandling: 'export',
-          }
-        }
-
-        factory.surplus[product.id].amount = product.amount
-      }
-    })
   })
 }
 
