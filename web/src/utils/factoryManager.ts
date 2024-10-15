@@ -196,6 +196,31 @@ export const calculateFactorySatisfaction = (factory: Factory) => {
   })
 }
 
+export const calculateFactoryBuildingsAndPower = (factory: Factory) => {
+  factory.totalPower = 0
+  factory.buildingRequirements = {}
+
+  // Loop through each product and sum the power requirements based off the metrics already there.
+  factory.products.forEach(product => {
+    product.buildingRequirements.forEach(building => {
+      if (!factory.buildingRequirements[building.name]) {
+        factory.buildingRequirements[building.name] = {
+          name: building.name,
+          amount: 0,
+          powerPerBuilding: building.powerPerBuilding,
+          totalPower: 0,
+        }
+      }
+
+      factory.buildingRequirements[building.name].amount += parseFloat(building.amount)
+      factory.buildingRequirements[building.name].totalPower += building.totalPower
+    })
+
+    // Sum the total power.
+    factory.totalPower += product.buildingRequirements.reduce((acc, building) => acc + building.totalPower, 0)
+  })
+}
+
 export const calculateSurplus = (factory: Factory) => {
   factory.surplus = {} // Avoids orphaning
 

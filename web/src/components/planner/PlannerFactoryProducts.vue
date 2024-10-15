@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">
+    <h1 class="text-h4 mb-4">
       <i class="fas fa-conveyor-belt-alt" />
       <span class="ml-3">Products</span>
     </h1>
@@ -80,7 +80,7 @@
       </v-row>
       <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3 text-body-1">
         <div>
-          <span>Requires: </span>
+          <span>Ingredients: </span>
           <v-chip
             v-for="(requirement, requirementIndex) in product.requirements"
             :key="`ingredients-${requirementIndex}`"

@@ -92,7 +92,7 @@
   import {
     calculateBuildingRequirements,
     calculateDependencies,
-    calculateDependencyMetrics,
+    calculateDependencyMetrics, calculateFactoryBuildingsAndPower,
     calculateFactoryInputSupply,
     calculateFactoryInternalSupply,
     calculateFactoryRawSupply,
@@ -200,6 +200,7 @@
       partRequirements: {},
       buildingRequirements: {},
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
+      totalPower: 0,
       dependencies: {},
       rawResources: {},
       usingRawResourcesOnly: false,
@@ -230,6 +231,9 @@
 
     // Then we calculate the satisfaction of the factory.
     calculateFactorySatisfaction(factory)
+
+    // We then calculate the building and power demands to make the factory.
+    calculateFactoryBuildingsAndPower(factory)
 
     // Then we calculate the output state of the factory (including surplus etc).
     calculateSurplus(factory)
@@ -348,5 +352,19 @@
   :last-child {
     margin-bottom: 0 !important;
   }
+}
+
+.my-card {
+  background-color: rgb(50, 50, 50);
+
+  &:last-of-type {
+    border-bottom: 0;
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.v-card-title {
+  padding: 1rem;
+
 }
 </style>

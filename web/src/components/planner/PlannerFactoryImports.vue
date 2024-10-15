@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">
+    <h1 class="text-h4 mb-4">
       <i class="fas fa-arrow-to-right" />
       <span class="ml-3">Imports</span>
     </h1>

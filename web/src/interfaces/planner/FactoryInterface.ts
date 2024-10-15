@@ -25,6 +25,7 @@ export interface FactoryItem {
   amount: number;
   displayOrder: number;
   requirements: { [key: string]: { amount: number }};
+  buildingRequirements: BuildingRequirement
 }
 
 export interface FactorySurplusItem extends FactoryItem {
@@ -72,6 +73,7 @@ export interface Factory {
   partRequirements: PartRequirement;
   buildingRequirements: BuildingRequirement;
   requirementsSatisfied: boolean;
+  totalPower: number;
   surplus: FactorySurplusItem;
   dependencies: FactoryDependency;
   rawResources: WorldRawResource;

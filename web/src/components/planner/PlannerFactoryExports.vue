@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-h5 mb-4"><i class="fa fa-truck-container" /> Exports</h2>
+    <h2 class="text-h4 mb-4"><i class="fa fa-truck-container" /> Exports</h2>
     <div v-if="factory.products.length > 0">
       <p v-show="helpText" class="text-body-2 mb-4">
         <i class="fas fa-info-circle" /> Items listed below are the surplus of products available for
@@ -12,18 +12,19 @@
       </p>
 
       <div v-if="factory.surplus && Object.keys(factory.surplus).length > 0">
-        <p v-if="factory?.requirementsSatisfied === false" class="text-body-1 text-amber">
+        <p v-if="factory?.requirementsSatisfied === false" class="text-body-1 text-yellow-darken-3 mb-4">
           <i class="fas fa-exclamation-triangle" />
-          <span class="ml-3">Factory satisfaction is not fulfilled! The below numbers are not accurate to realistic output.</span>
+          <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
         </p>
         <v-card
           v-for="(surplus, part) in factory.surplus"
           :key="`${factory.id}-${part}`"
-          class="output"
-          rounded="0"
+          class="my-card border-md mb-1"
           :style="requestStyling(getRequestMetricsForFactoryByPart(factory, part))"
         >
-          <v-card-title><b>{{ getPartDisplayName(part) }}</b></v-card-title>
+          <v-card-title>
+            <h2 class="text-h5"><i class="fas fa-cube" /> <span class="ml-1">{{ getPartDisplayName(part) }}</span>
+            </h2></v-card-title>
           <v-card-text class="text-body-1">
             <p><b>Surplus</b>: {{ surplus.amount }}/min</p>
             <div v-if="getRequestsForFactoryByProduct(factory, part).length > 0">
@@ -83,7 +84,7 @@
     // If no requests, return nothing
     if (Object.keys(requestMetric).length === 0) {
       return {
-        border: requestMetric.isRequestSatisfied ? '' : '1px solid #2f2f2f',
+        border: requestMetric.isRequestSatisfied ? '' : '1px solid #ccc',
       }
     }
 
@@ -144,12 +145,4 @@
   }
 }
 
-.output {
-  background-color: rgb(50, 50, 50);
-
-  &:last-of-type {
-    border-bottom: 0;
-    box-shadow: 0 0 0 0;
-  }
-}
 </style>
