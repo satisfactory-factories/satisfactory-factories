@@ -78,7 +78,7 @@
           Internal
         </v-chip>
       </v-row>
-      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3">
+      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3 text-body-1">
         <div>
           <span>Requires: </span>
           <v-chip
@@ -86,11 +86,43 @@
             :key="`ingredients-${requirementIndex}`"
             class="mr-2 border-md"
             color="primary"
+            prepend-icon="fa fa-cube"
+            size="large"
             style="border-color: rgb(0, 93, 167) !important"
             variant="tonal"
           >
             <b>{{ getPartDisplayName(requirementIndex) }}</b>: {{ requirement.amount }}/min
           </v-chip>
+        </div>
+      </v-row>
+      <v-row v-show="product.buildingRequirements.length > 0" class="ml-0 mb-3 text-body-1">
+        <div>
+          <span>Buildings: </span>
+          <span
+            v-for="(building, buildingIndex) in product.buildingRequirements"
+            :key="`buildings-${buildingIndex}`"
+          >
+            <v-chip
+              class="mr-2 border-md"
+              color="yellow-darken-4"
+              prepend-icon="fas fa-building"
+              size="large"
+              style="border-color: rgb(167, 86, 0)!important"
+              variant="tonal"
+            >
+              <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
+            </v-chip>
+            <v-chip
+              class="mr-2 border-md"
+              color="yellow-darken-2"
+              prepend-icon="fas fa-bolt"
+              size="large"
+              style="border-color: rgb(172, 153, 2) !important"
+              variant="tonal"
+            >
+              <b>Power:</b>&nbsp; {{ building.totalPower }} MW
+            </v-chip>
+          </span>
         </div>
       </v-row>
     </div>
@@ -105,10 +137,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Factory } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
+  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
 
@@ -125,6 +158,7 @@
       recipe: '',
       displayOrder: factory.products.length,
       requirements: {},
+      buildingRequirements: [],
     })
   }
 
@@ -206,4 +240,5 @@
 
     props.factory.products.sort((a, b) => a.displayOrder - b.displayOrder)
   }
+
 </script>

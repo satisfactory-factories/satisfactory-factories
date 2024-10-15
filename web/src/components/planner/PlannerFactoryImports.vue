@@ -85,7 +85,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void

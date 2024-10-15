@@ -35,7 +35,7 @@
               prepend-icon="fas fa-trash"
               variant="outlined"
               @click="confirmDelete() && deleteFactory(factory)"
-            >Delete Factory
+            >Delete
             </v-btn>
           </v-col>
         </v-row>
@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void

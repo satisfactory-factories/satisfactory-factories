@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Factory, FactoryDependencyMetrics, FactoryDependencyRequest } from '@/interfaces/planner/Factory'
+  import { Factory, FactoryDependencyMetrics, FactoryDependencyRequest } from '@/interfaces/planner/FactoryInterface'
 
   const findFactory = inject('findFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string

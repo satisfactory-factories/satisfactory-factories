@@ -10,6 +10,15 @@ export interface PartRequirement {
   }
 }
 
+export interface BuildingRequirement {
+  [key: string]: {
+    name: string;
+    amount: number;
+    powerPerBuilding: number;
+    totalPower: number;
+  }
+}
+
 export interface FactoryItem {
   id: string;
   recipe: string;
@@ -61,6 +70,7 @@ export interface Factory {
   products: FactoryItem[];
   internalProducts: FactoryItem;
   partRequirements: PartRequirement;
+  buildingRequirements: BuildingRequirement;
   requirementsSatisfied: boolean;
   surplus: FactorySurplusItem;
   dependencies: FactoryDependency;

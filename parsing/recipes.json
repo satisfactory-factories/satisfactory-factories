@@ -1,16 +1,16 @@
 {
     "buildings": {
-        "quantumencoder": 0.1,
-        "converter": 0.1,
-        "hadroncollider": 0.1,
-        "oilrefinery": 30,
-        "foundrymk1": 16,
-        "packager": 10,
-        "manufacturermk1": 55,
         "assemblermk1": 15,
         "blender": 75,
-        "smeltermk1": 4,
-        "constructormk1": 4
+        "constructormk1": 4,
+        "converter": 0.1,
+        "foundrymk1": 16,
+        "hadroncollider": 0.1,
+        "manufacturermk1": 55,
+        "oilrefinery": 30,
+        "packager": 10,
+        "quantumencoder": 0.1,
+        "smeltermk1": 4
     },
     "items": {
         "parts": {

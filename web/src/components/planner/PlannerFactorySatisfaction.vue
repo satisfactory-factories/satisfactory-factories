@@ -52,7 +52,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { Factory } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 

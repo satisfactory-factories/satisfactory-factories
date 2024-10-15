@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
   import { defineEmits, defineProps } from 'vue'
-  import { Factory } from '@/interfaces/planner/Factory'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
 
   defineProps<{ factories: Factory[] }>()
   const emit = defineEmits<{ 'createFactory':() => void }>()

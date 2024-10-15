@@ -4,14 +4,24 @@
       <v-card>
         <v-row style="padding: 16px">
           <v-col class="text-h4">
-            <i class="fas fa-globe"></i><span class="ml-3">World Resources</span>
+            <i class="fas fa-globe" /><span class="ml-3">World Resources</span>
           </v-col>
           <v-col align-self="center" class="text-right">
-            <v-btn v-show="!hidden" color="primary" prepend-icon="fas fa-eye-slash" variant="outlined"
-                   @click="toggleVisibility">Hide
+            <v-btn
+              v-show="!hidden"
+              color="primary"
+              prepend-icon="fas fa-eye-slash"
+              variant="outlined"
+              @click="toggleVisibility"
+            >Hide
             </v-btn>
-            <v-btn v-show="hidden" color="primary" prepend-icon="fas fa-eye" variant="outlined"
-                   @click="toggleVisibility">Show
+            <v-btn
+              v-show="hidden"
+              color="primary"
+              prepend-icon="fas fa-eye"
+              variant="outlined"
+              @click="toggleVisibility"
+            >Show
             </v-btn>
           </v-col>
         </v-row>
@@ -29,23 +39,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { WorldRawResource } from "@/interfaces/planner/Factory";
+  import { ref, watch } from 'vue'
+  import { WorldRawResource } from '@/interfaces/planner/FactoryInterface'
 
-const props = defineProps<{
-  worldRawResources: WorldRawResource;
-}>();
+  defineProps<{
+    worldRawResources: WorldRawResource;
+  }>()
 
-// Initialize the 'hidden' ref based on the value in localStorage
-let hidden = ref<boolean>(localStorage.getItem('worldResourcesHidden') === 'true');
+  // Initialize the 'hidden' ref based on the value in localStorage
+  const hidden = ref<boolean>(localStorage.getItem('worldResourcesHidden') === 'true')
 
-// Watch the 'hidden' ref and update localStorage whenever it changes
-watch(hidden, (newValue) => {
-  localStorage.setItem('worldResourcesHidden', newValue.toString());
-});
+  // Watch the 'hidden' ref and update localStorage whenever it changes
+  watch(hidden, newValue => {
+    localStorage.setItem('worldResourcesHidden', newValue.toString())
+  })
 
-// Function to toggle visibility
-const toggleVisibility = () => {
-  hidden.value = !hidden.value;
-};
+  // Function to toggle visibility
+  const toggleVisibility = () => {
+    hidden.value = !hidden.value
+  }
 </script>

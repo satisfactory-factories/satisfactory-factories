@@ -1,4 +1,4 @@
-import { Factory, FactoryDependency } from '@/interfaces/planner/Factory'
+import { Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 
 export const calculateProductRequirements = (factory: Factory, gameData: DataInterface) => {
@@ -56,6 +56,34 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
 
       factory.partRequirements[part].amountRequired += partAmount * product.amount
     })
+  })
+}
+
+// Calculates what buildings are required to produce the products.
+export const calculateBuildingRequirements = (factory: Factory, gameData: DataInterface) => {
+  factory.products.forEach(product => {
+    if (product.recipe) {
+      const recipe = gameData.recipes.find(r => r.id === product.recipe)
+      if (recipe) {
+        product.buildingRequirements = recipe.producedIn
+          .filter(buildingName => buildingName !== 'bp_workbenchcomponent')
+          .map(buildingName => {
+            const buildingPower = gameData.buildings[buildingName]
+            const buildingCount = (product.amount / recipe.perMin).toFixed(3)
+
+            return {
+              name: buildingName,
+              amount: buildingCount,
+              powerPerBuilding: buildingPower,
+              totalPower: buildingPower * buildingCount,
+            }
+          })
+      } else {
+        product.buildingRequirements = []
+      }
+    } else {
+      product.buildings = []
+    }
   })
 }
 

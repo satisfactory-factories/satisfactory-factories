@@ -24,7 +24,7 @@
     </v-navigation-drawer>
     <v-row>
       <!-- Sticky Sidebar for Desktop -->
-      <v-col class="d-none d-md-flex sticky-sidebar" cols="3">
+      <v-col class="d-none d-md-flex sticky-sidebar" style="max-width: 350px">
         <v-container class="pa-0">
           <planner-factory-list
             :factories="factories"
@@ -47,7 +47,7 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-md" cols="12" md="9">
+      <v-col class="border-s-md pa-0" style="max-width: 1200px">
         <v-container>
           <v-btn
             class="d-md-none mb-4"
@@ -86,10 +86,11 @@
   import {
     Factory,
     WorldRawResource,
-  } from '@/interfaces/planner/Factory'
+  } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
   import {
+    calculateBuildingRequirements,
     calculateDependencies,
     calculateDependencyMetrics,
     calculateFactoryInputSupply,
@@ -197,6 +198,7 @@
       internalProducts: {},
       inputs: [],
       partRequirements: {},
+      buildingRequirements: {},
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       dependencies: {},
       rawResources: {},
@@ -207,43 +209,29 @@
     })
   }
 
-  // Scenario 1 (raw material use):
-  // - Products are comprised of raw resources e.g. Iron Ingots.
-  // - Iron ingots can be used internally. Raw resources can only be used to make Iron Ingots.
-  // - Iron ingots can be used in other factories, or internally by creating e.g. Iron Plates.
-  // Scenario 2 (imported product use):
-  // - Products are comprised of imported products e.g. Iron Ingots.
-  // - Iron Ingots are used internally to produce Iron Plates
-  // - Iron Ingots can also be used to produce Iron Rods.
-  // - Satisfaction for Iron Ingots must be calculated based on the requirements of Iron Plates and Iron Rods.
-  // - Both products can be used internally by e.g. screws (Ingots -> Rods -> Screws) and surplus of which can be exported.
-  // Scenario 3 (product not exported):
-  // - With the advent of the Dimensional Storage portal, we now have the likely use case of products not being shipped anywhere and being used by a combination of sinking and used by the DDU.
-  // - Users need to be able to mark the product as "sunk" in order to ensure there's less waste.
-  // - As soon as users mark a product as sunk, they need to be informed this is going to occur.
-  // Scenario 4 (product shipped to multiple factories):
-  // - A product of a factory (and it's surplus) can be distributed to multiple factories. We need to ensure the user is informed that the demands set upon the factory are not being met and they need to increase production to compensate.
+  // We update the factory in layers of calculations. This makes it much easier to conceptualize.
   const updateFactory = (factory: Factory) => {
     updateWorldRawResources()
-
-    // We update the factory in layers of calculations. This makes it much easier to conceptualize.
 
     // First we calculate what is required to make the products, without any injection of inputs etc.
     calculateProductRequirements(factory, props.gameData)
 
-    // Calculate if we have products satisfied by raw resources
+    // Calculate building requirements for each product based on the selected recipe and product amount.
+    calculateBuildingRequirements(factory, props.gameData)
+
+    // Calculate if we have products satisfied by raw resources.
     calculateFactoryRawSupply(factory, props.gameData)
 
-    // Calculate if we have any internal products that can be used to satisfy requirements
+    // Calculate if we have any internal products that can be used to satisfy requirements.
     calculateFactoryInternalSupply(factory, props.gameData)
 
-    // Then we calculate the effect that inputs have on the requirements
+    // Then we calculate the effect that inputs have on the requirements.
     calculateFactoryInputSupply(factories, factory, props.gameData)
 
-    // Then we calculate the satisfaction of the factory
+    // Then we calculate the satisfaction of the factory.
     calculateFactorySatisfaction(factory)
 
-    // Then we calculate the output state of the factory (including surplus etc)
+    // Then we calculate the output state of the factory (including surplus etc).
     calculateSurplus(factory)
 
     // Check all other factories to see if they are affected by this factory change.
@@ -279,6 +267,25 @@
     return props.gameData.items.rawResources[part]?.name || props.gameData.items.parts[part]
   }
 
+  const getBuildingDisplayName = (building: string) => {
+    const buildingFriendly = new Map<string, string>([
+      ['assemblermk1', 'Assembler'],
+      ['blender', 'Blender'],
+      ['constructormk1', 'Constructor'],
+      ['converter', 'Converter'],
+      ['foundrymk1', 'Foundry'],
+      ['hadroncollider', 'Particle Accelerator'],
+      ['manufacturermk1', 'Manufacturer'],
+      ['oilrefinery', 'Oil Refinery'],
+      ['packager', 'Packager'],
+      ['quantumencoder', 'Quantum Encoder'],
+      ['smeltermk1', 'Smelter'],
+      ['waterExtractor', 'Water Extractor'],
+    ])
+
+    return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`
+  }
+
   const showHideAll = (mode: 'show' | 'hide') => {
     factories.forEach(factory => factory.hidden = mode === 'hide')
   }
@@ -304,6 +311,7 @@
   provide('updateFactory', updateFactory)
   provide('deleteFactory', deleteFactory)
   provide('getPartDisplayName', getPartDisplayName)
+  provide('getBuildingDisplayName', getBuildingDisplayName)
 
   const showDemo = () => {
     console.log('showDemo')
