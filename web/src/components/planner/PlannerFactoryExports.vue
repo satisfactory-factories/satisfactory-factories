@@ -31,7 +31,7 @@
               <v-card-text class="text-body-1">
                 <p><b>Surplus</b>: {{ factory.surplus[product.id].amount }}/min</p>
                 <div v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0">
-                  <p><b>Requests total</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min</p>
+                  <p><b>Requests</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min</p>
                   <p>Status:
                     <span
                       v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
@@ -43,7 +43,7 @@
                       v-if="!getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
                       style="color: red"
                     >
-                      <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage!</span>
+                      <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
                     </span>
                   </p>
                   <div class="my-4">
@@ -54,19 +54,20 @@
                       </li>
                     </ul>
                   </div>
+                  <v-radio-group
+                    v-model="factory.surplus[product.id].surplusHandling"
+                    class="radio-fix d-inline mb-4"
+                    density="compact"
+                    hide-details
+                    inline
+                    @update:model-value="updateFactory(factory)"
+                  >
+                    <v-radio class="mr-4" label="Export" value="export" />
+                    <v-radio label="Sink" value="sink" />
+                  </v-radio-group>
                 </div>
-                <p v-else>There are currently no requests upon this product.</p>
-                <v-radio-group
-                  v-model="factory.surplus[product.id].surplusHandling"
-                  class="radio-fix d-inline mb-4"
-                  density="compact"
-                  hide-details
-                  inline
-                  @update:model-value="updateFactory(factory)"
-                >
-                  <v-radio class="mr-4" label="Export" value="export" />
-                  <v-radio label="Sink" value="sink" />
-                </v-radio-group>
+                <p v-else class="mt-2">There are currently no requests upon this product. Add imports in other factories to link.</p>
+
               </v-card-text>
             </v-card>
           </div>
