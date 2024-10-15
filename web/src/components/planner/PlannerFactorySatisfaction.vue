@@ -27,7 +27,7 @@
     <div v-if="Object.keys(factory.partRequirements).length > 0">
       <v-card class="my-card mb-1 border-md">
         <v-card-title>
-          <h2 class="text-h5"><i class="fas fa-cube" /> <span class="ml-1">Items</span></h2>
+          <h2 class="text-h5"><i class="fas fa-cube" /><span class="ml-2">Items</span></h2>
         </v-card-title>
         <v-card-text class="text-body-1">
           <p v-show="helpText" class="text-body-2 mb-4">

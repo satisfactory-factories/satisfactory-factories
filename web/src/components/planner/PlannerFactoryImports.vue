@@ -1,26 +1,29 @@
 <template>
   <div>
-    <h1 class="text-h4 mb-4">
+    <h1 class="text-h5 mb-4">
       <i class="fas fa-arrow-to-right" />
       <span class="ml-3">Imports</span>
     </h1>
+    <p v-show="helpText" class="text-body-2 mb-4">
+      <i class="fas fa-info-circle" /> Imports are the resources needed to produce the factory's products and ensure its satisfaction. To set up imports, you select another factory and choose one of its outputs. This creates a "request" for that output. The selected factory must fulfill this request, and you'll be notified if it cannot meet the demand. All available outputs are listed in the Outputs section of the factory you choose.
+    </p>
     <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partRequirements).length > 0">
-      <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border">
-        <v-card-title><i class="fas fa-hard-hat" /> Raw Resources</v-card-title>
-        <v-card-text>
-          <p v-show="helpText" class="text-body-2 mb-4">
+      <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border-md my-card">
+        <v-card-title>
+          <i class="fas fa-hard-hat" /><span class="ml-2">Raw Resources</span>
+        </v-card-title>
+        <v-card-text class="text-body-2">
+          <p class="mb-4">
             <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
           </p>
           <div v-for="(resource, resourceKey) in factory.rawResources" :key="resource">
-            <p class="text-body-1">
+            <p>
               <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }} /min
             </p>
           </div>
         </v-card-text>
       </v-card>
-      <p v-show="helpText" class="text-body-2 mb-4">
-        <i class="fas fa-info-circle" /> Imports are the resources needed to produce the factory's products and ensure its satisfaction. To set up imports, you select another factory and choose one of its outputs. This creates a "request" for that output. The selected factory must fulfill this request, and you'll be notified if it cannot meet the demand. All available outputs are listed in the Outputs section of the factory you choose.
-      </p>
+
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
         :key="`${inputIndex}-${input.outputPart}`"

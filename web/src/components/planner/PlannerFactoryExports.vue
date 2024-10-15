@@ -23,7 +23,7 @@
           :style="requestStyling(getRequestMetricsForFactoryByPart(factory, part))"
         >
           <v-card-title>
-            <h2 class="text-h5"><i class="fas fa-cube" /> <span class="ml-1">{{ getPartDisplayName(part) }}</span>
+            <h2 class="text-h5"><i class="fas fa-cube" /><span class="ml-2">{{ getPartDisplayName(part) }}</span>
             </h2></v-card-title>
           <v-card-text class="text-body-1">
             <p><b>Surplus</b>: {{ surplus.amount }}/min</p>

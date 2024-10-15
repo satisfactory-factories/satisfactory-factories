@@ -1,17 +1,15 @@
 <template>
   <div>
-    <h1 class="text-h4 mb-4">
+    <h1 class="text-h5 mb-4">
       <i class="fas fa-conveyor-belt-alt" />
       <span class="ml-3">Products</span>
     </h1>
     <p v-show="helpText" class="text-body-2 mb-4">
       <i class="fas fa-info-circle" /> Products that are created within the factory. Products are first
-      used to fulfil recipes internally, and any surplus is then shown in Outputs for export or
+      used to fulfil recipes internally, and any surplus is then shown in Exports for export or
       sinking.<br>
       e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an
-      Output (and the Screws).<br>
-      This way you know exactly how much of a part you need to make to fulfil both the factory itself and
-      any other factories that use this one as an Input.<br>
+      Export (and the Screws as a end product).<br>
       An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.
     </p>
     <div

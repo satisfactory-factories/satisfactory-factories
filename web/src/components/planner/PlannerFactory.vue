@@ -3,7 +3,7 @@
     <v-col>
       <v-card :id="factory.id" :style="factoryStyling(factory)">
         <v-row class="pa-4 pb-0 mb-0 border-b align-center" :style="factoryHeaderStyling(factory)">
-          <v-col class="text-h3 flex-grow-1" cols="8">
+          <v-col class="text-h4 flex-grow-1" cols="8">
             <i class="fas fa-industry" style="width: 35px" />
             <input
               v-model="factory.name"
