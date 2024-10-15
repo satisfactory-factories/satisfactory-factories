@@ -43,7 +43,16 @@
                       v-if="!getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
                       class="text-red"
                     >
-                      <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
+                      <span>
+                        <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
+                        <v-btn
+                          class="ml-2"
+                          color="primary"
+                          size="small"
+                          variant="outlined"
+                          @click="fixShortage(factory, product)"
+                        >Fix production</v-btn>
+                      </span>
                     </span>
                   </p>
                   <div class="my-4">
@@ -66,8 +75,7 @@
                     <v-radio label="Sink" value="sink" />
                   </v-radio-group>
                 </div>
-                <p v-else class="mt-2">There are currently no requests upon this product. Add imports in other factories to link.</p>
-
+                <p v-else class="mt-2">No requests. Add imports in other factories.</p>
               </v-card-text>
             </v-card>
           </div>
@@ -79,9 +87,15 @@
 </template>
 
 <script setup lang="ts">
-  import { Factory, FactoryDependencyMetrics, FactoryDependencyRequest } from '@/interfaces/planner/FactoryInterface'
+  import {
+    Factory,
+    FactoryDependencyMetrics,
+    FactoryDependencyRequest,
+    FactoryItem,
+  } from '@/interfaces/planner/FactoryInterface'
 
   const findFactory = inject('findFactory') as (id: number) => Factory
+  const updateFactory = inject('updateFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
   defineProps<{
@@ -139,6 +153,13 @@
     }
 
     return factory.dependencies.metrics[part] ?? {}
+  }
+
+  const fixShortage = (factory: Factory, product: FactoryItem) => {
+    const metric = getRequestMetricsForFactoryByPart(factory, product.id)
+    const difference = Math.abs(metric.difference)
+    product.amount = parseInt(product.amount) + parseInt(difference)
+    updateFactory(factory)
   }
 </script>
 

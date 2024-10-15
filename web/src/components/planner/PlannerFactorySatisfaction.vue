@@ -9,13 +9,11 @@
     </h2>
     <h2
       v-show="!factory.requirementsSatisfied"
-      class="text-h4 mb-4"
-      style="color: red"
+      class="text-h4 mb-4 text-red"
     >
       <i class="fas fa-times" />
       <span class="ml-3">Satisfaction</span>
     </h2>
-
     <h2
       v-show="factory.requirementsSatisfied && Object.keys(factory.partRequirements).length === 0"
       class="text-h5 mb-4"
@@ -32,7 +30,7 @@
           </v-card-title>
           <v-card-text class="text-body-1">
             <p v-show="helpText" class="text-body-2 mb-4">
-              <i class="fas fa-info-circle" /> All entries are listed as [supply/demand]. Supply is created by adding imports to the factory or adding internal products.
+              <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
             <div
               v-for="(part, partIndex) in factory.partRequirements"
@@ -45,7 +43,19 @@
               </p>
               <p v-else>
                 <v-icon icon="fas fa-times" />
-                <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
+                <span class="ml-2">
+                  <span>
+                    <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min
+                  </span>
+                  <v-btn
+                    v-if="getImport(factory, partIndex)"
+                    class="ml-2"
+                    color="primary"
+                    size="small"
+                    variant="outlined"
+                    @click="fixSatisfactionImport(factory, partIndex)"
+                  >Fix Import</v-btn>
+                </span>
               </p>
             </div>
           </v-card-text>
@@ -85,10 +95,11 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryImport } from '@/interfaces/planner/FactoryInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
+  const updateFactory = inject('updateFactory') as (part: string) => string
 
   defineProps<{
     factory: Factory;
@@ -100,5 +111,21 @@
       'text-green': factory.partRequirements[requirement].satisfied,
       'text-red': !factory.partRequirements[requirement].satisfied,
     }
+  }
+
+  const getImport = (factory, partIndex: string): FactoryImport => {
+    // Search the inputs array for the outputPart using the part index
+    return factory.inputs.find(input => input.outputPart === partIndex)
+  }
+
+  const fixSatisfactionImport = (factory: Factory, partIndex: string | number) => {
+    const itemImport = getImport(factory, partIndex)
+
+    // If the import is not found, return
+    if (!itemImport) return
+
+    // Set the import amount to the required amount
+    itemImport.amount = factory.partRequirements[partIndex].amountRequired
+    updateFactory(factory)
   }
 </script>

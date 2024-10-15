@@ -60,14 +60,16 @@ export interface WorldRawResource {
   }
 }
 
+export interface FactoryImport {
+  groupId: number;
+  outputPart: string;
+  amount: number
+}
+
 export interface Factory {
   id: number;
   name: string;
-  inputs: Array<{
-    groupId: number;
-    outputPart: string;
-    amount: number;
-  }>;
+  inputs: FactoryImport[];
   products: FactoryItem[];
   internalProducts: FactoryItem;
   partRequirements: PartRequirement;
