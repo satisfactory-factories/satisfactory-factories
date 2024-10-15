@@ -66,6 +66,7 @@ export interface Factory {
   surplus: FactorySurplusItem;
   dependencies: FactoryDependency;
   rawResources: WorldRawResource;
+  usingRawResourcesOnly: boolean;
   hidden: boolean; // Whether to hide the card or not
   hasProblem: boolean
 }

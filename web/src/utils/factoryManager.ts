@@ -273,3 +273,24 @@ export const calculateHasProblem = (factory: Factory) => {
 
   factory.hasProblem = hasProblem
 }
+
+// Determine if we're only using raw resources in this factory.
+export const calculateUsingRawResourcesOnly = (factory: Factory) => {
+  factory.usingRawResourcesOnly = false
+
+  // 1. Check if there's a rawResources object with content (if not skip further checks).
+  // 2. Check if we are only using raw resources in the partsRequired array. If they're not the same, we're using something else other than raw resource parts.
+  // Get the keys of both the rawResources and partRequirements objects.
+
+  if (Object.keys(factory.rawResources).length === 0) {
+    return
+  }
+
+  const rawResourcesKeys = Object.keys(factory.rawResources)
+  const partRequirementsKeys = Object.keys(factory.partRequirements)
+
+  // If the arrays are the same, we're only using raw resources.
+  if (rawResourcesKeys.length === partRequirementsKeys.length && rawResourcesKeys.every((value, index) => value === partRequirementsKeys[index])) {
+    factory.usingRawResourcesOnly = true
+  }
+}

@@ -97,7 +97,7 @@
     calculateFactoryRawSupply,
     calculateFactorySatisfaction, calculateHasProblem,
     calculateProductRequirements,
-    calculateSurplus,
+    calculateSurplus, calculateUsingRawResourcesOnly,
   } from '@/utils/factoryManager'
 
   const props = defineProps<{ gameData: DataInterface }>()
@@ -117,16 +117,9 @@
   })
 
   // Computed properties
-  const validFactoriesForImports = computed(() => {
-    return factories.filter(factory => {
-      // Loop any records in factory.surplus and check they have amount > 0
-      Object.keys(factory.surplus).forEach(part => {
-        if (factory.surplus[part].amount > 0) {
-          return false
-        }
-      })
-      return true
-    })
+  const factoriesWithSurplus = computed(() => {
+    // Loop through all factories and see if any have any surplus
+    return factories.filter(factory => Object.keys(factory.surplus).length > 0)
   })
 
   // This function calculates the world resources available after each group has consumed Raw Resources.
@@ -207,6 +200,7 @@
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       dependencies: {},
       rawResources: {},
+      usingRawResourcesOnly: false,
       surplus: {},
       hidden: false,
       hasProblem: false,
@@ -256,6 +250,9 @@
     calculateDependencies(factories)
     calculateDependencyMetrics(factories)
 
+    // Add a flag to denote if we're only using raw resources to make products.
+    calculateUsingRawResourcesOnly(factory)
+
     // Finally, set the flags for if the factory has any issues for display.
     calculateHasProblem(factory)
   }
@@ -302,7 +299,7 @@
   // Initialize during setup
   initializeFactories()
 
-  provide('validFactoriesForImports', validFactoriesForImports)
+  provide('factoriesWithSurplus', factoriesWithSurplus)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('deleteFactory', deleteFactory)

@@ -56,7 +56,7 @@
             :help-text="helpText"
           />
           <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
-          <planner-factory-outputs
+          <planner-factory-exports
             :factory="factory"
             :help-text="helpText"
           />
