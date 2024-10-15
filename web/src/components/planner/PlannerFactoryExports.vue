@@ -16,59 +16,61 @@
           <i class="fas fa-exclamation-triangle" />
           <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
         </p>
-        <v-card
-          v-for="(surplus, part) in factory.surplus"
-          :key="`${factory.id}-${part}`"
-          class="my-card border-md mb-1"
-          :style="requestStyling(getRequestMetricsForFactoryByPart(factory, part))"
-        >
-          <v-card-title>
-            <h2 class="text-h5">
-              <i class="fas fa-cube" /><span class="ml-2">{{ getPartDisplayName(part) }}</span>
-            </h2>
-          </v-card-title>
-          <v-card-text class="text-body-1">
-            <p><b>Surplus</b>: {{ surplus.amount }}/min</p>
-            <div v-if="getRequestsForFactoryByProduct(factory, part).length > 0">
-              <p><b>Requests total</b>: {{ getRequestMetricsForFactoryByPart(factory, part).request }}/min</p>
-              <p>Status:
-                <span
-                  v-if="getRequestMetricsForFactoryByPart(factory, part).isRequestSatisfied"
-                  style="color: green"
-                >
-                  <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
-                </span>
-                <span
-                  v-if="!getRequestMetricsForFactoryByPart(factory, part).isRequestSatisfied"
-                  style="color: red"
-                >
-                  <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage!</span>
-                </span>
-              </p>
-              <div class="my-4">
-                <p class="text-h6"><b>Requesting factories:</b></p>
-                <ul class="ml-4">
-                  <li v-for="request in getRequestsForFactoryByProduct(factory, part)" :key="request.factory">
-                    <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
-                  </li>
-                </ul>
-                <!--                <segmented-bar :max-value="surplusAmount" :requests="requests" />-->
-              </div>
-            </div>
-            <p v-else>There are currently no requests upon this product.</p>
-            <v-radio-group
-              v-model="surplus.surplusHandling"
-              class="radio-fix d-inline mb-4"
-              density="compact"
-              hide-details
-              inline
-              @update:model-value="updateFactory(factory)"
+        <div class="v-card-grid">
+          <div v-for="(product, index) in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)" :key="`${factory.id}-${product.id}`">
+            <v-card
+              v-if="factory.surplus[product.id]"
+              class="my-card border-md mb-1"
+              :style="requestStyling(getRequestMetricsForFactoryByPart(factory, product.id))"
             >
-              <v-radio class="mr-4" label="Export" value="export" />
-              <v-radio label="Sink" value="sink" />
-            </v-radio-group>
-          </v-card-text>
-        </v-card>
+              <v-card-title>
+                <h2 class="text-h5">
+                  <i class="fas fa-cube" /><span class="ml-2">{{ getPartDisplayName(product.id) }}</span>
+                </h2>
+              </v-card-title>
+              <v-card-text class="text-body-1">
+                <p><b>Surplus</b>: {{ factory.surplus[product.id].amount }}/min</p>
+                <div v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0">
+                  <p><b>Requests total</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min</p>
+                  <p>Status:
+                    <span
+                      v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                      style="color: green"
+                    >
+                      <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
+                    </span>
+                    <span
+                      v-if="!getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                      style="color: red"
+                    >
+                      <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage!</span>
+                    </span>
+                  </p>
+                  <div class="my-4">
+                    <p class="text-h6"><b>Requesting factories:</b></p>
+                    <ul class="ml-4">
+                      <li v-for="request in getRequestsForFactoryByProduct(factory, product.id)" :key="request.factory">
+                        <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <p v-else>There are currently no requests upon this product.</p>
+                <v-radio-group
+                  v-model="factory.surplus[product.id].surplusHandling"
+                  class="radio-fix d-inline mb-4"
+                  density="compact"
+                  hide-details
+                  inline
+                  @update:model-value="updateFactory(factory)"
+                >
+                  <v-radio class="mr-4" label="Export" value="export" />
+                  <v-radio label="Sink" value="sink" />
+                </v-radio-group>
+              </v-card-text>
+            </v-card>
+          </div>
+        </div>
       </div>
     </div>
     <p v-else class="text-body-1">Awaiting product selection.</p>
@@ -138,6 +140,7 @@
     return factory.dependencies.metrics[part] ?? {}
   }
 </script>
+
 <style lang="scss" scoped>
 .radio-fix {
   ::v-deep label {
@@ -149,4 +152,9 @@
   }
 }
 
+.v-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
 </style>
