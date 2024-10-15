@@ -82,7 +82,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
         product.buildingRequirements = []
       }
     } else {
-      product.buildings = []
+      product.buildingRequirements = []
     }
   })
 }

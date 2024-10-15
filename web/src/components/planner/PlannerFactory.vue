@@ -12,31 +12,50 @@
               @input="updateFactory(factory)"
             >
           </v-col>
-          <v-col align-self="center" class="text-right" cols="4">
+          <v-col class="text-right" cols="4">
+            <v-btn
+              class="mr-2 rounded"
+              color="primary "
+              :disabled="factory.displayOrder === 0"
+              icon="fas fa-arrow-up"
+              size="small"
+              variant="outlined"
+              @click="moveFactory(factory, 'up')"
+            />
+            <v-btn
+              class="mr-2 rounded"
+              color="primary"
+              :disabled="factory.displayOrder === totalFactories - 1"
+              icon="fas fa-arrow-down"
+              size="small"
+              variant="outlined"
+              @click="moveFactory(factory, 'down')"
+            />
             <v-btn
               v-show="!factory.hidden"
-              color="primary"
-              prepend-icon="fas fa-eye-slash"
+              class="mr-2 rounded"
+              color="secondary"
+              icon="fas fa-compress-alt"
+              size="small"
               variant="outlined"
               @click="factory.hidden = true"
-            >Hide
-            </v-btn>
+            />
             <v-btn
               v-show="factory.hidden"
-              color="primary"
-              prepend-icon="fas fa-eye"
+              class="mr-2 rounded"
+              color="secondary"
+              icon="fas fa-expand-alt"
+              size="small"
               variant="outlined"
               @click="factory.hidden = false"
-            >Show
-            </v-btn>
+            />
             <v-btn
-              class="ml-2"
-              color="red"
-              prepend-icon="fas fa-trash"
+              color="red rounded"
+              icon="fas fa-trash"
+              size="small"
               variant="outlined"
               @click="confirmDelete() && deleteFactory(factory)"
-            >Delete
-            </v-btn>
+            />
           </v-col>
         </v-row>
         <v-card-text v-show="!factory.hidden">
@@ -67,17 +86,19 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps } from 'vue'
+  import { defineProps, inject } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
+  const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
 
   defineProps<{
     factory: Factory
     gameData: DataInterface
     helpText: boolean
+    totalFactories: number;
   }>()
 
   const factoryStyling = (factory: Factory) => {

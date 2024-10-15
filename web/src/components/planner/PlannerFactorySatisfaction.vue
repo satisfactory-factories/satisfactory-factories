@@ -48,6 +48,14 @@
                     <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min
                   </span>
                   <v-btn
+                    v-if="!getProduct(factory, partIndex)"
+                    class="ml-2"
+                    color="primary"
+                    size="small"
+                    variant="outlined"
+                    @click="addProduct(factory, partIndex)"
+                  >Add Product</v-btn>
+                  <v-btn
                     v-if="getImport(factory, partIndex)"
                     class="ml-2"
                     color="primary"
@@ -95,7 +103,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { Factory, FactoryImport } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryImport, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
@@ -111,6 +119,22 @@
       'text-green': factory.partRequirements[requirement].satisfied,
       'text-red': !factory.partRequirements[requirement].satisfied,
     }
+  }
+
+  const getProduct = (factory, part: string): FactoryItem => {
+    return factory.products.find(product => product.id === part)
+  }
+
+  const addProduct = (factory, part: string): void => {
+    factory.products.push({
+      id: part,
+      amount: 0,
+      recipe: '',
+      displayOrder: factory.products.length,
+      requirements: {},
+      buildingRequirements: {},
+    })
+    updateFactory(factory)
   }
 
   const getImport = (factory, partIndex: string): FactoryImport => {

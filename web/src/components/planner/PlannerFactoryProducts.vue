@@ -52,23 +52,28 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          v-show="product.displayOrder !== 0"
-          class="rounded mr-1"
+          class="rounded"
           color="blue"
+          :disabled="product.displayOrder === 0"
           icon="fas fa-arrow-up"
+          size="small"
+          variant="outlined"
           @click="updateOrder('up', product)"
         />
         <v-btn
-          v-show="product.displayOrder !== factory.products.length - 1"
-          class="rounded"
+          class="rounded ml-1"
           color="blue"
+          :disabled="product.displayOrder === factory.products.length - 1"
           icon="fas fa-arrow-down"
+          size="small"
+          variant="outlined"
           @click="updateOrder('down', product)"
         />
         <v-btn
-          class="ml-4 rounded"
+          class="ml-6 rounded"
           color="red"
           icon="fas fa-trash"
+          size="small"
           variant="outlined"
           @click="deleteProduct(productIndex, factory)"
         />
@@ -78,7 +83,7 @@
       </v-row>
       <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3 text-body-1">
         <div>
-          <span>Ingredients: </span>
+          <span class="font-weight-bold">Ingredients: </span>
           <v-chip
             v-for="(requirement, requirementIndex) in product.requirements"
             :key="`ingredients-${requirementIndex}`"
@@ -95,7 +100,7 @@
       </v-row>
       <v-row v-show="product.buildingRequirements.length > 0" class="ml-0 mb-3 text-body-1">
         <div>
-          <span>Buildings: </span>
+          <span class="font-weight-bold">Buildings: </span>
           <span
             v-for="(building, buildingIndex) in product.buildingRequirements"
             :key="`buildings-${buildingIndex}`"

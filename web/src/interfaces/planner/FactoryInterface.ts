@@ -82,4 +82,5 @@ export interface Factory {
   usingRawResourcesOnly: boolean;
   hidden: boolean; // Whether to hide the card or not
   hasProblem: boolean
+  displayOrder: number;
 }

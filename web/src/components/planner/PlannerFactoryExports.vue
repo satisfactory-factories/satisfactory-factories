@@ -56,12 +56,15 @@
                     </span>
                   </p>
                   <div class="my-4">
-                    <p class="text-h6"><b>Requesting factories:</b></p>
-                    <ul class="ml-4">
-                      <li v-for="request in getRequestsForFactoryByProduct(factory, product.id)" :key="request.factory">
-                        <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
-                      </li>
-                    </ul>
+                    <p class="text-h6"><b>Requests:</b></p>
+                    <v-chip
+                      v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
+                      :key="request.factory"
+                      class="mr-2"
+                      @click="navigateToFactory(request.factory)"
+                    >
+                      <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
+                    </v-chip>
                   </div>
                   <v-radio-group
                     v-model="factory.surplus[product.id].surplusHandling"
@@ -97,6 +100,7 @@
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
+  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
 
   defineProps<{
     factory: Factory;

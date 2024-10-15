@@ -66,7 +66,16 @@
             :factory="factory"
             :game-data="gameData"
             :help-text="helpText"
+            :total-factories="factories.length"
           />
+          <div class="mt-4 text-center">
+            <v-btn
+              color="primary"
+              prepend-icon="fas fa-plus"
+              size="large"
+              @click="createFactory()"
+            >Add Factory</v-btn>
+          </div>
 
           <!-- Debugging -->
           <div class="mt-16">
@@ -79,7 +88,7 @@
   </v-container>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import { computed, defineProps, provide, reactive, ref, watch } from 'vue'
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
@@ -103,14 +112,14 @@
 
   const props = defineProps<{ gameData: DataInterface }>()
 
-  const factories = reactive<Factory[]>(JSON.parse(localStorage.getItem('factoryGroups') || '[]') as Factory[])
+  let factories = reactive<Factory[]>(JSON.parse(localStorage.getItem('factories') || '[]') as Factory[])
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
   watch(factories, newValue => {
-    localStorage.setItem('factoryGroups', JSON.stringify(newValue))
+    localStorage.setItem('factories', JSON.stringify(newValue))
   }, { deep: true })
 
   watch(helpText, newValue => {
@@ -207,6 +216,7 @@
       surplus: {},
       hidden: false,
       hasProblem: false,
+      displayOrder: factories.length,
     })
   }
 
@@ -260,6 +270,8 @@
       // After deleting the factory, update the rest to ensure consistency
       factories.forEach(fac => updateFactory(fac))
     }
+
+    regenerateSortOrders()
   }
 
   const clearAll = () => {
@@ -298,6 +310,53 @@
     helpText.value = !helpText.value
   }
 
+  const navigateToFactory = (factoryId: string) => {
+    console.log('Navigating to factory', factoryId)
+    const factoryElement = document.getElementById(`${factoryId}`)
+    if (factoryElement) {
+      factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  const moveFactory = (factory: Factory, direction: string) => {
+    console.log(`moving factory ${factory.id} ${direction}`)
+    const currentOrder = factory.displayOrder
+    let targetOrder
+
+    if (direction === 'up' && currentOrder > 0) {
+      targetOrder = currentOrder - 1
+    } else if (direction === 'down' && currentOrder < factories.length - 1) {
+      targetOrder = currentOrder + 1
+    } else {
+      return // Invalid move
+    }
+
+    // Find the target factory and swap display orders
+    const targetFactory = factories.find(fac => fac.displayOrder === targetOrder)
+    if (targetFactory) {
+      targetFactory.displayOrder = currentOrder
+      factory.displayOrder = targetOrder
+    }
+
+    regenerateSortOrders()
+  }
+
+  const regenerateSortOrders = () => {
+    let count = 0
+
+    // Sort now, which may have sorted them weirdly
+    factories = factories.sort((a, b) => a.displayOrder - b.displayOrder)
+
+    // Ensure that the display order is correct
+    factories.forEach(factory => {
+      factory.displayOrder = count
+      count++
+    })
+
+    // Now re-sort
+    factories = factories.sort((a, b) => a.displayOrder - b.displayOrder)
+  }
+
   const initializeFactories = () => {
     Object.assign(worldRawResources, generateRawResources())
     updateWorldRawResources()
@@ -316,6 +375,8 @@
   provide('deleteFactory', deleteFactory)
   provide('getPartDisplayName', getPartDisplayName)
   provide('getBuildingDisplayName', getBuildingDisplayName)
+  provide('navigateToFactory', navigateToFactory)
+  provide('moveFactory', moveFactory)
 
   const showDemo = () => {
     console.log('showDemo')

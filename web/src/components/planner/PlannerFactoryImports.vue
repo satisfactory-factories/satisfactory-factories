@@ -63,8 +63,19 @@
         />
         <v-btn
           class="rounded"
+          color="primary"
+          :disabled="!input.factoryId"
+          prepend-icon="fas fa-eye"
+          size="default"
+          variant="outlined"
+          @click="navigateToFactory(input.factoryId)"
+        >View</v-btn>
+        <v-btn
+          class="rounded ml-6"
           color="red"
           icon="fas fa-trash"
+          size="small"
+          variant="outlined"
           @click="deleteInput(inputIndex, factory)"
         />
       </v-row>
@@ -94,6 +105,7 @@
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const validFactoriesForImports = inject('factoriesWithSurplus') as ComputedRef<Factory[]>
+  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
 
   const props = defineProps<{
     factory: Factory;

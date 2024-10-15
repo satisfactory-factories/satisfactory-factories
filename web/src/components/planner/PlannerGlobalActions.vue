@@ -4,7 +4,7 @@
       <v-btn
         class="ma-1"
         color="blue"
-        prepend-icon="fas fa-compress-arrows-alt"
+        prepend-icon="fas fa-compress-alt"
         variant="tonal"
         @click="emit('hide-all')"
       >
@@ -13,7 +13,7 @@
       <v-btn
         class="ma-1"
         color="blue"
-        prepend-icon="fas fa-expand-arrows-alt"
+        prepend-icon="fas fa-expand-alt"
         variant="tonal"
         @click="emit('show-all')"
       >
