@@ -23,7 +23,7 @@
       </p>
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
-        :key="inputIndex"
+        :key="`${inputIndex}-${input.outputPart}`"
         class="pa-0 my-2 mx-1 align-center selectors"
       >
         <v-autocomplete
@@ -32,21 +32,21 @@
           hide-details
           :items="validImportFactories(factory, inputIndex)"
           label="Factory"
+          max-width="300px"
           prepend-icon="fas fa-industry"
           variant="outlined"
-          width="300px"
           @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
         />
         <v-autocomplete
           v-model="input.outputPart"
           class="mr-2"
           hide-details
-          :items="getFactoryOutputsForAutocomplete(input.factoryId)"
+          :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
           label="Item"
+          max-width="300px"
           prepend-icon="fas fa-cube"
           variant="outlined"
-          width="300px"
-          @update:model-value="(newValue) => handleItemChange(newValue, factory, inputIndex)"
+          @input="updateFactory(factory)"
         />
         <v-text-field
           v-model.number="input.amount"
@@ -68,10 +68,10 @@
       <v-btn
         v-show="Object.keys(factory.partRequirements).length > 0"
         color="green"
-        :disabled="!hasAvailableImports(factory)"
+        :disabled="!hasAvailableImports(factory) || !hasValidImportsRemaining(factory)"
         prepend-icon="fas fa-dolly"
         ripple
-        :variant="hasAvailableImports(factory) ? 'flat' : 'outlined'"
+        :variant="hasAvailableImports(factory) && hasValidImportsRemaining(factory) ? 'flat' : 'outlined'"
         @click="addEmptyInput(factory)"
       >Add Import
       </v-btn>
@@ -102,6 +102,7 @@
       factoryId: 0,
       outputPart: '',
       amount: 0,
+      displayName: '',
     })
   }
 
@@ -150,51 +151,47 @@
     // Get all factories that are not the current factory
     const otherFactories = possibleImports.value.filter(f => f.id !== factory.id)
 
-    // Get a list of all existing input factory IDs excluding the current input index if provided
-    const allInputFactoryIds = factory.inputs
-      .filter((_, index) => inputIndex === null || index !== inputIndex) // If inputIndex is null, ignore filtering
-      .map(input => input.factoryId)
+    // Get a list of all existing input requests excluding the current input index if provided
+    const existingRequests = factory.inputs
+      .filter((_, index) => inputIndex === null || index !== inputIndex) // If inputIndex is null, include all inputs
+      .map(input => ({ factoryId: input.factoryId, outputPart: input.outputPart }))
 
     // Iterate through other factories and build the valid options list
     return otherFactories.filter(otherFactory => {
-      // Check if the factory is already selected by another input
-      return !allInputFactoryIds.includes(otherFactory.id)
+      // Allow the factory if it's not already selected for the same output part from the same factory
+      const alreadyRequestedPart = existingRequests.some(request =>
+        request.factoryId === otherFactory.id && request.outputPart === factory.inputs[inputIndex]?.outputPart
+      )
+
+      return !alreadyRequestedPart
     })
   }
 
-  // This looks like spaghetti, but it actually does work somehow.
   const validImportFactories = (factory: Factory, inputIndex: number) => {
-    // Get all factories that are not the current factory
-    const otherFactories = possibleImports.value.filter(f => f.id !== factory.id)
+    // Get a list of valid factories based on the current factory inputs
+    let validFactories = getValidImportFactories(factory, inputIndex)
 
-    // Get a list of all existing input factory IDs excluding the current input index
-    const allInputFactoryIds = factory.inputs
-      .filter((_, index) => index !== inputIndex) // Exclude the current input index to preserve its value
-      .map(input => input.factoryId)
+    // Get the current factory input details
+    const currentInput = factory.inputs[inputIndex]
+    const currentInputFactoryId = currentInput?.factoryId
 
-    // Iterate through other factories and build the valid options list
-    const validFactories = otherFactories.filter(otherFactory => {
-      // Check if the factory is already selected by another input
-      return !allInputFactoryIds.includes(otherFactory.id)
-    })
-
-    // Add the currently selected factory as an option to preserve existing selection
-    const currentInputFactoryId = factory.inputs[inputIndex]?.factoryId
-
-    // Check if currentInputFactoryId is valid and should be added
+    // If there's a current factory selected, ensure it is part of the options
     if (currentInputFactoryId) {
-      const selectedFactory = possibleImports.value.find(f => f.id === currentInputFactoryId)
+      const alreadyInList = validFactories.some(f => f.id === currentInputFactoryId)
 
-      if (selectedFactory && !validFactories.some(f => f.id === selectedFactory.id)) {
-        validFactories.push(selectedFactory)
+      // Add the currently selected factory if it's not already in the list
+      if (!alreadyInList) {
+        const selectedFactory = possibleImports.value.find(f => f.id === currentInputFactoryId)
+        if (selectedFactory) {
+          validFactories.push(selectedFactory)
+        }
       }
     }
 
-    // Always insert "Select a Factory" as an option to prevent showing 0 upon adding the input
-    validFactories.unshift({
-      id: 0,
-      name: 'Select a Factory',
-    })
+    // Remove any duplicate entries based on factory IDs
+    validFactories = validFactories.filter((factory, index, self) =>
+      index === self.findIndex(f => f.id === factory.id)
+    )
 
     // Map to the required format for the dropdown
     return validFactories.map(f => ({
@@ -205,44 +202,66 @@
 
   const hasAvailableImports = (factory: Factory): boolean => {
     // Get valid factories using the core function with `inputIndex` set to `null` to consider all current inputs
-    const validFactories = getValidImportFactories(factory, false, null)
+    const validFactories = getValidImportFactories(factory, null)
 
-    return validFactories.length > 0
+    // Only return true if there's at least one factory with a surplus of a required part
+    return validFactories.some(otherFactory => {
+      return Object.keys(factory.partRequirements).some(requiredPart => {
+        return otherFactory.surplus[requiredPart] && otherFactory.surplus[requiredPart].amount > 0
+      })
+    })
+  }
+
+  const hasValidImportsRemaining = (factory: Factory): boolean => {
+    // Check if there are still any valid imports remaining that are not already fully used
+    return possibleImports.value.some(otherFactory => {
+      return Object.keys(factory.partRequirements).some(requiredPart => {
+        const surplus = otherFactory.surplus[requiredPart]
+        const totalRequested = factory.inputs
+          .filter(input => input.outputPart === requiredPart && input.factoryId === otherFactory.id)
+          .reduce((sum, input) => sum + input.amount, 0)
+        return surplus && surplus.amount > totalRequested
+      })
+    })
   }
 
   // Gets the products of another factory for dependencies
-  const getFactoryOutputsForAutocomplete = (factoryId: number | undefined, inputIndex: number): string[] => {
-    if (factoryId !== 0 && !factoryId) {
-      console.error('Tried to get products for an undefined factory ID.')
-      return []
-    }
-
-    // If the factory is 0, it's a placeholder for a new input, do no nothing
-    if (factoryId === 0) {
+  const getFactoryOutputsForAutocomplete = (factoryId: number | undefined, inputIndex: number) => {
+    if (!factoryId || factoryId === 0) {
+      // If factoryId is 0 or undefined, return an empty array to prevent any selection.
       return []
     }
 
     // Get the factory by ID
     const factory = findFactory(factoryId)
-
     if (!factory || !factory.id) {
       console.error('Tried to get outputs for a factory that does not exist:', factoryId)
       return []
     }
 
+    // If there are no products available from the factory, return an empty array.
     if (factory.products.length === 0) {
-      console.error('Tried to get outputs of a group with no products.')
+      console.error('Tried to get outputs of a factory with no products.')
       return []
     }
 
-    // Ensure that we're not returning the same factory as requested, and return as an array for rendering.
-    // It must be in the format of [ { title: 'Item Name', value: 'Item ID' } ]
-    return Object.keys(factory.surplus).map(item => {
-      return {
-        title: getPartDisplayName(item),
-        value: item,
-      }
-    })
+    // Get a list of output parts that have already been selected for the same factory by other inputs (excluding the current input)
+    const alreadySelectedParts = props.factory.inputs
+      .filter((_, index) => index !== inputIndex && props.factory.inputs[index]?.factoryId === factoryId)
+      .map(input => input.outputPart)
+      .filter(part => part !== '') // Remove empty selections
+
+    // Filter out already selected parts from the factory's available surplus
+    const availableParts = Object.keys(factory.surplus)
+      .filter(partKey => !alreadySelectedParts.includes(partKey) && partKey in props.factory.partRequirements) // Exclude already-selected parts and parts not required
+      .map(partKey => ({
+        title: getPartDisplayName(partKey), // For display purposes
+        value: partKey, // Value is the ID
+      }))
+
+    console.log('availableParts', availableParts)
+
+    return availableParts
   }
 
   const handleFactoryChange = (newValue, factory, index) => {
@@ -253,11 +272,4 @@
     updateFactory(factory)
   }
 
-  const handleItemChange = (newValue, factory, index) => {
-    // Update the outputPart for the specific input
-    factory.inputs[index].outputPart = newValue
-
-    // Trigger recalculations or any side effects needed
-    updateFactory(factory)
-  }
 </script>
