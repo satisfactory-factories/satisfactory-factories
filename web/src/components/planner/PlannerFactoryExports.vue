@@ -23,8 +23,10 @@
           :style="requestStyling(getRequestMetricsForFactoryByPart(factory, part))"
         >
           <v-card-title>
-            <h2 class="text-h5"><i class="fas fa-cube" /><span class="ml-2">{{ getPartDisplayName(part) }}</span>
-            </h2></v-card-title>
+            <h2 class="text-h5">
+              <i class="fas fa-cube" /><span class="ml-2">{{ getPartDisplayName(part) }}</span>
+            </h2>
+          </v-card-title>
           <v-card-text class="text-body-1">
             <p><b>Surplus</b>: {{ surplus.amount }}/min</p>
             <div v-if="getRequestsForFactoryByProduct(factory, part).length > 0">
@@ -33,11 +35,15 @@
                 <span
                   v-if="getRequestMetricsForFactoryByPart(factory, part).isRequestSatisfied"
                   style="color: green"
-                ><b>Satisfied</b></span>
+                >
+                  <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
+                </span>
                 <span
                   v-if="!getRequestMetricsForFactoryByPart(factory, part).isRequestSatisfied"
                   style="color: red"
-                ><b>Shortage!</b></span>
+                >
+                  <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage!</span>
+                </span>
               </p>
               <div class="my-4">
                 <p class="text-h6"><b>Requesting factories:</b></p>
@@ -81,15 +87,13 @@
   }>()
 
   const requestStyling = (requestMetric: FactoryDependencyMetrics) => {
-    // If no requests, return nothing
+    // If no requests, return nothing, this should never really happen though.
     if (Object.keys(requestMetric).length === 0) {
-      return {
-        border: requestMetric.isRequestSatisfied ? '' : '1px solid #ccc',
-      }
+      return {}
     }
 
     return {
-      border: requestMetric.isRequestSatisfied ? '1px solid rgb(97, 97, 97)' : '1px solid red',
+      border: requestMetric.isRequestSatisfied ? '2px solid rgb(97, 97, 97)' : '2px solid red !important',
     }
   }
 
