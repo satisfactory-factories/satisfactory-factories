@@ -17,7 +17,7 @@
           <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
         </p>
         <div class="v-card-grid">
-          <div v-for="(product, index) in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)" :key="`${factory.id}-${product.id}`">
+          <div v-for=" (product) in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)" :key="`${factory.id}-${product.id}`">
             <v-card
               v-if="factory.surplus[product.id]"
               class="my-card border-md mb-1"
@@ -35,13 +35,13 @@
                   <p>Status:
                     <span
                       v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
-                      style="color: green"
+                      class="text-green"
                     >
                       <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
                     </span>
                     <span
                       v-if="!getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
-                      style="color: red"
+                      class="text-red"
                     >
                       <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
                     </span>

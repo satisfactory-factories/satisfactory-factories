@@ -37,7 +37,7 @@
             <div
               v-for="(part, partIndex) in factory.partRequirements"
               :key="partIndex"
-              :style="isSatisfiedStyling(factory, partIndex)"
+              :class="isSatisfiedStyling(factory, partIndex)"
             >
               <p v-if="part.satisfied">
                 <v-icon icon="fas fa-check" />
@@ -96,6 +96,9 @@
   }>()
 
   const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
-    return factory.partRequirements[requirement].satisfied ? 'color: green' : 'color: red'
+    return {
+      'text-green': factory.partRequirements[requirement].satisfied,
+      'text-red': !factory.partRequirements[requirement].satisfied,
+    }
   }
 </script>
