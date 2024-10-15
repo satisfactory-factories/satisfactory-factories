@@ -19,7 +19,7 @@
         <v-card
           v-for="(surplus, part) in factory.surplus"
           :key="`${factory.id}-${part}`"
-          class="rounded output"
+          class="output"
           rounded="0"
           :style="requestStyling(getRequestMetricsForFactoryByPart(factory, part))"
         >
@@ -45,7 +45,7 @@
                     <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
                   </li>
                 </ul>
-                <segmented-bar :max-value="surplusAmount" :requests="requests" />
+                <!--                <segmented-bar :max-value="surplusAmount" :requests="requests" />-->
               </div>
             </div>
             <p v-else>There are currently no requests upon this product.</p>
@@ -82,12 +82,13 @@
   const requestStyling = (requestMetric: FactoryDependencyMetrics) => {
     // If no requests, return nothing
     if (Object.keys(requestMetric).length === 0) {
-      return {}
+      return {
+        border: requestMetric.isRequestSatisfied ? '' : '1px solid #2f2f2f',
+      }
     }
 
     return {
-      border: requestMetric.isRequestSatisfied ? '' : '1px solid red',
-      borderBottom: requestMetric.isRequestSatisfied ? '' : '1px solid red !important',
+      border: requestMetric.isRequestSatisfied ? '1px solid rgb(97, 97, 97)' : '1px solid red',
     }
   }
 
@@ -102,10 +103,9 @@
     // Return an object containing the requests of all factories requesting a particular part
     // We need to get all requests set upon by other factories and check their part names
     // If the part name matches the one we're looking for, we add it to the list.
-    const factoryIdStr = factory.id.toString() // JavaScript doing bullshit things
-    const factoryRequests = factory.dependencies[factoryIdStr]?.requestedBy
+    const factoryRequests = factory.dependencies.requests
 
-    if (!factoryRequests) {
+    if (!factoryRequests || factoryRequests.length === 0) {
       return []
     }
 
@@ -130,11 +130,7 @@
       return {}
     }
 
-    // Dependency may be empty.
-    if (!factory.dependencies[factory.id.toString()]) {
-      return {}
-    }
-    return factory.dependencies[factory.id.toString()].metrics[part] ?? {}
+    return factory.dependencies.metrics[part] ?? {}
   }
 </script>
 <style lang="scss" scoped>

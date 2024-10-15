@@ -27,7 +27,6 @@ export interface FactorySurplusItem extends FactoryItem {
 export interface FactoryDependencyRequest {
   part: string;
   amount: number;
-  requestedBy: number;
 }
 
 export interface FactoryDependencyMetrics {
@@ -39,7 +38,7 @@ export interface FactoryDependencyMetrics {
 
 export interface FactoryDependency {
   [key: string]: {
-    requestedBy: { [key: string]: FactoryDependencyRequest[] },
+    requests: { [key: string]: FactoryDependencyRequest[] },
     metrics: { [key: string]: FactoryDependencyMetrics },
   };
 }

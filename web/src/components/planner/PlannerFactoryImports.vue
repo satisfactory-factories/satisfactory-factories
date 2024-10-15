@@ -102,7 +102,6 @@
       factoryId: 0,
       outputPart: '',
       amount: 0,
-      displayName: '',
     })
   }
 
@@ -252,16 +251,12 @@
       .filter(part => part !== '') // Remove empty selections
 
     // Filter out already selected parts from the factory's available surplus
-    const availableParts = Object.keys(factory.surplus)
+    return Object.keys(factory.surplus)
       .filter(partKey => !alreadySelectedParts.includes(partKey) && partKey in props.factory.partRequirements) // Exclude already-selected parts and parts not required
       .map(partKey => ({
         title: getPartDisplayName(partKey), // For display purposes
         value: partKey, // Value is the ID
       }))
-
-    console.log('availableParts', availableParts)
-
-    return availableParts
   }
 
   const handleFactoryChange = (newValue, factory, index) => {

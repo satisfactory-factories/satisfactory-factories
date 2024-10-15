@@ -199,7 +199,10 @@ export const calculateSurplus = (factory: Factory) => {
 export const calculateDependencies = (factories: Factory[]): FactoryDependency => {
   // First, remove the current dependencies for each factory to ensure we're not orphaning.
   factories.forEach(factory => {
-    factory.dependencies = {}
+    factory.dependencies = {
+      requests: {},
+      metrics: {},
+    }
   })
 
   // Second, rebuild the dependencies.
@@ -215,14 +218,11 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
         return
       }
 
-      if (!requestedFactory.dependencies[factory.id]) {
-        requestedFactory.dependencies[factory.id] = {
-          requestedBy: [],
-          metrics: {},
-        }
+      if (!requestedFactory.dependencies.requests[factory.id]) {
+        requestedFactory.dependencies.requests[factory.id] = []
       }
 
-      requestedFactory.dependencies[factory.id].requestedBy.push({
+      requestedFactory.dependencies.requests[factory.id].push({
         part: input.outputPart,
         amount: input.amount,
       })
@@ -233,14 +233,14 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
 // Create data helper classes to visualize the dependencies in the UI nicely.
 export const calculateDependencyMetrics = (factories: Factory[]) => {
   factories.forEach(factory => {
-    Object.keys(factory.dependencies).forEach(dependencyId => {
-      const dependency = factory.dependencies[dependencyId]
-
-      dependency.requestedBy.forEach(request => {
+    Object.keys(factory.dependencies.requests).forEach(reqFac => {
+      const requests = factory.dependencies.requests[reqFac]
+      requests.forEach(request => {
         const part = request.part
+        const metrics = factory.dependencies.metrics
 
-        if (!dependency.metrics[part]) {
-          dependency.metrics[part] = {
+        if (!metrics[part]) {
+          metrics[part] = {
             part,
             request: 0,
             supply: 0,
@@ -248,13 +248,12 @@ export const calculateDependencyMetrics = (factories: Factory[]) => {
           }
         }
 
-        dependency.metrics[part].request += request.amount
+        metrics[part].request += request.amount
 
         // Supply is calculated from the surplus of the factory. If the surplus doesn't exist, there is a shortage.
-        const requestedFactory = factories.find(fac => fac.id === parseInt(dependencyId))
-        if (requestedFactory.surplus[part]) {
-          dependency.metrics[part].supply += requestedFactory.surplus[part] // Additive
-          dependency.metrics[part].isRequestSatisfied = dependency.metrics[part].supply >= dependency.metrics[part].request
+        if (factory.surplus[part]) {
+          metrics[part].supply += factory.surplus[part].amount // Additive
+          metrics[part].isRequestSatisfied = metrics[part].supply >= metrics[part].request
         }
       })
     })
@@ -270,6 +269,13 @@ export const calculateHasProblem = (factory: Factory) => {
   if (!factory.requirementsSatisfied) {
     hasProblem = true
   }
+
+  // Loop through all of the dependency metrics of a factory and ensure all requests are satisfied.
+  Object.keys(factory.dependencies.metrics).forEach(part => {
+    if (!factory.dependencies.metrics[part].isRequestSatisfied) {
+      hasProblem = true
+    }
+  })
 
   factory.hasProblem = hasProblem
 }

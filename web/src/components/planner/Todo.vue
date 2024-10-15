@@ -11,6 +11,7 @@
             <li>Bug: Imports: Should not be able to select the same factory and part for import.</li>
             <li>Feat: Complete request bar segments.</li>
             <li>Feat: Enable to sink remainder, or sink entire output.</li>
+            <li>Bug: Dependencies. If Factory 2 updates it's import amount and factory 1 can no longer supply it, a shortage is detected but a problem is not.</li>
           </ul>
         </v-card-text>
       </v-card>
