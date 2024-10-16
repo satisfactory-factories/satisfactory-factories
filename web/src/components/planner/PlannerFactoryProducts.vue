@@ -17,7 +17,7 @@
       :key="productIndex"
       class="px-4 my-2 border rounded bg-grey-darken-4"
     >
-      <v-row class="selectors align-center ml-0 mt-5 mb-0">
+      <v-row class="selectors align-center ml-0 mt-3 mb-0">
         <span v-show="!product.id" class="mr-2">
           <i class="fas fa-cube" style="width: 32px; height: 32px" />
         </span>
@@ -129,12 +129,11 @@
           <v-chip
             class="mr-2 border-md py-5"
             color="yellow-darken-2"
-            prepend-icon="fas fa-bolt"
             size="large"
             style="border-color: rgb(172, 153, 2) !important"
             variant="tonal"
           >
-            {{ building.totalPower }} MW
+            <i class="fas fa-bolt" /><span class="ml-2">{{ building.totalPower }} MW</span>
           </v-chip>
         </span>
       </v-row>

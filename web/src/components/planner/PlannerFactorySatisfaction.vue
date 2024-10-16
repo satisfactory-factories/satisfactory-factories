@@ -23,7 +23,7 @@
     </h2>
 
     <v-row v-if="Object.keys(factory.partRequirements).length > 0">
-      <v-col cols="12" md="8">
+      <v-col cols="12" md="7">
         <v-card class="mb-1 border-md my-card">
           <v-card-title>
             <h2 class="text-h6">
@@ -84,7 +84,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="5">
         <v-card class="my-card border-md">
           <v-card-title>
             <h2 class="text-h6">
@@ -96,10 +96,10 @@
             <div
               v-for="(building, buildingIndex) in factory.buildingRequirements"
               :key="buildingIndex"
-              class="mb-1"
+              style="display: inline;"
             >
               <v-chip
-                class="mr-2 border-md py-5"
+                class="mr-2 border-md py-5 mb-2"
                 color="yellow-darken-4"
                 size="large"
                 style="border-color: rgb(167, 86, 0)!important"
@@ -114,13 +114,12 @@
               </v-chip>
             </div>
             <v-chip
-              class="mr-2 border-md py-5 mb-1"
+              class="mr-2 border-md py-5 mb-2"
               color="yellow-darken-2"
-              prepend-icon="fas fa-bolt"
               size="large"
               style="border-color: rgb(172, 153, 2) !important"
               variant="tonal"
-            >{{ factory.totalPower.toFixed(0) }} MW
+            ><i class="fas fa-bolt" /><span class="ml-2">{{ factory.totalPower.toFixed(0) }} MW</span>
             </v-chip>
           </v-card-text>
         </v-card>

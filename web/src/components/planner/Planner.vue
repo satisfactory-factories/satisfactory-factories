@@ -1,5 +1,5 @@
 <template>
-  <v-container max-width="100%">
+  <v-container class="planner-container">
     <!-- The Drawer for Mobile -->
     <v-navigation-drawer
       v-model="drawer"
@@ -23,9 +23,9 @@
         @create-factory="createFactory"
       />
     </v-navigation-drawer>
-    <v-row>
+    <v-row class="two-pane-container">
       <!-- Sticky Sidebar for Desktop -->
-      <v-col class="d-none d-md-flex sticky-sidebar" style="max-width: 400px">
+      <v-col class="d-none d-md-flex sticky-sidebar">
         <v-container class="pa-0">
           <planner-factory-list
             :factories="factories"
@@ -46,7 +46,7 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-md pa-0" style="max-width: 1200px">
+      <v-col class="border-s-md pa-0 main-content">
         <v-container>
           <v-btn
             class="d-md-none mb-4"
@@ -76,10 +76,10 @@
             >Add Factory</v-btn>
           </div>
 
-          <!--          <div class="mt-16">-->
-          <!--            <h4 class="text-h5">DEBUG</h4>-->
-          <!--            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>-->
-          <!--          </div>-->
+        <!--          <div class="mt-16">-->
+        <!--            <h4 class="text-h5">DEBUG</h4>-->
+        <!--            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>-->
+        <!--          </div>-->
         </v-container>
       </v-col>
     </v-row>
@@ -423,6 +423,30 @@
 </style>
 
 <style lang="scss">
+.planner-container {
+  max-width: 100%;
+  height: calc(100vh - 112px);
+  padding: 0;
+  overflow-y: hidden;
+
+  .two-pane-container {
+    height: calc(100vh - 112px);
+    margin: 0;
+  }
+
+  .sticky-sidebar {
+    width: 400px;
+    max-width: 400px;
+    max-height: 87vh; // For some reason this is not relative to the container
+    overflow-y: auto; /* Make it scrollable */
+  }
+
+  .main-content {
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+  }
+}
+
 .selectors {
   &:last-of-type {
     margin-bottom: 12px !important;
@@ -462,5 +486,9 @@
 
 .v-card-title {
   padding: 1rem;
+}
+
+.fa-bolt {
+  font-size: 20px;
 }
 </style>
