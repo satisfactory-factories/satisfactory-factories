@@ -19,15 +19,17 @@
       <v-divider color="#ccc" thickness="2px" />
       <planner-factory-list
         :factories="factories"
+        :total-factories="factories.length"
         @create-factory="createFactory"
       />
     </v-navigation-drawer>
     <v-row>
       <!-- Sticky Sidebar for Desktop -->
-      <v-col class="d-none d-md-flex sticky-sidebar" style="max-width: 350px">
+      <v-col class="d-none d-md-flex sticky-sidebar" style="max-width: 400px">
         <v-container class="pa-0">
           <planner-factory-list
             :factories="factories"
+            :total-factories="factories.length"
             @create-factory="createFactory"
           />
           <v-divider color="#ccc" thickness="2px" />
@@ -41,9 +43,6 @@
             @toggle-help-text="toggleHelp()"
           />
           <v-divider color="#ccc" thickness="2px" />
-          <div>
-            Copyright
-          </div>
         </v-container>
       </v-col>
       <!-- Main Content Area -->
@@ -77,11 +76,10 @@
             >Add Factory</v-btn>
           </div>
 
-          <!-- Debugging -->
-          <div class="mt-16">
-            <h4 class="text-h5">DEBUG</h4>
-            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>
-          </div>
+          <!--          <div class="mt-16">-->
+          <!--            <h4 class="text-h5">DEBUG</h4>-->
+          <!--            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>-->
+          <!--          </div>-->
         </v-container>
       </v-col>
     </v-row>
@@ -366,6 +364,39 @@
     }
   }
 
+  const sluggify = (subject: string): string => {
+    // Converts CamelCase to kebab-case without adding dash at the beginning
+    return subject.replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/\s+/g, '-').toLowerCase()
+  }
+
+  const getIcon = (
+    subject: string,
+    type: 'building' | 'item',
+    size: 'small' | 'big' = 'small'
+  ): string => {
+    if (!subject) {
+      console.error('No subject provided to getIcon!')
+      return ''
+    }
+    if (type === 'building') {
+      return getImageUrl(subject, 'building', size)
+    } else {
+      const item = props.gameData.items.parts[subject] || props.gameData.items.rawResources[subject]
+      console.log(item)
+      console.log(sluggify(item))
+      return getImageUrl(sluggify(item), 'item', size)
+    }
+  }
+
+  const getImageUrl = (
+    name: string,
+    type: 'building' | 'item',
+    size: 'small' | 'big' = 'big'
+  ): string => {
+    const pxSize = size === 'small' ? '64' : '256'
+    return `/assets/game/images/${type}/${name}_${pxSize}.png`
+  }
+
   // Initialize during setup
   initializeFactories()
 
@@ -377,6 +408,7 @@
   provide('getBuildingDisplayName', getBuildingDisplayName)
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
+  provide('getIcon', getIcon)
 
   const showDemo = () => {
     console.log('showDemo')
@@ -424,8 +456,15 @@
   }
 }
 
+.no-bottom {
+  &:last-of-type {
+    border-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: 0 0 0 0;
+  }
+}
+
 .v-card-title {
   padding: 1rem;
-
 }
 </style>

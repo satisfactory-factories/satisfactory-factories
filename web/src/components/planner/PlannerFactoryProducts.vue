@@ -17,21 +17,30 @@
       :key="productIndex"
       class="px-4 my-2 border rounded bg-grey-darken-4"
     >
-      <v-row class="selectors align-center ml-0 mt-5 mb-4">
+      <v-row class="selectors align-center ml-0 mt-5 mb-0">
+        <span v-show="!product.id" class="mr-2">
+          <i class="fas fa-cube" style="width: 32px; height: 32px" />
+        </span>
+        <span v-show="product.id" class="mr-2">
+          <game-asset
+            :key="product.id"
+            :subject="product.id"
+            type="item"
+          />
+        </span>
         <v-autocomplete
           v-model="product.id"
-          class="mr-6"
+          class="mr-6 mb-2"
           hide-details
           :items="autocompletePartItems"
           label="Item"
           max-width="300px"
-          prepend-icon="fas fa-cube"
           variant="outlined"
           @update:model-value="updateProductSelection(product, factory)"
         />
         <v-autocomplete
           v-model="product.recipe"
-          class="mr-2"
+          class="mr-2 mb-2"
           :disabled="!product.id"
           hide-details
           :items="getRecipesForPartSelector(product.id)"
@@ -43,7 +52,7 @@
         />
         <v-text-field
           v-model.number="product.amount"
-          class="mr-2"
+          class="mr-2 mb-2"
           hide-details
           label="Qty /min"
           max-width="110px"
@@ -52,7 +61,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          class="rounded"
+          class="rounded mb-2"
           color="blue"
           :disabled="product.displayOrder === 0"
           icon="fas fa-arrow-up"
@@ -61,7 +70,7 @@
           @click="updateOrder('up', product)"
         />
         <v-btn
-          class="rounded ml-1"
+          class="rounded ml-1 mb-2"
           color="blue"
           :disabled="product.displayOrder === factory.products.length - 1"
           icon="fas fa-arrow-down"
@@ -70,7 +79,7 @@
           @click="updateOrder('down', product)"
         />
         <v-btn
-          class="ml-6 rounded"
+          class="ml-6 rounded mr-2 mb-2"
           color="red"
           icon="fas fa-trash"
           size="small"
@@ -81,52 +90,53 @@
           Internal
         </v-chip>
       </v-row>
-      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 mb-3 text-body-1">
-        <div>
-          <span class="font-weight-bold">Ingredients: </span>
+      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 my-0 text-body-1">
+        <v-chip
+          v-for="(requirement, part) in product.requirements"
+          :key="`ingredients-${part}`"
+          class="mr-2 mb-2 border-md py-5"
+          color="primary"
+          size="large"
+          style="border-color: rgb(0, 93, 167) !important"
+          variant="tonal"
+        >
+          <game-asset
+            class="mr-2"
+            :subject="part"
+            type="item"
+          /><b>{{ getPartDisplayName(part) }}</b>: {{ requirement.amount }}/min
+        </v-chip>
+      </v-row>
+      <v-row v-show="product.buildingRequirements.length > 0" class="ml-0 mt-0 mb-3 text-body-1">
+        <span
+          v-for="(building, buildingIndex) in product.buildingRequirements"
+          :key="`buildings-${buildingIndex}`"
+        >
           <v-chip
-            v-for="(requirement, requirementIndex) in product.requirements"
-            :key="`ingredients-${requirementIndex}`"
-            class="mr-2 border-md"
-            color="primary"
-            prepend-icon="fa fa-cube"
+            class="mr-2 border-md py-5"
+            color="yellow-darken-4"
             size="large"
-            style="border-color: rgb(0, 93, 167) !important"
+            style="border-color: rgb(167, 86, 0)!important"
             variant="tonal"
           >
-            <b>{{ getPartDisplayName(requirementIndex) }}</b>: {{ requirement.amount }}/min
+            <game-asset
+              class="mr-2"
+              :subject="building.name"
+              type="building"
+            />
+            <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
           </v-chip>
-        </div>
-      </v-row>
-      <v-row v-show="product.buildingRequirements.length > 0" class="ml-0 mb-3 text-body-1">
-        <div>
-          <span class="font-weight-bold">Buildings: </span>
-          <span
-            v-for="(building, buildingIndex) in product.buildingRequirements"
-            :key="`buildings-${buildingIndex}`"
+          <v-chip
+            class="mr-2 border-md py-5"
+            color="yellow-darken-2"
+            prepend-icon="fas fa-bolt"
+            size="large"
+            style="border-color: rgb(172, 153, 2) !important"
+            variant="tonal"
           >
-            <v-chip
-              class="mr-2 border-md"
-              color="yellow-darken-4"
-              prepend-icon="fas fa-building"
-              size="large"
-              style="border-color: rgb(167, 86, 0)!important"
-              variant="tonal"
-            >
-              <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
-            </v-chip>
-            <v-chip
-              class="mr-2 border-md"
-              color="yellow-darken-2"
-              prepend-icon="fas fa-bolt"
-              size="large"
-              style="border-color: rgb(172, 153, 2) !important"
-              variant="tonal"
-            >
-              <b>Power:</b>&nbsp; {{ building.totalPower }} MW
-            </v-chip>
-          </span>
-        </div>
+            {{ building.totalPower }} MW
+          </v-chip>
+        </span>
       </v-row>
     </div>
     <v-btn
@@ -210,7 +220,7 @@
   }
 
   const updateProductSelection = (product: FactoryProduct, factory: Factory) => {
-    // If the user update's the product within the item selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
+    // If the user update's the product within the subject selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
     product.recipe = ''
     product.amount = 0
 

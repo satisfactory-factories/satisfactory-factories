@@ -23,78 +23,105 @@
     </h2>
 
     <v-row v-if="Object.keys(factory.partRequirements).length > 0">
-      <v-col>
-        <v-card class="my-card mb-1 border-md">
+      <v-col cols="12" md="8">
+        <v-card class="mb-1 border-md my-card">
           <v-card-title>
-            <h2 class="text-h6"><i class="fas fa-cube" /><span class="ml-2">Items</span></h2>
+            <h2 class="text-h6">
+              <i class="fas fa-cube" /><span class="ml-2">Items</span>
+            </h2>
           </v-card-title>
-          <v-card-text class="text-body-1">
+          <v-card-text class="text-body-1 pb-2">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
             <div
               v-for="(part, partIndex) in factory.partRequirements"
               :key="partIndex"
+              class="mb-0 py-2 border-b-md no-bottom"
               :class="isSatisfiedStyling(factory, partIndex)"
             >
-              <p v-if="part.satisfied">
-                <v-icon icon="fas fa-check" />
-                <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
-              </p>
-              <p v-else>
-                <v-icon icon="fas fa-times" />
-                <span class="ml-2">
-                  <span>
-                    <b>{{ getPartDisplayName(partIndex) }}</b>: {{ part.amountSupplied }}/{{ part.amountRequired }} /min
-                  </span>
+              <v-row>
+                <v-col align-self="center" class="flex-grow-0 py-2" style="padding-right: 0">
+                  <game-asset :subject="partIndex" type="item" />
+                </v-col>
+                <v-col>
+                  <p v-if="part.satisfied">
+                    <v-icon icon="fas fa-check" />
+                    <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
+                  </p>
+                  <p v-else>
+                    <v-icon icon="fas fa-times" />
+                    <span class="ml-2">
+                      <span>
+                        <b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
+                      </span>
+                    </span>
+                  </p>
+                </v-col>
+
+                <v-col align-self="center" class="text-right flex-shrink-0">
                   <v-btn
                     v-if="!getProduct(factory, partIndex)"
-                    class="ml-2"
+                    class="ml-2 my-1"
                     color="primary"
                     size="small"
                     variant="outlined"
                     @click="addProduct(factory, partIndex)"
-                  >Add Product</v-btn>
+                  >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
+                  </v-btn>
                   <v-btn
-                    v-if="getImport(factory, partIndex)"
-                    class="ml-2"
-                    color="primary"
+                    v-if="getImport(factory, partIndex) && !part.satisfied"
+                    class="ml-2 my-1"
+                    color="secondary"
                     size="small"
                     variant="outlined"
                     @click="fixSatisfactionImport(factory, partIndex)"
-                  >Fix Import</v-btn>
-                </span>
-              </p>
+                  >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
+                  </v-btn>
+                </v-col>
+              </v-row>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col cols="12" md="4">
         <v-card class="my-card border-md">
           <v-card-title>
             <h2 class="text-h6">
               <i class="fas fa-building" />
-              <span class="ml-3">Buildings</span>
+              <span class="ml-3">Buildings & Power</span>
             </h2>
           </v-card-title>
           <v-card-text class="text-body-1">
-            <p class="mb-4 text-yellow-darken-3">
-              <v-icon icon="fas fa-bolt" />
-              <span class="ml-2"><b>Power</b>: {{ factory.totalPower.toFixed(2) }} MW</span>
-            </p>
-            <div>
-              <p v-if="factory.buildingRequirements.length === 0">No buildings required.</p>
-              <div v-else>
-                <p
-                  v-for="(building, buildingIndex) in factory.buildingRequirements"
-                  :key="buildingIndex"
-                  class="mb-1"
-                >
-                  <v-icon icon="fas fa-building" />
-                  <span class="ml-2"><b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x</span>
-                </p>
-              </div>
+            <div
+              v-for="(building, buildingIndex) in factory.buildingRequirements"
+              :key="buildingIndex"
+              class="mb-1"
+            >
+              <v-chip
+                class="mr-2 border-md py-5"
+                color="yellow-darken-4"
+                size="large"
+                style="border-color: rgb(167, 86, 0)!important"
+                variant="tonal"
+              >
+                <game-asset
+                  class="mr-2"
+                  :subject="building.name"
+                  type="building"
+                />
+                <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
+              </v-chip>
             </div>
+            <v-chip
+              class="mr-2 border-md py-5 mb-1"
+              color="yellow-darken-2"
+              prepend-icon="fas fa-bolt"
+              size="large"
+              style="border-color: rgb(172, 153, 2) !important"
+              variant="tonal"
+            >{{ factory.totalPower.toFixed(0) }} MW
+            </v-chip>
           </v-card-text>
         </v-card>
       </v-col>

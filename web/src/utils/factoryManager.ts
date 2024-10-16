@@ -296,20 +296,14 @@ export const calculateDependencyMetrics = (factories: Factory[]) => {
           metrics[part] = {
             part,
             request: 0,
-            supply: 0,
+            supply: factory.surplus[part].amount ?? 0,
             isRequestSatisfied: false,
             difference: 0,
           }
         }
 
         metrics[part].request += request.amount
-
-        // Supply is calculated from the surplus of the factory. If the surplus doesn't exist, there is a shortage.
-        if (factory.surplus[part]) {
-          metrics[part].supply += factory.surplus[part].amount // Additive
-          metrics[part].isRequestSatisfied = metrics[part].supply >= metrics[part].request
-        }
-
+        metrics[part].isRequestSatisfied = metrics[part].supply >= metrics[part].request
         metrics[part].difference = metrics[part].supply - metrics[part].request
       })
     })

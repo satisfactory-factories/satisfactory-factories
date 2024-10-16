@@ -15,7 +15,7 @@
           <v-col class="text-right" cols="4">
             <v-btn
               class="mr-2 rounded"
-              color="primary "
+              color="primary"
               :disabled="factory.displayOrder === 0"
               icon="fas fa-arrow-up"
               size="small"
