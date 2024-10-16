@@ -309,7 +309,6 @@
   }
 
   const navigateToFactory = (factoryId: string) => {
-    console.log('Navigating to factory', factoryId)
     const factoryElement = document.getElementById(`${factoryId}`)
     if (factoryElement) {
       factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -317,7 +316,6 @@
   }
 
   const moveFactory = (factory: Factory, direction: string) => {
-    console.log(`moving factory ${factory.id} ${direction}`)
     const currentOrder = factory.displayOrder
     let targetOrder
 
@@ -382,8 +380,6 @@
       return getImageUrl(subject, 'building', size)
     } else {
       const item = props.gameData.items.parts[subject] || props.gameData.items.rawResources[subject]
-      console.log(item)
-      console.log(sluggify(item))
       return getImageUrl(sluggify(item), 'item', size)
     }
   }
