@@ -9,14 +9,13 @@ import {Query, Send} from "express-serve-static-core";
 
 dotenv.config();
 
-let app: Express.Application | undefined = undefined;
 const PORT = 3001;
 
 // *************************************************
 // Setup Express
 // *************************************************
 
-app = Express();
+const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
 
@@ -44,6 +43,16 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 const User = mongoose.model('User', UserSchema);
+
+// *************************************************
+// Factory Data Model
+// *************************************************
+
+const FactoryDataSchema = new mongoose.Schema({
+  user: { type: String, required: true },
+  data: { type: mongoose.Schema.Types.Mixed, required: true },
+});
+const FactoryData = mongoose.model('FactoryData', FactoryDataSchema);
 
 // *************************************************
 // Request/Response Types
@@ -125,7 +134,8 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET ?? 'secret', { expiresIn: '1h' });
+    const secret = process.env.JWT_SECRET ?? 'secret';
+    const token = jwt.sign({ id: user._id, username: user.username }, secret, { expiresIn: '30d' });
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Login failed', error });
@@ -133,11 +143,18 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
 });
 
 // Sync Data Endpoint
-app.post('/sync', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<any>, res: Express.Response) => {
+app.post('/sync', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
-    const userData = req.body;
-    await User.findByIdAndUpdate((req.user as jwt.JwtPayload & { id: string }).id, { userData }, { new: true });
-    res.json({ message: 'Data synced successfully' });
+    const { username } = req.user as jwt.JwtPayload & { username: string };
+    const { data } = req.body;
+
+    const updatedFactoryData = await FactoryData.findOneAndUpdate(
+      { user: username },
+      { data },
+      { new: true, upsert: true }
+    );
+
+    res.json({ message: 'Data synced successfully', updatedFactoryData });
   } catch (error) {
     res.status(500).json({ message: 'Data sync failed', error });
   }
