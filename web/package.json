@@ -1,6 +1,7 @@
 {
   "name": "factory-planner",
   "version": "0.0.0",
+  "author": "Matt Cavanagh",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

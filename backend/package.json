@@ -1,0 +1,29 @@
+{
+  "name": "factory-planner-backend",
+  "version": "1.0.0",
+  "description": "Backend for Factory Planner with authentication and data sync",
+  "author": "Matt Cavanagh",
+  "main": "backend.ts",
+  "scripts": {
+    "start": "ts-node backend.ts",
+    "dev": "nodemon backend.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.9.0",
+    "eslint": "^8.57.1",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
