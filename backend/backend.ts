@@ -114,11 +114,18 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
   try {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).json({ message: 'User already exists.' });
+    }
+
     const user = new User({ username, password: hashedPassword });
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
-    res.status(400).json({ message: 'Registration failed', error });
+    res.status(400).json({ message: 'Registration failed.', error });
   }
 });
 
@@ -142,21 +149,43 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
   }
 });
 
-// Sync Data Endpoint
-app.post('/sync', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+// Save Data Endpoint
+app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
-    const { data } = req.body;
+    const userData = req.body;
 
-    const updatedFactoryData = await FactoryData.findOneAndUpdate(
+    console.log(req.body);
+
+    console.log(`Saving data for user ${username}`);
+    console.log(`Data: ${userData}`);
+
+    await FactoryData.findOneAndUpdate(
       { user: username },
-      { data },
+      { data: userData },
       { new: true, upsert: true }
     );
 
-    res.json({ message: 'Data synced successfully', updatedFactoryData });
+    console.log('Data saved!');
+
+    res.json({ message: 'Data saved successfully', userData });
   } catch (error) {
-    res.status(500).json({ message: 'Data sync failed', error });
+    console.error(`Data save failed: ${error}`);
+    res.status(500).json({ message: 'Data save failed', error });
+  }
+});
+
+app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+  try {
+    const { username } = req.user as jwt.JwtPayload & { username: string };
+
+    const data = await FactoryData.findOne(
+      { user: username },
+    );
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: 'Data save failed', error });
   }
 });
 

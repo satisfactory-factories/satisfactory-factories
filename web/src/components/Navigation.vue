@@ -1,6 +1,9 @@
 <template>
   <v-toolbar dark>
-    <v-toolbar-title><v-icon icon="fas fa-industry-alt" /> Factory Planner</v-toolbar-title>
+    <v-toolbar-title>
+      <v-icon icon="fas fa-industry-alt" />
+      <span class="ml-3">Satisfactory Factories</span>
+    </v-toolbar-title>
     <template #extension>
       <v-tabs
         v-model="tab"
