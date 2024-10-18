@@ -156,11 +156,11 @@
     part: string
   ): FactoryDependencyMetrics => {
     // Requests may be empty.
-    if (!factory || !part || !factory.id) {
+    if (!factory?.dependencies.metrics || !part || !factory.id) {
       return {}
     }
 
-    return factory.dependencies.metrics[part] ?? {}
+    return factory.dependencies?.metrics[part] ?? {}
   }
 
   const fixShortage = (factory: Factory, product: FactoryItem) => {

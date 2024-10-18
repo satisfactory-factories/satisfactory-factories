@@ -10,9 +10,7 @@
     <v-card class="border-md">
       <v-card-title class="text-h5">Session Expired</v-card-title>
       <v-card-text>
-        <p>
-          Your session has expired, Pioneer. Please log in again!
-        </p>
+        <p>Your session has expired, Pioneer. Please log in again!</p>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" variant="elevated" @click="closeSessionExpiredAlert">Ok</v-btn>
@@ -21,7 +19,7 @@
   </v-overlay>
   <div class="position-absolute top-0 right-0 ma-2 text-right">
     <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
-    <v-btn v-else @click="toggleTray">Hello again, {{ loggedInUser }}!</v-btn>
+    <v-btn v-else @click="toggleTray"><i class="fas fa-user" /><span class="ml-2">{{ loggedInUser }}</span></v-btn>
     <div v-show="isSaving">
       <p class="text-body-1">
         <i class="fas fa-sync fa-spin" /><span class="ml-2">Saving
@@ -129,8 +127,6 @@
       if (dataSavePending.value) {
         await handleDataSave(dataToSave.value)
         dataSavePending.value = false // Reset the pending save flag after save
-      } else {
-        console.log('no data to save')
       }
     }, 10000)
 
@@ -334,11 +330,12 @@
       const realData = data.data
       if (response.ok) {
         console.log('Data loaded:', realData)
-        appStore.saveFactories(realData.factories)
+        appStore.setFactories(realData.factories)
 
         // If the data store is already empty, simply replace the data
         if (appStore.getFactories.length === 0 || forceLoad) {
           console.log('Data store is empty. Loading data from backend.')
+          appStore.setFactories(realData.factories)
         } else {
           // If the data store is not empty, check if the data is newer than the last save
           const lastSave = new Date(realData.lastSave)

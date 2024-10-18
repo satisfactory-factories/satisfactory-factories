@@ -76,10 +76,10 @@
             >Add Factory</v-btn>
           </div>
 
-        <!--          <div class="mt-16">-->
-        <!--            <h4 class="text-h5">DEBUG</h4>-->
-        <!--            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>-->
-        <!--          </div>-->
+          <div class="mt-16">
+            <h4 class="text-h5">DEBUG</h4>
+            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>
+          </div>
         </v-container>
       </v-col>
     </v-row>
@@ -108,21 +108,18 @@
     calculateSurplus, calculateUsingRawResourcesOnly,
   } from '@/utils/factoryManager'
   import { useAppStore } from '@/stores/app-store'
+  import { storeToRefs } from 'pinia'
 
   const props = defineProps<{ gameData: DataInterface }>()
 
   const appStore = useAppStore()
+  const { factories } = storeToRefs(appStore)
 
-  let factories = appStore.getFactories
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
-  watch(factories, newValue => {
-    appStore.saveFactories(newValue)
-  }, { deep: true })
-
   watch(helpText, newValue => {
     localStorage.setItem('helpText', JSON.stringify(newValue))
   })
@@ -130,17 +127,17 @@
   // Computed properties
   const factoriesWithSurplus = computed(() => {
     // Loop through all factories and see if any have any surplus
-    return factories.filter(factory => Object.keys(factory.surplus).length > 0)
+    return factories.value.filter(factory => Object.keys(factory.surplus).length > 0)
   })
 
   // This function calculates the world resources available after each group has consumed Raw Resources.
-  // This is done here globally as it loops all factories. It is not appropriate to be done on group updates.
+  // This is done here globally as it loops all factories.value. It is not appropriate to be done on group updates.
   const updateWorldRawResources = (): void => {
     // Generate fresh world resources as a baseline for calculation.
     Object.assign(worldRawResources, generateRawResources())
 
     // Loop through each group's products to calculate usage of raw resources.
-    factories.forEach(factory => {
+    factories.value.forEach(factory => {
       factory.products.forEach(product => {
         const recipe = props.gameData.recipes.find(r => r.id === product.recipe)
         if (!recipe) {
@@ -193,7 +190,7 @@
     }
 
     // Ensure factoryId is parsed to a number to match factories array ids
-    const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10))
+    const factory = factories.value.find(fac => fac.id === parseInt(factoryId.toString(), 10))
     if (!factory) {
       throw new Error(`Factory ${factoryId} not found!`)
     }
@@ -201,7 +198,7 @@
   }
 
   const createFactory = (name = 'A new factory') => {
-    factories.push({
+    factories.value.push({
       id: Math.floor(Math.random() * 10000),
       name,
       products: [],
@@ -217,7 +214,7 @@
       surplus: {},
       hidden: false,
       hasProblem: false,
-      displayOrder: factories.length,
+      displayOrder: factories.value.length,
     })
   }
 
@@ -238,7 +235,7 @@
     calculateFactoryInternalSupply(factory, props.gameData)
 
     // Then we calculate the effect that inputs have on the requirements.
-    calculateFactoryInputSupply(factories, factory, props.gameData)
+    calculateFactoryInputSupply(factories.value, factory, props.gameData)
 
     // Then we calculate the satisfaction of the factory.
     calculateFactorySatisfaction(factory)
@@ -250,8 +247,8 @@
     calculateSurplus(factory)
 
     // Check all other factories to see if they are affected by this factory change.
-    calculateDependencies(factories)
-    calculateDependencyMetrics(factories)
+    calculateDependencies(factories.value)
+    calculateDependencyMetrics(factories.value)
 
     // Add a flag to denote if we're only using raw resources to make products.
     calculateUsingRawResourcesOnly(factory)
@@ -262,21 +259,21 @@
 
   const deleteFactory = (factory: Factory) => {
     // Find the index of the factory to delete
-    const index = factories.findIndex(fac => fac.id === factory.id)
+    const index = factories.value.findIndex(fac => fac.id === factory.id)
 
     if (index !== -1) {
-      factories.splice(index, 1) // Remove the factory at the found index
+      factories.value.splice(index, 1) // Remove the factory at the found index
       updateWorldRawResources() // Recalculate the world resources
 
       // After deleting the factory, update the rest to ensure consistency
-      factories.forEach(fac => updateFactory(fac))
+      factories.value.forEach(fac => updateFactory(fac))
     }
 
     regenerateSortOrders()
   }
 
   const clearAll = () => {
-    factories.length = 0
+    factories.value.length = 0
     updateWorldRawResources()
   }
 
@@ -304,7 +301,7 @@
   }
 
   const showHideAll = (mode: 'show' | 'hide') => {
-    factories.forEach(factory => factory.hidden = mode === 'hide')
+    factories.value.forEach(factory => factory.hidden = mode === 'hide')
   }
 
   const toggleHelp = () => {
@@ -324,14 +321,14 @@
 
     if (direction === 'up' && currentOrder > 0) {
       targetOrder = currentOrder - 1
-    } else if (direction === 'down' && currentOrder < factories.length - 1) {
+    } else if (direction === 'down' && currentOrder < factories.value.length - 1) {
       targetOrder = currentOrder + 1
     } else {
       return // Invalid move
     }
 
     // Find the target factory and swap display orders
-    const targetFactory = factories.find(fac => fac.displayOrder === targetOrder)
+    const targetFactory = factories.value.find(fac => fac.displayOrder === targetOrder)
     if (targetFactory) {
       targetFactory.displayOrder = currentOrder
       factory.displayOrder = targetOrder
@@ -344,16 +341,16 @@
     let count = 0
 
     // Sort now, which may have sorted them weirdly
-    factories = factories.sort((a, b) => a.displayOrder - b.displayOrder)
+    factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
 
     // Ensure that the display order is correct
-    factories.forEach(factory => {
+    factories.value.forEach(factory => {
       factory.displayOrder = count
       count++
     })
 
     // Now re-sort
-    factories = factories.sort((a, b) => a.displayOrder - b.displayOrder)
+    factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
   }
 
   const initializeFactories = () => {
