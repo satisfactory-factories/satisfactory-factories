@@ -1,4 +1,24 @@
 <template>
+  <v-overlay
+    absolute
+    location="center"
+    :model-value="showSessionExpiredAlert"
+    scroll-strategy="block"
+    style="top: calc(50vh - 90px); left: calc(50vw - 190px)"
+    theme="dark"
+  >
+    <v-card class="border-md">
+      <v-card-title class="text-h5">Session Expired</v-card-title>
+      <v-card-text>
+        <p>
+          Your session has expired, Pioneer. Please log in again!
+        </p>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" variant="elevated" @click="closeSessionExpiredAlert">Ok</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-overlay>
   <div class="position-absolute top-0 right-0 ma-2 text-right">
     <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
     <v-btn v-else @click="toggleTray">Hello again, {{ loggedInUser }}!</v-btn>
@@ -62,8 +82,8 @@
 
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
           <p class="mb-4">You are signed in. As of now your factories will be automatically saved. Should you lose your data (unless you wiped it!), simply log back in again.</p>
-          <p class="mb-4"><i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> 2024-05-05 00:00:00</p>
-          <v-btn color="primary" @click="saveNow">Save</v-btn>
+          <p class="mb-4"><i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}</p>
+          <v-btn class="mr-2" color="primary" @click="saveNow">Save Now</v-btn>
           <v-btn color="warning" @click="handleLogout">Log out</v-btn>
 
         </v-card-text>
@@ -74,24 +94,48 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
+  import { useAppStore } from '@/stores/app-store'
+  import { storeToRefs } from 'pinia'
 
   const trayOpen = ref(false)
   const username = ref('')
   const password = ref('')
-  const loggedIn = ref(false)
-  const loggedInUser = ref('')
-  const token = ref('')
   const showLogin = ref(true)
   const showRegister = ref(false)
   const errorMessage = ref('')
   const apiUrl = 'http://localhost:3001'
-  const lastSaved = ref('')
+  const lastSaved = ref(new Date())
+  const lastSavedDisplay = ref('')
   const isSaving = ref(false)
+  const showSessionExpiredAlert = ref(false)
+
+  const appStore = useAppStore()
+  const { loggedInUser, token, factories } = storeToRefs(appStore)
+
+  watch(factories, newValue => {
+    console.log('Factories updated:', newValue)
+
+    handleDataSave({ factories: newValue })
+  }, { deep: true })
 
   const toggleTray = () => {
     trayOpen.value = !trayOpen.value
   }
+
+  // Received from click events elsewhere
+  const closeTray = () => {
+    trayOpen.value = false
+  }
+
+  defineExpose({
+    closeTray,
+  })
+
+  watch(lastSaved, newValue => {
+    lastSavedDisplay.value = lastSaveDateFormat(newValue)
+    console.log('Updated last saved time', lastSavedDisplay.value)
+  }, { deep: true })
 
   const handleSignIn = async () => {
     try {
@@ -105,21 +149,16 @@
       const data = await response.json()
       if (response.ok) {
         console.log('User logged in')
-        loggedIn.value = true
-        loggedInUser.value = username.value
-        token.value = data.token
-        localStorage.setItem('loggedInUser', username.value)
-        localStorage.setItem('token', data.token)
+        appStore.setLoggedInUser(username.value)
+        appStore.setToken(data.token)
         username.value = ''
         password.value = ''
       } else {
         console.error('Login failed:', data)
-        loggedIn.value = false
         errorMessage.value = data.message
       }
     } catch (error) {
       console.error('Error:', error)
-      loggedIn.value = false
       errorMessage.value = error.message
     }
   }
@@ -138,23 +177,18 @@
         await handleSignIn()
       } else {
         console.error('Registration failed:', data)
-        loggedIn.value = false
         errorMessage.value = `Registration failed. ${data.errorResponse?.errmsg || data.message}`
       }
     } catch (error) {
       console.error('Error:', error)
-      loggedIn.value = false
       errorMessage.value = error.message
     }
   }
 
   const handleLogout = async () => {
-    loggedIn.value = ''
-    loggedInUser.value = ''
-    token.value = ''
+    appStore.setLoggedInUser('')
+    appStore.setToken('')
     showLogin.value = true
-    localStorage.removeItem('loggedInUser')
-    localStorage.removeItem('token')
   }
 
   const showLoginForm = () => {
@@ -169,14 +203,52 @@
     errorMessage.value = ''
   }
 
+  const closeSessionExpiredAlert = () => {
+    showSessionExpiredAlert.value = false
+    trayOpen.value = true
+    showLoginForm()
+  }
+
+  const sessionHasExpired = async () => {
+    if (loggedInUser.value !== '') {
+      showSessionExpiredAlert.value = true
+      trayOpen.value = false
+      await handleLogout()
+    }
+    // Otherwise do nothing, the user was never logged in.
+  }
+
+  const validateToken = async (): Promise<boolean> => {
+    try {
+      console.log('Validating token', token.value)
+      const response = await fetch(`${apiUrl}/validate-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: JSON.stringify({ token: token.value }),
+      })
+      if (response.ok) {
+        console.log('Token is valid')
+        return true
+      } else {
+        console.log('Token invalid!')
+        await sessionHasExpired()
+        return false
+      }
+    } catch (error) {
+      await sessionHasExpired()
+      console.error('Error during token validation:', error)
+      return false
+    }
+  }
+
   onMounted(() => {
     const savedUser = localStorage.getItem('loggedInUser')
     const savedToken = localStorage.getItem('token')
     if (savedUser && savedToken) {
-      console.log('User already logged in:', savedUser)
-      loggedIn.value = true
-      loggedInUser.value = savedUser
-      token.value = savedToken
+      validateToken(savedToken)
     }
   })
 
@@ -189,6 +261,13 @@
   }
 
   const handleDataSave = async (data: any) => {
+    isSaving.value = true
+
+    if (!await validateToken()) {
+      isSaving.value = false
+      return
+    }
+
     console.log('Saving data:', data)
     // Send a POST request to the /sync endpoint with the data in question
     try {
@@ -203,7 +282,8 @@
       await response.json()
       if (response.ok) {
         console.log('data saved')
-        lastSaved.value = new Date().toISOString()
+        lastSaved.value = new Date()
+        isSaving.value = false
       } else {
         console.error('Data save failed at response!', data)
       }
@@ -235,6 +315,18 @@
       isSaving.value = false
       console.error('Data load errored!', data)
     }
+  }
+
+  // Function to convert date object to desired format
+  const lastSaveDateFormat = (date: Date) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = months[date.getMonth()]
+    const year = date.getFullYear()
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
   }
 </script>
 

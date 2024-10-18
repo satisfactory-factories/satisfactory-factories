@@ -14,6 +14,9 @@ importers:
       core-js:
         specifier: ^3.37.1
         version: 3.38.1
+      pinia:
+        specifier: ^2.2.4
+        version: 2.2.4(typescript@5.6.3)(vue@3.5.11(typescript@5.6.3))
       roboto-fontface:
         specifier: '*'
         version: 0.10.0
@@ -63,9 +66,6 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.27.0
         version: 9.28.0(eslint@8.57.1)
-      pinia:
-        specifier: ^2.1.7
-        version: 2.2.4(typescript@5.6.3)(vue@3.5.11(typescript@5.6.3))
       sass:
         specifier: 1.77.6
         version: 1.77.6

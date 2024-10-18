@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 // @ts-ignore Types exist???
-import {Query, Send} from "express-serve-static-core";
+import { Query, Send } from "express-serve-static-core";
 
 dotenv.config();
 
@@ -31,8 +31,8 @@ mongoose.connect(process.env.MONGO_URI ?? 'mongodb://localhost:27017/factory_pla
   autoIndex: true,
   autoCreate: true,
 })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((error) => console.log('Error connecting to MongoDB', error));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.log('Error connecting to MongoDB', error));
 
 // *************************************************
 // User Model
@@ -118,7 +118,7 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
     // Check if the user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-        return res.status(400).json({ message: 'User already exists.' });
+      return res.status(400).json({ message: 'User already exists.' });
     }
 
     const user = new User({ username, password: hashedPassword });
@@ -142,10 +142,28 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
       return res.status(400).json({ message: 'Invalid credentials' });
     }
     const secret = process.env.JWT_SECRET ?? 'secret';
-    const token = jwt.sign({ id: user._id, username: user.username }, secret, { expiresIn: '30d' });
+    const token = jwt.sign({ id: user._id, username: user.username }, secret, { expiresIn: '7d' });
+
+    console.log(`Successfully signed in user ${username}`);
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Login failed', error });
+  }
+});
+
+// Validate Token Endpoint
+app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Express.Response) => {
+  const token = req.body.token;
+  if (!token) {
+    return res.status(400).json({ message: 'Token is required' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET ?? 'secret');
+    res.status(200).json({ valid: true, decoded });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    res.status(401).json({ valid: false, message: 'Invalid or expired token' });
   }
 });
 
@@ -158,7 +176,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
     console.log(req.body);
 
     console.log(`Saving data for user ${username}`);
-    console.log(`Data: ${userData}`);
+    console.log(`Data: ${JSON.stringify(userData, null, 2)}`);
 
     await FactoryData.findOneAndUpdate(
       { user: username },

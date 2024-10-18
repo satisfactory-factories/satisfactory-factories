@@ -107,17 +107,20 @@
     calculateProductRequirements,
     calculateSurplus, calculateUsingRawResourcesOnly,
   } from '@/utils/factoryManager'
+  import { useAppStore } from '@/stores/app-store'
 
   const props = defineProps<{ gameData: DataInterface }>()
 
-  let factories = reactive<Factory[]>(JSON.parse(localStorage.getItem('factories') || '[]') as Factory[])
+  const appStore = useAppStore()
+
+  let factories = appStore.getFactories
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
   watch(factories, newValue => {
-    localStorage.setItem('factories', JSON.stringify(newValue))
+    appStore.saveFactories(newValue)
   }, { deep: true })
 
   watch(helpText, newValue => {
