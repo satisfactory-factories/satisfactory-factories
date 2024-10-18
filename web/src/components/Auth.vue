@@ -83,7 +83,6 @@
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
           <p class="mb-4">You are signed in. As of now your factories will be automatically saved. Should you lose your data (unless you wiped it!), simply log back in again.</p>
           <p class="mb-4"><i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}</p>
-          <v-btn class="mr-2" color="primary" @click="saveNow">Save Now</v-btn>
           <v-btn color="warning" @click="handleLogout">Log out</v-btn>
 
         </v-card-text>
@@ -110,14 +109,51 @@
   const isSaving = ref(false)
   const showSessionExpiredAlert = ref(false)
 
+  const dataToSave = ref({})
+  const dataSavePending = ref(false)
+  let saveInterval: NodeJS.Timeout
+
   const appStore = useAppStore()
   const { loggedInUser, token, factories } = storeToRefs(appStore)
 
   watch(factories, newValue => {
-    console.log('Factories updated:', newValue)
-
-    handleDataSave({ factories: newValue })
+    if (appStore.loggedInUser) {
+      dataToSave.value = newValue
+      dataSavePending.value = true
+    }
   }, { deep: true })
+
+  onMounted(() => {
+    // Start interval to check if data needs to be saved
+    saveInterval = setInterval(async () => {
+      if (dataSavePending.value) {
+        await handleDataSave(dataToSave.value)
+        dataSavePending.value = false // Reset the pending save flag after save
+      } else {
+        console.log('no data to save')
+      }
+    }, 10000)
+
+    const savedUser = localStorage.getItem('loggedInUser')
+    const savedToken = localStorage.getItem('token')
+    if (savedUser && savedToken) {
+      validateToken(savedToken)
+    }
+  })
+
+  onBeforeUnmount(() => {
+    // Clear the interval to avoid memory leaks when component unmounts
+    if (saveInterval) {
+      clearInterval(saveInterval)
+    }
+  })
+
+  onUnmounted(() => {
+    // Clear interval again in case onBeforeUnmount is not triggered (hot reloads)
+    if (saveInterval) {
+      clearInterval(saveInterval)
+    }
+  })
 
   const toggleTray = () => {
     trayOpen.value = !trayOpen.value
@@ -134,7 +170,6 @@
 
   watch(lastSaved, newValue => {
     lastSavedDisplay.value = lastSaveDateFormat(newValue)
-    console.log('Updated last saved time', lastSavedDisplay.value)
   }, { deep: true })
 
   const handleSignIn = async () => {
@@ -148,13 +183,13 @@
       })
       const data = await response.json()
       if (response.ok) {
-        console.log('User logged in')
         appStore.setLoggedInUser(username.value)
         appStore.setToken(data.token)
         username.value = ''
         password.value = ''
+        await handleDataLoad()
       } else {
-        console.error('Login failed:', data)
+        console.warn('Login failed:', data)
         errorMessage.value = data.message
       }
     } catch (error) {
@@ -220,7 +255,6 @@
 
   const validateToken = async (): Promise<boolean> => {
     try {
-      console.log('Validating token', token.value)
       const response = await fetch(`${apiUrl}/validate-token`, {
         method: 'POST',
         headers: {
@@ -230,10 +264,9 @@
         body: JSON.stringify({ token: token.value }),
       })
       if (response.ok) {
-        console.log('Token is valid')
         return true
       } else {
-        console.log('Token invalid!')
+        console.warn('Token invalid!')
         await sessionHasExpired()
         return false
       }
@@ -244,23 +277,12 @@
     }
   }
 
-  onMounted(() => {
-    const savedUser = localStorage.getItem('loggedInUser')
-    const savedToken = localStorage.getItem('token')
-    if (savedUser && savedToken) {
-      validateToken(savedToken)
-    }
-  })
-
-  const saveNow = async () => {
-    console.log('saving now')
-    const data = {
-      foo: 'bar!',
-    }
-    await handleDataSave(data)
-  }
-
   const handleDataSave = async (data: any) => {
+    // If user is not logged in we do nothing
+    if (loggedInUser.value === '') {
+      return
+    }
+
     isSaving.value = true
 
     if (!await validateToken()) {
@@ -281,7 +303,7 @@
       })
       await response.json()
       if (response.ok) {
-        console.log('data saved')
+        console.log('Data was saved.')
         lastSaved.value = new Date()
         isSaving.value = false
       } else {
@@ -292,9 +314,14 @@
     }
   }
 
-  const handleDataLoad = async () => {
-    isSaving.value = true
-    // Send a gGET request to the /load endpoint to load the user's data and overwrite the local data
+  // This function checks if there is any local data and the last time it was edited.
+  // If it was edited after the last save, it will prompt the user to load the data.
+  // Otherwise, it will immediately load the data into the store.
+  const handleDataLoad = async (forceLoad = false) => {
+    if (!await validateToken()) {
+      return
+    }
+
     try {
       const response = await fetch(`${apiUrl}/load`, {
         method: 'GET',
@@ -304,16 +331,30 @@
         },
       })
       const data = await response.json()
-
-      isSaving.value = false
+      const realData = data.data
       if (response.ok) {
-        console.log('Data loaded:', data)
+        console.log('Data loaded:', realData)
+        appStore.saveFactories(realData.factories)
+
+        // If the data store is already empty, simply replace the data
+        if (appStore.getFactories.length === 0 || forceLoad) {
+          console.log('Data store is empty. Loading data from backend.')
+        } else {
+          // If the data store is not empty, check if the data is newer than the last save
+          const lastSave = new Date(realData.lastSave)
+          const lastEdit = new Date(realData.lastEdit)
+          if (lastEdit > lastSave || forceLoad) {
+            appStore.setFactories(realData.factories)
+          } else {
+            console.log('Data is older than last save. Prompting user to load data.')
+            // Prompt user to load data
+          }
+        }
       } else {
-        console.error('Data load failed at response!', data)
+        console.error('Data load failed:', data)
       }
     } catch (error) {
-      isSaving.value = false
-      console.error('Data load errored!', data)
+      console.error('Data load errored:', error)
     }
   }
 

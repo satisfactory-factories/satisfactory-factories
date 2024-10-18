@@ -359,10 +359,6 @@
   const initializeFactories = () => {
     Object.assign(worldRawResources, generateRawResources())
     updateWorldRawResources()
-
-    if (factories.length === 0) {
-      createFactory('My first factory')
-    }
   }
 
   const sluggify = (subject: string): string => {

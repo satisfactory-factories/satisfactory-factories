@@ -8,6 +8,7 @@ export const useAppStore = defineStore('app', {
     factories: reactive<Factory[]>(JSON.parse(localStorage.getItem('factories') || '[]') as Factory[]),
     loggedInUser: ref<string>(localStorage.getItem('loggedInUser') || ''),
     token: ref<string>(localStorage.getItem('token') || ''),
+    lastSave: ref<Date>(localStorage.getItem('lastSave') || ''),
   }),
   getters: {
     getFactories: state => state.factories,
@@ -29,7 +30,6 @@ export const useAppStore = defineStore('app', {
       this.factories[index] = factory
     },
     setLoggedInUser (username: string) {
-      console.log('Setting logged in user to', username)
       this.loggedInUser = username ?? ''
       localStorage.setItem('loggedInUser', username)
       if (username === '') {
@@ -37,7 +37,6 @@ export const useAppStore = defineStore('app', {
       }
     },
     setToken (token: string) {
-      console.log('Setting token to', token)
       this.token = token ?? ''
       localStorage.setItem('token', token)
       if (token === '') {
@@ -47,12 +46,11 @@ export const useAppStore = defineStore('app', {
     saveFactories (factoryData: Factory[]) {
       // Save the factories array to localStorage
       this.factories = factoryData
-      localStorage.setItem('factories', JSON.stringify(factoryData))
+      this.lastSave = new Date()
+      localStorage.setItem('factories', JSON.stringify(this.factoryData))
+      localStorage.setItem('lastSave', JSON.stringify(this.lastSave))
 
-      // If the user is logged in, save the factories to the database
-      if (this.loggedInUser) {
-        console.log('Saving factories to the database from store')
-      }
+      // Since the factory data is being watched by the auth module, it will automatically be saved to the server if the user is logged in.
     },
   },
 })
