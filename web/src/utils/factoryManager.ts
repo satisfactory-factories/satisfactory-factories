@@ -23,10 +23,28 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
         return
       }
 
-      const produces = recipe.product[recipe.id]
+      const isRaw = gameData.items.rawResources[ingredient]
+
+      // Get the first key of product
+      const productKey = Object.keys(recipe.product)[0] // This is a large assumption there is only ever one product!
+
+      let produces = recipe.product[productKey]
+
+      if (isRaw) {
+        produces = 1 // This is a large assumption!
+      }
+
       const ingredientRequired = (product.amount / produces) * ingredientAmount
 
       console.log(`(${product.amount} / ${produces}) * ${ingredientAmount} = ${ingredientRequired}`)
+
+      console.log('product', product)
+      console.log('productKey', productKey)
+      console.log('recipe', recipe)
+      console.log('ingredient', ingredient)
+      console.log('produces', produces)
+      console.log('ingredientPart', ingredientPart)
+      console.log('ingredientRequired', ingredientRequired)
 
       // Raw resource handling
       if (gameData.items.rawResources[ingredient]) {
@@ -37,7 +55,7 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
           }
         }
         factory.rawResources[ingredient] = {
-          amount: ingredientRequired,
+          amount: factory.rawResources[ingredient].amount += ingredientRequired,
           satisfied: true, // Always mark raws as satisfied, it saves a ton of pain.
         }
       }
@@ -60,11 +78,6 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
       }
 
       factory.partRequirements[ingredient].amountRequired += ingredientRequired
-
-      console.log('product', product)
-      console.log('partAmount', ingredientAmount)
-      console.log('ingredientPart', ingredientPart)
-      console.log('ingredientRequired', ingredientRequired)
     })
   })
 }
