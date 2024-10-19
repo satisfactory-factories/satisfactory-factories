@@ -387,7 +387,6 @@
       console.error('No subject provided to getIcon!')
       return ''
     }
-    console.log(subject)
     if (type === 'building') {
       return getImageUrl(subject, 'building', size)
     } else {
@@ -506,12 +505,17 @@
   border: 2px solid rgb(108, 108, 108);
 
   .header {
-    padding: 16px 12px 0 !important;
+    padding: 16px 16px 0 !important;
     margin-bottom: 0;
     border-bottom: 1px solid rgb(108, 108, 108);
     align-items: center;
     transition: all 0.3s;
     background-color: rgba(43, 43, 43, 0.4);
+
+    &.list {
+      padding: 0 !important;
+      border-bottom: 0;
+    }
   }
 
   &.problem {

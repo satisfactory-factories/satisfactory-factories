@@ -2,10 +2,10 @@
   <v-img
     :alt="subject"
     aspect-ratio="1/1"
-    :height="heightPx"
     inline
+    :min-height="heightPx"
+    :min-width="widthPx"
     :src="imgUrl"
-    :width="widthPx"
   />
 </template>
 

@@ -24,63 +24,61 @@
 
     <v-row v-if="Object.keys(factory.partRequirements).length > 0">
       <v-col cols="12" md="7">
-        <v-card class="mb-1 border-md sub-card">
+        <v-card class="mb-1 pb-0 border-md sub-card">
           <v-card-title>
             <h2 class="text-h6">
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1 pb-2">
+          <v-card-text class="text-body-1 pb-0">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <div
+            <v-row
               v-for="(part, partIndex) in factory.partRequirements"
               :key="partIndex"
-              class="mb-0 py-2 border-b-md no-bottom"
+              class="my-0 py-0 border-b-md no-bottom"
               :class="isSatisfiedStyling(factory, partIndex)"
             >
-              <v-row>
-                <v-col align-self="center" class="flex-grow-0 py-2" style="padding-right: 0">
-                  <game-asset :subject="partIndex" type="item" />
-                </v-col>
-                <v-col>
-                  <p v-if="part.satisfied">
-                    <v-icon icon="fas fa-check" />
-                    <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
-                  </p>
-                  <p v-else>
-                    <v-icon icon="fas fa-times" />
-                    <span class="ml-2">
-                      <span>
-                        <b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
-                      </span>
+              <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
+                <game-asset height="40" :subject="partIndex" type="item" width="40" />
+              </v-col>
+              <v-col>
+                <p v-if="part.satisfied">
+                  <v-icon icon="fas fa-check" />
+                  <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
+                </p>
+                <p v-else>
+                  <v-icon icon="fas fa-times" />
+                  <span class="ml-2">
+                    <span>
+                      <b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
                     </span>
-                  </p>
-                </v-col>
+                  </span>
+                </p>
+              </v-col>
 
-                <v-col align-self="center" class="text-right flex-shrink-0">
-                  <v-btn
-                    v-if="!getProduct(factory, partIndex)"
-                    class="ml-2 my-1"
-                    color="primary"
-                    size="small"
-                    variant="outlined"
-                    @click="addProduct(factory, partIndex)"
-                  >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
-                  </v-btn>
-                  <v-btn
-                    v-if="getImport(factory, partIndex) && !part.satisfied"
-                    class="ml-2 my-1"
-                    color="secondary"
-                    size="small"
-                    variant="outlined"
-                    @click="fixSatisfactionImport(factory, partIndex)"
-                  >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </div>
+              <v-col align-self="center" class="text-right flex-shrink-0">
+                <v-btn
+                  v-if="!getProduct(factory, partIndex)"
+                  class="ml-2 my-1"
+                  color="primary"
+                  size="small"
+                  variant="outlined"
+                  @click="addProduct(factory, partIndex)"
+                >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
+                </v-btn>
+                <v-btn
+                  v-if="getImport(factory, partIndex) && !part.satisfied"
+                  class="ml-2 my-1"
+                  color="secondary"
+                  size="small"
+                  variant="outlined"
+                  @click="fixSatisfactionImport(factory, partIndex)"
+                >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>

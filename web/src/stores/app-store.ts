@@ -1,7 +1,7 @@
 // Utilities
 import { defineStore } from 'pinia'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
   // Define state using Composition API

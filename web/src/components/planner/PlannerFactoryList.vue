@@ -1,7 +1,7 @@
 <template>
   <div v-for="(factory) in factories" :key="factory.id" class="mb-1 rounded no-bottom" :class="factoryClass(factory)">
     <v-card
-      class="w-100 header"
+      class="w-100 header list"
       @click="navigateToFactory(factory.id)"
     >
       <v-card-title>

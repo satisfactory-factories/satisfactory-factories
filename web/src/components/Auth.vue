@@ -364,8 +364,6 @@
         }
 
         const lastSaved = new Date(realData.lastSaved)
-        console.log('Last saved:', lastSaved)
-        console.log('Last edit:', lastEdit.value)
         const oos = lastEdit.value && lastEdit.value > lastSaved // Check for desync
 
         if (oos) {
@@ -422,8 +420,5 @@
 }
 .lightRed {
   color: lightcoral;
-}
-.lightGreen {
-  color: lightgreen;
 }
 </style>
