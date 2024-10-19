@@ -173,7 +173,7 @@
 
 <style lang="scss" scoped>
 .radio-fix {
-  ::v-deep label {
+  :deep(label) {
     margin-left: 5px;
   }
 

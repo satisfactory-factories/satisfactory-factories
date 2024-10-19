@@ -431,8 +431,8 @@
   }
 
   .sticky-sidebar {
-    width: 400px;
-    max-width: 400px;
+    width: 350px;
+    max-width: 350px;
     max-height: 87vh; // For some reason this is not relative to the container
     overflow-y: auto; /* Make it scrollable */
   }

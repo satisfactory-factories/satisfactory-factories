@@ -115,7 +115,7 @@
     }
   }
 
-  const confirmDelete = (message = 'Are you sure?') => {
+  const confirmDelete = (message = 'Are you sure you want to delete this factory?') => {
     return confirm(message)
   }
 </script>

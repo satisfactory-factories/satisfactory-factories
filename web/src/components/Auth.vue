@@ -1,11 +1,18 @@
 <template>
-  <v-overlay
-    absolute
-    location="center"
+  <v-dialog v-model="showOverwriteDialog" max-width="400">
+    <v-card>
+      <v-card-title class="headline">Confirm Overwrite</v-card-title>
+      <v-card-text>
+        You have unsaved changes locally. Do you want to overwrite your changes with the saved data from the server?
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" @click="confirmOverwrite">Overwrite</v-btn>
+        <v-btn color="secondary" @click="cancelOverwrite">Cancel</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-dialog
     :model-value="showSessionExpiredAlert"
-    scroll-strategy="block"
-    style="top: calc(50vh - 90px); left: calc(50vw - 190px)"
-    theme="dark"
   >
     <v-card class="border-md">
       <v-card-title class="text-h5">Session Expired</v-card-title>
@@ -16,7 +23,7 @@
         <v-btn color="primary" variant="elevated" @click="closeSessionExpiredAlert">Ok</v-btn>
       </v-card-actions>
     </v-card>
-  </v-overlay>
+  </v-dialog>
   <div class="position-absolute top-0 right-0 ma-2 text-right">
     <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
     <v-btn v-else @click="toggleTray"><i class="fas fa-user" /><span class="ml-2">{{ loggedInUser }}</span></v-btn>
@@ -79,9 +86,21 @@
         </v-card-text>
 
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
-          <p class="mb-4">You are signed in. As of now your factories will be automatically saved. Should you lose your data (unless you wiped it!), simply log back in again.</p>
-          <p class="mb-4"><i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}</p>
-          <v-btn color="warning" @click="handleLogout">Log out</v-btn>
+          <p class="mb-4">
+            You are signed in. Your factory data will automatically saved. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
+          </p>
+          <p class="mb-4">
+            <i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}
+          </p>
+          <v-btn
+            class="mr-2"
+            color="warning"
+            @click="handleLogout"
+          >Log out</v-btn>
+          <v-btn
+            color="primary"
+            @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
+          >Force Download</v-btn>
 
         </v-card-text>
       </v-card>
@@ -102,23 +121,27 @@
   const showRegister = ref(false)
   const errorMessage = ref('')
   const apiUrl = 'http://localhost:3001'
-  const lastSaved = ref(new Date())
   const lastSavedDisplay = ref('')
   const isSaving = ref(false)
   const showSessionExpiredAlert = ref(false)
+  const showOverwriteDialog = ref(false)
 
   const dataToSave = ref({})
   const dataSavePending = ref(false)
   let saveInterval: NodeJS.Timeout
 
   const appStore = useAppStore()
-  const { loggedInUser, token, factories } = storeToRefs(appStore)
+  const { loggedInUser, token, factories, lastSave, lastEdit } = storeToRefs(appStore)
 
   watch(factories, newValue => {
     if (appStore.loggedInUser) {
       dataToSave.value = newValue
       dataSavePending.value = true
     }
+  }, { deep: true })
+
+  watch(lastSave, newValue => {
+    lastSavedDisplay.value = lastSaveDateFormat(newValue)
   }, { deep: true })
 
   onMounted(() => {
@@ -163,10 +186,6 @@
   defineExpose({
     closeTray,
   })
-
-  watch(lastSaved, newValue => {
-    lastSavedDisplay.value = lastSaveDateFormat(newValue)
-  }, { deep: true })
 
   const handleSignIn = async () => {
     try {
@@ -300,7 +319,7 @@
       await response.json()
       if (response.ok) {
         console.log('Data was saved.')
-        lastSaved.value = new Date()
+        appStore.setLastSave()
         isSaving.value = false
       } else {
         console.error('Data save failed at response!', data)
@@ -318,6 +337,10 @@
       return
     }
 
+    if (forceLoad) {
+      console.log('Forcing data load...')
+    }
+
     try {
       const response = await fetch(`${apiUrl}/load`, {
         method: 'GET',
@@ -327,26 +350,32 @@
         },
       })
       const data = await response.json()
-      const realData = data.data
+      const realData = data?.data
       if (response.ok) {
-        console.log('Data loaded:', realData)
-        appStore.setFactories(realData.factories)
-
-        // If the data store is already empty, simply replace the data
-        if (appStore.getFactories.length === 0 || forceLoad) {
-          console.log('Data store is empty. Loading data from backend.')
-          appStore.setFactories(realData.factories)
-        } else {
-          // If the data store is not empty, check if the data is newer than the last save
-          const lastSave = new Date(realData.lastSave)
-          const lastEdit = new Date(realData.lastEdit)
-          if (lastEdit > lastSave || forceLoad) {
-            appStore.setFactories(realData.factories)
-          } else {
-            console.log('Data is older than last save. Prompting user to load data.')
-            // Prompt user to load data
-          }
+        if (!realData) {
+          console.warn('No data found in response. Could be first time user has logged in.')
+          return
         }
+
+        if (forceLoad) {
+          console.log('Forcing data load...')
+          appStore.setFactories(realData)
+          return
+        }
+
+        const lastSaved = new Date(realData.lastSaved)
+        console.log('Last saved:', lastSaved)
+        console.log('Last edit:', lastEdit.value)
+        const oos = lastEdit.value && lastEdit.value > lastSaved // Check for desync
+
+        if (oos) {
+          console.log('Data is out of sync. Prompting user for overwrite.')
+          showOverwriteDialog.value = true
+          return
+        }
+
+        console.log('Data loaded:', realData)
+        appStore.setFactories(realData)
       } else {
         console.error('Data load failed:', data)
       }
@@ -365,6 +394,20 @@
     const minutes = String(date.getMinutes()).padStart(2, '0')
     const seconds = String(date.getSeconds()).padStart(2, '0')
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+  }
+
+  const confirmOverwrite = () => {
+    console.log('Overwriting local data with server data...')
+    handleDataLoad(true)
+    showOverwriteDialog.value = false
+  }
+
+  const cancelOverwrite = () => {
+    showOverwriteDialog.value = false
+  }
+
+  const confirmForceSync = (message: string) => {
+    return confirm(message)
   }
 </script>
 

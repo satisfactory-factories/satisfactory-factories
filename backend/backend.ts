@@ -6,6 +6,8 @@ import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 // @ts-ignore Types exist???
 import { Query, Send } from "express-serve-static-core";
+import {FactoryData} from "./models/FactoyDataSchema";
+import {User} from "./models/UsersSchema";
 
 dotenv.config();
 
@@ -33,26 +35,6 @@ mongoose.connect(process.env.MONGO_URI ?? 'mongodb://localhost:27017/factory_pla
 })
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.log('Error connecting to MongoDB', error));
-
-// *************************************************
-// User Model
-// *************************************************
-
-const UserSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-});
-const User = mongoose.model('User', UserSchema);
-
-// *************************************************
-// Factory Data Model
-// *************************************************
-
-const FactoryDataSchema = new mongoose.Schema({
-  user: { type: String, required: true },
-  data: { type: mongoose.Schema.Types.Mixed, required: true },
-});
-const FactoryData = mongoose.model('FactoryData', FactoryDataSchema);
 
 // *************************************************
 // Request/Response Types
@@ -180,7 +162,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
 
     await FactoryData.findOneAndUpdate(
       { user: username },
-      { data: userData },
+      { data: userData, lastSaved: new Date() },
       { new: true, upsert: true }
     );
 
