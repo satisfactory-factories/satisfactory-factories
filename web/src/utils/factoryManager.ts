@@ -23,17 +23,9 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
         return
       }
 
-      const isRaw = gameData.items.rawResources[ingredient]
-
       // Get the first key of product
       const productKey = Object.keys(recipe.product)[0] // This is a large assumption there is only ever one product!
-
-      let produces = recipe.product[productKey]
-
-      if (isRaw) {
-        produces = 1 // This is a large assumption!
-      }
-
+      const produces = recipe.product[productKey]
       const ingredientRequired = (product.amount / produces) * ingredientAmount
 
       console.log(`(${product.amount} / ${produces}) * ${ingredientAmount} = ${ingredientRequired}`)
