@@ -60,7 +60,7 @@
 
               <v-col align-self="center" class="text-right flex-shrink-0">
                 <v-btn
-                  v-if="!getProduct(factory, partIndex)"
+                  v-if="!getProduct(factory, partIndex) && !isItemRawResource(partIndex)"
                   class="ml-2 my-1"
                   color="primary"
                   size="small"
@@ -132,6 +132,7 @@
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (part: string) => string
+  const isItemRawResource = inject('isItemRawResource') as (part: string) => booleanß
 
   defineProps<{
     factory: Factory;

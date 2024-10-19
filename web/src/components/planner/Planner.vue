@@ -409,6 +409,10 @@
     return `/assets/game/images/${type}/${name}_${pxSize}.png`
   }
 
+  const isItemRawResource = (item: string): boolean => {
+    return !!props.gameData.items.rawResources[item]
+  }
+
   // Initialize during setup
   initializeFactories()
 
@@ -421,6 +425,7 @@
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
   provide('getIcon', getIcon)
+  provide('isItemRawResource', isItemRawResource)
 
   const showDemo = () => {
     console.log('showDemo')
