@@ -1,46 +1,39 @@
 <template>
-  <v-row>
-    <v-col>
-      <v-list v-if="factories.length > 0" density="compact">
-        <v-list-item v-for="(factory) in factories" :key="factory.id">
-          <v-card
-            class="w-100"
-            :style="factoryStyling(factory)"
-            @click="navigateToFactory(factory.id)"
-          >
-            <v-card-title>
-              <v-row>
-                <v-col align-self="center" class="text-body-1 pr-2">
-                  <i class="fas fa-industry" />
-                  <span class="ml-2">{{ truncateFactoryName(factory.name) }}</span>
-                </v-col>
-                <v-col align-self="end" class="text-right pl-0">
-                  <v-btn
-                    class="mr-1 rounded"
-                    color="primary"
-                    :disabled="factory.displayOrder === 0"
-                    icon="fas fa-arrow-up"
-                    size="x-small"
-                    variant="outlined"
-                    @click="moveFactory(factory, 'up')"
-                  />
-                  <v-btn
-                    class="rounded"
-                    color="primary"
-                    :disabled="factory.displayOrder === totalFactories - 1"
-                    icon="fas fa-arrow-down"
-                    size="x-small"
-                    variant="outlined"
-                    @click="moveFactory(factory, 'down')"
-                  /></v-col>
-              </v-row>
+  <div v-for="(factory) in factories" :key="factory.id" class="mb-1 rounded no-bottom" :class="factoryClass(factory)">
+    <v-card
+      class="w-100 header"
+      @click="navigateToFactory(factory.id)"
+    >
+      <v-card-title>
+        <v-row>
+          <v-col align-self="center" class="text-body-1 pr-2">
+            <i class="fas fa-industry" />
+            <span class="ml-2">{{ truncateFactoryName(factory.name) }}</span>
+          </v-col>
+          <v-col align-self="end" class="text-right pl-0">
+            <v-btn
+              class="mr-1 rounded"
+              color="primary"
+              :disabled="factory.displayOrder === 0"
+              icon="fas fa-arrow-up"
+              size="x-small"
+              variant="outlined"
+              @click="moveFactory(factory, 'up')"
+            />
+            <v-btn
+              class="rounded"
+              color="primary"
+              :disabled="factory.displayOrder === totalFactories - 1"
+              icon="fas fa-arrow-down"
+              size="x-small"
+              variant="outlined"
+              @click="moveFactory(factory, 'down')"
+            /></v-col>
+        </v-row>
 
-            </v-card-title>
-          </v-card>
-        </v-list-item>
-      </v-list>
-    </v-col>
-  </v-row>
+      </v-card-title>
+    </v-card>
+  </div>
   <v-row class="pa-0 ma-0">
     <v-col class="text-center">
       <v-btn
@@ -65,10 +58,10 @@
   defineProps<{ factories: Factory[], totalFactories: number }>()
   const emit = defineEmits<{ 'createFactory':() => void }>()
 
-  const factoryStyling = (factory: Factory) => {
+  const factoryClass = (factory: Factory) => {
     return {
-      border: `1px solid ${factory.hasProblem ? '#dc3545' : 'rgb(108, 108, 108)'}`,
-      backgroundColor: `${factory.hasProblem ? 'rgba(140, 9, 21, 0.4)' : 'rgba(43, 43, 43, 0.4)'}`,
+      'factory-card': true,
+      problem: factory.hasProblem,
     }
   }
 

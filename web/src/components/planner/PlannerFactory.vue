@@ -1,8 +1,8 @@
 <template>
   <v-row>
     <v-col>
-      <v-card :id="factory.id" :style="factoryStyling(factory)">
-        <v-row class="pa-4 pb-0 mb-0 border-b align-center" :style="factoryHeaderStyling(factory)">
+      <v-card :id="factory.id" :class="factoryClass(factory)">
+        <v-row class="header">
           <v-col class="text-h4 flex-grow-1" cols="8">
             <i class="fas fa-industry" style="width: 35px" />
             <input
@@ -101,17 +101,10 @@
     totalFactories: number;
   }>()
 
-  const factoryStyling = (factory: Factory) => {
+  const factoryClass = (factory: Factory) => {
     return {
-      border: `1px solid ${factory.hasProblem ? '#dc3545' : 'rgb(108, 108, 108)'}`,
-    }
-  }
-
-  const factoryHeaderStyling = (factory: Factory) => {
-    const satisfied = factory.requirementsSatisfied
-
-    return {
-      backgroundColor: `${satisfied ? 'rgba(43, 43, 43, 0.4)' : 'rgba(140, 9, 21, 0.4)'}`,
+      'factory-card': true,
+      problem: !factory.requirementsSatisfied,
     }
   }
 
@@ -125,7 +118,6 @@
   width: 85%;
   padding: 6px;
   border-radius: 4px;
-
   transition: background-color 0.3s;
 
   &:hover {

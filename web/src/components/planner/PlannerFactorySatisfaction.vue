@@ -9,7 +9,7 @@
     </h2>
     <h2
       v-show="!factory.requirementsSatisfied"
-      class="text-h4 mb-4 text-red"
+      class="text-h5 mb-4 text-red"
     >
       <i class="fas fa-times" />
       <span class="ml-3">Satisfaction</span>
@@ -24,7 +24,7 @@
 
     <v-row v-if="Object.keys(factory.partRequirements).length > 0">
       <v-col cols="12" md="7">
-        <v-card class="mb-1 border-md my-card">
+        <v-card class="mb-1 border-md sub-card">
           <v-card-title>
             <h2 class="text-h6">
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
@@ -85,7 +85,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="5">
-        <v-card class="my-card border-md">
+        <v-card class="sub-card border-md">
           <v-card-title>
             <h2 class="text-h6">
               <i class="fas fa-building" />

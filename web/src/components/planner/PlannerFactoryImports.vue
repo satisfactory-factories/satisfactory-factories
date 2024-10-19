@@ -8,7 +8,7 @@
       <i class="fas fa-info-circle" /> Imports are the resources needed to produce the factory's products and ensure its satisfaction. To set up imports, you select another factory and choose one of its outputs. This creates a "request" for that output. The selected factory must fulfill this request, and you'll be notified if it cannot meet the demand. All available outputs are listed in the Outputs section of the factory you choose.
     </p>
     <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partRequirements).length > 0">
-      <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border-md my-card">
+      <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border-md sub-card">
         <v-card-title>
           <i class="fas fa-hard-hat" /><span class="ml-2">Raw Resources</span>
         </v-card-title>

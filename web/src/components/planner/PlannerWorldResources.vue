@@ -1,12 +1,12 @@
 <template>
   <v-row>
     <v-col>
-      <v-card>
-        <v-row style="padding: 16px">
-          <v-col class="text-h4">
+      <v-card class="factory-card">
+        <v-row class="header">
+          <v-col class="text-h4 flex-grow-1" cols="8">
             <i class="fas fa-globe" /><span class="ml-3">World Resources</span>
           </v-col>
-          <v-col align-self="center" class="text-right">
+          <v-col class="text-right" cols="4">
             <v-btn
               v-show="!hidden"
               color="primary"
@@ -26,7 +26,9 @@
           </v-col>
         </v-row>
         <v-card-text v-show="!hidden" class="text-body-1">
-          <p class="mb-4">Showing all of the world resources remaining after all factory requirements are taken into account. Units are in /min or /m3 depending on the resource. This does not take into any account about Converters as it's very hard to calculate.</p>
+          <p v-show="helpText" class="mb-4">
+            <i class="fas fa-info-circle" />Showing all of the world resources remaining after all factory requirements are taken into account. Units are in /min or /m3 depending on the resource. This does not take into any account about Converters as it's very hard to calculate.
+          </p>
           <v-chip v-for="ore in worldRawResources" :key="ore.id" class="ma-1" color="primary">
             <game-asset :subject="ore.id" type="item" />
             <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ ore.amount }}</span>
@@ -45,6 +47,7 @@
 
   defineProps<{
     worldRawResources: WorldRawResource;
+    helpText: boolean;
   }>()
 
   // Initialize the 'hidden' ref based on the value in localStorage

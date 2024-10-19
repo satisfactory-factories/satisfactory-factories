@@ -57,7 +57,10 @@
           </v-btn>
 
           <todo />
-          <planner-world-resources :world-raw-resources="worldRawResources" />
+          <planner-world-resources
+            :help-text="helpText"
+            :world-raw-resources="worldRawResources"
+          />
 
           <planner-factory
             v-for="(factory) in factories"
@@ -156,6 +159,7 @@
           }
 
           if (!worldRawResources[ingredientId]) {
+            console.log(`Ingredient ${ingredientId} not found in worldRawResources. Skipping.`)
             return
           }
 
@@ -163,6 +167,8 @@
 
           // Update the world resource by reducing the available amount.
           worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * product.amount)
+
+          console.log('worldRawResources', worldRawResources)
         })
       })
     })
@@ -182,7 +188,14 @@
     })
 
     // Return a sorted object by the name property. Key is not correct.
-    return Object.values(ores).sort((a, b) => a.name.localeCompare(b.name))
+    const sortedOres = Object.values(ores).sort((a, b) => a.name.localeCompare(b.name))
+
+    const sortedOresAsObj = {}
+    sortedOres.forEach(ore => {
+      sortedOresAsObj[ore.id] = ore
+    })
+
+    return sortedOresAsObj
   }
 
   const findFactory = (factoryId: string | number): Factory | null => {
@@ -471,7 +484,7 @@
   }
 }
 
-.my-card {
+.sub-card {
   background-color: rgb(50, 50, 50);
 
   &:last-of-type {
@@ -485,6 +498,28 @@
     border-bottom: 0 !important;
     margin-bottom: 0 !important;
     box-shadow: 0 0 0 0;
+  }
+}
+
+.factory-card {
+  transition: all 0.3s;
+  border: 2px solid rgb(108, 108, 108);
+
+  .header {
+    padding: 16px 12px 0 !important;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgb(108, 108, 108);
+    align-items: center;
+    transition: all 0.3s;
+    background-color: rgba(43, 43, 43, 0.4);
+  }
+
+  &.problem {
+    border: 2px solid #dc3545;
+
+    .header {
+      background-color: rgba(140, 9, 21, 0.4);
+    }
   }
 }
 

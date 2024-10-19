@@ -20,7 +20,7 @@
           <div v-for=" (product) in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)" :key="`${factory.id}-${product.id}`">
             <v-card
               v-if="factory.surplus[product.id]"
-              class="my-card border-md mb-1"
+              class="sub-card border-md mb-1"
               :style="requestStyling(getRequestMetricsForFactoryByPart(factory, product.id))"
             >
               <v-row align-content="center" class="mb-0 pa-6 pb-0">
