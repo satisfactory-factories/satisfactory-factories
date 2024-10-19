@@ -60,11 +60,14 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
         }
       }
 
+      // Set the amount that the individual products need.
       if (!product.requirements[ingredient]) {
         product.requirements[ingredient] = {
           amount: 0,
         }
       }
+
+      product.requirements[ingredient].amount += ingredientRequired
 
       // Now add the requirements to the factory wide part requirements.
       if (!factory.partRequirements[ingredient]) {
