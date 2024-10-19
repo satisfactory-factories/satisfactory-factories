@@ -27,12 +27,13 @@
         </v-row>
         <v-card-text v-show="!hidden" class="text-body-1">
           <p class="mb-4">Showing all of the world resources remaining after all factory requirements are taken into account. Units are in /min or /m3 depending on the resource. This does not take into any account about Converters as it's very hard to calculate.</p>
-          <ul class="pl-4">
-            <li v-for="ore in worldRawResources" :key="ore.name">
-              <b>{{ ore.name }}</b>: {{ ore.amount }}
-            </li>
-          </ul>
+          <v-chip v-for="ore in worldRawResources" :key="ore.id" class="ma-1" color="primary">
+            <game-asset :subject="ore.id" type="item" />
+            <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ ore.amount }}</span>
+            <span v-else class="ml-2">Water: <i class="fas fa-infinity" /></span>
+          </v-chip>
         </v-card-text>
+
       </v-card>
     </v-col>
   </v-row>

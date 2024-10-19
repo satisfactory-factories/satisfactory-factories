@@ -90,22 +90,22 @@
   import { computed, defineProps, provide, reactive, ref, watch } from 'vue'
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
-  import {
-    Factory,
-    WorldRawResource,
-  } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, WorldRawResource } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
   import {
     calculateBuildingRequirements,
     calculateDependencies,
-    calculateDependencyMetrics, calculateFactoryBuildingsAndPower,
+    calculateDependencyMetrics,
+    calculateFactoryBuildingsAndPower,
     calculateFactoryInputSupply,
     calculateFactoryInternalSupply,
     calculateFactoryRawSupply,
-    calculateFactorySatisfaction, calculateHasProblem,
+    calculateFactorySatisfaction,
+    calculateHasProblem,
     calculateProductRequirements,
-    calculateSurplus, calculateUsingRawResourcesOnly,
+    calculateSurplus,
+    calculateUsingRawResourcesOnly,
   } from '@/utils/factoryManager'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
@@ -175,12 +175,14 @@
     Object.keys(props.gameData.items.rawResources).forEach(name => {
       const resource = props.gameData.items.rawResources[name]
       ores[name] = {
+        id: name,
         name: resource.name,
         amount: resource.limit,
       }
     })
 
-    return ores
+    // Return a sorted object by the name property. Key is not correct.
+    return Object.values(ores).sort((a, b) => a.name.localeCompare(b.name))
   }
 
   const findFactory = (factoryId: string | number): Factory | null => {
@@ -372,10 +374,16 @@
       console.error('No subject provided to getIcon!')
       return ''
     }
+    console.log(subject)
     if (type === 'building') {
       return getImageUrl(subject, 'building', size)
     } else {
-      const item = props.gameData.items.parts[subject] || props.gameData.items.rawResources[subject]
+      const item = props.gameData.items.parts[subject] || props.gameData.items.rawResources[subject].name
+
+      if (!item) {
+        console.error(`Item ${subject} not found in game data!`)
+        return ''
+      }
       return getImageUrl(sluggify(item), 'item', size)
     }
   }

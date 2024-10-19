@@ -55,6 +55,7 @@ export interface FactoryDependency {
 
 export interface WorldRawResource {
   [key: string]: {
+    id: string;
     name: string;
     amount: number;
   }
