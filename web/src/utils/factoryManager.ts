@@ -17,35 +17,40 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
 
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredientPart => {
-      const [part, partAmount] = Object.entries(ingredientPart)[0]
-      if (isNaN(partAmount)) {
-        console.warn(`Invalid ingredient amount for ingredient ${part}. Skipping.`)
+      const [ingredient, ingredientAmount] = Object.entries(ingredientPart)[0]
+      if (isNaN(ingredientAmount)) {
+        console.warn(`Invalid ingredient amount for ingredient ${ingredient}. Skipping.`)
         return
       }
 
+      const produces = recipe.product[recipe.id]
+      const ingredientRequired = (product.amount / produces) * ingredientAmount
+
+      console.log(`(${product.amount} / ${produces}) * ${ingredientAmount} = ${ingredientRequired}`)
+
       // Raw resource handling
-      if (gameData.items.rawResources[part]) {
-        if (!factory.rawResources[part]) {
-          factory.rawResources[part] = {
-            name: gameData.items.rawResources[part].name,
+      if (gameData.items.rawResources[ingredient]) {
+        if (!factory.rawResources[ingredient]) {
+          factory.rawResources[ingredient] = {
+            name: gameData.items.rawResources[ingredient].name,
             amount: 0,
           }
         }
-        factory.rawResources[part] = {
-          amount: partAmount * product.amount,
+        factory.rawResources[ingredient] = {
+          amount: ingredientRequired,
           satisfied: true, // Always mark raws as satisfied, it saves a ton of pain.
         }
       }
 
-      if (!product.requirements[part]) {
-        product.requirements[part] = {
-          amount: partAmount * product.amount,
+      if (!product.requirements[ingredient]) {
+        product.requirements[ingredient] = {
+          amount: 0,
         }
       }
 
       // Now add the requirements to the factory wide part requirements.
-      if (!factory.partRequirements[part]) {
-        factory.partRequirements[part] = {
+      if (!factory.partRequirements[ingredient]) {
+        factory.partRequirements[ingredient] = {
           amountRequired: 0,
           amountSupplied: 0,
           amountSuppliedViaInput: 0,
@@ -54,7 +59,12 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
         }
       }
 
-      factory.partRequirements[part].amountRequired += partAmount * product.amount
+      factory.partRequirements[ingredient].amountRequired += ingredientRequired
+
+      console.log('product', product)
+      console.log('partAmount', ingredientAmount)
+      console.log('ingredientPart', ingredientPart)
+      console.log('ingredientRequired', ingredientRequired)
     })
   })
 }
