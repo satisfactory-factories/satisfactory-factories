@@ -525,7 +525,7 @@
     margin-bottom: 0;
     border-bottom: 1px solid rgb(108, 108, 108);
     align-items: center;
-    transition: all 0.3s;
+    transition: background-color 0.3s;
     background-color: rgba(43, 43, 43, 0.4);
 
     &.list {

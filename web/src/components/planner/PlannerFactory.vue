@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <v-card :id="factory.id" :class="factoryClass(factory)">
-        <v-row class="header">
+        <v-row class="header" :style="factoryHeaderStyle(factory)">
           <v-col class="text-h4 flex-grow-1" cols="8">
             <i class="fas fa-industry" style="width: 35px" />
             <input
@@ -115,6 +115,12 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
+    }
+  }
+
+  const factoryHeaderStyle = (factory: Factory) => {
+    return {
+      'border-bottom-color': factory.hidden ? 'transparent' : '',
     }
   }
 
