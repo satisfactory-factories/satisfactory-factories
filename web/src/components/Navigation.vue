@@ -30,7 +30,6 @@
           { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
           { title: 'Graph', icon: 'fas fa-project-diagram', href: '/graph' },
           { title: 'Recipes', icon: 'fas fa-hat-chef', href: '/recipes' },
-          { title: 'Settings', icon: 'fas fa-wrench', href: '/settings' },
         ],
       }
     },

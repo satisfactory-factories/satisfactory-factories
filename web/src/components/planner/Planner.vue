@@ -21,6 +21,7 @@
         :factories="factories"
         :total-factories="factories.length"
         @create-factory="createFactory"
+        @update-factories="updateFactories"
       />
     </v-navigation-drawer>
     <v-row class="two-pane-container">
@@ -31,6 +32,7 @@
             :factories="factories"
             :total-factories="factories.length"
             @create-factory="createFactory"
+            @update-factories="updateFactories"
           />
           <v-divider color="#ccc" thickness="2px" />
           <planner-global-actions
@@ -230,6 +232,13 @@
     })
   }
 
+  const updateFactories = (newFactories: Factory[]) => {
+    console.log('updateFactories', newFactories[0])
+    factories.value = newFactories
+    forceSort()
+    console.log('Factories updated and re-sorted')
+  }
+
   // We update the factory in layers of calculations. This makes it much easier to conceptualize.
   const updateFactory = (factory: Factory) => {
     updateWorldRawResources()
@@ -363,6 +372,16 @@
 
     // Now re-sort
     factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
+  }
+
+  const forceSort = () => {
+    let count = 0
+
+    // Forcefully regenerate the displayOrder counting upwards.
+    factories.value.forEach(factory => {
+      factory.displayOrder = count
+      count++
+    })
   }
 
   const initializeFactories = () => {
