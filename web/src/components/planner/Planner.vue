@@ -159,7 +159,6 @@
           }
 
           if (!worldRawResources[ingredientId]) {
-            console.log(`Ingredient ${ingredientId} not found in worldRawResources. Skipping.`)
             return
           }
 
@@ -167,8 +166,6 @@
 
           // Update the world resource by reducing the available amount.
           worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * product.amount)
-
-          console.log('worldRawResources', worldRawResources)
         })
       })
     })

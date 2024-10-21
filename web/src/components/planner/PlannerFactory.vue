@@ -79,6 +79,13 @@
             :factory="factory"
             :help-text="helpText"
           />
+          <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
+          <v-btn color="primary" @click="showDebug = !showDebug">
+            <i class="fas fa-bug" /> Show Debug
+          </v-btn>
+          <div v-show="showDebug">
+            <pre>{{ factory }}</pre>
+          </div>
         </v-card-text>
       </v-card>
     </v-col>
@@ -100,6 +107,8 @@
     helpText: boolean
     totalFactories: number;
   }>()
+
+  const showDebug = ref(false)
 
   const factoryClass = (factory: Factory) => {
     return {

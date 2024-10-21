@@ -28,16 +28,6 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
       const produces = recipe.product[productKey]
       const ingredientRequired = (product.amount / produces) * ingredientAmount
 
-      console.log(`(${product.amount} / ${produces}) * ${ingredientAmount} = ${ingredientRequired}`)
-
-      console.log('product', product)
-      console.log('productKey', productKey)
-      console.log('recipe', recipe)
-      console.log('ingredient', ingredient)
-      console.log('produces', produces)
-      console.log('ingredientPart', ingredientPart)
-      console.log('ingredientRequired', ingredientRequired)
-
       // Raw resource handling
       if (gameData.items.rawResources[ingredient]) {
         if (!factory.rawResources[ingredient]) {

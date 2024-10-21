@@ -40,6 +40,16 @@
           variant="outlined"
           @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
         />
+        <span v-show="!input.outputPart" class="mr-2">
+          <i class="fas fa-cube" style="width: 32px; height: 32px" />
+        </span>
+        <span v-show="input.outputPart" class="mr-2">
+          <game-asset
+            :key="input.outputPart"
+            :subject="input.outputPart"
+            type="item"
+          />
+        </span>
         <v-autocomplete
           v-model="input.outputPart"
           class="mr-2"
@@ -47,7 +57,6 @@
           :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
           label="Item"
           max-width="300px"
-          prepend-icon="fas fa-cube"
           variant="outlined"
           @input="updateFactory(factory)"
         />
@@ -62,10 +71,28 @@
           @input="updateFactory(factory)"
         />
         <v-btn
+          v-show="requirementSatisfied(factory, input.outputPart)"
+          class="rounded mr-2"
+          color="green"
+          :disabled="true"
+          prepend-icon="fas fa-thumbs-up"
+          size="default"
+          variant="outlined"
+        >Satisfied!</v-btn>
+        <v-btn
+          v-show="!requirementSatisfied(factory, input.outputPart)"
+          class="rounded mr-2"
+          color="green"
+          prepend-icon="fas fa-arrow-up"
+          size="default"
+          variant="outlined"
+          @click="updateInputToSatisfy(factory, input)"
+        >Satisfy</v-btn>
+        <v-btn
           class="rounded"
           color="primary"
           :disabled="!input.factoryId"
-          prepend-icon="fas fa-eye"
+          prepend-icon="fas fa-industry"
           size="default"
           variant="outlined"
           @click="navigateToFactory(input.factoryId)"
@@ -99,7 +126,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryImport, PartRequirement } from '@/interfaces/planner/FactoryInterface'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -279,6 +306,24 @@
     factory.inputs[index].factoryId = newValue
 
     // Trigger recalculations or any side effects needed
+    updateFactory(factory)
+  }
+
+  const requirementSatisfied = (factory: Factory, part: string): boolean => {
+    const requirement = factory.partRequirements[part]
+
+    if (!requirement) {
+      console.log(`Could not find part requirement in factory for input satisfaction check. Part: ${part}`)
+      return false
+    }
+
+    return requirement.amountRemaining <= 0
+  }
+
+  const updateInputToSatisfy = (factory: factory, input: FactoryImport) => {
+    const part: PartRequirement = factory.partRequirements[input.outputPart]
+    input.amount = part.amountRequired
+
     updateFactory(factory)
   }
 
