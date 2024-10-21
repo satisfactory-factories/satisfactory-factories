@@ -8,30 +8,13 @@
         >
           <v-card-title>
             <v-row>
-              <v-col align-self="center" class="text-body-1 pr-2">
-                <i class="fas fa-industry" />
+              <v-col align-self="end" class="text-body-1 pr-2">
+                <i class="fas fa-bars" />
+
+                <i class="fas fa-industry ml-4" />
                 <span class="ml-2">{{ truncateFactoryName(element.name) }}</span>
               </v-col>
-              <v-col align-self="end" class="text-right pl-0">
-                <v-btn
-                  class="mr-1 rounded"
-                  color="primary"
-                  :disabled="element.displayOrder === 0"
-                  icon="fas fa-arrow-up"
-                  size="x-small"
-                  variant="outlined"
-                  @click="moveFactory(element, 'up')"
-                />
-                <v-btn
-                  class="rounded"
-                  color="primary"
-                  :disabled="element.displayOrder === totalFactories - 1"
-                  icon="fas fa-arrow-down"
-                  size="x-small"
-                  variant="outlined"
-                  @click="moveFactory(element, 'down')"
-                />
-              </v-col>
+
             </v-row>
           </v-card-title>
         </v-card>

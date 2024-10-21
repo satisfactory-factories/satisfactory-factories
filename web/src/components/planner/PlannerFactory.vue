@@ -81,7 +81,8 @@
           />
           <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
           <v-btn color="primary" @click="showDebug = !showDebug">
-            <i class="fas fa-bug" /> Show Debug
+            <i class="fas fa-bug" />
+            <span class="ml-2">Show Debug Data</span>
           </v-btn>
           <div v-show="showDebug">
             <pre>{{ factory }}</pre>
@@ -113,7 +114,7 @@
   const factoryClass = (factory: Factory) => {
     return {
       'factory-card': true,
-      problem: !factory.requirementsSatisfied,
+      problem: factory.hasProblem,
     }
   }
 

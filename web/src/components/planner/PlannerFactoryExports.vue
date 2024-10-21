@@ -33,9 +33,13 @@
               </v-row>
 
               <v-card-text class="text-body-1">
-                <p><b>Surplus</b>: {{ factory.surplus[product.id].amount }}/min</p>
+                <p>
+                  <b>Surplus</b>: {{ factory.surplus[product.id].amount }}/min
+                </p>
                 <div v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0">
-                  <p><b>Requests</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min</p>
+                  <p>
+                    <b>Requests</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min
+                  </p>
                   <p>Status:
                     <span
                       v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
@@ -59,28 +63,18 @@
                       </span>
                     </span>
                   </p>
-                  <div class="my-4">
+                  <div class="mt-2">
                     <p class="text-h6"><b>Requests:</b></p>
                     <v-chip
                       v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
                       :key="request.factory"
-                      class="mr-2"
+                      class="mr-2 mb-1"
                       @click="navigateToFactory(request.factory)"
                     >
-                      <b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min
+                      <i class="fas fa-industry" />
+                      <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
                     </v-chip>
                   </div>
-                  <v-radio-group
-                    v-model="factory.surplus[product.id].surplusHandling"
-                    class="radio-fix d-inline mb-4"
-                    density="compact"
-                    hide-details
-                    inline
-                    @update:model-value="updateFactory(factory)"
-                  >
-                    <v-radio class="mr-4" label="Export" value="export" />
-                    <v-radio label="Sink" value="sink" />
-                  </v-radio-group>
                 </div>
                 <p v-else class="mt-2">No requests. Add imports in other factories.</p>
               </v-card-text>

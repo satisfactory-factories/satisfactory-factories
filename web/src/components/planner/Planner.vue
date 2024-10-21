@@ -80,11 +80,6 @@
               @click="createFactory()"
             >Add Factory</v-btn>
           </div>
-
-          <div class="mt-16">
-            <h4 class="text-h5">DEBUG</h4>
-            <pre style="text-align: left">{{ JSON.stringify(factories, null, 2) }}</pre>
-          </div>
         </v-container>
       </v-col>
     </v-row>
