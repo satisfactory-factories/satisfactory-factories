@@ -79,7 +79,7 @@
           @click="updateOrder('down', product)"
         />
         <v-btn
-          class="ml-6 rounded mr-2 mb-2"
+          class="rounded mx-2 mb-2"
           color="red"
           icon="fas fa-trash"
           size="small"
