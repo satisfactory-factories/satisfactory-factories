@@ -41,7 +41,6 @@
   import draggable from 'vuedraggable'
 
   const navigateToFactory = inject('navigateToFactory') as (id: number) => void
-  const moveFactory = inject('moveFactory') as (id: number) => void
 
   const emit = defineEmits<{
     createFactory:() => void,
@@ -49,6 +48,10 @@
   }>()
   const props = defineProps<{ factories: Factory[], totalFactories: number }>()
   const factoriesCopy = ref([...props.factories])
+
+  watch(() => props.factories, factories => {
+    factoriesCopy.value = [...factories]
+  }, { deep: true })
 
   const factoryClass = (factory: Factory) => {
     return {
@@ -66,7 +69,6 @@
   }
 
   const onDragEnd = () => {
-    console.log('factoriesCopy', factoriesCopy.value[0])
     emit('updateFactories', factoriesCopy.value)
   }
 </script>
