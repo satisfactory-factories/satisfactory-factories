@@ -141,7 +141,7 @@
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (part: string) => string
-  const isItemRawResource = inject('isItemRawResource') as (part: string) => booleanß
+  const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
 
   defineProps<{
     factory: Factory;
