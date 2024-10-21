@@ -60,7 +60,7 @@
 
               <v-col align-self="center" class="text-right flex-shrink-0">
                 <v-btn
-                  v-if="!getProduct(factory, partIndex) && !isItemRawResource(partIndex)"
+                  v-if="!getProduct(factory, partIndex) && !isItemRawResource(partIndex) && !part.satisfied"
                   class="ml-2 my-1"
                   color="primary"
                   size="small"
@@ -69,9 +69,18 @@
                 >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
                 </v-btn>
                 <v-btn
+                  v-if="getProduct(factory, partIndex) && !isItemRawResource(partIndex) && !part.satisfied"
+                  class="ml-2 my-1"
+                  color="primary"
+                  size="small"
+                  variant="outlined"
+                  @click="fixProduction(factory, partIndex)"
+                ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+                </v-btn>
+                <v-btn
                   v-if="getImport(factory, partIndex) && !part.satisfied"
                   class="ml-2 my-1"
-                  color="secondary"
+                  color="green"
                   size="small"
                   variant="outlined"
                   @click="fixSatisfactionImport(factory, partIndex)"
@@ -165,6 +174,19 @@
   const getImport = (factory, partIndex: string): FactoryImport => {
     // Search the inputs array for the outputPart using the part index
     return factory.inputs.find(input => input.outputPart === partIndex)
+  }
+
+  const fixProduction = (factory, partIndex: string | number) => {
+    const product = getProduct(factory, partIndex)
+
+    // If the product is not found, return
+    if (!product) {
+      console.error(`Could not find product for ${partIndex} to fix!`)
+    }
+
+    // Update the production amount to match requirement
+    product.amount = factory.partRequirements[partIndex].amountRequired
+    updateFactory(factory)
   }
 
   const fixSatisfactionImport = (factory: Factory, partIndex: string | number) => {
