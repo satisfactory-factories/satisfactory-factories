@@ -10,9 +10,7 @@
             <li>Bug: Imports: Should not be able to select the same factory and part for import.</li>
             <li>Feat: Complete request bar segments.</li>
             <li>Feat: Enable to sink remainder, or sink entire output.</li>
-            <li>Bug: Dependencies. If Factory 2 updates it's import amount and factory 1 can no longer supply it, a shortage is detected but a problem is not until the products in Factory 1 are updated.</li>
             <li>Feat: Byproduct representations</li>
-            <li>Feat: Add drag and drop in factory list.</li>
             <li>Bug: Fix Residual Plastic naming to Plastic.</li>
             <li>Bug: Fix Residual Plastic not detecting Polymer Resin as it's requirement (data issue?).</li>
             <li>Feat: Show unsatisfied demands for factories for easy creation of new factories.</li>

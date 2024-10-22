@@ -269,8 +269,8 @@
     // Add a flag to denote if we're only using raw resources to make products.
     calculateUsingRawResourcesOnly(factory)
 
-    // Finally, set the flags for if the factory has any issues for display.
-    calculateHasProblem(factory)
+    // Go through all factories and check if they have any problems.
+    calculateHasProblem(factories.value)
   }
 
   const deleteFactory = (factory: Factory) => {
