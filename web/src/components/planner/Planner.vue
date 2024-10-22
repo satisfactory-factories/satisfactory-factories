@@ -325,10 +325,18 @@
   }
 
   const navigateToFactory = (factoryId: string) => {
-    const factoryElement = document.getElementById(`${factoryId}`)
-    if (factoryElement) {
-      factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    // Unhide the factory
+    const factory = findFactory(factoryId)
+    factory.hidden = false
+
+    // Wait a bit for the factory to unhide fully. Hack but works well.
+    setTimeout(() => {
+      // Navigate to it
+      const factoryElement = document.getElementById(`${factoryId}`)
+      if (factoryElement) {
+        factoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 50)
   }
 
   const moveFactory = (factory: Factory, direction: string) => {

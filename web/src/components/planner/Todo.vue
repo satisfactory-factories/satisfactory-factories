@@ -16,7 +16,6 @@
             <li>Bug: Fix Residual Plastic naming to Plastic.</li>
             <li>Bug: Fix Residual Plastic not detecting Polymer Resin as it's requirement (data issue?).</li>
             <li>Feat: Show unsatisfied demands for factories for easy creation of new factories.</li>
-            <li>Feat: When factory is clicked on list, unhide it.</li>
           </ul>
         </v-card-text>
       </v-card>
