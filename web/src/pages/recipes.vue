@@ -1,9 +1,9 @@
 <template>
   <v-container>
-  <recipes />
+    <recipes />
   </v-container>
 </template>
 
 <script setup lang="ts">
-import Recipes from "@/components/Recipes.vue";
+  import Recipes from '@/components/Recipes.vue'
 </script>
