@@ -11,12 +11,10 @@ export interface PartRequirement {
 }
 
 export interface BuildingRequirement {
-  [key: string]: {
-    name: string;
-    amount: number;
-    powerPerBuilding: number;
-    totalPower: number;
-  }
+  name: string;
+  amount: number;
+  powerPerBuilding: number;
+  totalPower: number;
 }
 
 export interface FactoryItem {

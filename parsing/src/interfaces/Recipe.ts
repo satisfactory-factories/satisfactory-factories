@@ -10,8 +10,9 @@ export interface Recipe {
   displayName: string;
   ingredients: RecipeItem[];
   products: RecipeItem[];
-  perMin: number;
-  producedIn: string[];
-  powerPerBuilding: [{ building: string, powerPerBuilding: number }];
+  building: {
+    name: string;
+    power: string;
+  }
   isAlternate: boolean;
 }

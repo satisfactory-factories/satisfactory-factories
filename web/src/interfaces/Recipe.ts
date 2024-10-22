@@ -1,8 +1,18 @@
+export interface RecipeItem {
+  part: string;
+  amount: number;
+  perMin: number;
+  isByProduct?: boolean;
+}
+
 export interface Recipe {
   id: string;
   displayName: string;
-  ingredients: { [key: string]: number }[];
-  product: { [key: string]: number };
-  perMin: number;
+  ingredients: RecipeItem[];
+  products: RecipeItem[];
+  building: {
+    name: string;
+    power: string;
+  }
   isAlternate: boolean;
 }

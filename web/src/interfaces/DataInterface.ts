@@ -1,4 +1,4 @@
-import {Recipe} from "./Recipe.ts";
+import { Recipe } from './Recipe.ts'
 
 export interface RawResource {
     name: string;

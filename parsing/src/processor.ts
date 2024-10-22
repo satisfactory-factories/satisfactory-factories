@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
-import {Recipe} from "./interfaces/Recipe";
+import { Recipe } from "./interfaces/Recipe";
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -38,7 +38,7 @@ function cleanInput(input: string): string {
 
 // Blacklist for excluding items produced by the Build Gun
 const blacklist = [
-  "/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C",
+    "/Game/FactoryGame/Equipment/BuildGun/BP_BuildGun.BP_BuildGun_C",
 ];
 
 // Helper function to determine if an ingredient is a collectable (e.g., Power Slug)
@@ -129,7 +129,7 @@ function getProducingBuildings(data: any[]): string[] {
                         const match = building.match(/\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/);
                         if (match) {
                             // Remove "build_" prefix if present
-                          return match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
+                            return match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
                         }
                         return null;
                     })
@@ -159,7 +159,7 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
 
                 // Only include power data if the building is in the producingBuildings list
                 if (producingBuildings.includes(buildingName)) {
-                  buildingsPowerMap[buildingName] = parseFloat(building.mPowerConsumption) || 0;
+                    buildingsPowerMap[buildingName] = parseFloat(building.mPowerConsumption) || 0;
                 }
             }
         });
@@ -224,9 +224,6 @@ function getRecipes(
                             const partName = match[1];
                             let amount = parseInt(match[2], 10);
 
-                            const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
-                                ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
-
                              if (isFluid(partName)) {
                                 amount = amount / 1000;
                             }
@@ -268,28 +265,17 @@ function getRecipes(
             });
 
             // Handle multiple building power values and remove "build_" prefix
-            const producedIn = recipe.mProducedIn
-                .match(/\/([^\/]+)\./g)
-                ?.map((building: string) => {
-                    let buildingKey = building.replace(/\//g, '').replace(/\./g, '').toLowerCase();
-                    // Remove "build_" prefix if present
-                    if (buildingKey.startsWith('build_')) {
-                        buildingKey = buildingKey.replace('build_', '');
-                    }
-                    return buildingKey;
-                })
-                .filter((building: string) => building !== "factorygame") || [];
+            const producedIn = recipe.mProducedIn.match(/\/([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/)?.[2]?.replace(/build_/gi, '').toLowerCase() || '';
 
-            // Filter out redundant buildings like "bp_workbenchcomponent" and "factorygame"
-            const powerPerBuilding = producedIn
-                .filter((building: string) => !['bp_workbenchcomponent', 'factorygame'].includes(building)) // Remove entries with these buildings
-                .map((building: string) => {
-                    const buildingPower = producingBuildings[building] || 0;  // Get building power from the producingBuildings map, default to 0
-                    return {
-                        building: building,
-                        powerPerBuilding: Object.values(products).reduce((total, product) => total + (product.amount > 0 ? buildingPower / product.amount : 0), 0)
-                    };
-                });
+            const validBuilding = producedIn && !['bp_workbenchcomponent', 'factorygame'].includes(producedIn) ? producedIn : '';
+
+            const powerPerBuilding = validBuilding
+                ? Object.values(products).reduce((total, product) => total + (product.amount > 0 ? (producingBuildings[validBuilding] || 0) / product.amount : 0), 0)
+                : null;
+            const building = {
+                name: producedIn,
+                power: powerPerBuilding
+            }
 
             const isAlternate = recipe.mDisplayName.includes("Alternate");
 
@@ -298,8 +284,7 @@ function getRecipes(
                 displayName: recipe.mDisplayName,
                 ingredients,
                 products,
-                producedIn,
-                powerPerBuilding,
+                building,
                 isAlternate
             });
         });
