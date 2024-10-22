@@ -7,7 +7,7 @@
       Error loading recipes: {{ error }}
     </v-card-title>
   </v-card>
-  <planner v-if="data.items" :game-data="data" @click="emitTrayClose" />
+  <planner v-if="data.items" :game-data="data" />
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue'
