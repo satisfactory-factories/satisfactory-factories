@@ -114,7 +114,7 @@
           </v-row>
           <div
             v-if="factory.dependencies?.requests && Object.keys(factory.dependencies?.requests).length > 0"
-            class="text-body-1 pa-2 px-4 my-2"
+            class="text-body-1 pa-2 px-4 mt-2 pb-1"
           >
             <p>Exporting to:</p>
             <v-row
@@ -122,7 +122,7 @@
               :key="dependant"
               class="ma-0 mx-n2 border-b no-bottom"
             >
-              <div class="d-inline-block factory-link pa-2 rounded " @click="navigateToFactory(dependant)">
+              <div class="d-inline-block factory-link pa-2 rounded" @click="navigateToFactory(dependant)">
                 <i class="fas fa-industry" />
                 <span class="ml-2">
                   <b>{{ findFactory(dependant).name }}:</b>
