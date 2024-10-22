@@ -204,7 +204,7 @@
   }
 
   const createFactory = (name = 'A new factory') => {
-    factories.value.push({
+    const factory = {
       id: Math.floor(Math.random() * 10000),
       name,
       products: [],
@@ -221,7 +221,10 @@
       hidden: false,
       hasProblem: false,
       displayOrder: factories.value.length,
-    })
+    }
+    factories.value.push(factory)
+
+    navigateToFactory(factory.id)
   }
 
   const updateFactories = (newFactories: Factory[]) => {
