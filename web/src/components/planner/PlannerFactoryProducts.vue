@@ -107,11 +107,8 @@
           /><b>{{ getPartDisplayName(part) }}</b>: {{ requirement.amount }}/min
         </v-chip>
       </v-row>
-      <v-row v-show="product.buildingRequirements.length > 0" class="ml-0 mt-0 mb-3 text-body-1">
-        <span
-          v-for="(building, buildingIndex) in product.buildingRequirements"
-          :key="`buildings-${buildingIndex}`"
-        >
+      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-3 text-body-1">
+        <span>
           <v-chip
             class="mr-2 border-md py-5"
             color="yellow-darken-4"
@@ -121,10 +118,10 @@
           >
             <game-asset
               class="mr-2"
-              :subject="building.name"
+              :subject="product.buildingRequirements.name"
               type="building"
             />
-            <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
+            <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
           </v-chip>
           <v-chip
             class="mr-2 border-md py-5"
@@ -133,7 +130,7 @@
             style="border-color: rgb(172, 153, 2) !important"
             variant="tonal"
           >
-            <i class="fas fa-bolt" /><span class="ml-2">{{ building.totalPower }} MW</span>
+            <i class="fas fa-bolt" /><span class="ml-2">{{ product.buildingRequirements.totalPower }} MW</span>
           </v-chip>
         </span>
       </v-row>
