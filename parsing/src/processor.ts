@@ -50,14 +50,14 @@ function isCollectable(ingredients: string): boolean {
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
+interface PartDataInterface {
+    parts: { [key: string]: string };
+    collectables: { [key: string]: string };
+    rawResources: { [key: string]: RawResource };
+}
+
 // Function to extract parts, moving collectables to specialParts
-function getParts(
-    data: any[])
-    : {
-        parts: { [key: string]: string },
-        collectables: { [key: string]: string },
-        rawResources: { [key: string]: RawResource }
-    } {
+function getItems(data: any[]): PartDataInterface {
     const parts: { [key: string]: string } = {};
     const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
@@ -163,7 +163,13 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
             }
         });
 
-    return buildingsPowerMap;
+    // Finally sort the map by key
+    const sortedMap: { [key: string]: number } = {};
+    Object.keys(buildingsPowerMap).sort().forEach(key => {
+        sortedMap[key] = buildingsPowerMap[key];
+    });
+
+    return sortedMap;
 }
 
 // Helper function to check if a recipe is likely to be liquid based on building type and amount
@@ -176,7 +182,23 @@ function isLikelyFluid(building: string, amount: number, productName: string): b
     return (isFluidBuilding && amount > 100) || isGasProduct;
 }
 
-function getRecipes(data: any[], producingBuildings: { [key: string]: number }): any[] {
+
+interface Recipe {
+    id: string;
+    displayName: string;
+    ingredients: { [key: string]: number }[];
+    product: { [key: string]: number };
+    byProduct: { [key: string]: number };
+    perMin: number;
+    producedIn: string[];
+    powerPerBuilding: { building: string, powerPerBuilding: number }[];
+    isAlternate: boolean;
+}
+
+function getRecipes(
+    data: any[],
+    producingBuildings: { [key: string]: number }
+): Recipe[] {
     const recipes: any[] = [];
     const uniqueProductsSet = new Set<string>();
 
@@ -356,6 +378,43 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
     return rawResources;
 }
 
+function fixItemNames(items: PartDataInterface): void {
+    // Go through the item names and do some manual fixes, e.g. renaming "Residual Plastic" to "Plastic"
+    const fixItems: Record<string, string> = {
+        "Plastic": "Plastic",
+        "Rubber": "Rubber",
+        "Snow": "Snow"
+    };
+
+    for (const search of Object.keys(fixItems)) {
+        if (items.parts[search]) {
+            items.parts[search] = fixItems[search];
+        }
+    }
+}
+
+function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
+    // Create a Set to store all product keys from recipes
+    const recipeProducts = new Set();
+
+    // Loop through each recipe to collect all product keys
+    recipes.forEach(recipe => {
+        if (recipe.product) {
+            Object.keys(recipe.product).forEach(product => {
+                recipeProducts.add(product);
+            });
+        }
+    });
+
+    // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
+    Object.keys(items.parts).forEach(part => {
+        if (!recipeProducts.has(part)) {
+            console.log(`Removing rubbish item: ${part}`);
+            delete items.parts[part];
+        }
+    });
+}
+
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
     try {
@@ -364,20 +423,23 @@ async function processFile(inputFile: string, outputFile: string) {
         const data = JSON.parse(cleanedContent);
 
         // Get parts
-        const items = getParts(data);
+        const items = getItems(data);
+        fixItemNames(items);
 
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
 
         // Get power consumption for the producing buildings
-        const buildingsPowerMap = getPowerConsumptionForBuildings(data, producingBuildings);
+        const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
-        const recipes = getRecipes(data, buildingsPowerMap);
+        const recipes = getRecipes(data, buildings);
+
+        removeRubbishItems(items, recipes);
 
         // Construct the final JSON object
         const finalData = {
-            buildings: buildingsPowerMap,  // Use buildingsPowerMap for building info
+            buildings,
             items,
             recipes
         };
@@ -395,4 +457,4 @@ async function processFile(inputFile: string, outputFile: string) {
 }
 
 // Export processFile for use
-export { processFile };
+export { processFile }
