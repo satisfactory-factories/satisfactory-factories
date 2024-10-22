@@ -29,7 +29,7 @@
     },
     async mounted () {
       try {
-        const response = await fetch('/recipes.json')
+        const response = await fetch('/gameData.json')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
         }
