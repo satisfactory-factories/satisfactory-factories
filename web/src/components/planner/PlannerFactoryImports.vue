@@ -18,7 +18,7 @@
           </p>
           <div v-for="(resource, resourceKey) in factory.rawResources" :key="resource">
             <p>
-              <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }} /min
+              <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }}/min
             </p>
           </div>
         </v-card-text>
@@ -71,7 +71,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          v-show="requirementSatisfied(factory, input.outputPart)"
+          v-show="requirementSatisfied(factory, input.outputPart) && !inputOverflow(factory, input.outputPart)"
           class="rounded mr-2"
           color="green"
           :disabled="true"
@@ -80,12 +80,19 @@
           variant="outlined"
         >Satisfied!</v-btn>
         <v-btn
+          v-show="requirementSatisfied(factory, input.outputPart) && inputOverflow(factory, input.outputPart)"
+          class="rounded mr-2"
+          color="yellow"
+          prepend-icon="fas fa-arrow-down"
+          size="default"
+          @click="updateInputToSatisfy(factory, input)"
+        >Trim amount</v-btn>
+        <v-btn
           v-show="!requirementSatisfied(factory, input.outputPart)"
           class="rounded mr-2"
           color="green"
           prepend-icon="fas fa-arrow-up"
           size="default"
-          variant="outlined"
           @click="updateInputToSatisfy(factory, input)"
         >Satisfy</v-btn>
         <v-btn
@@ -318,6 +325,12 @@
     }
 
     return requirement.amountRemaining <= 0
+  }
+
+  const inputOverflow = (factory, part: string): boolean => {
+    const requirement = factory.partRequirements[part]
+
+    return requirement.amountRemaining < 0
   }
 
   const updateInputToSatisfy = (factory: factory, input: FactoryImport) => {
