@@ -44,7 +44,6 @@
             @show-demo="showDemo"
             @toggle-help-text="toggleHelp()"
           />
-          <v-divider color="#ccc" thickness="2px" />
         </v-container>
       </v-col>
       <!-- Main Content Area -->
@@ -278,14 +277,24 @@
     const index = factories.value.findIndex(fac => fac.id === factory.id)
 
     if (index !== -1) {
+      // Remove the inputs from factories that depend on this factory
+      const dependents = factory.dependencies.requests
+      Object.keys(dependents).forEach(dependentId => {
+        const dependent = findFactory(dependentId)
+        dependent.inputs = dependent.inputs.filter(input => input.factory !== factory.id)
+      })
+
       factories.value.splice(index, 1) // Remove the factory at the found index
       updateWorldRawResources() // Recalculate the world resources
 
-      // After deleting the factory, update the rest to ensure consistency
+      // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
       factories.value.forEach(fac => updateFactory(fac))
-    }
 
-    regenerateSortOrders()
+      // Regenerate the sort orders
+      regenerateSortOrders()
+    } else {
+      console.error('Factory not found to delete?!')
+    }
   }
 
   const clearAll = () => {
