@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <v-card :id="factory.id" :class="factoryClass(factory)">
-        <v-row class="header" :style="factoryHeaderStyle(factory)">
+        <v-row class="header">
           <v-col class="text-h4 flex-grow-1" cols="8">
             <i class="fas fa-industry" style="width: 35px" />
             <input
@@ -88,6 +88,57 @@
             <pre>{{ factory }}</pre>
           </div>
         </v-card-text>
+        <v-card-text v-show="factory.hidden" class="pa-0">
+          <v-row class="border-b-md pa-2 px-4 my-2 mx-0">
+            <p v-if="factory.products.length === 0" class="text-body-1">Empty factory! Select a product!</p>
+            <div v-else>
+              <p class="text-body-1 d-inline-block mr-2">Producing: </p>
+              <v-chip
+                v-for="part in factory.products"
+                :key="part.id"
+                class="mr-2 border-md py-4"
+              >
+                <game-asset
+                  class="mr-2"
+                  :subject="part.id"
+                  type="item"
+                />
+                <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
+                <span
+                  v-if="factory.dependencies?.metrics[part.id]?.difference"
+                  class="ml-2"
+                  :class="differenceClass(factory.dependencies.metrics[part.id].difference)"
+                >({{ factory.dependencies.metrics[part.id].difference }}/min)</span>
+              </v-chip>
+            </div>
+          </v-row>
+          <div
+            v-if="factory.dependencies?.requests && Object.keys(factory.dependencies?.requests).length > 0"
+            class="text-body-1 pa-2 px-4 my-2"
+          >
+            <p>Exporting to:</p>
+            <v-row
+              v-for="dependant in Object.keys(factory.dependencies.requests)"
+              :key="dependant"
+              class="ma-0 mx-n2 border-b no-bottom"
+            >
+              <div class="d-inline-block factory-link pa-2 rounded " @click="navigateToFactory(dependant)">
+                <i class="fas fa-industry" />
+                <span class="ml-2">
+                  <b>{{ findFactory(dependant).name }}:</b>
+                </span>
+                <v-chip
+                  v-for="part in factory.dependencies.requests[dependant]"
+                  :key="part.part"
+                  class="mx-1 border-md py-4"
+                >
+                  <game-asset height="32" :subject="part.part" type="item" width="32" />
+                  <span class="ml-2"><b>{{ getPartDisplayName(part.part) }}:</b> {{ part.amount }}/min</span>
+                </v-chip>
+              </div>
+            </v-row>
+          </div>
+        </v-card-text>
       </v-card>
     </v-col>
   </v-row>
@@ -98,9 +149,12 @@
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
+  const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
+  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
+  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
   defineProps<{
     factory: Factory
@@ -118,14 +172,15 @@
     }
   }
 
-  const factoryHeaderStyle = (factory: Factory) => {
-    return {
-      'border-bottom-color': factory.hidden ? 'transparent' : '',
-    }
-  }
-
   const confirmDelete = (message = 'Are you sure you want to delete this factory?') => {
     return confirm(message)
+  }
+
+  const differenceClass = (difference: number) => {
+    return {
+      'text-green': difference > 0,
+      'text-red': difference < 0,
+    }
   }
 </script>
 
@@ -136,6 +191,14 @@
   border-radius: 4px;
   transition: background-color 0.3s;
 
+  &:hover {
+    cursor: pointer;
+    background-color: #323232;
+  }
+}
+
+.factory-link {
+  display: block;
   &:hover {
     cursor: pointer;
     background-color: #323232;
