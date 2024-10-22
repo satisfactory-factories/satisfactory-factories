@@ -275,6 +275,11 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
   // Second, rebuild the dependencies.
   factories.forEach(factory => {
     factory.inputs.forEach(input => {
+      // Handle the case where the user is mid-way selecting an input.
+      if (input.factoryId === 0) {
+        return
+      }
+
       const requestedFactory = factories.find(fac => fac.id === input.factoryId)
       if (!requestedFactory) {
         console.error(`Factory with ID ${input.factoryId} not found.`)
