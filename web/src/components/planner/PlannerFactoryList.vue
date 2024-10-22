@@ -6,15 +6,13 @@
           class="w-100 header list"
           @click="navigateToFactory(element.id)"
         >
-          <v-card-title>
+          <v-card-title class="py-3">
             <v-row>
-              <v-col align-self="end" class="text-body-1 pr-2">
+              <v-col align-self="end" class="text-body-1">
                 <i class="fas fa-bars" />
-
                 <i class="fas fa-industry ml-4" />
                 <span class="ml-2">{{ truncateFactoryName(element.name) }}</span>
               </v-col>
-
             </v-row>
           </v-card-title>
         </v-card>

@@ -7,6 +7,13 @@
       class="d-md-none"
       temporary
     >
+      <v-divider color="#ccc" thickness="2px" />
+      <planner-factory-list
+        :factories="factories"
+        :total-factories="factories.length"
+        @create-factory="createFactory"
+        @update-factories="updateFactories"
+      />
       <planner-global-actions
         class="py-4"
         :help-text-shown="helpText"
@@ -15,13 +22,6 @@
         @show-all="showHideAll('show')"
         @show-demo="showDemo"
         @toggle-help-text="toggleHelp()"
-      />
-      <v-divider color="#ccc" thickness="2px" />
-      <planner-factory-list
-        :factories="factories"
-        :total-factories="factories.length"
-        @create-factory="createFactory"
-        @update-factories="updateFactories"
       />
     </v-navigation-drawer>
     <v-row class="two-pane-container">
@@ -450,17 +450,6 @@
     console.log('showDemo')
   }
 </script>
-
-<style lang="scss" scoped>
-.sticky-sidebar {
-  position: sticky;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  overflow-y: auto;
-  padding: 16px;
-}
-</style>
 
 <style lang="scss">
 .planner-container {
