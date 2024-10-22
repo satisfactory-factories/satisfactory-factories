@@ -202,7 +202,8 @@
 
   const getRecipesForPart = (part: string) => {
     return props.gameData.recipes.filter(recipe => {
-      return recipe.product[part] || undefined
+      // Filter the recipe product array to return only the recipes that produce the part
+      return recipe.products.filter(product => product.part === part).length > 0
     })
   }
 
