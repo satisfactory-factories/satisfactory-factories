@@ -82,7 +82,7 @@
                   </div>
                 </div>
                 <p v-else class="mt-2">
-                  <b>No requests for export!</b><br>Add imports in other factories linking to this one. It it assumed you are sinking all these products.
+                  <b>No requests for export!</b><br>Add imports in other factories linking to this one. It is assumed you are sinking all these products.
                 </p>
               </v-card-text>
             </v-card>
