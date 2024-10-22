@@ -77,11 +77,10 @@ function getItems(data: any[]): PartDataInterface {
             if (entry.mDisplayName.includes("Unpackage")) return;
 
             // Extract the part name
-            const productMatches = entry.mProduct
-                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+            const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
-            if (productMatches) {
-                const partName = productMatches[1];  // Use the mProduct part name
+            productMatches.forEach(match => {
+                const partName = match[1];  // Use the mProduct part name
                 let friendlyName = entry.mDisplayName;  // Use the friendly name
 
                 // Remove any text within brackets, including the brackets themselves
@@ -93,7 +92,7 @@ function getItems(data: any[]): PartDataInterface {
                 } else {
                     parts[partName] = friendlyName;
                 }
-            }
+            });
         });
 
     // Sort the parts and collectables by key
@@ -342,11 +341,17 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
 function fixItemNames(items: PartDataInterface): void {
     // Go through the item names and do some manual fixes, e.g. renaming "Residual Plastic" to "Plastic"
     const fixItems: Record<string, string> = {
+        "AlienProtein": "Alien Protein",
+        "CompactedCoal": "Compacted Coal",
+        "DarkEnergy": "Dark Matter Residue",
+        "HeavyOilResidue": "Heavy Oil Residue",
         "LiquidFuel": "Fuel",
         "Plastic": "Plastic",
+        "PolymerResin": "Polymer Resin",
         "Rubber": "Rubber",
         "Snow": "Snow",
         "TurboFuel": "Turbofuel",
+        "Water": "Water",
     };
 
     for (const search of Object.keys(fixItems)) {

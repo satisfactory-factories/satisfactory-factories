@@ -424,7 +424,7 @@
     } else {
       const partItem = props.gameData.items.parts[subject]
       const rawItem = props.gameData.items.rawResources[subject]
-      const item = partItem || rawItem.name || null
+      const item = partItem || rawItem?.name || null
 
       if (!item) {
         console.error(`Item ${subject} not found in game data!`)
