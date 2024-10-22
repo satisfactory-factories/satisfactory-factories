@@ -1,7 +1,7 @@
 <template>
   <draggable v-model="factoriesCopy" class="factory-list" item-key="id" @end="onDragEnd">
     <template #item="{ element }">
-      <div :key="element.id" class="mb-1 rounded no-bottom" :class="factoryClass(element)">
+      <div :key="element.id" class="mb-1 rounded" :class="factoryClass(element)">
         <v-card
           class="w-100 header list"
           @click="navigateToFactory(element.id)"
@@ -77,12 +77,5 @@
 .factory-list {
   display: flex;
   flex-direction: column;
-}
-
-v-list-item {
-  margin-bottom: 10px;
-  :last-child {
-    margin-bottom: 0;
-  }
 }
 </style>
