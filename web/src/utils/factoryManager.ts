@@ -9,11 +9,7 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
   factory.products.forEach(product => {
     product.requirements = {} // Prevents orphaning
 
-    const recipe = gameData.recipes.find(r => r.id === product.recipe)
-    if (!recipe) {
-      console.error(`Recipe with ID ${product.recipe} not found.`)
-      return
-    }
+    const recipe = getRecipe(product.recipe, gameData)
 
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredientPart => {
@@ -77,24 +73,26 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
 export const calculateBuildingRequirements = (factory: Factory, gameData: DataInterface) => {
   factory.products.forEach(product => {
     if (product.recipe) {
-      const recipe = gameData.recipes.find(r => r.id === product.recipe)
-      if (recipe) {
-        product.buildingRequirements = recipe.producedIn
-          .filter(buildingName => buildingName !== 'bp_workbenchcomponent')
-          .map(buildingName => {
-            const buildingPower = gameData.buildings[buildingName]
-            const buildingCount = (product.amount / recipe.perMin).toFixed(3)
+      const recipe = getRecipe(product.recipe, gameData)
 
-            return {
-              name: buildingName,
-              amount: buildingCount,
-              powerPerBuilding: buildingPower,
-              totalPower: buildingPower * buildingCount,
-            }
-          })
-      } else {
+      if (!recipe) {
         product.buildingRequirements = []
+        return
       }
+
+      product.buildingRequirements = recipe.producedIn
+        .filter(buildingName => buildingName !== 'bp_workbenchcomponent')
+        .map(buildingName => {
+          const buildingPower = gameData.buildings[buildingName]
+          const buildingCount = (product.amount / recipe.perMin).toFixed(3)
+
+          return {
+            name: buildingName,
+            amount: buildingCount,
+            powerPerBuilding: buildingPower,
+            totalPower: buildingPower * buildingCount,
+          }
+        })
     } else {
       product.buildingRequirements = []
     }
@@ -109,11 +107,7 @@ export const calculateFactoryRawSupply = (factory: Factory, gameData: DataInterf
     // Due to the weird way the raw resources are handled, we have to loop by product, pull out the recipeID and check if the raw resource have the ingredient within the rawResources key.
 
     // Get the recipe
-    const recipe = gameData.recipes.find(r => r.id === product.recipe)
-    if (!recipe) {
-      console.error(`Recipe with ID ${product.recipe} not found.`)
-      return
-    }
+    const recipe = getRecipe(product.recipe, gameData)
 
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredientPart => {
@@ -133,7 +127,7 @@ export const calculateFactoryInternalSupply = (factory: Factory, gameData: DataI
   factory.internalProducts = {}
 
   factory.products.forEach(product => {
-    const recipe = gameData.recipes.find(r => r.id === product.recipe)
+    const recipe = getRecipe(product.recipe, gameData)
     if (!recipe) {
       console.error(`Recipe with ID ${product.recipe} not found.`)
       return
@@ -372,4 +366,15 @@ export const calculateUsingRawResourcesOnly = (factory: Factory) => {
   if (rawResourcesKeys.length === partRequirementsKeys.length && rawResourcesKeys.every((value, index) => value === partRequirementsKeys[index])) {
     factory.usingRawResourcesOnly = true
   }
+}
+
+const getRecipe = (partId: any, gameData: DataInterface) => {
+  const recipe = gameData.recipes.find(r => r.id === partId)
+
+  if (!recipe) {
+    console.error(`Recipe with ID ${product.recipe} not found.`)
+    return
+  }
+
+  return recipe
 }
