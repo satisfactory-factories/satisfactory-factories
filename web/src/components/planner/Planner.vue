@@ -278,11 +278,14 @@
 
     if (index !== -1) {
       // Remove the inputs from factories that depend on this factory
-      const dependents = factory.dependencies.requests
-      Object.keys(dependents).forEach(dependentId => {
-        const dependent = findFactory(dependentId)
-        dependent.inputs = dependent.inputs.filter(input => input.factory !== factory.id)
-      })
+      if (factory.dependencies?.requests) {
+        const dependents = factory.dependencies?.requests
+
+        Object.keys(dependents).forEach(dependentId => {
+          const dependent = findFactory(dependentId)
+          dependent.inputs = dependent.inputs.filter(input => input.factory !== factory.id)
+        })
+      }
 
       factories.value.splice(index, 1) // Remove the factory at the found index
       updateWorldRawResources() // Recalculate the world resources
