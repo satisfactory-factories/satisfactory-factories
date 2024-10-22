@@ -147,21 +147,19 @@
         // Loop through each ingredient in the recipe (array of objects).
         recipe.ingredients.forEach(ingredient => {
           // Extract the ingredient name and amount.
-          const [ingredientId, ingredientAmount] = Object.entries(ingredient)[0]
-
-          if (isNaN(ingredientAmount)) {
-            console.warn(`Invalid ingredient amount for ingredient ${ingredientId}. Skipping.`)
+          if (isNaN(ingredient.amount)) {
+            console.warn(`Invalid ingredient amount for ingredient "${ingredient.part}". Skipping.`)
             return
           }
 
-          if (!worldRawResources[ingredientId]) {
+          if (!worldRawResources[ingredient.part]) {
             return
           }
 
-          const resource = worldRawResources[ingredientId]
+          const resource = worldRawResources[ingredient.part]
 
           // Update the world resource by reducing the available amount.
-          worldRawResources[ingredientId].amount = resource.amount - (ingredientAmount * product.amount)
+          worldRawResources[ingredient.part].amount = resource.amount - (ingredient.amount * product.amount)
         })
       })
     })
@@ -421,7 +419,9 @@
     if (type === 'building') {
       return getImageUrl(subject, 'building', size)
     } else {
-      const item = props.gameData.items.parts[subject] || props.gameData.items.rawResources[subject].name
+      const partItem = props.gameData.items.parts[subject]
+      const rawItem = props.gameData.items.rawResources[subject]
+      const item = partItem || rawItem.name || null
 
       if (!item) {
         console.error(`Item ${subject} not found in game data!`)

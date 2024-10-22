@@ -35,24 +35,29 @@
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
             <v-row
-              v-for="(part, partIndex) in factory.partRequirements"
-              :key="partIndex"
+              v-for="(requirement, part) in factory.partRequirements"
+              :key="part"
               class="my-0 py-0 border-b-md no-bottom"
-              :class="isSatisfiedStyling(factory, partIndex)"
+              :class="isSatisfiedStyling(factory, part)"
             >
               <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
-                <game-asset height="40" :subject="partIndex" type="item" width="40" />
+                <game-asset
+                  height="40"
+                  :subject="part"
+                  type="item"
+                  width="40"
+                />
               </v-col>
               <v-col>
-                <p v-if="part.satisfied">
+                <p v-if="requirement.satisfied">
                   <v-icon icon="fas fa-check" />
-                  <span class="ml-2"><b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min</span>
+                  <span class="ml-2"><b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }} /min</span>
                 </p>
                 <p v-else>
                   <v-icon icon="fas fa-times" />
                   <span class="ml-2">
                     <span>
-                      <b>{{ getPartDisplayName(partIndex) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
+                      <b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }} /min
                     </span>
                   </span>
                 </p>
@@ -60,30 +65,30 @@
 
               <v-col align-self="center" class="text-right flex-shrink-0">
                 <v-btn
-                  v-if="!getProduct(factory, partIndex) && !isItemRawResource(partIndex) && !part.satisfied"
+                  v-if="!getProduct(factory, part) && !isItemRawResource(part) && !requirement.satisfied"
                   class="ml-2 my-1"
                   color="primary"
                   size="small"
                   variant="outlined"
-                  @click="addProduct(factory, partIndex)"
+                  @click="addProduct(factory, part)"
                 >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
                 </v-btn>
                 <v-btn
-                  v-if="getProduct(factory, partIndex) && !isItemRawResource(partIndex) && !part.satisfied"
+                  v-if="getProduct(factory, part) && !isItemRawResource(part) && !requirement.satisfied"
                   class="ml-2 my-1"
                   color="primary"
                   size="small"
                   variant="outlined"
-                  @click="fixProduction(factory, partIndex)"
+                  @click="fixProduction(factory, part)"
                 ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
                 </v-btn>
                 <v-btn
-                  v-if="getImport(factory, partIndex) && !part.satisfied"
+                  v-if="getImport(factory, part) && !requirement.satisfied"
                   class="ml-2 my-1"
                   color="green"
                   size="small"
                   variant="outlined"
-                  @click="fixSatisfactionImport(factory, partIndex)"
+                  @click="fixSatisfactionImport(factory, part)"
                 >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
                 </v-btn>
               </v-col>
@@ -117,7 +122,7 @@
                   :subject="building.name"
                   type="building"
                 />
-                <b>{{ getBuildingDisplayName(building.name) }}</b>: {{ building.amount }}x
+                <b>{{ getBuildingDisplayName(building.name) ?? 'UNKNOWN' }}</b>: {{ building.amount ?? 0 }}x
               </v-chip>
             </div>
             <v-chip
@@ -126,7 +131,7 @@
               size="large"
               style="border-color: rgb(172, 153, 2) !important"
               variant="tonal"
-            ><i class="fas fa-bolt" /><span class="ml-2">{{ factory.totalPower.toFixed(0) }} MW</span>
+            ><i class="fas fa-bolt" /><span class="ml-2">{{ factory.totalPower?.toFixed(0) ?? 0 }} MW</span>
             </v-chip>
           </v-card-text>
         </v-card>

@@ -1,5 +1,6 @@
 import { Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
+import { Recipe } from '@/interfaces/Recipe'
 
 export const calculateProductRequirements = (factory: Factory, gameData: DataInterface) => {
   factory.rawResources = {}
@@ -11,51 +12,57 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
 
     const recipe = getRecipe(product.recipe, gameData)
 
+    if (!recipe) {
+      console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
+      return
+    }
+
     // Calculate the ingredients needed to make this product.
-    recipe.ingredients.forEach(ingredientPart => {
-      const [ingredient, ingredientAmount] = Object.entries(ingredientPart)[0]
-      if (isNaN(ingredientAmount)) {
-        console.warn(`Invalid ingredient amount for ingredient ${ingredient}. Skipping.`)
+    recipe.ingredients.forEach(ingredient => {
+      if (isNaN(ingredient.amount)) {
+        console.warn(`Invalid ingredient amount for ingredient "${ingredient}". Skipping.`)
         return
       }
 
-      // Get the first key of product
-      const productKey = Object.keys(recipe.product)[0] // This is a large assumption there is only ever one product!
-      const produces = recipe.product[productKey]
-
-      if (product.amount <= 0) {
-        // Forcefully set it to a positive value so the user can't break stuff
-        product.amount = 1
+      if (product.amount === 0 || !product.amount) {
+        // If the product amount is 0, we don't need to calculate anything, because the user might be entering a new number.
+        // I tried forcing this to be 1, but it causes a lot of frustration for the user, so it's better to just simply do nothing.
+        return
       }
 
-      const ingredientRequired = (product.amount / produces) * ingredientAmount
+      if (product.amount < 0) {
+        // If the product amount is negative, this causes issues with calculations, so force it to 0.
+        product.amount = 0
+      }
+
+      const ingredientRequired = ingredient.amount * product.amount
 
       // Raw resource handling
-      if (gameData.items.rawResources[ingredient]) {
-        if (!factory.rawResources[ingredient]) {
-          factory.rawResources[ingredient] = {
-            name: gameData.items.rawResources[ingredient].name,
+      if (gameData.items.rawResources[ingredient.part]) {
+        if (!factory.rawResources[ingredient.part]) {
+          factory.rawResources[ingredient.part] = {
+            name: gameData.items.rawResources[ingredient.part].name,
             amount: 0,
           }
         }
-        factory.rawResources[ingredient] = {
-          amount: factory.rawResources[ingredient].amount += ingredientRequired,
+        factory.rawResources[ingredient.part] = {
+          amount: factory.rawResources[ingredient.part].amount += ingredientRequired,
           satisfied: true, // Always mark raws as satisfied, it saves a ton of pain.
         }
       }
 
       // Set the amount that the individual products need.
-      if (!product.requirements[ingredient]) {
-        product.requirements[ingredient] = {
+      if (!product.requirements[ingredient.part]) {
+        product.requirements[ingredient.part] = {
           amount: 0,
         }
       }
 
-      product.requirements[ingredient].amount += ingredientRequired
+      product.requirements[ingredient.part].amount += ingredientRequired
 
       // Now add the requirements to the factory wide part requirements.
-      if (!factory.partRequirements[ingredient]) {
-        factory.partRequirements[ingredient] = {
+      if (!factory.partRequirements[ingredient.part]) {
+        factory.partRequirements[ingredient.part] = {
           amountRequired: 0,
           amountSupplied: 0,
           amountSuppliedViaInput: 0,
@@ -64,7 +71,7 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
         }
       }
 
-      factory.partRequirements[ingredient].amountRequired += ingredientRequired
+      factory.partRequirements[ingredient.part].amountRequired += ingredientRequired
     })
   })
 }
@@ -76,31 +83,33 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
       const recipe = getRecipe(product.recipe, gameData)
 
       if (!recipe) {
-        product.buildingRequirements = []
+        console.warn(`calculateBuildingRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
         return
       }
 
-      product.buildingRequirements = recipe.producedIn
-        .filter(buildingName => buildingName !== 'bp_workbenchcomponent')
-        .map(buildingName => {
-          const buildingPower = gameData.buildings[buildingName]
-          const buildingCount = (product.amount / recipe.perMin).toFixed(3)
+      const productInRecipe = recipe.products.filter(p => p.part === product.id)[0]
 
-          return {
-            name: buildingName,
-            amount: buildingCount,
-            powerPerBuilding: buildingPower,
-            totalPower: buildingPower * buildingCount,
-          }
-        })
+      if (!productInRecipe) {
+        product.buildingRequirements = {}
+        return
+      }
+
+      const buildingData = recipe.building
+      const buildingCount = (product.amount / productInRecipe.perMin).toFixed(3)
+
+      product.buildingRequirements = {
+        name: buildingData.name,
+        amount: buildingCount,
+        powerPerBuilding: buildingData.power,
+        totalPower: buildingData.power * buildingCount,
+      }
     } else {
-      product.buildingRequirements = []
+      product.buildingRequirements = {}
     }
   })
 }
 
 // Calculate the supply of parts via raw inputs. It is assumed that the raw resources are always available.
-// Prepare to lose your brain!
 export const calculateFactoryRawSupply = (factory: Factory, gameData: DataInterface) => {
   Object.keys(factory.products).forEach(productIndex => {
     const product = factory.products[productIndex]
@@ -109,14 +118,17 @@ export const calculateFactoryRawSupply = (factory: Factory, gameData: DataInterf
     // Get the recipe
     const recipe = getRecipe(product.recipe, gameData)
 
-    // Calculate the ingredients needed to make this product.
-    recipe.ingredients.forEach(ingredientPart => {
-      const [part] = Object.entries(ingredientPart)[0]
+    if (!recipe) {
+      console.warn(`calculateFactoryRawSupply: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
+      return
+    }
 
+    // Calculate the ingredients needed to make this product.
+    recipe.ingredients.forEach(ingredient => {
       // If the part is a raw resource, mark it as supplied.
-      if (factory.rawResources[part]) {
+      if (factory.rawResources[ingredient.part]) {
         // This looks like a hack, but it's correct, the raw recipes are a PITA.
-        factory.partRequirements[part].amountSuppliedViaRaw = factory.rawResources[part].amount
+        factory.partRequirements[ingredient.part].amountSuppliedViaRaw = factory.rawResources[ingredient.part].amount
       }
     })
   })
@@ -129,19 +141,17 @@ export const calculateFactoryInternalSupply = (factory: Factory, gameData: DataI
   factory.products.forEach(product => {
     const recipe = getRecipe(product.recipe, gameData)
     if (!recipe) {
-      console.error(`Recipe with ID ${product.recipe} not found.`)
+      console.warn(`calculateFactoryInternalSupply: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
       return
     }
 
     // Calculate the ingredients needed to make this product.
-    recipe.ingredients.forEach(productIngredient => {
-      const [ingredient] = Object.entries(productIngredient)[0]
-
+    recipe.ingredients.forEach(ingredient => {
       // If the part is a requirement, mark it as an internal product.
-      const foundProduct = factory.products.find(p => p.id === ingredient)
+      const foundProduct = factory.products.find(p => p.id === ingredient.part)
 
       if (foundProduct) {
-        factory.internalProducts[ingredient] = {
+        factory.internalProducts[ingredient.part] = {
           id: foundProduct.id,
           amount: foundProduct.amount,
         }
@@ -210,22 +220,21 @@ export const calculateFactoryBuildingsAndPower = (factory: Factory) => {
 
   // Loop through each product and sum the power requirements based off the metrics already there.
   factory.products.forEach(product => {
-    product.buildingRequirements.forEach(building => {
-      if (!factory.buildingRequirements[building.name]) {
-        factory.buildingRequirements[building.name] = {
-          name: building.name,
-          amount: 0,
-          powerPerBuilding: building.powerPerBuilding,
-          totalPower: 0,
-        }
+    const building = product.buildingRequirements
+    if (!factory.buildingRequirements[building.name]) {
+      factory.buildingRequirements[building.name] = {
+        name: building.name,
+        amount: 0,
+        powerPerBuilding: building.powerPerBuilding,
+        totalPower: 0,
       }
+    }
 
-      factory.buildingRequirements[building.name].amount += parseFloat(building.amount)
-      factory.buildingRequirements[building.name].totalPower += building.totalPower
-    })
+    factory.buildingRequirements[building.name].amount += parseFloat(building.amount)
+    factory.buildingRequirements[building.name].totalPower += building.totalPower
 
     // Sum the total power.
-    factory.totalPower += product.buildingRequirements.reduce((acc, building) => acc + building.totalPower, 0)
+    factory.totalPower += building.totalPower
   })
 }
 
@@ -368,11 +377,11 @@ export const calculateUsingRawResourcesOnly = (factory: Factory) => {
   }
 }
 
-const getRecipe = (partId: any, gameData: DataInterface) => {
+const getRecipe = (partId: any, gameData: DataInterface): Recipe => {
   const recipe = gameData.recipes.find(r => r.id === partId)
 
   if (!recipe) {
-    console.error(`Recipe with ID ${product.recipe} not found.`)
+    console.error(`Recipe with ID ${partId} not found.`)
     return
   }
 

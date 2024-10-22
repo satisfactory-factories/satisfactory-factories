@@ -25,7 +25,12 @@
             >
               <v-row align-content="center" class="mb-0 pa-6 pb-0">
                 <v-col class="flex-grow-0 pa-0" style="padding-right: 0">
-                  <game-asset height="32" :subject="product.id" type="item" width="32" />
+                  <game-asset
+                    height="32"
+                    :subject="product.id"
+                    type="item"
+                    width="32"
+                  />
                 </v-col>
                 <v-col class="pa-0 pl-3">
                   <p class="text-h5">{{ getPartDisplayName(product.id) }}</p>

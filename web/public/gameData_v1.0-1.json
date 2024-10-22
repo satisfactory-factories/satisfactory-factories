@@ -230,15 +230,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -274,15 +269,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -324,15 +314,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10400000000000001
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10400000000000001
+            },
             "isAlternate": false
         },
         {
@@ -358,16 +343,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -393,16 +372,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -423,16 +396,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -474,15 +441,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10416666666666667
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10416666666666667
+            },
             "isAlternate": false
         },
         {
@@ -508,15 +470,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -542,15 +499,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1
+            },
             "isAlternate": true
         },
         {
@@ -571,15 +523,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1.3333333333333333
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1.3333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -600,15 +547,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.5714285714285714
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.5714285714285714
+            },
             "isAlternate": true
         },
         {
@@ -627,15 +569,10 @@
                 }
             ],
             "products": [],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 0
+            },
             "isAlternate": true
         },
         {
@@ -666,15 +603,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 13.75
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 13.75
+            },
             "isAlternate": true
         },
         {
@@ -700,15 +632,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 1.6
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 1.6
+            },
             "isAlternate": true
         },
         {
@@ -729,15 +656,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.6666666666666666
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.6666666666666666
+            },
             "isAlternate": true
         },
         {
@@ -763,15 +685,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -797,15 +714,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 5
+            },
             "isAlternate": true
         },
         {
@@ -826,15 +738,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.2
+            },
             "isAlternate": true
         },
         {
@@ -860,15 +767,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 2.142857142857143
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 2.142857142857143
+            },
             "isAlternate": true
         },
         {
@@ -899,15 +801,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": true
         },
         {
@@ -928,15 +825,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.5
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.5
+            },
             "isAlternate": true
         },
         {
@@ -957,15 +849,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.4
+            },
             "isAlternate": true
         },
         {
@@ -991,15 +878,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 2.142857142857143
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 2.142857142857143
+            },
             "isAlternate": true
         },
         {
@@ -1035,15 +917,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 13.75
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 13.75
+            },
             "isAlternate": true
         },
         {
@@ -1069,15 +946,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": true
         },
         {
@@ -1103,15 +975,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 3.3333333333333335
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 3.3333333333333335
+            },
             "isAlternate": true
         },
         {
@@ -1137,15 +1004,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 3.75
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 3.75
+            },
             "isAlternate": true
         },
         {
@@ -1171,15 +1033,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.5
+            },
             "isAlternate": true
         },
         {
@@ -1205,15 +1062,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 0.8
+            },
             "isAlternate": true
         },
         {
@@ -1239,15 +1091,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 3
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 3
+            },
             "isAlternate": true
         },
         {
@@ -1273,15 +1120,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 4
+            },
             "isAlternate": true
         },
         {
@@ -1312,15 +1154,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 37.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 37.5
+            },
             "isAlternate": true
         },
         {
@@ -1346,15 +1183,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 1.6
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 1.6
+            },
             "isAlternate": true
         },
         {
@@ -1380,15 +1212,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 5
+            },
             "isAlternate": true
         },
         {
@@ -1414,15 +1241,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -1443,15 +1265,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": true
         },
         {
@@ -1477,15 +1294,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.05
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.05
+            },
             "isAlternate": true
         },
         {
@@ -1517,15 +1329,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.060000000000000005
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.060000000000000005
+            },
             "isAlternate": true
         },
         {
@@ -1551,15 +1358,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -1585,15 +1387,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -1630,15 +1427,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 12.152777777777779
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 12.152777777777779
+            },
             "isAlternate": true
         },
         {
@@ -1664,15 +1456,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -1704,15 +1491,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 5.785714285714286
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 5.785714285714286
+            },
             "isAlternate": true
         },
         {
@@ -1738,15 +1520,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -1772,15 +1549,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -1806,15 +1578,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -1856,15 +1623,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 13.125
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 13.125
+            },
             "isAlternate": true
         },
         {
@@ -1890,15 +1652,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 2.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 2.5
+            },
             "isAlternate": true
         },
         {
@@ -1924,15 +1681,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.5
+            },
             "isAlternate": true
         },
         {
@@ -1963,15 +1715,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": true
         },
         {
@@ -1997,15 +1744,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 0.8888888888888888
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 0.8888888888888888
+            },
             "isAlternate": true
         },
         {
@@ -2031,15 +1773,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.25
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.25
+            },
             "isAlternate": true
         },
         {
@@ -2065,15 +1802,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 0.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 0.5
+            },
             "isAlternate": true
         },
         {
@@ -2099,15 +1831,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -2143,15 +1870,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 75
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 75
+            },
             "isAlternate": true
         },
         {
@@ -2187,15 +1909,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 18.333333333333332
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 18.333333333333332
+            },
             "isAlternate": true
         },
         {
@@ -2231,15 +1948,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": true
         },
         {
@@ -2266,15 +1978,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 22.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 22.5
+            },
             "isAlternate": true
         },
         {
@@ -2310,15 +2017,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 13.75
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 13.75
+            },
             "isAlternate": true
         },
         {
@@ -2344,15 +2046,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.005
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.005
+            },
             "isAlternate": true
         },
         {
@@ -2394,15 +2091,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 17.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 17.5
+            },
             "isAlternate": true
         },
         {
@@ -2428,15 +2120,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 0.75
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 0.75
+            },
             "isAlternate": true
         },
         {
@@ -2467,15 +2154,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": true
         },
         {
@@ -2501,15 +2183,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 1.0666666666666667
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 1.0666666666666667
+            },
             "isAlternate": true
         },
         {
@@ -2530,15 +2207,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": true
         },
         {
@@ -2559,15 +2231,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.4444444444444444
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.4444444444444444
+            },
             "isAlternate": true
         },
         {
@@ -2593,15 +2260,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 5
+            },
             "isAlternate": true
         },
         {
@@ -2627,15 +2289,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 1.3636363636363635
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 1.3636363636363635
+            },
             "isAlternate": true
         },
         {
@@ -2661,15 +2318,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 3
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 3
+            },
             "isAlternate": true
         },
         {
@@ -2695,15 +2347,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 1.7777777777777777
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 1.7777777777777777
+            },
             "isAlternate": true
         },
         {
@@ -2729,15 +2376,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 3.2
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 3.2
+            },
             "isAlternate": true
         },
         {
@@ -2779,15 +2421,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 87.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 87.5
+            },
             "isAlternate": true
         },
         {
@@ -2813,15 +2450,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -2842,15 +2474,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.05
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.05
+            },
             "isAlternate": true
         },
         {
@@ -2871,15 +2498,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": true
         },
         {
@@ -2905,15 +2527,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.1
+            },
             "isAlternate": true
         },
         {
@@ -2939,15 +2556,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -2978,15 +2590,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": true
         },
         {
@@ -3012,15 +2619,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -3046,15 +2648,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 30
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 30
+            },
             "isAlternate": true
         },
         {
@@ -3081,15 +2678,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 17.307692307692307
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 17.307692307692307
+            },
             "isAlternate": true
         },
         {
@@ -3110,15 +2702,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 4
+            },
             "isAlternate": true
         },
         {
@@ -3144,15 +2731,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 30
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 30
+            },
             "isAlternate": true
         },
         {
@@ -3178,15 +2760,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2
+            },
             "isAlternate": true
         },
         {
@@ -3212,15 +2789,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2.3076923076923075
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2.3076923076923075
+            },
             "isAlternate": true
         },
         {
@@ -3246,15 +2818,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 4.285714285714286
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 4.285714285714286
+            },
             "isAlternate": true
         },
         {
@@ -3286,15 +2853,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 4.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 4.5
+            },
             "isAlternate": true
         },
         {
@@ -3320,15 +2882,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.3636363636363635
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.3636363636363635
+            },
             "isAlternate": true
         },
         {
@@ -3354,15 +2911,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -3393,15 +2945,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": true
         },
         {
@@ -3437,15 +2984,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 18.333333333333332
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 18.333333333333332
+            },
             "isAlternate": true
         },
         {
@@ -3471,15 +3013,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2.5
+            },
             "isAlternate": true
         },
         {
@@ -3505,15 +3042,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2.5
+            },
             "isAlternate": true
         },
         {
@@ -3544,15 +3076,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 9.166666666666666
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 9.166666666666666
+            },
             "isAlternate": true
         },
         {
@@ -3578,15 +3105,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.6666666666666667
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.6666666666666667
+            },
             "isAlternate": true
         },
         {
@@ -3612,15 +3134,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 3
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 3
+            },
             "isAlternate": true
         },
         {
@@ -3651,15 +3168,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": true
         },
         {
@@ -3685,15 +3197,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2.5
+            },
             "isAlternate": true
         },
         {
@@ -3719,15 +3226,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 5.333333333333333
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 5.333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -3753,15 +3255,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 10
+            },
             "isAlternate": true
         },
         {
@@ -3782,15 +3279,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1
+            },
             "isAlternate": true
         },
         {
@@ -3816,15 +3308,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 5.333333333333333
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 5.333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -3845,15 +3332,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1
+            },
             "isAlternate": true
         },
         {
@@ -3879,15 +3361,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": true
         },
         {
@@ -3908,15 +3385,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.07692307692307693
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.07692307692307693
+            },
             "isAlternate": true
         },
         {
@@ -3942,15 +3414,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 5
+            },
             "isAlternate": true
         },
         {
@@ -3976,15 +3443,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 5
+            },
             "isAlternate": true
         },
         {
@@ -4020,15 +3482,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": true
         },
         {
@@ -4054,15 +3511,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 5.333333333333333
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 5.333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -4088,15 +3540,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 1.3333333333333333
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 1.3333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -4132,15 +3579,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 12.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 12.5
+            },
             "isAlternate": true
         },
         {
@@ -4166,15 +3608,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.03333333333333333
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.03333333333333333
+            },
             "isAlternate": true
         },
         {
@@ -4210,15 +3647,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 18.333333333333332
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 18.333333333333332
+            },
             "isAlternate": true
         },
         {
@@ -4244,15 +3676,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -4288,15 +3715,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": true
         },
         {
@@ -4332,15 +3754,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 18.333333333333332
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 18.333333333333332
+            },
             "isAlternate": true
         },
         {
@@ -4366,15 +3783,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 7.5
+            },
             "isAlternate": true
         },
         {
@@ -4406,15 +3818,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 8.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 8.5
+            },
             "isAlternate": false
         },
         {
@@ -4435,16 +3842,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -4470,16 +3871,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -4511,15 +3906,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 20
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 20
+            },
             "isAlternate": false
         },
         {
@@ -4545,15 +3935,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -4579,15 +3964,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -4623,15 +4003,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -4668,15 +4043,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 125
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 125
+            },
             "isAlternate": false
         },
         {
@@ -4702,15 +4072,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -4736,15 +4101,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -4775,15 +4135,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 18.75
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 18.75
+            },
             "isAlternate": false
         },
         {
@@ -4804,16 +4159,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.04
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.04
+            },
             "isAlternate": false
         },
         {
@@ -4834,16 +4183,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": false
         },
         {
@@ -4864,16 +4207,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.4
+            },
             "isAlternate": false
         },
         {
@@ -4894,16 +4231,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.2
+            },
             "isAlternate": false
         },
         {
@@ -4929,20 +4260,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -4963,15 +4284,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -4992,16 +4308,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5022,15 +4332,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5051,16 +4356,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5086,15 +4385,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5120,15 +4414,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5154,16 +4443,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -5189,15 +4472,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5223,15 +4501,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5262,16 +4535,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -5292,16 +4559,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5337,15 +4598,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 75
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 75
+            },
             "isAlternate": false
         },
         {
@@ -5371,15 +4627,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 16
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 16
+            },
             "isAlternate": false
         },
         {
@@ -5400,16 +4651,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5435,15 +4680,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5469,15 +4709,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -5498,16 +4733,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": false
         },
         {
@@ -5528,16 +4757,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5568,16 +4791,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": false
         },
         {
@@ -5603,15 +4820,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -5632,15 +4844,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.01
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.01
+            },
             "isAlternate": false
         },
         {
@@ -5661,15 +4868,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -5695,16 +4897,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -5725,16 +4921,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1
+            },
             "isAlternate": false
         },
         {
@@ -5755,16 +4945,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -5790,16 +4974,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -5825,16 +5003,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -5871,15 +5043,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 52.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 52.5
+            },
             "isAlternate": false
         },
         {
@@ -5894,15 +5061,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.01
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.01
+            },
             "isAlternate": false
         },
         {
@@ -5933,20 +5095,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -5972,16 +5124,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -6007,15 +5153,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -6041,15 +5182,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -6075,15 +5211,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -6104,16 +5235,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1.3333333333333333
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1.3333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -6134,15 +5259,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6168,15 +5288,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -6202,15 +5317,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -6231,15 +5341,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6265,15 +5370,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -6304,15 +5404,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -6354,15 +5449,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10500000000000001
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10500000000000001
+            },
             "isAlternate": false
         },
         {
@@ -6389,15 +5479,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 17.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 17.5
+            },
             "isAlternate": false
         },
         {
@@ -6428,15 +5513,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 75
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 75
+            },
             "isAlternate": false
         },
         {
@@ -6467,20 +5547,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -6501,16 +5571,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6536,16 +5600,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -6581,16 +5639,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -6621,16 +5673,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -6651,16 +5697,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6686,20 +5726,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1.5
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1.5
+            },
             "isAlternate": false
         },
         {
@@ -6730,20 +5760,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -6775,15 +5795,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 16.875
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 16.875
+            },
             "isAlternate": false
         },
         {
@@ -6809,15 +5824,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 16
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 16
+            },
             "isAlternate": false
         },
         {
@@ -6838,16 +5848,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6873,15 +5877,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -6902,16 +5901,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -6932,20 +5925,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -6966,16 +5949,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -7001,15 +5978,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -7035,15 +6007,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -7069,15 +6036,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -7108,15 +6070,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -7142,16 +6099,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -7177,16 +6128,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -7228,15 +6173,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10400000000000001
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10400000000000001
+            },
             "isAlternate": false
         },
         {
@@ -7267,15 +6207,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 25
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 25
+            },
             "isAlternate": false
         },
         {
@@ -7301,15 +6236,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -7335,15 +6265,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -7385,15 +6310,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 16.25
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 16.25
+            },
             "isAlternate": false
         },
         {
@@ -7419,15 +6339,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -7453,15 +6368,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7487,15 +6397,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7521,15 +6426,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7555,15 +6455,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7589,15 +6484,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7623,15 +6513,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -7657,15 +6542,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -7691,15 +6571,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7725,15 +6600,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -7759,15 +6629,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7793,15 +6658,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7827,15 +6687,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 5
+            },
             "isAlternate": false
         },
         {
@@ -7856,15 +6711,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 2.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 2.5
+            },
             "isAlternate": false
         },
         {
@@ -7891,15 +6741,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 45
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 45
+            },
             "isAlternate": false
         },
         {
@@ -7935,15 +6780,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -7969,15 +6809,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "hadroncollider"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "hadroncollider",
-                    "powerPerBuilding": 0.0033333333333333335
-                }
-            ],
+            "building": {
+                "name": "hadroncollider",
+                "power": 0.0033333333333333335
+            },
             "isAlternate": false
         },
         {
@@ -7998,16 +6833,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -8028,16 +6857,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -8058,16 +6881,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": false
         },
         {
@@ -8093,16 +6910,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8123,16 +6934,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1.3333333333333333
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1.3333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -8153,16 +6958,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": false
         },
         {
@@ -8193,16 +6992,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": false
         },
         {
@@ -8228,15 +7021,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -8262,15 +7050,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -8291,16 +7074,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -8321,15 +7098,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "smeltermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "smeltermk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "smeltermk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -8355,16 +7127,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8385,15 +7151,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -8419,15 +7180,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8453,15 +7209,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8487,20 +7238,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 1
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 1
+            },
             "isAlternate": false
         },
         {
@@ -8532,15 +7273,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 82.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 82.5
+            },
             "isAlternate": false
         },
         {
@@ -8566,16 +7302,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8602,15 +7332,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 30
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 30
+            },
             "isAlternate": false
         },
         {
@@ -8641,16 +7366,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -8671,16 +7390,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1
+            },
             "isAlternate": false
         },
         {
@@ -8706,20 +7419,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8740,16 +7443,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 0.8
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 0.8
+            },
             "isAlternate": false
         },
         {
@@ -8785,15 +7482,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 5.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 5.5
+            },
             "isAlternate": false
         },
         {
@@ -8819,15 +7511,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8853,15 +7540,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -8882,15 +7564,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -8911,21 +7588,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent",
-                "automatedworkbench"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 1
-                },
-                {
-                    "building": "automatedworkbench",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 1
+            },
             "isAlternate": false
         },
         {
@@ -8946,16 +7612,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -8981,16 +7641,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -9011,16 +7665,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -9046,16 +7694,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "foundrymk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "foundrymk1",
-                    "powerPerBuilding": 5.333333333333333
-                }
-            ],
+            "building": {
+                "name": "foundrymk1",
+                "power": 5.333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -9076,16 +7718,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         },
         {
@@ -9106,16 +7742,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 4
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
             "isAlternate": false
         },
         {
@@ -9141,20 +7771,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 15
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -9180,15 +7800,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -9214,15 +7829,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -9248,15 +7858,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 6
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 6
+            },
             "isAlternate": false
         },
         {
@@ -9292,16 +7897,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -9343,15 +7942,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10400000000000001
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10400000000000001
+            },
             "isAlternate": false
         },
         {
@@ -9393,15 +7987,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "quantumencoder"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "quantumencoder",
-                    "powerPerBuilding": 0.10833333333333334
-                }
-            ],
+            "building": {
+                "name": "quantumencoder",
+                "power": 0.10833333333333334
+            },
             "isAlternate": false
         },
         {
@@ -9437,15 +8026,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 27.5
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 27.5
+            },
             "isAlternate": false
         },
         {
@@ -9466,15 +8050,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.1
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.1
+            },
             "isAlternate": false
         },
         {
@@ -9510,16 +8089,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -9550,20 +8123,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1",
-                "bp_workshopcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 1.1
-                },
-                {
-                    "building": "bp_workshopcomponent",
-                    "powerPerBuilding": 0
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 1.1
+            },
             "isAlternate": false
         },
         {
@@ -9594,15 +8157,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "blender"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "blender",
-                    "powerPerBuilding": 1.5
-                }
-            ],
+            "building": {
+                "name": "blender",
+                "power": 1.5
+            },
             "isAlternate": false
         },
         {
@@ -9628,15 +8186,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "oilrefinery"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "oilrefinery",
-                    "powerPerBuilding": 6
-                }
-            ],
+            "building": {
+                "name": "oilrefinery",
+                "power": 6
+            },
             "isAlternate": false
         },
         {
@@ -9663,15 +8216,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -9698,15 +8246,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -9733,15 +8276,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -9768,15 +8306,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -9803,15 +8336,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -9838,15 +8366,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 20
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 20
+            },
             "isAlternate": false
         },
         {
@@ -9873,15 +8396,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 12.5
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 12.5
+            },
             "isAlternate": false
         },
         {
@@ -9908,15 +8426,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -9943,15 +8456,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 15
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 15
+            },
             "isAlternate": false
         },
         {
@@ -9978,15 +8486,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 20
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 20
+            },
             "isAlternate": false
         },
         {
@@ -10013,15 +8516,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -10048,15 +8546,10 @@
                     "isByProduct": true
                 }
             ],
-            "producedIn": [
-                "packager"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "packager",
-                    "powerPerBuilding": 10
-                }
-            ],
+            "building": {
+                "name": "packager",
+                "power": 10
+            },
             "isAlternate": false
         },
         {
@@ -10087,15 +8580,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "manufacturermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "manufacturermk1",
-                    "powerPerBuilding": 55
-                }
-            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": 55
+            },
             "isAlternate": false
         },
         {
@@ -10121,15 +8609,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "converter"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "converter",
-                    "powerPerBuilding": 0.008333333333333333
-                }
-            ],
+            "building": {
+                "name": "converter",
+                "power": 0.008333333333333333
+            },
             "isAlternate": false
         },
         {
@@ -10155,15 +8638,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "assemblermk1"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "assemblermk1",
-                    "powerPerBuilding": 7.5
-                }
-            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 7.5
+            },
             "isAlternate": false
         },
         {
@@ -10184,16 +8662,10 @@
                     "isByProduct": false
                 }
             ],
-            "producedIn": [
-                "constructormk1",
-                "bp_workbenchcomponent"
-            ],
-            "powerPerBuilding": [
-                {
-                    "building": "constructormk1",
-                    "powerPerBuilding": 2
-                }
-            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 2
+            },
             "isAlternate": false
         }
     ]
