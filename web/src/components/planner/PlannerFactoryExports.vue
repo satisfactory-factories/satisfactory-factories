@@ -81,7 +81,9 @@
                     </v-chip>
                   </div>
                 </div>
-                <p v-else class="mt-2">No requests. Add imports in other factories.</p>
+                <p v-else class="mt-2">
+                  <b>No requests for export!</b><br>Add imports in other factories linking to this one. It it assumed you are sinking all these products.
+                </p>
               </v-card-text>
             </v-card>
           </div>
