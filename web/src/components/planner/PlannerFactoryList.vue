@@ -9,8 +9,8 @@
           <v-card-title class="py-3">
             <v-row>
               <v-col align-self="end" class="text-body-1">
-                <i class="fas fa-bars" />
-                <i class="fas fa-industry ml-4" />
+                <i class="fas fa-bars text-grey-darken-1" />
+                <i class="fas fa-industry ml-2" />
                 <span class="ml-2">{{ truncateFactoryName(element.name) }}</span>
               </v-col>
             </v-row>
