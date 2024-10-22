@@ -154,7 +154,6 @@
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
-
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
 
   const props = defineProps<{
@@ -166,7 +165,7 @@
   const addEmptyProduct = (factory: Factory) => {
     factory.products.push({
       id: '',
-      amount: 0,
+      amount: 1,
       recipe: '',
       displayOrder: factory.products.length,
       requirements: {},
@@ -221,7 +220,7 @@
   const updateProductSelection = (product: FactoryProduct, factory: Factory) => {
     // If the user update's the product within the subject selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
     product.recipe = ''
-    product.amount = 0
+    product.amount = 1
 
     // If there is only one recipe for the product just automatically select it
     const recipes = getRecipesForPart(product.id)
