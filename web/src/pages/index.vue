@@ -28,7 +28,15 @@
       }
     },
     async mounted () {
+      // Load the game data from localStorage if it exists
+      if (localStorage.getItem('gameData')) {
+        this.data = JSON.parse(localStorage.getItem('gameData') as string)
+        this.loading = false
+        return
+      }
+
       try {
+        console.log('Game data not found in localStorage, fetching from server')
         const response = await fetch('/gameData.json')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
@@ -40,6 +48,7 @@
         }
 
         this.data = data
+        localStorage.setItem('gameData', JSON.stringify(data))
       } catch (error) {
         console.error('Error loading recipes:', error)
         this.error = error instanceof Error ? error.message : 'Unknown error'
