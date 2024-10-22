@@ -26,6 +26,12 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
       // Get the first key of product
       const productKey = Object.keys(recipe.product)[0] // This is a large assumption there is only ever one product!
       const produces = recipe.product[productKey]
+
+      if (product.amount <= 0) {
+        // Forcefully set it to a positive value so the user can't break stuff
+        product.amount = 1
+      }
+
       const ingredientRequired = (product.amount / produces) * ingredientAmount
 
       // Raw resource handling
