@@ -1,6 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
+import {Recipe} from "./interfaces/Recipe";
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -173,28 +174,18 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
 }
 
 // Helper function to check if a recipe is likely to be liquid based on building type and amount
-function isLikelyFluid(building: string, amount: number, productName: string): boolean {
-    const fluidBuildings = ['build_waterpump', 'build_oilrefinery', 'build_packager', 'build_oilpump', 'build_blender'];
-    const gasProducts = ['nitrogengas', 'oxygengas', 'heliumgas'];  // Add any gas product names here
-    const isFluidBuilding = fluidBuildings.includes(building.toLowerCase());
-    const isGasProduct = gasProducts.includes(productName.toLowerCase());
+function isFluid(productName: string): boolean {
+    const liquidProducts = ['water', 'liquidoil', 'heavyoilresidue', 'liquidfuel', 'liquidturbofuel', 'liquidbiofuel', 'aluminasolution', 'sulfuricacid', 'nitricacid', 'dissolvedsilica']
+    const gasProducts = ['nitrogengas', 'rocketfuel', 'ionizedfuel', 'quantumenergy', 'darkenergy'];
 
-    return (isFluidBuilding && amount > 100) || isGasProduct;
+    if (liquidProducts.includes(productName.toLowerCase())) {
+        return true;
+    }
+
+    return gasProducts.includes(productName.toLowerCase());
 }
 
-
-interface Recipe {
-    id: string;
-    displayName: string;
-    ingredients: { [key: string]: number }[];
-    product: { [key: string]: number };
-    byProduct: { [key: string]: number };
-    perMin: number;
-    producedIn: string[];
-    powerPerBuilding: { building: string, powerPerBuilding: number }[];
-    isAlternate: boolean;
-}
-
+// If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
 function getRecipes(
     data: any[],
     producingBuildings: { [key: string]: number }
@@ -213,14 +204,13 @@ function getRecipes(
             const rawBuildingKey = recipe.mProducedIn.match(/\/([^\/]+)\./g);
 
             if (!rawBuildingKey) {
-              return false;
+                return false;
             }
 
             // Check the array for "Build_", if one is found remove the build prefix
             const buildingKey = rawBuildingKey[0].replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
 
             if (producingBuildings[buildingKey]) {
-              console.log('Found building in producingBuildings map:', buildingKey);
                 return true;
             }
         })
@@ -229,65 +219,53 @@ function getRecipes(
                 ? recipe.mIngredients
                     .match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
                     ?.map((ingredientStr: string) => {
-                        const match = ingredientStr.match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+                        const match = ingredientStr.match(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/);
                         if (match) {
                             const partName = match[1];
                             let amount = parseInt(match[2], 10);
-                            // Check if this is a likely liquid or gas based on building and amount
+
                             const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
                                 ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
 
-                            if (isLikelyFluid(producedIn, amount, partName)) {
-                                amount = amount / 1000;  // Divide by 1000 for liquids and gases
+                             if (isFluid(partName)) {
+                                amount = amount / 1000;
                             }
-                            return { [partName]: amount };
+
+                            const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+
+                            return {
+                                part: partName,
+                                amount,
+                                perMin
+                            };
                         }
                         return null;
                     })
                     .filter((ingredient: any) => ingredient !== null)
                 : [];
 
-            // Parse mProduct to extract both the product and byProduct
-            const productMatches = recipe.mProduct
-                ?.match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
+            // Parse mProduct to extract all products
+            const productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
-            let product = {};
-            let byProduct = {};
-            let productAmount = 0;
+            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
+            productMatches.forEach(match => {
+                const productName = match[1];
+                let amount = parseInt(match[2], 10);
 
-            if (productMatches && productMatches.length > 0) {
-                // Handle the first product
-                const primaryProductMatch = productMatches[0].match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
-                if (primaryProductMatch) {
-                    const productName = primaryProductMatch[1];
-                    productAmount = parseInt(primaryProductMatch[2], 10);
-
-                    const producedIn = recipe.mProducedIn.match(/\/([^\/]+)\./g)
-                        ?.map((building: string) => building.replace(/\//g, '').replace(/\./g, '').toLowerCase())[0] || '';
-
-                    if (isLikelyFluid(producedIn, productAmount, productName)) {
-                        productAmount = productAmount / 1000;  // Divide by 1000 for liquid/gas amounts
-                    }
-
-                    product = { [productName]: productAmount };
-
-                    // Add to uniqueProductsSet to ensure unique products in parts
-                    uniqueProductsSet.add(productName);
+                if (isFluid(productName)) {
+                    amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
 
-                // Handle the second product as byProduct, if present
-                if (productMatches.length > 1) {
-                    const byProductMatch = productMatches[1].match(/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/);
-                    if (byProductMatch) {
-                        const byProductName = byProductMatch[1];
-                        let byProductAmount = parseInt(byProductMatch[2], 10);
-                        byProduct = { [byProductName]: byProductAmount };
-                    }
-                }
-            }
+                const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
-            // Ensure primary product's amount is a number
-            const perMin = recipe.mManufactoringDuration && productAmount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * productAmount : 0;
+                products.push({
+                    part: productName,
+                    amount,
+                    perMin,
+                    isByProduct: products.length > 0
+                });
+                uniqueProductsSet.add(productName);
+            });
 
             // Handle multiple building power values and remove "build_" prefix
             const producedIn = recipe.mProducedIn
@@ -309,7 +287,7 @@ function getRecipes(
                     const buildingPower = producingBuildings[building] || 0;  // Get building power from the producingBuildings map, default to 0
                     return {
                         building: building,
-                        powerPerBuilding: productAmount > 0 ? buildingPower / productAmount : 0
+                        powerPerBuilding: Object.values(products).reduce((total, product) => total + (product.amount > 0 ? buildingPower / product.amount : 0), 0)
                     };
                 });
 
@@ -319,9 +297,7 @@ function getRecipes(
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
                 displayName: recipe.mDisplayName,
                 ingredients,
-                product,        // Singular primary product
-                byProduct,      // Singular byProduct (if any)
-                perMin,         // Add perMin for the primary product
+                products,
                 producedIn,
                 powerPerBuilding,
                 isAlternate
@@ -381,9 +357,11 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
 function fixItemNames(items: PartDataInterface): void {
     // Go through the item names and do some manual fixes, e.g. renaming "Residual Plastic" to "Plastic"
     const fixItems: Record<string, string> = {
+        "LiquidFuel": "Fuel",
         "Plastic": "Plastic",
         "Rubber": "Rubber",
-        "Snow": "Snow"
+        "Snow": "Snow",
+        "TurboFuel": "Turbofuel",
     };
 
     for (const search of Object.keys(fixItems)) {
@@ -399,11 +377,9 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
 
     // Loop through each recipe to collect all product keys
     recipes.forEach(recipe => {
-        if (recipe.product) {
-            Object.keys(recipe.product).forEach(product => {
-                recipeProducts.add(product);
-            });
-        }
+        recipe.products.forEach(product => {
+            recipeProducts.add(product.part);
+        });
     });
 
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
