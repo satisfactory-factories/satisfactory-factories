@@ -307,34 +307,39 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
 
 export const configureExportCalculator = (factories: Factory[]) => {
   factories.forEach(factory => {
-    const requestKeys = Object.keys(factory.dependencies.requests)
-
-    // Now that all the dependencies are created, if the selection has not yet been made, make it the first selection now.
-    if (factory.exportCalculator.selected === null && requestKeys.length > 0) {
-      factory.exportCalculator.selected = requestKeys[0] ?? null
-    }
-
-    // If there are no settings, make the key now.
-    if (!factory.exportCalculator.settings) {
-      factory.exportCalculator.settings = {}
-    }
-
-    // Now check each of the export calculator settings to ensure that the factory is still a valid dependency, if not it needs removing.
-    // Obviously if this was just created it does nothing.
-    Object.keys(factory.exportCalculator.settings).forEach(factoryId => {
-    // Check if there is still a dependency between the two factories.
-      if (!factory.dependencies.requests[factoryId]) {
-        delete factory.exportCalculator.settings[factoryId]
-      }
-    })
-
-    // Now initialize the export calculator settings for each factory, if they don't exist already.
-    factories.forEach(fac => {
-      if (!fac.exportCalculator.settings[factory.id]) {
-        fac.exportCalculator.settings[factory.id] = {
-          trainTime: 123,
+    // For each surplus product we need to make sure there is an export calculator setting associated with it
+    Object.keys(factory.surplus).forEach(part => {
+      // If there's not already a record for this surplus product, create one now.
+      if (!factory.exportCalculator[part]) {
+        factory.exportCalculator[part] = {
+          selected: null,
+          factorySettings: {},
         }
       }
+
+      // For readability
+      const exportCalculatorSettings = factory.exportCalculator[part]
+
+      // Now we need to check if the selected export calculator setting is still valid.
+      if (exportCalculatorSettings.selected !== null && !factory.dependencies.requests[exportCalculatorSettings.selected]) {
+        exportCalculatorSettings.selected = null
+      }
+
+      const requestKeys = Object.keys(factory.dependencies.requests)
+
+      // If the selection has not yet been made, make it the first option now.
+      if (exportCalculatorSettings.selected === null && requestKeys.length > 0) {
+        exportCalculatorSettings.selected = requestKeys[0] ?? null
+      }
+
+      // We also need to pre-fill the factory settings for the requests
+      requestKeys.forEach(request => {
+        if (!exportCalculatorSettings.factorySettings[request]) {
+          exportCalculatorSettings.factorySettings[request] = {
+            trainTime: 123,
+          }
+        }
+      })
     })
   })
 }
@@ -348,11 +353,15 @@ export const calculateDependencyMetrics = (factories: Factory[]) => {
         const part = request.part
         const metrics = factory.dependencies.metrics
 
+        if (!factory.surplus[part]) {
+          console.warn(`calculateDependencyMetrics: Could not find a surplus for part ${part}.`, part)
+        }
+
         if (!metrics[part]) {
           metrics[part] = {
             part,
             request: 0,
-            supply: factory.surplus[part].amount ?? 0,
+            supply: factory.surplus[part]?.amount ?? 0,
             isRequestSatisfied: false,
             difference: 0,
           }

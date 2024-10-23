@@ -30,7 +30,7 @@
     </p>
     <div class="d-flex justify-center align-center text-center mt-2">
       <v-text-field
-        v-model.number="calculatorSettings.trainTime"
+        v-model.number="destFactorySettings.trainTime"
         density="compact"
         hide-details
         label="Round trip secs"
@@ -53,7 +53,6 @@
 <script setup lang="ts">
   import { defineProps } from 'vue'
   import {
-    ExportCalculatorSettings,
     Factory,
     FactoryDependencyMetrics,
     FactoryItem,
@@ -65,7 +64,7 @@
     destFactory: Factory;
     request: FactoryDependencyMetrics;
     product: FactoryItem;
-    calculatorSettings: ExportCalculatorSettings
+    destFactorySettings: { trainTime: number };
     gameData: DataInterface;
     helpText: boolean;
   }>()
@@ -119,7 +118,7 @@
 
     const amount = props.request.amount
     const carCap = 32 * data.stackSize
-    const rtt = props.calculatorSettings.trainTime ?? 123
+    const rtt = props.destFactorySettings.trainTime ?? 123
 
     // Need amount per minute of the product, divided by the car capacity divided by the round trip time
     const carsNeeded = (amount / 60) / (carCap / rtt)
@@ -130,7 +129,7 @@
   const calculateFluidCars = () => {
     const amount = props.request.amount
     const carCap = 1600
-    const rtt = props.calculatorSettings.trainTime ?? 123
+    const rtt = props.destFactorySettings.trainTime ?? 123
 
     // Need amount per minute of the product, divided by the car capacity divided by the round trip time
     const carsNeeded = (amount / 60) / (carCap / rtt)

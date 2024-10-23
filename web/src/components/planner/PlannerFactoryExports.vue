@@ -74,9 +74,9 @@
                 v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
                 :key="request.factory"
                 class="mr-2 mb-2 border-md border-gray"
-                :color="isRequestSelected(factory, request.factory) ? 'primary' : ''"
-                :style="isRequestSelected(factory, request.factory) ? 'border-color: rgb(0, 123, 255) !important' : ''"
-                @click="changeCalculatorSelection(factory, request.factory)"
+                :color="isRequestSelected(factory, request.factory, product.id) ? 'primary' : ''"
+                :style="isRequestSelected(factory, request.factory, product.id) ? 'border-color: rgb(0, 123, 255) !important' : ''"
+                @click="changeCalculatorSelection(factory, request.factory, product.id)"
               >
                 <i class="fas fa-industry" />
                 <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
@@ -90,15 +90,23 @@
           </v-col>
           <v-col cols="12" md="7">
             <planner-factory-export-calculator
-              v-if="factory.exportCalculator.selected"
+              v-if="isCalculatorReady(factory, product.id)"
               :key="factory.exportCalculator.selected"
-              :calculator-settings="factory.exportCalculator.settings[factory.exportCalculator.selected]"
-              :dest-factory="findFactory(factory.exportCalculator.selected)"
+              :dest-factory="findFactory(getCalculatorSettings(factory, product.id).selected)"
+              :dest-factory-settings="getCalculatorDestFacSettings(
+                factory,
+                product.id,
+                getCalculatorSettings(factory, product.id).selected
+              )"
               :factory="factory"
               :game-data="gameData"
               :help-text="helpText"
               :product="product"
-              :request="getRequestForPartByDestFac(factory, factory.exportCalculator.selected, product.id)"
+              :request="getRequestForPartByDestFac(
+                factory,
+                product.id,
+                getCalculatorSettings(factory, product.id).selected,
+              )"
             />
             <div v-else class="text-center">
               <p class="text-h5 mb-2">
@@ -107,7 +115,6 @@
               </p>
               <p>Nothing to calculate.</p>
             </div>
-
           </v-col>
         </v-row>
       </div>
@@ -171,7 +178,7 @@
     }).flat()
   }
 
-  const getRequestForPartByDestFac = (factory: Factory, destFacId: string, part: string) => {
+  const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string) => {
     // Get the requests, then filter by the requesting factory to get the exact request for the port
     const requests = factory.dependencies.requests[destFacId]
     if (!requests) {
@@ -213,12 +220,44 @@
     updateFactory(factory)
   }
 
-  const changeCalculatorSelection = (factory: Factory, factoryId: string) => {
-    factory.exportCalculator.selected = factoryId
+  const isCalculatorReady = (factory: Factory, part: string) => {
+    const settings = getCalculatorSettings(factory, part)
+
+    if (!settings?.selected && settings.selected) {
+      console.log('No factory selected')
+      return false
+    }
+
+    if (getRequestsForFactoryByProduct(factory, part).length === 0) {
+      console.log('No requests for export')
+      return false
+    }
+
+    if (getCalculatorDestFacSettings(factory, part, settings.selected)?.trainTime === undefined) {
+      console.log('No train time set')
+      console.log(factory.exportCalculator[part])
+      console.log(settings.selected)
+      console.log(getCalculatorDestFacSettings(factory, part, settings.selected))
+      return false
+    }
+
+    return true
   }
 
-  const isRequestSelected = (factory: Factory, factoryId: string) => {
-    return factory.exportCalculator.selected === factoryId
+  const changeCalculatorSelection = (factory: Factory, factoryId: string, part: string) => {
+    factory.exportCalculator[part].selected = factoryId
+  }
+
+  const isRequestSelected = (factory: Factory, factoryId: string, part: string) => {
+    return factory.exportCalculator[part].selected === factoryId
+  }
+
+  const getCalculatorSettings = (factory: Factory, part: string) => {
+    return factory.exportCalculator[part]
+  }
+
+  const getCalculatorDestFacSettings = (factory: Factory, part: string, destFactoryId: string) => {
+    return factory.exportCalculator[part].factorySettings[destFactoryId]
   }
 </script>
 

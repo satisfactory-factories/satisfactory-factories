@@ -104,7 +104,8 @@
     calculateHasProblem,
     calculateProductRequirements,
     calculateSurplus,
-    calculateUsingRawResourcesOnly, configureExportCalculator,
+    calculateUsingRawResourcesOnly,
+    configureExportCalculator,
   } from '@/utils/factoryManager'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
@@ -215,10 +216,7 @@
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       totalPower: 0,
       dependencies: {},
-      exportCalculator: {
-        selected: null,
-        settings: {},
-      },
+      exportCalculator: {},
       rawResources: {},
       usingRawResourcesOnly: false,
       surplus: {},
