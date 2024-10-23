@@ -64,7 +64,7 @@
           v-model.number="input.amount"
           class="mr-2"
           hide-details
-          label="Amount"
+          label="Qty /min"
           max-width="110px"
           type="number"
           variant="outlined"
