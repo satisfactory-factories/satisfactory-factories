@@ -28,19 +28,23 @@
         It is assumed you are feeding the freight platforms with sufficient belt capacity. <br>Time is from "choo" to "choo".
       </span>
     </p>
-    <div class="d-flex justify-center align-center text-center my-2">
+    <div class="d-flex justify-center align-center text-center mt-2">
       <v-text-field
         v-model.number="calculatorSettings.trainTime"
         density="compact"
         hide-details
-        label="Round trip time (s)"
-        max-width="225px"
-        prepend-icon="fas fa-clock"
+        label="Round trip secs"
+        max-width="160px"
+        prepend-icon="fas fa-train"
         variant="outlined"
       />
-      <v-chip class="ml-2">
+      <v-chip v-if="!isFluid(product.id)" class="ml-2">
         <game-asset subject="freight-car" type="item" />
-        <span class="ml-2">Freight Cars: {{ calculateTrainCars() }}</span>
+        <span class="ml-2">Freight Cars: {{ calculateFreightCars() }}</span>
+      </v-chip>
+      <v-chip v-if="isFluid(product.id)" class="ml-2">
+        <game-asset subject="freight-car" type="item" />
+        <span class="ml-2">Fluid Freight Cars: {{ calculateFluidCars() }}</span>
       </v-chip>
     </div>
   </div>
@@ -103,7 +107,7 @@
     return belt.replace('-', '').replace(/\b\w/g, l => l.toUpperCase())
   }
 
-  const calculateTrainCars = () => {
+  const calculateFreightCars = () => {
     const part = props.product.id
 
     // 1. Get the product info from game data
@@ -121,6 +125,21 @@
     const carsNeeded = (amount / 60) / (carCap / rtt)
 
     return carsNeeded.toFixed(2)
+  }
+
+  const calculateFluidCars = () => {
+    const amount = props.request.amount
+    const carCap = 1600
+    const rtt = props.calculatorSettings.trainTime ?? 123
+
+    // Need amount per minute of the product, divided by the car capacity divided by the round trip time
+    const carsNeeded = (amount / 60) / (carCap / rtt)
+
+    return carsNeeded.toFixed(2)
+  }
+
+  const isFluid = (part: string) => {
+    return props.gameData.items.parts[part].isFluid
   }
 
 </script>
