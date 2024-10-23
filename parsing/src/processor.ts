@@ -19,6 +19,7 @@ async function readFileAsUtf8(inputFile: string): Promise<string> {
         const content = iconv.decode(buffer, 'utf-16le');
         return normalizeLineEndings(content);
     } else {
+        // noinspection JSVoidFunctionReturnValueUsed
         const content = await fs.readFile(path.resolve(inputFile), 'utf-8');
         return normalizeLineEndings(content);
     }
