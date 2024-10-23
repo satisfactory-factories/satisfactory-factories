@@ -104,9 +104,7 @@
   }
 
   const calculateTrainCars = () => {
-    const factory = props.factory
     const part = props.product.id
-    const rTT = props.calculatorSettings.trainTime ?? 123
 
     // 1. Get the product info from game data
     const data = props.gameData.items.parts[part]
@@ -115,15 +113,14 @@
       console.error(`Unable to get stack size for ${part}`)
     }
 
-    // 2. Get the surplus of the product
-    const surplus = factory.surplus[part].amount
+    const amount = props.request.amount
+    const carCap = 32 * data.stackSize
+    const rtt = props.calculatorSettings.trainTime ?? 123
 
-    const freightCarCapacity = 32 * data.stackSize
+    // Need amount per minute of the product, divided by the car capacity divided by the round trip time
+    const carsNeeded = (amount / 60) / (carCap / rtt)
 
-    // 3. Calculate the number of freight cars needed
-    const result = Math.ceil(surplus / freightCarCapacity)
-    console.log('carsResult', result)
-    return result
+    return carsNeeded.toFixed(2)
   }
 
 </script>

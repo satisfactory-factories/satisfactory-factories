@@ -307,7 +307,6 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
 
 export const configureExportCalculator = (factories: Factory[]) => {
   factories.forEach(factory => {
-    console.log(factory.dependencies.requests)
     const requestKeys = Object.keys(factory.dependencies.requests)
 
     // Now that all the dependencies are created, if the selection has not yet been made, make it the first selection now.

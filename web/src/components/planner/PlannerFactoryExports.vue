@@ -129,7 +129,6 @@
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (id: number) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
-  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
 
   defineProps<{
     factory: Factory;

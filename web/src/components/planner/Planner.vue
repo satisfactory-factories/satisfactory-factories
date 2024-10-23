@@ -566,9 +566,6 @@
   font-size: 20px;
 }
 
-.border-primary {
-  border-color:  !important;
-}
 .border-gray {
   border-color: rgb(129, 129, 129) !important;
 }
