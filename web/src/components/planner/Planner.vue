@@ -424,12 +424,8 @@
     } else {
       const partItem = props.gameData.items.parts[subject]
       const rawItem = props.gameData.items.rawResources[subject]
-      const item = partItem || rawItem?.name || null
+      const item = partItem || rawItem?.name || subject
 
-      if (!item) {
-        console.error(`Item ${subject} not found in game data!`)
-        return ''
-      }
       return getImageUrl(sluggify(item), 'item', size)
     }
   }
@@ -561,5 +557,12 @@
 
 .fa-bolt {
   font-size: 20px;
+}
+
+.border-gray {
+  border-color: rgb(129, 129, 129) !important;
+}
+.border-light-gray {
+  border-color: rgb(186, 186, 186) !important;
 }
 </style>
