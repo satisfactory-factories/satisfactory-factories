@@ -44,6 +44,12 @@ export interface FactoryDependencyMetrics {
   isRequestSatisfied: boolean;
 }
 
+export interface ExportCalculatorSettings {
+  [key: string]: {
+    trainTime: number;
+  }
+}
+
 export interface FactoryDependency {
   [key: string]: {
     requests: { [key: string]: FactoryDependencyRequest[] },
@@ -77,6 +83,10 @@ export interface Factory {
   totalPower: number;
   surplus: FactorySurplusItem;
   dependencies: FactoryDependency;
+  exportCalculator: {
+    selected: string | null
+    settings: ExportCalculatorSettings
+  }
   rawResources: WorldRawResource;
   usingRawResourcesOnly: boolean;
   hidden: boolean; // Whether to hide the card or not

@@ -14,6 +14,7 @@ declare module 'vue' {
     Navigation: typeof import('./components/Navigation.vue')['default']
     Planner: typeof import('./components/planner/Planner.vue')['default']
     PlannerFactory: typeof import('./components/planner/PlannerFactory.vue')['default']
+    PlannerFactoryExportCalculator: typeof import('./components/planner/PlannerFactoryExportCalculator.vue')['default']
     PlannerFactoryExports: typeof import('./components/planner/PlannerFactoryExports.vue')['default']
     PlannerFactoryImports: typeof import('./components/planner/PlannerFactoryImports.vue')['default']
     PlannerFactoryInputs: typeof import('./components/planner/PlannerFactoryInputs.vue')['default']

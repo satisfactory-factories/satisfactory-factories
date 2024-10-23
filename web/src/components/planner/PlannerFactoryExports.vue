@@ -68,14 +68,15 @@
             </div>
             <div
               v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0"
-              class=""
             >
               <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
               <v-chip
                 v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
                 :key="request.factory"
-                class="mr-2 border-md border-gray"
-                @click="navigateToFactory(request.factory)"
+                class="mr-2 mb-2 border-md border-gray"
+                :color="isRequestSelected(factory, request.factory) ? 'primary' : ''"
+                :style="isRequestSelected(factory, request.factory) ? 'border-color: rgb(0, 123, 255) !important' : ''"
+                @click="changeCalculatorSelection(factory, request.factory)"
               >
                 <i class="fas fa-industry" />
                 <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
@@ -88,44 +89,25 @@
             </div>
           </v-col>
           <v-col cols="12" md="7">
-            <div class="text-center border-b pb-2 mb-2">
-              <p class="text-h6 mb-2 text-center">Output of {{ factory.surplus[product.id].amount }}/min via Belts</p>
-              <v-chip
-                v-for="belt in ['mk-1', 'mk-2', 'mk-3', 'mk-4', 'mk-5', 'mk-6']"
-                :key="belt"
-                class="mr-1 mb-1"
-              >
-                <game-asset :subject="`conveyor-belt-${belt}`" type="building" />
-                <span class="ml-2"><b>{{ beltDisplay(belt) }}:</b> {{ calculateBelts(factory, product.id, belt) }}x</span>
-              </v-chip>
-            </div>
-            <div>
-              <p class="text-h6 text-center">Output of {{ factory.surplus[product.id].amount }}/min via Train</p>
-              <p v-if="helpText" class="text-body-2 text-center">
-                <i class="fas fa-info-circle" />
-                <span class="ml-1">
-                  It is assumed you are feeding the freight platforms with sufficient belt capacity. <br>Time is from "choo" to "choo".
-                </span>
+            <planner-factory-export-calculator
+              v-if="factory.exportCalculator.selected"
+              :key="factory.exportCalculator.selected"
+              :calculator-settings="factory.exportCalculator.settings[factory.exportCalculator.selected]"
+              :dest-factory="findFactory(factory.exportCalculator.selected)"
+              :factory="factory"
+              :game-data="gameData"
+              :help-text="helpText"
+              :product="product"
+              :request="getRequestForPartByDestFac(factory, factory.exportCalculator.selected, product.id)"
+            />
+            <div v-else class="text-center">
+              <p class="text-h5 mb-2">
+                <i class="fas fa-calculator" />
+                <span class="ml-2">Export calculator</span>
               </p>
-              <div class="d-flex justify-center align-center text-center my-2">
-                <v-text-field
-                  density="compact"
-                  hide-details
-                  label="Round trip time (s)"
-                  max-width="225px"
-                  prepend-icon="fas fa-clock"
-                  variant="outlined"
-                />
-
-              </div>
-              <div class="text-center">
-                <v-chip class="ml-2">
-                  <game-asset subject="freight-car" type="item" />
-                  <span class="ml-2">Freight Cars: ???</span>
-                </v-chip>
-              </div>
-
+              <p>Nothing to calculate.</p>
             </div>
+
           </v-col>
         </v-row>
       </div>
@@ -142,6 +124,7 @@
     FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
+  import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
 
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (id: number) => Factory
@@ -189,6 +172,15 @@
     }).flat()
   }
 
+  const getRequestForPartByDestFac = (factory: Factory, destFacId: string, part: string) => {
+    // Get the requests, then filter by the requesting factory to get the exact request for the port
+    const requests = factory.dependencies.requests[destFacId]
+    if (!requests) {
+      return null
+    }
+    return requests.find(request => request.part === part)
+  }
+
   const getRequestMetricsForFactoryByPart = (
     factory: Factory,
     part: string
@@ -222,56 +214,12 @@
     updateFactory(factory)
   }
 
-  const calculateBelts = (factory: Factory, part: string, beltType: string) => {
-    // Simple math here to divide the amount by the belt's capacity
-
-    let beltThroughput = 0
-
-    switch (beltType) {
-      case 'mk-1':
-        beltThroughput = 60
-        break
-      case 'mk-2':
-        beltThroughput = 120
-        break
-      case 'mk-3':
-        beltThroughput = 270
-        break
-      case 'mk-4':
-        beltThroughput = 480
-        break
-      case 'mk-5':
-        beltThroughput = 780
-        break
-      case 'mk-6':
-        beltThroughput = 1200
-        break
-      default:
-        beltThroughput = -1
-        break
-    }
-
-    const exportAmount = factory.surplus[part].amount
-
-    return (exportAmount / beltThroughput).toFixed(2)
+  const changeCalculatorSelection = (factory: Factory, factoryId: string) => {
+    factory.exportCalculator.selected = factoryId
   }
 
-  const beltDisplay = (belt: string) => {
-    // Remove the dash and capitalize the first letter
-    return belt.replace('-', '').replace(/\b\w/g, l => l.toUpperCase())
-  }
-
-  const calculateTrainCars = (factory: Factory, part: string, roundTripTime: number) => {
-    // 1. Get the product info from game data
-    const data = props.gameData.items.parts[part]
-
-    // 2. Get the surplus of the product
-    const surplus = factory.surplus[part].amount
-
-    const freightCarCapacity = 32 * data.stackSize
-
-    // 3. Calculate the number of freight cars needed
-    return Math.ceil(surplus / freightCarCapacity)
+  const isRequestSelected = (factory: Factory, factoryId: string) => {
+    return factory.exportCalculator.selected === factoryId
   }
 </script>
 

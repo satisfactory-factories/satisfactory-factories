@@ -305,6 +305,41 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
   })
 }
 
+export const configureExportCalculator = (factories: Factory[]) => {
+  factories.forEach(factory => {
+    console.log(factory.dependencies.requests)
+    const requestKeys = Object.keys(factory.dependencies.requests)
+
+    // Now that all the dependencies are created, if the selection has not yet been made, make it the first selection now.
+    if (factory.exportCalculator.selected === null && requestKeys.length > 0) {
+      factory.exportCalculator.selected = requestKeys[0] ?? null
+    }
+
+    // If there are no settings, make the key now.
+    if (!factory.exportCalculator.settings) {
+      factory.exportCalculator.settings = {}
+    }
+
+    // Now check each of the export calculator settings to ensure that the factory is still a valid dependency, if not it needs removing.
+    // Obviously if this was just created it does nothing.
+    Object.keys(factory.exportCalculator.settings).forEach(factoryId => {
+    // Check if there is still a dependency between the two factories.
+      if (!factory.dependencies.requests[factoryId]) {
+        delete factory.exportCalculator.settings[factoryId]
+      }
+    })
+
+    // Now initialize the export calculator settings for each factory, if they don't exist already.
+    factories.forEach(fac => {
+      if (!fac.exportCalculator.settings[factory.id]) {
+        fac.exportCalculator.settings[factory.id] = {
+          trainTime: 123,
+        }
+      }
+    })
+  })
+}
+
 // Create data helper classes to visualize the dependencies in the UI nicely.
 export const calculateDependencyMetrics = (factories: Factory[]) => {
   factories.forEach(factory => {

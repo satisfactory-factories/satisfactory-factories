@@ -104,7 +104,7 @@
     calculateHasProblem,
     calculateProductRequirements,
     calculateSurplus,
-    calculateUsingRawResourcesOnly,
+    calculateUsingRawResourcesOnly, configureExportCalculator,
   } from '@/utils/factoryManager'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
@@ -204,7 +204,7 @@
   }
 
   const createFactory = (name = 'A new factory') => {
-    const factory = {
+    const factory: Factory = {
       id: Math.floor(Math.random() * 10000),
       name,
       products: [],
@@ -215,6 +215,10 @@
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       totalPower: 0,
       dependencies: {},
+      exportCalculator: {
+        selected: null,
+        settings: {},
+      },
       rawResources: {},
       usingRawResourcesOnly: false,
       surplus: {},
@@ -265,6 +269,9 @@
     // Check all other factories to see if they are affected by this factory change.
     calculateDependencies(factories.value)
     calculateDependencyMetrics(factories.value)
+
+    // Export Calculator stuff
+    configureExportCalculator(factories.value)
 
     // Add a flag to denote if we're only using raw resources to make products.
     calculateUsingRawResourcesOnly(factory)
@@ -559,6 +566,9 @@
   font-size: 20px;
 }
 
+.border-primary {
+  border-color:  !important;
+}
 .border-gray {
   border-color: rgb(129, 129, 129) !important;
 }
