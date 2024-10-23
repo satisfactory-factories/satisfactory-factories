@@ -51,7 +51,7 @@
               <v-col>
                 <p v-if="requirement.satisfied">
                   <v-icon icon="fas fa-check" />
-                  <span class="ml-2"><b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }} /min</span>
+                  <span class="ml-2"><b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }}/min</span>
                 </p>
                 <p v-else>
                   <v-icon icon="fas fa-times" />
