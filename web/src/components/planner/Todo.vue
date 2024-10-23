@@ -7,12 +7,14 @@
           <ul class="ml-4">
             <li>Bug: Products: Should not be able to select multiple products of the same recipe.</li>
             <li>Bug: Imports: Should not be able to select the same factory and part for import.</li>
-            <li>Feat: Complete request bar segments.</li>
-            <li>Feat: Enable to sink remainder, or sink entire output.</li>
+            <li>Bug: Imports: Should not be able to press Satisfy until both Factory and Item are inserted.</li>
+            <li>Bug: Imports: Should not be able to add a quantity until both Factory and Item are inserted.</li>
+            <li>Bug: Imports: Factory list is showing up as 0 on first load, needs to show first entry.</li>
             <li>Feat: Byproduct representations</li>
-            <li>Bug: Fix Residual Plastic naming to Plastic.</li>
-            <li>Bug: Fix Residual Plastic not detecting Polymer Resin as it's requirement (data issue?).</li>
+            <li>Feat: Enable exports to select factory for output calculations</li>
+            <li>Feat: Add ability to add icon to factory</li>
             <li>Feat: Show unsatisfied demands for factories for easy creation of new factories.</li>
+            <li>Feat: Add utilisation % to exports</li>
           </ul>
         </v-card-text>
       </v-card>

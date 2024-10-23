@@ -17,6 +17,12 @@ export interface BuildingRequirement {
   totalPower: number;
 }
 
+export interface ByProductItem {
+  id: string;
+  amount: number;
+  byProductOf: string; // Product ID
+}
+
 export interface FactoryItem {
   id: string;
   recipe: string;
@@ -24,6 +30,7 @@ export interface FactoryItem {
   displayOrder: number;
   requirements: { [key: string]: { amount: number }};
   buildingRequirements: BuildingRequirement
+  byProducts?: ByProductItem[];
 }
 
 export interface FactorySurplusItem extends FactoryItem {

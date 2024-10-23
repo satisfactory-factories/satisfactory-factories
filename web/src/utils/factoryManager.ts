@@ -76,6 +76,56 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
   })
 }
 
+export const calculateByProducts = (factory: Factory, gameData: DataInterface) => {
+  factory.products.forEach(product => {
+    product.byProducts = [] // Prevents orphaning / duplication
+
+    const recipe = getRecipe(product.recipe, gameData)
+
+    if (!recipe) {
+      console.warn('getByProduct: Could not get recipe, user may not have picked one yet.')
+      return null
+    }
+
+    const byProducts = recipe.products.filter(p => p.isByProduct)
+
+    if (byProducts.length === 0) {
+      return null
+    }
+
+    byProducts.forEach(byProduct => {
+      // We need to get ratio of product to byProduct by looking at the recipe's original product amount and the byProduct amount.
+      const byProductRatio = byProduct.amount / recipe.products[0].amount
+
+      // Now we compare the product.amount (the amount being produced) and times by the ratio to get the byProduct amount.
+      const byProductAmount = product.amount * byProductRatio
+
+      // Now we need to add the byProduct to the product's byProducts array
+      product.byProducts.push({
+        id: byProduct.part,
+        byProductOf: product.id,
+        amount: byProductAmount,
+      })
+
+      // Now also add to the partRequirements so it can be used internally
+      if (!factory.partRequirements[byProduct.part]) {
+        factory.partRequirements[byProduct.part] = {
+          amountRequired: 0,
+          amountSupplied: 0,
+          amountSuppliedViaInput: 0,
+          amountSuppliedViaInternal: 0,
+          amountSuppliedViaRaw: 0,
+        }
+      }
+
+      factory.partRequirements[byProduct.part].amountSuppliedViaInternal += byProductAmount
+      factory.partRequirements[byProduct.part].amountSupplied += byProductAmount
+      factory.partRequirements[byProduct.part].amountRemaining = factory.partRequirements[byProduct.part].amountRequired - factory.partRequirements[byProduct.part].amountSupplied
+      factory.partRequirements[byProduct.part].satisfied = factory.partRequirements[byProduct.part].amountRemaining <= 0
+    })
+  })
+}
+
 // Calculates what buildings are required to produce the products.
 export const calculateBuildingRequirements = (factory: Factory, gameData: DataInterface) => {
   factory.products.forEach(product => {

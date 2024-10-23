@@ -94,6 +94,7 @@
   import Todo from '@/components/planner/Todo.vue'
   import {
     calculateBuildingRequirements,
+    calculateByProducts,
     calculateDependencies,
     calculateDependencyMetrics,
     calculateFactoryBuildingsAndPower,
@@ -242,6 +243,9 @@
 
     // First we calculate what is required to make the products, without any injection of inputs etc.
     calculateProductRequirements(factory, props.gameData)
+
+    // And calculate Byproducts
+    calculateByProducts(factory, props.gameData)
 
     // Calculate building requirements for each product based on the selected recipe and product amount.
     calculateBuildingRequirements(factory, props.gameData)
