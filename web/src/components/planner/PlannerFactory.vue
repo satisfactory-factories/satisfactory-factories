@@ -106,7 +106,7 @@
                 />
                 <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
                 <span
-                  v-if="factory.dependencies?.metrics[part.id]?.difference"
+                  v-if="hasMetricsForPart(factory, part.id)"
                   class="ml-2"
                   :class="differenceClass(factory.dependencies.metrics[part.id].difference)"
                 >({{ factory.dependencies.metrics[part.id].difference }}/min)</span>
@@ -182,6 +182,10 @@
       'text-green': difference > 0,
       'text-red': difference < 0,
     }
+  }
+
+  const hasMetricsForPart = (factory: Factory, part: string) => {
+    return factory.dependencies.metrics && factory.dependencies.metrics[part]
   }
 </script>
 
