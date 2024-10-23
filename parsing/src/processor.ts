@@ -51,15 +51,22 @@ function isCollectable(ingredients: string): boolean {
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
+interface Part {
+    [key: string]: {
+        name: string;
+        stackSize: number;
+        isFluid: boolean;
+    }
+}
+
 interface PartDataInterface {
-    parts: { [key: string]: string };
+    parts: Part;
     collectables: { [key: string]: string };
     rawResources: { [key: string]: RawResource };
 }
 
-// Function to extract parts, moving collectables to specialParts
 function getItems(data: any[]): PartDataInterface {
-    const parts: { [key: string]: string } = {};
+    const parts: Part = {};
     const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
 
@@ -67,7 +74,9 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
+            // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
+
             if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
             // Check if it's an alternate recipe and skip it for parts
@@ -86,11 +95,25 @@ function getItems(data: any[]): PartDataInterface {
                 // Remove any text within brackets, including the brackets themselves
                 friendlyName = friendlyName.replace(/\s*\(.*?\)/g, '');
 
+                // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size
+                const productClass = match[0].match(/Desc_(.*?)\.Desc_/)?.[1];
+
+                const classDescriptor = data
+                    .flatMap((entry: any) => entry.Classes)
+                    .find((entry: any) => entry.ClassName === `Desc_${productClass}_C`);
+
+                // Extract stack size
+                const stackSize = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
+
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
-                    parts[partName] = friendlyName;
+                    parts[partName] = {
+                        name: friendlyName,
+                        stackSize,
+                        isFluid: isFluid(partName)
+                    };
                 }
             });
         });
@@ -99,7 +122,7 @@ function getItems(data: any[]): PartDataInterface {
     return {
         parts: Object.keys(parts)
             .sort()
-            .reduce((sortedObj: { [key: string]: string }, key: string) => {
+            .reduce((sortedObj: Part, key: string) => {
                 sortedObj[key] = parts[key];
                 return sortedObj;
             }, {}),
@@ -356,7 +379,7 @@ function fixItemNames(items: PartDataInterface): void {
 
     for (const search of Object.keys(fixItems)) {
         if (items.parts[search]) {
-            items.parts[search] = fixItems[search];
+            items.parts[search].name = fixItems[search];
         }
     }
 }
@@ -379,6 +402,22 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
             delete items.parts[part];
         }
     });
+}
+
+function stackSizeConvert(stackSize: string) {
+    // Convert e.g. SS_HUGE to 500
+    switch (stackSize) {
+        case "SS_HUGE":
+            return 500;
+        case "SS_BIG":
+            return 200;
+        case "SS_MEDIUM":
+            return 100;
+        case "SS_SMALL":
+            return 50;
+        default:
+            return 0;
+    }
 }
 
 // Central function to process the file and generate the output
