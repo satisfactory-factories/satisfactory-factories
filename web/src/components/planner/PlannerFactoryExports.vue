@@ -16,81 +16,125 @@
           <i class="fas fa-exclamation-triangle" />
           <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
         </p>
-        <div class="v-card-grid">
-          <div v-for=" (product) in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)" :key="`${factory.id}-${product.id}`">
-            <v-card
-              v-if="factory.surplus[product.id]"
-              class="sub-card border-md mb-1"
-              :style="requestStyling(getRequestMetricsForFactoryByPart(factory, product.id))"
+        <v-row
+          v-for="product in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)"
+          :key="`${factory.id}-${product.id}`"
+          class="sub-card border-md my-4 mx-0 text-body-1 rounded d-flex"
+          :style="requestStyling(getRequestMetricsForFactoryByPart(factory, product.id))"
+        >
+          <v-col class="border-e-md" cols="12" md="5">
+            <div class="mb-4 d-flex align-center">
+              <game-asset
+                height="40"
+                :subject="product.id"
+                type="item"
+                width="40"
+              />
+              <span class="ml-2 text-h5">{{ getPartDisplayName(product.id) }}</span>
+            </div>
+            <div class="mb-4">
+              <span
+                v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                class="text-green"
+              >
+                <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
+              </span>
+              <span
+                v-if="!getRequestMetricsForFactoryByPart(factory, product.id) && !getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                class="text-red"
+              >
+                <span>
+                  <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
+                  <v-btn
+                    class="ml-2"
+                    color="primary"
+                    size="small"
+                    variant="outlined"
+                    @click="fixShortage(factory, product)"
+                  >Fix production</v-btn>
+                </span>
+              </span>
+            </div>
+            <div class="mb-4">
+              <v-chip>
+                <b>Surplus:</b>&nbsp;{{ factory.surplus[product.id].amount }}/min
+              </v-chip>
+              <v-chip class="ml-2">
+                <b>Demands:</b>&nbsp;{{ getRequestMetricsForFactoryByPart(factory, product.id).request ?? 0 }}/min
+              </v-chip>
+            </div>
+            <div
+              v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0"
+              class=""
             >
-              <v-row align-content="center" class="mb-0 pa-6 pb-0">
-                <v-col class="flex-grow-0 pa-0" style="padding-right: 0">
-                  <game-asset
-                    height="32"
-                    :subject="product.id"
-                    type="item"
-                    width="32"
-                  />
-                </v-col>
-                <v-col class="pa-0 pl-3">
-                  <p class="text-h5">{{ getPartDisplayName(product.id) }}</p>
-                </v-col>
-              </v-row>
+              <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
+              <v-chip
+                v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
+                :key="request.factory"
+                class="mr-2 border-md border-gray"
+                @click="navigateToFactory(request.factory)"
+              >
+                <i class="fas fa-industry" />
+                <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
+              </v-chip>
+            </div>
+            <div v-else>
+              <p class="mt-2">
+                <b>No requests for export!</b><br>Add imports in other factories linking to this one. It is assumed you are sinking all these products.
+              </p>
+            </div>
+          </v-col>
+          <v-col cols="12" md="7">
+            <p class="text-h6 mb-2 text-center">Output via Belts</p>
+            <div class="text-center border-b pb-2">
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-1" type="building" />
+                <span class="ml-2">Mk1: 1.5x</span>
+              </v-chip>
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-2" type="building" />
+                <span class="ml-2">Mk2: 0.5x</span>
+              </v-chip>
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-3" type="building" />
+                <span class="ml-2">Mk3: 0.5x</span>
+              </v-chip>
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-4" type="building" />
+                <span class="ml-2">Mk4: 0.5x</span>
+              </v-chip>
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-5" type="building" />
+                <span class="ml-2">Mk5: 0.5x</span>
+              </v-chip>
+              <v-chip class="mr-1 mb-1">
+                <game-asset subject="conveyor-belt-mk-6" type="building" />
+                <span class="ml-2">Mk6: 0.5x</span>
+              </v-chip>
+            </div>
+            <div>
+              <p class="text-h6 text-center">Output via Train</p>
+              <div class="d-flex justify-center align-center text-center mt-2">
+                <v-text-field
+                  density="compact"
+                  hide-details
+                  label="Round trip time (s)"
+                  max-width="225px"
+                  prepend-icon="fas fa-clock"
+                  variant="outlined"
+                />
+                <v-chip class="ml-2">
+                  <game-asset subject="freight-car" type="item" />
+                  <span class="ml-2">Freight Cars: ???</span>
+                </v-chip>
+              </div>
 
-              <v-card-text class="text-body-1">
-                <p>
-                  <b>Surplus</b>: {{ factory.surplus[product.id].amount }}/min
-                </p>
-                <div v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0">
-                  <p>
-                    <b>Requests</b>: {{ getRequestMetricsForFactoryByPart(factory, product.id).request }}/min
-                  </p>
-                  <p>Status:
-                    <span
-                      v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
-                      class="text-green"
-                    >
-                      <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
-                    </span>
-                    <span
-                      v-if="!getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
-                      class="text-red"
-                    >
-                      <span>
-                        <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
-                        <v-btn
-                          class="ml-2"
-                          color="primary"
-                          size="small"
-                          variant="outlined"
-                          @click="fixShortage(factory, product)"
-                        >Fix production</v-btn>
-                      </span>
-                    </span>
-                  </p>
-                  <div class="mt-2">
-                    <p class="text-h6"><b>Requests:</b></p>
-                    <v-chip
-                      v-for="request in getRequestsForFactoryByProduct(factory, product.id)"
-                      :key="request.factory"
-                      class="mr-2 mb-1"
-                      @click="navigateToFactory(request.factory)"
-                    >
-                      <i class="fas fa-industry" />
-                      <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
-                    </v-chip>
-                  </div>
-                </div>
-                <p v-else class="mt-2">
-                  <b>No requests for export!</b><br>Add imports in other factories linking to this one. It is assumed you are sinking all these products.
-                </p>
-              </v-card-text>
-            </v-card>
-          </div>
-        </div>
+            </div>
+          </v-col>
+        </v-row>
       </div>
+      <p v-else class="text-body-1">Awaiting product selection.</p>
     </div>
-    <p v-else class="text-body-1">Awaiting product selection.</p>
   </div>
 </template>
 
@@ -101,6 +145,7 @@
     FactoryDependencyRequest,
     FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
+  import { DataInterface } from '@/interfaces/DataInterface'
 
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (id: number) => Factory
@@ -109,6 +154,7 @@
 
   defineProps<{
     factory: Factory;
+    gameData: DataInterface;
     helpText: boolean;
   }>()
 
@@ -170,17 +216,23 @@
     product.amount = parseInt(product.amount) + parseInt(difference)
     updateFactory(factory)
   }
+
+  const calculateTrainCars = (factory: Factory, part: string, roundTripTime: number) => {
+    // 1. Get the product
+    const product = getProduct(factory, part)
+
+    // 2. Get the surplus of the product
+    const surplus = factory.surplus[part].amount
+
+    // 3. Get the volume of the item from the game data
+    const volume = 1 // TODO: Get the volume of the item from the game data
+  }
 </script>
 
 <style lang="scss" scoped>
-.radio-fix {
-  :deep(label) {
-    margin-left: 5px;
-  }
-
-  * {
-    opacity: 100;
-  }
+.export-item {
+  background-color: #434343;
+  border: 1px solid #999;
 }
 
 .v-card-grid {
