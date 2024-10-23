@@ -307,7 +307,7 @@
   }
 
   const getPartDisplayName = (part: string | number) => {
-    return props.gameData.items.rawResources[part]?.name || props.gameData.items.parts[part]
+    return props.gameData.items.rawResources[part]?.name || props.gameData.items.parts[part]?.name
   }
 
   const getBuildingDisplayName = (building: string) => {
@@ -424,7 +424,7 @@
     } else {
       const partItem = props.gameData.items.parts[subject]
       const rawItem = props.gameData.items.rawResources[subject]
-      const item = partItem || rawItem?.name || subject
+      const item = partItem?.name || rawItem?.name || subject
 
       return getImageUrl(sluggify(item), 'item', size)
     }

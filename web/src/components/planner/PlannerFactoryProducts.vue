@@ -181,13 +181,10 @@
   }
 
   const autocompletePartItemsGenerator = () => {
-    // `props.gameData.items.parts` is assumed to be an object with key-value pairs.
-    // We use `Object.entries` to get an array of key-value pairs for iteration.
-
-    const data = Object.entries(props.gameData.items.parts).map(([value, title]) => {
+    const data = Object.keys(props.gameData.items.parts).map(part => {
       return {
-        value,
-        title,
+        title: getPartDisplayName(part),
+        value: part,
       }
     })
     data.sort((a, b) => a.title.localeCompare(b.title))
