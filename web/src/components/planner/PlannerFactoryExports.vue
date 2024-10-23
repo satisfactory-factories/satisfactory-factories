@@ -20,7 +20,7 @@
           v-for="product in factory.products.filter(product => factory.surplus[product.id]).sort((a, b) => a.displayOrder - b.displayOrder)"
           :key="`${factory.id}-${product.id}`"
           class="sub-card border-md my-4 mx-0 text-body-1 rounded d-flex"
-          :style="requestStyling(getRequestMetricsForFactoryByPart(factory, product.id))"
+          :style="requestStyling(factory, product.id)"
         >
           <v-col class="border-e-md" cols="12" md="5">
             <div class="mb-4 d-flex align-center">
@@ -34,17 +34,20 @@
             </div>
             <div class="mb-4">
               <span
-                v-if="getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                v-if="requestSatisfied(factory, product.id)"
                 class="text-green"
               >
                 <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
               </span>
               <span
-                v-if="!getRequestMetricsForFactoryByPart(factory, product.id) && !getRequestMetricsForFactoryByPart(factory, product.id).isRequestSatisfied"
+                v-if="!requestSatisfied(factory, product.id)"
                 class="text-red"
               >
                 <span>
-                  <i class="fas fa-times" /><span class="ml-2 font-weight-bold">Shortage of {{ Math.abs(getRequestMetricsForFactoryByPart(factory, product.id).difference) }}/min</span>
+                  <i class="fas fa-times" />
+                  <span class="ml-2 font-weight-bold">
+                    Shortage of {{ getShortageAmount(factory, product.id) }}/min
+                  </span>
                   <v-btn
                     class="ml-2"
                     color="primary"
@@ -85,36 +88,26 @@
             </div>
           </v-col>
           <v-col cols="12" md="7">
-            <p class="text-h6 mb-2 text-center">Output via Belts</p>
-            <div class="text-center border-b pb-2">
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-1" type="building" />
-                <span class="ml-2">Mk1: 1.5x</span>
-              </v-chip>
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-2" type="building" />
-                <span class="ml-2">Mk2: 0.5x</span>
-              </v-chip>
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-3" type="building" />
-                <span class="ml-2">Mk3: 0.5x</span>
-              </v-chip>
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-4" type="building" />
-                <span class="ml-2">Mk4: 0.5x</span>
-              </v-chip>
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-5" type="building" />
-                <span class="ml-2">Mk5: 0.5x</span>
-              </v-chip>
-              <v-chip class="mr-1 mb-1">
-                <game-asset subject="conveyor-belt-mk-6" type="building" />
-                <span class="ml-2">Mk6: 0.5x</span>
+            <div class="text-center border-b pb-2 mb-2">
+              <p class="text-h6 mb-2 text-center">Output of {{ factory.surplus[product.id].amount }}/min via Belts</p>
+              <v-chip
+                v-for="belt in ['mk-1', 'mk-2', 'mk-3', 'mk-4', 'mk-5', 'mk-6']"
+                :key="belt"
+                class="mr-1 mb-1"
+              >
+                <game-asset :subject="`conveyor-belt-${belt}`" type="building" />
+                <span class="ml-2"><b>{{ beltDisplay(belt) }}:</b> {{ calculateBelts(factory, product.id, belt) }}x</span>
               </v-chip>
             </div>
             <div>
-              <p class="text-h6 text-center">Output via Train</p>
-              <div class="d-flex justify-center align-center text-center mt-2">
+              <p class="text-h6 text-center">Output of {{ factory.surplus[product.id].amount }}/min via Train</p>
+              <p v-if="helpText" class="text-body-2 text-center">
+                <i class="fas fa-info-circle" />
+                <span class="ml-1">
+                  It is assumed you are feeding the freight platforms with sufficient belt capacity. <br>Time is from "choo" to "choo".
+                </span>
+              </p>
+              <div class="d-flex justify-center align-center text-center my-2">
                 <v-text-field
                   density="compact"
                   hide-details
@@ -123,6 +116,9 @@
                   prepend-icon="fas fa-clock"
                   variant="outlined"
                 />
+
+              </div>
+              <div class="text-center">
                 <v-chip class="ml-2">
                   <game-asset subject="freight-car" type="item" />
                   <span class="ml-2">Freight Cars: ???</span>
@@ -158,14 +154,9 @@
     helpText: boolean;
   }>()
 
-  const requestStyling = (requestMetric: FactoryDependencyMetrics) => {
-    // If no requests, return nothing, this should never really happen though.
-    if (Object.keys(requestMetric).length === 0) {
-      return {}
-    }
-
+  const requestStyling = (factory: Factory, productId: string) => {
     return {
-      border: requestMetric.isRequestSatisfied ? '2px solid rgb(97, 97, 97)' : '2px solid red !important',
+      border: requestSatisfied(factory, productId) ? '2px solid rgb(97, 97, 97)' : '2px solid red !important',
     }
   }
 
@@ -210,6 +201,20 @@
     return factory.dependencies?.metrics[part] ?? {}
   }
 
+  const requestSatisfied = (factory: Factory, part: string) => {
+    const metric = getRequestMetricsForFactoryByPart(factory, part)
+
+    // If there's no requests return true
+    if (Object.keys(metric).length === 0) {
+      return true
+    }
+    return metric.isRequestSatisfied
+  }
+
+  const getShortageAmount = (factory: factory, part: string) => {
+    return Math.abs(getRequestMetricsForFactoryByPart(factory, part).difference ?? -1234)
+  }
+
   const fixShortage = (factory: Factory, product: FactoryItem) => {
     const metric = getRequestMetricsForFactoryByPart(factory, product.id)
     const difference = Math.abs(metric.difference)
@@ -217,24 +222,60 @@
     updateFactory(factory)
   }
 
+  const calculateBelts = (factory: Factory, part: string, beltType: string) => {
+    // Simple math here to divide the amount by the belt's capacity
+
+    let beltThroughput = 0
+
+    switch (beltType) {
+      case 'mk-1':
+        beltThroughput = 60
+        break
+      case 'mk-2':
+        beltThroughput = 120
+        break
+      case 'mk-3':
+        beltThroughput = 270
+        break
+      case 'mk-4':
+        beltThroughput = 480
+        break
+      case 'mk-5':
+        beltThroughput = 780
+        break
+      case 'mk-6':
+        beltThroughput = 1200
+        break
+      default:
+        beltThroughput = -1
+        break
+    }
+
+    const exportAmount = factory.surplus[part].amount
+
+    return (exportAmount / beltThroughput).toFixed(2)
+  }
+
+  const beltDisplay = (belt: string) => {
+    // Remove the dash and capitalize the first letter
+    return belt.replace('-', '').replace(/\b\w/g, l => l.toUpperCase())
+  }
+
   const calculateTrainCars = (factory: Factory, part: string, roundTripTime: number) => {
-    // 1. Get the product
-    const product = getProduct(factory, part)
+    // 1. Get the product info from game data
+    const data = props.gameData.items.parts[part]
 
     // 2. Get the surplus of the product
     const surplus = factory.surplus[part].amount
 
-    // 3. Get the volume of the item from the game data
-    const volume = 1 // TODO: Get the volume of the item from the game data
+    const freightCarCapacity = 32 * data.stackSize
+
+    // 3. Calculate the number of freight cars needed
+    return Math.ceil(surplus / freightCarCapacity)
   }
 </script>
 
 <style lang="scss" scoped>
-.export-item {
-  background-color: #434343;
-  border: 1px solid #999;
-}
-
 .v-card-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
