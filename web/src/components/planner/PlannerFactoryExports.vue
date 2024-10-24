@@ -37,7 +37,14 @@
                 v-if="requestSatisfied(factory, product.id)"
                 class="text-green"
               >
-                <i class="fas fa-check" /><span class="ml-2 font-weight-bold">Satisfied</span>
+                <i class="fas fa-check" />
+                <span class="ml-2 font-weight-bold">Satisfied</span>
+                <v-chip
+                  class="ml-2"
+                  color="green"
+                >
+                  <b>{{ getDifference(factory, product.id) }}</b>&nbsp;available for export
+                </v-chip>
               </span>
               <span
                 v-if="!requestSatisfied(factory, product.id)"
@@ -207,8 +214,12 @@
     return metric.isRequestSatisfied
   }
 
-  const getShortageAmount = (factory: factory, part: string) => {
-    return Math.abs(getRequestMetricsForFactoryByPart(factory, part).difference ?? -1234)
+  const getDifference = (factory: Factory, part: string): number => {
+    return getRequestMetricsForFactoryByPart(factory, part).difference ?? -1234
+  }
+
+  const getShortageAmount = (factory: factory, part: string): number => {
+    return Math.abs(getDifference(factory, part))
   }
 
   const fixShortage = (factory: Factory, product: FactoryItem) => {
