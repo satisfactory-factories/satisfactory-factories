@@ -10,8 +10,8 @@
     width="auto"
   >
     <v-card
-      prepend-icon="fas fa-donate"
-      title="Support the project!"
+      prepend-icon="fas fa-heart"
+      title="Help support the project!"
       width="400"
     >
       <div class="pa-2">
@@ -23,7 +23,6 @@
           title="maelstromeous"
         />
       </div>
-
       <template #actions>
         <v-btn
           class="ms-auto"
