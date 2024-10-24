@@ -91,7 +91,7 @@
         </v-card-text>
         <v-card-text v-show="factory.hidden" class="pa-0">
           <v-row
-            class="pa-4 px-4 my-2 mx-0"
+            class="pa-4 px-4 my-0 mx-0"
             :class="hasExports(factory) ? 'border-b-md' : ''"
           >
             <p v-if="factory.products.length === 0" class="text-body-1">Empty factory! Select a product!</p>
@@ -121,7 +121,7 @@
             class="text-body-1 pa-2 px-4 mt-2 pb-1"
           >
             <p>Exporting to:</p>
-            <div class="d-flex">
+            <div class="d-flex mx-n2">
               <div
                 v-for="dependant in Object.keys(factory.dependencies.requests)"
                 :key="dependant"
