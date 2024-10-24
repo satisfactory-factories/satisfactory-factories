@@ -161,7 +161,6 @@
         return acc
       }, {})
 
-    console.log(parts)
     return parts
   })
 

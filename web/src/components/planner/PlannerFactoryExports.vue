@@ -177,7 +177,6 @@
       }
     })
 
-    console.log(surplusWithOrder)
     return surplusWithOrder
   })
 
@@ -273,12 +272,7 @@
       return false
     }
 
-    if (getCalculatorDestFacSettings(factory, part, settings.selected)?.trainTime === undefined) {
-      console.log(getCalculatorDestFacSettings(factory, part, settings.selected))
-      return false
-    }
-
-    return true
+    return getCalculatorDestFacSettings(factory, part, settings.selected)?.trainTime !== undefined
   }
 
   const changeCalculatorSelection = (factory: Factory, factoryId: string, part: string) => {
