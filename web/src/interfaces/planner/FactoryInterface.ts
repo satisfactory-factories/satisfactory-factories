@@ -78,7 +78,7 @@ export interface WorldRawResource {
 }
 
 export interface FactoryImport {
-  groupId: number;
+  factoryId: number;
   outputPart: string;
   amount: number
 }

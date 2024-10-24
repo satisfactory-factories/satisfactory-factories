@@ -53,6 +53,7 @@
         <v-autocomplete
           v-model="input.outputPart"
           class="mr-2"
+          :disabled="!input.factoryId"
           hide-details
           :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
           label="Item"
@@ -63,6 +64,7 @@
         <v-text-field
           v-model.number="input.amount"
           class="mr-2"
+          :disabled="!input.outputPart"
           hide-details
           label="Qty /min"
           max-width="110px"
