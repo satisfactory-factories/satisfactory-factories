@@ -71,7 +71,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          v-show="requirementSatisfied(factory, input.outputPart) && !inputOverflow(factory, input.outputPart)"
+          v-show="input.amount > 0 && requirementSatisfied(factory, input.outputPart) && !inputOverflow(factory, input.outputPart)"
           class="rounded mr-2"
           color="green"
           :disabled="true"
@@ -86,9 +86,9 @@
           prepend-icon="fas fa-arrow-down"
           size="default"
           @click="updateInputToSatisfy(factory, input)"
-        >Trim amount</v-btn>
+        >Trim</v-btn>
         <v-btn
-          v-show="!requirementSatisfied(factory, input.outputPart)"
+          v-show="input.outputPart && !requirementSatisfied(factory, input.outputPart)"
           class="rounded mr-2"
           color="green"
           prepend-icon="fas fa-arrow-up"

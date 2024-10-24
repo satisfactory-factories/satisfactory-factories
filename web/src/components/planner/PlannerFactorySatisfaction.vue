@@ -86,9 +86,8 @@
                   class="ml-2 my-1"
                   color="green"
                   size="small"
-                  variant="outlined"
                   @click="fixSatisfactionImport(factory, partId)"
-                >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
+                >&nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
                 </v-btn>
               </v-col>
             </v-row>
