@@ -90,7 +90,10 @@
           </div>
         </v-card-text>
         <v-card-text v-show="factory.hidden" class="pa-0">
-          <v-row class="border-b-md pa-2 px-4 my-2 mx-0">
+          <v-row
+            class="pa-4 px-4 my-2 mx-0"
+            :class="hasExports(factory) ? 'border-b-md' : ''"
+          >
             <p v-if="factory.products.length === 0" class="text-body-1">Empty factory! Select a product!</p>
             <div v-else>
               <p class="text-body-1 d-inline-block mr-2">Producing: </p>
@@ -118,12 +121,13 @@
             class="text-body-1 pa-2 px-4 mt-2 pb-1"
           >
             <p>Exporting to:</p>
-            <v-row
-              v-for="dependant in Object.keys(factory.dependencies.requests)"
-              :key="dependant"
-              class="ma-0 mx-n2 border-b no-bottom"
-            >
-              <div class="d-inline-block factory-link pa-2 rounded" @click="navigateToFactory(dependant)">
+            <div class="d-flex">
+              <div
+                v-for="dependant in Object.keys(factory.dependencies.requests)"
+                :key="dependant"
+                class="mr-2 no-bottom pa-2 rounded factory-link"
+                @click="navigateToFactory(dependant)"
+              >
                 <i class="fas fa-industry" />
                 <span class="ml-2">
                   <b>{{ findFactory(dependant).name }}:</b>
@@ -137,7 +141,7 @@
                   <span class="ml-2"><b>{{ getPartDisplayName(part.part) }}:</b> {{ part.amount }}/min</span>
                 </v-chip>
               </div>
-            </v-row>
+            </div>
           </div>
         </v-card-text>
       </v-card>
@@ -187,6 +191,10 @@
   const hasMetricsForPart = (factory: Factory, part: string) => {
     return factory.dependencies.metrics && factory.dependencies.metrics[part]
   }
+
+  const hasExports = (factory: Factory) => {
+    return Object.keys(factory.dependencies.requests).length > 0 ?? false
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -203,7 +211,6 @@
 }
 
 .factory-link {
-  display: block;
   &:hover {
     cursor: pointer;
     background-color: #323232;
