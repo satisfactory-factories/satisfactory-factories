@@ -193,6 +193,7 @@
   }
 
   const hasExports = (factory: Factory) => {
+    if (!factory.dependencies?.requests) return false
     return Object.keys(factory.dependencies.requests).length > 0 ?? false
   }
 </script>
