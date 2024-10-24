@@ -7,7 +7,7 @@
     <p v-show="helpText" class="text-body-2 mb-4">
       <i class="fas fa-info-circle" /> Imports are the resources needed to produce the factory's products and ensure its satisfaction. To set up imports, you select another factory and choose one of its outputs. This creates a "request" for that output. The selected factory must fulfill this request, and you'll be notified if it cannot meet the demand. All available outputs are listed in the Outputs section of the factory you choose.
     </p>
-    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.partRequirements).length > 0">
+    <div v-if="Object.keys(factory.rawResources).length > 0 || Object.keys(factory.parts).length > 0">
       <v-card v-if="Object.keys(factory.rawResources).length > 0" class="mb-4 border-md sub-card">
         <v-card-title>
           <i class="fas fa-hard-hat" /><span class="ml-2">Raw Resources</span>
@@ -105,7 +105,7 @@
           @click="navigateToFactory(input.factoryId)"
         >View</v-btn>
         <v-btn
-          class="rounded ml-6"
+          class="rounded ml-2"
           color="red"
           icon="fas fa-trash"
           size="small"
@@ -114,7 +114,7 @@
         />
       </v-row>
       <v-btn
-        v-show="Object.keys(factory.partRequirements).length > 0"
+        v-show="Object.keys(factory.parts).length > 0"
         color="green"
         :disabled="!hasAvailableImports(factory) || !hasValidImportsRemaining(factory)"
         prepend-icon="fas fa-dolly"
@@ -133,7 +133,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory, FactoryImport, PartRequirement } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryImport, PartMetrics } from '@/interfaces/planner/FactoryInterface'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -164,7 +164,7 @@
     const factories = []
 
     // Loop through each part in the requirements of the current factory prop
-    for (const part in props.factory.partRequirements) {
+    for (const part in props.factory.parts) {
       // Find any factories that have a surplus of this part
       const availableFactories = validFactoriesForImports.value.filter(
         oFac => oFac.surplus[part] && oFac.surplus[part].amount > 0
@@ -254,7 +254,7 @@
 
     // Only return true if there's at least one factory with a surplus of a required part
     return validFactories.some(otherFactory => {
-      return Object.keys(factory.partRequirements).some(requiredPart => {
+      return Object.keys(factory.parts).some(requiredPart => {
         return otherFactory.surplus[requiredPart] && otherFactory.surplus[requiredPart].amount > 0
       })
     })
@@ -263,7 +263,7 @@
   const hasValidImportsRemaining = (factory: Factory): boolean => {
     // Check if there are still any valid imports remaining that are not already fully used
     return possibleImports.value.some(otherFactory => {
-      return Object.keys(factory.partRequirements).some(requiredPart => {
+      return Object.keys(factory.parts).some(requiredPart => {
         const surplus = otherFactory.surplus[requiredPart]
         const totalRequested = factory.inputs
           .filter(input => input.outputPart === requiredPart && input.factoryId === otherFactory.id)
@@ -301,7 +301,7 @@
 
     // Filter out already selected parts from the factory's available surplus
     return Object.keys(factory.surplus)
-      .filter(partKey => !alreadySelectedParts.includes(partKey) && partKey in props.factory.partRequirements) // Exclude already-selected parts and parts not required
+      .filter(partKey => !alreadySelectedParts.includes(partKey) && partKey in props.factory.parts) // Exclude already-selected parts and parts not required
       .map(partKey => ({
         title: getPartDisplayName(partKey), // For display purposes
         value: partKey, // Value is the ID
@@ -317,7 +317,7 @@
   }
 
   const requirementSatisfied = (factory: Factory, part: string): boolean => {
-    const requirement = factory.partRequirements[part]
+    const requirement = factory.parts[part]
 
     if (!requirement) {
       console.log(`Could not find part requirement in factory for input satisfaction check. Part: ${part}`)
@@ -328,13 +328,13 @@
   }
 
   const inputOverflow = (factory, part: string): boolean => {
-    const requirement = factory.partRequirements[part]
+    const requirement = factory.parts[part]
 
     return requirement.amountRemaining < 0
   }
 
   const updateInputToSatisfy = (factory: factory, input: FactoryImport) => {
-    const part: PartRequirement = factory.partRequirements[input.outputPart]
+    const part: PartMetrics = factory.parts[input.outputPart]
     input.amount = part.amountRequired
 
     updateFactory(factory)

@@ -32,7 +32,7 @@
               />
               <span class="ml-2 text-h5">{{ getPartDisplayName(product.id) }}</span>
             </div>
-            <div class="mb-4">
+            <div v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0" class="mb-4">
               <span
                 v-if="requestSatisfied(factory, product.id)"
                 class="text-green"
@@ -58,16 +58,17 @@
                 </span>
               </span>
             </div>
-            <div class="mb-4">
-              <v-chip>
+            <div class="ml-n1">
+              <v-chip class="ma-1">
                 <b>Surplus:</b>&nbsp;{{ factory.surplus[product.id].amount }}/min
               </v-chip>
-              <v-chip class="ml-2">
+              <v-chip class="ma-1">
                 <b>Demands:</b>&nbsp;{{ getRequestMetricsForFactoryByPart(factory, product.id).request ?? 0 }}/min
               </v-chip>
             </div>
             <div
               v-if="getRequestsForFactoryByProduct(factory, product.id).length > 0"
+              class="mt-2"
             >
               <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
               <v-chip
@@ -81,11 +82,6 @@
                 <i class="fas fa-industry" />
                 <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
               </v-chip>
-            </div>
-            <div v-else>
-              <p class="mt-2">
-                <b>No requests for export!</b><br>Add imports in other factories linking to this one. It is assumed you are sinking all these products.
-              </p>
             </div>
           </v-col>
           <v-col cols="12" md="7">
@@ -113,7 +109,9 @@
                 <i class="fas fa-calculator" />
                 <span class="ml-2">Export calculator</span>
               </p>
-              <p>Nothing to calculate.</p>
+              <p class="mt-2">
+                <b>No requests for export!</b><br>Add imports in other factories linking to this one. Otherwise, it is assumed you are sinking all these products.
+              </p>
             </div>
           </v-col>
         </v-row>
