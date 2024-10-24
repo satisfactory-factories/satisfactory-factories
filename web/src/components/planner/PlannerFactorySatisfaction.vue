@@ -30,72 +30,68 @@
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1">
+          <v-card-text class="text-body-1 pb-0 pt-2">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <div
-              v-for="(requirement, part) in factory.parts"
-              :key="part"
+            <v-row
+              v-for="(part, partId) in satisfactionDisplay"
+              :key="partId"
+              class="mx-n4 mb-2 pb-2 border-b no-bottom"
+              :class="isSatisfiedStyling(part)"
             >
-              <v-row
-                v-if="requirement.amountRequired > 0"
-                class="my-0 mx-n4 py-0 border-b-md no-bottom mb-2"
-                :class="isSatisfiedStyling(factory, part)"
-              >
-                <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
-                  <game-asset
-                    height="40"
-                    :subject="part"
-                    type="item"
-                    width="40"
-                  />
-                </v-col>
-                <v-col class="py-0">
-                  <p v-if="requirement.satisfied">
-                    <v-icon icon="fas fa-check" />
-                    <span class="ml-2"><b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }}/min</span>
-                  </p>
-                  <p v-else>
-                    <v-icon icon="fas fa-times" />
-                    <span class="ml-2">
-                      <span>
-                        <b>{{ getPartDisplayName(part) }}</b><br>{{ requirement.amountSupplied }}/{{ requirement.amountRequired }} /min
-                      </span>
+              <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
+                <game-asset
+                  height="40"
+                  :subject="partId"
+                  type="item"
+                  width="40"
+                />
+              </v-col>
+              <v-col class="py-0">
+                <p v-if="part.satisfied">
+                  <v-icon icon="fas fa-check" />
+                  <span class="ml-2"><b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }}/min</span>
+                </p>
+                <p v-else>
+                  <v-icon icon="fas fa-times" />
+                  <span class="ml-2">
+                    <span>
+                      <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
                     </span>
-                  </p>
-                </v-col>
-                <v-col align-self="center" class="text-right flex-shrink-0">
-                  <v-btn
-                    v-if="!getProduct(factory, part) && !isItemRawResource(part) && !requirement.satisfied"
-                    class="ml-2 my-1"
-                    color="primary"
-                    size="small"
-                    variant="outlined"
-                    @click="addProduct(factory, part)"
-                  >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
-                  </v-btn>
-                  <v-btn
-                    v-if="getProduct(factory, part) && !isItemRawResource(part) && !requirement.satisfied"
-                    class="ml-2 my-1"
-                    color="primary"
-                    size="small"
-                    variant="outlined"
-                    @click="fixProduction(factory, part)"
-                  ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-                  </v-btn>
-                  <v-btn
-                    v-if="getImport(factory, part) && !requirement.satisfied"
-                    class="ml-2 my-1"
-                    color="green"
-                    size="small"
-                    variant="outlined"
-                    @click="fixSatisfactionImport(factory, part)"
-                  >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </div>
+                  </span>
+                </p>
+              </v-col>
+              <v-col align-self="center" class="text-right flex-shrink-0 py-0">
+                <v-btn
+                  v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
+                  class="ml-2 my-1"
+                  color="primary"
+                  size="small"
+                  variant="outlined"
+                  @click="addProduct(factory, partId)"
+                >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
+                </v-btn>
+                <v-btn
+                  v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
+                  class="ml-2 my-1"
+                  color="primary"
+                  size="small"
+                  variant="outlined"
+                  @click="fixProduction(factory, partId)"
+                ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+                </v-btn>
+                <v-btn
+                  v-if="getImport(factory, partId) && !part.satisfied"
+                  class="ml-2 my-1"
+                  color="green"
+                  size="small"
+                  variant="outlined"
+                  @click="fixSatisfactionImport(factory, partId)"
+                >&nbsp;<i class="fas fa-wrench" /><span class="ml-1">Fix Import</span>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
@@ -144,22 +140,35 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { Factory, FactoryImport, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryImport, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (part: string) => string
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
 
-  defineProps<{
+  const props = defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
 
-  const isSatisfiedStyling = (factory: Factory, requirement: string | number) => {
+  // Calculated function showing parts displayed if the amountRequired > 0
+  const satisfactionDisplay = computed(() => {
+    const parts = Object.entries(props.factory.parts)
+      .filter(([_, value]) => value.amountRequired > 0)
+      .reduce((acc, [key, value]) => {
+        acc[key] = value
+        return acc
+      }, {})
+
+    console.log(parts)
+    return parts
+  })
+
+  const isSatisfiedStyling = (part: PartMetrics) => {
     return {
-      'text-green': factory.parts[requirement].satisfied,
-      'text-red': !factory.parts[requirement].satisfied,
+      'text-green': part.satisfied,
+      'text-red': !part.satisfied,
     }
   }
 
