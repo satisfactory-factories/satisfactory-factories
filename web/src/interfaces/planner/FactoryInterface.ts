@@ -1,11 +1,11 @@
-export interface PartRequirement {
+export interface PartMetrics {
   [key: string]: {
     amountRequired: number; // Total amount required by all products on the line
     amountSupplied: number; // Total amount of supply used for display purposes
     amountSuppliedViaInput: number; // This is the amount supplied by the inputs
-    amountSuppliedViaInternal: number; // This is the amount supplied by internal products
-    amountSuppliedViaRaw: number; // This is the amount supplied by raw resources
+    amountSuppliedViaProduction: number; // This is the amount supplied by internal products
     amountRemaining: number; // This is the amount remaining after all inputs and internal products are accounted for. Can be a minus number, which is used for surplus calculations.
+    isRaw: boolean; // Whether the part is a raw resource or not, if so it will always be marked as satisfied.
     satisfied: boolean; // Use of use flag for templating.
   }
 }
@@ -89,7 +89,7 @@ export interface Factory {
   inputs: FactoryImport[];
   products: FactoryItem[];
   internalProducts: FactoryItem;
-  partRequirements: PartRequirement;
+  parts: PartMetrics;
   buildingRequirements: BuildingRequirement;
   requirementsSatisfied: boolean;
   totalPower: number;

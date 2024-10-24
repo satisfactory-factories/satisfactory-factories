@@ -2,16 +2,50 @@ import { Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterfac
 import { DataInterface } from '@/interfaces/DataInterface'
 import { Recipe } from '@/interfaces/Recipe'
 
-export const calculateProductRequirements = (factory: Factory, gameData: DataInterface) => {
-  factory.rawResources = {}
-  factory.partRequirements = {}
+const createNewPart = (factory: Factory, part: string) => {
+  if (!factory.parts[part]) {
+    factory.parts[part] = {
+      amountRequired: 0,
+      amountSupplied: 0,
+      amountSuppliedViaInput: 0,
+      amountSuppliedViaProduction: 0,
+      amountRemaining: 0,
+      satisfied: true,
+      isRaw: false,
+    }
+  }
+}
 
-  // First loop through each product and calculate requirements.
+// Runs calculations of the metrics within the part, saves having to run it in multiple places.
+const calculatePartMetrics = (factory: Factory, part: string) => {
+  const partData = factory.parts[part]
+
+  // If supplied from raw, we always assure that it is fully supplied and satisfied
+  if (partData.isRaw) {
+    partData.amountSupplied = partData.amountRequired
+  } else {
+    partData.amountSupplied = partData.amountSuppliedViaInput + partData.amountSuppliedViaProduction
+  }
+
+  partData.amountRemaining = partData.amountRequired - partData.amountSupplied
+  partData.satisfied = partData.amountRemaining <= 0
+}
+
+// This simply loops through all the inputs and adds them to the parts object.
+export const calculateInputs = (factory: Factory) => {
+  factory.inputs.forEach(input => {
+    createNewPart(factory, input.outputPart)
+    factory.parts[input.outputPart].amountSuppliedViaInput += input.amount
+    calculatePartMetrics(factory, input.outputPart)
+  })
+}
+
+// Loops through all products and figures out what they produce and what they require, then adds it to the factory.parts object.
+export const calculateProducts = (factory: Factory, gameData: DataInterface) => {
   factory.products.forEach(product => {
     product.requirements = {} // Prevents orphaning
 
     const recipe = getRecipe(product.recipe, gameData)
-
     if (!recipe) {
       console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
       return
@@ -20,7 +54,7 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredient => {
       if (isNaN(ingredient.amount)) {
-        console.warn(`Invalid ingredient amount for ingredient "${ingredient}". Skipping.`)
+        console.warn(`Invalid ingredient amount for ingredient "${ingredient.part}". Skipping.`)
         return
       }
 
@@ -33,9 +67,20 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
       if (product.amount < 0) {
         // If the product amount is negative, this causes issues with calculations, so force it to 0.
         product.amount = 0
+        return // Nothing else to do
       }
 
+      // Add the output of the product to the parts array
+      createNewPart(factory, product.id)
+      factory.parts[product.id].amountSuppliedViaProduction += product.amount
+      calculatePartMetrics(factory, product.id)
+
+      // === Now we need to also factor in the product's ingredients, and add it to the parts array.
       const ingredientRequired = ingredient.amount * product.amount
+
+      // In every case, always add the ingredient to the parts list
+      createNewPart(factory, ingredient.part)
+      factory.parts[ingredient.part].amountRequired += ingredientRequired
 
       // Raw resource handling
       if (gameData.items.rawResources[ingredient.part]) {
@@ -43,15 +88,18 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
           factory.rawResources[ingredient.part] = {
             name: gameData.items.rawResources[ingredient.part].name,
             amount: 0,
+            satisfied: true,
           }
         }
-        factory.rawResources[ingredient.part] = {
-          amount: factory.rawResources[ingredient.part].amount += ingredientRequired,
-          satisfied: true, // Always mark raws as satisfied, it saves a ton of pain.
-        }
+
+        factory.rawResources[ingredient.part].amount += ingredientRequired
+
+        // Mark the part as raw which will eventually be marked as fully satisfied.
+        factory.parts[ingredient.part].isRaw = true
+        calculatePartMetrics(factory, ingredient.part)
       }
 
-      // Set the amount that the individual products need.
+      // Set the amount that the individual products need for display purposes.
       if (!product.requirements[ingredient.part]) {
         product.requirements[ingredient.part] = {
           amount: 0,
@@ -59,19 +107,6 @@ export const calculateProductRequirements = (factory: Factory, gameData: DataInt
       }
 
       product.requirements[ingredient.part].amount += ingredientRequired
-
-      // Now add the requirements to the factory wide part requirements.
-      if (!factory.partRequirements[ingredient.part]) {
-        factory.partRequirements[ingredient.part] = {
-          amountRequired: 0,
-          amountSupplied: 0,
-          amountSuppliedViaInput: 0,
-          amountSuppliedViaInternal: 0,
-          amountSuppliedViaRaw: 0,
-        }
-      }
-
-      factory.partRequirements[ingredient.part].amountRequired += ingredientRequired
     })
   })
 }
@@ -100,28 +135,17 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface) =
       // Now we compare the product.amount (the amount being produced) and times by the ratio to get the byProduct amount.
       const byProductAmount = product.amount * byProductRatio
 
-      // Now we need to add the byProduct to the product's byProducts array
+      // Now we need to add the byProduct to the product's byProducts array for display purposes
       product.byProducts.push({
         id: byProduct.part,
         byProductOf: product.id,
         amount: byProductAmount,
       })
 
-      // Now also add to the partRequirements so it can be used internally
-      if (!factory.partRequirements[byProduct.part]) {
-        factory.partRequirements[byProduct.part] = {
-          amountRequired: 0,
-          amountSupplied: 0,
-          amountSuppliedViaInput: 0,
-          amountSuppliedViaInternal: 0,
-          amountSuppliedViaRaw: 0,
-        }
-      }
-
-      factory.partRequirements[byProduct.part].amountSuppliedViaInternal += byProductAmount
-      factory.partRequirements[byProduct.part].amountSupplied += byProductAmount
-      factory.partRequirements[byProduct.part].amountRemaining = factory.partRequirements[byProduct.part].amountRequired - factory.partRequirements[byProduct.part].amountSupplied
-      factory.partRequirements[byProduct.part].satisfied = factory.partRequirements[byProduct.part].amountRemaining <= 0
+      // Now also add the part that the Byproduct creates to the parts list
+      createNewPart(factory, byProduct.part)
+      factory.parts[byProduct.part].amountSuppliedViaProduction += byProductAmount
+      calculatePartMetrics(factory, byProduct.part)
     })
   })
 }
@@ -160,9 +184,9 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
 }
 
 // Calculate the supply of parts via raw inputs. It is assumed that the raw resources are always available.
-export const calculateFactoryRawSupply = (factory: Factory, gameData: DataInterface) => {
-  Object.keys(factory.products).forEach(productIndex => {
-    const product = factory.products[productIndex]
+export const calculateRawSupply = (factory: Factory, gameData: DataInterface) => {
+  Object.keys(factory.products).forEach(productId => {
+    const product = factory.products[productId]
     // Due to the weird way the raw resources are handled, we have to loop by product, pull out the recipeID and check if the raw resource have the ingredient within the rawResources key.
 
     // Get the recipe
@@ -178,14 +202,14 @@ export const calculateFactoryRawSupply = (factory: Factory, gameData: DataInterf
       // If the part is a raw resource, mark it as supplied.
       if (factory.rawResources[ingredient.part]) {
         // This looks like a hack, but it's correct, the raw recipes are a PITA.
-        factory.partRequirements[ingredient.part].amountSuppliedViaRaw = factory.rawResources[ingredient.part].amount
+        factory.parts[ingredient.part].amountSuppliedViaRaw = factory.rawResources[ingredient.part].amount
       }
     })
   })
 }
 
 // Loop through each product, and check if the parts produced by a recipe match a product requirement. If so, we mark that as an internal product and recalculate the remainder.
-export const calculateFactoryInternalSupply = (factory: Factory, gameData: DataInterface) => {
+export const calculateInternalProducts = (factory: Factory, gameData: DataInterface) => {
   factory.internalProducts = {}
 
   factory.products.forEach(product => {
@@ -205,66 +229,29 @@ export const calculateFactoryInternalSupply = (factory: Factory, gameData: DataI
           id: foundProduct.id,
           amount: foundProduct.amount,
         }
-
-        // Update the supply of the part.
-        factory.partRequirements[foundProduct.id].amountSuppliedViaInternal = foundProduct.amount
       }
     })
   })
 }
 
-// Calculate the supply of parts via inputs. It is assumed that the input factories are supplying this factory at 100% efficiency, we then report shortages at the supplying factory so production can be increased there.
-export const calculateFactoryInputSupply = (factories: Factory[], factory: Factory) => {
-  factory.inputs.forEach(input => {
-    const requestedFactory = factories.find(fac => fac.id === input.factoryId)
-    if (!requestedFactory) {
-      console.error(`Factory with ID ${input.factoryId} not found.`)
-      return
-    }
-
-    // We have to assume here that a product is being supplied at 100% efficiency.
-    const requestedProduct = requestedFactory.products.find(product => product.id === input.outputPart)
-    if (!requestedProduct) {
-      console.error(`Product with ID ${input.outputPart} not found in factory ${input.factoryId}.`)
-      return
-    }
-
-    // Update the supply of the part.
-    factory.partRequirements[requestedProduct.id].amountSuppliedViaInput += input.amount
-  })
-}
-
 // Calculate the remaining amount of parts required after all inputs and internal products are accounted for.
 export const calculateFactorySatisfaction = (factory: Factory) => {
+  // Let's make absolutely sure the factory part metrics are right
+  Object.keys(factory.parts).forEach(part => {
+    calculatePartMetrics(factory, part)
+  })
+
   // If factory has no products there is nothing for us to do, so mark as satisfied.
   if (factory.products.length === 0) {
     factory.requirementsSatisfied = true
     return
   }
 
-  Object.keys(factory.products).forEach(productIndex => {
-    const product = factory.products[productIndex]
-    Object.keys(product.requirements).forEach(partIndex => {
-      const requirement = factory.partRequirements[partIndex]
-
-      // Calculate the remaining amount of parts required after all inputs and internal products are accounted for.
-      requirement.amountSupplied =
-        requirement.amountSuppliedViaInternal +
-        requirement.amountSuppliedViaInput +
-        requirement.amountSuppliedViaRaw
-
-      requirement.amountRemaining = requirement.amountRequired - requirement.amountSupplied
-
-      // Check if the input amount is enough to satisfy the requirement.
-      requirement.satisfied = requirement.amountRemaining <= 0
-    })
-
-    // Now check if all requirements are satisfied and flag so if it is.
-    factory.requirementsSatisfied = Object.keys(factory.partRequirements).every(part => factory.partRequirements[part].satisfied)
-  })
+  // Now check if all requirements are satisfied and flag so if it is.
+  factory.requirementsSatisfied = Object.keys(factory.parts).every(part => factory.parts[part].satisfied)
 }
 
-export const calculateFactoryBuildingsAndPower = (factory: Factory) => {
+export const calculateBuildingsAndPower = (factory: Factory) => {
   factory.totalPower = 0
   factory.buildingRequirements = {}
 
@@ -291,25 +278,19 @@ export const calculateFactoryBuildingsAndPower = (factory: Factory) => {
 export const calculateSurplus = (factory: Factory) => {
   factory.surplus = {} // Avoids orphaning
 
-  // Loop through each product.
-  // We need to check if the product has requirements.
-  // If it has requirements, check the amountRemaining, if it less than 0, we have a surplus.
-  // If it does not have requirements, add the product directly as a surplus because it is not an intermediary product.
-  factory.products.forEach(product => {
-    // If there are no part requirements for this product, it is a surplus.
-    if (!factory.partRequirements[product.id]) {
-      factory.surplus[product.id] = {
-        amount: product.amount,
+  // Loop through each part list, and check if there's any surplus
+  Object.keys(factory.parts).forEach(partKey => {
+    const part = factory.parts[partKey]
+
+    if (!part) {
+      console.error(`Part listing is missing for part ${partKey}`)
+    }
+
+    // If the amount remaining is less than 0, we have a surplus.
+    if (part.amountRemaining < 0) {
+      factory.surplus[partKey] = {
+        amount: Math.abs(part.amountRemaining),
         surplusHandling: 'export',
-      }
-    } else {
-      const requirement = factory.partRequirements[product.id]
-      // If the amount remaining is less than 0, we have a surplus.
-      if (requirement.amountRemaining < 0) {
-        factory.surplus[product.id] = {
-          amount: Math.abs(requirement.amountRemaining),
-          surplusHandling: 'export',
-        }
       }
     }
   })
@@ -450,24 +431,24 @@ export const calculateHasProblem = (factories: Factory[]) => {
 }
 
 // Determine if we're only using raw resources in this factory.
-export const calculateUsingRawResourcesOnly = (factory: Factory) => {
-  factory.usingRawResourcesOnly = false
+export const calculateUsingRawResourcesOnly = (factory: Factory, gameData: DataInterface) => {
+  factory.usingRawResourcesOnly = true
 
-  // 1. Check if there's a rawResources object with content (if not skip further checks).
-  // 2. Check if we are only using raw resources in the partsRequired array. If they're not the same, we're using something else other than raw resource parts.
-  // Get the keys of both the rawResources and partRequirements objects.
+  // Check each product, and check if all their ingredients are raw, if so we're only using raw resources.
+  factory.products.forEach(product => {
+    const recipe = getRecipe(product.recipe, gameData)
+    if (!recipe) {
+      console.warn(`calculateUsingRawResourcesOnly: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
+      return
+    }
 
-  if (Object.keys(factory.rawResources).length === 0) {
-    return
-  }
-
-  const rawResourcesKeys = Object.keys(factory.rawResources)
-  const partRequirementsKeys = Object.keys(factory.partRequirements)
-
-  // If the arrays are the same, we're only using raw resources.
-  if (rawResourcesKeys.length === partRequirementsKeys.length && rawResourcesKeys.every((value, index) => value === partRequirementsKeys[index])) {
-    factory.usingRawResourcesOnly = true
-  }
+    // If any ingredient is not raw, mark the whole factory as not using only raw ingredients
+    recipe.ingredients.forEach(ingredient => {
+      if (!gameData.items.rawResources[ingredient.part]) {
+        factory.usingRawResourcesOnly = false
+      }
+    })
+  })
 }
 
 const getRecipe = (partId: any, gameData: DataInterface): Recipe => {

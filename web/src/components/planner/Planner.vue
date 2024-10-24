@@ -94,16 +94,16 @@
   import Todo from '@/components/planner/Todo.vue'
   import {
     calculateBuildingRequirements,
+    calculateBuildingsAndPower,
     calculateByProducts,
     calculateDependencies,
     calculateDependencyMetrics,
-    calculateFactoryBuildingsAndPower,
-    calculateFactoryInputSupply,
-    calculateFactoryInternalSupply,
-    calculateFactoryRawSupply,
     calculateFactorySatisfaction,
     calculateHasProblem,
-    calculateProductRequirements,
+    calculateInputs,
+    calculateInternalProducts,
+    calculateProducts,
+    calculateRawSupply,
     calculateSurplus,
     calculateUsingRawResourcesOnly,
     configureExportCalculator,
@@ -212,7 +212,7 @@
       products: [],
       internalProducts: {},
       inputs: [],
-      partRequirements: {},
+      parts: {},
       buildingRequirements: {},
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       totalPower: 0,
@@ -239,10 +239,16 @@
 
   // We update the factory in layers of calculations. This makes it much easier to conceptualize.
   const updateFactory = (factory: Factory) => {
+    factory.rawResources = {}
+    factory.parts = {}
+
     updateWorldRawResources()
 
-    // First we calculate what is required to make the products, without any injection of inputs etc.
-    calculateProductRequirements(factory, props.gameData)
+    // Calculate what is inputted into the factory to be used by products.
+    calculateInputs(factory)
+
+    // Calculate what is produced and required by the products.
+    calculateProducts(factory, props.gameData)
 
     // And calculate Byproducts
     calculateByProducts(factory, props.gameData)
@@ -251,19 +257,16 @@
     calculateBuildingRequirements(factory, props.gameData)
 
     // Calculate if we have products satisfied by raw resources.
-    calculateFactoryRawSupply(factory, props.gameData)
+    calculateRawSupply(factory, props.gameData)
 
     // Calculate if we have any internal products that can be used to satisfy requirements.
-    calculateFactoryInternalSupply(factory, props.gameData)
-
-    // Then we calculate the effect that inputs have on the requirements.
-    calculateFactoryInputSupply(factories.value, factory, props.gameData)
+    calculateInternalProducts(factory, props.gameData)
 
     // Then we calculate the satisfaction of the factory.
     calculateFactorySatisfaction(factory)
 
     // We then calculate the building and power demands to make the factory.
-    calculateFactoryBuildingsAndPower(factory)
+    calculateBuildingsAndPower(factory)
 
     // Then we calculate the output state of the factory (including surplus etc).
     calculateSurplus(factory)
@@ -276,7 +279,7 @@
     configureExportCalculator(factories.value)
 
     // Add a flag to denote if we're only using raw resources to make products.
-    calculateUsingRawResourcesOnly(factory)
+    calculateUsingRawResourcesOnly(factory, props.gameData)
 
     // Go through all factories and check if they have any problems.
     calculateHasProblem(factories.value)
