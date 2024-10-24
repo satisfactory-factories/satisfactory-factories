@@ -126,8 +126,8 @@
           </v-col>
         </v-row>
       </div>
-      <p v-else class="text-body-1">Awaiting product selection.</p>
     </div>
+    <p v-else class="text-body-1">Awaiting product selection.</p>
   </div>
 </template>
 
