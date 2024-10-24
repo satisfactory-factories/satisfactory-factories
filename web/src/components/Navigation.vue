@@ -17,12 +17,17 @@
           :value="item.href"
         />
       </v-tabs>
+      <ko-fi />
+
     </template>
   </v-toolbar>
 </template>
 
 <script lang="ts">
+  import KoFi from '@/components/ko-fi.vue'
+
   export default {
+    components: { KoFi },
     data () {
       return {
         tab: null,

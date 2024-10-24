@@ -10,6 +10,8 @@
 </template>
 
 <script setup lang="ts">
+  import KoFi from '@/components/ko-fi.vue'
+
   const authRef = ref(null)
 
   const closeAuthTray = () => {

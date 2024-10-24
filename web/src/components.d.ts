@@ -11,6 +11,7 @@ declare module 'vue' {
     Auth: typeof import('./components/Auth.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
     ItemImage: typeof import('./components/ItemImage.vue')['default']
+    KoFi: typeof import('./components/ko-fi.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
     Planner: typeof import('./components/planner/Planner.vue')['default']
     PlannerFactory: typeof import('./components/planner/PlannerFactory.vue')['default']
