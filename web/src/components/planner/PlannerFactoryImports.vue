@@ -150,8 +150,8 @@
 
   const addEmptyInput = (factory: Factory) => {
     factory.inputs.push({
-      factoryId: 0,
-      outputPart: '',
+      factoryId: null,
+      outputPart: null,
       amount: 0,
     })
   }
