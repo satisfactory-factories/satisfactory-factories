@@ -288,10 +288,14 @@ export const calculateSurplus = (factory: Factory) => {
 
     // If the amount remaining is less than 0, we have a surplus.
     if (part.amountRemaining < 0) {
-      factory.surplus[partKey] = {
-        amount: Math.abs(part.amountRemaining),
-        surplusHandling: 'export',
+      if (!factory.surplus[partKey]) {
+        factory.surplus[partKey] = {
+          amount: 0,
+          surplusHandling: 'export',
+        }
       }
+
+      factory.surplus[partKey].amount += Math.abs(part.amountRemaining)
     }
   })
 }

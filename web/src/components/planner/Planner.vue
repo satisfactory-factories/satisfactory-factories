@@ -89,7 +89,7 @@
   import { computed, defineProps, provide, reactive, ref, watch } from 'vue'
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
-  import { Factory, WorldRawResource } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryItem, WorldRawResource } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
   import {
@@ -322,6 +322,10 @@
     return props.gameData.items.rawResources[part]?.name || props.gameData.items.parts[part]?.name
   }
 
+  const getProduct = (factory, part: string): FactoryItem => {
+    return factory.products.find(product => product.id === part)
+  }
+
   const getBuildingDisplayName = (building: string) => {
     const buildingFriendly = new Map<string, string>([
       ['assemblermk1', 'Assembler'],
@@ -468,6 +472,7 @@
   provide('moveFactory', moveFactory)
   provide('getIcon', getIcon)
   provide('isItemRawResource', isItemRawResource)
+  provide('getProduct', getProduct)
 
   const showDemo = () => {
     console.log('showDemo')

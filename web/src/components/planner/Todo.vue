@@ -5,7 +5,6 @@
         <v-card-title>Todo</v-card-title>
         <v-card-text class="text-body-1">
           <ul class="ml-4">
-            <li>Bug: Products: Should not be able to select multiple products of the same recipe.</li>
             <li>Bug: Imports: Should not be able to select the same factory and part for import.</li>
             <li>Bug: Imports: Should not be able to press Satisfy until both Factory and Item are inserted.</li>
             <li>Bug: Imports: Should not be able to add a quantity until both Factory and Item are inserted.</li>

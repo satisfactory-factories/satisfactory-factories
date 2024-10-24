@@ -5,11 +5,11 @@
         <i class="fas fa-calculator" />
         <span class="ml-2">Export calculations to</span>
       </p>
-      <p class="text-h6">
-        <i class="fas fa-industry" /><span class="ml-2">{{ destFactory.name }}</span>
-      </p>
+      <v-chip class="border-md border-gray" color="gray">
+        <i class="fas fa-industry" /><span class="ml-2"><b>{{ destFactory.name }}:</b> {{ request.amount }}/min</span>
+      </v-chip>
     </div>
-    <p class="text-body-1 mb-2">{{ request.amount }}/min</p>
+    <p class="text-body-1 mb-2" />
   </div>
   <div class="text-center border-b py-2">
     <v-chip
@@ -25,7 +25,7 @@
     <p v-if="helpText" class="text-body-2 text-center">
       <i class="fas fa-info-circle" />
       <span class="ml-1">
-        It is assumed you are feeding the freight platforms with sufficient belt capacity. <br>Time is from "choo" to "choo".
+        It is assumed you are feeding the freight platforms with sufficient belt capacity.<br>Time is from "choo" to "choo".
       </span>
     </p>
     <div class="d-flex justify-center align-center text-center mt-2">

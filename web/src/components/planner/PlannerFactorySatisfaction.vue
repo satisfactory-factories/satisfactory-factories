@@ -103,7 +103,7 @@
               <span class="ml-3">Buildings & Power</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1">
+          <v-card-text class="text-body-1 pb-0">
             <div
               v-for="(building, buildingIndex) in factory.buildingRequirements"
               :key="buildingIndex"
@@ -146,6 +146,7 @@
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (part: string) => string
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
+  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
   const props = defineProps<{
     factory: Factory;
@@ -170,10 +171,6 @@
       'text-green': part.satisfied,
       'text-red': !part.satisfied,
     }
-  }
-
-  const getProduct = (factory, part: string): FactoryItem => {
-    return factory.products.find(product => product.id === part)
   }
 
   const addProduct = (factory, part: string): void => {
