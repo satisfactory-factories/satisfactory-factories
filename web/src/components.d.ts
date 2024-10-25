@@ -10,6 +10,8 @@ declare module 'vue' {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Auth: typeof import('./components/Auth.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
+    Graph: typeof import('./components/graph/Graph.vue')['default']
+    GraphIndex: typeof import('./components/graph/Graph.vue')['default']
     ItemImage: typeof import('./components/ItemImage.vue')['default']
     KoFi: typeof import('./components/ko-fi.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
