@@ -1,5 +1,9 @@
 <template>
-  <VueFlow :edges="myEdges" :nodes="myNodes" />
+  <VueFlow :edges="myEdges" :nodes="myNodes">
+    <template #node-custom="props">
+      <CustomNode v-bind="props" />
+    </template>
+  </VueFlow>
 </template>
 
 <script setup lang="ts">
@@ -9,6 +13,7 @@
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import CustomNode from '@/components/graph/CustomNode.vue'
 
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
@@ -37,7 +42,11 @@
       nodes.push({
         id: factory.id.toString(),
         position: { x: posX, y: posY },
-        data: { label: factory.name },
+        type: 'custom',
+        data: {
+          id: factory.id,
+          name: factory.name,
+        },
       })
       posX += 200
       posY += 75
@@ -50,7 +59,6 @@
     const edges: Edge[] = []
 
     nodes.forEach(node => {
-      console.log('node', node)
       const factory = findFactory(node.id)
 
       if (!factory) {

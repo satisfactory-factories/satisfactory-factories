@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Auth: typeof import('./components/Auth.vue')['default']
+    CustomNode: typeof import('./components/graph/CustomNode.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
     Graph: typeof import('./components/graph/Graph.vue')['default']
     GraphIndex: typeof import('./components/graph/Graph.vue')['default']
