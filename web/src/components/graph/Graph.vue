@@ -1,19 +1,44 @@
 <template>
-  <VueFlow :edges="myEdges" :nodes="myNodes">
+  <VueFlow
+    :key="nodes.length"
+    :edges="edges"
+    :node-types="nodeTypes"
+    :nodes="nodes"
+  >
+    <MiniMap />
     <template #node-custom="props">
-      <CustomNode v-bind="props" />
+      <CustomNodeComponent v-bind="props" />
     </template>
   </VueFlow>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import type { Edge, Node } from '@vue-flow/core'
-  import { VueFlow } from '@vue-flow/core'
+  import { markRaw, ref } from 'vue'
+
+  import { Edge, MarkerType, Node, Position, useVueFlow, VueFlow } from '@vue-flow/core'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-  import CustomNode from '@/components/graph/CustomNode.vue'
+  import CustomNodeComponent from '@/components/graph/CustomNodeComponent.vue'
+  import { MiniMap } from '@vue-flow/minimap'
+
+  export interface CustomData {
+    hello: string
+  }
+
+  export interface CustomEvents {
+    onCustomEvent: (event: MouseEvent) => void
+  }
+
+  type CustomNodeTypes = 'custom'
+
+  type CustomNode = Node<CustomData, CustomEvents, CustomNodeTypes>
+
+  const nodeTypes = ref({
+    custom: markRaw(CustomNodeComponent),
+  })
+
+  const { onConnect } = useVueFlow()
 
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
@@ -33,8 +58,8 @@
   }
 
   // This function generates the nodes required to render the view
-  const generateNodes = (factories: ref<Factory[]>): Node[] => {
-    const nodes: Node[] = []
+  const generateNodes = (factories: ref<Factory[]>): CustomNode[] => {
+    const nodes: CustomNode[] = []
     let posX = 25
     let posY = 25
 
@@ -43,9 +68,13 @@
         id: factory.id.toString(),
         position: { x: posX, y: posY },
         type: 'custom',
+        sourcePosition: Position.Right,
+        targetPosition: Position.Left,
+        connectable: false,
         data: {
           id: factory.id,
-          name: factory.name,
+          label: `${factory.name} (${factory.id})`,
+          hello: 'world',
         },
       })
       posX += 200
@@ -55,7 +84,7 @@
     return nodes
   }
 
-  const generateEdges = (factories: Factory[], nodes: Node[]): Edge[] => {
+  const generateEdges = (factories: Factory[], nodes: NodeData[]): Edge[] => {
     const edges: Edge[] = []
 
     nodes.forEach(node => {
@@ -76,24 +105,33 @@
           return
         }
         edges.push({
-          id: `e${factory.id}->${recFac.id}`,
+          id: `${factory.id}->${recFac.id}`,
           source: factory.id.toString(),
           target: recFac.id.toString(),
+          label: 'Iron plates',
           type: 'smoothstep',
           animated: false,
-          sourceHandle: 'right',
-          targetHandle: 'left',
+          markerEnd: MarkerType.ArrowClosed,
         })
       })
     })
     return edges
   }
 
-  const myNodes = ref<Node[]>(generateNodes(factories))
-  const myEdges = ref<Edge[]>(generateEdges(factories, myNodes.value))
+  const nodes = ref<CustomNode[]>(generateNodes(factories))
+  const edges = ref<Edge[]>(generateEdges(factories, nodes.value))
 
-  console.log('nodes', myNodes.value)
-  console.log('edges', myEdges.value)
+  console.log('nodes', nodes.value)
+  console.log('edges', edges.value)
+
+  onConnect(({ source, target, sourceHandle, targetHandle }) => {
+    console.log('source', source)
+    console.log('target', target)
+    // these are the handle ids of the source and target node
+    // if no id is specified these will be `null`, meaning the first handle of the necessary type will be used
+    console.log('sourceHandle', sourceHandle)
+    console.log('targetHandle', targetHandle)
+  })
 </script>
 
 <style>
@@ -103,12 +141,4 @@
 /* import the default theme, this is optional but generally recommended */
 @import '@vue-flow/core/dist/theme-default.css';
 
-.vue-flow__node-custom {
-    background: purple;
-    color: white;
-    border: 1px solid purple;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px purple;
-    padding: 8px;
-}
 </style>
