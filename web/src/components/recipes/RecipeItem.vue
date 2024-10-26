@@ -1,35 +1,46 @@
 <template>
   <div>
-    <b>Inputs:</b>
-    <ul>
-      <li v-for="ingredient in recipe.ingredients" :key="Object.keys(ingredient)[0]">
-        {{ Object.keys(ingredient)[0] }}: {{ Object.values(ingredient)[0] }}
-      </li>
-    </ul>
-    <b>Outputs:</b>
-    <ul>
-      <li>
-        {{ Object.keys(recipe.product)[0] }}: {{ Object.values(recipe.product)[0] }} /  {{ recipe.perMin }}/min
-      </li>
-    </ul>
+    <div class="mb-2 border-b-md">
+      <span class="font-weight-bold mr-2">Inputs:</span>
+      <v-chip
+        v-for="ingredient in recipe.ingredients"
+        :key="ingredient.part"
+        class="mr-2 mb-2"
+      >
+        <game-asset
+          :subject="ingredient.part"
+          type="item"
+        />
+        <span class="ml-2">
+          <b>{{ getPartDisplayName(ingredient.part) }}:</b> x{{ ingredient.amount }}
+        </span>
+      </v-chip>
+    </div>
+    <div>
+      <span class="font-weight-bold mr-2">Products:</span>
+      <v-chip
+        v-for="product in recipe.products"
+        :key="product.part"
+        class="mb-2 mr-2"
+      >
+        <game-asset
+          :subject="product.part"
+          type="item"
+        />
+        <span class="ml-2">
+          <b>{{ getPartDisplayName(product.part) }}:</b> x{{ product.amount }}
+        </span>
+      </v-chip>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { Recipe } from '@/interfaces/Recipe'
+  import { inject } from 'vue'
+  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
   defineProps<{
     recipe: Recipe;
   }>()
 </script>
-
-<style scoped>
-div {
-  text-align: left;
-
-  h3 {
-    text-align: center;
-    margin: 0;
-  }
-}
-</style>
