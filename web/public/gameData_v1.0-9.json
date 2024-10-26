@@ -512,6 +512,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "PackagedTurboFuel": {
+                "name": "Packaged Turbofuel",
+                "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "PackagedWater": {
                 "name": "Packaged Water",
                 "stackSize": 100,
@@ -4426,7 +4432,7 @@
                     "perMin": 600
                 },
                 {
-                    "part": "TurboFuel",
+                    "part": "PackagedTurboFuel",
                     "amount": 2,
                     "perMin": 40
                 }
@@ -7586,7 +7592,7 @@
             ],
             "products": [
                 {
-                    "part": "TurboFuel",
+                    "part": "PackagedTurboFuel",
                     "amount": 2,
                     "perMin": 20,
                     "isByProduct": false
@@ -9094,7 +9100,7 @@
                     "perMin": 15
                 },
                 {
-                    "part": "TurboFuel",
+                    "part": "PackagedTurboFuel",
                     "amount": 3,
                     "perMin": 15
                 }
@@ -9494,7 +9500,7 @@
             "displayName": "Unpackage Turbofuel",
             "ingredients": [
                 {
-                    "part": "TurboFuel",
+                    "part": "PackagedTurboFuel",
                     "amount": 2,
                     "perMin": 20
                 }

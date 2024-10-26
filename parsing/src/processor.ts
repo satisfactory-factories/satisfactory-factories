@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
-import { Recipe } from "./interfaces/Recipe";
+import {Recipe} from "./interfaces/Recipe";
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -376,12 +376,10 @@ function fixItemNames(items: PartDataInterface): void {
         "DarkEnergy": "Dark Matter Residue",
         "HeavyOilResidue": "Heavy Oil Residue",
         "LiquidFuel": "Fuel",
-        "LiquidTurboFuel": "Turbofuel",
         "Plastic": "Plastic",
         "PolymerResin": "Polymer Resin",
         "Rubber": "Rubber",
         "Snow": "Snow",
-        "TurboFuel": "Packaged Turbofuel",
         "Water": "Water",
     };
 
@@ -390,26 +388,6 @@ function fixItemNames(items: PartDataInterface): void {
             items.parts[search].name = fixItems[search];
         }
     }
-}
-
-function fixMissingParts(items: PartDataInterface): void {
-    // Insert missing items
-    const missingItems: Record<string, Part> = {
-        "LiquidTurboFuel": { name: "Turbofuel", stackSize: 0, isFluid: true, isFicsmas: false },
-    };
-
-    for (const key of Object.keys(missingItems)) {
-        if (!items.parts[key]) {
-            items.parts[key] = missingItems[key];
-        }
-    }
-
-    // Sort the items
-    const sortedItems: { [key: string]: Part } = {};
-    Object.keys(items.parts).sort().forEach(key => {
-        sortedItems[key] = items.parts[key];
-    });
-    items.parts = sortedItems;
 }
 
 function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
@@ -448,6 +426,34 @@ function stackSizeConvert(stackSize: string) {
     }
 }
 
+function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
+    // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
+    items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
+
+    // Add the actual "Turbofuel" as a new item
+    items.parts["LiquidTurboFuel"] = {
+        name: "Turbofuel",
+        stackSize: 0,
+        isFluid: true,
+        isFicsmas: false,
+    };
+
+    // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
+    recipes.forEach(recipe => {
+        recipe.products.forEach(product => {
+            if (product.part === "TurboFuel") {
+                product.part = "PackagedTurboFuel";
+            }
+        });
+
+        recipe.ingredients.forEach(ingredient => {
+            if (ingredient.part === "TurboFuel") {
+                ingredient.part = "PackagedTurboFuel";
+            }
+        });
+    });
+}
+
 // Central function to process the file and generate the output
 async function processFile(inputFile: string, outputFile: string) {
     try {
@@ -469,7 +475,14 @@ async function processFile(inputFile: string, outputFile: string) {
         const recipes = getRecipes(data, buildings);
 
         removeRubbishItems(items, recipes);
-        fixMissingParts(items);
+        fixTurbofuel(items, recipes);
+
+        // Since we've done some manipulation of the items data, re-sort it
+        const sortedItems: { [key: string]: Part } = {};
+        Object.keys(items.parts).sort().forEach(key => {
+            sortedItems[key] = items.parts[key];
+        });
+        items.parts = sortedItems;
 
         // Construct the final JSON object
         const finalData = {
