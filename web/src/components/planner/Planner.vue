@@ -89,7 +89,13 @@
   import { computed, defineProps, provide, reactive, ref, watch } from 'vue'
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
-  import { Factory, FactoryItem, WorldRawResource } from '@/interfaces/planner/FactoryInterface'
+  import {
+    BuildingRequirement,
+    Factory,
+    FactoryDependency,
+    FactoryItem,
+    WorldRawResource,
+  } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
   import {
@@ -113,7 +119,9 @@
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
-  if (props.gameData === null) {
+  const gameData = props.gameData
+  if (!gameData) {
+    console.error('No game data provided to Planner!')
     throw new Error('No game data provided to Planner!')
   }
 
@@ -137,14 +145,14 @@
 
   // This function calculates the world resources available after each group has consumed Raw Resources.
   // This is done here globally as it loops all factories.value. It is not appropriate to be done on group updates.
-  const updateWorldRawResources = (): void => {
+  const updateWorldRawResources = (gameData: DataInterface): void => {
     // Generate fresh world resources as a baseline for calculation.
-    Object.assign(worldRawResources, generateRawResources())
+    Object.assign(worldRawResources, generateRawResources(gameData))
 
     // Loop through each group's products to calculate usage of raw resources.
     factories.value.forEach(factory => {
       factory.products.forEach(product => {
-        const recipe = props.gameData.recipes.find(r => r.id === product.recipe)
+        const recipe = gameData.recipes.find(r => r.id === product.recipe)
         if (!recipe) {
           console.error(`Recipe with ID ${product.id} not found.`)
           return
@@ -172,11 +180,11 @@
   }
 
   // Resets the world's raw resources counts according to the limits provided by the data.
-  const generateRawResources = (): { [key: string]: WorldRawResource } => {
+  const generateRawResources = (gameData: DataInterface): { [key: string]: WorldRawResource } => {
     const ores = {} as { [key: string]: WorldRawResource }
 
-    Object.keys(props.gameData.items.rawResources).forEach(name => {
-      const resource = props.gameData.items.rawResources[name]
+    Object.keys(gameData.items.rawResources).forEach(name => {
+      const resource = gameData.items.rawResources[name]
       ores[name] = {
         id: name,
         name: resource.name,
@@ -187,7 +195,7 @@
     // Return a sorted object by the name property. Key is not correct.
     const sortedOres = Object.values(ores).sort((a, b) => a.name.localeCompare(b.name))
 
-    const sortedOresAsObj: WorldRawResource = {}
+    const sortedOresAsObj: {[key: string]: WorldRawResource } = {}
     sortedOres.forEach(ore => {
       sortedOresAsObj[ore.id] = ore
     })
@@ -217,10 +225,10 @@
       internalProducts: {},
       inputs: [],
       parts: {},
-      buildingRequirements: {},
+      buildingRequirements: {} as BuildingRequirement,
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
       totalPower: 0,
-      dependencies: {},
+      dependencies: {} as FactoryDependency,
       exportCalculator: {},
       rawResources: {},
       usingRawResourcesOnly: false,
@@ -242,29 +250,29 @@
   }
 
   // We update the factory in layers of calculations. This makes it much easier to conceptualize.
-  const updateFactory = (factory: Factory) => {
+  const updateFactory = (factory: Factory, gameData: DataInterface) => {
     factory.rawResources = {}
     factory.parts = {}
 
-    updateWorldRawResources()
+    updateWorldRawResources(gameData)
 
     // Calculate what is inputted §into the factory to be used by products.
     calculateInputs(factory)
 
     // Calculate what is produced and required by the products.
-    calculateProducts(factory, props.gameData)
+    calculateProducts(factory, gameData)
 
     // And calculate Byproducts
-    calculateByProducts(factory, props.gameData)
+    calculateByProducts(factory, gameData)
 
     // Calculate building requirements for each product based on the selected recipe and product amount.
-    calculateBuildingRequirements(factory, props.gameData)
+    calculateBuildingRequirements(factory, gameData)
 
     // Calculate if we have products satisfied by raw resources.
-    calculateRawSupply(factory, props.gameData)
+    calculateRawSupply(factory, gameData)
 
     // Calculate if we have any internal products that can be used to satisfy requirements.
-    calculateInternalProducts(factory, props.gameData)
+    calculateInternalProducts(factory, gameData)
 
     // Then we calculate the satisfaction of the factory.
     calculateFactorySatisfaction(factory)
@@ -283,7 +291,7 @@
     configureExportCalculator(factories.value)
 
     // Add a flag to denote if we're only using raw resources to make products.
-    calculateUsingRawResourcesOnly(factory, props.gameData)
+    calculateUsingRawResourcesOnly(factory, gameData)
 
     // Go through all factories and check if they have any problems.
     calculateHasProblem(factories.value)
@@ -309,10 +317,10 @@
       }
 
       factories.value.splice(index, 1) // Remove the factory at the found index
-      updateWorldRawResources() // Recalculate the world resources
+      updateWorldRawResources(gameData) // Recalculate the world resources
 
       // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
-      factories.value.forEach(fac => updateFactory(fac))
+      factories.value.forEach(fac => updateFactory(fac, gameData))
 
       // Regenerate the sort orders
       regenerateSortOrders()
@@ -323,12 +331,12 @@
 
   const clearAll = () => {
     factories.value.length = 0
-    updateWorldRawResources()
+    updateWorldRawResources(gameData)
   }
 
   const getPartDisplayName = (part: string | number): string => {
-    return props.gameData.items.rawResources[part]?.name ||
-      props.gameData.items.parts[part]?.name ||
+    return gameData.items.rawResources[part]?.name ||
+      gameData.items.parts[part]?.name ||
       'UNKNOWN!'
   }
 
@@ -363,9 +371,13 @@
     helpText.value = !helpText.value
   }
 
-  const navigateToFactory = (factoryId: string) => {
-    // Unhide the factory
+  const navigateToFactory = (factoryId: number) => {
     const factory = findFactory(factoryId)
+    if (!factory) {
+      console.error(`navigateToFactory: Factory ${factoryId} not found!`)
+      return
+    }
+    // Unhide the factory which makes more sense than the user being scrolled to it than having to open it.
     factory.hidden = false
 
     // Wait a bit for the factory to unhide fully. Hack but works well.
@@ -427,8 +439,8 @@
   }
 
   const initializeFactories = () => {
-    Object.assign(worldRawResources, generateRawResources())
-    updateWorldRawResources()
+    Object.assign(worldRawResources, generateRawResources(gameData))
+    updateWorldRawResources(gameData)
   }
 
   const sluggify = (subject: string): string => {
@@ -448,8 +460,8 @@
     if (type === 'building') {
       return getImageUrl(subject, 'building', size)
     } else {
-      const partItem = props.gameData.items.parts[subject]
-      const rawItem = props.gameData.items.rawResources[subject]
+      const partItem = gameData.items.parts[subject]
+      const rawItem = gameData.items.rawResources[subject]
       const item = partItem?.name || rawItem?.name || subject
 
       return getImageUrl(sluggify(item), 'item', size)
@@ -466,7 +478,7 @@
   }
 
   const isItemRawResource = (item: string): boolean => {
-    return !!props.gameData.items.rawResources[item]
+    return !!gameData.items.rawResources[item]
   }
 
   // Initialize during setup

@@ -1,24 +1,22 @@
-import { Recipe } from './Recipe.ts'
+import { Recipe } from './Recipe'
 
 export interface Part {
-  [key: string]: {
-    name: string;
-    stackSize: number;
-    isFluid: boolean;
-  }
+  name: string;
+  stackSize: number;
+  isFluid: boolean;
 }
 
 export interface RawResource {
-    name: string;
-    limit: number;
+  name: string;
+  limit: number;
 }
 
 export interface DataInterface {
-    buildings: { [key: string]: string };
-    items: {
-        parts: Part;
-        collectables: { [key: string]: string };
-        rawResources: { [key: string]: RawResource };
-    }
-    recipes: Recipe[];
+  buildings: { [key: string]: string };
+  items: {
+      parts: { [key: string]: Part };
+      collectables: { [key: string]: string };
+      rawResources: { [key: string]: RawResource };
+  }
+  recipes: Recipe[];
 }
