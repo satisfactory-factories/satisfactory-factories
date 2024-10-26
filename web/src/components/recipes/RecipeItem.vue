@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Recipe } from '../interfaces/Recipe.ts'
+  import { Recipe } from '@/interfaces/Recipe'
 
   defineProps<{
     recipe: Recipe;
