@@ -111,7 +111,11 @@
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
 
-  const props = defineProps<{ gameData: DataInterface }>()
+  const props = defineProps<{ gameData: DataInterface | null }>()
+
+  if (props.gameData === null) {
+    throw new Error('No game data provided to Planner!')
+  }
 
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
@@ -423,7 +427,6 @@
   }
 
   const initializeFactories = () => {
-    console.log('factories', factories)
     Object.assign(worldRawResources, generateRawResources())
     updateWorldRawResources()
   }

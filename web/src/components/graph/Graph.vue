@@ -13,32 +13,27 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { defineProps, ref } from 'vue'
 
-  import { Edge, Node, VueFlow } from '@vue-flow/core'
+  import { Edge, VueFlow } from '@vue-flow/core'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import FactoryNode from '@/components/graph/FactoryNode.vue'
   import { MiniMap } from '@vue-flow/minimap'
-  import { generateEdges, generateNodes } from '@/utils/graphUtils'
+  import { CustomNode, generateEdges, generateNodes } from '@/utils/graphUtils'
+  import { DataInterface } from '@/interfaces/DataInterface'
 
-  export interface CustomData {
-    hello: string
+  const props = defineProps<{ gameData: DataInterface | null }>()
+
+  if (props.gameData === null) {
+    throw new Error('No game data provided to Planner!')
   }
-
-  export interface CustomEvents {
-    onCustomEvent: (event: MouseEvent) => void
-  }
-
-  type CustomNodeTypes = 'custom'
-
-  type CustomNode = Node<CustomData, CustomEvents, CustomNodeTypes>
 
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
 
   const nodes = ref<CustomNode[]>(generateNodes(factories))
-  const edges = ref<Edge[]>(generateEdges(factories, nodes.value))
+  const edges = ref<Edge[]>(generateEdges(factories.value, nodes.value))
 
   console.log('nodes', nodes.value)
   console.log('edges', edges.value)
