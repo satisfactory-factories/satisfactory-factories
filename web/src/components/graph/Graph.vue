@@ -32,7 +32,7 @@
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
 
-  const nodes = ref<CustomNode[]>(generateNodes(factories))
+  const nodes = ref<CustomNode[]>(generateNodes(factories.value))
   const edges = ref<Edge[]>(generateEdges(factories.value, nodes.value))
 
   console.log('nodes', nodes.value)

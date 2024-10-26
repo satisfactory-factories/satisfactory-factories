@@ -1,7 +1,13 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { Edge, MarkerType, Position } from '@vue-flow/core'
+import { Edge, MarkerType, Node, Position } from '@vue-flow/core'
 import dagre from '@dagrejs/dagre'
 import { ref } from 'vue'
+
+export interface CustomData {
+  factory: Factory
+}
+
+export type CustomNode = Node<CustomData>
 
 const graph = ref(new dagre.graphlib.Graph())
 const previousDirection = ref('LR')
@@ -13,7 +19,7 @@ const findFactory = (factoryId: string | number, factories: Factory[]): Factory 
   }
 
   // Ensure factoryId is parsed to a number to match factories array ids
-  const factory = factories.value.find(fac => fac.id === parseInt(factoryId.toString(), 10))
+  const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10))
   if (!factory) {
     throw new Error(`Factory ${factoryId} not found!`)
   }
@@ -21,12 +27,12 @@ const findFactory = (factoryId: string | number, factories: Factory[]): Factory 
 }
 
 // This function generates the nodes required to render the view
-export const generateNodes = (factories: ref<Factory[]>): CustomNode[] => {
+export const generateNodes = (factories: Factory[]): CustomNode[] => {
   const nodes: CustomNode[] = []
-  let posX = 25
-  let posY = 25
+  let posX = 50
+  let posY = 50
 
-  factories.value.forEach(factory => {
+  factories.forEach(factory => {
     nodes.push({
       id: factory.id.toString(),
       position: { x: posX, y: posY },
@@ -35,19 +41,17 @@ export const generateNodes = (factories: ref<Factory[]>): CustomNode[] => {
       targetPosition: Position.Left,
       connectable: false,
       data: {
-        id: factory.id,
-        label: `${factory.name} (${factory.id})`,
-        hello: 'world',
+        factory,
       },
     })
-    posX += 200
-    posY += 75
+    posX += 400
+    posY += 150
   })
 
   return nodes
 }
 
-export const generateEdges = (factories: Factory[], nodes: NodeData[]): Edge[] => {
+export const generateEdges = (factories: Factory[], nodes: CustomNode[]): Edge[] => {
   const edges: Edge[] = []
 
   nodes.forEach(node => {
@@ -61,16 +65,18 @@ export const generateEdges = (factories: Factory[], nodes: NodeData[]): Edge[] =
     const reqs = factory.dependencies.requests
 
     Object.keys(reqs).forEach(recFacId => {
-      const recFac = findFactory(recFacId, factories)
+      const reqFac = findFactory(recFacId, factories)
+      const request = factory.dependencies.requests[recFacId]
 
-      if (!recFac) {
+      if (!reqFac) {
         console.error('Could not find dependant factory', recFacId)
         return
       }
+      console.log(request)
       edges.push({
-        id: `${factory.id}->${recFac.id}`,
+        id: `${factory.id}->${reqFac.id}`,
         source: factory.id.toString(),
-        target: recFac.id.toString(),
+        target: reqFac.id.toString(),
         label: 'Iron plates',
         type: 'smoothstep',
         animated: true,
