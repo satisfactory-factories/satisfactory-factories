@@ -22,8 +22,8 @@
 
   const props = defineProps<{
     subject: string
-    height?: number | undefined
-    width?: number | undefined
+    height?: string | number | undefined
+    width?: string | number | undefined
     type: 'building' | 'item',
   }>()
 
@@ -57,11 +57,18 @@
     type: 'building' | 'item',
     size: 'small' | 'big' = 'big'
   ): string => {
-    const pxSize = size === 'small' ? '64' : '256'
+    const pxSize = size === 'small' ? 64 : 256
     return `/assets/game/images/${type}/${name}_${pxSize}.png`
   }
 
-  const widthPx = props.width ?? 32
-  const heightPx = props.height ?? 32
-  const imgUrl = getIcon(props.subject, props.type, 'small')
+  const widthPx = parseInt(
+    typeof props.width === 'number' ? props.width.toString() : props.width ?? '32',
+    10
+  )
+  const heightPx = parseInt(
+    typeof props.height === 'number' ? props.height.toString() : props.height ?? '32',
+    10
+  )
+  const imgSize = widthPx > 64 || heightPx > 64 ? 'big' : 'small'
+  const imgUrl = getIcon(props.subject, props.type, imgSize)
 </script>
