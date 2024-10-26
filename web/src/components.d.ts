@@ -33,7 +33,7 @@ declare module 'vue' {
     PlannerWorldResources: typeof import('./components/planner/PlannerWorldResources.vue')['default']
     RecipeItem: typeof import('./components/recipes/RecipeItem.vue')['default']
     Recipes: typeof import('./components/recipes/Recipes.vue')['default']
-    RecipeSearch: typeof import('./components/recipes/RecipeSearch.vue')['default']
+    RecipeSearch: typeof import('./components/recipes/Recipes.vue')['default']
     RecipeSearchItem: typeof import('./components/recipes/RecipeSearchItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
