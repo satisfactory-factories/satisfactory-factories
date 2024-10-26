@@ -20,18 +20,14 @@ router.beforeEach(async (to, from, next) => {
   const gameDataStore = useGameDataStore()
 
   // Check if the game data is already loaded
-  if (!gameDataStore.gameData) {
-    try {
-      await gameDataStore.loadGameData()
-      console.log('Router: Game data loaded successfully from route')
-    } catch (error) {
-      console.error('Router: Failed to load game data:', error)
-      // Optionally handle the error, e.g., redirect to an error page
-      next(false) // Cancel the navigation if loading fails
-      return
-    }
-  } else {
-    console.log('Router: Game data already loaded')
+  try {
+    await gameDataStore.loadGameData()
+    console.log('Router: Game data loaded successfully from route')
+  } catch (error) {
+    console.error('Router: Failed to load game data:', error)
+    // Optionally handle the error, e.g., redirect to an error page
+    next(false) // Cancel the navigation if loading fails
+    return
   }
 
   // Proceed to the route if data is loaded
