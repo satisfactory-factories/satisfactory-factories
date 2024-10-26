@@ -15,4 +15,5 @@ export interface Recipe {
     power: string;
   }
   isAlternate: boolean;
+  isFicsmas: boolean;
 }

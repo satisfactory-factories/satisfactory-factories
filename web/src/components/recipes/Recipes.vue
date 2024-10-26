@@ -3,9 +3,19 @@
     <v-divider />
     <v-card-text>
       <v-text-field v-model="searchTerm" label="Recipe name" />
-      <v-chip color="primary" :variant="showAltRecipes ? 'flat' : 'outlined'" @click="toggleAltRecipes">
-        Alt Recipes
-      </v-chip>
+      <div class="mb-4">
+        <v-chip
+          class="mr-2"
+          color="primary"
+          :variant="showAltRecipes ? 'flat' : 'outlined'"
+          @click="toggleAltRecipes"
+        >
+          Alt Recipes
+        </v-chip>
+        <v-chip color="primary" :variant="showFicsmas ? 'flat' : 'outlined'" @click="toggleFicsmas">
+          Show FICSMAS
+        </v-chip>
+      </div>
       <v-expansion-panels multiple>
         <recipe-search-item v-for="recipe in filteredRecipes" :key="recipe.id" :recipe="recipe" />
       </v-expansion-panels>
@@ -27,6 +37,7 @@
   // Reactive State
   const searchTerm = ref<string>('')
   const showAltRecipes = ref<boolean>(false)
+  const showFicsmas = ref<boolean>(false)
 
   // Computed Property
   const filteredRecipes = computed<Recipe[]>(() => {
@@ -38,16 +49,26 @@
       )
     }
 
-    if (!showAltRecipes.value) {
-      filtered = filtered.filter(recipe => !recipe.isAlternate)
-    }
+    filtered = filtered.filter(recipe => {
+      if (!showAltRecipes.value) {
+        return !recipe.isAlternate
+      }
+
+      if (!showFicsmas.value) {
+        return !recipe.isFicsmas
+      }
+
+      return true
+    })
 
     return filtered
   })
 
-  // Methods
   const toggleAltRecipes = () => {
     showAltRecipes.value = !showAltRecipes.value
+  }
+  const toggleFicsmas = () => {
+    showFicsmas.value = !showFicsmas.value
   }
 
   const getPartDisplayName = (part: string | number): string => {

@@ -52,6 +52,22 @@ function isCollectable(ingredients: string): boolean {
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
+// Helper function to check if a recipe is likely to be liquid based on building type and amount
+function isFluid(productName: string): boolean {
+    const liquidProducts = ['water', 'liquidoil', 'heavyoilresidue', 'liquidfuel', 'liquidturbofuel', 'liquidbiofuel', 'aluminasolution', 'sulfuricacid', 'nitricacid', 'dissolvedsilica']
+    const gasProducts = ['nitrogengas', 'rocketfuel', 'ionizedfuel', 'quantumenergy', 'darkenergy'];
+
+    if (liquidProducts.includes(productName.toLowerCase())) {
+        return true;
+    }
+
+    return gasProducts.includes(productName.toLowerCase());
+}
+
+function isFicsmas(displayName: string): boolean {
+    return displayName.includes("FICSMAS") || displayName.includes("Snow");
+}
+
 interface Part {
     name: string;
     stackSize: number;
@@ -105,12 +121,6 @@ function getItems(data: any[]): PartDataInterface {
                 // Extract stack size
                 const stackSize = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
 
-                let isFicsmas = false
-                // Calculate if it is a FICSMAS item
-                if (entry.mDisplayName.includes("FICSMAS") || entry.mDisplayName.includes("Snow")) {
-                    isFicsmas = true;
-                }
-
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
@@ -119,7 +129,7 @@ function getItems(data: any[]): PartDataInterface {
                         name: friendlyName,
                         stackSize,
                         isFluid: isFluid(partName),
-                        isFicsmas,
+                        isFicsmas: isFicsmas(entry.mDisplayName),
                     };
                 }
             });
@@ -202,17 +212,6 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
     return sortedMap;
 }
 
-// Helper function to check if a recipe is likely to be liquid based on building type and amount
-function isFluid(productName: string): boolean {
-    const liquidProducts = ['water', 'liquidoil', 'heavyoilresidue', 'liquidfuel', 'liquidturbofuel', 'liquidbiofuel', 'aluminasolution', 'sulfuricacid', 'nitricacid', 'dissolvedsilica']
-    const gasProducts = ['nitrogengas', 'rocketfuel', 'ionizedfuel', 'quantumenergy', 'darkenergy'];
-
-    if (liquidProducts.includes(productName.toLowerCase())) {
-        return true;
-    }
-
-    return gasProducts.includes(productName.toLowerCase());
-}
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
 function getRecipes(
@@ -306,15 +305,14 @@ function getRecipes(
                 power: powerPerBuilding
             }
 
-            const isAlternate = recipe.mDisplayName.includes("Alternate");
-
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
                 displayName: recipe.mDisplayName,
                 ingredients,
                 products,
                 building,
-                isAlternate
+                isAlternate: recipe.mDisplayName.includes("Alternate"),
+                isFicsmas: isFicsmas(recipe.mDisplayName)
             });
         });
 

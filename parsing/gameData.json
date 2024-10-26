@@ -948,7 +948,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "SpaceElevatorPart_5",
@@ -987,7 +988,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_12",
@@ -1032,7 +1034,8 @@
                 "name": "quantumencoder",
                 "power": 0.10400000000000001
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AILimiter",
@@ -1061,7 +1064,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AluminumSheet",
@@ -1090,7 +1094,8 @@
                 "name": "assemblermk1",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AlienDNACapsule",
@@ -1114,7 +1119,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AlienPowerFuel",
@@ -1159,7 +1165,8 @@
                 "name": "quantumencoder",
                 "power": 0.10416666666666667
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AdheredIronPlate",
@@ -1188,7 +1195,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AlcladCasing",
@@ -1217,7 +1225,8 @@
                 "name": "assemblermk1",
                 "power": 1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelBeam_Aluminum",
@@ -1241,7 +1250,8 @@
                 "name": "constructormk1",
                 "power": 1.3333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AluminumRod",
@@ -1265,7 +1275,8 @@
                 "name": "constructormk1",
                 "power": 0.5714285714285714
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AutomatedMiner",
@@ -1287,7 +1298,8 @@
                 "name": "assemblermk1",
                 "power": 0
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HighSpeedWiring",
@@ -1321,7 +1333,8 @@
                 "name": "manufacturermk1",
                 "power": 13.75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IronIngot_Basic",
@@ -1350,7 +1363,8 @@
                 "name": "foundrymk1",
                 "power": 1.6
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Coal_2",
@@ -1374,7 +1388,8 @@
                 "name": "constructormk1",
                 "power": 0.6666666666666666
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_BoltedFrame",
@@ -1403,7 +1418,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ReinforcedIronPlate_1",
@@ -1432,7 +1448,8 @@
                 "name": "assemblermk1",
                 "power": 5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Screw",
@@ -1456,7 +1473,8 @@
                 "name": "constructormk1",
                 "power": 0.2
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CircuitBoard_2",
@@ -1485,7 +1503,8 @@
                 "name": "assemblermk1",
                 "power": 2.142857142857143
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Computer_1",
@@ -1519,7 +1538,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Wire_2",
@@ -1543,7 +1563,8 @@
                 "name": "constructormk1",
                 "power": 0.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Coal_1",
@@ -1567,7 +1588,8 @@
                 "name": "constructormk1",
                 "power": 0.4
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Silica",
@@ -1596,7 +1618,8 @@
                 "name": "assemblermk1",
                 "power": 2.142857142857143
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ClassicBattery",
@@ -1635,7 +1658,8 @@
                 "name": "manufacturermk1",
                 "power": 13.75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Cloudy",
@@ -1664,7 +1688,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedCable",
@@ -1693,7 +1718,8 @@
                 "name": "oilrefinery",
                 "power": 3.3333333333333335
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedIronCanister",
@@ -1722,7 +1748,8 @@
                 "name": "assemblermk1",
                 "power": 3.75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedIronPlate",
@@ -1751,7 +1778,8 @@
                 "name": "assemblermk1",
                 "power": 1.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CokeSteelIngot",
@@ -1780,7 +1808,8 @@
                 "name": "foundrymk1",
                 "power": 0.8
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_EnrichedCoal",
@@ -1809,7 +1838,8 @@
                 "name": "assemblermk1",
                 "power": 3
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotSteel_2",
@@ -1838,7 +1868,8 @@
                 "name": "foundrymk1",
                 "power": 4
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoolingDevice",
@@ -1872,7 +1903,8 @@
                 "name": "blender",
                 "power": 37.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperAlloyIngot",
@@ -1901,7 +1933,8 @@
                 "name": "foundrymk1",
                 "power": 1.6
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperRotor",
@@ -1930,7 +1963,8 @@
                 "name": "assemblermk1",
                 "power": 5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Computer_2",
@@ -1959,7 +1993,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DarkMatter_Crystallization",
@@ -1983,7 +2018,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DarkMatter_Trap",
@@ -2012,7 +2048,8 @@
                 "name": "hadroncollider",
                 "power": 0.05
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IonizedFuel_Dark",
@@ -2047,7 +2084,8 @@
                 "name": "converter",
                 "power": 0.060000000000000005
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DilutedFuel",
@@ -2076,7 +2114,8 @@
                 "name": "blender",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DilutedPackagedFuel",
@@ -2105,7 +2144,8 @@
                 "name": "oilrefinery",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Silica_Distilled",
@@ -2145,7 +2185,8 @@
                 "name": "blender",
                 "power": 12.152777777777779
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectricMotor",
@@ -2174,7 +2215,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectroAluminumScrap",
@@ -2209,7 +2251,8 @@
                 "name": "oilrefinery",
                 "power": 5.785714285714286
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectrodeCircuitBoard",
@@ -2238,7 +2281,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectromagneticControlRod_1",
@@ -2267,7 +2311,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_EncasedIndustrialBeam",
@@ -2296,7 +2341,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FertileUranium",
@@ -2341,7 +2387,8 @@
                 "name": "blender",
                 "power": 13.125
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Gunpowder_1",
@@ -2370,7 +2417,8 @@
                 "name": "assemblermk1",
                 "power": 2.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Concrete",
@@ -2399,7 +2447,8 @@
                 "name": "assemblermk1",
                 "power": 1.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FlexibleFramework",
@@ -2433,7 +2482,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quartz_Fused",
@@ -2462,7 +2512,8 @@
                 "name": "foundrymk1",
                 "power": 0.8888888888888888
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quickwire",
@@ -2491,7 +2542,8 @@
                 "name": "assemblermk1",
                 "power": 1.25
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FusedWire",
@@ -2520,7 +2572,8 @@
                 "name": "assemblermk1",
                 "power": 0.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeatSink_1",
@@ -2549,7 +2602,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeatFusedFrame",
@@ -2588,7 +2642,8 @@
                 "name": "blender",
                 "power": 75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ModularFrameHeavy",
@@ -2627,7 +2682,8 @@
                 "name": "manufacturermk1",
                 "power": 18.333333333333332
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeavyFlexibleFrame",
@@ -2666,7 +2722,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeavyOilResidue",
@@ -2696,7 +2753,8 @@
                 "name": "oilrefinery",
                 "power": 22.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_UraniumCell_1",
@@ -2735,7 +2793,8 @@
                 "name": "manufacturermk1",
                 "power": 13.75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_InstantPlutoniumCell",
@@ -2764,7 +2823,8 @@
                 "name": "hadroncollider",
                 "power": 0.005
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_InstantScrap",
@@ -2809,7 +2869,8 @@
                 "name": "blender",
                 "power": 17.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Cable_1",
@@ -2838,7 +2899,8 @@
                 "name": "assemblermk1",
                 "power": 0.75
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CrystalOscillator",
@@ -2872,7 +2934,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotIron",
@@ -2901,7 +2964,8 @@
                 "name": "foundrymk1",
                 "power": 1.0666666666666667
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelPipe_Iron",
@@ -2925,7 +2989,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Wire_1",
@@ -2949,7 +3014,8 @@
                 "name": "constructormk1",
                 "power": 0.4444444444444444
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CateriumIngot_Leached",
@@ -2978,7 +3044,8 @@
                 "name": "oilrefinery",
                 "power": 5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperIngot_Leached",
@@ -3007,7 +3074,8 @@
                 "name": "oilrefinery",
                 "power": 1.3636363636363635
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IronIngot_Leached",
@@ -3036,7 +3104,8 @@
                 "name": "oilrefinery",
                 "power": 3
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelBeam_Molded",
@@ -3065,7 +3134,8 @@
                 "name": "foundrymk1",
                 "power": 1.7777777777777777
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelPipe_Molded",
@@ -3094,7 +3164,8 @@
                 "name": "foundrymk1",
                 "power": 3.2
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RocketFuel_Nitro",
@@ -3139,7 +3210,8 @@
                 "name": "blender",
                 "power": 87.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_OCSupercomputer",
@@ -3168,7 +3240,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_OilBased",
@@ -3192,7 +3265,8 @@
                 "name": "hadroncollider",
                 "power": 0.05
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Petroleum",
@@ -3216,7 +3290,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Pink",
@@ -3245,7 +3320,8 @@
                 "name": "converter",
                 "power": 0.1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AILimiter_Plastic",
@@ -3274,7 +3350,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PlasticSmartPlating",
@@ -3308,7 +3385,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PlutoniumFuelUnit",
@@ -3337,7 +3415,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PolyesterFabric",
@@ -3366,7 +3445,8 @@
                 "name": "oilrefinery",
                 "power": 30
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PolymerResin",
@@ -3396,7 +3476,8 @@
                 "name": "oilrefinery",
                 "power": 17.307692307692307
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "PureAluminumIngot",
@@ -3420,7 +3501,8 @@
                 "name": "smeltermk1",
                 "power": 4
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureCateriumIngot",
@@ -3449,7 +3531,8 @@
                 "name": "oilrefinery",
                 "power": 30
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureCopperIngot",
@@ -3478,7 +3561,8 @@
                 "name": "oilrefinery",
                 "power": 2
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureIronIngot",
@@ -3507,7 +3591,8 @@
                 "name": "oilrefinery",
                 "power": 2.3076923076923075
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureQuartzCrystal",
@@ -3536,7 +3621,8 @@
                 "name": "oilrefinery",
                 "power": 4.285714285714286
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quartz_Purified",
@@ -3571,7 +3657,8 @@
                 "name": "oilrefinery",
                 "power": 4.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Cable_2",
@@ -3600,7 +3687,8 @@
                 "name": "assemblermk1",
                 "power": 1.3636363636363635
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Stator",
@@ -3629,7 +3717,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RadioControlUnit_1",
@@ -3663,7 +3752,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RadioControlSystem",
@@ -3702,7 +3792,8 @@
                 "name": "manufacturermk1",
                 "power": 18.333333333333332
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Plastic_1",
@@ -3731,7 +3822,8 @@
                 "name": "oilrefinery",
                 "power": 2.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RecycledRubber",
@@ -3760,7 +3852,8 @@
                 "name": "oilrefinery",
                 "power": 2.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Motor_1",
@@ -3794,7 +3887,8 @@
                 "name": "manufacturermk1",
                 "power": 9.166666666666666
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RubberConcrete",
@@ -3823,7 +3917,8 @@
                 "name": "assemblermk1",
                 "power": 1.6666666666666667
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CircuitBoard_1",
@@ -3852,7 +3947,8 @@
                 "name": "assemblermk1",
                 "power": 3
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HighSpeedConnector",
@@ -3886,7 +3982,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SloppyAlumina",
@@ -3915,7 +4012,8 @@
                 "name": "oilrefinery",
                 "power": 2.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotSteel_1",
@@ -3944,7 +4042,8 @@
                 "name": "foundrymk1",
                 "power": 5.333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteamedCopperSheet",
@@ -3973,7 +4072,8 @@
                 "name": "oilrefinery",
                 "power": 10
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelCanister",
@@ -3997,7 +4097,8 @@
                 "name": "constructormk1",
                 "power": 1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelCastedPlate",
@@ -4026,7 +4127,8 @@
                 "name": "foundrymk1",
                 "power": 5.333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelRod",
@@ -4050,7 +4152,8 @@
                 "name": "constructormk1",
                 "power": 1
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Rotor",
@@ -4079,7 +4182,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Screw_2",
@@ -4103,7 +4207,8 @@
                 "name": "constructormk1",
                 "power": 0.07692307692307693
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ModularFrame",
@@ -4132,7 +4237,8 @@
                 "name": "assemblermk1",
                 "power": 5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ReinforcedIronPlate_2",
@@ -4161,7 +4267,8 @@
                 "name": "assemblermk1",
                 "power": 5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SuperStateComputer",
@@ -4200,7 +4307,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CateriumIngot_Tempered",
@@ -4229,7 +4337,8 @@
                 "name": "foundrymk1",
                 "power": 5.333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperIngot_Tempered",
@@ -4258,7 +4367,8 @@
                 "name": "foundrymk1",
                 "power": 1.3333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboBlendFuel",
@@ -4297,7 +4407,8 @@
                 "name": "blender",
                 "power": 12.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Turbo",
@@ -4326,7 +4437,8 @@
                 "name": "hadroncollider",
                 "power": 0.03333333333333333
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboMotor_1",
@@ -4365,7 +4477,8 @@
                 "name": "manufacturermk1",
                 "power": 18.333333333333332
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboHeavyFuel",
@@ -4394,7 +4507,8 @@
                 "name": "oilrefinery",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboPressureMotor",
@@ -4433,7 +4547,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_NuclearFuelRod_1",
@@ -4472,7 +4587,8 @@
                 "name": "manufacturermk1",
                 "power": 18.333333333333332
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_WetConcrete",
@@ -4501,7 +4617,8 @@
                 "name": "oilrefinery",
                 "power": 7.5
             },
-            "isAlternate": true
+            "isAlternate": true,
+            "isFicsmas": false
         },
         {
             "id": "AluminaSolution",
@@ -4536,7 +4653,8 @@
                 "name": "oilrefinery",
                 "power": 8.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AluminumCasing",
@@ -4560,7 +4678,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IngotAluminum",
@@ -4589,7 +4708,8 @@
                 "name": "foundrymk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "AluminumScrap",
@@ -4624,7 +4744,8 @@
                 "name": "oilrefinery",
                 "power": 20
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_7",
@@ -4653,7 +4774,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_3",
@@ -4682,7 +4804,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_11",
@@ -4721,7 +4844,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Battery",
@@ -4761,7 +4885,8 @@
                 "name": "blender",
                 "power": 125
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Bauxite_Caterium",
@@ -4790,7 +4915,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Bauxite_Copper",
@@ -4819,7 +4945,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_10",
@@ -4853,7 +4980,8 @@
                 "name": "blender",
                 "power": 18.75
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Biomass_AlienProtein",
@@ -4877,7 +5005,8 @@
                 "name": "constructormk1",
                 "power": 0.04
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Leaves",
@@ -4901,7 +5030,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Mycelia",
@@ -4925,7 +5055,8 @@
                 "name": "constructormk1",
                 "power": 0.4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Wood",
@@ -4949,7 +5080,8 @@
                 "name": "constructormk1",
                 "power": 0.2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Gunpowder",
@@ -4978,7 +5110,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "XmasBall2",
@@ -5002,7 +5135,8 @@
                 "name": "smeltermk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "Cable",
@@ -5026,7 +5160,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CandyCane",
@@ -5050,7 +5185,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IngotCaterium",
@@ -5074,7 +5210,8 @@
                 "name": "smeltermk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Caterium_Copper",
@@ -5103,7 +5240,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Caterium_Quartz",
@@ -5132,7 +5270,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CircuitBoard",
@@ -5161,7 +5300,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Coal_Iron",
@@ -5190,7 +5330,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Coal_Limestone",
@@ -5219,7 +5360,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Computer",
@@ -5253,7 +5395,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Concrete",
@@ -5277,7 +5420,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CoolingSystem",
@@ -5316,7 +5460,8 @@
                 "name": "blender",
                 "power": 75
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "XmasBall3",
@@ -5345,7 +5490,8 @@
                 "name": "foundrymk1",
                 "power": 16
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "IngotCopper",
@@ -5369,7 +5515,8 @@
                 "name": "smeltermk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Copper_Quartz",
@@ -5398,7 +5545,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Copper_Sulfur",
@@ -5427,7 +5575,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CopperDust",
@@ -5451,7 +5600,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CopperSheet",
@@ -5475,7 +5625,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CrystalOscillator",
@@ -5509,7 +5660,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "DarkMatter",
@@ -5538,7 +5690,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "DarkEnergy",
@@ -5562,7 +5715,8 @@
                 "name": "converter",
                 "power": 0.01
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Diamond",
@@ -5586,7 +5740,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ElectromagneticControlRod",
@@ -5615,7 +5770,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FluidCanister",
@@ -5639,7 +5795,8 @@
                 "name": "constructormk1",
                 "power": 1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "GasTank",
@@ -5663,7 +5820,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "EncasedIndustrialBeam",
@@ -5692,7 +5850,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PlutoniumCell",
@@ -5721,7 +5880,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UraniumCell",
@@ -5761,7 +5921,8 @@
                 "name": "blender",
                 "power": 52.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "QuantumEnergy",
@@ -5779,7 +5940,8 @@
                 "name": "converter",
                 "power": 0.01
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Explosive",
@@ -5813,7 +5975,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Fabric",
@@ -5842,7 +6005,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FicsiteIngot_AL",
@@ -5871,7 +6035,8 @@
                 "name": "converter",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FicsiteIngot_CAT",
@@ -5900,7 +6065,8 @@
                 "name": "converter",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FicsiteIngot_Iron",
@@ -5929,7 +6095,8 @@
                 "name": "converter",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FicsiteMesh",
@@ -5953,7 +6120,8 @@
                 "name": "constructormk1",
                 "power": 1.3333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "XmasBow",
@@ -5977,7 +6145,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "XmasWreath",
@@ -6006,7 +6175,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "XmasBallCluster",
@@ -6035,7 +6205,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "XmasBranch",
@@ -6059,7 +6230,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "XmasStar",
@@ -6088,7 +6260,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "Ficsonium",
@@ -6122,7 +6295,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FicsoniumFuelRod",
@@ -6167,7 +6341,8 @@
                 "name": "quantumencoder",
                 "power": 0.10500000000000001
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "LiquidFuel",
@@ -6197,7 +6372,8 @@
                 "name": "oilrefinery",
                 "power": 17.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FusedModularFrame",
@@ -6231,7 +6407,8 @@
                 "name": "blender",
                 "power": 75
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FilterGasMask",
@@ -6265,7 +6442,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Protein_Crab",
@@ -6289,7 +6467,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "HeatSink",
@@ -6318,7 +6497,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ModularFrameHeavy",
@@ -6357,7 +6537,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "HighSpeedConnector",
@@ -6391,7 +6572,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Protein_Hog",
@@ -6415,7 +6597,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CartridgeSmart",
@@ -6444,7 +6627,8 @@
                 "name": "assemblermk1",
                 "power": 1.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "FilterHazmat",
@@ -6478,7 +6662,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IonizedFuel",
@@ -6513,7 +6698,8 @@
                 "name": "oilrefinery",
                 "power": 16.875
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "XmasBall4",
@@ -6542,7 +6728,8 @@
                 "name": "foundrymk1",
                 "power": 16
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "IngotIron",
@@ -6566,7 +6753,8 @@
                 "name": "smeltermk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Iron_Limestone",
@@ -6595,7 +6783,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IronPlate",
@@ -6619,7 +6808,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpikedRebar",
@@ -6643,7 +6833,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IronRod",
@@ -6667,7 +6858,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Limestone_Sulfur",
@@ -6696,7 +6888,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "LiquidBiofuel",
@@ -6725,7 +6918,8 @@
                 "name": "oilrefinery",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_6",
@@ -6754,7 +6948,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_4",
@@ -6788,7 +6983,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ModularFrame",
@@ -6817,7 +7013,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Motor",
@@ -6846,7 +7043,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "TemporalProcessor",
@@ -6891,7 +7089,8 @@
                 "name": "quantumencoder",
                 "power": 0.10400000000000001
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "NitricAcid",
@@ -6925,7 +7124,8 @@
                 "name": "blender",
                 "power": 25
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Nitrogen_Bauxite",
@@ -6954,7 +7154,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Nitrogen_Caterium",
@@ -6983,7 +7184,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "NonFissileUranium",
@@ -7028,7 +7230,8 @@
                 "name": "blender",
                 "power": 16.25
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_9",
@@ -7057,7 +7260,8 @@
                 "name": "hadroncollider",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedAlumina",
@@ -7086,7 +7290,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Fuel",
@@ -7115,7 +7320,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedOilResidue",
@@ -7144,7 +7350,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedIonizedFuel",
@@ -7173,7 +7380,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedBiofuel",
@@ -7202,7 +7410,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedNitricAcid",
@@ -7231,7 +7440,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedNitrogen",
@@ -7260,7 +7470,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedCrudeOil",
@@ -7289,7 +7500,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedRocketFuel",
@@ -7318,7 +7530,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedSulfuricAcid",
@@ -7347,7 +7560,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedTurboFuel",
@@ -7376,7 +7590,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PackagedWater",
@@ -7405,7 +7620,8 @@
                 "name": "packager",
                 "power": 5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PetroleumCoke",
@@ -7429,7 +7645,8 @@
                 "name": "oilrefinery",
                 "power": 2.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Plastic",
@@ -7459,7 +7676,8 @@
                 "name": "oilrefinery",
                 "power": 45
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PlutoniumFuelRod",
@@ -7498,7 +7716,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Plutonium",
@@ -7527,7 +7746,8 @@
                 "name": "hadroncollider",
                 "power": 0.0033333333333333335
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_1",
@@ -7551,7 +7771,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_2",
@@ -7575,7 +7796,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_3",
@@ -7599,7 +7821,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "PressureConversionCube",
@@ -7628,7 +7851,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "QuartzCrystal",
@@ -7652,7 +7876,8 @@
                 "name": "constructormk1",
                 "power": 1.3333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Quickwire",
@@ -7676,7 +7901,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "RadioControlUnit",
@@ -7710,7 +7936,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Quartz_Bauxite",
@@ -7739,7 +7966,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Quartz_Coal",
@@ -7768,7 +7996,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IngotSAM",
@@ -7792,7 +8021,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "XmasBall1",
@@ -7816,7 +8046,8 @@
                 "name": "smeltermk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "IronPlateReinforced",
@@ -7845,7 +8076,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ResidualFuel",
@@ -7869,7 +8101,8 @@
                 "name": "oilrefinery",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ResidualPlastic",
@@ -7898,7 +8131,8 @@
                 "name": "oilrefinery",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ResidualRubber",
@@ -7927,7 +8161,8 @@
                 "name": "oilrefinery",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Cartridge",
@@ -7956,7 +8191,8 @@
                 "name": "assemblermk1",
                 "power": 1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "RocketFuel",
@@ -7991,7 +8227,8 @@
                 "name": "blender",
                 "power": 82.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Rotor",
@@ -8020,7 +8257,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Rubber",
@@ -8050,7 +8288,8 @@
                 "name": "oilrefinery",
                 "power": 30
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SAMFluctuator",
@@ -8084,7 +8323,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Screw",
@@ -8108,7 +8348,8 @@
                 "name": "constructormk1",
                 "power": 1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Spreadshot",
@@ -8137,7 +8378,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Silica",
@@ -8161,7 +8403,8 @@
                 "name": "constructormk1",
                 "power": 0.8
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SingularityCell",
@@ -8200,7 +8443,8 @@
                 "name": "manufacturermk1",
                 "power": 5.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_1",
@@ -8229,7 +8473,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "GunpowderMK2",
@@ -8258,7 +8503,8 @@
                 "name": "oilrefinery",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Snowball",
@@ -8282,7 +8528,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "Biofuel",
@@ -8306,7 +8553,8 @@
                 "name": "constructormk1",
                 "power": 1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Protein_Spitter",
@@ -8330,7 +8578,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Stator",
@@ -8359,7 +8608,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SteelBeam",
@@ -8383,7 +8633,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "IngotSteel",
@@ -8412,7 +8663,8 @@
                 "name": "foundrymk1",
                 "power": 5.333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SteelPipe",
@@ -8436,7 +8688,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Protein_Stinger",
@@ -8460,7 +8713,8 @@
                 "name": "constructormk1",
                 "power": 4
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Stunshot",
@@ -8489,7 +8743,8 @@
                 "name": "assemblermk1",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Sulfur_Coal",
@@ -8518,7 +8773,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Sulfur_Iron",
@@ -8547,7 +8803,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SulfuricAcid",
@@ -8576,7 +8833,8 @@
                 "name": "oilrefinery",
                 "power": 6
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "ComputerSuper",
@@ -8615,7 +8873,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SuperpositionOscillator",
@@ -8660,7 +8919,8 @@
                 "name": "quantumencoder",
                 "power": 0.10400000000000001
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SyntheticPowerShard",
@@ -8705,7 +8965,8 @@
                 "name": "quantumencoder",
                 "power": 0.10833333333333334
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_8",
@@ -8744,7 +9005,8 @@
                 "name": "manufacturermk1",
                 "power": 27.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "TimeCrystal",
@@ -8768,7 +9030,8 @@
                 "name": "converter",
                 "power": 0.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "MotorTurbo",
@@ -8807,7 +9070,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CartridgeChaos_Packaged",
@@ -8841,7 +9105,8 @@
                 "name": "manufacturermk1",
                 "power": 1.1
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "CartridgeChaos",
@@ -8875,7 +9140,8 @@
                 "name": "blender",
                 "power": 1.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Turbofuel",
@@ -8904,7 +9170,8 @@
                 "name": "oilrefinery",
                 "power": 6
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageAlumina",
@@ -8934,7 +9201,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageFuel",
@@ -8964,7 +9232,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageOilResidue",
@@ -8994,7 +9263,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageIonizedFuel",
@@ -9024,7 +9294,8 @@
                 "name": "packager",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageBioFuel",
@@ -9054,7 +9325,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageNitricAcid",
@@ -9084,7 +9356,8 @@
                 "name": "packager",
                 "power": 20
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageNitrogen",
@@ -9114,7 +9387,8 @@
                 "name": "packager",
                 "power": 12.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageOil",
@@ -9144,7 +9418,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageRocketFuel",
@@ -9174,7 +9449,8 @@
                 "name": "packager",
                 "power": 15
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageSulfuricAcid",
@@ -9204,7 +9480,8 @@
                 "name": "packager",
                 "power": 20
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageTurboFuel",
@@ -9234,7 +9511,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "UnpackageWater",
@@ -9264,7 +9542,8 @@
                 "name": "packager",
                 "power": 10
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "NuclearFuelRod",
@@ -9298,7 +9577,8 @@
                 "name": "manufacturermk1",
                 "power": 55
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Uranium_Bauxite",
@@ -9327,7 +9607,8 @@
                 "name": "converter",
                 "power": 0.008333333333333333
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_2",
@@ -9356,7 +9637,8 @@
                 "name": "assemblermk1",
                 "power": 7.5
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         },
         {
             "id": "Wire",
@@ -9380,7 +9662,8 @@
                 "name": "constructormk1",
                 "power": 2
             },
-            "isAlternate": false
+            "isAlternate": false,
+            "isFicsmas": false
         }
     ]
 }
