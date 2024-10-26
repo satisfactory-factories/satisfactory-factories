@@ -337,7 +337,7 @@
   const getPartDisplayName = (part: string | number): string => {
     return gameData.items.rawResources[part]?.name ||
       gameData.items.parts[part]?.name ||
-      'UNKNOWN!'
+      `UNKNOWN PART ${part}!`
   }
 
   const getProduct = (factory: Factory, part: string): FactoryItem | undefined => {

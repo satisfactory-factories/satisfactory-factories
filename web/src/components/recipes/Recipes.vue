@@ -77,7 +77,7 @@
   const getPartDisplayName = (part: string | number): string => {
     return props.gameData.items.rawResources[part]?.name ||
       props.gameData.items.parts[part]?.name ||
-      'UNKNOWN!'
+      `UNKNOWN PART ${part}`
   }
 
   provide('getPartDisplayName', getPartDisplayName)
