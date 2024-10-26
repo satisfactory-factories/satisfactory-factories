@@ -183,7 +183,7 @@
     // Return a sorted object by the name property. Key is not correct.
     const sortedOres = Object.values(ores).sort((a, b) => a.name.localeCompare(b.name))
 
-    const sortedOresAsObj = {}
+    const sortedOresAsObj: WorldRawResource = {}
     sortedOres.forEach(ore => {
       sortedOresAsObj[ore.id] = ore
     })
@@ -244,7 +244,7 @@
 
     updateWorldRawResources()
 
-    // Calculate what is inputted into the factory to be used by products.
+    // Calculate what is inputted §into the factory to be used by products.
     calculateInputs(factory)
 
     // Calculate what is produced and required by the products.
@@ -296,7 +296,11 @@
 
         Object.keys(dependents).forEach(dependentId => {
           const dependent = findFactory(dependentId)
-          dependent.inputs = dependent.inputs.filter(input => input.factory !== factory.id)
+          if (!dependent) {
+            console.error(`Dependent factory ${dependentId} not found!`)
+            return
+          }
+          dependent.inputs = dependent.inputs.filter(input => input.factoryId !== factory.id)
         })
       }
 
@@ -318,11 +322,13 @@
     updateWorldRawResources()
   }
 
-  const getPartDisplayName = (part: string | number) => {
-    return props.gameData.items.rawResources[part]?.name || props.gameData.items.parts[part]?.name
+  const getPartDisplayName = (part: string | number): string => {
+    return props.gameData.items.rawResources[part]?.name ||
+      props.gameData.items.parts[part]?.name ||
+      'UNKNOWN!'
   }
 
-  const getProduct = (factory, part: string): FactoryItem => {
+  const getProduct = (factory: Factory, part: string): FactoryItem | undefined => {
     return factory.products.find(product => product.id === part)
   }
 
@@ -417,6 +423,7 @@
   }
 
   const initializeFactories = () => {
+    console.log('factories', factories)
     Object.assign(worldRawResources, generateRawResources())
     updateWorldRawResources()
   }

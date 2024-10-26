@@ -18,7 +18,6 @@
         />
       </v-tabs>
       <ko-fi />
-
     </template>
   </v-toolbar>
 </template>
