@@ -362,6 +362,12 @@
                 "isFluid": true,
                 "isFicsmas": false
             },
+            "LiquidTurboFuel": {
+                "name": "Turbofuel",
+                "stackSize": 0,
+                "isFluid": true,
+                "isFicsmas": false
+            },
             "ModularFrame": {
                 "name": "Modular Frame",
                 "stackSize": 50,
@@ -789,7 +795,7 @@
                 "isFicsmas": false
             },
             "TurboFuel": {
-                "name": "Turbofuel",
+                "name": "Packaged Turbofuel",
                 "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false

@@ -376,11 +376,12 @@ function fixItemNames(items: PartDataInterface): void {
         "DarkEnergy": "Dark Matter Residue",
         "HeavyOilResidue": "Heavy Oil Residue",
         "LiquidFuel": "Fuel",
+        "LiquidTurboFuel": "Turbofuel",
         "Plastic": "Plastic",
         "PolymerResin": "Polymer Resin",
         "Rubber": "Rubber",
         "Snow": "Snow",
-        "TurboFuel": "Turbofuel",
+        "TurboFuel": "Packaged Turbofuel",
         "Water": "Water",
     };
 
@@ -389,6 +390,26 @@ function fixItemNames(items: PartDataInterface): void {
             items.parts[search].name = fixItems[search];
         }
     }
+}
+
+function fixMissingParts(items: PartDataInterface): void {
+    // Insert missing items
+    const missingItems: Record<string, Part> = {
+        "LiquidTurboFuel": { name: "Turbofuel", stackSize: 0, isFluid: true, isFicsmas: false },
+    };
+
+    for (const key of Object.keys(missingItems)) {
+        if (!items.parts[key]) {
+            items.parts[key] = missingItems[key];
+        }
+    }
+
+    // Sort the items
+    const sortedItems: { [key: string]: Part } = {};
+    Object.keys(items.parts).sort().forEach(key => {
+        sortedItems[key] = items.parts[key];
+    });
+    items.parts = sortedItems;
 }
 
 function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
@@ -448,6 +469,7 @@ async function processFile(inputFile: string, outputFile: string) {
         const recipes = getRecipes(data, buildings);
 
         removeRubbishItems(items, recipes);
+        fixMissingParts(items);
 
         // Construct the final JSON object
         const finalData = {
