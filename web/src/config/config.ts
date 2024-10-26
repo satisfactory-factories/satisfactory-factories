@@ -1,3 +1,3 @@
 export const config = {
-  dataVersion: '1.0-3',
+  dataVersion: '1.0-4',
 }

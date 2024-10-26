@@ -53,21 +53,20 @@ function isCollectable(ingredients: string): boolean {
 }
 
 interface Part {
-    [key: string]: {
-        name: string;
-        stackSize: number;
-        isFluid: boolean;
-    }
+    name: string;
+    stackSize: number;
+    isFluid: boolean;
+    isFicsmas: boolean;
 }
 
 interface PartDataInterface {
-    parts: Part;
+    parts: { [key: string]: Part };
     collectables: { [key: string]: string };
     rawResources: { [key: string]: RawResource };
 }
 
 function getItems(data: any[]): PartDataInterface {
-    const parts: Part = {};
+    const parts: { [key: string]: Part } = {};
     const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
 
@@ -106,6 +105,12 @@ function getItems(data: any[]): PartDataInterface {
                 // Extract stack size
                 const stackSize = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
 
+                let isFicsmas = false
+                // Calculate if it is a FICSMAS item
+                if (entry.mDisplayName.includes("FICSMAS") || entry.mDisplayName.includes("Snow")) {
+                    isFicsmas = true;
+                }
+
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
@@ -113,7 +118,8 @@ function getItems(data: any[]): PartDataInterface {
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
-                        isFluid: isFluid(partName)
+                        isFluid: isFluid(partName),
+                        isFicsmas,
                     };
                 }
             });
@@ -123,7 +129,7 @@ function getItems(data: any[]): PartDataInterface {
     return {
         parts: Object.keys(parts)
             .sort()
-            .reduce((sortedObj: Part, key: string) => {
+            .reduce((sortedObj: { [key: string]: Part }, key: string) => {
                 sortedObj[key] = parts[key];
                 return sortedObj;
             }, {}),

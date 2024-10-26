@@ -4,6 +4,7 @@ export interface Part {
   name: string;
   stackSize: number;
   isFluid: boolean;
+  isFicsmas: boolean;
 }
 
 export interface RawResource {
@@ -14,9 +15,9 @@ export interface RawResource {
 export interface DataInterface {
   buildings: { [key: string]: string };
   items: {
-      parts: { [key: string]: Part };
-      collectables: { [key: string]: string };
-      rawResources: { [key: string]: RawResource };
+    parts: { [key: string]: Part };
+    collectables: { [key: string]: string };
+    rawResources: { [key: string]: RawResource };
   }
   recipes: Recipe[];
 }
