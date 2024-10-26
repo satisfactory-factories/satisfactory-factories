@@ -1,5 +1,8 @@
 <template>
-  <v-card title="Recipes">
+  <v-card>
+    <v-card-title class="py-4">
+      <h1 class="text-h4">Recipes</h1>
+    </v-card-title>
     <v-divider />
     <v-card-text>
       <v-text-field v-model="searchTerm" label="Recipe name" />
