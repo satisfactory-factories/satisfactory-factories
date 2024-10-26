@@ -46,7 +46,7 @@
   import { WorldRawResource } from '@/interfaces/planner/FactoryInterface'
 
   defineProps<{
-    worldRawResources: WorldRawResource;
+    worldRawResources: { [key: string]: WorldRawResource };
     helpText: boolean;
   }>()
 
