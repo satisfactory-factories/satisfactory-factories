@@ -90,7 +90,7 @@
                 "name": "Candy Cane",
                 "stackSize": 500,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": true
             },
             "CartridgeChaos": {
                 "name": "Turbo Rifle Ammo",
@@ -5186,7 +5186,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false
+            "isFicsmas": true
         },
         {
             "id": "IngotCaterium",

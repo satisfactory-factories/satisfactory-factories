@@ -65,7 +65,9 @@ function isFluid(productName: string): boolean {
 }
 
 function isFicsmas(displayName: string): boolean {
-    return displayName.includes("FICSMAS") || displayName.includes("Snow");
+    return displayName.includes("FICSMAS") ||
+        displayName.includes("Snow") ||
+        displayName.includes("Candy");
 }
 
 interface Part {

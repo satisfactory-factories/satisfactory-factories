@@ -1,5 +1,6 @@
 <template>
   <v-img
+    v-if="!ficsmas"
     :alt="subject"
     aspect-ratio="1/1"
     inline
@@ -7,6 +8,7 @@
     :min-width="widthPx"
     :src="imgUrl"
   />
+  <v-icon v-if="ficsmas" icon="fas fa-snowflake" :style="{ width: widthPx + 'px', height: heightPx + 'px' }" />
 </template>
 
 <script setup lang="ts">
@@ -15,6 +17,7 @@
 
   useGameDataStore()
   const gameData = useGameDataStore().getGameData()
+  const ficsmas = ref(false)
 
   if (!gameData) {
     throw new Error('No game data provided to GameAsset!')
@@ -46,6 +49,13 @@
     } else {
       const partItem = gameData.items.parts[subject]
       const rawItem = gameData.items.rawResources[subject]
+
+      // If a FICSMAS item, we don't have images for it so mark it as unknown
+      if (partItem?.isFicsmas) {
+        ficsmas.value = true
+        return ''
+      }
+
       const item = partItem?.name || rawItem?.name || subject
 
       return getImageUrl(sluggify(item), 'item', size)

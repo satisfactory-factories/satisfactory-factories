@@ -10,7 +10,7 @@
           :variant="showAltRecipes ? 'flat' : 'outlined'"
           @click="toggleAltRecipes"
         >
-          Alt Recipes
+          Show Alt Recipes
         </v-chip>
         <v-chip color="primary" :variant="showFicsmas ? 'flat' : 'outlined'" @click="toggleFicsmas">
           Show FICSMAS
@@ -50,14 +50,17 @@
     }
 
     filtered = filtered.filter(recipe => {
-      if (!showAltRecipes.value) {
-        return !recipe.isAlternate
+      // Filter out alternate recipes if `showAltRecipes` is false
+      if (!showAltRecipes.value && recipe.isAlternate) {
+        return false
       }
 
-      if (!showFicsmas.value) {
-        return !recipe.isFicsmas
+      // Filter out Ficsmas recipes if `showFicsmas` is false
+      if (!showFicsmas.value && recipe.isFicsmas) {
+        return false
       }
 
+      // If the recipe passed all conditions, include it
       return true
     })
 
