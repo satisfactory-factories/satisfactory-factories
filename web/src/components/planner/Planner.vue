@@ -98,24 +98,17 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import Todo from '@/components/planner/Todo.vue'
-  import {
-    calculateBuildingRequirements,
-    calculateBuildingsAndPower,
-    calculateByProducts,
-    calculateDependencies,
-    calculateDependencyMetrics,
-    calculateFactorySatisfaction,
-    calculateHasProblem,
-    calculateInputs,
-    calculateInternalProducts,
-    calculateProducts,
-    calculateRawSupply,
-    calculateSurplus,
-    calculateUsingRawResourcesOnly,
-    configureExportCalculator,
-  } from '@/utils/factoryManager'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
+  import { calculateInputs } from '@/utils/factory-management/inputs'
+  import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
+  import { calculateBuildingRequirements } from '@/utils/factory-management/buildingRequirements'
+  import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
+  import { calculateBuildingsAndPower, calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
+  import { calculateSurplus } from '@/utils/factory-management/surplus'
+  import { calculateDependencies, calculateDependencyMetrics } from '@/utils/factory-management/dependencies'
+  import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
+  import { calculateHasProblem } from '@/utils/factory-management/problems'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -225,9 +218,9 @@
       internalProducts: {},
       inputs: [],
       parts: {},
-      buildingRequirements: {} as BuildingRequirement,
+      buildingRequirements: {} as { [p: string]: BuildingRequirement },
       requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
-      totalPower: 0,
+      totalPower: '0',
       dependencies: {} as FactoryDependency,
       exportCalculator: {},
       rawResources: {},
