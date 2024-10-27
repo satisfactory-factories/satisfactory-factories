@@ -134,7 +134,7 @@
             >
               <i class="fas fa-bolt" />
               <span class="ml-2">
-                {{ factory.totalPower?.toFixed(0) ?? 0 }} MW
+                {{ factory.totalPower }} MW
               </span>
             </v-chip>
           </v-card-text>
@@ -191,6 +191,7 @@
       displayOrder: factory.products.length,
       requirements: {},
       buildingRequirements: {} as BuildingRequirement,
+      byProducts: [],
     })
     updateFactory(factory)
   }
