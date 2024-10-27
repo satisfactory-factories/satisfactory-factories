@@ -136,7 +136,6 @@
     navigateToFactory(factory.id)
   }
 
-  // Computed properties
   const factoriesWithSurplus = computed(() => {
     // Loop through all factories and see if any have any surplus
     return factories.value.filter(factory => Object.keys(factory.surplus).length > 0)
@@ -207,7 +206,6 @@
   }
 
   const updateFactories = (newFactories: Factory[]) => {
-    console.log('updateFactories', newFactories[0])
     factories.value = newFactories
     forceSort()
     console.log('Factories updated and re-sorted')
@@ -331,7 +329,7 @@
 
   const navigateToFactory = (factoryId: number | string) => {
     const facId = parseInt(factoryId.toString(), 10)
-    const factory = findFactory(facId)
+    const factory = findFac(facId, factories.value)
     if (!factory) {
       console.error(`navigateToFactory: Factory ${factoryId} not found!`)
       return

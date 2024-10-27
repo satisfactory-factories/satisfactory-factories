@@ -136,6 +136,7 @@
 <script setup lang="ts">
   import { defineProps } from 'vue'
   import { Factory, FactoryImport, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { addInputToFactory } from '@/utils/factory-management/inputs'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -149,7 +150,7 @@
   }>()
 
   const addEmptyInput = (factory: Factory) => {
-    factory.inputs.push({
+    addInputToFactory(factory, {
       factoryId: null,
       outputPart: null,
       amount: 0,

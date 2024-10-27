@@ -1,8 +1,34 @@
-// Loops through all products and figures out what they produce and what they require, then adds it to the factory.parts object.
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { calculatePartMetrics, createNewPart, getRecipe } from '@/utils/factory-management/common'
 
+export const addProductToFactory = (
+  factory: Factory, options: {
+    id?: string,
+    amount?: number,
+    recipe?: string,
+  }
+) => {
+  // Check if there's already a product of the same name, if there is, throw an error
+  if (factory.products.find(product => product.id === options.id)) {
+    throw new Error(`Product with ID ${options.id} already exists in factory ${factory.id}`)
+  }
+
+  factory.products.push({
+    id: options.id ?? '',
+    amount: options.amount ?? 1,
+    recipe: options.recipe ?? '',
+    displayOrder: factory.products.length,
+    requirements: {},
+    buildingRequirements: {} as BuildingRequirement,
+    byProducts: [],
+  })
+
+  // Also add the part record to the factory
+  createNewPart(factory, options.id ?? '')
+}
+
+// Loops through all products and figures out what they produce and what they require, then adds it to the factory.parts object.
 export const calculateProducts = (factory: Factory, gameData: DataInterface) => {
   factory.products.forEach(product => {
     product.requirements = {} // Prevents orphaning

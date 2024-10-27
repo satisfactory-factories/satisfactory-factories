@@ -32,25 +32,8 @@ export const newFactory = (name = 'A new factory'): Factory => {
     surplus: {},
     hidden: false,
     hasProblem: false,
-    displayOrder: -1,
+    displayOrder: -1, // this will get set by the planner
   }
-}
-
-export const addProductToFactory = (
-  factory: Factory, options: {
-    id?: string,
-    amount?: number,
-  }
-) => {
-  factory.products.push({
-    id: options.id ?? '',
-    amount: options.amount ?? 1,
-    recipe: '',
-    displayOrder: factory.products.length,
-    requirements: {},
-    buildingRequirements: {} as BuildingRequirement,
-    byProducts: [],
-  })
 }
 
 export const removeFactoryDependants = (factory: Factory, factories: Factory[]) => {

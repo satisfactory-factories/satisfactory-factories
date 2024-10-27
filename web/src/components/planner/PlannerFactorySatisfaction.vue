@@ -152,7 +152,7 @@
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
   import { computed, inject } from 'vue'
-  import { addProductToFactory } from '@/utils/factory-management/factory'
+  import { addProductToFactory } from '@/utils/factory-management/products'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
@@ -187,7 +187,6 @@
     addProductToFactory(factory, {
       id: part,
       amount: 0,
-      displayOrder: factory.products.length,
     })
     updateFactory(factory)
   }

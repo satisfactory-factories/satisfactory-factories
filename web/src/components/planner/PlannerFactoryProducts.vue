@@ -169,7 +169,7 @@
 <script lang="ts" setup>
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import { addProductToFactory } from '@/utils/factory-management/factory'
+  import { addProductToFactory } from '@/utils/factory-management/products'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
