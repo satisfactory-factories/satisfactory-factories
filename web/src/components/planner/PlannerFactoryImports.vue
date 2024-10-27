@@ -208,14 +208,14 @@
 
     // Iterate through other factories and build the valid options list
     return otherFactories.filter(otherFactory => {
-      if (inputIndex === null) {
-        console.warn('getValidImportFactories: Tried to get other factories when inputIndex is null, cannot continue')
-        return false
-      }
       // Allow the factory if it's not already selected for the same output part from the same factory
-      const alreadyRequestedPart = existingRequests.some(request =>
-        request.factoryId === otherFactory.id && request.outputPart === factory.inputs[inputIndex]?.outputPart
-      )
+      const alreadyRequestedPart = existingRequests.some(request => {
+        // We only care if the inputIndex is provided
+        if (inputIndex) {
+          return request.factoryId === otherFactory.id && request.outputPart === factory.inputs[inputIndex].outputPart
+        }
+        return false
+      })
 
       return !alreadyRequestedPart
     })
