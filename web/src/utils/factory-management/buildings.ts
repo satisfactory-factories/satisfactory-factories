@@ -34,3 +34,29 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
     }
   })
 }
+
+export const calculateBuildingsAndPower = (factory: Factory) => {
+  factory.totalPower = '0'
+  factory.buildingRequirements = {} as {[key: string]: BuildingRequirement }
+
+  // Loop through each product and sum the power requirements based off the metrics already there.
+  factory.products.forEach(product => {
+    const building = product.buildingRequirements
+    if (!factory.buildingRequirements[building.name]) {
+      factory.buildingRequirements[building.name] = {
+        name: building.name,
+        amount: '0',
+        powerPerBuilding: building.powerPerBuilding,
+        totalPower: '0',
+      }
+    }
+
+    const facBuilding = factory.buildingRequirements[building.name]
+
+    facBuilding.amount = String(parseFloat(facBuilding.amount) + parseFloat(building.amount))
+    facBuilding.totalPower = String(parseFloat(facBuilding.totalPower) + parseFloat(building.totalPower))
+
+    // Sum the total power.
+    factory.totalPower = String(parseFloat(factory.totalPower) + parseFloat(building.totalPower))
+  })
+}
