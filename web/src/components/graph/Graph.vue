@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
   import { defineProps, ref } from 'vue'
-
   import { Edge, VueFlow } from '@vue-flow/core'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
@@ -22,6 +21,7 @@
   import { MiniMap } from '@vue-flow/minimap'
   import { CustomNode, generateEdges, generateNodes } from '@/utils/graphUtils'
   import { DataInterface } from '@/interfaces/DataInterface'
+  import { useLayout } from '@/utils/graphLayout'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -32,11 +32,25 @@
   const appStore = useAppStore()
   const { factories } = storeToRefs(appStore)
 
-  const nodes = ref<CustomNode[]>(generateNodes(factories.value))
-  const edges = ref<Edge[]>(generateEdges(factories.value, nodes.value))
+  const nodes = ref<CustomNode[]>([])
+  const edges = ref<Edge[]>([])
+
+  const { layout } = useLayout()
+
+  // Apply the layout to organize nodes after generation
+  function initializeGraph () {
+    nodes.value = generateNodes(factories.value)
+    edges.value = generateEdges(factories.value, nodes.value)
+    const updatedNodes = layout(nodes.value, edges.value, 'LR')
+    nodes.value = [...updatedNodes]
+  }
+
+  // Apply initial layout when nodes and edges are created
+  initializeGraph()
 
   console.log('nodes', nodes.value)
   console.log('edges', edges.value)
+
 </script>
 
 <style>

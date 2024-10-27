@@ -9,6 +9,7 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@dagrejs/dagre": "^1.1.4",
     "@mdi/font": "7.4.47",
     "@vue-flow/background": "^1.3.0",
     "@vue-flow/controls": "^1.1.2",
