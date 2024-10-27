@@ -29,7 +29,11 @@ describe('commonFactoryCalculations', () => {
       const part = 'CompactedCoal'
 
       createNewPart(mockFactory, part)
+      mockFactory.parts[part].amountRequired = 1234
 
+      createNewPart(mockFactory, part)
+
+      // If it was to make a new one it would be initialized as 0.
       expect(mockFactory.parts[part].amountRequired).toBe(1234)
     })
   })
