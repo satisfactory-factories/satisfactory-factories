@@ -1,14 +1,15 @@
 import { beforeEach, describe, expect, test } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { addMockFactoryProduct, createMockFactory } from '@/utils/factory-management/mocks/mock-factory'
 import { createNewPart } from '@/utils/factory-management/common'
+import { newFactory } from '@/utils/factory-management/factory'
+import { addProductToFactory } from '@/utils/factory-management/products'
 
 describe('commonFactoryCalculations', () => {
   let mockFactory: Factory
 
   beforeEach(() => {
-    mockFactory = createMockFactory('Test Factory')
-    addMockFactoryProduct(mockFactory, {
+    mockFactory = newFactory('Test Factory')
+    addProductToFactory(mockFactory, {
       id: 'CompactedCoal',
       amount: 1234,
       recipe: 'CompactedCoal',

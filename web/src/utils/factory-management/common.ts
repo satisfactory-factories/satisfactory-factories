@@ -26,17 +26,3 @@ export const getRecipe = (partId: any, gameData: DataInterface): Recipe | undefi
 
   return recipe
 }
-
-export const calculatePartMetrics = (factory: Factory, part: string) => {
-  const partData = factory.parts[part]
-
-  // If supplied from raw, we always assure that it is fully supplied and satisfied
-  if (partData.isRaw) {
-    partData.amountSupplied = partData.amountRequired
-  } else {
-    partData.amountSupplied = partData.amountSuppliedViaInput + partData.amountSuppliedViaProduction
-  }
-
-  partData.amountRemaining = partData.amountRequired - partData.amountSupplied
-  partData.satisfied = partData.amountRemaining <= 0
-}

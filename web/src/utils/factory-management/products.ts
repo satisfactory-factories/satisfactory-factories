@@ -1,6 +1,7 @@
 import { BuildingRequirement, Factory } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
-import { calculatePartMetrics, createNewPart, getRecipe } from '@/utils/factory-management/common'
+import { createNewPart, getRecipe } from '@/utils/factory-management/common'
+import { calculatePartMetrics } from '@/utils/factory-management/satisfaction'
 
 export const addProductToFactory = (
   factory: Factory, options: {

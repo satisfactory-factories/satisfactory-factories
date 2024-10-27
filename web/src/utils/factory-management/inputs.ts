@@ -1,6 +1,7 @@
 // This simply loops through all the inputs and adds them to the parts object.
-import { calculatePartMetrics, createNewPart } from '@/utils/factory-management/common'
+import { createNewPart } from '@/utils/factory-management/common'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { calculatePartMetrics } from '@/utils/factory-management/satisfaction'
 
 export const addInputToFactory = (
   factory: Factory, options: {

@@ -1,6 +1,19 @@
 // Calculate the remaining amount of parts required after all inputs and internal products are accounted for.
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { calculatePartMetrics } from '@/utils/factory-management/common'
+
+export const calculatePartMetrics = (factory: Factory, part: string) => {
+  const partData = factory.parts[part]
+
+  // If supplied from raw, we always assure that it is fully supplied and satisfied
+  if (partData.isRaw) {
+    partData.amountSupplied = partData.amountRequired
+  } else {
+    partData.amountSupplied = partData.amountSuppliedViaInput + partData.amountSuppliedViaProduction
+  }
+
+  partData.amountRemaining = partData.amountRequired - partData.amountSupplied
+  partData.satisfied = partData.amountRemaining <= 0
+}
 
 export const calculateFactorySatisfaction = (factory: Factory) => {
   // Let's make absolutely sure the factory part metrics are right
