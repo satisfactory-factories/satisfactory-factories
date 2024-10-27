@@ -1,4 +1,4 @@
-import { Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { Recipe } from '@/interfaces/Recipe'
 
@@ -34,6 +34,10 @@ const calculatePartMetrics = (factory: Factory, part: string) => {
 // This simply loops through all the inputs and adds them to the parts object.
 export const calculateInputs = (factory: Factory) => {
   factory.inputs.forEach(input => {
+    if (!input.outputPart) {
+      console.error('calculateInputs: Output part is missing from input.', input)
+      return
+    }
     createNewPart(factory, input.outputPart)
     factory.parts[input.outputPart].amountSuppliedViaInput += input.amount
     calculatePartMetrics(factory, input.outputPart)
@@ -45,11 +49,32 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
   factory.products.forEach(product => {
     product.requirements = {} // Prevents orphaning
 
+    if (product.id === 'CompactedCoal') {
+      console.log('CompactedCoal')
+    }
+
     const recipe = getRecipe(product.recipe, gameData)
     if (!recipe) {
       console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
       return
     }
+
+    if (product.amount === 0 || !product.amount) {
+      // If the product amount is 0, we don't need to calculate anything, because the user might be entering a new number.
+      // I tried forcing this to be 1, but it causes a lot of frustration for the user, so it's better to just simply do nothing.
+      return
+    }
+
+    if (product.amount < 0) {
+      // If the product amount is negative, this causes issues with calculations, so force it to 0.
+      product.amount = 0
+      return // Nothing else to do
+    }
+
+    // Add the output of the product to the parts array
+    createNewPart(factory, product.id)
+    factory.parts[product.id].amountSuppliedViaProduction = product.amount
+    calculatePartMetrics(factory, product.id)
 
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredient => {
@@ -57,23 +82,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
         console.warn(`Invalid ingredient amount for ingredient "${ingredient.part}". Skipping.`)
         return
       }
-
-      if (product.amount === 0 || !product.amount) {
-        // If the product amount is 0, we don't need to calculate anything, because the user might be entering a new number.
-        // I tried forcing this to be 1, but it causes a lot of frustration for the user, so it's better to just simply do nothing.
-        return
-      }
-
-      if (product.amount < 0) {
-        // If the product amount is negative, this causes issues with calculations, so force it to 0.
-        product.amount = 0
-        return // Nothing else to do
-      }
-
-      // Add the output of the product to the parts array
-      createNewPart(factory, product.id)
-      factory.parts[product.id].amountSuppliedViaProduction += product.amount
-      calculatePartMetrics(factory, product.id)
 
       // === Now we need to also factor in the product's ingredients, and add it to the parts array.
       const ingredientRequired = ingredient.amount * product.amount
@@ -86,9 +94,9 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       if (gameData.items.rawResources[ingredient.part]) {
         if (!factory.rawResources[ingredient.part]) {
           factory.rawResources[ingredient.part] = {
+            id: ingredient.part,
             name: gameData.items.rawResources[ingredient.part].name,
             amount: 0,
-            satisfied: true,
           }
         }
 
@@ -164,7 +172,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
       const productInRecipe = recipe.products.filter(p => p.part === product.id)[0]
 
       if (!productInRecipe) {
-        product.buildingRequirements = {}
+        product.buildingRequirements = {} as BuildingRequirement
         return
       }
 
@@ -175,10 +183,10 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
         name: buildingData.name,
         amount: buildingCount,
         powerPerBuilding: buildingData.power,
-        totalPower: buildingData.power * buildingCount,
+        totalPower: (parseInt(buildingData.power) * parseInt(buildingCount)).toFixed(2),
       }
     } else {
-      product.buildingRequirements = {}
+      product.buildingRequirements = {} as BuildingRequirement
     }
   })
 }
@@ -186,7 +194,12 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
 // Calculate the supply of parts via raw inputs. It is assumed that the raw resources are always available.
 export const calculateRawSupply = (factory: Factory, gameData: DataInterface) => {
   Object.keys(factory.products).forEach(productId => {
-    const product = factory.products[productId]
+    const product = factory.products.find(p => p.id === productId)
+
+    if (!product) {
+      console.warn(`calculateFactoryRawSupply: Product with ID ${productId} not found. It could be the user has not yet selected one.`)
+      return
+    }
     // Due to the weird way the raw resources are handled, we have to loop by product, pull out the recipeID and check if the raw resource have the ingredient within the rawResources key.
 
     // Get the recipe
@@ -202,7 +215,7 @@ export const calculateRawSupply = (factory: Factory, gameData: DataInterface) =>
       // If the part is a raw resource, mark it as supplied.
       if (factory.rawResources[ingredient.part]) {
         // This looks like a hack, but it's correct, the raw recipes are a PITA.
-        factory.parts[ingredient.part].amountSuppliedViaRaw = factory.rawResources[ingredient.part].amount
+        factory.parts[ingredient.part].amountSuppliedViaInput = factory.rawResources[ingredient.part].amount
       }
     })
   })
@@ -252,8 +265,8 @@ export const calculateFactorySatisfaction = (factory: Factory) => {
 }
 
 export const calculateBuildingsAndPower = (factory: Factory) => {
-  factory.totalPower = 0
-  factory.buildingRequirements = {}
+  factory.totalPower = '0'
+  factory.buildingRequirements = {} as {[key: string]: BuildingRequirement }
 
   // Loop through each product and sum the power requirements based off the metrics already there.
   factory.products.forEach(product => {
@@ -261,17 +274,19 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
     if (!factory.buildingRequirements[building.name]) {
       factory.buildingRequirements[building.name] = {
         name: building.name,
-        amount: 0,
+        amount: '0',
         powerPerBuilding: building.powerPerBuilding,
-        totalPower: 0,
+        totalPower: '0',
       }
     }
 
-    factory.buildingRequirements[building.name].amount += parseFloat(building.amount)
-    factory.buildingRequirements[building.name].totalPower += building.totalPower
+    const facBuilding = factory.buildingRequirements[building.name]
+
+    facBuilding.amount = String(parseFloat(facBuilding.amount) + parseFloat(building.amount))
+    facBuilding.totalPower = String(parseFloat(facBuilding.totalPower) + parseFloat(building.totalPower))
 
     // Sum the total power.
-    factory.totalPower += building.totalPower
+    factory.totalPower = String(parseFloat(factory.totalPower) + parseFloat(building.totalPower))
   })
 }
 
@@ -301,7 +316,7 @@ export const calculateSurplus = (factory: Factory) => {
 }
 
 // Loop through all factories, checking their inputs and building a dependency tree.
-export const calculateDependencies = (factories: Factory[]): FactoryDependency => {
+export const calculateDependencies = (factories: Factory[]): void => {
   // First, remove the current dependencies for each factory to ensure we're not orphaning.
   factories.forEach(factory => {
     factory.dependencies = {
@@ -314,7 +329,7 @@ export const calculateDependencies = (factories: Factory[]): FactoryDependency =
   factories.forEach(factory => {
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
-      if (input.factoryId === 0) {
+      if (input.factoryId === 0 || !input.outputPart) {
         return
       }
 
@@ -455,7 +470,7 @@ export const calculateUsingRawResourcesOnly = (factory: Factory, gameData: DataI
   })
 }
 
-const getRecipe = (partId: any, gameData: DataInterface): Recipe => {
+const getRecipe = (partId: any, gameData: DataInterface): Recipe | undefined => {
   const recipe = gameData.recipes.find(r => r.id === partId)
 
   if (!recipe) {

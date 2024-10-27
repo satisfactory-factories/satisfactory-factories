@@ -10,9 +10,9 @@ export interface PartMetrics {
 
 export interface BuildingRequirement {
   name: string;
-  amount: number;
-  powerPerBuilding: number;
-  totalPower: number;
+  amount: string;
+  powerPerBuilding: string;
+  totalPower: string;
 }
 
 export interface ByProductItem {
@@ -28,10 +28,11 @@ export interface FactoryItem {
   displayOrder: number;
   requirements: { [key: string]: { amount: number } };
   buildingRequirements: BuildingRequirement
-  byProducts?: ByProductItem[];
+  byProducts: ByProductItem[];
 }
 
-export interface FactorySurplusItem extends FactoryItem {
+export interface FactorySurplusItem {
+  amount: number;
   surplusHandling: 'export' | 'sink';
 }
 
@@ -76,16 +77,21 @@ export interface FactoryImport {
   amount: number
 }
 
+export interface FactoryInternalProduct {
+  id: string;
+  amount: number
+}
+
 export interface Factory {
   id: number;
   name: string;
   inputs: FactoryImport[];
   products: FactoryItem[];
-  internalProducts: { [key: string]: FactoryItem };
+  internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };
-  buildingRequirements: BuildingRequirement;
+  buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
-  totalPower: number;
+  totalPower: string;
   surplus: { [key: string]: FactorySurplusItem };
   dependencies: FactoryDependency;
   exportCalculator: { [key: string]: ExportCalculatorSettings };
