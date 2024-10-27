@@ -325,7 +325,7 @@
 
   const requirementSatisfied = (factory: Factory, part: string | null): boolean => {
     if (!part) {
-      console.error('requirementSatisfied: No part provided for input satisfaction check.')
+      console.warn('requirementSatisfied: No part provided for input satisfaction check. It could be the user has not properly selected an output part yet.')
       return false
     }
     const requirement = factory.parts[part]

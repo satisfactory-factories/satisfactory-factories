@@ -35,19 +35,3 @@ export const newFactory = (name = 'A new factory'): Factory => {
     displayOrder: -1, // this will get set by the planner
   }
 }
-
-export const removeFactoryDependants = (factory: Factory, factories: Factory[]) => {
-  // Remove the inputs from factories that depend on this factory
-  if (factory.dependencies?.requests) {
-    const dependents = factory.dependencies?.requests
-
-    Object.keys(dependents).forEach(dependentId => {
-      const dependent = findFac(dependentId, factories)
-      if (!dependent) {
-        console.error(`Dependent factory ${dependentId} not found!`)
-        return
-      }
-      dependent.inputs = dependent.inputs.filter(input => input.factoryId !== factory.id)
-    })
-  }
-}

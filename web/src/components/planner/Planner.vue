@@ -104,10 +104,13 @@
   import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
   import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
   import { calculateSurplus } from '@/utils/factory-management/surplus'
-  import { calculateDependencies, calculateDependencyMetrics } from '@/utils/factory-management/dependencies'
+  import {
+    constructDependencies,
+    removeFactoryDependants,
+  } from '@/utils/factory-management/dependencies'
   import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
   import { calculateHasProblem } from '@/utils/factory-management/problems'
-  import { findFac, newFactory, removeFactoryDependants } from '@/utils/factory-management/factory'
+  import { findFac, newFactory } from '@/utils/factory-management/factory'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -252,8 +255,7 @@
     calculateSurplus(factory)
 
     // Check all other factories to see if they are affected by this factory change.
-    calculateDependencies(factories.value)
-    calculateDependencyMetrics(factories.value)
+    constructDependencies(factories.value)
 
     // Export Calculator stuff
     configureExportCalculator(factories.value)
