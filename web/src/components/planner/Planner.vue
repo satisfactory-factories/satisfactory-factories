@@ -90,9 +90,7 @@
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
   import {
-    BuildingRequirement,
     Factory,
-    FactoryDependency,
     FactoryItem,
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
@@ -109,6 +107,7 @@
   import { calculateDependencies, calculateDependencyMetrics } from '@/utils/factory-management/dependencies'
   import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
   import { calculateHasProblem } from '@/utils/factory-management/problems'
+  import { findFac, newFactory, removeFactoryDependants } from '@/utils/factory-management/factory'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -129,6 +128,13 @@
   watch(helpText, newValue => {
     localStorage.setItem('helpText', JSON.stringify(newValue))
   })
+
+  const createFactory = () => {
+    const factory = newFactory()
+    factory.displayOrder = factories.value.length
+    factories.value.push(factory)
+    navigateToFactory(factory.id)
+  }
 
   // Computed properties
   const factoriesWithSurplus = computed(() => {
@@ -197,42 +203,7 @@
   }
 
   const findFactory = (factoryId: string | number): Factory | null => {
-    if (!factoryId) {
-      console.warn('No factoryId provided to findFactory')
-      return null
-    }
-
-    // Ensure factoryId is parsed to a number to match factories array ids
-    const factory = factories.value.find(fac => fac.id === parseInt(factoryId.toString(), 10))
-    if (!factory) {
-      throw new Error(`Factory ${factoryId} not found!`)
-    }
-    return factory
-  }
-
-  const createFactory = (name = 'A new factory') => {
-    const factory: Factory = {
-      id: Math.floor(Math.random() * 10000),
-      name,
-      products: [],
-      internalProducts: {},
-      inputs: [],
-      parts: {},
-      buildingRequirements: {} as { [p: string]: BuildingRequirement },
-      requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
-      totalPower: '0',
-      dependencies: {} as FactoryDependency,
-      exportCalculator: {},
-      rawResources: {},
-      usingRawResourcesOnly: false,
-      surplus: {},
-      hidden: false,
-      hasProblem: false,
-      displayOrder: factories.value.length,
-    }
-    factories.value.push(factory)
-
-    navigateToFactory(factory.id)
+    return findFac(factoryId, factories.value)
   }
 
   const updateFactories = (newFactories: Factory[]) => {
@@ -301,19 +272,7 @@
     const index = factories.value.findIndex(fac => fac.id === factory.id)
 
     if (index !== -1) {
-      // Remove the inputs from factories that depend on this factory
-      if (factory.dependencies?.requests) {
-        const dependents = factory.dependencies?.requests
-
-        Object.keys(dependents).forEach(dependentId => {
-          const dependent = findFactory(dependentId)
-          if (!dependent) {
-            console.error(`Dependent factory ${dependentId} not found!`)
-            return
-          }
-          dependent.inputs = dependent.inputs.filter(input => input.factoryId !== factory.id)
-        })
-      }
+      removeFactoryDependants(factory, factories.value)
 
       factories.value.splice(index, 1) // Remove the factory at the found index
       updateWorldRawResources(gameData) // Recalculate the world resources

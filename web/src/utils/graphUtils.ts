@@ -1,25 +1,12 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { Edge, MarkerType, Node, Position } from '@vue-flow/core'
+import { findFac } from '@/utils/factory-management/factory'
 
 export interface CustomData {
   factory: Factory
 }
 
 export type CustomNode = Node<CustomData>
-
-const findFactory = (factoryId: string | number, factories: Factory[]): Factory | null => {
-  if (!factoryId) {
-    console.warn('No factoryId provided to findFactory')
-    return null
-  }
-
-  // Ensure factoryId is parsed to a number to match factories array ids
-  const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10))
-  if (!factory) {
-    throw new Error(`Factory ${factoryId} not found!`)
-  }
-  return factory
-}
 
 // This function generates the nodes required to render the view
 export const generateNodes = (factories: Factory[]): CustomNode[] => {
@@ -50,7 +37,7 @@ export const generateEdges = (factories: Factory[], nodes: CustomNode[]): Edge[]
   const edges: Edge[] = []
 
   nodes.forEach(node => {
-    const factory = findFactory(node.id, factories)
+    const factory = findFac(node.id, factories)
 
     if (!factory) {
       console.log('Cannot find factory data for node', node.id)
@@ -60,7 +47,7 @@ export const generateEdges = (factories: Factory[], nodes: CustomNode[]): Edge[]
     const reqs = factory.dependencies.requests
 
     Object.keys(reqs).forEach(recFacId => {
-      const reqFac = findFactory(recFacId, factories)
+      const reqFac = findFac(recFacId, factories)
       const request = factory.dependencies.requests[recFacId]
 
       if (!reqFac) {

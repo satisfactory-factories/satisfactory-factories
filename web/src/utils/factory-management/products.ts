@@ -7,10 +7,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
   factory.products.forEach(product => {
     product.requirements = {} // Prevents orphaning
 
-    if (product.id === 'CompactedCoal') {
-      console.log('CompactedCoal')
-    }
-
     const recipe = getRecipe(product.recipe, gameData)
     if (!recipe) {
       console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)

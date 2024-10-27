@@ -167,8 +167,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
+  import { addProductToFactory } from '@/utils/factory-management/factory'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
@@ -181,13 +182,9 @@
   }>()
 
   const addEmptyProduct = (factory: Factory) => {
-    factory.products.push({
+    addProductToFactory(factory, {
       id: '',
       amount: 1,
-      recipe: '',
-      displayOrder: factory.products.length,
-      requirements: {},
-      buildingRequirements: {} as BuildingRequirement,
     })
   }
 

@@ -146,13 +146,13 @@
 </template>
 <script setup lang="ts">
   import {
-    BuildingRequirement,
     Factory,
     FactoryImport,
     FactoryItem,
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
   import { computed, inject } from 'vue'
+  import { addProductToFactory } from '@/utils/factory-management/factory'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
@@ -184,14 +184,10 @@
   }
 
   const addProduct = (factory: Factory, part: string): void => {
-    factory.products.push({
+    addProductToFactory(factory, {
       id: part,
       amount: 0,
-      recipe: '',
       displayOrder: factory.products.length,
-      requirements: {},
-      buildingRequirements: {} as BuildingRequirement,
-      byProducts: [],
     })
     updateFactory(factory)
   }
