@@ -5,21 +5,17 @@ export const calculateHasProblem = (factories: Factory[]) => {
   factories.forEach(factory => {
     factory.hasProblem = false
 
-    let hasProblem = false
-    // If any of the requirements are not satisfied, we have a problem.
-
     if (!factory.requirementsSatisfied) {
-      hasProblem = true
+      factory.hasProblem = true
+      return // Nothing else to do, if the requirements are unsatisfied the exports will be unsatisfied as well.
     }
 
     // Loop through all of the dependency metrics of a factory and ensure all requests are satisfied.
     Object.keys(factory.dependencies.metrics).forEach(part => {
     // We need to have !hasProblem because we don't want to overwrite the hasProblem flag if it's already set.
-      if (!hasProblem && !factory.dependencies.metrics[part].isRequestSatisfied) {
-        hasProblem = true
+      if (!factory.dependencies.metrics[part].isRequestSatisfied) {
+        factory.hasProblem = true
       }
     })
-
-    factory.hasProblem = hasProblem
   })
 }

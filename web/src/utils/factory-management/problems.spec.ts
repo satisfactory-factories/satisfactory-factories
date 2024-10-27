@@ -1,54 +1,54 @@
 import { beforeEach, describe, expect, test } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { createMockFactory } from '@/utils/factory-management/mocks/mock-factory'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
+import { newFactory } from '@/utils/factory-management/factory'
 
 describe('calculateHasProblem', () => {
   let mockFactory: Factory
 
   beforeEach(() => {
-    mockFactory = createMockFactory('Test Factory')
+    mockFactory = newFactory('Test Factory')
     mockFactory.dependencies = {
       requests: {
-        CopperOre: [
+        9216: [
           {
-            part: 'CopperOre',
-            amount: 1234,
+            part: 'IronIngot',
+            amount: 900,
           },
         ],
       },
       metrics: {
-        CopperOre: {
-          part: 'CopperOre',
-          request: 1234,
-          supply: 1000,
-          difference: 234,
-          isRequestSatisfied: false,
+        IronIngot: {
+          part: 'IronIngot',
+          request: 900,
+          supply: 900,
+          isRequestSatisfied: true,
+          difference: 0,
         },
       },
     }
   })
 
-  test('should mark the factory has having a problem requirements are not satisfied', () => {
+  test('should have problem if requirements are not fully satisfied', () => {
     mockFactory.requirementsSatisfied = false
 
     calculateHasProblem([mockFactory])
     expect(mockFactory.hasProblem).toBe(true)
   })
 
-  test('should mark the factory has having a problem if not all dependency requirements are satisfied', () => {
+  test('should not have problem if requirements are satisfied', () => {
     mockFactory.requirementsSatisfied = true
-
-    calculateHasProblem([mockFactory])
-    expect(mockFactory.hasProblem).toBe(true)
-  })
-
-  test('should mark the factory has no problem if all dependencies are satisfied', () => {
-    mockFactory.requirementsSatisfied = true
-
-    mockFactory.dependencies.metrics.CopperOre.isRequestSatisfied = true
 
     calculateHasProblem([mockFactory])
     expect(mockFactory.hasProblem).toBe(false)
+  })
+
+  test('should have problem if not all requests are satisfied', () => {
+    mockFactory.requirementsSatisfied = true
+
+    mockFactory.dependencies.metrics.IronIngot.isRequestSatisfied = false
+
+    calculateHasProblem([mockFactory])
+    expect(mockFactory.hasProblem).toBe(true)
   })
 })
