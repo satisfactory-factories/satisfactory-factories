@@ -2,7 +2,6 @@ import { Factory, FactoryInput } from '@/interfaces/planner/FactoryInterface'
 import { findFac } from '@/utils/factory-management/factory'
 
 // Adds dependencies between two factories.
-// Also triggers a calculation of the metric for the dependent factory.
 export const addDependency = (
   factory: Factory,
   dependent: Factory,
@@ -30,8 +29,6 @@ export const addDependency = (
     part: input.outputPart,
     amount: input.amount,
   })
-
-  calculateDependencyMetrics(dependent)
 }
 
 export const removeFactoryDependants = (factory: Factory, factories: Factory[]) => {
@@ -46,6 +43,10 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
         return
       }
       dependent.inputs = dependent.inputs.filter(input => input.factoryId !== factory.id)
+
+      // Remove the dependency from the calling factory
+      // Not that this massively matters as the factory is likely getting deleted
+      delete factory.dependencies.requests[factory.id]
     })
   }
 }
@@ -68,8 +69,8 @@ export const constructDependencies = (factories: Factory[]): void => {
         return
       }
 
-      const requestedFactory = factories.find(fac => fac.id === input.factoryId)
-      if (!requestedFactory) {
+      const dependant = factories.find(fac => fac.id === input.factoryId)
+      if (!dependant) {
         console.error(`Factory with ID ${input.factoryId} not found.`)
 
         // Remove it from the inputs if this is the case as it's invalid.
@@ -78,8 +79,14 @@ export const constructDependencies = (factories: Factory[]): void => {
         return
       }
 
-      addDependency(requestedFactory, factory, input)
+      addDependency(factory, dependant, input)
     })
+  })
+}
+
+export const calculateAllDependencyMetrics = (factories: Factory[]) => {
+  factories.forEach(factory => {
+    calculateDependencyMetrics(factory)
   })
 }
 

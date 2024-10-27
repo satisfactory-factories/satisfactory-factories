@@ -105,6 +105,7 @@
   import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
   import { calculateSurplus } from '@/utils/factory-management/surplus'
   import {
+    calculateAllDependencyMetrics,
     constructDependencies,
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
@@ -256,6 +257,7 @@
 
     // Check all other factories to see if they are affected by this factory change.
     constructDependencies(factories.value)
+    calculateAllDependencyMetrics(factories.value)
 
     // Export Calculator stuff
     configureExportCalculator(factories.value)

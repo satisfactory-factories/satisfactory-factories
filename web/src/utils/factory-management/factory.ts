@@ -25,7 +25,10 @@ export const newFactory = (name = 'A new factory'): Factory => {
     buildingRequirements: {} as { [p: string]: BuildingRequirement },
     requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
     totalPower: '0',
-    dependencies: {} as FactoryDependency,
+    dependencies: {
+      requests: {},
+      metrics: {},
+    } as FactoryDependency,
     exportCalculator: {},
     rawResources: {},
     usingRawResourcesOnly: false,
