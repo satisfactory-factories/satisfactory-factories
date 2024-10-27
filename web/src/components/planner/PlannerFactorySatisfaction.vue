@@ -116,7 +116,6 @@
                 variant="tonal"
               >
                 <game-asset
-                  class="mr-2"
                   :subject="buildingData.name"
                   type="building"
                 />

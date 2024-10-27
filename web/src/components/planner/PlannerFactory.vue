@@ -99,14 +99,16 @@
               <p class="text-body-1 d-inline-block mr-2">Producing: </p>
               <v-chip
                 v-for="part in factory.products"
-                :key="part.id"
+                :key="`${factory.id}-${part.id}`"
                 class="mr-2 border-md py-4"
               >
-                <game-asset
-                  class="mr-2"
-                  :subject="part.id"
-                  type="item"
-                />
+                <span class="mr-2">
+                  <game-asset
+                    v-if="part.id"
+                    :subject="part.id"
+                    type="item"
+                  />
+                </span>
                 <span class="ml-2">
                   <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
                 </span>
@@ -139,7 +141,13 @@
                   :key="part.part"
                   class="mx-1 border-md py-4"
                 >
-                  <game-asset height="32" :subject="part.part" type="item" width="32" />
+                  <game-asset
+                    v-if="part.part"
+                    height="32"
+                    :subject="part.part"
+                    type="item"
+                    width="32"
+                  />
                   <span class="ml-2"><b>{{ getPartDisplayName(part.part) }}:</b> {{ part.amount }}/min</span>
                 </v-chip>
               </div>

@@ -21,7 +21,7 @@
         <span v-show="!product.id" class="mr-2">
           <i class="fas fa-cube" style="width: 32px; height: 32px" />
         </span>
-        <span v-show="product.id" class="mr-2">
+        <span v-if="product.id" class="mr-2">
           <game-asset
             :key="product.id"
             :subject="product.id"
@@ -101,7 +101,9 @@
           size="large"
         >
           <game-asset :subject="byProduct.id" type="item" />
-          <span class="ml-2"><b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ byProduct.amount }}/min</span>
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ byProduct.amount }}/min
+          </span>
         </v-chip>
       </v-row>
       <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 my-0 text-body-1">
@@ -114,11 +116,7 @@
           style="border-color: rgb(0, 93, 167) !important"
           variant="tonal"
         >
-          <game-asset
-
-            :subject="part.toString()"
-            type="item"
-          />
+          <game-asset :subject="part.toString()" type="item" />
           <span class="ml-2">
             <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ requirement.amount }}/min
           </span>
@@ -133,10 +131,7 @@
             style="border-color: rgb(167, 86, 0)!important"
             variant="tonal"
           >
-            <game-asset
-              :subject="product.buildingRequirements.name"
-              type="building"
-            />
+            <game-asset :subject="product.buildingRequirements.name" type="building" />
             <span class="ml-2">
               <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
             </span>
