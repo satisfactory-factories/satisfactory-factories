@@ -6,7 +6,7 @@
         <span class="ml-2">Export calculations to</span>
       </p>
       <v-chip class="border-md border-gray" color="gray">
-        <i class="fas fa-industry" /><span class="ml-2"><b>{{ destFactory.name }}:</b> {{ request.amount }}/min</span>
+        <i class="fas fa-industry" /><span class="ml-2"><b>{{ destFactory.name }}:</b> {{ request?.amount ?? '???' }}/min</span>
       </v-chip>
     </div>
     <p class="text-body-1 mb-2" />
@@ -18,7 +18,12 @@
       class="mr-1 mb-1"
     >
       <game-asset :subject="`conveyor-belt-${belt}`" type="building" />
-      <span class="ml-2"><b>{{ beltDisplay(belt) }}:</b> {{ calculateBelts(factory, request.amount, belt) }}x</span>
+      <span v-if="request" class="ml-2">
+        <b>{{ beltDisplay(belt) }}:</b> {{ calculateBelts(request.amount, belt) }}x
+      </span>
+      <span v-if="!request" class="ml-2">
+        <b>{{ beltDisplay(belt) }}:</b> ???
+      </span>
     </v-chip>
   </div>
   <div class="mt-4">
@@ -36,6 +41,7 @@
         label="Round trip secs"
         max-width="160px"
         prepend-icon="fas fa-train"
+        type="number"
         variant="outlined"
       />
       <v-chip v-if="!isFluid(product.id)" class="ml-2">
@@ -53,8 +59,9 @@
 <script setup lang="ts">
   import { defineProps } from 'vue'
   import {
+    ExportCalculatorFactorySettings,
     Factory,
-    FactoryDependencyMetrics,
+    FactoryDependencyRequest,
     FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
@@ -62,14 +69,18 @@
   const props = defineProps<{
     factory: Factory;
     destFactory: Factory;
-    request: FactoryDependencyMetrics;
+    request: FactoryDependencyRequest | undefined;
     product: FactoryItem;
-    destFactorySettings: { trainTime: number };
+    destFactorySettings: ExportCalculatorFactorySettings
     gameData: DataInterface;
     helpText: boolean;
   }>()
 
-  const calculateBelts = (factory: Factory, amount: string, beltType: string) => {
+  if (!props.request) {
+    console.error('No request provided!')
+  }
+
+  const calculateBelts = (amount: number, beltType: string) => {
     // Simple math here to divide the amount by the belt's capacity
 
     let beltThroughput
@@ -107,6 +118,11 @@
   }
 
   const calculateFreightCars = () => {
+    if (!props.request) {
+      console.warn('calculateFreightCars: No request provided!')
+      return '???'
+    }
+
     const part = props.product.id
 
     // 1. Get the product info from game data
@@ -127,7 +143,11 @@
   }
 
   const calculateFluidCars = () => {
-    const amount = props.request.amount
+    if (!props.request) {
+      console.warn('calculateFluidCars: No request provided!')
+      return '???'
+    }
+    const amount = props.request.amount ?? 0
     const carCap = 1600
     const rtt = props.destFactorySettings.trainTime ?? 123
 

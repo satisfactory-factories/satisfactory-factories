@@ -16,9 +16,9 @@
           <p class="mb-4">
             <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently.
           </p>
-          <div v-for="(resource, resourceKey) in factory.rawResources" :key="resource">
+          <div v-for="(resource, resourceKey) in factory.rawResources" :key="resourceKey">
             <p>
-              <b>{{ getPartDisplayName(resourceKey) }}</b>: {{ resource.amount }}/min
+              <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ resource.amount }}/min
             </p>
           </div>
         </v-card-text>
@@ -43,7 +43,7 @@
         <span v-show="!input.outputPart" class="mr-2">
           <i class="fas fa-cube" style="width: 32px; height: 32px" />
         </span>
-        <span v-show="input.outputPart" class="mr-2">
+        <span v-if="input.outputPart" class="mr-2">
           <game-asset
             :key="input.outputPart"
             :subject="input.outputPart"
@@ -141,7 +141,7 @@
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const validFactoriesForImports = inject('factoriesWithSurplus') as ComputedRef<Factory[]>
-  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
+  const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
     factory: Factory;
@@ -208,6 +208,10 @@
 
     // Iterate through other factories and build the valid options list
     return otherFactories.filter(otherFactory => {
+      if (inputIndex === null) {
+        console.warn('getValidImportFactories: Tried to get other factories when inputIndex is null, cannot continue')
+        return false
+      }
       // Allow the factory if it's not already selected for the same output part from the same factory
       const alreadyRequestedPart = existingRequests.some(request =>
         request.factoryId === otherFactory.id && request.outputPart === factory.inputs[inputIndex]?.outputPart
@@ -276,7 +280,7 @@
   }
 
   // Gets the products of another factory for dependencies
-  const getFactoryOutputsForAutocomplete = (factoryId: number | undefined, inputIndex: number) => {
+  const getFactoryOutputsForAutocomplete = (factoryId: number | null, inputIndex: number) => {
     if (!factoryId || factoryId === 0) {
       // If factoryId is 0 or undefined, return an empty array to prevent any selection.
       return []
@@ -310,32 +314,44 @@
       }))
   }
 
-  const handleFactoryChange = (newValue, factory, index) => {
+  const handleFactoryChange = (newValue: number, factory: Factory, inputIndex: number) => {
     // Update the factoryId for the specific input
-    factory.inputs[index].factoryId = newValue
+    factory.inputs[inputIndex].factoryId = newValue
 
     // Trigger recalculations or any side effects needed
     updateFactory(factory)
   }
 
-  const requirementSatisfied = (factory: Factory, part: string): boolean => {
+  const requirementSatisfied = (factory: Factory, part: string | null): boolean => {
+    if (!part) {
+      console.error('requirementSatisfied: No part provided for input satisfaction check.')
+      return false
+    }
     const requirement = factory.parts[part]
 
     if (!requirement) {
-      console.log(`Could not find part requirement in factory for input satisfaction check. Part: ${part}`)
+      console.log(`handleFactoryChange: Could not find part requirement in factory for input satisfaction check. Part: ${part}`)
       return false
     }
 
     return requirement.amountRemaining <= 0
   }
 
-  const inputOverflow = (factory, part: string): boolean => {
+  const inputOverflow = (factory: Factory, part: string | null): boolean => {
+    if (!part) {
+      console.error('inputOverflow: No part provided for input overflow check.')
+      return false
+    }
     const requirement = factory.parts[part]
 
     return requirement.amountRemaining < 0
   }
 
-  const updateInputToSatisfy = (factory: factory, input: FactoryImport) => {
+  const updateInputToSatisfy = (factory: Factory, input: FactoryImport) => {
+    if (!input.outputPart) {
+      console.error('updateInputToSatisfy: No output part selected for input:', input)
+      return
+    }
     const part: PartMetrics = factory.parts[input.outputPart]
     input.amount = part.amountRequired
 

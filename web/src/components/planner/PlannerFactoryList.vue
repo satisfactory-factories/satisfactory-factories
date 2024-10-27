@@ -40,9 +40,10 @@
 
   const navigateToFactory = inject('navigateToFactory') as (id: number) => void
 
+  // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
-    createFactory:() => void,
-    updateFactories:(factories: Factory[]) => void
+    (event: 'createFactory'): void;
+    (event: 'updateFactories', factories: Factory[]): void;
   }>()
   const props = defineProps<{ factories: Factory[], totalFactories: number }>()
   const factoriesCopy = ref([...props.factories])

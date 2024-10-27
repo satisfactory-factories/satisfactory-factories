@@ -17,8 +17,8 @@
           <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
         </p>
         <v-row
-          v-for="surplus in exportsDisplay"
-          :key="`${factory.id}-${surplus.productId}`"
+          v-for="surplus in exportsDisplay.filter(item => item !== null)"
+          :key="`${factory.id}-${surplus?.productId}`"
           class="sub-card border-md my-4 mx-0 text-body-1 rounded d-flex"
           :style="requestStyling(factory, surplus.productId)"
         >
@@ -70,7 +70,7 @@
                 <b>Surplus:</b>&nbsp;{{ factory.surplus[surplus.productId].amount }}/min
               </v-chip>
               <v-chip class="ma-1 mt-0">
-                <b>Demands:</b>&nbsp;{{ getRequestMetricsForFactoryByPart(factory, surplus.productId).request ?? 0 }}/min
+                <b>Demands:</b>&nbsp;{{ getRequestMetricsForFactoryByPart(factory, surplus.productId)?.request ?? 0 }}/min
               </v-chip>
             </div>
             <div
@@ -80,21 +80,22 @@
               <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
               <v-chip
                 v-for="request in getRequestsForFactoryByProduct(factory, surplus.productId)"
-                :key="request.factory"
+                :key="request.factoryId"
                 class="mr-2 mb-2 border-md border-gray"
-                :color="isRequestSelected(factory, request.factory, surplus.productId) ? 'primary' : ''"
-                :style="isRequestSelected(factory, request.factory, surplus.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
-                @click="changeCalculatorSelection(factory, request.factory, surplus.productId)"
+                :color="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'primary' : ''"
+                :style="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
+                @click="changeCalculatorSelection(factory, request.factoryId, surplus.productId)"
               >
                 <i class="fas fa-industry" />
-                <span class="ml-2"><b>{{ findFactory(request.factory).name }}</b>: {{ request.amount }}/min</span>
+                <span class="ml-2"><b>{{ findFactory(request.factoryId).name }}</b>: {{ request.amount }}/min</span>
               </v-chip>
             </div>
           </v-col>
           <v-col cols="12" md="7">
+            <!-- Yeah good luck trying to get this to type check nicely -->
             <planner-factory-export-calculator
               v-if="isCalculatorReady(factory, surplus.productId)"
-              :key="factory.exportCalculator.selected"
+              :key="factory.exportCalculator.selected ?? surplus.productId"
               :dest-factory="findFactory(getCalculatorSettings(factory, surplus.productId).selected)"
               :dest-factory-settings="getCalculatorDestFacSettings(
                 factory,
@@ -133,16 +134,18 @@
 
 <script setup lang="ts">
   import {
+    ExportCalculatorFactorySettings,
+    ExportCalculatorSettings,
     Factory,
     FactoryDependencyMetrics,
     FactoryDependencyRequest,
-    FactoryItem,
+    FactoryItem, FactorySurplusItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
 
   const findFactory = inject('findFactory') as (id: number) => Factory
-  const updateFactory = inject('updateFactory') as (id: number) => Factory
+  const updateFactory = inject('updateFactory') as (factory: Factory) => Factory
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
@@ -152,32 +155,44 @@
     helpText: boolean;
   }>()
 
-  const exportsDisplay = computed(() => {
+  interface ExportsDisplay extends FactorySurplusItem {
+    productId: string;
+  }
+
+  const exportsDisplay = computed((): ExportsDisplay[] => {
     // Get the surplus entries as key-value pairs
     const surplus = Object.entries(props.factory.surplus)
 
     // Map through the surplus to add the sort order from factory.products
     const surplusWithOrder = surplus.map(([key, value]) => {
-      const product = props.factory.products[key]
+      const product = props.factory.products.filter(product => product.id === key)[0]
+      if (!product) {
+        console.error(`exportsDisplay: Could not find product ${key} in factory products`)
+        return null // Return null when product is not found
+      }
+
       return {
         ...value,
-        sortOrder: product ? product.sortOrder : null, // Add sort order if available, else null
         productId: key, // Add the product name to retain the reference
-      }
+        displayOrder: product.displayOrder,
+      } as ExportsDisplay
     })
 
-    // Sort the surplus entries based on sortOrder
-    surplusWithOrder.sort((a, b) => {
-      if (a.sortOrder !== null && b.sortOrder !== null) {
-        return a.sortOrder - b.sortOrder
-      } else if (a.sortOrder === null) {
+    // Filter out any `null` values from the mapped array
+    const filteredSurplusWithOrder = surplusWithOrder.filter((item): item is ExportsDisplay => item !== null)
+
+    // Sort the filtered surplus entries based on sortOrder
+    filteredSurplusWithOrder.sort((a, b) => {
+      if (a.displayOrder && b.displayOrder) {
+        return a.displayOrder - b.displayOrder
+      } else if (a.displayOrder) {
         return 1 // Push entries without sortOrder to the end
       } else {
         return -1
       }
     })
 
-    return surplusWithOrder
+    return filteredSurplusWithOrder
   })
 
   const requestStyling = (factory: Factory, productId: string) => {
@@ -186,10 +201,14 @@
     }
   }
 
+  interface FactoryDependencyRequestDisplay extends FactoryDependencyRequest {
+    factoryId: number;
+  }
+
   const getRequestsForFactoryByProduct = (
-    factory: Factory | string,
+    factory: Factory,
     part: string
-  ): FactoryDependencyRequest[] => {
+  ): FactoryDependencyRequestDisplay[] => {
     // If sent an empty factory, there's no request.
     if (!factory) {
       return []
@@ -199,7 +218,7 @@
     // If the part name matches the one we're looking for, we add it to the list.
     const factoryRequests = factory.dependencies.requests
 
-    if (!factoryRequests || factoryRequests.length === 0) {
+    if (Object.keys(factoryRequests).length === 0) {
       return []
     }
 
@@ -209,17 +228,17 @@
       return requests.filter(request => request.part === part).map(request => {
         return {
           ...request,
-          factory: factoryId,
+          factoryId: parseInt(factoryId, 10),
         }
       })
     }).flat()
   }
 
-  const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string) => {
+  const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string): FactoryDependencyRequest | undefined => {
     // Get the requests, then filter by the requesting factory to get the exact request for the port
     const requests = factory.dependencies.requests[destFacId]
     if (!requests) {
-      return null
+      return undefined
     }
     return requests.find(request => request.part === part)
   }
@@ -227,10 +246,10 @@
   const getRequestMetricsForFactoryByPart = (
     factory: Factory,
     part: string
-  ): FactoryDependencyMetrics => {
+  ): FactoryDependencyMetrics | undefined => {
     // Requests may be empty.
     if (!factory?.dependencies.metrics || !part || !factory.id) {
-      return {}
+      return undefined
     }
 
     return factory.dependencies?.metrics[part] ?? {}
@@ -238,6 +257,11 @@
 
   const requestSatisfied = (factory: Factory, part: string) => {
     const metric = getRequestMetricsForFactoryByPart(factory, part)
+
+    if (!metric) {
+      console.log(`Could not get request metric to calculate satisfaction for ${part}`)
+      return false
+    }
 
     // If there's no requests return true
     if (Object.keys(metric).length === 0) {
@@ -247,24 +271,30 @@
   }
 
   const getDifference = (factory: Factory, part: string): number => {
-    return getRequestMetricsForFactoryByPart(factory, part).difference ?? -1234
+    return getRequestMetricsForFactoryByPart(factory, part)?.difference ?? -1234
   }
 
-  const getShortageAmount = (factory: factory, part: string): number => {
+  const getShortageAmount = (factory: Factory, part: string): number => {
     return Math.abs(getDifference(factory, part))
   }
 
   const fixShortage = (factory: Factory, product: FactoryItem) => {
     const metric = getRequestMetricsForFactoryByPart(factory, product.id)
+
+    if (!metric) {
+      console.error(`Could not get request metric to fix shortage for ${product.id}`)
+      return
+    }
+
     const difference = Math.abs(metric.difference)
-    product.amount = parseInt(product.amount) + parseInt(difference)
+    product.amount = product.amount + difference
     updateFactory(factory)
   }
 
   const isCalculatorReady = (factory: Factory, part: string) => {
     const settings = getCalculatorSettings(factory, part)
 
-    if (!settings?.selected && settings.selected) {
+    if (!settings?.selected) {
       return false
     }
 
@@ -275,19 +305,31 @@
     return getCalculatorDestFacSettings(factory, part, settings.selected)?.trainTime !== undefined
   }
 
-  const changeCalculatorSelection = (factory: Factory, factoryId: string, part: string) => {
-    factory.exportCalculator[part].selected = factoryId
+  const changeCalculatorSelection = (factory: Factory, factoryId: number, part: string) => {
+    factory.exportCalculator[part].selected = factoryId.toString()
   }
 
-  const isRequestSelected = (factory: Factory, factoryId: string, part: string) => {
-    return factory.exportCalculator[part].selected === factoryId
+  const isRequestSelected = (factory: Factory, factoryId: number, part: string) => {
+    return factory.exportCalculator[part].selected === factoryId.toString()
   }
 
-  const getCalculatorSettings = (factory: Factory, part: string) => {
+  const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
+    if (part === null) {
+      console.error(`Could not get calculator settings for invalid part ${part}`)
+      return undefined
+    }
     return factory.exportCalculator[part]
   }
 
-  const getCalculatorDestFacSettings = (factory: Factory, part: string, destFactoryId: string) => {
+  const getCalculatorDestFacSettings = (
+    factory: Factory,
+    part: string,
+    destFactoryId: string | null
+  ): ExportCalculatorFactorySettings => {
+    if (destFactoryId === null) {
+      console.error(`Could not get calculator factory settings for invalid factory ${destFactoryId}`)
+      return { trainTime: 123 }
+    }
     return factory.exportCalculator[part].factorySettings[destFactoryId]
   }
 </script>

@@ -86,6 +86,7 @@ export const useAppStore = defineStore('app', () => {
     loggedInUser,
     token,
     lastSave,
+    lastEdit,
     getFactory,
     getFactories,
     getLastEdit,

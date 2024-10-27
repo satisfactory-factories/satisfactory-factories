@@ -45,14 +45,17 @@ export interface FactoryDependencyMetrics {
   request: number;
   supply: number;
   isRequestSatisfied: boolean;
+  difference: number;
+}
+
+export interface ExportCalculatorFactorySettings {
+  trainTime: number;
 }
 
 export interface ExportCalculatorSettings {
   selected: string | null;
   factorySettings: {
-    [key: string] : {
-      trainTime: number
-    }
+    [key: string] : ExportCalculatorFactorySettings
   }
 }
 
@@ -68,8 +71,8 @@ export interface WorldRawResource {
 }
 
 export interface FactoryImport {
-  factoryId: number;
-  outputPart: string;
+  factoryId: number | null;
+  outputPart: string | null;
   amount: number
 }
 

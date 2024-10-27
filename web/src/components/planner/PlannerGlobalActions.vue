@@ -55,12 +55,13 @@
   import { defineEmits, defineProps } from 'vue'
 
   defineProps<{ helpTextShown: boolean }>()
+  // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
-    'show-demo':() => void;
-    'hide-all': () => void;
-    'show-all': () => void;
-    'toggle-help-text': () => void;
-    'clear-all': () => void;
+    (event: 'show-demo'): void;
+    (event: 'hide-all'): void;
+    (event: 'show-all'): void;
+    (event: 'toggle-help-text'): void;
+    (event: 'clear-all'): void;
   }>()
 
   const confirmDelete = (message: string): boolean => {

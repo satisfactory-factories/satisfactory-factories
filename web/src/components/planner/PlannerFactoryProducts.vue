@@ -115,10 +115,13 @@
           variant="tonal"
         >
           <game-asset
-            class="mr-2"
-            :subject="part"
+
+            :subject="part.toString()"
             type="item"
-          /><b>{{ getPartDisplayName(part) }}</b>: {{ requirement.amount }}/min
+          />
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ requirement.amount }}/min
+          </span>
         </v-chip>
       </v-row>
       <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-3 text-body-1">
@@ -131,11 +134,12 @@
             variant="tonal"
           >
             <game-asset
-              class="mr-2"
               :subject="product.buildingRequirements.name"
               type="building"
             />
-            <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
+            <span class="ml-2">
+              <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
+            </span>
           </v-chip>
           <v-chip
             class="mr-2 border-md py-5"
@@ -144,7 +148,10 @@
             style="border-color: rgb(172, 153, 2) !important"
             variant="tonal"
           >
-            <i class="fas fa-bolt" /><span class="ml-2">{{ product.buildingRequirements.totalPower }} MW</span>
+            <i class="fas fa-bolt" />
+            <span class="ml-2">
+              {{ product.buildingRequirements.totalPower }} MW
+            </span>
           </v-chip>
         </span>
       </v-row>
@@ -160,7 +167,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
@@ -180,7 +187,7 @@
       recipe: '',
       displayOrder: factory.products.length,
       requirements: {},
-      buildingRequirements: [],
+      buildingRequirements: {} as BuildingRequirement,
     })
   }
 
@@ -226,7 +233,7 @@
     })
   }
 
-  const updateProductSelection = (product: FactoryProduct, factory: Factory) => {
+  const updateProductSelection = (product: FactoryItem, factory: Factory) => {
     // If the user update's the product within the subject selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
     product.recipe = ''
     product.amount = 1
@@ -241,7 +248,7 @@
   }
 
   // Enables the user to move the order of the products up or down
-  const updateOrder = (direction: 'up' | 'down', product: FactoryProduct) => {
+  const updateOrder = (direction: 'up' | 'down', product: FactoryItem) => {
     const index = props.factory.products.findIndex(p => p.displayOrder === product.displayOrder)
     const newIndex = direction === 'up' ? index - 1 : index + 1
 

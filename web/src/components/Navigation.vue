@@ -10,7 +10,7 @@
       >
         <v-tab
           v-for="item in items"
-          :key="item"
+          :key="item.title"
           :prepend-icon="item.icon"
           :text="item.title"
           :to="item.href"

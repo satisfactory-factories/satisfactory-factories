@@ -250,9 +250,15 @@
   }
 
   // We update the factory in layers of calculations. This makes it much easier to conceptualize.
-  const updateFactory = (factory: Factory, gameData: DataInterface) => {
+  const updateFactory = (factory: Factory) => {
     factory.rawResources = {}
     factory.parts = {}
+
+    const gameData = props.gameData
+    if (!gameData) {
+      console.error('No game data provided to updateFactory!')
+      return
+    }
 
     updateWorldRawResources(gameData)
 
@@ -320,7 +326,7 @@
       updateWorldRawResources(gameData) // Recalculate the world resources
 
       // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
-      factories.value.forEach(fac => updateFactory(fac, gameData))
+      factories.value.forEach(fac => updateFactory(fac))
 
       // Regenerate the sort orders
       regenerateSortOrders()
@@ -371,8 +377,9 @@
     helpText.value = !helpText.value
   }
 
-  const navigateToFactory = (factoryId: number) => {
-    const factory = findFactory(factoryId)
+  const navigateToFactory = (factoryId: number | string) => {
+    const facId = parseInt(factoryId.toString(), 10)
+    const factory = findFactory(facId)
     if (!factory) {
       console.error(`navigateToFactory: Factory ${factoryId} not found!`)
       return

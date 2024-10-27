@@ -51,14 +51,14 @@
               <v-col class="py-0">
                 <p v-if="part.satisfied">
                   <v-icon icon="fas fa-check" />
-                  <span class="ml-2"><b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }}/min</span>
+                  <span class="ml-2">
+                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }}/min
+                  </span>
                 </p>
                 <p v-else>
                   <v-icon icon="fas fa-times" />
                   <span class="ml-2">
-                    <span>
-                      <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
-                    </span>
+                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied }}/{{ part.amountRequired }} /min
                   </span>
                 </p>
               </v-col>
@@ -104,7 +104,7 @@
           </v-card-title>
           <v-card-text class="text-body-1 pb-0">
             <div
-              v-for="(building, buildingIndex) in factory.buildingRequirements"
+              v-for="([_, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
               :key="buildingIndex"
               style="display: inline;"
             >
@@ -117,10 +117,12 @@
               >
                 <game-asset
                   class="mr-2"
-                  :subject="building.name"
+                  :subject="buildingData.name"
                   type="building"
                 />
-                <b>{{ getBuildingDisplayName(building.name) ?? 'UNKNOWN' }}</b>: {{ building.amount ?? 0 }}x
+                <span class="ml-2">
+                  <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ buildingData.amount ?? 0 }}x
+                </span>
               </v-chip>
             </div>
             <v-chip
@@ -129,7 +131,11 @@
               size="large"
               style="border-color: rgb(172, 153, 2) !important"
               variant="tonal"
-            ><i class="fas fa-bolt" /><span class="ml-2">{{ factory.totalPower?.toFixed(0) ?? 0 }} MW</span>
+            >
+              <i class="fas fa-bolt" />
+              <span class="ml-2">
+                {{ factory.totalPower?.toFixed(0) ?? 0 }} MW
+              </span>
             </v-chip>
           </v-card-text>
         </v-card>
@@ -139,13 +145,20 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { Factory, FactoryImport, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import {
+    BuildingRequirement,
+    Factory,
+    FactoryImport,
+    FactoryItem,
+    PartMetrics,
+  } from '@/interfaces/planner/FactoryInterface'
+  import { computed, inject } from 'vue'
 
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
-  const updateFactory = inject('updateFactory') as (part: string) => string
+  const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
-  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
+  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem | undefined
 
   const props = defineProps<{
     factory: Factory;
@@ -154,14 +167,13 @@
 
   // Calculated function showing parts displayed if the amountRequired > 0
   const satisfactionDisplay = computed(() => {
-    const parts = Object.entries(props.factory.parts)
+    return Object.entries(props.factory.parts)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, value]) => value.amountRequired > 0)
       .reduce((acc, [key, value]) => {
         acc[key] = value
         return acc
-      }, {})
-
-    return parts
+      }, {} as Record<string, PartMetrics>)
   })
 
   const isSatisfiedStyling = (part: PartMetrics) => {
@@ -171,29 +183,25 @@
     }
   }
 
-  const addProduct = (factory, part: string): void => {
+  const addProduct = (factory: Factory, part: string): void => {
     factory.products.push({
       id: part,
       amount: 0,
       recipe: '',
       displayOrder: factory.products.length,
       requirements: {},
-      buildingRequirements: {},
+      buildingRequirements: {} as BuildingRequirement,
     })
     updateFactory(factory)
   }
 
-  const getImport = (factory, partIndex: string): FactoryImport => {
-    // Search the inputs array for the outputPart using the part index
-    return factory.inputs.find(input => input.outputPart === partIndex)
-  }
-
-  const fixProduction = (factory, partIndex: string | number) => {
+  const fixProduction = (factory: Factory, partIndex: string): void => {
     const product = getProduct(factory, partIndex)
 
     // If the product is not found, return
     if (!product) {
       console.error(`Could not find product for ${partIndex} to fix!`)
+      return
     }
 
     // Update the production amount to match requirement
@@ -201,7 +209,12 @@
     updateFactory(factory)
   }
 
-  const fixSatisfactionImport = (factory: Factory, partIndex: string | number) => {
+  const getImport = (factory: Factory, partIndex: string): FactoryImport | undefined => {
+    // Search the inputs array for the outputPart using the part index
+    return factory.inputs.find(input => input.outputPart === partIndex)
+  }
+
+  const fixSatisfactionImport = (factory: Factory, partIndex: string) => {
     const itemImport = getImport(factory, partIndex)
 
     // If the import is not found, return

@@ -153,10 +153,8 @@
       }
     }, 10000)
 
-    const savedUser = localStorage.getItem('loggedInUser')
-    const savedToken = localStorage.getItem('token')
-    if (savedUser && savedToken) {
-      validateToken(savedToken)
+    if (loggedInUser && token) {
+      validateToken()
     }
   })
 
@@ -208,8 +206,12 @@
         errorMessage.value = data.message
       }
     } catch (error) {
-      console.error('Error:', error)
-      errorMessage.value = error.message
+      if (error instanceof Error) {
+        if (error.message === 'Failed to fetch') {
+          errorMessage.value = 'Could not connect to the server.'
+          console.error('Error:', error)
+        }
+      }
     }
   }
 
@@ -230,8 +232,10 @@
         errorMessage.value = `Registration failed. ${data.errorResponse?.errmsg || data.message}`
       }
     } catch (error) {
-      console.error('Error:', error)
-      errorMessage.value = error.message
+      if (error instanceof Error) {
+        console.error('Error:', error)
+        errorMessage.value = error.message
+      }
     }
   }
 

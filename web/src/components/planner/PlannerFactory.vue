@@ -107,9 +107,11 @@
                   :subject="part.id"
                   type="item"
                 />
-                <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
+                <span class="ml-2">
+                  <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
+                </span>
                 <span
-                  v-if="hasMetricsForPart(factory, part.id)"
+                  v-if="hasMetricsForPart(factory, part.id) && factory.dependencies.metrics[part.id].difference !== 0"
                   class="ml-2"
                   :class="differenceClass(factory.dependencies.metrics[part.id].difference)"
                 >({{ factory.dependencies.metrics[part.id].difference }}/min)</span>
@@ -154,11 +156,11 @@
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
 
-  const findFactory = inject('findFactory') as (id: number) => Factory
+  const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
-  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
+  const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
   const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
   defineProps<{
@@ -194,7 +196,7 @@
 
   const hasExports = (factory: Factory) => {
     if (!factory.dependencies?.requests) return false
-    return Object.keys(factory.dependencies.requests).length > 0 ?? false
+    return Object.keys(factory.dependencies.requests).length > 0
   }
 </script>
 
