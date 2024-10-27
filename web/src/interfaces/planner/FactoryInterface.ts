@@ -71,7 +71,7 @@ export interface WorldRawResource {
   amount: number;
 }
 
-export interface FactoryImport {
+export interface FactoryInput {
   factoryId: number | null;
   outputPart: string | null;
   amount: number
@@ -85,7 +85,7 @@ export interface FactoryInternalProduct {
 export interface Factory {
   id: number;
   name: string;
-  inputs: FactoryImport[];
+  inputs: FactoryInput[];
   products: FactoryItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };

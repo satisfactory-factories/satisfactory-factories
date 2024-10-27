@@ -146,7 +146,7 @@
 <script setup lang="ts">
   import {
     Factory,
-    FactoryImport,
+    FactoryInput,
     FactoryItem,
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
@@ -204,7 +204,7 @@
     updateFactory(factory)
   }
 
-  const getImport = (factory: Factory, partIndex: string): FactoryImport | undefined => {
+  const getImport = (factory: Factory, partIndex: string): FactoryInput | undefined => {
     // Search the inputs array for the outputPart using the part index
     return factory.inputs.find(input => input.outputPart === partIndex)
   }

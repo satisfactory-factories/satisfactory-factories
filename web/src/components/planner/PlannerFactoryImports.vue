@@ -135,7 +135,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory, FactoryImport, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
   import { addInputToFactory } from '@/utils/factory-management/inputs'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
@@ -348,7 +348,7 @@
     return requirement.amountRemaining < 0
   }
 
-  const updateInputToSatisfy = (factory: Factory, input: FactoryImport) => {
+  const updateInputToSatisfy = (factory: Factory, input: FactoryInput) => {
     if (!input.outputPart) {
       console.error('updateInputToSatisfy: No output part selected for input:', input)
       return
