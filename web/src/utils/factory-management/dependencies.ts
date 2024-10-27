@@ -3,25 +3,25 @@ import { findFac } from '@/utils/factory-management/factory'
 
 // Adds dependencies between two factories.
 export const addDependency = (
-  factory: Factory,
-  dependent: Factory,
+  factory: Factory, // The factory that has the input
+  provider: Factory, // The factory that provides the dependency
   input: FactoryInput
 ) => {
   if (!input.outputPart) {
     throw new Error(`addDependency: Factory ${factory.id} is attempting to add a dependency with no output part!`)
   }
 
-  if (!dependent.dependencies.requests[factory.id]) {
-    dependent.dependencies.requests[factory.id] = []
+  if (!provider.dependencies.requests[factory.id]) {
+    provider.dependencies.requests[factory.id] = []
   }
 
-  const requests = dependent.dependencies.requests[factory.id]
+  const requests = provider.dependencies.requests[factory.id]
 
   // If the factory already has a request for the same factory and part, there's an issue.
   if (requests.length > 0) {
     const existingRequest = requests.find(req => req.part === input.outputPart)
     if (existingRequest) {
-      throw new Error(`addDependency: Factory ${dependent.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
+      throw new Error(`addDependency: Factory ${provider.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
     }
   }
 
@@ -66,27 +66,26 @@ export const constructDependencies = (factories: Factory[]): void => {
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
       if (input.factoryId === 0 || !input.outputPart) {
+        console.warn(`Factory ${factory.id} has an incomplete input. User may still be selecting it.`)
         return
       }
 
-      const dependant = factories.find(fac => fac.id === input.factoryId)
-      if (!dependant) {
+      // Stop if the factory input is somehow the same as the factory itself.
+      if (input.factoryId === factory.id) {
+        throw new Error(`Factory ${factory.id} is trying to add a dependency to itself!`)
+      }
+
+      const provider = factories.find(fac => fac.id === input.factoryId)
+      if (!provider) {
         console.error(`Factory with ID ${input.factoryId} not found.`)
 
         // Remove it from the inputs if this is the case as it's invalid.
         factory.inputs = factory.inputs.filter(i => i !== input)
-
         return
       }
 
-      addDependency(factory, dependant, input)
+      addDependency(factory, provider, input)
     })
-  })
-}
-
-export const calculateAllDependencyMetrics = (factories: Factory[]) => {
-  factories.forEach(factory => {
-    calculateDependencyMetrics(factory)
   })
 }
 

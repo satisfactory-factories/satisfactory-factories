@@ -33,7 +33,6 @@ export interface FactoryItem {
 
 export interface FactorySurplusItem {
   amount: number;
-  surplusHandling: 'export' | 'sink';
 }
 
 export interface FactoryDependencyRequest {

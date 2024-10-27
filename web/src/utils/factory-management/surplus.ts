@@ -1,5 +1,18 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 
+export const addSurplus = (factory: Factory, options: {
+  part: string,
+  amount: number,
+}) => {
+  if (!factory.surplus[options.part]) {
+    factory.surplus[options.part] = {
+      amount: 0,
+    }
+  }
+
+  factory.surplus[options.part].amount += options.amount
+}
+
 export const calculateSurplus = (factory: Factory) => {
   factory.surplus = {} // Avoids orphaning
 
@@ -13,14 +26,10 @@ export const calculateSurplus = (factory: Factory) => {
 
     // If the amount remaining is less than 0, we have a surplus.
     if (part.amountRemaining < 0) {
-      if (!factory.surplus[partKey]) {
-        factory.surplus[partKey] = {
-          amount: 0,
-          surplusHandling: 'export',
-        }
-      }
-
-      factory.surplus[partKey].amount += Math.abs(part.amountRemaining)
+      addSurplus(factory, {
+        part: partKey,
+        amount: Math.abs(part.amountRemaining),
+      })
     }
   })
 }
