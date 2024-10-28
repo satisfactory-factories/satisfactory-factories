@@ -19,6 +19,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     id: Math.floor(Math.random() * 10000),
     name,
     products: [],
+    byProducts: [],
     internalProducts: {},
     inputs: [],
     parts: {},

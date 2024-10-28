@@ -101,7 +101,8 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
   })
 }
 
-export const calculateByProducts = (factory: Factory, gameData: DataInterface) => {
+export const calculateByProducts = (factory: Factory, gameData: DataInterface): void => {
+  factory.byProducts = [] // Prevents orphaning / duplication
   factory.products.forEach(product => {
     product.byProducts = [] // Prevents orphaning / duplication
 
@@ -109,13 +110,13 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface) =
 
     if (!recipe) {
       console.warn('getByProduct: Could not get recipe, user may not have picked one yet.')
-      return null
+      return
     }
 
     const byProducts = recipe.products.filter(p => p.isByProduct)
 
     if (byProducts.length === 0) {
-      return null
+      return
     }
 
     byProducts.forEach(byProduct => {
@@ -125,12 +126,29 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface) =
       // Now we compare the product.amount (the amount being produced) and times by the ratio to get the byProduct amount.
       const byProductAmount = product.amount * byProductRatio
 
-      // Now we need to add the byProduct to the product's byProducts array for display purposes
+      if (!product.byProducts) {
+        product.byProducts = []
+      }
+
+      // Add to the byProducts of the product
       product.byProducts.push({
         id: byProduct.part,
         byProductOf: product.id,
         amount: byProductAmount,
       })
+
+      // Now we need to add the byProduct to the factory's byProducts array for use by the Exports array purposes
+      const byProductExists = factory.byProducts.find(p => p.id === byProduct.part)
+
+      if (!byProductExists) {
+        factory.byProducts.push({
+          id: byProduct.part,
+          amount: byProductAmount,
+          byProductOf: product.id,
+        })
+      } else {
+        byProductExists.amount += byProductAmount
+      }
 
       // Now also add the part that the Byproduct creates to the parts list
       createNewPart(factory, byProduct.part)

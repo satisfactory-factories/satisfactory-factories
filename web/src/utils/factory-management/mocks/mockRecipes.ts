@@ -101,4 +101,35 @@ export const mockRecipes: Recipe[] = [
     isAlternate: false,
     isFicsmas: false,
   },
+  {
+    id: 'LiquidFuel',
+    displayName: 'Fuel',
+    ingredients: [
+      {
+        part: 'LiquidOil',
+        amount: 6,
+        perMin: 60,
+      },
+    ],
+    products: [
+      {
+        part: 'LiquidFuel',
+        amount: 4,
+        perMin: 40,
+        isByProduct: false,
+      },
+      {
+        part: 'PolymerResin',
+        amount: 3,
+        perMin: 30,
+        isByProduct: true,
+      },
+    ],
+    building: {
+      name: 'oilrefinery',
+      power: 17.5,
+    },
+    isAlternate: false,
+    isFicsmas: false,
+  },
 ]

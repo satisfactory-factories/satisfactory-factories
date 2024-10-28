@@ -166,15 +166,19 @@
     // Map through the surplus to add the sort order from factory.products
     const surplusWithOrder = surplus.map(([key, value]) => {
       const product = props.factory.products.filter(product => product.id === key)[0]
-      if (!product) {
-        console.error(`exportsDisplay: Could not find product ${key} in factory products`)
-        return null // Return null when product is not found
+      const byProduct = props.factory.byProducts.filter(product => product.id === key)[0]
+      if (!product && !byProduct) {
+        return null // Return null when product is not found, as it is not a surplus designated for export.
       }
+
+      // If byproduct, we need to get the product to get the display order
+      const productParent = byProduct ? props.factory.products.filter(product => product.id === byProduct.byProductOf)[0] : product
+      const displayOrder = productParent?.displayOrder
 
       return {
         ...value,
         productId: key, // Add the product name to retain the reference
-        displayOrder: product.displayOrder,
+        displayOrder,
       } as ExportsDisplay
     })
 

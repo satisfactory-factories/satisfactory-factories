@@ -28,7 +28,7 @@ export interface FactoryItem {
   displayOrder: number;
   requirements: { [key: string]: { amount: number } };
   buildingRequirements: BuildingRequirement
-  byProducts: ByProductItem[];
+  byProducts?: ByProductItem[];
 }
 
 export interface FactorySurplusItem {
@@ -86,6 +86,7 @@ export interface Factory {
   name: string;
   inputs: FactoryInput[];
   products: FactoryItem[];
+  byProducts: ByProductItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };
   buildingRequirements: { [key: string]: BuildingRequirement };
