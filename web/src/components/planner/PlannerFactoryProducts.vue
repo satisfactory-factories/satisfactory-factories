@@ -92,12 +92,13 @@
       </v-row>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
-        class="mt-0 mb-2 pa-2 ml-n1 text-body-1 d-flex align-center"
+        class="mt-0 mb-2 px-2 text-body-1 d-flex align-center"
       >
-        <p class="mr-2">Byproduct(s):</p>
+        <p class="mr-2">Byproduct:</p>
         <v-chip
           v-for="byProduct in product.byProducts"
           :key="byProduct.id"
+          class="mr-2 border-md border-gray py-5"
           size="large"
         >
           <game-asset :subject="byProduct.id" type="item" />
@@ -106,11 +107,15 @@
           </span>
         </v-chip>
       </v-row>
-      <v-row v-show="Object.keys(product.requirements).length > 0" class="ml-0 my-0 text-body-1">
+      <v-row
+        v-show="Object.keys(product.requirements).length > 0"
+        class="mt-0 mb-2 px-2 text-body-1 d-flex align-center"
+      >
+        <p class="mr-2">Requires:</p>
         <v-chip
           v-for="(requirement, part) in product.requirements"
           :key="`ingredients-${part}`"
-          class="mr-2 mb-2 border-md py-5"
+          class="mr-2 border-md py-5"
           color="primary"
           size="large"
           style="border-color: rgb(0, 93, 167) !important"

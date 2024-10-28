@@ -1,4 +1,5 @@
 <template>
+  <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
   <VueFlow
     :key="nodes.length"
     :edges="edges"
@@ -50,7 +51,6 @@
 
   console.log('nodes', nodes.value)
   console.log('edges', edges.value)
-
 </script>
 
 <style>
