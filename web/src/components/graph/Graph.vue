@@ -1,5 +1,9 @@
 <template>
   <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
+  <p class="text-center">
+    This page is highly experimental and is being actively worked on. It is nowhere complete.
+  </p>
+  <Todo />
   <VueFlow
     :key="nodes.length"
     :edges="edges"
@@ -23,6 +27,8 @@
   import { CustomNode, generateEdges, generateNodes } from '@/utils/graphUtils'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useLayout } from '@/utils/graphLayout'
+
+  import Todo from '@/components/graph/Todo.vue'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
