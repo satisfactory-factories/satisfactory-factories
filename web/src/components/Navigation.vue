@@ -3,6 +3,9 @@
     <v-toolbar-title>
       <v-icon icon="fas fa-industry-alt" />
       <span class="ml-3">Satisfactory Factories</span>
+      <span class="ml-2">
+        <v-chip color="orange">ALPHA</v-chip>
+      </span>
     </v-toolbar-title>
     <template #extension>
       <v-tabs
@@ -32,7 +35,7 @@
         tab: null,
         items: [
           { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
-          { title: 'Graph', icon: 'fas fa-project-diagram', href: '/graph' },
+          { title: 'Graph (WIP)', icon: 'fas fa-project-diagram', href: '/graph' },
           { title: 'Recipes', icon: 'fas fa-hat-chef', href: '/recipes' },
         ],
       }

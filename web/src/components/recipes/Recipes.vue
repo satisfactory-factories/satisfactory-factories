@@ -1,4 +1,5 @@
 <template>
+  <Todo />
   <v-card>
     <v-card-title class="py-4">
       <h1 class="text-h4">Recipes</h1>
@@ -31,6 +32,7 @@
   import RecipeSearchItem from './RecipeSearchItem.vue'
   import { Recipe } from '@/interfaces/Recipe'
   import { DataInterface } from '@/interfaces/DataInterface'
+  import Todo from '@/components/recipes/Todo.vue'
 
   // Props
   const props = defineProps<{

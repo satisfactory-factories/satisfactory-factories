@@ -13,6 +13,7 @@
             <li>Feat: Integrate <a href="https://help.featurebase.app/en/help/articles/1261560-install-feedback-widget">Featurebase</a>.</li>
             <li>Feat: World Resources: Make world resources flag an issue when exceeding world limits.</li>
             <li>Feat: World Resources: Show % used.</li>
+            <li>Feat: Add button to jump to the node in the graph.</li>
           </ul>
         </v-card-text>
       </v-card>
