@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h2 class="text-h5 mb-4"><i class="fa fa-truck-container" /> Exports</h2>
+    <h2 class="text-h5 mb-4">
+      <i class="fa fa-truck-container" />
+      <span class="ml-3">Exports</span>
+    </h2>
     <div v-if="factory.products.length > 0">
       <p v-show="helpText" class="text-body-2 mb-4">
         <i class="fas fa-info-circle" /> Items listed below are the surplus of products available for
