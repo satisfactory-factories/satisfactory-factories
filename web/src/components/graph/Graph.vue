@@ -1,7 +1,7 @@
 <template>
   <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
   <p class="text-center">
-    This page is highly experimental and is being actively worked on. It is nowhere complete.
+    This page is highly experimental and is being actively worked on. It is nowhere near complete.
   </p>
   <Todo />
   <VueFlow
