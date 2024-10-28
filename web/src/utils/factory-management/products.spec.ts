@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
-import { addProductToFactory, calculateProducts } from '@/utils/factory-management/products'
+import { addProductToFactory, calculateByProducts, calculateProducts } from '@/utils/factory-management/products'
 import { mockGameData } from '@/utils/factory-management/mocks/mockGameData'
 
 const mockIngotIron = {
@@ -50,6 +50,7 @@ describe('products', () => {
       expect(mockFactory.products[1].displayOrder).toBe(1)
     })
   })
+
   describe('calculateProducts', () => {
     beforeEach(() => {
       addProductToFactory(mockFactory, mockIngotIron)
@@ -59,20 +60,20 @@ describe('products', () => {
       mockFactory.products[0].recipe = 'NotARecipe'
       expect(() => {
         calculateProducts(mockFactory, mockGameData)
-      }).toThrow
+      }).toThrow()
     })
     it('should calculate the products and produce the correct part info', () => {
       calculateProducts(mockFactory, mockGameData)
 
       // Expect the parts to exist
-      expect(mockFactory.parts.IngotIron).toBeDefined()
-      expect(mockFactory.parts.IngotCopper).toBeDefined()
+      expect(mockFactory.parts.IronIngot).toBeDefined()
+      expect(mockFactory.parts.CopperIngot).toBeDefined()
 
       // Expect the parts to have the correct amount of supply data
-      expect(mockFactory.parts.IngotIron.amountSuppliedViaProduction).toBe(123)
-      expect(mockFactory.parts.IngotIron.amountSupplied).toBe(123)
-      expect(mockFactory.parts.IngotIron.amountRemaining).toBe(-123)
-      expect(mockFactory.parts.IngotIron.satisfied).toBe(true)
+      expect(mockFactory.parts.IronIngot.amountSuppliedViaProduction).toBe(123)
+      expect(mockFactory.parts.IronIngot.amountSupplied).toBe(123)
+      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(-123)
+      expect(mockFactory.parts.IronIngot.satisfied).toBe(true)
 
       // Expect the raw resources to exist
       expect(mockFactory.rawResources.OreIron).toBeDefined()
@@ -126,6 +127,47 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(100)
       expect(mockFactory.parts.IronIngot.amountRemaining).toBe(300)
       expect(mockFactory.parts.IronIngot.satisfied).toBe(false)
+    })
+  })
+
+  describe('calculateByProducts', () => {
+    beforeEach(() => {
+      mockFactory.name = 'Fuel'
+    })
+    it('should do nothing if the recipe contains no byproducts', () => {
+      const mockProductWithoutByProducts = {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      }
+
+      addProductToFactory(mockFactory, mockProductWithoutByProducts)
+      calculateProducts(mockFactory, mockGameData)
+      calculateByProducts(mockFactory, mockGameData)
+
+      expect(mockFactory.products[0].byProducts).toHaveLength(0)
+    })
+    it('should calculate byproducts', () => {
+      const mockProductWithByProducts = {
+        id: 'LiquidFuel',
+        amount: 100,
+        recipe: 'LiquidFuel',
+      }
+
+      addProductToFactory(mockFactory, mockProductWithByProducts)
+      calculateProducts(mockFactory, mockGameData)
+      calculateByProducts(mockFactory, mockGameData)
+
+      expect(mockFactory.products[0].id).toBe('LiquidFuel')
+      expect(mockFactory.products[0].byProducts).toHaveLength(1)
+      // @ts-ignore
+      expect(mockFactory.products[0].byProducts[0].id).toBe('PolymerResin')
+
+      // Expect that the ByProduct exists in the factory.byProducts array
+      expect(mockFactory.byProducts[0].id).toBe('PolymerResin')
+
+      // Expect that the byproduct has been added to the parts array for potential consumption by other products.
+      expect(mockFactory.parts.PolymerResin.amountSupplied).toBe(75)
     })
   })
 })
