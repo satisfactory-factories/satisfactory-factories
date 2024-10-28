@@ -60,9 +60,9 @@
                   </span>
                   <v-btn
                     class="ml-2"
-                    color="primary"
+                    color="green"
                     size="small"
-                    variant="outlined"
+                    variant="flat"
                     @click="fixShortage(factory, getProduct(factory, surplus.productId))"
                   >Fix production</v-btn>
                 </span>

@@ -11,7 +11,7 @@ export interface PartMetrics {
 export interface BuildingRequirement {
   name: string;
   amount: string;
-  powerPerBuilding: string;
+  powerPerBuilding: number;
   totalPower: string;
 }
 

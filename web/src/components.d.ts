@@ -15,6 +15,7 @@ declare module 'vue' {
     GameAsset: typeof import('./components/GameAsset.vue')['default']
     Graph: typeof import('./components/graph/Graph.vue')['default']
     GraphIndex: typeof import('./components/graph/Graph.vue')['default']
+    Introduction: typeof import('./components/planner/Introduction.vue')['default']
     ItemImage: typeof import('./components/ItemImage.vue')['default']
     KoFi: typeof import('./components/ko-fi.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']

@@ -1,4 +1,5 @@
 <template>
+  <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <v-container class="planner-container">
     <!-- The Drawer for Mobile -->
     <v-navigation-drawer
@@ -20,7 +21,7 @@
         @clear-all="clearAll"
         @hide-all="showHideAll('hide')"
         @show-all="showHideAll('show')"
-        @show-demo="showDemo"
+        @show-intro="showIntro"
         @toggle-help-text="toggleHelp()"
       />
     </v-navigation-drawer>
@@ -41,7 +42,7 @@
             @clear-all="clearAll"
             @hide-all="showHideAll('hide')"
             @show-all="showHideAll('show')"
-            @show-demo="showDemo"
+            @show-intro="showIntro"
             @toggle-help-text="toggleHelp()"
           />
         </v-container>
@@ -113,6 +114,7 @@
   import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
   import { calculateHasProblem } from '@/utils/factory-management/problems'
   import { findFac, newFactory } from '@/utils/factory-management/factory'
+  import { demoFactories } from '@/utils/demoFactories'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -427,8 +429,33 @@
   provide('isItemRawResource', isItemRawResource)
   provide('getProduct', getProduct)
 
-  const showDemo = () => {
-    console.log('showDemo')
+  // Grab from local storage if the user has already dismissed this popup
+  // If they have, don't show it again.
+  const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
+
+  const setupDemo = () => {
+    console.log('setupDemo')
+    closeIntro()
+    if (factories.value.length > 0) {
+      if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
+        console.log('Replacing factories with Demo')
+        factories.value = demoFactories
+      }
+    } else {
+      console.log('Adding demo factories')
+      factories.value = demoFactories
+    }
+  }
+
+  const closeIntro = () => {
+    console.log('closing intro')
+    introShow.value = false
+    localStorage.setItem('dismissed-introduction', 'true')
+  }
+
+  const showIntro = () => {
+    console.log('showing intro')
+    introShow.value = true
   }
 </script>
 

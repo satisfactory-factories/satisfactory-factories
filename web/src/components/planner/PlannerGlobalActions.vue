@@ -31,12 +31,12 @@
       <v-btn
         class="ma-1"
         color="green"
-        prepend-icon="fas fa-clipboard-list"
+        prepend-icon="fas fa-users-class"
         ripple
         variant="tonal"
-        @click="confirmDelete('Are you sure? This will replace your factories with the demo example!') && emit('show-demo')"
+        @click="emit('show-intro')"
       >
-        Show Demo
+        Show Intro
       </v-btn>
       <v-btn
         class="ma-1"
@@ -57,7 +57,7 @@
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
-    (event: 'show-demo'): void;
+    (event: 'show-intro'): void;
     (event: 'hide-all'): void;
     (event: 'show-all'): void;
     (event: 'toggle-help-text'): void;
