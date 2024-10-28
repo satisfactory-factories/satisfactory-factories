@@ -70,6 +70,7 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       // In every case, always add the ingredient to the parts list
       createNewPart(factory, ingredient.part)
       factory.parts[ingredient.part].amountRequired += ingredientRequired
+      calculatePartMetrics(factory, ingredient.part)
 
       // Raw resource handling
       if (gameData.items.rawResources[ingredient.part]) {
