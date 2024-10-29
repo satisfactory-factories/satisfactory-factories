@@ -52,7 +52,8 @@
       const partItem = gameData.items.parts[subject]
       const rawItem = gameData.items.rawResources[subject]
 
-      if (!partItem && !rawItem) {
+      // Freight cars are not in the items list
+      if (!partItem && !rawItem && subject !== 'freight-car') {
         unknown.value = true
         return ''
       }
