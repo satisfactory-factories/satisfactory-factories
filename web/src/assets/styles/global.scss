@@ -24,3 +24,82 @@
     border-color: rgb(172, 153, 2) !important
   }
 }
+
+.selectors {
+  &:last-of-type {
+    margin-bottom: 12px !important;
+  }
+
+  .v-input__prepend {
+    margin-right: 10px;
+  }
+}
+
+.v-list-item__prepend {
+  padding-right: 10px;
+}
+
+.last-child-no-margin {
+  :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+.sub-card {
+  background-color: rgb(50, 50, 50);
+
+  &:last-of-type {
+    border-bottom: 0;
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.no-bottom {
+  &:last-of-type {
+    border-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.factory-card {
+  transition: all 0.3s;
+  border: 2px solid rgb(108, 108, 108) !important;
+
+  .header {
+    padding: 16px 16px 0 !important;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgb(108, 108, 108) !important;
+    align-items: center;
+    transition: background-color 0.3s;
+    background-color: rgba(43, 43, 43, 0.4);
+
+    &.list {
+      padding: 0 !important;
+      border-bottom: 0;
+    }
+  }
+
+  &.problem {
+    border: 2px solid #dc3545;
+
+    .header {
+      background-color: rgba(140, 9, 21, 0.4);
+    }
+  }
+}
+
+.v-card-title {
+  padding: 1rem;
+}
+
+.fa-bolt {
+  font-size: 20px;
+}
+
+.border-gray {
+  border-color: rgb(129, 129, 129) !important;
+}
+.border-light-gray {
+  border-color: rgb(186, 186, 186) !important;
+}

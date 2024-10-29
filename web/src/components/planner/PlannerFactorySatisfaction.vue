@@ -30,7 +30,7 @@
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1 pb-0 pt-2">
+          <v-card-text class="text-body-1 pb-0 pt-4">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
@@ -102,7 +102,7 @@
               <span class="ml-3">Buildings & Power</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1 pb-0">
+          <v-card-text class="text-body-1 pb-2">
             <div
               v-for="([_, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
               :key="buildingIndex"

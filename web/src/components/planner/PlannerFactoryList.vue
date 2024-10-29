@@ -76,5 +76,11 @@
 .factory-list {
   display: flex;
   flex-direction: column;
+
+  .factory-card {
+    .header {
+      border-bottom: 0 !important;
+    }
+  }
 }
 </style>
