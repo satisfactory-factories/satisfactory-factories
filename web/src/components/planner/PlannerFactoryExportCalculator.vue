@@ -5,8 +5,9 @@
         <i class="fas fa-calculator" />
         <span class="ml-2">Export calculations to</span>
       </p>
-      <v-chip class="border-md border-gray" color="gray">
-        <i class="fas fa-industry" /><span class="ml-2"><b>{{ destFactory.name }}:</b> {{ request?.amount ?? '???' }}/min</span>
+      <v-chip class="sf-chip">
+        <i class="fas fa-industry" />
+        <span class="ml-2"><b>{{ destFactory.name }}:</b> {{ request?.amount ?? '???' }}/min</span>
       </v-chip>
     </div>
     <p class="text-body-1 mb-2" />

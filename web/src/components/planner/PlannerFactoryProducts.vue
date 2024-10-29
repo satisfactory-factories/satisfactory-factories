@@ -92,14 +92,13 @@
       </v-row>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
-        class="mt-0 mb-2 px-2 text-body-1 d-flex align-center"
+        class="mt-0 mb-1 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Byproduct:</p>
         <v-chip
           v-for="byProduct in product.byProducts"
           :key="byProduct.id"
-          class="mr-2 border-md border-gray py-5"
-          size="large"
+          class="sf-chip"
         >
           <game-asset :subject="byProduct.id" type="item" />
           <span class="ml-2">
@@ -109,16 +108,13 @@
       </v-row>
       <v-row
         v-show="Object.keys(product.requirements).length > 0"
-        class="mt-0 mb-2 px-2 text-body-1 d-flex align-center"
+        class="mt-0 mb-1 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
         <v-chip
           v-for="(requirement, part) in product.requirements"
           :key="`ingredients-${part}`"
-          class="mr-2 border-md py-5"
-          color="primary"
-          size="large"
-          style="border-color: rgb(0, 93, 167) !important"
+          class="sf-chip blue"
           variant="tonal"
         >
           <game-asset :subject="part.toString()" type="item" />
@@ -127,13 +123,10 @@
           </span>
         </v-chip>
       </v-row>
-      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-3 text-body-1">
+      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-2 text-body-1">
         <span>
           <v-chip
-            class="mr-2 border-md py-5"
-            color="yellow-darken-4"
-            size="large"
-            style="border-color: rgb(167, 86, 0)!important"
+            class="sf-chip orange"
             variant="tonal"
           >
             <game-asset :subject="product.buildingRequirements.name" type="building" />
@@ -142,10 +135,7 @@
             </span>
           </v-chip>
           <v-chip
-            class="mr-2 border-md py-5"
-            color="yellow-darken-2"
-            size="large"
-            style="border-color: rgb(172, 153, 2) !important"
+            class="sf-chip yellow"
             variant="tonal"
           >
             <i class="fas fa-bolt" />

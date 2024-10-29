@@ -1,0 +1,26 @@
+.sf-chip {
+  padding: 20px 12px !important;
+  border: 2px solid #7f7f7f !important;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+
+  &.small {
+    padding: 12px 10px !important;
+  }
+
+  &.blue {
+    color: rgb(33, 150, 243) !important;
+    border-color: rgb(0, 93, 167) !important;
+  }
+
+  &.orange {
+    color: #f57f17 !important;
+    border-color: rgb(167, 86, 0) !important
+  }
+
+  &.yellow {
+    color: #fbc02d !important;
+    border-color: rgb(172, 153, 2) !important
+  }
+}

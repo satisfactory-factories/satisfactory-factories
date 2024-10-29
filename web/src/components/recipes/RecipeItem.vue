@@ -5,7 +5,7 @@
       <v-chip
         v-for="ingredient in recipe.ingredients"
         :key="ingredient.part"
-        class="mr-2 mb-2"
+        class="sf-chip"
       >
         <game-asset
           :subject="ingredient.part"
@@ -21,7 +21,7 @@
       <v-chip
         v-for="product in recipe.products"
         :key="product.part"
-        class="mb-2 mr-2"
+        class="sf-chip"
       >
         <game-asset
           :subject="product.part"

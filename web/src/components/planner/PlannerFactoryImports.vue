@@ -18,10 +18,7 @@
           </p>
           <div v-for="(resource, resourceKey) in factory.rawResources" :key="resourceKey">
             <v-chip
-              class="mr-2 py-5 border-md"
-              color="primary"
-              size="large"
-              style="border-color: rgb(0, 93, 167) !important"
+              class="sf-chip blue"
             >
               <game-asset :subject="resourceKey" type="item" />
               <span class="ml-2">

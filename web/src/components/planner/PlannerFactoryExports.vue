@@ -84,7 +84,7 @@
               <v-chip
                 v-for="request in getRequestsForFactoryByProduct(factory, surplus.productId)"
                 :key="request.factoryId"
-                class="mr-2 mb-2 border-md border-gray"
+                class="sf-chip small"
                 :color="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'primary' : ''"
                 :style="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
                 @click="changeCalculatorSelection(factory, request.factoryId, surplus.productId)"

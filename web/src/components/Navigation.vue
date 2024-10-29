@@ -4,7 +4,7 @@
       <v-icon icon="fas fa-industry-alt" />
       <span class="ml-3">Satisfactory Factories</span>
       <span class="ml-2">
-        <v-chip color="orange">ALPHA</v-chip>
+        <v-chip class="sf-chip blue">ALPHA</v-chip>
       </span>
     </v-toolbar-title>
     <template #extension>

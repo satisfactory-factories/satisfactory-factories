@@ -109,10 +109,7 @@
               style="display: inline;"
             >
               <v-chip
-                class="mr-2 border-md py-5 mb-2"
-                color="yellow-darken-4"
-                size="large"
-                style="border-color: rgb(167, 86, 0)!important"
+                class="sf-chip orange"
                 variant="tonal"
               >
                 <game-asset
@@ -125,10 +122,7 @@
               </v-chip>
             </div>
             <v-chip
-              class="mr-2 border-md py-5 mb-2"
-              color="yellow-darken-2"
-              size="large"
-              style="border-color: rgb(172, 153, 2) !important"
+              class="sf-chip yellow"
               variant="tonal"
             >
               <i class="fas fa-bolt" />

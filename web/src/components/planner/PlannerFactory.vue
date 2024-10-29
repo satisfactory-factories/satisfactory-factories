@@ -100,7 +100,7 @@
               <v-chip
                 v-for="part in factory.products"
                 :key="`${factory.id}-${part.id}`"
-                class="mr-2 border-md py-4"
+                class="sf-chip"
               >
                 <span class="mr-2">
                   <game-asset
@@ -139,7 +139,7 @@
                 <v-chip
                   v-for="part in factory.dependencies.requests[dependant]"
                   :key="part.part"
-                  class="mx-1 border-md py-4"
+                  class="sf-chip blue"
                 >
                   <game-asset
                     v-if="part.part"
