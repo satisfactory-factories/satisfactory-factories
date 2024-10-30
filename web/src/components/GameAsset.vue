@@ -38,7 +38,7 @@
   }
 
   const getIcon = (
-    subject: string,
+    subject: string | null,
     type: 'building' | 'item',
     size: 'small' | 'big' = 'small'
   ): string => {

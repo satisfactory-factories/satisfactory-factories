@@ -6,19 +6,20 @@
   <Todo />
   <VueFlow
     :key="nodes.length"
+    ref="vueFlowRef"
     :edges="edges"
     :nodes="nodes"
+    @nodes-initialized="onNodesInitialized"
   >
     <MiniMap />
     <template #node-custom="props">
-      <!--suppress RequiredAttributes -->
-      <FactoryNode v-bind="props" />
+      <FactoryNode v-bind="props" @node-rendered="onNodeRendered" />
     </template>
   </VueFlow>
 </template>
 
 <script setup lang="ts">
-  import { defineProps, ref } from 'vue'
+  import { defineProps, onMounted, ref } from 'vue'
   import { Edge, VueFlow } from '@vue-flow/core'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
@@ -27,8 +28,6 @@
   import { CustomNode, generateEdges, generateNodes } from '@/utils/graphUtils'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useLayout } from '@/utils/graphLayout'
-
-  import Todo from '@/components/graph/Todo.vue'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -41,22 +40,39 @@
 
   const nodes = ref<CustomNode[]>([])
   const edges = ref<Edge[]>([])
+  let renderedNodeCount = 0 // Count to track rendered nodes
 
   const { layout } = useLayout()
+  const vueFlowRef = ref(null)
 
   // Apply the layout to organize nodes after generation
   function initializeGraph () {
     nodes.value = generateNodes(factories.value)
     edges.value = generateEdges(factories.value, nodes.value)
-    const updatedNodes = layout(nodes.value, edges.value, 'LR')
-    nodes.value = [...updatedNodes]
   }
 
-  // Apply initial layout when nodes and edges are created
-  initializeGraph()
+  // Handle node rendered and nodesInitialized events
+  function onNodeRendered () {
+    renderedNodeCount++
+    if (renderedNodeCount === nodes.value.length) {
+      onNodesInitialized()
+    }
+  }
 
-  console.log('nodes', nodes.value)
-  console.log('edges', edges.value)
+  function onNodesInitialized () {
+    console.log('Nodes initialized')
+    // All nodes have rendered, apply Dagre layout
+    const updatedNodes = layout(nodes.value, edges.value, 'LR')
+    nodes.value = [...updatedNodes]
+    console.log('All nodes rendered, updated with Dagre layout:', nodes.value)
+  }
+
+  // Apply initial layout after the component mounts
+  onMounted(() => {
+    initializeGraph()
+    console.log('Initial nodes:', nodes.value)
+    console.log('Initial edges:', edges.value)
+  })
 </script>
 
 <style>

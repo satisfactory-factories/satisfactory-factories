@@ -14,10 +14,10 @@ export function useLayout () {
     const dagreGraph = new dagre.graphlib.Graph({ multigraph: true })
     dagreGraph.setGraph({
       rankdir: direction,
-      marginx: 100,
-      marginy: 100,
-      ranksep: 250,
-      nodesep: 250,
+      marginx: 25,
+      marginy: 25,
+      ranksep: 150,
+      nodesep: 50,
     })
     dagreGraph.setDefaultEdgeLabel(() => ({}))
 
@@ -28,24 +28,26 @@ export function useLayout () {
     for (const node of nodes) {
       // Use the findNode function to access the node's dimensions (if already rendered)
       const graphNode = findNode(node.id)
-      console.log(`Adding node to dagre graph: ${node.id}`, graphNode)
+      console.log(`Adding node to dagre graph: ${node.id}`, graphNode?.dimensions.width, graphNode?.dimensions.height, graphNode)
 
       // Set node dimensions in dagre (using defaults if no dimensions available)
       dagreGraph.setNode(node.id, {
-        width: graphNode?.dimensions.width || 150,
-        height: graphNode?.dimensions.height || 50,
+        width: graphNode?.dimensions.width || 0,
+        height: graphNode?.dimensions.height || 0,
       })
     }
 
     // Add edges to the graph
     for (const edge of edges) {
-      console.log(`Adding edge to dagre graph: ${edge.source} -> ${edge.target}`)
+      console.log(`Adding edge: ${edge.source} -> ${edge.target}`)
       dagreGraph.setEdge(edge.source, edge.target)
     }
 
     // Compute layout with dagre
     console.log('Computing layout with dagre')
     dagre.layout(dagreGraph)
+
+    console.log('Updated nodes', nodes)
 
     // Set nodes with updated positions from dagre layout
     return nodes.map(node => {
