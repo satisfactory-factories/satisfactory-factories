@@ -299,12 +299,6 @@
     updateWorldRawResources(gameData)
   }
 
-  const getPartDisplayName = (part: string | number): string => {
-    return gameData.items.rawResources[part]?.name ||
-      gameData.items.parts[part]?.name ||
-      `UNKNOWN PART ${part}!`
-  }
-
   const getProduct = (factory: Factory, part: string): FactoryItem | ByProductItem | undefined => {
     const product = factory.products.find(product => product.id === part)
     const byProduct = factory.byProducts.find(product => product.id === part)
@@ -422,7 +416,6 @@
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('deleteFactory', deleteFactory)
-  provide('getPartDisplayName', getPartDisplayName)
   provide('getBuildingDisplayName', getBuildingDisplayName)
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)

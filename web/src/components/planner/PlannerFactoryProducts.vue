@@ -160,8 +160,8 @@
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
+  import { getPartDisplayName } from '@/utils/helpers'
 
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
 

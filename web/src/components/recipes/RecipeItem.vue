@@ -37,8 +37,7 @@
 
 <script setup lang="ts">
   import { Recipe } from '@/interfaces/Recipe'
-  import { inject } from 'vue'
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
+  import { getPartDisplayName } from '@/utils/helpers'
 
   defineProps<{
     recipe: Recipe;

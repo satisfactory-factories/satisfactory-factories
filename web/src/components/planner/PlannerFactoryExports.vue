@@ -145,11 +145,11 @@
     FactoryItem, FactorySurplusItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
+  import { getPartDisplayName } from '@/utils/helpers'
 
+  import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => Factory
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
   const props = defineProps<{

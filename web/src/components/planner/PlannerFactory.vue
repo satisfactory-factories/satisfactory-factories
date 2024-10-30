@@ -163,13 +163,13 @@
   import { defineProps, inject } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
+  import { getPartDisplayName } from '@/utils/helpers'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
 
   defineProps<{
     factory: Factory

@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, provide, ref } from 'vue'
+  import { computed, ref } from 'vue'
   import RecipeSearchItem from './RecipeSearchItem.vue'
   import { Recipe } from '@/interfaces/Recipe'
   import { DataInterface } from '@/interfaces/DataInterface'
@@ -78,15 +78,6 @@
   const toggleFicsmas = () => {
     showFicsmas.value = !showFicsmas.value
   }
-
-  const getPartDisplayName = (part: string | number): string => {
-    return props.gameData.items.rawResources[part]?.name ||
-      props.gameData.items.parts[part]?.name ||
-      `UNKNOWN PART ${part}`
-  }
-
-  provide('getPartDisplayName', getPartDisplayName)
-
 </script>
 
 <style scoped>

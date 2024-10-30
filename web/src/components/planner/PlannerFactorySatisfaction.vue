@@ -146,8 +146,8 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { computed, inject } from 'vue'
   import { addProductToFactory } from '@/utils/factory-management/products'
+  import { getPartDisplayName } from '@/utils/helpers'
 
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean

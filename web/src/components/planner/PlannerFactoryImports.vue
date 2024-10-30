@@ -142,10 +142,10 @@
   import { defineProps } from 'vue'
   import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
   import { addInputToFactory } from '@/utils/factory-management/inputs'
+  import { getPartDisplayName } from '@/utils/helpers'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
-  const getPartDisplayName = inject('getPartDisplayName') as (part: string) => string
   const validFactoriesForImports = inject('factoriesWithSurplus') as ComputedRef<Factory[]>
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
