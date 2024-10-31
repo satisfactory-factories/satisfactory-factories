@@ -63,7 +63,6 @@
             :help-text="helpText"
             :world-raw-resources="worldRawResources"
           />
-
           <planner-factory
             v-for="(factory) in factories"
             :key="factory.id"

@@ -64,17 +64,17 @@
             :game-data="gameData"
             :help-text="helpText"
           />
-          <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
+          <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <planner-factory-imports
             :factory="factory"
             :help-text="helpText"
           />
-          <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
+          <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <planner-factory-satisfaction
             :factory="factory"
             :help-text="helpText"
           />
-          <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
+          <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <planner-factory-exports
             :factory="factory"
             :game-data="gameData"
@@ -157,6 +157,7 @@
       </v-card>
     </v-col>
   </v-row>
+  <v-divider class="my-6" color="white" thickness="5px" />
 </template>
 
 <script setup lang="ts">
