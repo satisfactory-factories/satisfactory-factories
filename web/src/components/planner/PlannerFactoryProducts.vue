@@ -38,6 +38,7 @@
           variant="outlined"
           @update:model-value="updateProductSelection(product, factory)"
         />
+        <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
         <v-autocomplete
           v-model="product.recipe"
           class="mr-2"
@@ -46,7 +47,6 @@
           :items="getRecipesForPartSelector(product.id)"
           label="Recipe"
           max-width="300px"
-          prepend-icon="fas fa-hat-chef"
           variant="outlined"
           @update:model-value="updateFactory(factory)"
         />
@@ -61,7 +61,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          class="rounded mb-2"
+          class="rounded"
           color="blue"
           :disabled="product.displayOrder === 0"
           icon="fas fa-arrow-up"
@@ -70,7 +70,7 @@
           @click="updateOrder('up', product)"
         />
         <v-btn
-          class="rounded ml-1 mb-2"
+          class="rounded ml-1"
           color="blue"
           :disabled="product.displayOrder === factory.products.length - 1"
           icon="fas fa-arrow-down"
@@ -79,7 +79,7 @@
           @click="updateOrder('down', product)"
         />
         <v-btn
-          class="rounded mx-2 mb-2"
+          class="rounded mx-2"
           color="red"
           icon="fas fa-trash"
           size="small"
