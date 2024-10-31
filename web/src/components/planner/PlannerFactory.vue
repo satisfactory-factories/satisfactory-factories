@@ -139,7 +139,7 @@
                 <v-chip
                   v-for="part in factory.dependencies.requests[dependant]"
                   :key="part.part"
-                  class="sf-chip blue"
+                  class="sf-chip blue ml-2"
                 >
                   <game-asset
                     v-if="part.part"
