@@ -165,9 +165,9 @@ function getProducingBuildings(data: any[]): string[] {
         .forEach((entry: any) => {
             if (entry.mProducedIn) {
                 // Updated regex to capture building names inside quotes
-                const producedInBuildings = entry.mProducedIn.match(/\/([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/g)
+                const producedInBuildings = entry.mProducedIn.match(/\/(\w+)\/(\w+)\.(\w+)_C/g)
                     ?.map((building: string) => {
-                        const match = building.match(/\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/);
+                        const match = RegExp(/\/(\w+)\.(\w+)_C/).exec(building);
                         if (match) {
                             // Remove "build_" prefix if present
                             return match[2].startsWith('Build_') ? match[2].replace('Build_', '').toLowerCase() : match[2].toLowerCase();
@@ -230,7 +230,7 @@ function getRecipes(
             if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
 
             // Check if there's a building in the producingBuildings map that matches the recipe's producing building
-            const rawBuildingKey = recipe.mProducedIn.match(/\/([^\/]+)\./g);
+            const rawBuildingKey = recipe.mProducedIn.match(/\/([^/]+)\./g);
 
             if (!rawBuildingKey) {
                 return false;
@@ -248,7 +248,7 @@ function getRecipes(
                 ? recipe.mIngredients
                     .match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
                     ?.map((ingredientStr: string) => {
-                        const match = ingredientStr.match(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/);
+                        const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
                         if (match) {
                             const partName = match[1];
                             let amount = parseInt(match[2], 10);
@@ -293,7 +293,7 @@ function getRecipes(
             });
 
             // Handle multiple building power values and remove "build_" prefix
-            const producedIn = recipe.mProducedIn.match(/\/([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)_C/)?.[2]?.replace(/build_/gi, '').toLowerCase() || '';
+            const producedIn = recipe.mProducedIn.match(/\/(\w+)\/(\w+)\.(\w+)_C/)?.[2]?.replace(/build_/gi, '').toLowerCase() || '';
 
             const validBuilding = producedIn && !['bp_workbenchcomponent', 'factorygame'].includes(producedIn) ? producedIn : '';
 
