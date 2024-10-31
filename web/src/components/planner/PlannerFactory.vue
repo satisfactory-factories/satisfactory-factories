@@ -157,7 +157,7 @@
       </v-card>
     </v-col>
   </v-row>
-  <v-divider class="my-6" color="white" thickness="5px" />
+  <v-divider class="my-6 opacity-50" color="blue" thickness="5px" />
 </template>
 
 <script setup lang="ts">
