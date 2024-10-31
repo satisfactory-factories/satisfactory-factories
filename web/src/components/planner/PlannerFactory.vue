@@ -179,7 +179,7 @@
   }>()
 
   const showDebug = ref(false)
-  const devMode = ref(true)
+  const devMode = ref(false)
 
   const factoryClass = (factory: Factory) => {
     return {
