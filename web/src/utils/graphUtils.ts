@@ -64,7 +64,7 @@ export const generateEdges = (factories: Factory[], nodes: CustomNode[]): Edge[]
           target: reqFac.id.toString(),
           sourceHandle: `${factory.id}-${request.part}`,
           targetHandle: `${reqFac.id}-${request.part}`,
-          label: getPartDisplayName(request.part),
+          label: `${getPartDisplayName(request.part)}: ${request.amount}/m`,
           type: 'smoothstep',
           animated: true,
           markerEnd: MarkerType.ArrowClosed,

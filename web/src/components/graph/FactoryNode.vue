@@ -40,12 +40,6 @@
               :key="`${data.factory.id}-${product.id}`"
               class="position-relative"
             >
-              <Handle
-                :id="`${data.factory.id}-${product.id}`"
-                class="handle handle-source"
-                :position="props.sourcePosition"
-                type="source"
-              />
               <v-chip class="sf-chip">
                 <game-asset :subject="product.id" type="item" />
                 <span class="ml-2">{{ getPartDisplayName(product.id) }}: {{ product.amount }}/min</span>
@@ -58,14 +52,22 @@
             <p class="text-body-1">
               Exporting:
             </p>
-            <v-chip
+            <div
               v-for="(product, part) in data.factory.surplus"
               :key="`${data.factory.id}-${part}`"
-              class="sf-chip"
+              class="position-relative"
             >
-              <game-asset :subject="part" type="item" />
-              <span class="ml-2">{{ getPartDisplayName(part) }}: {{ product.amount }}/min</span>
-            </v-chip>
+              <v-chip class="sf-chip">
+                <game-asset :subject="part" type="item" />
+                <span class="ml-2">{{ getPartDisplayName(part) }}: {{ product.amount }}/min</span>
+              </v-chip>
+              <Handle
+                :id="`${data.factory.id}-${part}`"
+                class="handle handle-source"
+                :position="props.sourcePosition"
+                type="source"
+              />
+            </div>
           </v-col>
         </v-row>
       </v-card-text>

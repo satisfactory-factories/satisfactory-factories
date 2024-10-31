@@ -14,10 +14,10 @@ export function useLayout () {
     const dagreGraph = new dagre.graphlib.Graph({ multigraph: true })
     dagreGraph.setGraph({
       rankdir: direction,
-      marginx: 25,
-      marginy: 25,
-      ranksep: 150,
-      nodesep: 50,
+      marginx: 50,
+      marginy: 50,
+      ranksep: 175,
+      nodesep: 100,
     })
     dagreGraph.setDefaultEdgeLabel(() => ({}))
 
@@ -32,8 +32,8 @@ export function useLayout () {
 
       // Set node dimensions in dagre (using defaults if no dimensions available)
       dagreGraph.setNode(node.id, {
-        width: graphNode?.dimensions.width || 0,
-        height: graphNode?.dimensions.height || 0,
+        width: graphNode?.dimensions.width ?? 0,
+        height: graphNode?.dimensions.height ?? 0,
       })
     }
 

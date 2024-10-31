@@ -39,6 +39,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SegmentedBar: typeof import('./components/SegmentedBar.vue')['default']
-    Todo: typeof import('./components/planner/Todo.vue')['default']
+    Todo: typeof import('./components/graph/Todo.vue')['default']
   }
 }

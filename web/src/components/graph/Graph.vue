@@ -1,9 +1,11 @@
 <template>
-  <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
-  <p class="text-center">
-    This page is highly experimental and is being actively worked on. It is nowhere near complete.
-  </p>
-  <Todo />
+  <div class="notice">
+    <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
+    <p class="text-center">
+      While the graph is mostly functional, many features are missing. Expect overlapping lines and nodes out of place.
+    </p>
+  </div>
+
   <VueFlow
     :key="nodes.length"
     ref="vueFlowRef"
@@ -81,4 +83,12 @@
 
 /* import the default theme, this is optional but generally recommended */
 @import '@vue-flow/core/dist/theme-default.css';
+
+.notice {
+  width: 1000px;
+  position: absolute;
+  top: 12vh;
+  left: calc(50% - 500px);
+  z-index: 100;
+}
 </style>
