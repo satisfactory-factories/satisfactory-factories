@@ -1,0 +1,43 @@
+---
+name: Release
+
+on:
+  workflow_call:
+    outputs:
+      version:
+        value: ${{ jobs.release.outputs.version }}
+        description: 'Version of the release'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.newTag }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      # Needed as when a badge is updated, checkout for some reason won't pull it in
+      - name: Ensure the very latest commit has been pulled
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Bump package version
+        id: version
+        uses: phips28/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target-branch: main
+
+      - name: Create new GitHub Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          tag: ${{ steps.version.outputs.newTag }}
+          generateReleaseNotes: true
+          makeLatest: true

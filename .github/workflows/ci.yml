@@ -1,0 +1,33 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    # Ensures only actual code changes trigger the workflow, otherwise we don't want to create a full on build.
+    paths:
+      - 'backend/**'
+
+jobs:
+  build:
+    name: Build Backend
+    uses: ./.github/workflows/backend/build.yml
+    secrets: inherit
+    working-directory: backend
+
+  release:
+    name: Create Release
+    needs: build
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    working-directory: backend
+
+  publish:
+    name: Build & Publish Backend
+    needs: [build, release]
+    with:
+      version: ${{ needs.release.outputs.version }}
+    uses: ./.github/workflows/backend/docker-publish.yml
+    secrets: inherit
+    working-directory: backend
+
+

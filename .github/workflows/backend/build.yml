@@ -1,0 +1,71 @@
+name: "Backend: Build"
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      store-path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.15.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.1.2
+          run_install: false
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: node_modules
+          key: "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"
+          restore-keys: |
+            backend-${{ runner.os }}-pnpm-store-
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run linter check
+        run: pnpm lint
+
+      - name: Check if app builds properly
+        run: pnpm build
+
+      - name: Run tests with coverage
+        run: pnpm test:ci
+
+      - name: Generate coverage badges
+        uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: main
+          coverage-summary-path: ./coverage/coverage-summary.json
+          commit-message: "ci(bot): Update coverage badges"
+          badges-icon: jest
+
+      - name: Calculate the new version
+        id: version
+        uses: phips28/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target-branch: main
+          skip-commit: 'true'
+          skip-tag: 'true'
+          skip-push: 'true'
+          tag_prefix: 'backend-'
+
+      # Need to wait a little bit for the last commit to fully register with GH, then pull it in
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '5'

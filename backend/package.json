@@ -1,9 +1,10 @@
 {
   "name": "factory-planner-backend",
-  "version": "1.0.0",
   "description": "Backend for Factory Planner with authentication and data sync",
   "author": "Matt Cavanagh",
+  "version": "0.1.0",
   "main": "backend.ts",
+  "license": "GNU GPLv3",
   "scripts": {
     "start": "ts-node backend.ts",
     "dev": "nodemon backend.ts"
@@ -15,7 +16,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1"
   },
-  "license": "ISC",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
