@@ -454,7 +454,7 @@
 
 <style scoped lang="scss">
 .planner-container {
-  max-width: 100%;
+  max-width: 1500px;
   height: calc(100vh - 112px);
   padding: 0;
   overflow-y: hidden;
