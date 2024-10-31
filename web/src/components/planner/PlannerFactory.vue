@@ -80,8 +80,8 @@
             :game-data="gameData"
             :help-text="helpText"
           />
-          <v-divider class="my-4 mx-n4" color="white" thickness="2px" />
-          <v-btn color="primary" @click="showDebug = !showDebug">
+          <v-divider v-if="devMode" class="my-4 mx-n4" color="white" thickness="2px" />
+          <v-btn v-if="devMode" color="primary" @click="showDebug = !showDebug">
             <i class="fas fa-bug" />
             <span class="ml-2">Show Debug Data</span>
           </v-btn>
@@ -179,6 +179,7 @@
   }>()
 
   const showDebug = ref(false)
+  const devMode = ref(true)
 
   const factoryClass = (factory: Factory) => {
     return {

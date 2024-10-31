@@ -32,7 +32,7 @@
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
         :key="`${inputIndex}-${input.outputPart}`"
-        class="pa-0 my-2 mx-1 align-center selectors"
+        class="px-4 py-3 my-2 mx-1 align-center selectors sub-card border-md rounded"
       >
         <v-autocomplete
           v-model="input.factoryId"

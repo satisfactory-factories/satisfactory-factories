@@ -15,7 +15,7 @@
     <div
       v-for="(product, productIndex) in factory.products"
       :key="productIndex"
-      class="px-4 my-2 border rounded bg-grey-darken-4"
+      class="px-4 my-2 border-md rounded sub-card"
     >
       <v-row class="selectors align-center ml-0 mt-3 mb-0">
         <span v-show="!product.id" class="mr-2">
@@ -30,7 +30,7 @@
         </span>
         <v-autocomplete
           v-model="product.id"
-          class="mr-6 mb-2"
+          class="mr-6"
           hide-details
           :items="autocompletePartItems"
           label="Item"
@@ -40,7 +40,7 @@
         />
         <v-autocomplete
           v-model="product.recipe"
-          class="mr-2 mb-2"
+          class="mr-2"
           :disabled="!product.id"
           hide-details
           :items="getRecipesForPartSelector(product.id)"
@@ -52,7 +52,7 @@
         />
         <v-text-field
           v-model.number="product.amount"
-          class="mr-2 mb-2"
+          class="mr-2"
           hide-details
           label="Qty /min"
           max-width="110px"
@@ -92,7 +92,7 @@
       </v-row>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
-        class="mt-0 mb-1 px-2 text-body-1 d-flex align-center"
+        class="mt-0 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Byproduct:</p>
         <v-chip
@@ -107,8 +107,8 @@
         </v-chip>
       </v-row>
       <v-row
-        v-show="Object.keys(product.requirements).length > 0"
-        class="mt-0 mb-1 px-2 text-body-1 d-flex align-center"
+        v-if="Object.keys(product.requirements).length > 0"
+        class="mt-1 mb-0 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
         <v-chip
@@ -123,7 +123,7 @@
           </span>
         </v-chip>
       </v-row>
-      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-2 text-body-1">
+      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-1 text-body-1">
         <span>
           <v-chip
             class="sf-chip orange"

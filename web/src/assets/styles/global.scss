@@ -46,7 +46,7 @@
 }
 
 .sub-card {
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(50, 50, 50) !important;
 
   &:last-of-type {
     border-bottom: 0;
@@ -55,8 +55,15 @@
 }
 
 .no-bottom {
+  &.border-md {
+    &:last-of-type {
+      margin-bottom: 0 !important;
+      box-shadow: 0 0 0 0;
+    }
+  }
+
   &:last-of-type {
-    border-bottom: 0 !important;
+    border-bottom: 0;
     margin-bottom: 0 !important;
     box-shadow: 0 0 0 0;
   }
