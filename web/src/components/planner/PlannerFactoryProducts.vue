@@ -92,7 +92,7 @@
       </v-row>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
-        class="mt-0 px-2 text-body-1 d-flex align-center"
+        class="my-1 mb-n1 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Byproduct:</p>
         <v-chip
