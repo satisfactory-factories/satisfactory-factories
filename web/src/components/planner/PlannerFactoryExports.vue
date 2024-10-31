@@ -94,15 +94,14 @@
           </div>
         </v-col>
         <v-col cols="12" md="7">
-          <!-- Yeah good luck trying to get this to type check nicely -->
           <planner-factory-export-calculator
             v-if="isCalculatorReady(factory, surplus.productId)"
-            :key="factory.exportCalculator.selected ?? surplus.productId"
-            :dest-factory="findFactory(getCalculatorSettings(factory, surplus.productId).selected)"
+            :key="`${factory.id}-${surplus.productId}`"
+            :dest-factory="findFactory(Number(getCalculatorSettings(factory, surplus.productId)!.selected))"
             :dest-factory-settings="getCalculatorDestFacSettings(
               factory,
               surplus.productId,
-              getCalculatorSettings(factory, surplus.productId).selected
+              getCalculatorSettings(factory, surplus.productId)!.selected
             )"
             :factory="factory"
             :game-data="gameData"
@@ -111,7 +110,7 @@
             :request="getRequestForPartByDestFac(
               factory,
               surplus.productId,
-              getCalculatorSettings(factory, surplus.productId).selected,
+              getCalculatorSettings(factory, surplus.productId)!.selected!,
             )"
           />
           <div v-else class="text-center">
@@ -158,6 +157,7 @@
 
   interface ExportsDisplay extends FactorySurplusItem {
     productId: string;
+    displayOrder?: number;
   }
 
   const exportsDisplay = computed((): ExportsDisplay[] => {

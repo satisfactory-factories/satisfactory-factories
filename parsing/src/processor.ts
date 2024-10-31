@@ -221,7 +221,6 @@ function getRecipes(
     producingBuildings: { [key: string]: number }
 ): Recipe[] {
     const recipes: any[] = [];
-    const uniqueProductsSet = new Set<string>();
 
     data
         .filter((entry: any) => entry.Classes)
@@ -291,7 +290,6 @@ function getRecipes(
                     perMin,
                     isByProduct: products.length > 0
                 });
-                uniqueProductsSet.add(productName);
             });
 
             // Handle multiple building power values and remove "build_" prefix
@@ -304,7 +302,7 @@ function getRecipes(
                 : null;
             const building = {
                 name: producedIn,
-                power: powerPerBuilding
+                power: String(powerPerBuilding)
             }
 
             recipes.push({

@@ -20,7 +20,7 @@
             <v-chip
               class="sf-chip blue"
             >
-              <game-asset :subject="resourceKey" type="item" />
+              <game-asset :subject="resourceKey.toString() ?? 'unknown'" type="item" />
               <span class="ml-2">
                 <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ resource.amount }}/min
               </span>

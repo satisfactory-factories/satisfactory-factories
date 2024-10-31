@@ -958,7 +958,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -998,7 +998,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1044,7 +1044,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10400000000000001
+                "power": "0.10400000000000001"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1074,7 +1074,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1104,7 +1104,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1129,7 +1129,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1175,7 +1175,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10416666666666667
+                "power": "0.10416666666666667"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1205,7 +1205,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1235,7 +1235,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1260,7 +1260,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1.3333333333333333
+                "power": "1.3333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1285,7 +1285,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.5714285714285714
+                "power": "0.5714285714285714"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1308,7 +1308,7 @@
             "products": [],
             "building": {
                 "name": "assemblermk1",
-                "power": 0
+                "power": "0"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1343,7 +1343,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 13.75
+                "power": "13.75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1373,7 +1373,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 1.6
+                "power": "1.6"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1398,7 +1398,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.6666666666666666
+                "power": "0.6666666666666666"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1428,7 +1428,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1458,7 +1458,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1483,7 +1483,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.2
+                "power": "0.2"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1513,7 +1513,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 2.142857142857143
+                "power": "2.142857142857143"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1548,7 +1548,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1573,7 +1573,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.5
+                "power": "0.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1598,7 +1598,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.4
+                "power": "0.4"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1628,7 +1628,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 2.142857142857143
+                "power": "2.142857142857143"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1668,7 +1668,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 13.75
+                "power": "13.75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1698,7 +1698,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1728,7 +1728,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 3.3333333333333335
+                "power": "3.3333333333333335"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1758,7 +1758,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 3.75
+                "power": "3.75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1788,7 +1788,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.5
+                "power": "1.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1818,7 +1818,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1848,7 +1848,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 3
+                "power": "3"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1878,7 +1878,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1913,7 +1913,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 37.5
+                "power": "37.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1943,7 +1943,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 1.6
+                "power": "1.6"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -1973,7 +1973,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2003,7 +2003,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2028,7 +2028,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2058,7 +2058,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.05
+                "power": "0.05"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2094,7 +2094,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.060000000000000005
+                "power": "0.060000000000000005"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2124,7 +2124,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2154,7 +2154,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2195,7 +2195,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 12.152777777777779
+                "power": "12.152777777777779"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2225,7 +2225,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2261,7 +2261,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 5.785714285714286
+                "power": "5.785714285714286"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2291,7 +2291,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2321,7 +2321,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2351,7 +2351,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2397,7 +2397,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 13.125
+                "power": "13.125"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2427,7 +2427,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 2.5
+                "power": "2.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2457,7 +2457,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.5
+                "power": "1.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2492,7 +2492,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2522,7 +2522,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 0.8888888888888888
+                "power": "0.8888888888888888"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2552,7 +2552,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.25
+                "power": "1.25"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2582,7 +2582,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 0.5
+                "power": "0.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2612,7 +2612,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2652,7 +2652,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 75
+                "power": "75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2692,7 +2692,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 18.333333333333332
+                "power": "18.333333333333332"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2732,7 +2732,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2763,7 +2763,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 22.5
+                "power": "22.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2803,7 +2803,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 13.75
+                "power": "13.75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2833,7 +2833,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.005
+                "power": "0.005"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2879,7 +2879,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 17.5
+                "power": "17.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2909,7 +2909,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 0.75
+                "power": "0.75"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2944,7 +2944,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2974,7 +2974,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 1.0666666666666667
+                "power": "1.0666666666666667"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2999,7 +2999,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3024,7 +3024,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.4444444444444444
+                "power": "0.4444444444444444"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3054,7 +3054,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3084,7 +3084,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 1.3636363636363635
+                "power": "1.3636363636363635"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3114,7 +3114,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 3
+                "power": "3"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3144,7 +3144,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 1.7777777777777777
+                "power": "1.7777777777777777"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3174,7 +3174,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 3.2
+                "power": "3.2"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3220,7 +3220,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 87.5
+                "power": "87.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3250,7 +3250,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3275,7 +3275,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.05
+                "power": "0.05"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3300,7 +3300,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3330,7 +3330,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3360,7 +3360,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3395,7 +3395,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3425,7 +3425,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3455,7 +3455,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 30
+                "power": "30"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3486,7 +3486,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 17.307692307692307
+                "power": "17.307692307692307"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3511,7 +3511,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3541,7 +3541,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 30
+                "power": "30"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3571,7 +3571,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3601,7 +3601,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2.3076923076923075
+                "power": "2.3076923076923075"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3631,7 +3631,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 4.285714285714286
+                "power": "4.285714285714286"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3667,7 +3667,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 4.5
+                "power": "4.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3697,7 +3697,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.3636363636363635
+                "power": "1.3636363636363635"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3727,7 +3727,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3762,7 +3762,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3802,7 +3802,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 18.333333333333332
+                "power": "18.333333333333332"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3832,7 +3832,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2.5
+                "power": "2.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3862,7 +3862,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2.5
+                "power": "2.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3897,7 +3897,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 9.166666666666666
+                "power": "9.166666666666666"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3927,7 +3927,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.6666666666666667
+                "power": "1.6666666666666667"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3957,7 +3957,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 3
+                "power": "3"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3992,7 +3992,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4022,7 +4022,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2.5
+                "power": "2.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4052,7 +4052,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 5.333333333333333
+                "power": "5.333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4082,7 +4082,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4107,7 +4107,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4137,7 +4137,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 5.333333333333333
+                "power": "5.333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4162,7 +4162,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4192,7 +4192,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4217,7 +4217,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.07692307692307693
+                "power": "0.07692307692307693"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4247,7 +4247,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4277,7 +4277,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4317,7 +4317,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4347,7 +4347,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 5.333333333333333
+                "power": "5.333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4377,7 +4377,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 1.3333333333333333
+                "power": "1.3333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4417,7 +4417,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 12.5
+                "power": "12.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4447,7 +4447,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.03333333333333333
+                "power": "0.03333333333333333"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4487,7 +4487,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 18.333333333333332
+                "power": "18.333333333333332"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4517,7 +4517,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4557,7 +4557,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4597,7 +4597,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 18.333333333333332
+                "power": "18.333333333333332"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4627,7 +4627,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4663,7 +4663,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 8.5
+                "power": "8.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4688,7 +4688,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4718,7 +4718,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4754,7 +4754,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 20
+                "power": "20"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4784,7 +4784,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4814,7 +4814,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4854,7 +4854,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4895,7 +4895,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 125
+                "power": "125"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4925,7 +4925,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4955,7 +4955,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4990,7 +4990,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 18.75
+                "power": "18.75"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5015,7 +5015,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.04
+                "power": "0.04"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5040,7 +5040,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5065,7 +5065,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.4
+                "power": "0.4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5090,7 +5090,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.2
+                "power": "0.2"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5120,7 +5120,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5145,7 +5145,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -5170,7 +5170,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5195,7 +5195,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -5220,7 +5220,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5250,7 +5250,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5280,7 +5280,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5310,7 +5310,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5340,7 +5340,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5370,7 +5370,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5405,7 +5405,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5430,7 +5430,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5470,7 +5470,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 75
+                "power": "75"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5500,7 +5500,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 16
+                "power": "16"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -5525,7 +5525,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5555,7 +5555,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5585,7 +5585,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5610,7 +5610,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5635,7 +5635,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5670,7 +5670,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5700,7 +5700,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5725,7 +5725,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.01
+                "power": "0.01"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5750,7 +5750,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5780,7 +5780,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5805,7 +5805,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5830,7 +5830,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5860,7 +5860,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5890,7 +5890,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5931,7 +5931,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 52.5
+                "power": "52.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5950,7 +5950,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.01
+                "power": "0.01"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5985,7 +5985,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6015,7 +6015,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6045,7 +6045,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6075,7 +6075,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6105,7 +6105,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6130,7 +6130,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1.3333333333333333
+                "power": "1.3333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6155,7 +6155,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6185,7 +6185,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6215,7 +6215,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6240,7 +6240,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6270,7 +6270,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6305,7 +6305,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6351,7 +6351,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10500000000000001
+                "power": "0.10500000000000001"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6382,7 +6382,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 17.5
+                "power": "17.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6417,7 +6417,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 75
+                "power": "75"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6452,7 +6452,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6477,7 +6477,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6507,7 +6507,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6547,7 +6547,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6582,7 +6582,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6607,7 +6607,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6637,7 +6637,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1.5
+                "power": "1.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6672,7 +6672,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6708,7 +6708,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 16.875
+                "power": "16.875"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6738,7 +6738,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 16
+                "power": "16"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6763,7 +6763,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6793,7 +6793,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6818,7 +6818,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6843,7 +6843,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6868,7 +6868,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6898,7 +6898,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6928,7 +6928,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6958,7 +6958,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6993,7 +6993,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7023,7 +7023,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7053,7 +7053,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7099,7 +7099,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10400000000000001
+                "power": "0.10400000000000001"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7134,7 +7134,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 25
+                "power": "25"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7164,7 +7164,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7194,7 +7194,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7240,7 +7240,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 16.25
+                "power": "16.25"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7270,7 +7270,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7300,7 +7300,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7330,7 +7330,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7360,7 +7360,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7390,7 +7390,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7420,7 +7420,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7450,7 +7450,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7480,7 +7480,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7510,7 +7510,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7540,7 +7540,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7570,7 +7570,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7600,7 +7600,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7630,7 +7630,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 5
+                "power": "5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7655,7 +7655,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 2.5
+                "power": "2.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7686,7 +7686,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 45
+                "power": "45"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7726,7 +7726,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7756,7 +7756,7 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.0033333333333333335
+                "power": "0.0033333333333333335"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7781,7 +7781,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7806,7 +7806,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7831,7 +7831,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7861,7 +7861,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7886,7 +7886,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1.3333333333333333
+                "power": "1.3333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7911,7 +7911,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7946,7 +7946,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7976,7 +7976,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8006,7 +8006,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8031,7 +8031,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8056,7 +8056,7 @@
             ],
             "building": {
                 "name": "smeltermk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -8086,7 +8086,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8111,7 +8111,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8141,7 +8141,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8171,7 +8171,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8201,7 +8201,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8237,7 +8237,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 82.5
+                "power": "82.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8267,7 +8267,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8298,7 +8298,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 30
+                "power": "30"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8333,7 +8333,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8358,7 +8358,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8388,7 +8388,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8413,7 +8413,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 0.8
+                "power": "0.8"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8453,7 +8453,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 5.5
+                "power": "5.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8483,7 +8483,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8513,7 +8513,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8538,7 +8538,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -8563,7 +8563,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 1
+                "power": "1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8588,7 +8588,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8618,7 +8618,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8643,7 +8643,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8673,7 +8673,7 @@
             ],
             "building": {
                 "name": "foundrymk1",
-                "power": 5.333333333333333
+                "power": "5.333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8698,7 +8698,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8723,7 +8723,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 4
+                "power": "4"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8753,7 +8753,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8783,7 +8783,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8813,7 +8813,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8843,7 +8843,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 6
+                "power": "6"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8883,7 +8883,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8929,7 +8929,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10400000000000001
+                "power": "0.10400000000000001"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8975,7 +8975,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.10833333333333334
+                "power": "0.10833333333333334"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9015,7 +9015,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 27.5
+                "power": "27.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9040,7 +9040,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": "0.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9080,7 +9080,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9115,7 +9115,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 1.1
+                "power": "1.1"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9150,7 +9150,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 1.5
+                "power": "1.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9180,7 +9180,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 6
+                "power": "6"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9211,7 +9211,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9242,7 +9242,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9273,7 +9273,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9304,7 +9304,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9335,7 +9335,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9366,7 +9366,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": "20"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9397,7 +9397,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 12.5
+                "power": "12.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9428,7 +9428,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9459,7 +9459,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 15
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9490,7 +9490,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": "20"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9521,7 +9521,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9552,7 +9552,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 10
+                "power": "10"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9587,7 +9587,7 @@
             ],
             "building": {
                 "name": "manufacturermk1",
-                "power": 55
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9617,7 +9617,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.008333333333333333
+                "power": "0.008333333333333333"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9647,7 +9647,7 @@
             ],
             "building": {
                 "name": "assemblermk1",
-                "power": 7.5
+                "power": "7.5"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9672,7 +9672,7 @@
             ],
             "building": {
                 "name": "constructormk1",
-                "power": 2
+                "power": "2"
             },
             "isAlternate": false,
             "isFicsmas": false

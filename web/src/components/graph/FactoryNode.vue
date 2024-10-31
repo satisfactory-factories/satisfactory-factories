@@ -24,7 +24,7 @@
                 type="target"
               />
               <v-chip class="sf-chip">
-                <game-asset :subject="input.outputPart" type="item" />
+                <game-asset :subject="input.outputPart ?? 'unknown'" type="item" />
                 <span class="ml-2">{{ getPartDisplayName(input.outputPart) }}: {{ input.amount }}/min</span>
               </v-chip>
             </div>
@@ -58,7 +58,7 @@
               class="position-relative"
             >
               <v-chip class="sf-chip">
-                <game-asset :subject="part" type="item" />
+                <game-asset :subject="part.toString() ?? 'unknown'" type="item" />
                 <span class="ml-2">{{ getPartDisplayName(part) }}: {{ product.amount }}/min</span>
               </v-chip>
               <Handle

@@ -13,6 +13,7 @@
 
   const closeAuthTray = () => {
     if (authRef.value) {
+      // @ts-ignore
       authRef.value.closeTray()
     }
   }

@@ -21,7 +21,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'smeltermk1',
-      power: 4,
+      power: '4',
     },
     isAlternate: false,
     isFicsmas: false,
@@ -46,7 +46,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'smeltermk1',
-      power: 4,
+      power: '4',
     },
     isAlternate: false,
     isFicsmas: false,
@@ -71,7 +71,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'constructormk1',
-      power: 2,
+      power: '2',
     },
     isAlternate: false,
     isFicsmas: false,
@@ -96,7 +96,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'constructormk1',
-      power: 4,
+      power: '4',
     },
     isAlternate: false,
     isFicsmas: false,
@@ -127,7 +127,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'oilrefinery',
-      power: 17.5,
+      power: '17.5',
     },
     isAlternate: false,
     isFicsmas: false,

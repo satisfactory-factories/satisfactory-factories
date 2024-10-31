@@ -12,7 +12,7 @@ export interface Recipe {
   products: RecipeItem[];
   building: {
     name: string;
-    power: string | number; // TODO: Fix the data to make it string / floats
+    power: string;
   }
   isAlternate: boolean;
   isFicsmas: boolean;
