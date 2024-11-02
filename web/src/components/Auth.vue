@@ -157,6 +157,8 @@
     if (loggedInUser && token) {
       validateToken()
     }
+
+    console.log(process.env)
   })
 
   onBeforeUnmount(() => {
