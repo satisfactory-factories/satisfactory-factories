@@ -14,13 +14,13 @@ jobs:
     secrets: inherit
 
   release:
-    name: Create Release
+    name: Create Backend Release
     needs: build
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/backend-release.yml
     secrets: inherit
 
   publish:
-    name: Build & Publish Backend
+    name: Build & Publish Backend Docker
     needs: [build, release]
     with:
       version: ${{ needs.release.outputs.version }}
