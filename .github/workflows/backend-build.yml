@@ -59,6 +59,9 @@ jobs:
 
       - name: Calculate the new version
         id: version
+        run: |
+          cd backend
+          npx gh-action-bump-version
         uses: phips28/gh-action-bump-version@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,6 +71,7 @@ jobs:
           skip-tag: 'true'
           skip-push: 'true'
           tag-prefix: 'backend-'
+          PACKAGEJSON_DIR: 'backend'
 
       # Need to wait a little bit for the last commit to fully register with GH, then pull it in
       - uses: GuillaumeFalourd/wait-sleep-action@v1
