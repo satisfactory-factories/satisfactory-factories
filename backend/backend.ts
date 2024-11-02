@@ -25,11 +25,11 @@ app.use(Express.json());
 // MongoDB Configuration
 // *************************************************
 
-mongoose.connect(process.env.MONGO_URI ?? 'mongodb://localhost:27017/factory_planner', {
+mongoose.connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/factory_planner', {
   bufferCommands: true,
-  dbName: 'factory_planner',
-  user: process.env.MONGO_USER ?? undefined,
-  pass: process.env.MONGO_PASS ?? undefined,
+  dbName: process.env.MONGODB_DATABASE ?? 'factory_planner',
+  user: process.env.MONGODB_USER ?? undefined,
+  pass: process.env.MONGODB_PASS ?? undefined,
   autoIndex: true,
   autoCreate: true,
 })
