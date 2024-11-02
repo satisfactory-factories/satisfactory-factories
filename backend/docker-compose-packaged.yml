@@ -8,8 +8,6 @@ services:
       - backend
     env_file:
       - .env
-    environment:
-      - MONGO_URI=mongodb://sf-db:27017/factory_planner
     ports:
       - "3001:3001"
     volumes:
