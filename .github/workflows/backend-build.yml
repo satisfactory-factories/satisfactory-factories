@@ -71,6 +71,7 @@ jobs:
           skip-tag: 'true'
           skip-push: 'true'
           tag-prefix: 'backend-'
+          PACKAGE_FILENAME: 'backend/package.json'
 
       # Need to wait a little bit for the last commit to fully register with GH, then pull it in
       - uses: GuillaumeFalourd/wait-sleep-action@v1
