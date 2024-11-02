@@ -416,14 +416,13 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .tray {
   position: absolute;
-  top: 0;
+  top: 45px;
   right: 0;
-  max-width: 400px;
+  width: 400px;
   z-index: 10 !important;
-  margin-top: 10px;
 }
 .lightRed {
   color: lightcoral;
