@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     # Ensures only actual code changes trigger the workflow, otherwise we don't want to create a full on build.
-    paths:
-      - 'backend/**'
+#    paths:
+#      - 'backend/**'
 
 jobs:
   build:
