@@ -56,24 +56,3 @@ jobs:
 #          coverage-summary-path: ./coverage/coverage-summary.json
 #          commit-message: "ci(bot): Update coverage badges"
 #          badges-icon: jest
-
-      - name: List all files in the working directory
-        run: ls -la
-
-      - name: Calculate the new version
-        id: version
-        uses: phips28/gh-action-bump-version@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          target-branch: main
-          skip-commit: 'true'
-          skip-tag: 'true'
-          skip-push: 'true'
-          tag-prefix: 'backend-'
-          PACKAGE_FILENAME: 'backend/package.json'
-
-      # Need to wait a little bit for the last commit to fully register with GH, then pull it in
-      - uses: GuillaumeFalourd/wait-sleep-action@v1
-        with:
-          time: '5'
