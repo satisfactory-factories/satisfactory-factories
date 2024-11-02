@@ -113,6 +113,7 @@
   import { onMounted, ref, watch } from 'vue'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
+  import { config } from '@/config/config'
 
   const trayOpen = ref(false)
   const username = ref('')
@@ -120,7 +121,7 @@
   const showLogin = ref(true)
   const showRegister = ref(false)
   const errorMessage = ref('')
-  const apiUrl = 'http://localhost:3001'
+  const apiUrl = config.apiUrl
   const lastSavedDisplay = ref('')
   const isSaving = ref(false)
   const showSessionExpiredAlert = ref(false)
