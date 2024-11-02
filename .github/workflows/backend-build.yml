@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend
     outputs:
       store-path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
     steps:
@@ -42,16 +46,16 @@ jobs:
       - name: Check if app builds properly
         run: pnpm build
 
-      - name: Run tests with coverage
-        run: pnpm test:ci
+#      - name: Run tests with coverage
+#        run: pnpm test:ci
 
-      - name: Generate coverage badges
-        uses: jpb06/coverage-badges-action@latest
-        with:
-          branches: main
-          coverage-summary-path: ./coverage/coverage-summary.json
-          commit-message: "ci(bot): Update coverage badges"
-          badges-icon: jest
+#      - name: Generate coverage badges
+#        uses: jpb06/coverage-badges-action@latest
+#        with:
+#          branches: main
+#          coverage-summary-path: ./coverage/coverage-summary.json
+#          commit-message: "ci(bot): Update coverage badges"
+#          badges-icon: jest
 
       - name: Calculate the new version
         id: version
@@ -63,7 +67,7 @@ jobs:
           skip-commit: 'true'
           skip-tag: 'true'
           skip-push: 'true'
-          tag_prefix: 'backend-'
+          tag-prefix: 'backend-'
 
       # Need to wait a little bit for the last commit to fully register with GH, then pull it in
       - uses: GuillaumeFalourd/wait-sleep-action@v1

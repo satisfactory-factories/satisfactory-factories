@@ -10,24 +10,19 @@ on:
 jobs:
   build:
     name: Build Backend
-    uses: ./.github/workflows/backend/build.yml
+    uses: ./.github/workflows/backend-build.yml
     secrets: inherit
-    working-directory: backend
 
   release:
     name: Create Release
     needs: build
     uses: ./.github/workflows/release.yml
     secrets: inherit
-    working-directory: backend
 
   publish:
     name: Build & Publish Backend
     needs: [build, release]
     with:
       version: ${{ needs.release.outputs.version }}
-    uses: ./.github/workflows/backend/docker-publish.yml
+    uses: ./.github/workflows/backend-docker-publish.yml
     secrets: inherit
-    working-directory: backend
-
-

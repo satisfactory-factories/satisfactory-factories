@@ -1,5 +1,4 @@
 name: "Backend: Docker Publish"
-
 on:
   workflow_call:
     inputs:
@@ -22,6 +21,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend
     permissions:
       contents: read
       packages: write
