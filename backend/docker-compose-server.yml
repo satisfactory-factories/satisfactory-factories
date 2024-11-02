@@ -23,6 +23,7 @@ services:
       - .env
     volumes:
       - ./data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
 
 networks:
   backend:
