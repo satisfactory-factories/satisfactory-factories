@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    networks:
+      - backend
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=mongodb://sf-db:27017/factory_planner
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+    command: pnpm start
+  mongo:
+    image: mongo:8.0.3
+    container_name: sf-db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data/db
+
+networks:
+  backend:
+    name: backend
