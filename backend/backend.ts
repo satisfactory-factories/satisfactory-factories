@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 import { Query, Send } from "express-serve-static-core";
 import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -20,6 +21,13 @@ const PORT = 3001;
 const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
+
+// Add CORS middleware
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://api.satisfactory-factories.app'], // Replace with your allowed origins, e.g., 'http://localhost:3000' or specific domains
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // *************************************************
 // MongoDB Configuration
