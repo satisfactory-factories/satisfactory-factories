@@ -1,12 +1,12 @@
 <template>
   <v-toolbar dark>
-    <v-toolbar-title>
-      <v-icon icon="fas fa-industry-alt" />
+    <div class="d-flex align-center ml-2 font-weight-bold text-h6">
+      <img alt="Site logo" src="/SF.png" style="max-width: 48px;">
       <span class="ml-3">Satisfactory Factories</span>
       <span class="ml-2">
         <v-chip class="sf-chip blue small">ALPHA</v-chip>
       </span>
-    </v-toolbar-title>
+    </div>
     <template #extension>
       <v-tabs
         v-model="tab"
