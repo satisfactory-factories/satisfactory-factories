@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-2 border-b-md">
+    <div class="mb-2 pb-2 border-b-md">
       <span class="font-weight-bold mr-2">Inputs:</span>
       <v-chip
         v-for="ingredient in recipe.ingredients"
