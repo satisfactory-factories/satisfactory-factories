@@ -452,7 +452,7 @@
   }
 
   @media screen and (min-width: 2560px) {
-    margin-left: calc((100vw - 2500px)/2) !important;
+    margin-left: calc((100vw - 2050px)/2) !important;
   }
 
   .two-pane-container {
