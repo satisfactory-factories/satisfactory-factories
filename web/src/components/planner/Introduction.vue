@@ -5,22 +5,25 @@
       <v-card-subtitle class="text-center">Bringing sanity to modular factories!</v-card-subtitle>
       <v-card-text class="text-body-1 text-left">
         <p class="text-h5">Why does this tool exist?</p>
-        <p><b>Satisfactory Factories</b> is designed to help you plan and manage modular (or floors of a mega-factory) factory production chains. As your factory demands scale (e.g. starting a new tier), keeping track of all the interconnected elements of your production chain can become overwhelming, often leading to overlooked areas and production bottlenecks without realising. This tool automates the calculations, ensuring that every part of your factory scales properly to meet new demands, saving you from tedious and repetitive math.</p>
-        <p>Unlike other production planners, such as Satisfactory Tools, Satisfactory Factories focuses on a per-factory level of demand rather than what you need to produce a particular part (although it can do that on a per-factory level). You can use Satisfactory Tools to determine the quantities of parts you need and then use this tool to map out and visualize the factories required to meet those numbers, and maintain the production chain in future changes.</p>
+        <p>TL;DR: Create factory links, track dependencies between factories, and plan your production goals on a per-factory basis and be informed when bottlenecks occur.</p>
+        <p><b>Satisfactory Factories</b> helps plan and manage modular factory (or levels in mega-factories) production chains. Tracking interconnected factories and their dependencies can be overwhelming, leading to overlooked areas and bottlenecks when demands change. This tool automates calculations, ensuring proper scaling for new demands and saving time. Unlike other planners that focus on "what is needed to make X part", SF focuses on per-factory demand rather than <i>just</i> per-part demand. You can use it to determine part quantities and import requirements for future changes, maintaining the production chain and highlighting issues / bottlenecks.</p>
         <div class="py-2 mb-4 border-t-md border-b-md rounded">
           <p class="text-h5">Enough yapping, how does it work?</p>
           <ul class="ml-4 mb-4">
-            <li>Firstly you create a <i class="fas fa-industry mr-2" /><b>Factory</b> (and give it a name!).</li>
-            <li>Then you define the <i class="fas fa-conveyor-belt-alt mr-2" /><b>Products</b> it is going to produce. You can also set up production items to use other items internally, these will be marked as <v-chip color="green">internal</v-chip>.</li>
-            <li>Create other factories and link factories together via an <i class="fas fa-arrow-to-right mr-2" /><b>Import</b>. These use the Exports of other factories.</li>
-            <li>The <i class="fas fa-check mr-2" /><b>Satisfaction</b> section then tells you if you're short of inputs or internal production to satisfy the factory's demands.</li>
-            <li>Any surplus (items left over after internal production requirements) will be marked under the <i class="fa fa-truck-container mr-2" /><b>Exports</b> section.</li>
-            <li>In the supplying factory you are then informed of the demands upon it, and if there are any issues with production that needs to increase due to the demands set upon it.</li>
-            <li>Factories that don't have enough imports / internal production to match demand or don't produce enough to satisfy depending factories, are marked in <span class="text-red">red</span> on both the main factory view and the list to the left.</li>
+            <li>Firstly you create a <i class="fas fa-industry mr-2  fa-fw" /><b>Factory</b> (and give it a name!).</li>
+            <li><i class="fas fa-conveyor-belt-alt mr-2 fa-fw" /><b>Products</b>: is what the factory is intending to produce (or to produce internally, these will be marked as <v-chip color="green" size="small">internal</v-chip>).</li>
+            <li><i class="fas fa-arrow-to-right mr-2 fa-fw" /><b>Imports</b>: is where you are bringing in items needed for production. These use the <i class="fa fa-truck-container mr-2" /><b>Exports</b> of other factories.</li>
+            <li><i class="fas fa-check mr-2 fa-fw" /><b>Satisfaction</b>: informs you if you're short of inputs or <v-chip color="green" size="small">internal</v-chip> production to satisfy the factory's production requirements.</li>
+            <li><i class="fa fa-truck-container mr-2 fa-fw" /><b>Exports</b>: any items after internal production is factored in, are listed as Exports ready to be shipped to other factories.</li>
           </ul>
+          <p class="mb-2">Factories that are:</p>
+          <ul class="ml-4 mb-2">
+            <li>Unsatisfied (missing imports, not enough internal production) etc</li>
+            <li>Not producing enough to meet export demands</li>
+          </ul>
+          <p>will be marked in <span class="text-red">red</span> on both the main factory view and the list to the left.</p>
           <p>My suggestion would be to start from "Goal first". Define a factory producing end products, then work your way back from there to the very base level products. But you can plan however you like!</p>
         </div>
-
         <div class="px-2 py-2 mb-4 bg-blue-grey-darken-3 rounded">
           <p>
             Please note - this project is in an <span class="text-orange font-weight-bold">alpha</span> state, it is very hot out of the oven and there may <i>(will)</i> be some bugs. Please report any bugs to the project's <a href="https://github.com/Maelstromeous/satisfactory-modular-facs/issues">GitHub Issues page</a> for now.
