@@ -452,7 +452,7 @@
   }
 
   @media screen and (min-width: 2560px) {
-    margin-left: calc((100vw - 2400px)/2) !important;
+    margin-left: calc((100vw - 2200px)/2) !important;
   }
 
   .two-pane-container {
@@ -477,7 +477,7 @@
     }
 
     @media screen and (min-width: 2560px) {
-      padding-right: calc(100vw - 2000px - 20vw) !important;
+      padding-right: calc(100vw - 1800px - 20vw) !important;
     }
   }
 }
