@@ -451,6 +451,10 @@
     width: 90vw;
   }
 
+  @media screen and (min-width: 2560px) {
+    margin-left: calc((100vw - 2400px)/2) !important;
+  }
+
   .two-pane-container {
     height: calc(100vh - 112px);
     margin: 0;
@@ -470,6 +474,10 @@
 
     @media screen and (min-width: 2000px) {
       padding-right: 10vw !important;
+    }
+
+    @media screen and (min-width: 2560px) {
+      padding-right: calc(100vw - 2000px - 20vw) !important;
     }
   }
 }
