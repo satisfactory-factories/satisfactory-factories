@@ -2,7 +2,7 @@
   <div class="notice">
     <h1 class="text-h4 text-center mt-4">Work in progress!</h1>
     <p class="text-center">
-      While the graph is mostly functional, many features are missing. Expect overlapping lines and nodes out of place.
+      While the graph is mostly functional (in testing, or it may be totally broken in certain circumstances), many features are missing. Expect overlapping lines and nodes out of place.
     </p>
   </div>
 
