@@ -24,35 +24,39 @@
         <span v-if="product.id" class="mr-2">
           <game-asset
             :key="product.id"
+            height="32px"
             :subject="product.id"
             type="item"
+            width="32px"
           />
         </span>
         <v-autocomplete
           v-model="product.id"
-          class="mr-4"
+          class="mr-3"
           hide-details
           :items="autocompletePartItems"
           label="Item"
-          max-width="350px"
+          max-width="300px"
           variant="outlined"
+          width="300px"
           @update:model-value="updateProductSelection(product, factory)"
         />
         <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
         <v-autocomplete
           v-model="product.recipe"
-          class="mr-4"
+          class="mr-3"
           :disabled="!product.id"
           hide-details
           :items="getRecipesForPartSelector(product.id)"
           label="Recipe"
           max-width="350px"
           variant="outlined"
+          width="350px"
           @update:model-value="updateFactory(factory)"
         />
         <v-text-field
           v-model.number="product.amount"
-          class="mr-4"
+          class="mr-3"
           hide-details
           label="Qty /min"
           max-width="110px"

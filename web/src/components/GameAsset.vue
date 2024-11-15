@@ -3,7 +3,8 @@
     v-if="!ficsmas && !unknown"
     :alt="subject"
     aspect-ratio="1/1"
-    inline
+    :max-height="heightPx"
+    :max-width="widthPx"
     :min-height="heightPx"
     :min-width="widthPx"
     :src="imgUrl"

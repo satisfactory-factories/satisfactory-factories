@@ -89,9 +89,10 @@
             <pre>{{ factory }}</pre>
           </div>
         </v-card-text>
+        <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
           <v-row
-            class="pa-4 px-4 my-0 mx-0"
+            class="py-2 px-4 my-0 mx-0"
             :class="hasExports(factory) ? 'border-b-md' : ''"
           >
             <p v-if="factory.products.length === 0" class="text-body-1">Empty factory! Select a product!</p>
@@ -109,7 +110,7 @@
                     type="item"
                   />
                 </span>
-                <span class="ml-2">
+                <span>
                   <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
                 </span>
                 <span
@@ -122,14 +123,14 @@
           </v-row>
           <div
             v-if="factory.dependencies?.requests && Object.keys(factory.dependencies?.requests).length > 0"
-            class="text-body-1 pa-2 px-4 mt-2 pb-1"
+            class="text-body-1 py-2 px-4 pb-1"
           >
-            <p>Exporting to:</p>
-            <div class="d-flex mx-n2">
+            <div class="d-flex align-center">
+              <p class="mr-2">Exports:</p>
               <div
                 v-for="dependant in Object.keys(factory.dependencies.requests)"
                 :key="dependant"
-                class="mr-2 no-bottom pa-2 rounded factory-link"
+                class="mr-2 pl-2 no-bottom rounded factory-link"
                 @click="navigateToFactory(dependant)"
               >
                 <i class="fas fa-industry" />

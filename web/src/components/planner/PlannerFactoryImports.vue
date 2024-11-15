@@ -32,18 +32,18 @@
       <v-row
         v-for="(input, inputIndex) in factory.inputs"
         :key="`${inputIndex}-${input.outputPart}`"
-        class="px-4 py-3 my-2 mx-1 align-center selectors sub-card border-md rounded"
+        class="px-4 py-3 my-2 mx-0 align-center selectors sub-card border-md rounded"
       >
+        <i class="fas fa-industry mr-2" style="width: 32px; height: 32px;" />
         <v-autocomplete
           v-model="input.factoryId"
-          class="mr-4"
+          class="mr-3"
           hide-details
           :items="validImportFactories(factory, inputIndex)"
           label="Factory"
-          max-width="374px"
-          prepend-icon="fas fa-industry"
+          max-width="300px"
           variant="outlined"
-          width="374px"
+          width="300px"
           @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
         />
         <span v-show="!input.outputPart" class="mr-2">
@@ -52,25 +52,27 @@
         <span v-if="input.outputPart" class="mr-2">
           <game-asset
             :key="input.outputPart"
+            height="32px"
             :subject="input.outputPart"
             type="item"
+            width="32px"
           />
         </span>
         <v-autocomplete
           v-model="input.outputPart"
-          class="mr-4"
+          class="mr-3"
           :disabled="!input.factoryId"
           hide-details
           :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
           label="Item"
-          max-width="374px"
+          max-width="350px"
           variant="outlined"
-          width="374px"
+          width="350px"
           @input="updateFactory(factory)"
         />
         <v-text-field
           v-model.number="input.amount"
-          class="mr-4"
+          class="mr-3"
           :disabled="!input.outputPart"
           hide-details
           label="Qty /min"

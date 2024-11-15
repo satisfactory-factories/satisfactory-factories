@@ -27,10 +27,10 @@
         <v-col class="border-e-md" cols="12" md="5">
           <div class="mb-4 d-flex align-center">
             <game-asset
-              height="40"
+              height="48"
               :subject="surplus.productId"
               type="item"
-              width="40"
+              width="48"
             />
             <span class="ml-2 text-h6">{{ getPartDisplayName(surplus.productId) }}</span>
           </div>
@@ -77,13 +77,13 @@
           </div>
           <div
             v-if="getRequestsForFactoryByProduct(factory, surplus.productId).length > 0"
-            class="mt-2"
+            class="mt-4"
           >
             <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
             <v-chip
               v-for="request in getRequestsForFactoryByProduct(factory, surplus.productId)"
               :key="request.factoryId"
-              class="sf-chip small"
+              class="sf-chip small mb-0"
               :color="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'primary' : ''"
               :style="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
               @click="changeCalculatorSelection(factory, request.factoryId, surplus.productId)"

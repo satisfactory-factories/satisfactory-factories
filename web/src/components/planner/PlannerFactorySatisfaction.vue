@@ -42,10 +42,10 @@
             >
               <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
                 <game-asset
-                  height="40"
+                  height="48"
                   :subject="partId"
                   type="item"
-                  width="40"
+                  width="48"
                 />
               </v-col>
               <v-col class="py-0">
