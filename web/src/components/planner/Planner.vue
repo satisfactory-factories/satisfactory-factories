@@ -1,6 +1,6 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
-  <v-container class="planner-container">
+  <div class="planner-container">
     <!-- The Drawer for Mobile -->
     <v-navigation-drawer
       v-model="drawer"
@@ -48,41 +48,31 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-md pa-0 main-content">
-        <v-container>
+      <v-col class="border-s-md pa-3 main-content">
+        <todo />
+        <planner-world-resources
+          :help-text="helpText"
+          :world-raw-resources="worldRawResources"
+        />
+        <planner-factory
+          v-for="(factory) in factories"
+          :key="factory.id"
+          :factory="factory"
+          :game-data="gameData"
+          :help-text="helpText"
+          :total-factories="factories.length"
+        />
+        <div class="mt-4 text-center">
           <v-btn
-            class="d-md-none mb-4"
             color="primary"
-            prepend-icon="mdi-menu"
-          >
-            Toggle Sidebar
-          </v-btn>
-
-          <todo />
-          <planner-world-resources
-            :help-text="helpText"
-            :world-raw-resources="worldRawResources"
-          />
-          <planner-factory
-            v-for="(factory) in factories"
-            :key="factory.id"
-            :factory="factory"
-            :game-data="gameData"
-            :help-text="helpText"
-            :total-factories="factories.length"
-          />
-          <div class="mt-4 text-center">
-            <v-btn
-              color="primary"
-              prepend-icon="fas fa-plus"
-              size="large"
-              @click="createFactory()"
-            >Add Factory</v-btn>
-          </div>
-        </v-container>
+            prepend-icon="fas fa-plus"
+            size="large"
+            @click="createFactory()"
+          >Add Factory</v-btn>
+        </div>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -453,10 +443,13 @@
 
 <style scoped lang="scss">
 .planner-container {
-  max-width: 1500px;
+  width: 100%;
   height: calc(100vh - 112px);
-  padding: 0;
-  overflow-y: hidden;
+
+  @media screen and (min-width: 2000px) {
+    margin-left: 10vw;
+    width: 90vw;
+  }
 
   .two-pane-container {
     height: calc(100vh - 112px);
@@ -464,15 +457,20 @@
   }
 
   .sticky-sidebar {
-    width: 350px;
-    max-width: 350px;
+    width: 375px;
+    max-width: 375px;
     max-height: 87vh; // For some reason this is not relative to the container
     overflow-y: auto; /* Make it scrollable */
   }
 
   .main-content {
+    width: 100%;
     max-height: calc(100vh - 112px);
     overflow-y: auto;
+
+    @media screen and (min-width: 2000px) {
+      padding-right: 10vw !important;
+    }
   }
 }
 </style>

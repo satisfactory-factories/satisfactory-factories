@@ -36,13 +36,14 @@
       >
         <v-autocomplete
           v-model="input.factoryId"
-          class="mr-6"
+          class="mr-4"
           hide-details
           :items="validImportFactories(factory, inputIndex)"
           label="Factory"
-          max-width="300px"
+          max-width="374px"
           prepend-icon="fas fa-industry"
           variant="outlined"
+          width="374px"
           @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
         />
         <span v-show="!input.outputPart" class="mr-2">
@@ -57,18 +58,19 @@
         </span>
         <v-autocomplete
           v-model="input.outputPart"
-          class="mr-2"
+          class="mr-4"
           :disabled="!input.factoryId"
           hide-details
           :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
           label="Item"
-          max-width="300px"
+          max-width="374px"
           variant="outlined"
+          width="374px"
           @input="updateFactory(factory)"
         />
         <v-text-field
           v-model.number="input.amount"
-          class="mr-2"
+          class="mr-4"
           :disabled="!input.outputPart"
           hide-details
           label="Qty /min"

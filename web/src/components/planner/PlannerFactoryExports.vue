@@ -121,7 +121,7 @@
             <p class="font-weight-bold text-yellow-darken-3">
               No requests for export!
             </p>
-            <p class="text-left">
+            <p class="text-center">
               Add imports in other factories linking to this one. Otherwise, it is assumed you are sinking all these products.
             </p>
           </div>

@@ -30,29 +30,29 @@
         </span>
         <v-autocomplete
           v-model="product.id"
-          class="mr-6"
+          class="mr-4"
           hide-details
           :items="autocompletePartItems"
           label="Item"
-          max-width="300px"
+          max-width="350px"
           variant="outlined"
           @update:model-value="updateProductSelection(product, factory)"
         />
         <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
         <v-autocomplete
           v-model="product.recipe"
-          class="mr-2"
+          class="mr-4"
           :disabled="!product.id"
           hide-details
           :items="getRecipesForPartSelector(product.id)"
           label="Recipe"
-          max-width="300px"
+          max-width="350px"
           variant="outlined"
           @update:model-value="updateFactory(factory)"
         />
         <v-text-field
           v-model.number="product.amount"
-          class="mr-2"
+          class="mr-4"
           hide-details
           label="Qty /min"
           max-width="110px"
@@ -61,7 +61,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          class="rounded"
+          class="rounded mr-2"
           color="blue"
           :disabled="product.displayOrder === 0"
           icon="fas fa-arrow-up"
@@ -70,7 +70,7 @@
           @click="updateOrder('up', product)"
         />
         <v-btn
-          class="rounded ml-1"
+          class="rounded mr-2"
           color="blue"
           :disabled="product.displayOrder === factory.products.length - 1"
           icon="fas fa-arrow-down"
@@ -79,7 +79,7 @@
           @click="updateOrder('down', product)"
         />
         <v-btn
-          class="rounded mx-2"
+          class="rounded"
           color="red"
           icon="fas fa-trash"
           size="small"
@@ -92,7 +92,7 @@
       </v-row>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
-        class="my-1 mb-n1 px-2 text-body-1 d-flex align-center"
+        class="my-2 mb-n1 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Byproduct:</p>
         <v-chip
@@ -108,7 +108,7 @@
       </v-row>
       <v-row
         v-if="Object.keys(product.requirements).length > 0"
-        class="mt-1 mb-0 px-2 text-body-1 d-flex align-center"
+        class="my-2 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
         <v-chip
@@ -122,38 +122,40 @@
             <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ requirement.amount }}/min
           </span>
         </v-chip>
-      </v-row>
-      <v-row v-if="product.buildingRequirements.name" class="ml-0 mt-0 mb-1 text-body-1">
-        <span>
-          <v-chip
-            class="sf-chip orange"
-            variant="tonal"
-          >
-            <game-asset :subject="product.buildingRequirements.name" type="building" />
-            <span class="ml-2">
-              <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
-            </span>
-          </v-chip>
-          <v-chip
-            class="sf-chip yellow"
-            variant="tonal"
-          >
-            <i class="fas fa-bolt" />
-            <span class="ml-2">
-              {{ product.buildingRequirements.totalPower }} MW
-            </span>
-          </v-chip>
-        </span>
+        <div v-if="product.buildingRequirements.name" class="ml-0 text-body-1 d-inline">
+          <span>
+            <v-chip
+              class="sf-chip orange"
+              variant="tonal"
+            >
+              <game-asset :subject="product.buildingRequirements.name" type="building" />
+              <span class="ml-2">
+                <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
+              </span>
+            </v-chip>
+            <v-chip
+              class="sf-chip yellow"
+              variant="tonal"
+            >
+              <i class="fas fa-bolt" />
+              <span class="ml-2">
+                {{ product.buildingRequirements.totalPower }} MW
+              </span>
+            </v-chip>
+          </span>
+        </div>
       </v-row>
     </div>
-    <v-btn
-      color="primary"
-      prepend-icon="fas fa-cube"
-      ripple
-      variant="flat"
-      @click="addEmptyProduct(factory)"
-    >Add Product
-    </v-btn>
+    <div class="mt-2">
+      <v-btn
+        color="primary"
+        prepend-icon="fas fa-cube"
+        ripple
+        variant="flat"
+        @click="addEmptyProduct(factory)"
+      >Add Product
+      </v-btn>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
