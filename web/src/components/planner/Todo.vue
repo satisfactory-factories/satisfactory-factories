@@ -2,8 +2,11 @@
   <v-row>
     <v-col>
       <v-card>
-        <v-card-title>Todo</v-card-title>
+        <v-card-title>Upcoming features / known bugs</v-card-title>
         <v-card-text class="text-body-1">
+          <p class="mb-2">
+            Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a>!
+          </p>
           <ul class="ml-4">
             <li>Feat: Add ability to add icon to factory</li>
             <li>Feat: Allow ability to add duplicate products to a factory (in case you split processing of them up).</li>
