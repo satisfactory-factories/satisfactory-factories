@@ -67,7 +67,8 @@ function isFluid(productName: string): boolean {
 function isFicsmas(displayName: string): boolean {
     return displayName.includes("FICSMAS") ||
         displayName.includes("Snow") ||
-        displayName.includes("Candy");
+        displayName.includes("Candy") ||
+        displayName.includes("Fireworks");
 }
 
 interface Part {
@@ -227,21 +228,30 @@ function getRecipes(
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
             if (!recipe.mProducedIn) return false;
-            if (blacklist.some(building => recipe.mProducedIn.includes(building))) return false;
+            if (blacklist.every(building => recipe.mProducedIn.includes(building))) return false;
 
-            // Check if there's a building in the producingBuildings map that matches the recipe's producing building
-            const rawBuildingKey = recipe.mProducedIn.match(/\/([^/]+)\./g);
+            // Extract all producing buildings
+            const rawBuildingKeys = recipe.mProducedIn.match(/\/([^/]+)\./g);
 
-            if (!rawBuildingKey) {
+            if (!rawBuildingKeys) {
                 return false;
             }
 
-            // Check the array for "Build_", if one is found remove the build prefix
-            const buildingKey = rawBuildingKey[0].replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
+            // Process all buildings and check if any match the producingBuildings map
+            const validBuilding = rawBuildingKeys.some((rawBuilding: string) => {
+                const buildingKey = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
+                return producingBuildings[buildingKey];
+            })
 
-            if (producingBuildings[buildingKey]) {
-                return true;
+
+            // Log for debugging NobeliskGas specifically
+            if (recipe.ClassName === "Recipe_NobeliskGas_C") {
+                console.log("Recipe:", recipe);
+                console.log("Raw Building Keys:", rawBuildingKeys);
+                console.log("Valid Building:", validBuilding);
             }
+
+            return validBuilding;
         })
         .forEach((recipe: any) => {
             const ingredients = recipe.mIngredients
@@ -253,7 +263,7 @@ function getRecipes(
                             const partName = match[1];
                             let amount = parseInt(match[2], 10);
 
-                             if (isFluid(partName)) {
+                            if (isFluid(partName)) {
                                 amount = amount / 1000;
                             }
 
@@ -292,18 +302,39 @@ function getRecipes(
                 });
             });
 
-            // Handle multiple building power values and remove "build_" prefix
-            const producedIn = recipe.mProducedIn.match(/\/(\w+)\/(\w+)\.(\w+)_C/)?.[2]?.replace(/build_/gi, '').toLowerCase() || '';
+            // Extract all producing buildings
+            const producedInMatches = recipe.mProducedIn.match(/\/(\w+)\/(\w+)\.(\w+)_C/g) || [];
 
-            const validBuilding = producedIn && !['bp_workbenchcomponent', 'factorygame'].includes(producedIn) ? producedIn : '';
+            // Filter and normalize building names, excluding invalid entries
+            const validBuildings = producedInMatches
+                .map((building: { match: (arg0: RegExp) => string[]; }) => building.match(/\/(\w+)\.(\w+)_C/)?.[2]?.replace(/build_/gi, '').toLowerCase())
+                .filter((building: string) => building && !['bp_workbenchcomponent', 'bp_workshopcomponent', 'factorygame'].includes(building));
 
-            const powerPerBuilding = validBuilding
-                ? Object.values(products).reduce((total, product) => total + (product.amount > 0 ? (producingBuildings[validBuilding] || 0) / product.amount : 0), 0)
-                : null;
-            const building = {
-                name: producedIn,
-                power: String(powerPerBuilding)
+            // Calculate power per building and choose the most relevant one
+            let powerPerBuilding = null;
+            let selectedBuilding: string | number = '';
+
+            if (validBuildings.length > 0) {
+                // Sum up power for all valid buildings
+                powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
+                    if (producingBuildings[building]) {
+                        const buildingPower = Object.values(products).reduce(
+                            (total, product) => total + (product.amount > 0 ? producingBuildings[building] / product.amount : 0),
+                            0
+                        );
+                        selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
+                        return totalPower + buildingPower; // Add power for this building
+                    }
+                    return totalPower;
+                }, 0);
             }
+
+// Create building object with the selected building and calculated power
+            const building = {
+                name: selectedBuilding || '', // Use the first valid building, or empty string if none
+                power: String(powerPerBuilding || 0), // Use calculated power or 0
+            };
+
 
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
@@ -327,7 +358,7 @@ interface RawResource {
 // Function to extract raw resources from the game data
 function getRawResources(data: any[]): { [key: string]: RawResource } {
     const rawResources: { [key: string]: RawResource } = {};
-    const limits: {[key: string]: number } = {
+    const limits: { [key: string]: number } = {
         "Coal": 42300,
         "LiquidOil": 12600,
         "NitrogenGas": 12000,
@@ -490,7 +521,7 @@ async function processFile(inputFile: string, outputFile: string) {
         };
 
         // Write the output to the file
-        await fs.writeJson(path.resolve(outputFile), finalData, { spaces: 4 });
+        await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
     } catch (error) {
         if (error instanceof Error) {
@@ -502,4 +533,4 @@ async function processFile(inputFile: string, outputFile: string) {
 }
 
 // Export processFile for use
-export { processFile }
+export {processFile}

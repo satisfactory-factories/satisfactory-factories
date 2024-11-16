@@ -248,6 +248,24 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "Fireworks_Projectile_01": {
+                "name": "Sweet Fireworks",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": true
+            },
+            "Fireworks_Projectile_02": {
+                "name": "Fancy Fireworks",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": true
+            },
+            "Fireworks_Projectile_03": {
+                "name": "Sparkly Fireworks",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": true
+            },
             "FluidCanister": {
                 "name": "Empty Canister",
                 "stackSize": 100,
@@ -414,6 +432,36 @@
                 "name": "Nitrogen Gas",
                 "stackSize": 0,
                 "isFluid": true,
+                "isFicsmas": false
+            },
+            "NobeliskCluster": {
+                "name": "Cluster Nobelisk",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "NobeliskExplosive": {
+                "name": "Nobelisk",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "NobeliskGas": {
+                "name": "Gas Nobelisk",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "NobeliskNuke": {
+                "name": "Nuke Nobelisk",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "NobeliskShockwave": {
+                "name": "Pulse Nobelisk",
+                "stackSize": 50,
+                "isFluid": false,
                 "isFicsmas": false
             },
             "NonFissibleUranium": {
@@ -5316,6 +5364,36 @@
             "isFicsmas": false
         },
         {
+            "id": "NobeliskCluster",
+            "displayName": "Cluster Nobelisk",
+            "ingredients": [
+                {
+                    "part": "NobeliskExplosive",
+                    "amount": 3,
+                    "perMin": 7.5
+                },
+                {
+                    "part": "GunpowderMK2",
+                    "amount": 4,
+                    "perMin": 10
+                }
+            ],
+            "products": [
+                {
+                    "part": "NobeliskCluster",
+                    "amount": 1,
+                    "perMin": 2.5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
             "id": "Coal_Iron",
             "displayName": "Coal (Iron)",
             "ingredients": [
@@ -6021,6 +6099,36 @@
             "isFicsmas": false
         },
         {
+            "id": "Fireworks_02",
+            "displayName": "Fancy Fireworks",
+            "ingredients": [
+                {
+                    "part": "XmasBranch",
+                    "amount": 4,
+                    "perMin": 10
+                },
+                {
+                    "part": "XmasBow",
+                    "amount": 3,
+                    "perMin": 7.5
+                }
+            ],
+            "products": [
+                {
+                    "part": "Fireworks_Projectile_02",
+                    "amount": 1,
+                    "perMin": 2.5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
             "id": "FicsiteIngot_AL",
             "displayName": "Ficsite Ingot (Aluminum)",
             "ingredients": [
@@ -6453,6 +6561,36 @@
             "building": {
                 "name": "manufacturermk1",
                 "power": "55"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "NobeliskGas",
+            "displayName": "Gas Nobelisk",
+            "ingredients": [
+                {
+                    "part": "NobeliskExplosive",
+                    "amount": 1,
+                    "perMin": 5
+                },
+                {
+                    "part": "GenericBiomass",
+                    "amount": 10,
+                    "perMin": 50
+                }
+            ],
+            "products": [
+                {
+                    "part": "NobeliskGas",
+                    "amount": 1,
+                    "perMin": 5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7200,6 +7338,36 @@
             "isFicsmas": false
         },
         {
+            "id": "Nobelisk",
+            "displayName": "Nobelisk",
+            "ingredients": [
+                {
+                    "part": "Gunpowder",
+                    "amount": 2,
+                    "perMin": 20
+                },
+                {
+                    "part": "SteelPipe",
+                    "amount": 2,
+                    "perMin": 20
+                }
+            ],
+            "products": [
+                {
+                    "part": "NobeliskExplosive",
+                    "amount": 1,
+                    "perMin": 10,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
             "id": "NonFissileUranium",
             "displayName": "Non-Fissile Uranium",
             "ingredients": [
@@ -7271,6 +7439,46 @@
             "building": {
                 "name": "hadroncollider",
                 "power": "0.1"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "NobeliskNuke",
+            "displayName": "Nuke Nobelisk",
+            "ingredients": [
+                {
+                    "part": "NobeliskExplosive",
+                    "amount": 5,
+                    "perMin": 2.5
+                },
+                {
+                    "part": "UraniumCell",
+                    "amount": 20,
+                    "perMin": 10
+                },
+                {
+                    "part": "GunpowderMK2",
+                    "amount": 10,
+                    "perMin": 5
+                },
+                {
+                    "part": "CircuitBoardHighSpeed",
+                    "amount": 6,
+                    "perMin": 3
+                }
+            ],
+            "products": [
+                {
+                    "part": "NobeliskNuke",
+                    "amount": 1,
+                    "perMin": 0.5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "manufacturermk1",
+                "power": "55"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7862,6 +8070,36 @@
             "building": {
                 "name": "assemblermk1",
                 "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "NobeliskShockwave",
+            "displayName": "Pulse Nobelisk",
+            "ingredients": [
+                {
+                    "part": "NobeliskExplosive",
+                    "amount": 5,
+                    "perMin": 5
+                },
+                {
+                    "part": "CrystalOscillator",
+                    "amount": 1,
+                    "perMin": 1
+                }
+            ],
+            "products": [
+                {
+                    "part": "NobeliskShockwave",
+                    "amount": 5,
+                    "perMin": 5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "3"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8569,6 +8807,36 @@
             "isFicsmas": false
         },
         {
+            "id": "Fireworks_03",
+            "displayName": "Sparkly Fireworks",
+            "ingredients": [
+                {
+                    "part": "XmasBranch",
+                    "amount": 3,
+                    "perMin": 7.5
+                },
+                {
+                    "part": "Snow",
+                    "amount": 2,
+                    "perMin": 5
+                }
+            ],
+            "products": [
+                {
+                    "part": "Fireworks_Projectile_03",
+                    "amount": 1,
+                    "perMin": 2.5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
             "id": "Protein_Spitter",
             "displayName": "Spitter Protein",
             "ingredients": [
@@ -8933,6 +9201,36 @@
             },
             "isAlternate": false,
             "isFicsmas": false
+        },
+        {
+            "id": "Fireworks_01",
+            "displayName": "Sweet Fireworks",
+            "ingredients": [
+                {
+                    "part": "XmasBranch",
+                    "amount": 6,
+                    "perMin": 15
+                },
+                {
+                    "part": "CandyCane",
+                    "amount": 3,
+                    "perMin": 7.5
+                }
+            ],
+            "products": [
+                {
+                    "part": "Fireworks_Projectile_01",
+                    "amount": 1,
+                    "perMin": 2.5,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": "15"
+            },
+            "isAlternate": false,
+            "isFicsmas": true
         },
         {
             "id": "SyntheticPowerShard",
