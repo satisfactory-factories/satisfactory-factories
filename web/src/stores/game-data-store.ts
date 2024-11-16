@@ -31,7 +31,7 @@ export const useGameDataStore = defineStore('game-data', () => {
         localStorage.setItem('localDataVersion', dataVersion)
         localStorage.setItem('gameData', JSON.stringify(gameData.value))
       } else {
-        console.log('Game data detected, skipping load.')
+        console.log(`Game data V${dataVersion} detected, skipping load.`)
       }
     } catch (err) {
       console.error('Error loading game data:', err)
