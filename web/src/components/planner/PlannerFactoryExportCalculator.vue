@@ -31,7 +31,7 @@
     <p v-if="helpText" class="text-body-2 text-center">
       <i class="fas fa-info-circle" />
       <span class="ml-1">
-        It is assumed you are feeding the freight platforms with sufficient belt capacity.<br>Time is from "choo" to "choo".
+        It is assumed you are feeding the freight platforms with sufficient belt capacity.<br>Time is from the destination factory to the source factory and back, aka "three choos".
       </span>
     </p>
     <div class="d-flex justify-center align-center text-center mt-2">
