@@ -14,8 +14,6 @@
             <li><span class="text-red">Bug:</span> Missing internal chip next to byproducts that are used internally.</li>
             <li>Feat: <b>Overclocking / Somersloops</b> (WIP, omitted for Alpha release, it's a LOT of math!)</li>
             <li>Feat: <b>Quantum Converter support</b> (omitted for Alpha release), it's a surprisingly complex thing to get right...</li>
-            <li>Bug: Imports are not showing up for collapsed / hidden factories.</li>
-            <li>Bug: Missing internal chip next to byproducts that are used internally.</li>
             <li>Feat: Add ability to add icon to factory.</li>
             <li>Feat: Allow ability to add duplicate products to a factory (in case you split processing of them up).</li>
             <li>Feat: Show unsatisfied demands for factories for easy creation of new factories.</li>
