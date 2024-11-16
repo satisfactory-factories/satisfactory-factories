@@ -5,7 +5,7 @@
         <v-card-title>Upcoming features / known bugs</v-card-title>
         <v-card-text class="text-body-1">
           <p class="mb-2">
-            Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a>!
+            Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a> or <a href="https://www.reddit.com/r/SatisfactoryGame/comments/1gsm980/new_tool_satisfactory_factories_a_production/">Reddit post</a>!
           </p>
           <ul class="ml-4">
             <li><span class="text-red">Critical bug</span>: Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly. Thanks to /u/walktheplank-yohoho for the report!</li>
