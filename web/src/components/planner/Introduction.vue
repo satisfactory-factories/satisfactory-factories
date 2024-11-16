@@ -38,7 +38,7 @@
         </div>
         <div class="px-2 py-2 mb-4 bg-blue-grey-darken-3 rounded">
           <p>
-            Please note - this project is in an <span class="text-orange font-weight-bold">alpha</span> state, it is very hot out of the oven and there may <i>(will)</i> be some bugs. Please report any bugs to the project's <a href="https://github.com/Maelstromeous/satisfactory-modular-facs/issues">GitHub Issues page</a> for now.
+            Please note - this project is in an <span class="text-orange font-weight-bold">alpha</span> state, it is very hot out of the oven and there may <i>(will)</i> be some bugs. Please report any bugs to the project's <a href="https://github.com/Maelstromeous/satisfactory-factories/issues">GitHub Issues page</a> for now.
           </p>
           <p>Each page has a Todo section with what I plan to add. Please offer any suggestions at the GitHub link above for any improvements you'd like to see.</p>
         </div>
