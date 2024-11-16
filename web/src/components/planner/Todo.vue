@@ -8,8 +8,8 @@
             Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a> or <a href="https://www.reddit.com/r/SatisfactoryGame/comments/1gsm980/new_tool_satisfactory_factories_a_production/">Reddit post</a>!
           </p>
           <ul class="ml-4">
-            <li><span class="text-red">Critical bug</span>: Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly. Thanks to /u/walktheplank-yohoho for the report! <a class="text-cyan" href="https://github.com/Maelstromeous/satisfactory-factories/issues/1">Please report any broken recipes here!</a> </li>
-            <li><span class="text-red">Critical bug</span>: Certain fluid recipes are inaccurate.</li>
+            <li><span class="text-amber">Critical bug</span>: <s>Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly.</s> Thanks to /u/walktheplank-yohoho for the report! <span class="text-green">Fix released 14:45 UTC 16th Nov</span>, please refresh and report any further issues! <a class="text-cyan" href="https://github.com/Maelstromeous/satisfactory-factories/issues/1">Please report any broken recipes here!</a> </li>
+            <li><span class="text-amber">Critical bug</span>: Certain fluid recipes are inaccurate. Quite likely related to the above. Please offer feedback</li>
             <li>Feat: <b>Overclocking / Somersloops</b> (WIP, omitted for Alpha release, it's a LOT of math!)</li>
             <li>Feat: <b>Quantum Converter support</b> (omitted for Alpha release), it's a surprisingly complex thing to get right...</li>
             <li>Feat: Add ability to add icon to factory.</li>
