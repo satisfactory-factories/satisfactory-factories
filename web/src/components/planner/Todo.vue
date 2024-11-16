@@ -20,6 +20,7 @@
             <li>Feat: World Resources: Make world resources flag an issue when exceeding world limits.</li>
             <li>Feat: World Resources: Show % used.</li>
             <li>Feat: Add button to jump to the node in the graph.</li>
+            <li>Feat: Password resets (use a password manager people! 🔐)</li>
           </ul>
         </v-card-text>
       </v-card>
