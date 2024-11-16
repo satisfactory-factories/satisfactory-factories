@@ -23,7 +23,7 @@
             <li>Feat: World Resources: Show % used.</li>
             <li>Feat: Add button to jump to the node in the graph.</li>
             <li>Feat: Password resets (use a password manager people! 🔐)</li>
-            <li><span class="text-green">FIXED - Critical bug</span>: <s>Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly.</s> Thanks to /u/walktheplank-yohoho for the report! <span class="text-green">Fix released 14:45 UTC 16th Nov</span>, please refresh and report any further issues! <a class="text-cyan" href="https://github.com/Maelstromeous/satisfactory-factories/issues/1">Please report any broken recipes here!</a> </li>
+            <li><span class="text-green">FIXED - Critical bug</span>: Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly. Thanks to /u/walktheplank-yohoho for the report! <span class="text-green">Fix released 14:45 UTC 16th Nov</span>, please refresh and report any further issues! <a class="text-cyan" href="https://github.com/Maelstromeous/satisfactory-factories/issues/1">Please report any broken recipes here!</a> </li>
           </ul>
         </v-card-text>
       </v-card>
