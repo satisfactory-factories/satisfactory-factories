@@ -8,6 +8,7 @@
             Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a>!
           </p>
           <ul class="ml-4">
+            <li><span class="text-red">Critical bug</span>: Recipes producing multiples of the same item e.g. Caterium CBs producing 7, are being regarded as producing 1 and the part demand not being ratioed correctly.</li>
             <li>Feat: <b>Overclocking / Somersloops</b> (WIP, omitted for Alpha release, it's a LOT of math!)</li>
             <li>Feat: <b>Quantum Converter support</b> (omitted for Alpha release), it's a surprisingly complex thing to get right...</li>
             <li>Feat: Add ability to add icon to factory.</li>
