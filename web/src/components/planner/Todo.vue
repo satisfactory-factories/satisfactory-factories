@@ -8,6 +8,7 @@
             Please report any bugs or feature requests to <a href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub page</a>!
           </p>
           <ul class="ml-4">
+            <li>Feat: <b>Overclocking / Somersloops</b> (omitted for Alpha release, it's a LOT of math!)</li>
             <li>Feat: Add ability to add icon to factory.</li>
             <li>Feat: Allow ability to add duplicate products to a factory (in case you split processing of them up).</li>
             <li>Feat: Show unsatisfied demands for factories for easy creation of new factories.</li>
