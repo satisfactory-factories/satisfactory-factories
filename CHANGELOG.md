@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 * **web:** Testing web scope ([6edd22e](https://github.com/Maelstromeous/satisfactory-factories/commit/6edd22e2fb9b89a0c1dcd1b79655f6b11b57ade0))
 
-## 0.1.1 (2024-11-17)
+## 0.1.1 (2024-11-17) Initial release
 
 
 ### Features
