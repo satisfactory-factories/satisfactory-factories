@@ -121,7 +121,7 @@ describe('products', () => {
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
       expect(Number(mockFactory.parts.HighSpeedWire.amountRequired.toFixed(3))).toBe(428.571)
-      expect(mockFactory.parts.Plastic.amountRequired.toFixed(3)).toBe(142.858)
+      expect(Number(mockFactory.parts.Plastic.amountRequired.toFixed(3))).toBe(142.858)
     })
     it('should properly calculate metrics when two products require the same ingredient', () => {
       const mockProductIronPlate = {
