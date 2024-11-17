@@ -132,4 +132,40 @@ export const mockRecipes: Recipe[] = [
     isAlternate: false,
     isFicsmas: false,
   },
+  {
+    id: 'AluminaSolution',
+    displayName: 'Alumina Solution',
+    ingredients: [
+      {
+        part: 'OreBauxite',
+        amount: 12,
+        perMin: 120,
+      },
+      {
+        part: 'Water',
+        amount: 18,
+        perMin: 180,
+      },
+    ],
+    products: [
+      {
+        part: 'AluminaSolution',
+        amount: 12,
+        perMin: 120,
+        isByProduct: false,
+      },
+      {
+        part: 'Silica',
+        amount: 5,
+        perMin: 50,
+        isByProduct: true,
+      },
+    ],
+    building: {
+      name: 'oilrefinery',
+      power: '8.5',
+    },
+    isAlternate: false,
+    isFicsmas: false,
+  },
 ]
