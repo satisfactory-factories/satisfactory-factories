@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.2.0...v0.2.1) (2024-11-17)
+
+
+### Features
+
+* Implement number formatting in Planner components and update formatNumber utility ([c3c1ea4](https://github.com/Maelstromeous/satisfactory-factories/commit/c3c1ea49ce57c8fa19d753035236ee63257d848e))
+* Implement number formatting in PlannerFactory components using formatNumber utility ([9a6f71c](https://github.com/Maelstromeous/satisfactory-factories/commit/9a6f71c49e508dce19dd19a843041b08434c53fb))
+* New version of the test file ([7241564](https://github.com/Maelstromeous/satisfactory-factories/commit/7241564ae49c6212cd14a523574258686a3c0d44))
+* **repo:** This should trigger a minor version ([b05a5a0](https://github.com/Maelstromeous/satisfactory-factories/commit/b05a5a025bb2b1d3aa20d48a0e1f7e60c66d69e3))
+* This should be a minor version ([f3f6173](https://github.com/Maelstromeous/satisfactory-factories/commit/f3f61731c71695ca4c42c203439b17f7f4b49bfa))
+* This should trigger a minor version as well ([582d231](https://github.com/Maelstromeous/satisfactory-factories/commit/582d2317b90bd069a07c75e3821d5f97c0052743))
+
 ## [0.2.0](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.1.3...v0.2.0) (2024-11-17)
 
 
