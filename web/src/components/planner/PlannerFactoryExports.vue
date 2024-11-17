@@ -55,7 +55,7 @@
               <span>
                 <i class="fas fa-times" />
                 <span class="ml-2 font-weight-bold">
-                  Shortage of {{ getShortageAmount(factory, surplus.productId) }}/min
+                  Shortage of {{ formatNumber(getShortageAmount(factory, surplus.productId)) }}/min
                 </span>
                 <v-btn
                   class="ml-2"
@@ -89,7 +89,7 @@
               @click="changeCalculatorSelection(factory, request.factoryId, surplus.productId)"
             >
               <i class="fas fa-industry" />
-              <span class="ml-2"><b>{{ findFactory(request.factoryId).name }}</b>: {{ request.amount }}/min</span>
+              <span class="ml-2"><b>{{ findFactory(request.factoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
             </v-chip>
           </div>
         </v-col>

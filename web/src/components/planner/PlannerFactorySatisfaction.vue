@@ -52,13 +52,13 @@
                 <p v-if="part.satisfied">
                   <v-icon icon="fas fa-check" />
                   <span class="ml-2">
-                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied.toFixed(0) }}/{{ part.amountRequired.toFixed(0) }}/min
+                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied.toFixed(0) }}/{{ formatNumber(part.amountRequired) }}/min
                   </span>
                 </p>
                 <p v-else>
                   <v-icon icon="fas fa-times" />
                   <span class="ml-2">
-                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied.toFixed(0) }}/{{ part.amountRequired.toFixed(0) }} /min
+                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ part.amountSupplied.toFixed(0) }}/{{ formatNumber(part.amountRequired) }} /min
                   </span>
                 </p>
               </v-col>

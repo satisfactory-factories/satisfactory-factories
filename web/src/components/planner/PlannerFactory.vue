@@ -111,13 +111,13 @@
                   />
                 </span>
                 <span>
-                  <b>{{ getPartDisplayName(part.id) }}</b>: {{ part.amount }}/min
+                  <b>{{ getPartDisplayName(part.id) }}</b>: {{ formatNumber(part.amount) }}/min
                 </span>
                 <span
                   v-if="hasMetricsForPart(factory, part.id) && factory.dependencies.metrics[part.id].difference !== 0"
                   class="ml-2"
                   :class="differenceClass(factory.dependencies.metrics[part.id].difference)"
-                >({{ factory.dependencies.metrics[part.id].difference }}/min)</span>
+                >({{ formatNumber(factory.dependencies.metrics[part.id].difference) }}/min)</span>
               </v-chip>
             </div>
           </v-row>
@@ -149,7 +149,7 @@
                     type="item"
                     width="32"
                   />
-                  <span class="ml-2"><b>{{ getPartDisplayName(part.part) }}:</b> {{ part.amount }}/min</span>
+                  <span class="ml-2"><b>{{ getPartDisplayName(part.part) }}:</b> {{ formatNumber(part.amount) }}/min</span>
                 </v-chip>
               </div>
             </div>
@@ -166,6 +166,7 @@
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void

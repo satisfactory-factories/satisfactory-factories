@@ -106,7 +106,7 @@
         >
           <game-asset :subject="byProduct.id" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ byProduct.amount }}/min
+            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
           </span>
         </v-chip>
       </v-row>
@@ -123,7 +123,7 @@
         >
           <game-asset :subject="part.toString()" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ requirement.amount.toFixed(1) }}/min
+            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
           </span>
         </v-chip>
         <div v-if="product.buildingRequirements.name" class="ml-0 text-body-1 d-inline">
