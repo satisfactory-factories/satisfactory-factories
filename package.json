@@ -5,7 +5,8 @@
   "author": "Matt Cavanagh",
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "release": "commit-and-tag-version"
+    "release": "commit-and-tag-version",
+    "release-dry": "commit-and-tag-version --dry-run"
   },
   "keywords": []
 }
