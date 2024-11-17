@@ -9,4 +9,8 @@ export const mockRawResources: { [key: string]: RawResource } = {
     name: 'Copper Ore',
     limit: 36900,
   },
+  Water: {
+    name: 'Water',
+    limit: 1000000000000,
+  },
 }

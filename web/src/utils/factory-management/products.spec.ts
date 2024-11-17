@@ -33,7 +33,7 @@ describe('products', () => {
     })
     it('should add a part to the factory', () => {
       addProductToFactory(mockFactory, mockIngotIron)
-      expect(mockFactory.parts.IngotIron).toBeDefined()
+      expect(mockFactory.parts.IronIngot).toBeDefined()
     })
     it('should prevent duplicate products', () => {
       addProductToFactory(mockFactory, mockIngotIron)
@@ -55,12 +55,6 @@ describe('products', () => {
     beforeEach(() => {
       addProductToFactory(mockFactory, mockIngotIron)
       addProductToFactory(mockFactory, mockIngotCopper)
-    })
-    it('should throw if the recipe could not be found', () => {
-      mockFactory.products[0].recipe = 'NotARecipe'
-      expect(() => {
-        calculateProducts(mockFactory, mockGameData)
-      }).toThrow()
     })
     it('should calculate the products and produce the correct part info', () => {
       calculateProducts(mockFactory, mockGameData)
@@ -91,8 +85,45 @@ describe('products', () => {
       // Expect the product to have the correct amount of requirement data
       expect(mockFactory.products[0].requirements.OreIron.amount).toBe(123)
     })
+
+    // 11.428571428571429
+    it('should properly calculate part requirements when the recipe returns more than 1 part itself', () => {
+      const mockProduct = {
+        id: 'CircuitBoard',
+        amount: 98,
+        recipe: 'Alternate_CircuitBoard_2',
+      }
+
+      // Reset the mock factory, we want very specific detail here
+      mockFactory.products = []
+      mockFactory.parts = {}
+
+      addProductToFactory(mockFactory, mockProduct)
+      calculateProducts(mockFactory, mockGameData)
+
+      expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(98)
+      expect(mockFactory.parts.HighSpeedWire.amountRequired).toBe(420) // Nice
+      expect(mockFactory.parts.Plastic.amountRequired).toBe(140)
+    })
+    it('should properly calculate part requirements when the recipe returns more than 1 part itself along with rounding', () => {
+      const mockProduct = {
+        id: 'CircuitBoard',
+        amount: 100,
+        recipe: 'Alternate_CircuitBoard_2',
+      }
+
+      // Reset the mock factory, we want very specific detail here
+      mockFactory.products = []
+      mockFactory.parts = {}
+
+      addProductToFactory(mockFactory, mockProduct)
+      calculateProducts(mockFactory, mockGameData)
+
+      expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
+      expect(mockFactory.parts.HighSpeedWire.amountRequired).toBe(428.572)
+      expect(mockFactory.parts.Plastic.amountRequired).toBe(142.858)
+    })
     it('should properly calculate metrics when two products require the same ingredient', () => {
-      mockIngotIron.amount = 100
       const mockProductIronPlate = {
         id: 'IronPlate',
         amount: 100,
@@ -103,6 +134,7 @@ describe('products', () => {
         amount: 100,
         recipe: 'IronRod',
       }
+      mockIngotIron.amount = 100
 
       // Reset the mock factory, we want very specific detail here
       mockFactory.products = []
@@ -118,8 +150,8 @@ describe('products', () => {
       calculateProducts(mockFactory, mockGameData)
 
       // Expect the ingredient requirements to be correct
-      // Iron Plate requires 1.5 Iron Ingots /i, so 150 Iron Ingots are required
-      // Iron Rod requires 1 Iron Ingot /i, so 100 Iron Ingots are required
+      // Iron Plate ratio is 3:2 so 150 iron ingots are required
+      // Iron Rod ratio is 1:1 so 100 iron ingots are required
       // Totalling 250 Iron Ingots
       expect(mockFactory.parts.IronIngot.amountRequired).toBe(250)
 

@@ -1,8 +1,10 @@
-import { beforeEach, describe, expect, test } from '@jest/globals'
+import { beforeEach, describe, expect, it, test } from '@jest/globals'
 import { calculateFactorySatisfaction } from './satisfaction'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
-import { addProductToFactory } from '@/utils/factory-management/products'
+import { addProductToFactory, calculateProducts } from '@/utils/factory-management/products'
+import { mockGameData } from '@/utils/factory-management/mocks/mockGameData'
+import { calculateRawSupply } from '@/utils/factory-management/supply'
 
 describe('satisfaction', () => {
   describe('calculateFactorySatisfaction', () => {
@@ -38,6 +40,28 @@ describe('satisfaction', () => {
       mockFactory.products = []
       calculateFactorySatisfaction(mockFactory)
       expect(mockFactory.requirementsSatisfied).toBe(true)
+    })
+
+    it('should calculate fluid ingredients when there is raw resource fluid ingredient', () => {
+      const mockProductWithByProducts = {
+        id: 'AluminaSolution',
+        amount: 100,
+        recipe: 'AluminaSolution',
+      }
+
+      // Reset the mock factory, we want very specific detail here
+      mockFactory.products = []
+      mockFactory.parts = {}
+
+      addProductToFactory(mockFactory, mockProductWithByProducts)
+      calculateProducts(mockFactory, mockGameData)
+      calculateRawSupply(mockFactory, mockGameData)
+      calculateFactorySatisfaction(mockFactory)
+
+      // Expect that all parts involved with creating Alumina have been added, including water.
+      expect(mockFactory.parts.Water.amountRequired).toBe(150)
+      expect(mockFactory.parts.Water.amountSuppliedViaInput).toBe(150)
+      expect(mockFactory.parts.Water.amountRemaining).toBe(0)
     })
   })
 })

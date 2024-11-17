@@ -22,6 +22,7 @@ This project has the following requirements:
 
 Visit http://localhost:3000 to view the project.
 
+#### Testing
 There are tests for the frontend project, run them with `pnpm test`. Tests must pass for PRs to be accepted. Note as of writing the coverage isn't 100%.
 
 ### Backend

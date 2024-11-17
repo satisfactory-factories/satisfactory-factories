@@ -16,16 +16,16 @@
           <p class="mb-4">
             <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently. It seemed a little pointless to force you to make a factory to input it directly into a factory.
           </p>
-          <div v-for="(resource, resourceKey) in factory.rawResources" :key="resourceKey">
-            <v-chip
-              class="sf-chip blue"
-            >
-              <game-asset :subject="resourceKey.toString() ?? 'unknown'" type="item" />
-              <span class="ml-2">
-                <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ resource.amount }}/min
-              </span>
-            </v-chip>
-          </div>
+          <v-chip
+            v-for="(resource, resourceKey) in factory.rawResources"
+            :key="resourceKey"
+            class="sf-chip blue"
+          >
+            <game-asset :subject="resourceKey.toString() ?? 'unknown'" type="item" />
+            <span class="ml-2">
+              <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ formatNumber(resource.amount) }}/min
+            </span>
+          </v-chip>
         </v-card-text>
       </v-card>
 
@@ -147,6 +147,7 @@
   import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
   import { addInputToFactory } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void

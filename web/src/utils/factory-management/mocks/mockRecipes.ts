@@ -132,4 +132,70 @@ export const mockRecipes: Recipe[] = [
     isAlternate: false,
     isFicsmas: false,
   },
+  {
+    id: 'AluminaSolution',
+    displayName: 'Alumina Solution',
+    ingredients: [
+      {
+        part: 'OreBauxite',
+        amount: 12,
+        perMin: 120,
+      },
+      {
+        part: 'Water',
+        amount: 18,
+        perMin: 180,
+      },
+    ],
+    products: [
+      {
+        part: 'AluminaSolution',
+        amount: 12,
+        perMin: 120,
+        isByProduct: false,
+      },
+      {
+        part: 'Silica',
+        amount: 5,
+        perMin: 50,
+        isByProduct: true,
+      },
+    ],
+    building: {
+      name: 'oilrefinery',
+      power: '8.5',
+    },
+    isAlternate: false,
+    isFicsmas: false,
+  },
+  {
+    id: 'Alternate_CircuitBoard_2',
+    displayName: 'Alternate: Caterium Circuit Board',
+    ingredients: [
+      {
+        part: 'Plastic',
+        amount: 10,
+        perMin: 12.5,
+      },
+      {
+        part: 'HighSpeedWire',
+        amount: 30,
+        perMin: 37.5,
+      },
+    ],
+    products: [
+      {
+        part: 'CircuitBoard',
+        amount: 7,
+        perMin: 8.75,
+        isByProduct: false,
+      },
+    ],
+    building: {
+      name: 'assemblermk1',
+      power: '2.142857142857143',
+    },
+    isAlternate: true,
+    isFicsmas: false,
+  },
 ]
