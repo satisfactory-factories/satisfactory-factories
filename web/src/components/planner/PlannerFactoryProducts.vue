@@ -106,7 +106,7 @@
         >
           <game-asset :subject="byProduct.id" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ byProduct.amount }}/min
+            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
           </span>
         </v-chip>
       </v-row>
@@ -123,7 +123,7 @@
         >
           <game-asset :subject="part.toString()" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ requirement.amount.toFixed(1) }}/min
+            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
           </span>
         </v-chip>
         <div v-if="product.buildingRequirements.name" class="ml-0 text-body-1 d-inline">
@@ -134,7 +134,7 @@
             >
               <game-asset :subject="product.buildingRequirements.name" type="building" />
               <span class="ml-2">
-                <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ product.buildingRequirements.amount }}x
+                <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ formatNumber(product.buildingRequirements.amount) }}x
               </span>
             </v-chip>
             <v-chip
@@ -143,7 +143,7 @@
             >
               <i class="fas fa-bolt" />
               <span class="ml-2">
-                {{ product.buildingRequirements.totalPower }} MW
+                {{ formatNumber(product.buildingRequirements.totalPower) }} MW
               </span>
             </v-chip>
           </span>
@@ -167,6 +167,7 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
