@@ -21,13 +21,13 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
       }
 
       const buildingData = recipe.building
-      const buildingCount = (product.amount / productInRecipe.perMin).toFixed(3)
+      const buildingCount = Number((product.amount / productInRecipe.perMin).toFixed(3))
 
       product.buildingRequirements = {
         name: buildingData.name,
         amount: buildingCount,
-        powerPerBuilding: Number(buildingData.power),
-        totalPower: (parseInt(buildingData.power) * parseInt(buildingCount)).toFixed(2),
+        powerPerBuilding: buildingData.power,
+        totalPower:  Number((buildingData.power * buildingCount).toFixed(3)),
       }
     } else {
       product.buildingRequirements = {} as BuildingRequirement
@@ -36,7 +36,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
 }
 
 export const calculateBuildingsAndPower = (factory: Factory) => {
-  factory.totalPower = '0'
+  factory.totalPower = 0
   factory.buildingRequirements = {} as {[key: string]: BuildingRequirement }
 
   // Loop through each product and sum the power requirements based off the metrics already there.
@@ -45,18 +45,18 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
     if (!factory.buildingRequirements[building.name]) {
       factory.buildingRequirements[building.name] = {
         name: building.name,
-        amount: '0',
+        amount: 0,
         powerPerBuilding: building.powerPerBuilding,
-        totalPower: '0',
+        totalPower: 0,
       }
     }
 
     const facBuilding = factory.buildingRequirements[building.name]
 
-    facBuilding.amount = String(parseFloat(facBuilding.amount) + parseFloat(building.amount))
-    facBuilding.totalPower = String(parseFloat(facBuilding.totalPower) + parseFloat(building.totalPower))
+    facBuilding.amount = Number((facBuilding.amount + building.amount).toFixed(3))
+    facBuilding.totalPower = Number((factory.totalPower + building.totalPower).toFixed(3))
 
     // Sum the total power.
-    factory.totalPower = String(parseFloat(factory.totalPower) + parseFloat(building.totalPower))
+    factory.totalPower = Number((factory.totalPower + building.totalPower).toFixed(3))
   })
 }
