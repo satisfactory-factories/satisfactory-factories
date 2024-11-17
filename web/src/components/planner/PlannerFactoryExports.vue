@@ -69,10 +69,10 @@
           </div>
           <div class="ml-n1">
             <v-chip class="ma-1 mt-0">
-              <b>Surplus:</b>&nbsp;{{ factory.surplus[surplus.productId].amount }}/min
+              <b>Surplus:</b>&nbsp;{{ formatNumber(factory.surplus[surplus.productId].amount) }}/min
             </v-chip>
             <v-chip class="ma-1 mt-0">
-              <b>Demands:</b>&nbsp;{{ getRequestMetricsForFactoryByPart(factory, surplus.productId)?.request ?? 0 }}/min
+              <b>Demands:</b>&nbsp;{{ formatNumber(getRequestMetricsForFactoryByPart(factory, surplus.productId)?.request ?? 0) }}/min
             </v-chip>
           </div>
           <div
@@ -143,6 +143,7 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   const findFactory = inject('findFactory') as (id: number) => Factory
