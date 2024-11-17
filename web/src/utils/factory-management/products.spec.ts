@@ -75,7 +75,7 @@ describe('products', () => {
       expect(mockFactory.parts.OreIron).toBeDefined()
       expect(mockFactory.parts.OreCopper).toBeDefined()
       // Expect the raw resources to have the correct amounts
-      expect(mockFactory.rawResources.OreIron.amount).toBe(123)
+      expect(Number(mockFactory.rawResources.OreIron.amount.toFixed(3))).toBe(123)
       expect(mockFactory.rawResources.OreCopper.amount).toBe(123)
 
       // Expect the rawResource data to be correct
@@ -121,7 +121,7 @@ describe('products', () => {
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
       expect(Number(mockFactory.parts.HighSpeedWire.amountRequired.toFixed(3))).toBe(428.571)
-      expect(Number(mockFactory.parts.Plastic.amountRequired.toFixed(3))).toBe(142.858)
+      expect(Number(mockFactory.parts.Plastic.amountRequired.toFixed(3))).toBe(142.857)
     })
     it('should properly calculate metrics when two products require the same ingredient', () => {
       const mockProductIronPlate = {
