@@ -10,9 +10,9 @@ export interface PartMetrics {
 
 export interface BuildingRequirement {
   name: string;
-  amount: string;
+  amount: number;
   powerPerBuilding: number;
-  totalPower: string;
+  totalPower: number;
 }
 
 export interface ByProductItem {
@@ -91,7 +91,7 @@ export interface Factory {
   parts: { [key: string]: PartMetrics };
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
-  totalPower: string;
+  totalPower: number;
   surplus: { [key: string]: FactorySurplusItem };
   dependencies: FactoryDependency;
   exportCalculator: { [key: string]: ExportCalculatorSettings };
