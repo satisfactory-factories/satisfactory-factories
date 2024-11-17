@@ -220,7 +220,7 @@
 
     updateWorldRawResources(gameData)
 
-    // Calculate what is inputted §into the factory to be used by products.
+    // Calculate what is inputted into the factory to be used by products.
     calculateInputs(factory)
 
     // Calculate what is produced and required by the products.
