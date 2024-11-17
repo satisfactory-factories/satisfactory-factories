@@ -25,9 +25,9 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
 
       product.buildingRequirements = {
         name: buildingData.name,
-        amount: buildingCount.toFixed(3),
+        amount: buildingCount,
         powerPerBuilding: Number(buildingData.power),
-        totalPower: parseFloat((Number(buildingData.power) * buildingCount).toFixed(2)),
+        totalPower: buildingData.power * buildingCount,
       }
     } else {
       product.buildingRequirements = {} as BuildingRequirement
@@ -45,7 +45,7 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
     if (!factory.buildingRequirements[building.name]) {
       factory.buildingRequirements[building.name] = {
         name: building.name,
-        amount: '0',
+        amount: 0,
         powerPerBuilding: building.powerPerBuilding,
         totalPower: 0,
       }
@@ -53,9 +53,9 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
 
     const facBuilding = factory.buildingRequirements[building.name]
 
-    facBuilding.amount = String(parseFloat(facBuilding.amount) + parseFloat(building.amount))
-    facBuilding.totalPower = parseFloat((parseFloat(facBuilding.totalPower) + building.totalPower).toFixed(2))
+    facBuilding.amount = facBuilding.amount + building.amount
+    facBuilding.totalPower = facBuilding.totalPower + building.totalPower
     // Sum the total power.
-    factory.totalPower = parseFloat((factory.totalPower + building.totalPower).toFixed(2))
+    factory.totalPower = factory.totalPower + building.totalPower
   })
 }
