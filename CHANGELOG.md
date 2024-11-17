@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.1.3...v0.2.0) (2024-11-17)
+
+
+### Features
+
+* **repo:** Removed test files, marked v0.1.1 as initial release ([2ce43de](https://github.com/Maelstromeous/satisfactory-factories/commit/2ce43dedecb3070132978ca765c8144becf73f07))
+
 ## [0.1.3](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.1.2...v0.1.3) (2024-11-17)
 
 
