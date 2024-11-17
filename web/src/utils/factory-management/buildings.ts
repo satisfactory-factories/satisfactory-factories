@@ -56,6 +56,6 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
     facBuilding.amount = facBuilding.amount + building.amount
     facBuilding.totalPower = facBuilding.totalPower + building.totalPower
     // Sum the total power.
-    factory.totalPower = factory.totalPower + building.totalPower
+    factory.totalPower = Number((factory.totalPower + building.totalPower).toFixed(3))
   })
 }
