@@ -127,7 +127,7 @@
             >
               <i class="fas fa-bolt" />
               <span class="ml-2">
-                {{ factory.totalPower }} MW
+                {{ formatNumber(factory.totalPower) }} MW
               </span>
             </v-chip>
           </v-card-text>
@@ -147,6 +147,7 @@
   import { computed, inject } from 'vue'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void

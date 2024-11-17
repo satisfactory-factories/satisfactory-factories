@@ -1,10 +1,7 @@
-export function formatNumber(value: number): string {
-  if (Number.isInteger(value)) {
-    return value.toString();
-  } else {
-    // If the number is 2.25, show 2.25
-    // If the number is 2.50, show 2.5
-    // If the number is 2.333, show 2.33
-    return value.toFixed(value % 1 === 0 ? 1 : 2);
+export function formatNumber(value: any): string {
+  const num = Number(value);
+  if (isNaN(num)) {
+    throw new TypeError('The provided value is not a number');
   }
+  return num % 1 === 0 ? num.toFixed(0) : parseFloat(num.toFixed(2)).toString();
 }
