@@ -149,7 +149,7 @@ describe('products', () => {
 
       calculateProducts(mockFactory, mockGameData)
 
-      // Expect the ingredient requirements to be correct
+      // Expect the ingredient requirements to be correcte
       // Iron Plate ratio is 3:2 so 150 iron ingots are required
       // Iron Rod ratio is 1:1 so 100 iron ingots are required
       // Totalling 250 Iron Ingots

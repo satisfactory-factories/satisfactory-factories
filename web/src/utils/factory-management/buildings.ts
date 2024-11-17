@@ -21,13 +21,13 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
       }
 
       const buildingData = recipe.building
-      const buildingCount = Number((product.amount / productInRecipe.perMin).toFixed(3))
+      const buildingCount = product.amount / productInRecipe.perMin
 
       product.buildingRequirements = {
         name: buildingData.name,
         amount: buildingCount,
         powerPerBuilding: buildingData.power,
-        totalPower:  Number((buildingData.power * buildingCount).toFixed(3)),
+        totalPower:  buildingData.power * buildingCount,
       }
     } else {
       product.buildingRequirements = {} as BuildingRequirement
@@ -53,10 +53,10 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
 
     const facBuilding = factory.buildingRequirements[building.name]
 
-    facBuilding.amount = Number((facBuilding.amount + building.amount).toFixed(3))
-    facBuilding.totalPower = Number((factory.totalPower + building.totalPower).toFixed(3))
+    facBuilding.amount = facBuilding.amount + building.amount
+    facBuilding.totalPower = factory.totalPower + building.totalPower
 
     // Sum the total power.
-    factory.totalPower = Number((factory.totalPower + building.totalPower).toFixed(3))
+    factory.totalPower = factory.totalPower + building.totalPower
   })
 }

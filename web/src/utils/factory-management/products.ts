@@ -131,10 +131,10 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface): 
 
     byProducts.forEach(byProduct => {
       // We need to get ratio of product to byProduct by looking at the recipe's original product amount and the byProduct amount.
-      const byProductRatio = Number((byProduct.amount / recipe.products[0].amount).toFixed(3))
+      const byProductRatio = byProduct.amount / recipe.products[0].amount
 
       // Now we compare the product.amount (the amount being produced) and times by the ratio to get the byProduct amount.
-      const byProductAmount = Number((product.amount * byProductRatio).toFixed(3))
+      const byProductAmount = product.amount * byProductRatio
 
       if (!product.byProducts) {
         product.byProducts = []
