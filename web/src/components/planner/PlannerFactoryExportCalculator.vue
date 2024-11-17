@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
+  import { formatNumber } from '@/utils/numberFormatter'
   import {
     ExportCalculatorFactorySettings,
     Factory,
@@ -83,7 +84,6 @@
 
   const calculateBelts = (amount: number, beltType: string) => {
     // Simple math here to divide the amount by the belt's capacity
-
     let beltThroughput
 
     switch (beltType) {
@@ -110,7 +110,7 @@
         break
     }
 
-    return (amount / beltThroughput).toFixed(1)
+    return formatNumber(amount / beltThroughput)
   }
 
   const beltDisplay = (belt: string) => {
@@ -140,7 +140,7 @@
     // Need amount per minute of the product, divided by the car capacity divided by the round trip time
     const carsNeeded = (amount / 60) / (carCap / rtt)
 
-    return carsNeeded.toFixed(2)
+    return formatNumber(carsNeeded)
   }
 
   const calculateFluidCars = () => {
@@ -155,7 +155,7 @@
     // Need amount per minute of the product, divided by the car capacity divided by the round trip time
     const carsNeeded = (amount / 60) / (carCap / rtt)
 
-    return carsNeeded.toFixed(2)
+    return formatNumber(carsNeeded)
   }
 
   const isFluid = (part: string) => {

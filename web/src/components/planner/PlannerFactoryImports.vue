@@ -22,7 +22,7 @@
             >
               <game-asset :subject="resourceKey.toString() ?? 'unknown'" type="item" />
               <span class="ml-2">
-                <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ resource.amount }}/min
+                <b>{{ getPartDisplayName(resourceKey.toString()) }}</b>: {{ formatNumber(resource.amount) }}/min
               </span>
             </v-chip>
           </div>
@@ -147,6 +147,7 @@
   import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
   import { addInputToFactory } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
