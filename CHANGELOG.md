@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.3](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.1.2...v0.1.3) (2024-11-17)
+
+
+### Features
+
+* **backend:** Testing backend additional commit ([16cdd9f](https://github.com/Maelstromeous/satisfactory-factories/commit/16cdd9fc28aeface16d613352f15e62378a06038))
+* **backend:** Testing backend scope as well ([cd3bc44](https://github.com/Maelstromeous/satisfactory-factories/commit/cd3bc445da1a470180bc1ae823cb1c6fdf59e3ea))
+* **web:** Testing web scope again ([dc5c8ac](https://github.com/Maelstromeous/satisfactory-factories/commit/dc5c8acf1dc79683e0e8448e500b59c64c2baac7))
+
 ## [0.1.2](https://github.com/Maelstromeous/satisfactory-factories/compare/v0.1.1...v0.1.2) (2024-11-17)
 
 
