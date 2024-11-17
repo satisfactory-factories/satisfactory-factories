@@ -25,7 +25,7 @@
               />
               <v-chip class="sf-chip">
                 <game-asset :subject="input.outputPart ?? 'unknown'" type="item" />
-                <span class="ml-2">{{ getPartDisplayName(input.outputPart) }}: {{ input.amount }}/min</span>
+                <span class="ml-2">{{ getPartDisplayName(input.outputPart) }}: {{ formatNumber(input.amount) }}/min</span>
               </v-chip>
             </div>
           </v-col>
@@ -42,7 +42,7 @@
             >
               <v-chip class="sf-chip">
                 <game-asset :subject="product.id" type="item" />
-                <span class="ml-2">{{ getPartDisplayName(product.id) }}: {{ product.amount }}/min</span>
+                <span class="ml-2">{{ getPartDisplayName(product.id) }}: {{ formatNumber(product.amount) }}/min</span>
               </v-chip>
             </div>
           </v-col>
@@ -59,7 +59,7 @@
             >
               <v-chip class="sf-chip">
                 <game-asset :subject="part.toString() ?? 'unknown'" type="item" />
-                <span class="ml-2">{{ getPartDisplayName(part) }}: {{ product.amount }}/min</span>
+                <span class="ml-2">{{ getPartDisplayName(part) }}: {{ formatNumber(product.amount) }}/min</span>
               </v-chip>
               <Handle
                 :id="`${data.factory.id}-${part}`"
@@ -80,6 +80,7 @@
   import { Handle } from '@vue-flow/core'
   import { CustomData } from '@/utils/graphUtils'
   import { getPartDisplayName } from '@/utils/helpers'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   // props were passed from the slot using `v-bind="customNodeProps"`
   const props = defineProps<NodeProps<CustomData>>()
