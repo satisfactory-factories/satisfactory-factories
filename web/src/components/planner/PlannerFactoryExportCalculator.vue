@@ -83,6 +83,7 @@
   }
 
   const calculateBelts = (amount: number, beltType: string) => {
+    // Simple math here to divide the amount by the belt's capacity
     let beltThroughput
 
     switch (beltType) {
