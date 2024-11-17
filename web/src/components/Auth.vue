@@ -122,7 +122,7 @@
   const showRegister = ref(false)
   const errorMessage = ref('')
   const apiUrl = config.apiUrl
-  const lastSavedDisplay = ref('')
+  const lastSavedDisplay = ref('Not saved yet, make a change!')
   const isSaving = ref(false)
   const showSessionExpiredAlert = ref(false)
   const showOverwriteDialog = ref(false)
