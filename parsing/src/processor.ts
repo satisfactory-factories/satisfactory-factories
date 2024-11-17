@@ -319,7 +319,7 @@ function getRecipes(
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
                     if (producingBuildings[building]) {
                         const buildingPower = Object.values(products).reduce(
-                            (total, product) => total + (product.amount > 0 ? producingBuildings[building] / product.amount : 0),
+                            (total, product) => total + (product.amount > 0 ? Number((producingBuildings[building] / product.amount).toFixed(3)) : 0),
                             0
                         );
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected

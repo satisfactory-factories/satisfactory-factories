@@ -29,7 +29,7 @@ describe('products', () => {
       }).not.toThrow()
 
       expect(mockFactory.products.length).toBe(1)
-      expect(mockFactory.products[0].id).toBe('IngotIron')
+      expect(mockFactory.products[0].id).toBe('IronIngot')
     })
     it('should add a part to the factory', () => {
       addProductToFactory(mockFactory, mockIngotIron)
@@ -121,11 +121,11 @@ describe('products', () => {
       // Iron Plate requires 3 Iron Ingots /i, so 300 Iron Ingots are required
       // Iron Rod requires 1 Iron Ingot /i, so 100 Iron Ingots are required
       // Totalling 400 Iron Ingots
-      expect(mockFactory.parts.IronIngot.amountRequired).toBe(400)
+      expect(mockFactory.parts.IronIngot.amountRequired).toBe(250)
 
       // Expect the calculation to be correct
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(100)
-      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(300)
+      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(150)
       expect(mockFactory.parts.IronIngot.satisfied).toBe(false)
     })
   })

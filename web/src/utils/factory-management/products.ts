@@ -65,8 +65,8 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       // === Now we need to calculate the parts required per min to make the product ===
-      const recipeScalingFactor = product.amount / recipe.products[0].perMin
-      const ingredientRequired = ingredient.perMin * recipeScalingFactor
+      const recipeScalingFactor = Number((product.amount / recipe.products[0].perMin).toFixed(3))
+      const ingredientRequired = Number((ingredient.perMin * recipeScalingFactor).toFixed(3))
 
       // In every case, always add the ingredient to the parts list
       createNewPart(factory, ingredient.part)
@@ -122,10 +122,10 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface): 
 
     byProducts.forEach(byProduct => {
       // We need to get ratio of product to byProduct by looking at the recipe's original product amount and the byProduct amount.
-      const byProductRatio = byProduct.amount / recipe.products[0].amount
+      const byProductRatio = Number((byProduct.amount / recipe.products[0].amount).toFixed(3))
 
       // Now we compare the product.amount (the amount being produced) and times by the ratio to get the byProduct amount.
-      const byProductAmount = product.amount * byProductRatio
+      const byProductAmount = Number((product.amount * byProductRatio).toFixed(3))
 
       if (!product.byProducts) {
         product.byProducts = []
