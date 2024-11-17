@@ -168,4 +168,34 @@ export const mockRecipes: Recipe[] = [
     isAlternate: false,
     isFicsmas: false,
   },
+  {
+    id: 'Alternate_CircuitBoard_2',
+    displayName: 'Alternate: Caterium Circuit Board',
+    ingredients: [
+      {
+        part: 'Plastic',
+        amount: 10,
+        perMin: 12.5,
+      },
+      {
+        part: 'HighSpeedWire',
+        amount: 30,
+        perMin: 37.5,
+      },
+    ],
+    products: [
+      {
+        part: 'CircuitBoard',
+        amount: 7,
+        perMin: 8.75,
+        isByProduct: false,
+      },
+    ],
+    building: {
+      name: 'assemblermk1',
+      power: '2.142857142857143',
+    },
+    isAlternate: true,
+    isFicsmas: false,
+  },
 ]
