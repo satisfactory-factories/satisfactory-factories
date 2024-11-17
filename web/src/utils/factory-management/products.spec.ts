@@ -118,9 +118,9 @@ describe('products', () => {
       calculateProducts(mockFactory, mockGameData)
 
       // Expect the ingredient requirements to be correct
-      // Iron Plate requires 3 Iron Ingots /i, so 300 Iron Ingots are required
+      // Iron Plate requires 1.5 Iron Ingots /i, so 150 Iron Ingots are required
       // Iron Rod requires 1 Iron Ingot /i, so 100 Iron Ingots are required
-      // Totalling 400 Iron Ingots
+      // Totalling 250 Iron Ingots
       expect(mockFactory.parts.IronIngot.amountRequired).toBe(250)
 
       // Expect the calculation to be correct
