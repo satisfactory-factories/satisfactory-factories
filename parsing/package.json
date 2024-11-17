@@ -2,9 +2,8 @@
   "name": "factory-planner-parser",
   "description": "Parses Satisfactory game data into a structured JSON format.",
   "author": "Matt Cavanagh",
-  "version": "0.1.0",
   "main": "dist/index.js",
-  "license": "GNU GPLv3",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js game-docs.json gameData.json",

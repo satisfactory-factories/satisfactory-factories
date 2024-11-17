@@ -2,9 +2,8 @@
   "name": "factory-planner-backend",
   "description": "Backend for Factory Planner with authentication and data sync",
   "author": "Matt Cavanagh",
-  "version": "0.1.0",
   "main": "backend.ts",
-  "license": "GNU GPLv3",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "ts-node backend.ts",
     "dev": "nodemon backend.ts",
