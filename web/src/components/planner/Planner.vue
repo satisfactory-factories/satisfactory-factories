@@ -443,7 +443,7 @@
 <style scoped lang="scss">
 .planner-container {
   width: 100%;
-  height: calc(100vh - 112px);
+  height: calc(100vh - 64px);
 
   @media screen and (min-width: 2000px) {
     margin-left: 10vw;
@@ -468,7 +468,7 @@
 
   .main-content {
     width: 100%;
-    max-height: calc(100vh - 112px);
+    max-height: calc(100vh - 64px);
     overflow-y: auto;
 
     @media screen and (min-width: 2000px) {
