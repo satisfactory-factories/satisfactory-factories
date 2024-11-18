@@ -117,7 +117,7 @@
                   type="building"
                 />
                 <span class="ml-2">
-                  <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ buildingData.amount ?? 0 }}x
+                  <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ formatNumber(buildingData.amount) ?? 0 }}x
                 </span>
               </v-chip>
             </div>
