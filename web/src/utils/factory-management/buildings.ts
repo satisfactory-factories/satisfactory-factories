@@ -27,7 +27,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
         name: buildingData.name,
         amount: buildingCount,
         powerPerBuilding: buildingData.power,
-        totalPower:  buildingData.power * buildingCount,
+        totalPower: buildingData.power * buildingCount,
       }
     } else {
       product.buildingRequirements = {} as BuildingRequirement
