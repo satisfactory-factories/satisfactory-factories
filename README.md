@@ -1,5 +1,5 @@
 # Satisfactory Factories
-This web tool is designed to help players of the video game Satisfactory&trade; to plan a comprehensive production chain.
+This [web tool](https://satisfactory-factories.app/) is designed to help players of the video game Satisfactory&trade; to plan a comprehensive production chain.
 
 The tool highlights bottlenecks in the production chain, and visually tells the player that they have a problem within their designs.
 
