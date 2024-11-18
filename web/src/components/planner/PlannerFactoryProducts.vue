@@ -210,7 +210,7 @@
   const route = useRoute()
 
   const showDebugButton = computed(() => {
-    if (window.location.hostname === 'localhost') {
+    if (window.location.hostname !== 'satisfactory-factories.app') {
       return true
     }
     return route.query.debug === 'true'
