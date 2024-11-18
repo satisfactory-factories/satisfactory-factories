@@ -24,9 +24,9 @@ const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
 
-// Configure rate limiter: maximum of 100 requests per 15 minutes
+// Configure rate limiter: maximum of 100 requests per 5 minutes (20 a minute)
 const apiRateLimit = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 5 * 60 * 1000, // 5 minutes
   max: 100, // limit each IP to 100 requests per windowMs
 });
 
@@ -91,12 +91,12 @@ const authenticate = (req: AuthenticatedRequest, res: Express.Response, next: Ex
 // *************************************************
 
 // Hello Endpoint
-app.get('/hello', function (_req: Express.Request, res: Express.Response) {
+app.get('/hello', apiRateLimit, function (_req: Express.Request, res: Express.Response) {
   res.status(200).json({ message: 'Hello, the server is running!' });
 });
 
 // Register Endpoint
-app.post('/register', async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
+app.post('/register', apiRateLimit, async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
   try {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -116,7 +116,7 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
 });
 
 // Login Endpoint
-app.post('/login', async (req: TypedRequestBody<{ username: string; password: string }>, res: TypedResponse<{ token: string }>) => {
+app.post('/login', apiRateLimit, async (req: TypedRequestBody<{ username: string; password: string }>, res: TypedResponse<{ token: string }>) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -138,7 +138,7 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
 });
 
 // Validate Token Endpoint
-app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Express.Response) => {
+app.post('/validate-token', apiRateLimit, (req: TypedRequestBody<{ token: string }>, res: Express.Response) => {
   const token = req.body.token;
   if (!token) {
     return res.status(400).json({ message: 'Token is required' });
@@ -154,7 +154,7 @@ app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Expr
 });
 
 // Save Data Endpoint
-app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/save', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const userData = req.body;
@@ -225,7 +225,7 @@ app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest 
   }
 });
 // Retrieve shared data
-app.get('/share/:id', async (req, res) => {
+app.get('/share/:id', apiRateLimit, async (req, res) => {
   try {
     const { id } = req.params;
 
