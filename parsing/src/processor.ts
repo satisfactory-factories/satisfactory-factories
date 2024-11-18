@@ -332,7 +332,7 @@ function getRecipes(
 // Create building object with the selected building and calculated power
             const building = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
-                power: String(powerPerBuilding || 0), // Use calculated power or 0
+                power: powerPerBuilding || 0, // Use calculated power or 0
             };
 
 
