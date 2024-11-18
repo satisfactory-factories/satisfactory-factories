@@ -28,7 +28,7 @@
         </v-row>
         <v-card-text v-show="issuesShow" class="text-body-1">
           <p class="mb-2">
-            Roughly in priority order. Please report any bugs or feature requests to <a class="font-weight-bold text-blue" href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub issues</a>. If you encounter any of the below bugs or wish to add your input to a feature request, go to the link and let your voice be known!
+            Roughly in priority order. Please report any bugs or feature requests to <v-btn class="px-2" color="blue" density="compact" href="https://github.com/Maelstromeous/satisfactory-factories/issues"><i class="fab fa-github mr-1" />SF's GitHub issues</v-btn>. If you encounter any new bugs or wish to add your input to a feature request, go to the link and let your voice be known!
           </p>
           <v-table class="text-body-1" density="comfortable">
             <thead>
@@ -148,7 +148,7 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/13',
     },
     {
-      description: 'Overclocking / Somersloops (WIP, omitted for Alpha release, it\'s a LOT of math!)',
+      description: 'Overclocking / Somersloops (WIP, omitted for Alpha release, it\'s a LOT of math!).',
       type: 'feature',
       severity: 'major',
       status: 'open',
@@ -164,7 +164,15 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/64',
     },
     {
-      description: 'Optimise vertical space / reduce clutter',
+      description: 'Goal Maker - Configure a goal to show on the right side enable the creation of factories to meet the demand.',
+      type: 'feature',
+      severity: 'major',
+      status: 'open',
+      updated: new Date('2024-11-18 15:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/17',
+    },
+    {
+      description: 'Optimise vertical space / reduce clutter.',
       type: 'feature',
       severity: 'minor',
       status: 'open',
@@ -196,14 +204,6 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/28',
     },
     {
-      description: 'Goal Maker - Configure a goal to show on the right side enable the creation of factories to meet the demand.',
-      type: 'feature',
-      severity: 'major',
-      status: 'open',
-      updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/17',
-    },
-    {
       description: 'World Resources: Make world resources flag an issue when exceeding world limits. Show %age used.',
       type: 'bug',
       severity: 'minor',
@@ -212,7 +212,7 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/20',
     },
     {
-      description: 'Factory Copy / Cloning',
+      description: 'Factory Copy / Cloning.',
       type: 'feature',
       severity: 'minor',
       status: 'open',
@@ -220,7 +220,7 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/31',
     },
     {
-      description: 'Password resets (use a password manager people! 🔐)',
+      description: 'Password resets (use a password manager for now! 🔐).',
       type: 'feature',
       severity: 'minor',
       status: 'open',
@@ -228,7 +228,7 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/22',
     },
     {
-      description: 'Export / Import factory data)',
+      description: 'Export / Import factory data.',
       type: 'feature',
       severity: 'minor',
       status: 'open',
@@ -236,7 +236,7 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/22',
     },
     {
-      description: 'Real time collaboration',
+      description: 'Real time collaboration.',
       type: 'feature',
       severity: 'minor',
       status: 'open',
@@ -246,7 +246,7 @@
 
     // CLOSED
     {
-      description: 'Inflated ingredient amounts for recipes creating more than 1 item per run',
+      description: 'Inflated ingredient amounts for recipes creating more than 1 item per run.',
       type: 'bug',
       severity: 'major',
       status: 'closed',
