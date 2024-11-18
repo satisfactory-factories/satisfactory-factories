@@ -178,7 +178,7 @@ app.post('/save', authenticate, apiRateLimit, async (req: AuthenticatedRequest &
 });
 
 // Load Data Endpoint
-app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.get('/load', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
 
