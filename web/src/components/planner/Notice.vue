@@ -33,11 +33,11 @@
           <v-table class="text-body-1" density="comfortable">
             <thead>
               <tr>
-                <th class="text-center">Status</th>
-                <th class="text-center">Type</th>
-                <th>Description</th>
-                <th class="text-center">Updated</th>
-                <th class="text-center">Link</th>
+                <th class="text-center" scope="col">Status</th>
+                <th class="text-center" scope="col">Type</th>
+                <th scope="col">Description</th>
+                <th class="text-center" scope="col">Updated</th>
+                <th class="text-center" scope="col">Link</th>
               </tr>
             </thead>
             <tbody>
