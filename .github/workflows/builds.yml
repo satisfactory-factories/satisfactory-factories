@@ -2,6 +2,8 @@ name: Component Builds
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -34,6 +36,13 @@ jobs:
 
       - name: Test Web
         run: pnpm test
+
+      - name: SonarCloud Scan with version attached
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          # SONAR_SCANNER_OPTS: -Dsonar.projectVersion=${{ steps.version.outputs.newTag }}
 
   build-parsing:
     name: Build Parsing
