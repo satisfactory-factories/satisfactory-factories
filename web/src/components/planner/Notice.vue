@@ -129,7 +129,7 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/26',
     },
     {
       description: 'Imports are not showing up for collapsed / hidden factories.',
@@ -137,7 +137,7 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/6',
     },
     {
       description: 'Missing internal chip next to byproducts that are used internally.',
@@ -145,7 +145,7 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/13',
     },
     {
       description: 'Overclocking / Somersloops (WIP, omitted for Alpha release, it\'s a LOT of math!)',
@@ -153,7 +153,7 @@
       severity: 'major',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/11',
     },
     {
       description: 'Quantum Converter support (omitted for Alpha release), it\'s a surprisingly complex thing to get right...',
@@ -161,7 +161,7 @@
       severity: 'major',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/64',
     },
     {
       description: 'Optimise vertical space / reduce clutter',
@@ -169,16 +169,15 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/58',
     },
-
     {
       description: 'Add ability to add icon to factory.',
       type: 'feature',
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/14',
     },
     {
       description: 'Show unsatisfied demands of the plan for easy creation of new factories to fulfil demands.',
@@ -186,7 +185,15 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/15',
+    },
+    {
+      description: 'When adding a product, a default recipe should be chosen.',
+      type: 'feature',
+      severity: 'minor',
+      status: 'open',
+      updated: new Date('2024-11-18 15:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/28',
     },
     {
       description: 'Goal Maker - Configure a goal to show on the right side enable the creation of factories to meet the demand.',
@@ -194,23 +201,23 @@
       severity: 'major',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/17',
     },
     {
-      description: 'World Resources: Make world resources flag an issue when exceeding world limits.',
+      description: 'World Resources: Make world resources flag an issue when exceeding world limits. Show %age used.',
       type: 'bug',
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/20',
     },
     {
-      description: 'World Resources: Show % used.',
+      description: 'Factory Copy / Cloning',
       type: 'feature',
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/31',
     },
     {
       description: 'Password resets (use a password manager people! 🔐)',
@@ -218,15 +225,33 @@
       severity: 'minor',
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/22',
     },
     {
-      description: 'Products where recipes created multiple items per recipe run inflated ingredient requirements.',
+      description: 'Export / Import factory data)',
+      type: 'feature',
+      severity: 'minor',
+      status: 'open',
+      updated: new Date('2024-11-18 15:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/22',
+    },
+    {
+      description: 'Real time collaboration',
+      type: 'feature',
+      severity: 'minor',
+      status: 'open',
+      updated: new Date('2024-11-18 15:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/33',
+    },
+
+    // CLOSED
+    {
+      description: 'Inflated ingredient amounts for recipes creating more than 1 item per run',
       type: 'bug',
       severity: 'major',
       status: 'closed',
       updated: new Date('2024-11-16 14:45:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/3',
     },
     {
       description: 'Multiple products of the same item using different recipes will only be counted once (the last entry).',
@@ -234,7 +259,7 @@
       severity: 'minor',
       status: 'closed',
       updated: new Date('2024-11-18 14:45:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/9',
     },
     {
       description: 'Allow ability to add duplicate products to a factory (in case you split processing of them up).',
@@ -242,7 +267,7 @@
       severity: 'minor',
       status: 'closed',
       updated: new Date('2024-11-18 14:45:00Z+0000'),
-      link: '',
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/9',
     },
   ]
 
