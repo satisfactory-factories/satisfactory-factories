@@ -1,30 +1,30 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-    <!-- The Drawer for Mobile -->
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      class="d-md-none"
-      temporary
-    >
-      <v-divider color="#ccc" thickness="2px" />
-      <planner-factory-list
-        :factories="factories"
-        :total-factories="factories.length"
-        @create-factory="createFactory"
-        @update-factories="updateFactories"
-      />
-      <planner-global-actions
-        class="py-4"
-        :help-text-shown="helpText"
-        @clear-all="clearAll"
-        @hide-all="showHideAll('hide')"
-        @show-all="showHideAll('show')"
-        @show-intro="showIntro"
-        @toggle-help-text="toggleHelp()"
-      />
-    </v-navigation-drawer>
+    <!--    &lt;!&ndash; The Drawer for Mobile &ndash;&gt;-->
+    <!--    <v-navigation-drawer-->
+    <!--      v-model="drawer"-->
+    <!--      app-->
+    <!--      class="d-md-none"-->
+    <!--      temporary-->
+    <!--    >-->
+    <!--      <v-divider color="#ccc" thickness="2px" />-->
+    <!--      <planner-factory-list-->
+    <!--        :factories="factories"-->
+    <!--        :total-factories="factories.length"-->
+    <!--        @create-factory="createFactory"-->
+    <!--        @update-factories="updateFactories"-->
+    <!--      />-->
+    <!--      <planner-global-actions-->
+    <!--        class="py-4"-->
+    <!--        :help-text-shown="helpText"-->
+    <!--        @clear-all="clearAll"-->
+    <!--        @hide-all="showHideAll('hide')"-->
+    <!--        @show-all="showHideAll('show')"-->
+    <!--        @show-intro="showIntro"-->
+    <!--        @toggle-help-text="toggleHelp()"-->
+    <!--      />-->
+    <!--    </v-navigation-drawer>-->
     <v-row class="two-pane-container">
       <!-- Sticky Sidebar for Desktop -->
       <v-col class="d-none d-md-flex sticky-sidebar">
@@ -49,7 +49,7 @@
       </v-col>
       <!-- Main Content Area -->
       <v-col class="border-s-md pa-3 main-content">
-        <todo />
+        <notice />
         <planner-world-resources
           :help-text="helpText"
           :world-raw-resources="worldRawResources"
@@ -86,7 +86,6 @@
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import Todo from '@/components/planner/Todo.vue'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import { calculateInputs } from '@/utils/factory-management/inputs'
@@ -117,7 +116,7 @@
   const { factories } = storeToRefs(appStore)
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
-  const drawer = ref(false)
+  // const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
@@ -436,7 +435,6 @@
   const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
 
   const setupDemo = () => {
-    console.log('setupDemo')
     closeIntro()
     if (factories.value.length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
@@ -464,7 +462,7 @@
 <style scoped lang="scss">
 .planner-container {
   width: 100%;
-  height: calc(100vh - 112px);
+  height: calc(100vh - 64px);
 
   @media screen and (min-width: 2000px) {
     margin-left: 10vw;
@@ -489,7 +487,7 @@
 
   .main-content {
     width: 100%;
-    max-height: calc(100vh - 112px);
+    max-height: calc(100vh - 64px);
     overflow-y: auto;
 
     @media screen and (min-width: 2000px) {

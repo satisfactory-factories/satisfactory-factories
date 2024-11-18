@@ -84,7 +84,7 @@
 
   const emit = defineEmits<{
     (event: 'showDemo'): void;
-    (event: 'close'): void;
+    (event: 'closeIntro'): void;
   }>()
 
   const showDemo = () => {
@@ -95,7 +95,7 @@
 
   const close = () => {
     console.log('Closing introduction')
-    emit('close')
+    emit('closeIntro')
     showDialog.value = false
   }
 </script>

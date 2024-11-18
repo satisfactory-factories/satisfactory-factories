@@ -24,7 +24,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <div class="position-absolute top-0 right-0 ma-2 text-right">
+  <div class="position-absolute right-0 ma-2 mt-3 text-right">
     <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
     <v-btn v-else @click="toggleTray"><i class="fas fa-user" /><span class="ml-2">{{ loggedInUser }}</span></v-btn>
     <div v-show="isSaving">
@@ -80,6 +80,7 @@
               required
               type="password"
             />
+            <p class="text-left mb-2"><b>NOTE:</b> There is currently no password reset system implemented. If you lose your login details, you'll have to create a new account!</p>
             <v-btn color="green" type="submit">Register</v-btn>
           </v-form>
           <p v-if="errorMessage" class="lightRed">{{ errorMessage }}</p>
@@ -423,6 +424,7 @@
   right: 0;
   width: 400px;
   z-index: 10 !important;
+  border: 1px solid rgb(108, 108, 108);
 }
 .lightRed {
   color: lightcoral;

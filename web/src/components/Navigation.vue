@@ -7,21 +7,19 @@
         <v-chip class="sf-chip blue small">ALPHA</v-chip>
       </span>
     </div>
-    <template #extension>
-      <v-tabs
-        v-model="tab"
-      >
-        <v-tab
-          v-for="item in items"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :text="item.title"
-          :to="item.href"
-          :value="item.href"
-        />
-      </v-tabs>
-      <ko-fi />
-    </template>
+    <v-tabs
+      v-model="tab"
+    >
+      <v-tab
+        v-for="item in items"
+        :key="item.title"
+        :prepend-icon="item.icon"
+        :text="item.title"
+        :to="item.href"
+        :value="item.href"
+      />
+    </v-tabs>
+    <ko-fi />
   </v-toolbar>
 </template>
 

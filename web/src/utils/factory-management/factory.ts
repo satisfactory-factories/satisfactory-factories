@@ -25,7 +25,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     parts: {},
     buildingRequirements: {} as { [p: string]: BuildingRequirement },
     requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
-    totalPower: '0',
+    totalPower: 0,
     dependencies: {
       requests: {},
       metrics: {},

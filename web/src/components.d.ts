@@ -15,6 +15,7 @@ declare module 'vue' {
     Introduction: typeof import('./components/planner/Introduction.vue')['default']
     KoFi: typeof import('./components/ko-fi.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
+    Notice: typeof import('./components/planner/Notice.vue')['default']
     Planner: typeof import('./components/planner/Planner.vue')['default']
     PlannerFactory: typeof import('./components/planner/PlannerFactory.vue')['default']
     PlannerFactoryExportCalculator: typeof import('./components/planner/PlannerFactoryExportCalculator.vue')['default']

@@ -21,7 +21,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'smeltermk1',
-      power: '4',
+      power: 4,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -46,7 +46,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'smeltermk1',
-      power: '4',
+      power: 4,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -71,7 +71,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'constructormk1',
-      power: '2',
+      power: 2,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -96,7 +96,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'constructormk1',
-      power: '4',
+      power: 4,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -127,7 +127,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'oilrefinery',
-      power: '17.5',
+      power: 17.5,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -163,7 +163,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'oilrefinery',
-      power: '8.5',
+      power: 8.5,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -193,7 +193,37 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'assemblermk1',
-      power: '2.142857142857143',
+      power: 2.142857142857143,
+    },
+    isAlternate: true,
+    isFicsmas: false,
+  },
+  {
+    id: 'Alternate_CoatedIronPlate',
+    displayName: 'Alternate: Coated Iron Plate',
+    ingredients: [
+      {
+        part: 'IronIngot',
+        amount: 5,
+        perMin: 37.5,
+      },
+      {
+        part: 'Plastic',
+        amount: 1,
+        perMin: 7.5,
+      },
+    ],
+    products: [
+      {
+        part: 'IronPlate',
+        amount: 10,
+        perMin: 75,
+        isByProduct: false,
+      },
+    ],
+    building: {
+      name: 'assemblermk1',
+      power: 1.5,
     },
     isAlternate: true,
     isFicsmas: false,
