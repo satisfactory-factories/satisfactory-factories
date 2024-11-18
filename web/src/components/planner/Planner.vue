@@ -268,7 +268,12 @@
   const copyFactory = (originalFactory: Factory) => {
     // Make a shallow copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
-    factories.value.push({ ...originalFactory, id: newId, name: `${originalFactory.name} (copy)`, displayOrder: originalFactory.displayOrder + 1 })
+    factories.value.push({
+      ...originalFactory, 
+      id: newId, 
+      name: `${originalFactory.name} (copy)`, 
+      displayOrder: originalFactory.displayOrder + 1 
+    })
 
     // Update the display order of the other factories
     factories.value = factories.value
