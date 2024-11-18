@@ -86,7 +86,6 @@
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import Todo from '@/components/planner/Notice.vue'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import { calculateInputs } from '@/utils/factory-management/inputs'
@@ -117,7 +116,7 @@
   const { factories } = storeToRefs(appStore)
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
-  const drawer = ref(false)
+  // const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
