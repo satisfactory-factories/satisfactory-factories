@@ -35,6 +35,12 @@ jobs:
       - name: Test Web
         run: pnpm test
 
+      - name: SonarCloud Scan with version attached
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          # SONAR_SCANNER_OPTS: -Dsonar.projectVersion=${{ steps.version.outputs.newTag }}
+
   build-parsing:
     name: Build Parsing
     runs-on: ubuntu-latest
