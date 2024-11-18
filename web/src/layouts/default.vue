@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <navigation style="height: 112px" @click="closeAuthTray" />
+    <navigation @click="closeAuthTray" />
     <auth ref="authRef" />
     <v-main @click="closeAuthTray">
       <router-view />
