@@ -416,7 +416,6 @@
   const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
 
   const setupDemo = () => {
-    console.log('setupDemo')
     closeIntro()
     if (factories.value.length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
