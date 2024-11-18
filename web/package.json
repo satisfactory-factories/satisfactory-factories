@@ -8,7 +8,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "test": "jest --silent"
+    "test": "jest --silent --coverage"
   },
   "dependencies": {
     "@dagrejs/dagre": "^1.1.4",
