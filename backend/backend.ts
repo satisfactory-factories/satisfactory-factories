@@ -10,6 +10,7 @@ import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import cors from 'cors';
 import {Share, ShareDataSchema} from "./models/ShareSchema";
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -185,8 +186,14 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
   }
 });
 
+// Configure rate limiter: maximum of 100 requests per 15 minutes
+const shareRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
 // Share link create endpoint
-app.post('/share', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/share', authenticate, shareRateLimiter, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const factoryData = req.body;
