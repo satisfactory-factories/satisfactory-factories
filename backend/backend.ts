@@ -5,10 +5,11 @@ import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 // @ts-ignore Types exist???
-import { Query, Send } from "express-serve-static-core";
+import { Send } from "express-serve-static-core";
 import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import cors from 'cors';
+import {Share, ShareDataSchema} from "./models/ShareSchema";
 
 dotenv.config();
 
@@ -47,15 +48,6 @@ mongoose.connect(process.env.MONGODB_URI ?? 'no idea', {
 
 export interface TypedRequestBody<T> extends Express.Request {
   body: T;
-}
-
-export interface TypedRequestQuery<T extends Query> extends Express.Request {
-  query: T;
-}
-
-export interface TypedRequest<T extends Query, U> extends Express.Request {
-  body: U;
-  query: T;
 }
 
 export interface TypedResponse<ResBody> extends Express.Response {
@@ -160,8 +152,6 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const userData = req.body;
 
-    console.log(req.body);
-
     console.log(`Saving data for user ${username}`);
     console.log(`Data: ${JSON.stringify(userData, null, 2)}`);
 
@@ -180,6 +170,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
   }
 });
 
+// Load Data Endpoint
 app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
@@ -191,6 +182,64 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: 'Data save failed', error });
+  }
+});
+
+// Share link create endpoint
+app.post('/share', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+  try {
+    const { username } = req.user as jwt.JwtPayload & { username: string };
+    const factoryData = req.body;
+
+    console.log(`Creating share link for user ${username}`);
+
+    const shareId = new mongoose.Types.ObjectId().toHexString();
+
+    const shareData: ShareDataSchema = {
+      id: shareId,
+      data: JSON.stringify(factoryData),
+      createdBy: username,
+      created: new Date(),
+      views: 0,
+      lastViewed: new Date(),
+    };
+
+    const share = new Share(shareData);
+    await share.save();
+    console.log('Share link created!');
+
+    // Generate the shareable URL
+    const shareableUrl = `${req.protocol}://${req.get('host')}/share/${shareId}`;
+
+    res.json({ message: 'Share link created successfully', shareableUrl, share });
+  } catch (error) {
+    console.error(`Share link creation failed: ${error}`);
+    res.status(500).json({ message: 'Share link creation failed', error });
+  }
+});
+// Retrieve shared data
+app.get('/share/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    console.log(`Fetching shared data for ID: ${id}`);
+
+    const share = await Share.findOne({ id });
+
+    if (!share) {
+      return res.status(404).json({ message: 'Share link not found' });
+    }
+
+    // Increment views and update last viewed timestamp
+    share.views += 1;
+    share.lastViewed = new Date();
+    await share.save();
+
+    console.log('Share data retrieved successfully');
+    res.json({ message: 'Share data retrieved successfully', data: JSON.parse(share.data) });
+  } catch (error) {
+    console.error(`Failed to fetch shared data: ${error}`);
+    res.status(500).json({ message: 'Failed to fetch shared data', error });
   }
 });
 
