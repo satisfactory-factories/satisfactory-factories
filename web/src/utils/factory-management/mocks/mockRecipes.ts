@@ -198,4 +198,34 @@ export const mockRecipes: Recipe[] = [
     isAlternate: true,
     isFicsmas: false,
   },
+  {
+    id: 'Alternate_CoatedIronPlate',
+    displayName: 'Alternate: Coated Iron Plate',
+    ingredients: [
+      {
+        part: 'IronIngot',
+        amount: 5,
+        perMin: 37.5,
+      },
+      {
+        part: 'Plastic',
+        amount: 1,
+        perMin: 7.5,
+      },
+    ],
+    products: [
+      {
+        part: 'IronPlate',
+        amount: 10,
+        perMin: 75,
+        isByProduct: false,
+      },
+    ],
+    building: {
+      name: 'assemblermk1',
+      power: 1.5,
+    },
+    isAlternate: true,
+    isFicsmas: false,
+  },
 ]

@@ -10,13 +10,16 @@ export const addProductToFactory = (
     recipe?: string,
   }
 ) => {
-  // Check if there's already a product of the same name, if there is, throw an error
-  if (factory.products.find(product => product.id === options.id)) {
-    throw new Error(`Product with ID ${options.id} already exists in factory ${factory.id}`)
+  // In order to allow multiple products of the same product but using different recipes to be added, we need to generate a unique ID using the product's ID as well as the recipe ID.
+
+  let productId = ''
+
+  if (options.id && options.recipe) {
+    productId = `${options.id}-${options.recipe}`
   }
 
   factory.products.push({
-    id: options.id ?? '',
+    id: productId,
     amount: options.amount ?? 1,
     recipe: options.recipe ?? '',
     displayOrder: factory.products.length,
@@ -39,6 +42,7 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
       return
     }
+    const recipePart = recipe.products[0].part
 
     if (product.amount === 0 || !product.amount) {
       // If the product amount is 0, we don't need to calculate anything, because the user might be entering a new number.
@@ -52,10 +56,12 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       return // Nothing else to do
     }
 
+    // Get the recipe of the product, as the product ID can no longer be used when there's multiple recipes involved for the same part.
+
     // Add the output of the product to the parts array
-    createNewPart(factory, product.id)
-    factory.parts[product.id].amountSuppliedViaProduction = product.amount
-    calculatePartMetrics(factory, product.id)
+    createNewPart(factory, recipePart)
+    factory.parts[recipePart].amountSuppliedViaProduction += product.amount
+    calculatePartMetrics(factory, recipePart)
 
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredient => {
@@ -66,13 +72,13 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
 
       // === Now we need to calculate the parts required per min to make the product ===
       const productIngredientRatio = product.amount / recipe.products[0].perMin // This formular should have no rounding - the decimal points are important here for the floating point calculations
-      let ingredientRequired = ingredient.perMin * productIngredientRatio
-      //ingredientRequired = Number((Math.ceil(ingredientRequired * 1000) / 1000).toFixed(3))
-      //ingredientRequired = Number(ingredientRequired.toFixed(3))
-      //ingredientRequired = Math.ceil(ingredientRequired * 1000) / 1000
+      const ingredientRequired = ingredient.perMin * productIngredientRatio
+      // ingredientRequired = Number((Math.ceil(ingredientRequired * 1000) / 1000).toFixed(3))
+      // ingredientRequired = Number(ingredientRequired.toFixed(3))
+      // ingredientRequired = Math.ceil(ingredientRequired * 1000) / 1000
 
-      //console.log(ingredient.part + ':product.amount (' + product.amount + ') / recipe.products[0].perMin (' + recipe.products[0].perMin + ') = productIngredientRatio (' + productIngredientRatio + ')')
-      //console.log(ingredient.part + ': ingredient.perMin (' + ingredient.perMin + ') * productIngredientRatio (' + productIngredientRatio + ') = ingredientRequired (' + ingredientRequired + ')')
+      // console.log(ingredient.part + ':product.amount (' + product.amount + ') / recipe.products[0].perMin (' + recipe.products[0].perMin + ') = productIngredientRatio (' + productIngredientRatio + ')')
+      // console.log(ingredient.part + ': ingredient.perMin (' + ingredient.perMin + ') * productIngredientRatio (' + productIngredientRatio + ') = ingredientRequired (' + ingredientRequired + ')')
 
       // In every case, always add the ingredient to the parts list
       createNewPart(factory, ingredient.part)
