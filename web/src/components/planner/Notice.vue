@@ -212,14 +212,6 @@
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/20',
     },
     {
-      description: 'Factory Copy / Cloning.',
-      type: 'feature',
-      severity: 'minor',
-      status: 'open',
-      updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/31',
-    },
-    {
       description: 'Password resets (use a password manager for now! 🔐).',
       type: 'feature',
       severity: 'minor',
@@ -269,6 +261,14 @@
       updated: new Date('2024-11-18 14:45:00Z+0000'),
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/9',
     },
+    {
+      description: 'Factory Copy / Cloning.',
+      type: 'feature',
+      severity: 'minor',
+      status: 'closed',
+      updated: new Date('2024-11-18 21:29:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/31',
+    }
   ]
 
   const statusChipColor = (issue: Issue) => {
