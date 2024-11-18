@@ -20,23 +20,15 @@
       />
     </v-tabs>
     <ko-fi />
+    <sharing />
   </v-toolbar>
 </template>
 
-<script lang="ts">
-  import KoFi from '@/components/ko-fi.vue'
-
-  export default {
-    components: { KoFi },
-    data () {
-      return {
-        tab: null,
-        items: [
-          { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
-          { title: 'Graph (WIP)', icon: 'fas fa-project-diagram', href: '/graph' },
-          { title: 'Recipes', icon: 'fas fa-hat-chef', href: '/recipes' },
-        ],
-      }
-    },
-  }
+<script setup lang="ts">
+  const tab = null
+  const items = [
+    { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
+    { title: 'Graph (WIP)', icon: 'fas fa-project-diagram', href: '/graph' },
+    { title: 'Recipes', icon: 'fas fa-hat-chef', href: '/recipes' },
+  ]
 </script>

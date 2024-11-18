@@ -218,7 +218,11 @@ app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest 
     // Generate the shareable URL
     const shareableUrl = `${req.protocol}://${req.get('host')}/share/${shareId}`;
 
-    res.json({ status: 'success', shareableUrl, share });
+    res.json({
+      status: 'success',
+      link: shareableUrl,
+      share
+    });
   } catch (error) {
     console.error(`Share link creation failed: ${error}`);
     res.status(500).json({ status: 'fail', error });
