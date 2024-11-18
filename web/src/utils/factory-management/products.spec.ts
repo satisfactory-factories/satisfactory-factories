@@ -53,10 +53,12 @@ describe('products', () => {
 
   describe('calculateProducts', () => {
     beforeEach(() => {
-      addProductToFactory(mockFactory, mockIngotIron)
-      addProductToFactory(mockFactory, mockIngotCopper)
+      mockFactory.products = []
+      mockFactory.parts = {}
     })
     it('should calculate the products and produce the correct part info', () => {
+      addProductToFactory(mockFactory, mockIngotIron)
+      addProductToFactory(mockFactory, mockIngotCopper)
       calculateProducts(mockFactory, mockGameData)
 
       // Expect the parts to exist
@@ -86,17 +88,12 @@ describe('products', () => {
       expect(Number(mockFactory.products[0].requirements.OreIron.amount.toFixed(3))).toBe(123)
     })
 
-    // 11.428571428571429
     it('should properly calculate part requirements when the recipe returns more than 1 part itself', () => {
       const mockProduct = {
         id: 'CircuitBoard',
         amount: 98,
         recipe: 'Alternate_CircuitBoard_2',
       }
-
-      // Reset the mock factory, we want very specific detail here
-      mockFactory.products = []
-      mockFactory.parts = {}
 
       addProductToFactory(mockFactory, mockProduct)
       calculateProducts(mockFactory, mockGameData)
@@ -111,10 +108,6 @@ describe('products', () => {
         amount: 100,
         recipe: 'Alternate_CircuitBoard_2',
       }
-
-      // Reset the mock factory, we want very specific detail here
-      mockFactory.products = []
-      mockFactory.parts = {}
 
       addProductToFactory(mockFactory, mockProduct)
       calculateProducts(mockFactory, mockGameData)
@@ -149,7 +142,7 @@ describe('products', () => {
 
       calculateProducts(mockFactory, mockGameData)
 
-      // Expect the ingredient requirements to be correcte
+      // Expect the ingredient requirements to be correct
       // Iron Plate ratio is 3:2 so 150 iron ingots are required
       // Iron Rod ratio is 1:1 so 100 iron ingots are required
       // Totalling 250 Iron Ingots
@@ -159,6 +152,83 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(100)
       expect(mockFactory.parts.IronIngot.amountRemaining).toBe(150)
       expect(mockFactory.parts.IronIngot.satisfied).toBe(false)
+    })
+
+    it('should properly calculate metrics when two same products are using different recipes', () => {
+      const mockProduct1 = {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      }
+      const mockProduct2 = {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'Alternate_CoatedIronPlate',
+      }
+
+      // Add the products that's being used
+      addProductToFactory(mockFactory, mockProduct1)
+      addProductToFactory(mockFactory, mockProduct2)
+
+      calculateProducts(mockFactory, mockGameData)
+
+      // This should result in 200 iron plates being made.
+      expect(mockFactory.parts.IronPlate.amountSupplied).toBe(200)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(200)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-200)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
+    })
+    it('should properly calculate metrics when products are duplicated using same recipe', () => {
+      const mockProduct1 = {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      }
+      const mockProduct2 = {
+        id: 'IronPlate',
+        amount: 200,
+        recipe: 'IronPlate',
+      }
+      // Add the products that's being used
+      addProductToFactory(mockFactory, mockProduct1)
+      addProductToFactory(mockFactory, mockProduct2)
+
+      calculateProducts(mockFactory, mockGameData)
+
+      // This should result in 200 iron plates being made.
+      expect(mockFactory.parts.IronPlate.amountSupplied).toBe(300)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(300)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-300)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
+    })
+    it('should properly calculate metrics when products are duplicated 3 times using different recipes', () => {
+      const mockProduct1 = {
+        id: 'IronPlate',
+        amount: 50,
+        recipe: 'IronPlate',
+      }
+      const mockProduct2 = {
+        id: 'IronPlate',
+        amount: 50,
+        recipe: 'Alternate_CoatedIronPlate',
+      }
+      const mockProduct3 = {
+        id: 'IronPlate',
+        amount: 50,
+        recipe: 'Alternate_CoatedIronPlate',
+      }
+      // Add the products that's being used
+      addProductToFactory(mockFactory, mockProduct1)
+      addProductToFactory(mockFactory, mockProduct2)
+      addProductToFactory(mockFactory, mockProduct3)
+
+      calculateProducts(mockFactory, mockGameData)
+
+      // This should result in 200 iron plates being made.
+      expect(mockFactory.parts.IronPlate.amountSupplied).toBe(150)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(150)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-150)
+      expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
     })
   })
 
