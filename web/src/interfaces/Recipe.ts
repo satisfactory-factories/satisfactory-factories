@@ -12,7 +12,7 @@ export interface Recipe {
   products: RecipeItem[];
   building: {
     name: string;
-    power: string;
+    power: number;
   }
   isAlternate: boolean;
   isFicsmas: boolean;

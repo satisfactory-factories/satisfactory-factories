@@ -75,7 +75,7 @@ describe('products', () => {
       expect(mockFactory.parts.OreIron).toBeDefined()
       expect(mockFactory.parts.OreCopper).toBeDefined()
       // Expect the raw resources to have the correct amounts
-      expect(mockFactory.rawResources.OreIron.amount).toBe(123)
+      expect(Number(mockFactory.rawResources.OreIron.amount.toFixed(3))).toBe(123)
       expect(mockFactory.rawResources.OreCopper.amount).toBe(123)
 
       // Expect the rawResource data to be correct
@@ -120,8 +120,8 @@ describe('products', () => {
       calculateProducts(mockFactory, mockGameData)
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
-      expect(mockFactory.parts.HighSpeedWire.amountRequired).toBe(428.572)
-      expect(mockFactory.parts.Plastic.amountRequired).toBe(142.858)
+      expect(Number(mockFactory.parts.HighSpeedWire.amountRequired.toFixed(3))).toBe(428.571)
+      expect(Number(mockFactory.parts.Plastic.amountRequired.toFixed(3))).toBe(142.857)
     })
     it('should properly calculate metrics when two products require the same ingredient', () => {
       const mockProductIronPlate = {
@@ -149,7 +149,7 @@ describe('products', () => {
 
       calculateProducts(mockFactory, mockGameData)
 
-      // Expect the ingredient requirements to be correct
+      // Expect the ingredient requirements to be correcte
       // Iron Plate ratio is 3:2 so 150 iron ingots are required
       // Iron Rod ratio is 1:1 so 100 iron ingots are required
       // Totalling 250 Iron Ingots

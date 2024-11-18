@@ -65,11 +65,14 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       // === Now we need to calculate the parts required per min to make the product ===
-      const productIngredientRatio = product.amount / recipe.products[0].perMin
+      const productIngredientRatio = product.amount / recipe.products[0].perMin // This formular should have no rounding - the decimal points are important here for the floating point calculations
       let ingredientRequired = ingredient.perMin * productIngredientRatio
+      //ingredientRequired = Number((Math.ceil(ingredientRequired * 1000) / 1000).toFixed(3))
+      //ingredientRequired = Number(ingredientRequired.toFixed(3))
+      //ingredientRequired = Math.ceil(ingredientRequired * 1000) / 1000
 
-      // Because we're doing a perMin calculation, we need to round up to the nearest 3 decimal places to prevent floating point errors.
-      ingredientRequired = Math.ceil(ingredientRequired * 1000) / 1000
+      //console.log(ingredient.part + ':product.amount (' + product.amount + ') / recipe.products[0].perMin (' + recipe.products[0].perMin + ') = productIngredientRatio (' + productIngredientRatio + ')')
+      //console.log(ingredient.part + ': ingredient.perMin (' + ingredient.perMin + ') * productIngredientRatio (' + productIngredientRatio + ') = ingredientRequired (' + ingredientRequired + ')')
 
       // In every case, always add the ingredient to the parts list
       createNewPart(factory, ingredient.part)
