@@ -10,7 +10,6 @@ import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import cors from 'cors';
 import {Share, ShareDataSchema} from "./models/ShareSchema";
-import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -23,12 +22,6 @@ const PORT = 3001;
 const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
-
-// Configure rate limiter: maximum of 100 requests per 15 minutes
-const apiRateLimit = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-});
 
 // Add CORS middleware
 app.use(cors({
@@ -193,7 +186,7 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
 });
 
 // Share link create endpoint
-app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/share', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const factoryData = req.body;
@@ -218,10 +211,10 @@ app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest 
     // Generate the shareable URL
     const shareableUrl = `${req.protocol}://${req.get('host')}/share/${shareId}`;
 
-    res.json({ status: 'success', shareableUrl, share });
+    res.json({ message: 'Share link created successfully', shareableUrl, share });
   } catch (error) {
     console.error(`Share link creation failed: ${error}`);
-    res.status(500).json({ status: 'fail', error });
+    res.status(500).json({ message: 'Share link creation failed', error });
   }
 });
 // Retrieve shared data
@@ -243,7 +236,7 @@ app.get('/share/:id', async (req, res) => {
     await share.save();
 
     console.log('Share data retrieved successfully');
-    res.json({ data: JSON.parse(share.data) });
+    res.json({ message: 'Share data retrieved successfully', data: JSON.parse(share.data) });
   } catch (error) {
     console.error(`Failed to fetch shared data: ${error}`);
     res.status(500).json({ message: 'Failed to fetch shared data', error });
