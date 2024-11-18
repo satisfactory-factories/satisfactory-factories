@@ -1,30 +1,30 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-    <!-- The Drawer for Mobile -->
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      class="d-md-none"
-      temporary
-    >
-      <v-divider color="#ccc" thickness="2px" />
-      <planner-factory-list
-        :factories="factories"
-        :total-factories="factories.length"
-        @create-factory="createFactory"
-        @update-factories="updateFactories"
-      />
-      <planner-global-actions
-        class="py-4"
-        :help-text-shown="helpText"
-        @clear-all="clearAll"
-        @hide-all="showHideAll('hide')"
-        @show-all="showHideAll('show')"
-        @show-intro="showIntro"
-        @toggle-help-text="toggleHelp()"
-      />
-    </v-navigation-drawer>
+    <!--    &lt;!&ndash; The Drawer for Mobile &ndash;&gt;-->
+    <!--    <v-navigation-drawer-->
+    <!--      v-model="drawer"-->
+    <!--      app-->
+    <!--      class="d-md-none"-->
+    <!--      temporary-->
+    <!--    >-->
+    <!--      <v-divider color="#ccc" thickness="2px" />-->
+    <!--      <planner-factory-list-->
+    <!--        :factories="factories"-->
+    <!--        :total-factories="factories.length"-->
+    <!--        @create-factory="createFactory"-->
+    <!--        @update-factories="updateFactories"-->
+    <!--      />-->
+    <!--      <planner-global-actions-->
+    <!--        class="py-4"-->
+    <!--        :help-text-shown="helpText"-->
+    <!--        @clear-all="clearAll"-->
+    <!--        @hide-all="showHideAll('hide')"-->
+    <!--        @show-all="showHideAll('show')"-->
+    <!--        @show-intro="showIntro"-->
+    <!--        @toggle-help-text="toggleHelp()"-->
+    <!--      />-->
+    <!--    </v-navigation-drawer>-->
     <v-row class="two-pane-container">
       <!-- Sticky Sidebar for Desktop -->
       <v-col class="d-none d-md-flex sticky-sidebar">
@@ -49,7 +49,7 @@
       </v-col>
       <!-- Main Content Area -->
       <v-col class="border-s-md pa-3 main-content">
-        <todo />
+        <notice />
         <planner-world-resources
           :help-text="helpText"
           :world-raw-resources="worldRawResources"
@@ -86,7 +86,7 @@
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import Todo from '@/components/planner/Todo.vue'
+  import Todo from '@/components/planner/Notice.vue'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
   import { calculateInputs } from '@/utils/factory-management/inputs'
