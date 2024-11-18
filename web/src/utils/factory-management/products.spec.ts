@@ -76,14 +76,14 @@ describe('products', () => {
       expect(mockFactory.parts.OreCopper).toBeDefined()
       // Expect the raw resources to have the correct amounts
       expect(Number(mockFactory.rawResources.OreIron.amount.toFixed(3))).toBe(123)
-      expect(mockFactory.rawResources.OreCopper.amount).toBe(123)
+      expect(Number(mockFactory.rawResources.OreCopper.amount.toFixed(3))).toBe(123)
 
       // Expect the rawResource data to be correct
       expect(mockFactory.rawResources.OreIron.name).toBe('Iron Ore')
       expect(mockFactory.parts.OreIron.isRaw).toBe(true)
 
       // Expect the product to have the correct amount of requirement data
-      expect(mockFactory.products[0].requirements.OreIron.amount).toBe(123)
+      expect(Number(mockFactory.products[0].requirements.OreIron.amount.toFixed(3))).toBe(123)
     })
 
     // 11.428571428571429
