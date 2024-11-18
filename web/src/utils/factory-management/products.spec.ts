@@ -24,23 +24,26 @@ describe('products', () => {
 
   describe('addProductToFactory', () => {
     it('should add a product to a factory', () => {
-      expect(() => {
-        addProductToFactory(mockFactory, mockIngotIron)
-      }).not.toThrow()
+      addProductToFactory(mockFactory, mockIngotIron)
 
       expect(mockFactory.products.length).toBe(1)
-      expect(mockFactory.products[0].id).toBe('IronIngot')
+      expect(mockFactory.products[0].id).toBe('IronIngot-IngotIron')
+    })
+    it('should add a product of different recipe to the factory', () => {
+      const mockProductAlt = {
+        id: 'IronIngot',
+        amount: 123,
+        recipe: 'Alternate_IngotIron',
+      }
+      addProductToFactory(mockFactory, mockIngotIron)
+      addProductToFactory(mockFactory, mockProductAlt)
+
+      expect(mockFactory.products.length).toBe(2)
+      expect(mockFactory.products[1].id).toBe('IronIngot-Alternate_IngotIron')
     })
     it('should add a part to the factory', () => {
       addProductToFactory(mockFactory, mockIngotIron)
       expect(mockFactory.parts.IronIngot).toBeDefined()
-    })
-    it('should prevent duplicate products', () => {
-      addProductToFactory(mockFactory, mockIngotIron)
-
-      expect(() => {
-        addProductToFactory(mockFactory, mockIngotIron)
-      }).toThrow()
     })
     it('should add proper display orders', () => {
       addProductToFactory(mockFactory, mockIngotIron)
@@ -260,7 +263,7 @@ describe('products', () => {
       calculateProducts(mockFactory, mockGameData)
       calculateByProducts(mockFactory, mockGameData)
 
-      expect(mockFactory.products[0].id).toBe('LiquidFuel')
+      expect(mockFactory.products[0].id).toBe('LiquidFuel-LiquidFuel')
       expect(mockFactory.products[0].byProducts).toHaveLength(1)
       // @ts-ignore
       expect(mockFactory.products[0].byProducts[0].id).toBe('PolymerResin')
