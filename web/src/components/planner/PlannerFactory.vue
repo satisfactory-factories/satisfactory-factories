@@ -50,6 +50,14 @@
               @click="factory.hidden = false"
             />
             <v-btn
+              class="mr-2"
+              color="orange rounded"
+              icon="fa fa-copy"
+              size="small"
+              variant="outlined"
+              @click="copyFactory(factory)"
+            />
+            <v-btn
               color="red rounded"
               icon="fas fa-trash"
               size="small"
@@ -170,6 +178,7 @@
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const copyFactory = inject('copyFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void

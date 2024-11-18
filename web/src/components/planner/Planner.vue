@@ -214,7 +214,7 @@
     const gameData = props.gameData
     if (!gameData) {
       console.error('No game data provided to updateFactory!')
-      return
+      return factory
     }
 
     updateWorldRawResources(gameData)
@@ -260,6 +260,31 @@
 
     // Go through all factories and check if they have any problems.
     calculateHasProblem(factories.value)
+
+    return factory
+  }
+
+  const copyFactory = (originalFactory: Factory) => {
+    // Make a shallow copy of the factory with a new ID
+    const newId = Math.floor(Math.random() * 10000)
+    factories.value.push({
+      ...originalFactory, 
+      id: newId, 
+      name: `${originalFactory.name} (copy)`, 
+      displayOrder: originalFactory.displayOrder + 1 
+    })
+
+    // Update the display order of the other factories
+    factories.value = factories.value
+      .map(factory => {
+        if (factory.displayOrder > originalFactory.displayOrder && factory.id !== newId) {
+          factory.displayOrder += 1
+        }
+        return updateFactory(factory)
+      })
+
+    regenerateSortOrders()
+    navigateToFactory(newId)
   }
 
   const deleteFactory = (factory: Factory) => {
@@ -363,15 +388,12 @@
   }
 
   const regenerateSortOrders = () => {
-    let count = 0
-
     // Sort now, which may have sorted them weirdly
     factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
 
     // Ensure that the display order is correct
-    factories.value.forEach(factory => {
-      factory.displayOrder = count
-      count++
+    factories.value.forEach((factory, index) => {
+      factory.displayOrder = index
     })
 
     // Now re-sort
@@ -379,12 +401,9 @@
   }
 
   const forceSort = () => {
-    let count = 0
-
     // Forcefully regenerate the displayOrder counting upwards.
-    factories.value.forEach(factory => {
-      factory.displayOrder = count
-      count++
+    factories.value.forEach((factory, index) => {
+      factory.displayOrder = index
     })
   }
 
@@ -403,6 +422,7 @@
   provide('factoriesWithSurplus', factoriesWithSurplus)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
+  provide('copyFactory', copyFactory)
   provide('deleteFactory', deleteFactory)
   provide('getBuildingDisplayName', getBuildingDisplayName)
   provide('navigateToFactory', navigateToFactory)
