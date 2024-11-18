@@ -11,7 +11,7 @@ on:
 jobs:
   build-web:
     name: Build Web
-    runs-on: ubuntu-
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
