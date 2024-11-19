@@ -18,7 +18,7 @@ jobs:
           node-version: '20'
 
       - name: Add "High Priority" milestone to issues with "P1" label
-        if: github.event.action == 'labeled' && github.event.label.name.includes('P1')
+        if: github.event.action == 'labeled' && contains(github.event.label.name, 'P1')
         run: |
           node -e "
             const { Octokit } = require('@octokit/rest');
@@ -34,7 +34,7 @@ jobs:
           "
 
       - name: Remove "High Priority" milestone from closed issues
-        if: github.event.action == 'closed' && github.event.issue.labels.includes('P1')
+        if: github.event.action == 'closed' && contains(github.event.label.name, 'P1')
         run: |
           node -e "
             const { Octokit } = require('@octokit/rest');
