@@ -54,13 +54,11 @@
         await navigator.clipboard.writeText(`${window.location.origin}/share/${data.shareId}`)
         toast.value = true // Shows toast
         creating.value = false
+      } else if (response.status === 429) {
+        alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
       } else {
-        if (response.status === 429) {
-          alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
-        } else {
-          console.error('Creating share link failed failed:', response.body)
-          alert(`Failed to create share link. Please report this error to GitHub! "${response.body}"`)
-        }
+        console.error('Creating share link failed failed:', response.body)
+        alert(`Failed to create share link. Please report this error to GitHub! "${response.body}"`)
       }
     } catch (error) {
       if (error instanceof Error) {
