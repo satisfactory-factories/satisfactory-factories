@@ -92,6 +92,18 @@ const authenticate = (req: AuthenticatedRequest, res: Express.Response, next: Ex
     return res.status(401).json({ message: 'Unauthorized' });
   }
 };
+const optionalAuthenticate = (req: AuthenticatedRequest, res: Express.Response, next: Express.NextFunction) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '') ?? '';
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET ?? 'secret') ?? 'unknown';
+    next();
+    // eslint-disable-next-line
+  } catch (error: any) {
+    req.user = 'Anonymous';
+    next();
+    // Do nothing
+  }
+};
 
 // *************************************************
 // Routes
@@ -200,7 +212,7 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
 });
 
 // Share link create endpoint
-app.post('/share', authenticate, shareRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/share', optionalAuthenticate, shareRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const factoryData = req.body;
@@ -212,7 +224,7 @@ app.post('/share', authenticate, shareRateLimit, async (req: AuthenticatedReques
     const shareData: ShareDataSchema = {
       id: shareId,
       data: JSON.stringify(factoryData),
-      createdBy: username,
+      createdBy: username ?? 'Anonymous',
       created: new Date(),
       views: 0,
       lastViewed: new Date(),

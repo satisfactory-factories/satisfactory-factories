@@ -30,15 +30,6 @@
   const creating = ref(false)
 
   const createShareLink = async () => {
-    if (!loggedInUser.value) {
-      alert('You need to be logged in to share links.')
-      return
-    }
-    // This shouldn't happen but just in case
-    if (!token.value) {
-      alert('Missing token! Please re-log in!')
-      return
-    }
     if (!factories.value || factories.value.length === 0) {
       alert('No factory data to share!')
       return
