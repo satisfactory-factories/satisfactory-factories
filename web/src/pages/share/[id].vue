@@ -90,7 +90,7 @@
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
-        alert(`Failed to load share link. Please report this error to GitHub! "${error}"`)
+        alert(`Failed to load share link. Please report this error to GitHub! "${error.message}"`)
       }
     }
 
