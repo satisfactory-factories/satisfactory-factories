@@ -1,0 +1,50 @@
+name: "Issue Milestone Management"
+
+on:
+  issues:
+    types: [labeled, closed]
+
+jobs:
+  manage-milestone:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Add "High Priority" milestone to issues with "P1" label
+        if: github.event.action == 'labeled' && contains(github.event.label.name, 'P1')
+        run: |
+          node -e "
+            const { Octokit } = require('@octokit/rest');
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+            const { owner, repo } = github.context.repo;
+            const issue_number = github.event.issue.number;
+            octokit.issues.update({
+              owner,
+              repo,
+              issue_number,
+              milestone: 'High Priority'
+            });
+          "
+
+      - name: Remove "High Priority" milestone from closed issues
+        if: github.event.action == 'closed' && contains(github.event.issue.labels, 'P1')
+        run: |
+          node -e "
+            const { Octokit } = require('@octokit/rest');
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+            const { owner, repo } = github.context.repo;
+            const issue_number = github.event.issue.number;
+            octokit.issues.update({
+              owner,
+              repo,
+              issue_number,
+              milestone: null
+            });
+          "
