@@ -21,15 +21,16 @@ const PORT = 3001;
 // Setup Express
 // *************************************************
 
-const app: Express.Application = Express();
-app.use(Express.urlencoded({ extended: true }));
-app.use(Express.json());
-
 // Configure rate limiter: maximum of 100 requests per 5 minutes (20 a minute)
 const apiRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100
 });
+
+const app: Express.Application = Express();
+app.use(Express.urlencoded({ extended: true }));
+app.use(Express.json());
+app.use(apiRateLimit);
 
 // Add CORS middleware
 app.use(cors({
@@ -92,12 +93,12 @@ const authenticate = (req: AuthenticatedRequest, res: Express.Response, next: Ex
 // *************************************************
 
 // Hello Endpoint
-app.get('/hello', apiRateLimit, function (_req: Express.Request, res: Express.Response) {
+app.get('/hello', function (_req: Express.Request, res: Express.Response) {
   res.status(200).json({ message: 'Hello, the server is running!' });
 });
 
 // Register Endpoint
-app.post('/register', apiRateLimit, async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
+app.post('/register', async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
   try {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -117,7 +118,7 @@ app.post('/register', apiRateLimit, async (req: TypedRequestBody<{ username: str
 });
 
 // Login Endpoint
-app.post('/login', apiRateLimit, async (req: TypedRequestBody<{ username: string; password: string }>, res: TypedResponse<{ token: string }>) => {
+app.post('/login', async (req: TypedRequestBody<{ username: string; password: string }>, res: TypedResponse<{ token: string }>) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -139,7 +140,7 @@ app.post('/login', apiRateLimit, async (req: TypedRequestBody<{ username: string
 });
 
 // Validate Token Endpoint
-app.post('/validate-token', apiRateLimit, (req: TypedRequestBody<{ token: string }>, res: Express.Response) => {
+app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Express.Response) => {
   const token = req.body.token;
   if (!token) {
     return res.status(400).json({ message: 'Token is required' });
@@ -155,7 +156,7 @@ app.post('/validate-token', apiRateLimit, (req: TypedRequestBody<{ token: string
 });
 
 // Save Data Endpoint
-app.post('/save', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const userData = req.body;
@@ -179,7 +180,7 @@ app.post('/save', authenticate, apiRateLimit, async (req: AuthenticatedRequest &
 });
 
 // Load Data Endpoint
-app.get('/load', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
 
@@ -194,7 +195,7 @@ app.get('/load', authenticate, apiRateLimit, async (req: AuthenticatedRequest & 
 });
 
 // Share link create endpoint
-app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/share', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const factoryData = req.body;
@@ -227,7 +228,7 @@ app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest 
   }
 });
 // Retrieve shared data
-app.get('/share/:id', apiRateLimit, async (req, res) => {
+app.get('/share/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
