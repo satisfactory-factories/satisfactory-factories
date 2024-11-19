@@ -372,6 +372,8 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         "Stone": 69900,
         "Sulfur": 10800,
         "Water": 9007199254740991,
+        "Leaves": 1000000,
+        "Wood": 1000000,
     }
 
     data
