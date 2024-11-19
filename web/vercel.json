@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/share/:path*", "destination": "/" }
+  ],
   "headers": [
     {
       "source": "/assets/game/images/(.*)",
