@@ -58,7 +58,7 @@
         alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
       } else {
         console.error('Creating share link failed failed:', response.body)
-        alert(`Failed to create share link. Please report this error to GitHub! "${response.body}"`)
+        alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${response.body}"`)
       }
     } catch (error) {
       if (error instanceof Error) {
