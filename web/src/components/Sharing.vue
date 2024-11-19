@@ -13,8 +13,9 @@
       <v-card-title class="headline">Share Plan</v-card-title>
       <v-card-text class="text-center">
         <v-text-field
-          v-model="link"
+          v-model="shareLink"
           label="Share Link"
+          readonly
         />
         <v-btn v-if="!copied" color="blue darken-1" @click="copyLink">Copy</v-btn>
         <v-btn v-if="copied" color="blue darken-1" :disabled="true">Copied!</v-btn>
@@ -34,7 +35,8 @@
   const appStore = useAppStore()
   const { loggedInUser, token, factories } = storeToRefs(appStore)
   const apiUrl = config.apiUrl
-  const link = ref('')
+  const shareId = ref('')
+  const shareLink = ref('')
   const dialog = ref(false)
   const copied = ref(false)
 
@@ -48,7 +50,7 @@
       alert('Missing token! Please re-log in!')
       return
     }
-    if (!factories.value || factories.value.length === 0) {
+    if (!factories.value || factories.value.length === 0 || !factories.value[0]) {
       alert('No factory data to share!')
       return
     }
@@ -70,7 +72,8 @@
       })
       const data: ShareDataCreationResponse = await response.json()
       if (response.ok) {
-        link.value = data.link
+        shareId.value = data.shareId
+        shareLink.value = `${window.location.origin}/share/${data.shareId}`
         dialog.value = true // Shows dialog
       } else {
         console.error('Registration failed:', data)
@@ -85,7 +88,7 @@
   }
 
   const copyLink = () => {
-    navigator.clipboard.writeText(link.value)
+    navigator.clipboard.writeText(shareLink.value)
     copied.value = true
   }
 </script>
