@@ -5,10 +5,13 @@ import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 // @ts-ignore Types exist???
-import { Query, Send } from "express-serve-static-core";
+import { Send } from "express-serve-static-core";
 import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import cors from 'cors';
+import {Share, ShareDataSchema} from "./models/ShareSchema";
+import rateLimit from 'express-rate-limit';
+import { generateSlug } from "random-word-slugs";
 
 dotenv.config();
 
@@ -18,9 +21,21 @@ const PORT = 3001;
 // Setup Express
 // *************************************************
 
+// Configure rate limiter: maximum of 100 requests per 5 minutes (10 a minute)
+const apiRateLimit = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 50
+});
+// Prevent people / bots from spamming the crap out of the button to 1 share a minute
+const shareRateLimit = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 5
+});
+
 const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
+app.use(apiRateLimit);
 
 // Add CORS middleware
 app.use(cors({
@@ -49,15 +64,6 @@ export interface TypedRequestBody<T> extends Express.Request {
   body: T;
 }
 
-export interface TypedRequestQuery<T extends Query> extends Express.Request {
-  query: T;
-}
-
-export interface TypedRequest<T extends Query, U> extends Express.Request {
-  body: U;
-  query: T;
-}
-
 export interface TypedResponse<ResBody> extends Express.Response {
   json: Send<ResBody, this>;
 }
@@ -84,6 +90,18 @@ const authenticate = (req: AuthenticatedRequest, res: Express.Response, next: Ex
       console.log(error.message);
     }
     return res.status(401).json({ message: 'Unauthorized' });
+  }
+};
+const optionalAuthenticate = (req: AuthenticatedRequest, res: Express.Response, next: Express.NextFunction) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '') ?? '';
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET ?? 'secret') ?? 'unknown';
+    next();
+    // eslint-disable-next-line
+  } catch (error: any) {
+    req.user = 'Anonymous';
+    next();
+    // Do nothing
   }
 };
 
@@ -160,8 +178,6 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const userData = req.body;
 
-    console.log(req.body);
-
     console.log(`Saving data for user ${username}`);
     console.log(`Data: ${JSON.stringify(userData, null, 2)}`);
 
@@ -180,6 +196,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
   }
 });
 
+// Load Data Endpoint
 app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
@@ -191,6 +208,65 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: 'Data save failed', error });
+  }
+});
+
+// Share link create endpoint
+app.post('/share', optionalAuthenticate, shareRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+  try {
+    const { username } = req.user as jwt.JwtPayload & { username: string };
+    const factoryData = req.body;
+
+    console.log(`Creating share link for user ${username}`);
+
+    const shareId = await generateShareWords(3);
+
+    const shareData: ShareDataSchema = {
+      id: shareId,
+      data: JSON.stringify(factoryData),
+      createdBy: username ?? 'Anonymous',
+      created: new Date(),
+      views: 0,
+      lastViewed: new Date(),
+    };
+
+    const share = new Share(shareData);
+    await share.save();
+    console.log('Share link created!');
+
+    res.json({
+      shareId,
+      status: 'success',
+      share
+    });
+  } catch (error) {
+    console.error(`Share link creation failed: ${error}`);
+    res.status(500).json({ status: 'fail', error });
+  }
+});
+// Retrieve shared data
+app.get('/share/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    console.log(`Fetching shared data for ID: ${id}`);
+
+    const share = await Share.findOne({ id });
+
+    if (!share) {
+      return res.status(404).json({ message: 'Share link not found' });
+    }
+
+    // Increment views and update last viewed timestamp
+    share.views += 1;
+    share.lastViewed = new Date();
+    await share.save();
+
+    console.log('Share data retrieved successfully');
+    res.json({ data: JSON.parse(share.data) });
+  } catch (error) {
+    console.error(`Failed to fetch shared data: ${error}`);
+    res.status(500).json({ message: 'Failed to fetch shared data', error });
   }
 });
 
@@ -207,3 +283,18 @@ app.use(function (_req: Express.Request, res: Express.Response) {
 // *************************************************
 
 http.createServer(app).listen(PORT, () => console.log(`Webserver running at http://localhost:${PORT}/`));
+
+const generateShareWords = async (count: number): Promise<string> => {
+    // Check we haven't generated this share ID before
+    const shareId = generateSlug(count);
+    const existingShare = await Share.findOne({ id: shareId });
+
+    // This is EXTREMELY unlikely to happen but in the event that it does...
+    if (existingShare) {
+      const maxAttempts = 10;
+      if (count >= maxAttempts) throw new Error('Max attempts reached');
+      return await generateShareWords(count + 1); // Try again with incremented count
+    }
+
+    return shareId;
+};
