@@ -178,8 +178,6 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const userData = req.body;
 
-    console.log(`Saving data for user ${username}`);
-    console.log(`Data: ${JSON.stringify(userData, null, 2)}`);
 
     await FactoryData.findOneAndUpdate(
       { user: username },
@@ -187,7 +185,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
       { new: true, upsert: true }
     );
 
-    console.log('Data saved!');
+    console.log(`Data saved for ${username}`);
 
     res.json({ message: 'Data saved successfully', userData });
   } catch (error) {
