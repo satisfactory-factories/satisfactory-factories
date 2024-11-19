@@ -26,6 +26,11 @@ const apiRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 100
 });
+// Prevent people / bots from spamming the crap out of the button to 1 share a minute
+const shareRateLimit = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 5
+});
 
 const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
@@ -195,7 +200,7 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
 });
 
 // Share link create endpoint
-app.post('/share', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
+app.post('/share', authenticate, shareRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
     const factoryData = req.body;

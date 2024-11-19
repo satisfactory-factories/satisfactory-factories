@@ -2,26 +2,16 @@
   <v-btn
     class="ml-2"
     color="blue"
+    :disabled="creating"
     variant="flat"
     @click="createShareLink"
   >
     <i class="fas fa-share-alt" /><span class="ml-2">Share Plan</span>
   </v-btn>
 
-  <v-dialog v-model="dialog" max-width="600">
-    <v-card>
-      <v-card-title class="headline">Share Plan</v-card-title>
-      <v-card-text class="text-center">
-        <v-text-field
-          v-model="shareLink"
-          label="Share Link"
-          readonly
-        />
-        <v-btn v-if="!copied" color="blue darken-1" @click="copyLink">Copy</v-btn>
-        <v-btn v-if="copied" color="blue darken-1" :disabled="true">Copied!</v-btn>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+  <v-snackbar v-model="toast" color="success" top>
+    Link copied to clipboard!
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">
@@ -34,11 +24,10 @@
   // Get user auth stuff from the app store
   const appStore = useAppStore()
   const { loggedInUser, token, factories } = storeToRefs(appStore)
+
   const apiUrl = config.apiUrl
-  const shareId = ref('')
-  const shareLink = ref('')
-  const dialog = ref(false)
-  const copied = ref(false)
+  const toast = ref(false)
+  const creating = ref(false)
 
   const createShareLink = async () => {
     if (!loggedInUser.value) {
@@ -55,12 +44,11 @@
       return
     }
 
-    copied.value = false
-
     await handleCreation(factories.value)
   }
 
   const handleCreation = async (factoryData: Factory[]) => {
+    creating.value = true
     try {
       const response = await fetch(`${apiUrl}/share`, {
         method: 'POST',
@@ -70,14 +58,18 @@
         },
         body: JSON.stringify(factoryData),
       })
-      const data: ShareDataCreationResponse = await response.json()
       if (response.ok) {
-        shareId.value = data.shareId
-        shareLink.value = `${window.location.origin}/share/${data.shareId}`
-        dialog.value = true // Shows dialog
+        const data: ShareDataCreationResponse = await response.json()
+        await navigator.clipboard.writeText(`${window.location.origin}/share/${data.shareId}`)
+        toast.value = true // Shows toast
+        creating.value = false
       } else {
-        console.error('Registration failed:', data)
-        alert(`Failed to create share link. Please report this error to GitHub! "${data}" `)
+        if (response.status === 429) {
+          alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
+        } else {
+          console.error('Creating share link failed failed:', response.body)
+          alert(`Failed to create share link. Please report this error to GitHub! "${response.body}"`)
+        }
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -85,10 +77,5 @@
         alert(`Failed to create share link. Please report this error to GitHub! "${error}"`)
       }
     }
-  }
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(shareLink.value)
-    copied.value = true
   }
 </script>
