@@ -28,11 +28,7 @@
   import { storeToRefs } from 'pinia'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-
-  interface ShareDataResponse {
-    status: string;
-    link: string;
-  }
+  import { ShareDataCreationResponse } from '@/interfaces/ShareDataInterface'
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
@@ -72,7 +68,7 @@
         },
         body: JSON.stringify(factoryData),
       })
-      const data: ShareDataResponse = await response.json()
+      const data: ShareDataCreationResponse = await response.json()
       if (response.ok) {
         link.value = data.link
         dialog.value = true // Shows dialog
