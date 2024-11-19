@@ -11,6 +11,7 @@ import {User} from "./models/UsersSchema";
 import cors from 'cors';
 import {Share, ShareDataSchema} from "./models/ShareSchema";
 import rateLimit from 'express-rate-limit';
+import { generateSlug } from "random-word-slugs";
 
 dotenv.config();
 
@@ -200,7 +201,7 @@ app.post('/share', authenticate, apiRateLimit, async (req: AuthenticatedRequest 
 
     console.log(`Creating share link for user ${username}`);
 
-    const shareId = new mongoose.Types.ObjectId().toHexString();
+    const shareId = await generateShareWords(3);
 
     const shareData: ShareDataSchema = {
       id: shareId,
@@ -264,3 +265,16 @@ app.use(function (_req: Express.Request, res: Express.Response) {
 // *************************************************
 
 http.createServer(app).listen(PORT, () => console.log(`Webserver running at http://localhost:${PORT}/`));
+
+const generateShareWords = async (count: number): Promise<string> => {
+    // Check we haven't generated this share ID before
+    const shareId = generateSlug(count);
+    const existingShare = await Share.findOne({ id: shareId });
+
+    // This is EXTREMELY unlikely to happen but in the event that it does...
+    if (existingShare) {
+      return await generateShareWords(count); // Try again re re reeecurrsionnnn
+    }
+
+    return shareId;
+};
