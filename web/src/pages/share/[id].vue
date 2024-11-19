@@ -10,7 +10,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="red" @click="dialog = false">No</v-btn>
+        <v-btn color="red" @click="cancelLoad">No</v-btn>
         <v-btn color="green" @click="continueWithLoad">Yes</v-btn>
       </v-card-actions>
     </v-card>
@@ -24,6 +24,7 @@
   import { config } from '@/config/config'
   import { ShareDataReturnResponse } from '@/interfaces/ShareDataInterface'
   import { useAppStore } from '@/stores/app-store'
+  import { useRoute } from 'vue-router'
   import router from '@/router'
 
   const data = ref<DataInterface | null>({} as DataInterface)
@@ -45,7 +46,8 @@
   })
 
   const loadShareData = async () => {
-    const shareId = route.params.id
+    const shareId = (route.params as { id: string }).id
+
     if (shareId) {
       loadedFactoryData.value = await getDataFromShare(shareId)
       loading.value = false
@@ -101,4 +103,9 @@
     // Redirect user to the index
     router.push('/')
   }
+
+  const cancelLoad = () => {
+    router.push('/')
+  }
+
 </script>
