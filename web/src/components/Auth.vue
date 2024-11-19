@@ -12,6 +12,7 @@
     </v-card>
   </v-dialog>
   <v-dialog
+    max-width="400"
     :model-value="showSessionExpiredAlert"
   >
     <v-card class="border-md">
