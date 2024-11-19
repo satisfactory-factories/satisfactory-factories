@@ -18,7 +18,7 @@ jobs:
           node-version: '14'
 
       - name: Add "High Priority" milestone to issues with "P1" label
-        if: github.event.action == 'labeled' && contains(github.event.label.name, 'P1')
+        if: github.event.action == 'labeled' && github.event.label.name.includes('P1')
         run: |
           node -e "
             const { Octokit } = require('@octokit/rest');
