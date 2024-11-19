@@ -100,13 +100,9 @@
   // State for issues visibility and the last seen change ID
   const issuesShow = ref<boolean>(
     localStorage.getItem('issuesShow') === null
-      ? true
-      : localStorage.getItem('issuesShow') === 'true'
+      ? false
+      : localStorage.getItem('issuesShow') === 'false'
   )
-
-  if (localStorage.getItem('issuesShow') === null) {
-    markChangesAsSeen()
-  }
 
   // Watch for changes to issuesShow
   watch(issuesShow, value => {
@@ -268,7 +264,7 @@
       status: 'closed',
       updated: new Date('2024-11-18 21:29:00Z+0000'),
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/31',
-    }
+    },
   ]
 
   const statusChipColor = (issue: Issue) => {
