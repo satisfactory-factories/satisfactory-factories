@@ -2,7 +2,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 
 export interface ShareDataCreationResponse {
   status: string;
-  link: string;
+  shareId: string;
 }
 
 export interface ShareDataReturnResponse {
