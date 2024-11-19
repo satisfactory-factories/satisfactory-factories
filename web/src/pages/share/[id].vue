@@ -84,7 +84,7 @@
         }
         return data.data
       } else {
-        console.error('Registration failed:', data)
+        console.error('Loading share data failed:', data)
         alert(`Failed to load share link. Please report this error to GitHub! "${data}" `)
       }
     } catch (error) {
