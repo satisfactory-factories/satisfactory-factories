@@ -291,7 +291,9 @@ const generateShareWords = async (count: number): Promise<string> => {
 
     // This is EXTREMELY unlikely to happen but in the event that it does...
     if (existingShare) {
-      return await generateShareWords(count); // Try again re re reeecurrsionnnn
+      const maxAttempts = 10;
+      if (count >= maxAttempts) throw new Error('Max attempts reached');
+      return await generateShareWords(count + 1); // Try again with incremented count
     }
 
     return shareId;
