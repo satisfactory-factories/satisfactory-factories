@@ -63,7 +63,7 @@
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
-        alert(`Failed to create share link. Please report this error to GitHub! "${error}"`)
+        alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${error}"`)
       }
     }
   }
