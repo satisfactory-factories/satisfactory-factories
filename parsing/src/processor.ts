@@ -375,7 +375,10 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         "Leaves": 1000000,
         "Wood": 1000000,
         "Mycelia": 1000000,
-        
+        "HogParts": 100000,
+        "SpitterParts": 100000,
+        "StingerParts": 100000,
+        "HatcherParts": 100000,
     }
 
     data
