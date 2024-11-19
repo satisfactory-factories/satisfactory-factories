@@ -23,12 +23,13 @@ jobs:
       - name: Add "High Priority" milestone to issues with "P1" label
         if: github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'P1')
         run: |
-          node -e "
-            const { Octokit } = require('@octokit/rest');
+          node --input-type=module -e "
+            import { Octokit } from '@octokit/rest';
+            import { context } from '@actions/github';
             const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-            const { owner, repo } = github.context.repo;
-            const issue_number = github.event.issue.number;
-            octokit.issues.update({
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            await octokit.issues.update({
               owner,
               repo,
               issue_number,
@@ -39,12 +40,13 @@ jobs:
       - name: Remove "High Priority" milestone from closed issues
         if: github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'P1')
         run: |
-          node -e "
-            const { Octokit } = require('@octokit/rest');
+          node --input-type=module -e "
+            import { Octokit } from '@octokit/rest';
+            import { context } from '@actions/github';
             const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-            const { owner, repo } = github.context.repo;
-            const issue_number = github.event.issue.number;
-            octokit.issues.update({
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            await octokit.issues.update({
               owner,
               repo,
               issue_number,
