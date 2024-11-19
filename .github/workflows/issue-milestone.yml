@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          
+      - name: Install dependencies
+        run: npm install @octokit/rest
 
       - name: Add "High Priority" milestone to issues with "P1" label
         if: github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'P1')
