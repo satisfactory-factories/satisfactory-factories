@@ -23,7 +23,7 @@
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
-  const { loggedInUser, token, factories } = storeToRefs(appStore)
+  const { token, factories } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
   const toast = ref(false)
