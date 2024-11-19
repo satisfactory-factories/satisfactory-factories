@@ -50,7 +50,7 @@
       alert('Missing token! Please re-log in!')
       return
     }
-    if (!factories.value || factories.value.length === 0 || !factories.value[0]) {
+    if (!factories.value || factories.value.length === 0) {
       alert('No factory data to share!')
       return
     }
