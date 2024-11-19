@@ -276,6 +276,16 @@
       product.recipe = recipes[0].id
     }
 
+    const exactRecipe = recipes.find(recipe => recipe.id === product.id)
+    if (exactRecipe) {
+      product.recipe = exactRecipe.id
+    } else {
+      const defaultRecipes = recipes.filter(recipe => !recipe.isAlternate)
+      if (defaultRecipes.length === 1) {
+        product.recipe = defaultRecipes[0].id
+      }
+    }
+
     updateFactory(factory)
   }
 
