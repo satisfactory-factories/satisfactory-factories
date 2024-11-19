@@ -45,7 +45,7 @@
                 class="ml-2"
                 color="green"
               >
-                <b>{{ getDifference(factory, surplus.productId) }}</b>&nbsp;available for export
+                <b>{{ formatNumber(getDifference(factory, surplus.productId)) }}</b>&nbsp;available for export
               </v-chip>
             </span>
             <span
