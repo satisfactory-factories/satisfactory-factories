@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory, calculateProducts } from '@/utils/factory-management/products'
-import { gameData } from '@/utils/factory-management/mocks/gameData'
 import { calculateRawSupply } from '@/utils/factory-management/supply'
+import { gameData } from '@/utils/gameData'
 
 describe('products', () => {
   let mockFactory: Factory
