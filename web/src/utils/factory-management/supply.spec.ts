@@ -5,7 +5,7 @@ import { addProductToFactory, calculateProducts } from '@/utils/factory-manageme
 import { calculateRawSupply } from '@/utils/factory-management/supply'
 import { gameData } from '@/utils/gameData'
 
-describe('products', () => {
+describe('supply', () => {
   let mockFactory: Factory
 
   beforeEach(() => {
