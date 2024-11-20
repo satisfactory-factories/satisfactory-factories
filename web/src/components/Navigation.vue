@@ -21,6 +21,7 @@
     </v-tabs>
     <ko-fi />
     <sharing />
+    <join-discord text="Discord" />
   </v-toolbar>
 </template>
 

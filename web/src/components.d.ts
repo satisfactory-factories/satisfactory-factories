@@ -9,10 +9,12 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Auth: typeof import('./components/Auth.vue')['default']
+    DiscordSplash: typeof import('./components/DiscordSplash.vue')['default']
     FactoryNode: typeof import('./components/graph/FactoryNode.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
     Graph: typeof import('./components/graph/Graph.vue')['default']
     Introduction: typeof import('./components/planner/Introduction.vue')['default']
+    JoinDiscord: typeof import('./components/JoinDiscord.vue')['default']
     KoFi: typeof import('./components/ko-fi.vue')['default']
     Navigation: typeof import('./components/Navigation.vue')['default']
     Notice: typeof import('./components/planner/Notice.vue')['default']
