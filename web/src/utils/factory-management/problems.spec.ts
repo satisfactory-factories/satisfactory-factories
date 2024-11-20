@@ -12,6 +12,7 @@ describe('calculateHasProblem', () => {
       requests: {
         9216: [
           {
+            requestingFactoryId: 9216,
             part: 'IronIngot',
             amount: 900,
           },

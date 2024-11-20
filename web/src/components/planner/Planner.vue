@@ -121,9 +121,9 @@
     navigateToFactory(factory.id)
   }
 
-  const factoriesWithSurplus = computed(() => {
+  const factoriesWithSurplusExports = computed(() => {
     // Loop through all factories and see if any have any surplus
-    return factories.value.filter(factory => Object.keys(factory.surplus).length > 0)
+    return factories.value.filter(factory => Object.keys(factory.exports).length > 0)
   })
 
   // This function calculates the world resources available after each group has consumed Raw Resources.
@@ -204,21 +204,21 @@
   const copyFactory = (originalFactory: Factory) => {
     // Make a shallow copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
-    factories.value.push({
+    const newFactory = {
       ...originalFactory,
       id: newId,
       name: `${originalFactory.name} (copy)`,
       displayOrder: originalFactory.displayOrder + 1,
-    })
+    }
+    factories.value.push(newFactory)
 
-    // Update the display order of the other factories
-    factories.value = factories.value
-      .map(factory => {
-        if (factory.displayOrder > originalFactory.displayOrder && factory.id !== newId) {
-          factory.displayOrder += 1
-        }
-        return updateFactory(factory)
-      })
+    // Update the display order of the other factory
+    if (newFactory.displayOrder > originalFactory.displayOrder && newFactory.id !== newId) {
+      newFactory.displayOrder += 1
+    }
+
+    // Now call calculateFactories in case the clone's imports cause a deficit
+    calculateFactories(factories.value, gameData)
 
     regenerateSortOrders()
     navigateToFactory(newId)
@@ -356,7 +356,7 @@
   // Initialize during setup
   initializeFactories()
 
-  provide('factoriesWithSurplus', factoriesWithSurplus)
+  provide('factoriesWithSurplusExports', factoriesWithSurplusExports)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)

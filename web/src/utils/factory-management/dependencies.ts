@@ -26,6 +26,7 @@ export const addDependency = (
   }
 
   requests.push({
+    requestingFactoryId: factory.id,
     part: input.outputPart,
     amount: input.amount,
   })

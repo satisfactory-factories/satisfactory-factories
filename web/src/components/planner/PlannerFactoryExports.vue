@@ -9,34 +9,34 @@
       export. They can be exported to other factories or sunk. To set up an export, create a new factory
       and use this factory as an import.
     </p>
-    <p v-if="factory.surplus && Object.keys(factory.surplus).length === 0" class="text-body-1">
-      No surplus products yet. Add a product!
+    <p v-if="factory.exports && Object.keys(factory.exports).length === 0" class="text-body-1">
+      No exportable products yet. Add a product!
     </p>
 
-    <div v-if="factory.surplus && Object.keys(factory.surplus).length > 0">
+    <div v-if="factory.exports && Object.keys(factory.exports).length > 0">
       <p v-if="factory?.requirementsSatisfied === false" class="text-body-1 text-yellow-darken-3 mb-4">
         <i class="fas fa-exclamation-triangle" />
         <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
       </p>
       <v-row
-        v-for="exportItem in exportsDisplay.filter(item => item !== null)"
-        :key="`${factory.id}-${exportItem?.id}`"
+        v-for="exportItem in factory.exports"
+        :key="`${factory.id}-${exportItem.productId}`"
         class="sub-card border-md my-4 mx-0 text-body-1 rounded d-flex no-bottom"
-        :style="requestStyling(factory, exportItem.id)"
+        :style="requestStyling(factory, exportItem.productId)"
       >
         <v-col class="border-e-md" cols="12" md="5">
           <div class="mb-4 d-flex align-center">
             <game-asset
               height="48"
-              :subject="exportItem.id"
+              :subject="exportItem.productId"
               type="item"
               width="48"
             />
-            <span class="ml-2 text-h6">{{ getPartDisplayName(exportItem.id) }}</span>
+            <span class="ml-2 text-h6">{{ getPartDisplayName(exportItem.productId) }}</span>
           </div>
-          <div v-if="getRequestsForFactoryByProduct(factory, exportItem.id).length > 0" class="mb-4">
+          <div class="mb-4">
             <span
-              v-if="requestSatisfied(factory, exportItem.id)"
+              v-if="requestSatisfied(factory, exportItem.productId)"
               class="text-green"
             >
               <i class="fas fa-check" />
@@ -45,72 +45,72 @@
                 class="ml-2"
                 color="green"
               >
-                <b>{{ formatNumber(getDifference(factory, exportItem.id)) }}</b>&nbsp;available for export
+                <b>{{ formatNumber(exportItem.surplus) }}</b>&nbsp;available for export
               </v-chip>
             </span>
             <span
-              v-if="!requestSatisfied(factory, exportItem.id)"
+              v-if="!requestSatisfied(factory, exportItem.productId)"
               class="text-red"
             >
               <span>
                 <i class="fas fa-times" />
                 <span class="ml-2 font-weight-bold">
-                  Shortage of {{ formatNumber(getShortageAmount(factory, exportItem.id)) }}/min
+                  Shortage of {{ formatNumber(exportItem.demands - exportItem.surplus) }}/min
                 </span>
                 <v-btn
                   class="ml-2"
                   color="green"
                   size="small"
                   variant="flat"
-                  @click="fixShortage(factory, getProduct(factory, exportItem.id))"
+                  @click="fixShortage(factory, getProduct(factory, exportItem.productId))"
                 >Fix production</v-btn>
               </span>
             </span>
           </div>
           <div class="ml-n1">
             <v-chip class="ma-1 mt-0">
-              <b>Surplus:</b>&nbsp;{{ formatNumber(factory.surplus[exportItem.id]?.amount ?? 0) }}/min
+              <b>Surplus:</b>&nbsp;{{ formatNumber(exportItem.surplus) }}/min
             </v-chip>
             <v-chip class="ma-1 mt-0">
-              <b>Demands:</b>&nbsp;{{ formatNumber(getRequestMetricsForFactoryByPart(factory, exportItem.id)?.request ?? 0) }}/min
+              <b>Demands:</b>&nbsp;{{ formatNumber(exportItem.demands) }}/min
             </v-chip>
           </div>
           <div
-            v-if="getRequestsForFactoryByProduct(factory, exportItem.id).length > 0"
+            v-if="getRequestsForFactoryByProduct(factory, exportItem.productId).length > 0"
             class="mt-4"
           >
             <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
             <v-chip
-              v-for="request in getRequestsForFactoryByProduct(factory, exportItem.id)"
-              :key="request.factoryId"
+              v-for="(request, factoryId) in getRequestsForFactoryByProduct(factory, exportItem.productId)"
+              :key="factoryId"
               class="sf-chip small mb-0"
-              :color="isRequestSelected(factory, request.factoryId, exportItem.id) ? 'primary' : ''"
-              :style="isRequestSelected(factory, request.factoryId, exportItem.id) ? 'border-color: rgb(0, 123, 255) !important' : ''"
-              @click="changeCalculatorSelection(factory, request.factoryId, exportItem.id)"
+              :color="isRequestSelected(factory, request.requestingFactoryId, exportItem.productId) ? 'primary' : ''"
+              :style="isRequestSelected(factory, request.requestingFactoryId, exportItem.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
+              @click="changeCalculatorSelection(factory, request.requestingFactoryId, exportItem.productId)"
             >
               <i class="fas fa-industry" />
-              <span class="ml-2"><b>{{ findFactory(request.factoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
+              <span class="ml-2"><b>{{ findFactory(request.requestingFactoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
             </v-chip>
           </div>
         </v-col>
         <v-col cols="12" md="7">
           <planner-factory-export-calculator
-            v-if="isCalculatorReady(factory, exportItem.id)"
-            :key="`${factory.id}-${exportItem.id}`"
-            :dest-factory="findFactory(Number(getCalculatorSettings(factory, exportItem.id)!.selected))"
+            v-if="isCalculatorReady(factory, exportItem.productId)"
+            :key="`${factory.id}-${exportItem.productId}`"
+            :dest-factory="findFactory(Number(getCalculatorSettings(factory, exportItem.productId)!.selected))"
             :dest-factory-settings="getCalculatorDestFacSettings(
               factory,
-              exportItem.id,
-              getCalculatorSettings(factory, exportItem.id)!.selected
+              exportItem.productId,
+              getCalculatorSettings(factory, exportItem.productId)!.selected
             )"
             :factory="factory"
             :game-data="gameData"
             :help-text="helpText"
-            :product="getProduct(factory, exportItem.id)"
+            :product="getProduct(factory, exportItem.productId)"
             :request="getRequestForPartByDestFac(
               factory,
-              exportItem.id,
-              getCalculatorSettings(factory, exportItem.id)!.selected!,
+              exportItem.productId,
+              getCalculatorSettings(factory, exportItem.productId)!.selected!,
             )"
           />
           <div v-else class="text-center">
@@ -139,39 +139,28 @@
     Factory,
     FactoryDependencyMetrics,
     FactoryDependencyRequest,
-    FactoryExportItem, FactoryItem,
+    FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
 
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
+  import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
   const findFactory = inject('findFactory') as (id: number) => Factory
   const updateFactory = inject('calculateFactory') as (factory: Factory) => Factory
   const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
-  const props = defineProps<{
+  defineProps<{
     factory: Factory;
     gameData: DataInterface;
     helpText: boolean;
   }>()
 
-  const getExportsDisplay = (factory: Factory): FactoryExportItem[] => {
-    return validExports
-  }
-
-  const exportsDisplay = computed((): FactoryExportItem[] => {
-    return getExportsDisplay(props.factory) // Proxied like this so we can test it better
-  })
-
   const requestStyling = (factory: Factory, productId: string) => {
     return {
       border: requestSatisfied(factory, productId) ? '2px solid rgb(97, 97, 97)' : '2px solid red !important',
     }
-  }
-
-  interface FactoryDependencyRequestDisplay extends FactoryDependencyRequest {
-    factoryId: number;
   }
 
   const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string): FactoryDependencyRequest | undefined => {
@@ -208,14 +197,6 @@
       return true
     }
     return metric.isRequestSatisfied
-  }
-
-  const getDifference = (factory: Factory, part: string): number => {
-    return getRequestMetricsForFactoryByPart(factory, part)?.difference ?? -1234
-  }
-
-  const getShortageAmount = (factory: Factory, part: string): number => {
-    return Math.abs(getDifference(factory, part))
   }
 
   const fixShortage = (factory: Factory, product: FactoryItem) => {

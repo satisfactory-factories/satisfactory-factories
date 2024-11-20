@@ -39,6 +39,7 @@ export interface FactoryExportItem {
 }
 
 export interface FactoryDependencyRequest {
+  requestingFactoryId: number;
   part: string;
   amount: number;
 }
