@@ -103,17 +103,15 @@ export const useAppStore = defineStore('app', () => {
     currentFactoryTabIndex.value = factoryTabs.value.length - 1
   }
 
-  const removeTab = (id: string) => {
+  const removeCurrentTab = async () => {
     if (factoryTabs.value.length === 1) return
 
-    const index = factoryTabs.value.findIndex(tab => tab.id === id)
-    if (index !== -1) {
-      factoryTabs.value.splice(index, 1)
-
-      if (currentFactoryTabIndex.value === index) {
-        currentFactoryTabIndex.value = index - 1
-      }
+    if (factories.value.length && !window.confirm('Are you sure you want to delete this tab? This will delete all factories in it.')) {
+      return
     }
+
+    factoryTabs.value.splice(currentFactoryTabIndex.value, 1)
+    currentFactoryTabIndex.value = Math.min(currentFactoryTabIndex.value, factoryTabs.value.length - 1)
   }
 
   // Return state, actions, and getters
@@ -135,6 +133,6 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit,
     setFactories,
     addTab,
-    removeTab,
+    removeCurrentTab,
   }
 })
