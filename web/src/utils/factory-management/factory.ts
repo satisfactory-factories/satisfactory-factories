@@ -1,4 +1,14 @@
 import { BuildingRequirement, Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
+import { calculateInputs } from '@/utils/factory-management/inputs'
+import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
+import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
+import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
+import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
+import { calculateDependencyMetrics, constructDependencies } from '@/utils/factory-management/dependencies'
+import { calculateExports } from '@/utils/factory-management/exports'
+import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
+import { calculateHasProblem } from '@/utils/factory-management/problems'
+import { DataInterface } from '@/interfaces/DataInterface'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -47,9 +57,71 @@ export const newFactory = (name = 'A new factory'): Factory => {
     exportCalculator: {},
     rawResources: {},
     usingRawResourcesOnly: false,
-    surplus: {},
+    exports: {},
     hidden: false,
     hasProblem: false,
     displayOrder: -1, // this will get set by the planner
   }
+}
+
+// We update the factory in layers of calculations. This makes it much easier to conceptualize.
+export const calculateFactory = (
+  factory: Factory,
+  allFactories: Factory[],
+  gameData: DataInterface
+) => {
+  factory.rawResources = {}
+  factory.parts = {}
+
+  // Calculate what is inputted into the factory to be used by products.
+  calculateInputs(factory)
+
+  // Calculate what is produced and required by the products.
+  calculateProducts(factory, gameData)
+
+  // And calculate Byproducts
+  calculateByProducts(factory, gameData)
+
+  // Calculate building requirements for each product based on the selected recipe and product amount.
+  calculateBuildingRequirements(factory, gameData)
+
+  // Calculate if we have products satisfied by raw resources.
+  calculateRawSupply(factory, gameData)
+
+  // Add a flag to denote if we're only using raw resources to make products.
+  calculateUsingRawResourcesOnly(factory, gameData)
+
+  // Calculate if we have any internal products that can be used to satisfy requirements.
+  calculateInternalProducts(factory, gameData)
+
+  // Then we calculate the satisfaction of the factory.
+  calculateFactorySatisfaction(factory)
+
+  // We then calculate the building and power demands to make the factory.
+  calculateBuildingsAndPower(factory)
+
+  // Check all other factories to see if they are affected by this factory change.
+  constructDependencies(allFactories)
+  allFactories.forEach(factory => {
+    calculateDependencyMetrics(factory)
+  })
+
+  // Then we calculate the output state of all factories after dependencies have been configured
+  calculateExports(allFactories)
+
+  // Export Calculator stuff
+  configureExportCalculator(allFactories)
+
+  // Finally, go through all factories and check if they have any problems.
+  calculateHasProblem(allFactories)
+
+  return factory
+}
+
+export const calculateFactories = (factories: Factory[], gameData: DataInterface) => {
+  factories.forEach(factory => {
+    calculateFactory(factory, factories, gameData)
+  })
+
+  return factories
 }

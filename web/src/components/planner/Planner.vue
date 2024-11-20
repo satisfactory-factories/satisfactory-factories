@@ -88,22 +88,11 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
-  import { calculateInputs } from '@/utils/factory-management/inputs'
-  import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
-  import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
-  import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
-  import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
-  import { calculateSurplus } from '@/utils/factory-management/surplus'
   import {
-    calculateDependencyMetrics,
-    constructDependencies,
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
-  import { calculateHasProblem } from '@/utils/factory-management/problems'
-  import { findFac, newFactory } from '@/utils/factory-management/factory'
+  import { calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
   import { demo } from '@/utils/factory-setups/demo'
-  import { calculateExports } from '@/utils/factory-management/exports'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -207,62 +196,9 @@
     console.log('Factories updated and re-sorted')
   }
 
-  // We update the factory in layers of calculations. This makes it much easier to conceptualize.
+  // Proxy method so we don't have to pass the gameData and factories.value around to every single subcomponent
   const updateFactory = (factory: Factory) => {
-    factory.rawResources = {}
-    factory.parts = {}
-
-    const gameData = props.gameData
-    if (!gameData) {
-      console.error('No game data provided to updateFactory!')
-      return factory
-    }
-
-    updateWorldRawResources(gameData)
-
-    // Calculate what is inputted into the factory to be used by products.
-    calculateInputs(factory)
-
-    // Calculate what is produced and required by the products.
-    calculateProducts(factory, gameData)
-
-    // And calculate Byproducts
-    calculateByProducts(factory, gameData)
-
-    // Calculate building requirements for each product based on the selected recipe and product amount.
-    calculateBuildingRequirements(factory, gameData)
-
-    // Calculate if we have products satisfied by raw resources.
-    calculateRawSupply(factory, gameData)
-
-    // Add a flag to denote if we're only using raw resources to make products.
-    calculateUsingRawResourcesOnly(factory, gameData)
-
-    // Calculate if we have any internal products that can be used to satisfy requirements.
-    calculateInternalProducts(factory, gameData)
-
-    // Then we calculate the satisfaction of the factory.
-    calculateFactorySatisfaction(factory)
-
-    // We then calculate the building and power demands to make the factory.
-    calculateBuildingsAndPower(factory)
-
-    // Check all other factories to see if they are affected by this factory change.
-    constructDependencies(factories.value)
-    factories.value.forEach(factory => {
-      calculateDependencyMetrics(factory)
-    })
-
-    // Then we calculate the output state of all factories after dependencies have been configured
-    calculateExports(factories.value)
-
-    // Export Calculator stuff
-    configureExportCalculator(factories.value)
-
-    // Finally, go through all factories and check if they have any problems.
-    calculateHasProblem(factories.value)
-
-    return factory
+    calculateFactory(factory, factories.value, gameData)
   }
 
   const copyFactory = (originalFactory: Factory) => {
@@ -281,7 +217,7 @@
         if (factory.displayOrder > originalFactory.displayOrder && factory.id !== newId) {
           factory.displayOrder += 1
         }
-        return updateFactory(factory)
+        return calculateFactory(factory, factories.value, gameData)
       })
 
     regenerateSortOrders()
@@ -299,7 +235,7 @@
       updateWorldRawResources(gameData) // Recalculate the world resources
 
       // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
-      factories.value.forEach(fac => updateFactory(fac))
+      factories.value.forEach(fac => calculateFactory(fac, factories.value, gameData))
 
       // Regenerate the sort orders
       regenerateSortOrders()
