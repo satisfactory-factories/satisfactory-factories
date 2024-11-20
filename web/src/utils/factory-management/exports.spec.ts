@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it } from '@jest/globals'
-import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
+import { calculateFactories, findFacByName, newFactory } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 import { addProductToFactory } from '@/utils/factory-management/products'
+import { internalProductionDeficit } from '@/utils/factory-setups/internal-production-deficit'
 
 let ironIngotFac = newFactory('Iron Ingots')
 let ironPlateFac = newFactory('Iron Plates')
@@ -110,5 +111,15 @@ describe('calculateExports', () => {
     expect(ironIngotFac.exports.IronIngot.surplus).toBe(0)
     expect(ironIngotFac.exports.IronPlate.surplus).toBe(200)
     expect(ironIngotFac.exports.IronPlate.demands).toBe(0)
+  })
+  it('should calculate exports correctly with confirmed bugged factory', () => {
+    const factories = internalProductionDeficit()
+
+    calculateFactories(factories, gameData)
+
+    const wireFac = findFacByName('Wire', factories)
+    expect(wireFac.parts.Wire.amountRemaining).toBe(120) // Currently, we do not add the exports into the parts calculations, we possibly could do.
+    expect(wireFac.exports.Wire.surplus).toBe(0)
+    expect(wireFac.exports.Wire.demands).toBe(170)
   })
 })

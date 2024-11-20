@@ -28,7 +28,7 @@ const addProductsToFactories = () => {
   addProductToFactory(copperIngotFac, {
     id: 'CopperIngot',
     amount: 340,
-    recipe: 'CopperIngot',
+    recipe: 'IngotCopper',
   })
 
   addProductToFactory(wireFac, {
