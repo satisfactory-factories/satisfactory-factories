@@ -147,12 +147,12 @@ describe('dependencies', () => {
       addInputToFactory(mockDependantFactory, input)
       addInputToFactory(mockDependantFactory, input2)
       constructDependencies(factories)
-      mockFactory.surplus.IronIngot = {
-        amount: 1000,
-      }
-      mockFactory.surplus.CopperIngot = {
-        amount: 23,
-      }
+      mockFactory.parts.IronIngot = {
+        amountRemaining: 1000,
+      } as any
+      mockFactory.parts.CopperIngot = {
+        amountRemaining: 23,
+      } as any
 
       calculateDependencyMetrics(mockFactory)
 
@@ -186,9 +186,9 @@ describe('dependencies', () => {
       addInputToFactory(mockDependantFactory2, input)
 
       constructDependencies(factories)
-      mockFactory.surplus.IronIngot = {
-        amount: 150,
-      }
+      mockFactory.parts.IronIngot = {
+        amountRemaining: 150,
+      } as any // Naughty yes but typescript is being a pain
 
       calculateDependencyMetrics(mockFactory)
 

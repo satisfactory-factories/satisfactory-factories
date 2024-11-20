@@ -101,7 +101,7 @@ export const calculateDependencyMetrics = (factory: Factory) => {
         metrics[part] = {
           part,
           request: 0,
-          supply: factory.exports[part]?.amount ?? 0,
+          supply: factory.parts[part].amountRemaining ?? 0,
           isRequestSatisfied: false,
           difference: 0,
         }

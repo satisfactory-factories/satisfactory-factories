@@ -25,16 +25,15 @@ describe('calculateExports', () => {
       recipe: 'IronPlate',
     })
   })
-  it('should not have any exports when none are set', () => {
-    const factories = [ironIngotFac, ironPlateFac]
+  it('should calculate exports correctly when no factories requesting it', () => {
+    const factories = [ironIngotFac]
 
-    // Run calculateFactories, we can't run calculateExports directly since there's so dependencies on other calculations
     calculateFactories(factories, gameData)
 
-    expect(ironIngotFac.exports).toEqual({})
-    expect(ironPlateFac.exports).toEqual({})
+    expect(ironIngotFac.exports.IronIngot.surplus).toEqual(100)
+    expect(ironIngotFac.exports.IronIngot.demands).toEqual(0)
   })
-  it('should calculate exports correctly under normal conditions', () => {
+  it('should calculate exports correctly', () => {
     const factories = [ironIngotFac, ironPlateFac]
 
     addInputToFactory(ironPlateFac, {
@@ -46,6 +45,70 @@ describe('calculateExports', () => {
     // This should have added the dependency for us, thus calculateExports should have added the export because it's a dependant.
     calculateFactories(factories, gameData)
 
-    expect(ironPlateFac.exports).not.toEqual({})
+    expect(ironIngotFac.exports).not.toEqual({})
+    expect(ironIngotFac.exports.IronIngot).toEqual({
+      productId: 'IronIngot',
+      surplus: 100,
+      demands: 100,
+      displayOrder: 0,
+    })
+  })
+  it('should calculate exports correctly with multiple factories', () => {
+    const ironRodsFac = newFactory('Iron Rods')
+    const factories = [ironIngotFac, ironPlateFac, ironRodsFac]
+
+    addInputToFactory(ironPlateFac, {
+      factoryId: ironIngotFac.id,
+      outputPart: 'IronIngot',
+      amount: 50,
+    })
+    addInputToFactory(ironRodsFac, {
+      factoryId: ironIngotFac.id,
+      outputPart: 'IronIngot',
+      amount: 75,
+    })
+
+    calculateFactories(factories, gameData)
+
+    expect(ironIngotFac.exports.IronIngot.demands).toEqual(125)
+  })
+  it('should calculate exports correctly when factory is in a production deficit, without demands', () => {
+    const factories = [ironIngotFac]
+
+    // Will produce a 200 ingot deficit
+    addProductToFactory(ironIngotFac, {
+      id: 'IronPlate',
+      amount: 200,
+      recipe: 'IronPlate',
+    })
+
+    calculateFactories(factories, gameData)
+
+    expect(ironIngotFac.exports.IronIngot).not.toBeDefined()
+  })
+
+  // Issue Ref: #107
+  it('should calculate exports correctly when factory is in a production deficit, with demands', () => {
+    const factories = [ironIngotFac, ironPlateFac]
+
+    addInputToFactory(ironPlateFac, {
+      factoryId: ironIngotFac.id,
+      outputPart: 'IronIngot',
+      amount: 100,
+    })
+
+    // Will produce a 200 ingot deficit
+    addProductToFactory(ironIngotFac, {
+      id: 'IronPlate',
+      amount: 200,
+      recipe: 'IronPlate',
+    })
+
+    calculateFactories(factories, gameData)
+
+    expect(ironIngotFac.exports.IronIngot.demands).toBe(100)
+    expect(ironIngotFac.exports.IronIngot.surplus).toBe(0)
+    expect(ironIngotFac.exports.IronPlate.surplus).toBe(200)
+    expect(ironIngotFac.exports.IronPlate.demands).toBe(0)
   })
 })

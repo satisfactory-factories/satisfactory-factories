@@ -32,8 +32,10 @@ export interface FactoryItem {
 }
 
 export interface FactoryExportItem {
-  amount: number;
-  demands?: number;
+  productId: string;
+  surplus: number;
+  demands: number;
+  displayOrder: number;
 }
 
 export interface FactoryDependencyRequest {
@@ -86,7 +88,7 @@ export interface Factory {
   id: number;
   name: string;
   inputs: FactoryInput[];
-  products: { [key: string] : FactoryItem };
+  products: FactoryItem[];
   byProducts: ByProductItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };
