@@ -13,7 +13,7 @@ export const getRequestsForFactoryByProduct = (
   // If the part name matches the one we're looking for, we add it to the list.
   const factoryRequests = factory.dependencies.requests
 
-  if (Object.keys(factoryRequests).length === 0) {
+  if (!factoryRequests || Object.keys(factoryRequests).length === 0) {
     return []
   }
 
@@ -44,7 +44,7 @@ export const calculateExports = (factories: Factory[]) => {
     }
 
     // Map through the products and check if the product both has a surplus or requests set upon it
-    const exports = products.map(([key, product]) => {
+    const factoryExports = factory.products.map(([key, product]) => {
     // Now check if the product has any demands set upon it by other factories
       const requests = getRequestsForFactoryByProduct(factory, product.id)
 
@@ -66,7 +66,7 @@ export const calculateExports = (factories: Factory[]) => {
     })
 
     // Filter out any `null` values from the mapped array, keeps typescript happy
-    const validExports = exports.filter(item => item !== null)
+    const validExports = factoryExports.filter(item => item !== null)
 
     // Sort the filtered surplus entries based on sortOrder
     validExports.sort((a, b) => {
@@ -81,6 +81,10 @@ export const calculateExports = (factories: Factory[]) => {
       } else {
         return -1
       }
+    })
+
+    validExports.forEach((exportItem, index) => {
+      factory.exports[index] = exportItem
     })
   })
 }

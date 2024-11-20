@@ -48,7 +48,6 @@ export const newFactory = (name = 'A new factory'): Factory => {
     inputs: [],
     parts: {},
     buildingRequirements: {} as { [p: string]: BuildingRequirement },
-    requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
     totalPower: 0,
     dependencies: {
       requests: {},
@@ -56,8 +55,9 @@ export const newFactory = (name = 'A new factory'): Factory => {
     } as FactoryDependency,
     exportCalculator: {},
     rawResources: {},
-    usingRawResourcesOnly: false,
     exports: {},
+    requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
+    usingRawResourcesOnly: false,
     hidden: false,
     hasProblem: false,
     displayOrder: -1, // this will get set by the planner

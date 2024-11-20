@@ -86,7 +86,7 @@ export interface Factory {
   id: number;
   name: string;
   inputs: FactoryInput[];
-  products: FactoryItem[];
+  products: { [key: string] : FactoryItem };
   byProducts: ByProductItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };
