@@ -33,7 +33,8 @@ declare module 'vue' {
     RecipeSearchItem: typeof import('./components/recipes/RecipeSearchItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sharing: typeof import('./components/Sharing.vue')['default']
+    ShareButton: typeof import('./components/ShareButton.vue')['default']
+    TabNavigation: typeof import('./components/TabNavigation.vue')['default']
     Todo: typeof import('./components/graph/Todo.vue')['default']
   }
 }

@@ -1,14 +1,11 @@
 <template>
   <v-btn
-    class="ml-2"
-    color="blue"
-    :disabled="creating"
+    color="blue rounded"
+    icon="fas fa-share-alt"
+    size="small"
     variant="flat"
     @click="createShareLink"
-  >
-    <i class="fas fa-share-alt" /><span class="ml-2">Share Plan</span>
-  </v-btn>
-
+  />
   <v-snackbar v-model="toast" color="success" top>
     Link copied to clipboard!
   </v-snackbar>
