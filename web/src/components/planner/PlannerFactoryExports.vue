@@ -147,7 +147,7 @@
 
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   const findFactory = inject('findFactory') as (id: number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => Factory
+  const updateFactory = inject('calculateFactory') as (factory: Factory) => Factory
   const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
   const props = defineProps<{
@@ -157,51 +157,6 @@
   }>()
 
   const getExportsDisplay = (factory: Factory): FactoryExportItem[] => {
-    // Get the products from the factory, and filter out any products that BOTH do not have a surplus and are NOT requested by other factories
-    const products = Object.entries(factory.products ?? {})
-    if (products.length === 0) {
-      return []
-    }
-
-    // Map through the products and check if the product both has a surplus or requests set upon it
-    const exports = products.map(([key, product]) => {
-      // Now check if the product has any demands set upon it by other factories
-      const requests = getRequestsForFactoryByProduct(factory, product.id)
-      const hasSurplus = factory.surplus[product.id] ?? false
-
-      if (requests.length === 0 && !hasSurplus) {
-        return null // Return null when product is not requested by other factories and has no surplus
-      }
-
-      const byProduct = factory.byProducts.find(byProduct => byProduct.id === product.id)
-
-      // If byproduct, we need to get the product to get the display order
-      const productParent = byProduct ? factory.products.filter(product => product.id === byProduct.byProductOf)[0] : product
-      const displayOrder = productParent?.displayOrder
-
-      return {
-        ...product,
-        productId: key, // Add the product name to retain the reference
-        surplus: hasSurplus.amount ?? 0,
-        demands: requests.reduce((acc, request) => acc + request.amount, 0),
-        displayOrder,
-      } as FactoryExportItem
-    })
-
-    // Filter out any `null` values from the mapped array, keeps typescript happy
-    const validExports = exports.filter((item): item is FactoryExportItem => item !== null)
-
-    // Sort the filtered surplus entries based on sortOrder
-    validExports.sort((a, b) => {
-      if (a.displayOrder && b.displayOrder) {
-        return a.displayOrder - b.displayOrder
-      } else if (a.displayOrder) {
-        return 1 // Push entries without sortOrder to the end
-      } else {
-        return -1
-      }
-    })
-
     return validExports
   }
 
@@ -217,35 +172,6 @@
 
   interface FactoryDependencyRequestDisplay extends FactoryDependencyRequest {
     factoryId: number;
-  }
-
-  const getRequestsForFactoryByProduct = (
-    factory: Factory,
-    part: string
-  ): FactoryDependencyRequestDisplay[] => {
-    // If sent an empty factory, there's no request.
-    if (!factory) {
-      return []
-    }
-    // Return an object containing the requests of all factories requesting a particular part
-    // We need to get all requests set upon by other factories and check their part names
-    // If the part name matches the one we're looking for, we add it to the list.
-    const factoryRequests = factory.dependencies.requests
-
-    if (Object.keys(factoryRequests).length === 0) {
-      return []
-    }
-
-    // Create a new object returning the requests for the specific part, injecting the factory ID.
-    // They can only ever request one part from us, so return it as a flat array.
-    return Object.entries(factoryRequests).map(([factoryId, requests]) => {
-      return requests.filter(request => request.part === part).map(request => {
-        return {
-          ...request,
-          factoryId: parseInt(factoryId, 10),
-        }
-      })
-    }).flat()
   }
 
   const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string): FactoryDependencyRequest | undefined => {
