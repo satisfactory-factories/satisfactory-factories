@@ -15,27 +15,27 @@
   import { config } from '@/config/config'
   import { storeToRefs } from 'pinia'
   import { useAppStore } from '@/stores/app-store'
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
   import { ShareDataCreationResponse } from '@/interfaces/ShareDataInterface'
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
-  const { token, factories } = storeToRefs(appStore)
+  const { token, currentFactoryTab } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
   const toast = ref(false)
   const creating = ref(false)
 
   const createShareLink = async () => {
-    if (!factories.value || factories.value.length === 0) {
+    if (!currentFactoryTab.value.factories || currentFactoryTab.value.factories.length === 0) {
       alert('No factory data to share!')
       return
     }
 
-    await handleCreation(factories.value)
+    await handleCreation(currentFactoryTab.value)
   }
 
-  const handleCreation = async (factoryData: Factory[]) => {
+  const handleCreation = async (factoryTabData: FactoryTab) => {
     creating.value = true
     try {
       const response = await fetch(`${apiUrl}/share`, {
@@ -44,7 +44,7 @@
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token.value}`,
         },
-        body: JSON.stringify(factoryData),
+        body: JSON.stringify(factoryTabData),
       })
       if (response.ok) {
         const data: ShareDataCreationResponse = await response.json()

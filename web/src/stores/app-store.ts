@@ -93,11 +93,15 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('lastSave', lastSave.value.toISOString())
   }
 
-  const addTab = () => {
+  const addTab = ({
+    id = crypto.randomUUID(),
+    name = 'New Tab',
+    factories = [],
+  } = {} as Partial<FactoryTab>) => {
     factoryTabs.value.push({
-      id: crypto.randomUUID(),
-      name: 'New Tab',
-      factories: [],
+      id,
+      name,
+      factories,
     })
 
     currentFactoryTabIndex.value = factoryTabs.value.length - 1
