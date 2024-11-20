@@ -83,7 +83,7 @@ const addImportsToFactories = (factories: Factory[]) => {
   })
 
   const circuitBoardsFac = findFacByName('Circuit Boards', factories)
-  const oilProcessingFac = findFacByName('Oil Processings', factories)
+  const oilProcessingFac = findFacByName('Oil Processing', factories)
   addInputToFactory(circuitBoardsFac, {
     factoryId: copperBasicsFac.id,
     outputPart: 'Cable',
