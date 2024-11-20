@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showSplash" max-width="1000" scrollable>
+  <v-dialog v-model="showSplash" max-width="1000" scrollable @click="closeSplash">
     <v-card>
       <v-card-title class="text-h4 text-center pb-0">Join the Satisfactory Factories Discord!</v-card-title>
       <v-card-subtitle class="text-center">We've just added a Discord server!</v-card-subtitle>
@@ -22,11 +22,11 @@
   // In case the user closes the dialog without clicking on the button
   watch(() => showSplash.value, value => {
     if (!value) {
-      close()
+      closeSplash()
     }
   })
 
-  const close = () => {
+  const closeSplash = () => {
     showSplash.value = false
     localStorage.setItem('seenDiscordSplash', 'true')
   }
