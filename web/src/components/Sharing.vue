@@ -23,19 +23,19 @@
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
-  const { token, factories } = storeToRefs(appStore)
+  const { token } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
   const toast = ref(false)
   const creating = ref(false)
 
   const createShareLink = async () => {
-    if (!factories.value || factories.value.length === 0) {
+    if (!appStore.getFactories() || appStore.getFactories().length === 0) {
       alert('No factory data to share!')
       return
     }
 
-    await handleCreation(factories.value)
+    await handleCreation(appStore.getFactories())
   }
 
   const handleCreation = async (factoryData: Factory[]) => {

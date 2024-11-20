@@ -17,11 +17,15 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
-  // Getters
-  const getFactory = (id: number) => {
-    return factories.value.find(factory => factory.id === id)
-  }
+  // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
+    // Patch for old data pre #116
+    factories.value.forEach(factory => {
+      if (!factory.exports) {
+        factory.exports = {}
+      }
+    })
+
     return factories.value
   }
   const getLastEdit = () => {
@@ -34,16 +38,9 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeFactory = (id: number) => {
-    const index = factories.value.findIndex(factory => factory.id === id)
+    const index = getFactories().findIndex(factory => factory.id === id)
     if (index !== -1) {
       factories.value.splice(index, 1)
-    }
-  }
-
-  const updateFactory = (factory: Factory) => {
-    const foundFactory = factories.value.find(f => f.id === factory.id)
-    if (foundFactory) {
-      Object.assign(foundFactory, factory)
     }
   }
 
@@ -71,6 +68,11 @@ export const useAppStore = defineStore('app', () => {
     // Will also call the watcher.
   }
 
+  const clearFactories = () => {
+    factories.value.length = 0
+    factories.value = []
+  }
+
   const setLastEdit = () => {
     lastEdit.value = new Date()
     localStorage.setItem('lastEdit', lastEdit.value.toISOString())
@@ -87,12 +89,11 @@ export const useAppStore = defineStore('app', () => {
     token,
     lastSave,
     lastEdit,
-    getFactory,
     getFactories,
     getLastEdit,
     addFactory,
     removeFactory,
-    updateFactory,
+    clearFactories,
     setLoggedInUser,
     setToken,
     setLastSave,
