@@ -35,6 +35,7 @@ const shareRateLimit = rateLimit({
 const app: Express.Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
+app.set('trust proxy', 1); // Trust first proxy
 app.use(apiRateLimit);
 
 // Add CORS middleware
