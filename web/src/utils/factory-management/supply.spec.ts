@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory, calculateProducts } from '@/utils/factory-management/products'
-import { mockGameData } from '@/utils/factory-management/mocks/mockGameData'
+import { gameData } from '@/utils/factory-management/mocks/gameData'
 import { calculateRawSupply } from '@/utils/factory-management/supply'
 
 describe('products', () => {
@@ -25,8 +25,8 @@ describe('products', () => {
       mockFactory.parts = {}
 
       addProductToFactory(mockFactory, mockFluidProduct)
-      calculateProducts(mockFactory, mockGameData)
-      calculateRawSupply(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
+      calculateRawSupply(mockFactory, gameData)
 
       // Expect that all parts involved with creating Alumina have been added, including water.
       expect(mockFactory.parts.Water.amountRequired).toBe(150)

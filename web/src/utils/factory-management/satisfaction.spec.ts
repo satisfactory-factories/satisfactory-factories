@@ -3,7 +3,7 @@ import { calculateFactorySatisfaction } from './satisfaction'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory, calculateProducts } from '@/utils/factory-management/products'
-import { mockGameData } from '@/utils/factory-management/mocks/mockGameData'
+import { gameData } from '@/utils/factory-management/mocks/gameData'
 import { calculateRawSupply } from '@/utils/factory-management/supply'
 
 describe('satisfaction', () => {
@@ -54,8 +54,8 @@ describe('satisfaction', () => {
       mockFactory.parts = {}
 
       addProductToFactory(mockFactory, mockProductWithByProducts)
-      calculateProducts(mockFactory, mockGameData)
-      calculateRawSupply(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
+      calculateRawSupply(mockFactory, gameData)
       calculateFactorySatisfaction(mockFactory)
 
       // Expect that all parts involved with creating Alumina have been added, including water.

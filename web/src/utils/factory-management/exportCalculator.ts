@@ -3,7 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 export const configureExportCalculator = (factories: Factory[]) => {
   factories.forEach(factory => {
     // For each surplus product we need to make sure there is an export calculator setting associated with it
-    Object.keys(factory.surplus).forEach(part => {
+    Object.keys(factory.exports).forEach(part => {
       // If there's not already a record for this surplus product, create one now.
       if (!factory.exportCalculator[part]) {
         factory.exportCalculator[part] = {
