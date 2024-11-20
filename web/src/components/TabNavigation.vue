@@ -2,21 +2,22 @@
   <div>
     <v-toolbar class="border-t-md" dark density="compact">
       <v-tabs
-        v-model="tab"
+        v-model="appStore.currentFactoryTabIndex"
         color="deep-orange"
       >
         <v-tab
-          v-for="item in items"
+          v-for="(item, index) in appStore.factoryTabs"
           :key="item.name"
           class="text-none"
           :text="item.name"
-          :value="item"
+          :value="index"
         />
 
       </v-tabs>
       <v-btn
         icon="fas fa-plus"
         size="x-small"
+        @click="appStore.addTab()"
       />
     </v-toolbar>
 
@@ -26,11 +27,11 @@
           v-if="isEditingName"
           density="compact"
           hide-details
-          :value="tab.name"
+          :value="appStore.currentFactoryTab.name"
           variant="outlined"
           width="300"
         />
-        <span v-else>{{ tab.name }}</span>
+        <span v-else>{{ appStore.currentFactoryTab.name }}</span>
         <v-btn
           v-if="isEditingName"
           class="ml-2"
@@ -53,11 +54,13 @@
 
       <ShareButton />
       <v-btn
+        v-if="appStore.factoryTabs.length > 1"
         class="ml-2"
         color="red rounded"
         icon="fas fa-trash"
         size="small"
         variant="flat"
+        @click="onClickRemoveTab"
       />
     </v-toolbar>
   </div>
@@ -65,12 +68,14 @@
 </template>
 
 <script setup lang="ts">
+  import { useAppStore } from '@/stores/app-store'
+
+  const appStore = useAppStore()
+
   const isEditingName = ref(false)
 
-  const items = [
-    { id: 1, name: 'Default', factory: {} },
-    { id: 2, name: 'factory 1', factory: {} },
-  ]
+  const onClickRemoveTab = () => {
+    appStore.removeTab(appStore.currentFactoryTab.id)
+  }
 
-  const tab = ref(items[0])
 </script>
