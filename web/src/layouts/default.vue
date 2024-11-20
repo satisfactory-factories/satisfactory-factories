@@ -15,7 +15,7 @@
   const route = useRoute()
 
   const showTabNavigation = computed(() => {
-    return route.path === '/'
+    return route.path === '/' || route.path === '/graph'
   })
 
   const authRef = ref(null)

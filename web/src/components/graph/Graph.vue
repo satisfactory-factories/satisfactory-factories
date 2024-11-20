@@ -75,6 +75,10 @@
     console.log('Initial nodes:', nodes.value)
     console.log('Initial edges:', edges.value)
   })
+
+  watch(factories, () => {
+    initializeGraph()
+  })
 </script>
 
 <style>
@@ -87,7 +91,7 @@
 .notice {
   width: 1000px;
   position: absolute;
-  top: 12vh;
+  top: 16vh;
   left: calc(50% - 500px);
   z-index: 100;
 }
