@@ -91,7 +91,7 @@
   import {
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
+  import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
   import { demo } from '@/utils/factory-setups/demo'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
@@ -217,7 +217,7 @@
         if (factory.displayOrder > originalFactory.displayOrder && factory.id !== newId) {
           factory.displayOrder += 1
         }
-        return calculateFactory(factory, factories.value, gameData)
+        return updateFactory(factory)
       })
 
     regenerateSortOrders()
@@ -235,7 +235,7 @@
       updateWorldRawResources(gameData) // Recalculate the world resources
 
       // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
-      factories.value.forEach(fac => calculateFactory(fac, factories.value, gameData))
+      calculateFactories(factories.value, gameData)
 
       // Regenerate the sort orders
       regenerateSortOrders()
