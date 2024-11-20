@@ -23,7 +23,7 @@ const addProductsToFactories = () => {
   addProductToFactory(ironIngotFac, {
     id: 'IronIngot',
     amount: 100,
-    recipe: 'IronIngot',
+    recipe: 'IngotIron',
   })
 
   addProductToFactory(ironPlateFac, {
@@ -35,7 +35,7 @@ const addProductsToFactories = () => {
 
 const addImportsToFactories = () => {
   addInputToFactory(ironPlateFac, {
-    factoryId: ironPlateFac.id,
+    factoryId: ironIngotFac.id,
     outputPart: 'IronIngot',
     amount: 100,
   })

@@ -4,6 +4,9 @@ import { findFacByName, newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
 // Programmatically create a set of factories with products and imports, which keeps the demo data consistent and in line with changes to the data structure.
+
+// Things to note:
+// - Oil Processing has a byproduct usage deficit, it would be blocked if not dealt with.
 export const demo = (): Factory[] => {
   const factories = constructFactories()
   addProductsToFactories(factories)
