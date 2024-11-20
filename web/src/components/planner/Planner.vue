@@ -102,7 +102,8 @@
   import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
   import { calculateHasProblem } from '@/utils/factory-management/problems'
   import { findFac, newFactory } from '@/utils/factory-management/factory'
-  import { demoFactories } from '@/utils/demoFactories'
+  import { demo } from '@/utils/factory-setups/demo'
+  import { calculateExports } from '@/utils/factory-management/exports'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -234,6 +235,9 @@
     // Calculate if we have products satisfied by raw resources.
     calculateRawSupply(factory, gameData)
 
+    // Add a flag to denote if we're only using raw resources to make products.
+    calculateUsingRawResourcesOnly(factory, gameData)
+
     // Calculate if we have any internal products that can be used to satisfy requirements.
     calculateInternalProducts(factory, gameData)
 
@@ -243,22 +247,19 @@
     // We then calculate the building and power demands to make the factory.
     calculateBuildingsAndPower(factory)
 
-    // Then we calculate the output state of the factory (including surplus etc).
-    calculateSurplus(factory)
-
     // Check all other factories to see if they are affected by this factory change.
     constructDependencies(factories.value)
     factories.value.forEach(factory => {
       calculateDependencyMetrics(factory)
     })
 
+    // Then we calculate the output state of all factories after dependencies have been configured
+    calculateExports(factories.value)
+
     // Export Calculator stuff
     configureExportCalculator(factories.value)
 
-    // Add a flag to denote if we're only using raw resources to make products.
-    calculateUsingRawResourcesOnly(factory, gameData)
-
-    // Go through all factories and check if they have any problems.
+    // Finally, go through all factories and check if they have any problems.
     calculateHasProblem(factories.value)
 
     return factory
@@ -268,10 +269,10 @@
     // Make a shallow copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
     factories.value.push({
-      ...originalFactory, 
-      id: newId, 
-      name: `${originalFactory.name} (copy)`, 
-      displayOrder: originalFactory.displayOrder + 1 
+      ...originalFactory,
+      id: newId,
+      name: `${originalFactory.name} (copy)`,
+      displayOrder: originalFactory.displayOrder + 1,
     })
 
     // Update the display order of the other factories
@@ -439,11 +440,11 @@
     if (factories.value.length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
         console.log('Replacing factories with Demo')
-        factories.value = demoFactories
+        factories.value = demo()
       }
     } else {
       console.log('Adding demo factories')
-      factories.value = demoFactories
+      factories.value = demo()
     }
   }
 
