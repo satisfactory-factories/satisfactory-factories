@@ -462,7 +462,7 @@
 <style scoped lang="scss">
 .planner-container {
   width: 100%;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 64px - 98px);
 
   @media screen and (min-width: 2000px) {
     margin-left: 10vw;
@@ -474,7 +474,6 @@
   }
 
   .two-pane-container {
-    height: calc(100vh - 112px);
     margin: 0;
   }
 
@@ -487,7 +486,7 @@
 
   .main-content {
     width: 100%;
-    max-height: calc(100vh - 64px);
+    max-height: calc(100vh - 64px - 98px);
     overflow-y: auto;
 
     @media screen and (min-width: 2000px) {

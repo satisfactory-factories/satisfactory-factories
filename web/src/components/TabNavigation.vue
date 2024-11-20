@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar class="border-t-md" dark density="compact">
+    <div class="border-t-md d-flex bg-grey-darken-3 align-center" density="compact">
       <v-tabs
         v-model="appStore.currentFactoryTabIndex"
         color="deep-orange"
@@ -15,56 +15,34 @@
 
       </v-tabs>
       <v-btn
+        color="grey-darken-3"
         icon="fas fa-plus"
         size="x-small"
+        variant="flat"
         @click="appStore.addTab()"
       />
-    </v-toolbar>
+    </div>
 
-    <v-toolbar class="bg-grey-darken-2 px-2" dark density="compact">
-      <template #prepend>
-        <v-text-field
-          v-if="isEditingName"
-          density="compact"
-          hide-details
-          :value="appStore.currentFactoryTab.name"
-          variant="outlined"
-          width="300"
-        />
-        <span v-else>{{ appStore.currentFactoryTab.name }}</span>
+    <div class="bg-grey-darken-2 py-1 px-2 d-flex align-center justify-space-between" dark density="compact">
+      <input
+        v-model.lazy="appStore.currentFactoryTab.name"
+        class="pa-1 rounded tab-name"
+        @keyup.enter="onEnterTabName"
+      >
+
+      <div class="d-flex align-center h-100 ga-2">
+        <ShareButton />
         <v-btn
-          v-if="isEditingName"
-          class="ml-2"
-          color="green rounded"
-          icon=" fas fa-check"
+          v-if="appStore.factoryTabs.length > 1"
+          color="red rounded"
+          icon="fas fa-trash"
           size="small"
           variant="flat"
-          @click="isEditingName = !isEditingName"
+          @click="appStore.removeCurrentTab()"
         />
-        <v-btn
-          v-else
-          class="ml-2"
-          color="grey-darken-2"
-          icon="fas fa-pen"
-          size="x-small"
-          variant="flat"
-          @click="isEditingName = !isEditingName"
-        />
-      </template>
-
-      <ShareButton />
-      <v-btn
-        v-if="appStore.factoryTabs.length > 1"
-        class="ml-2"
-        color="red rounded"
-        icon="fas fa-trash"
-        size="small"
-        variant="flat"
-        @click="onClickRemoveTab"
-      />
-    </v-toolbar>
+      </div>
+    </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -72,10 +50,18 @@
 
   const appStore = useAppStore()
 
-  const isEditingName = ref(false)
-
-  const onClickRemoveTab = () => {
-    appStore.removeTab(appStore.currentFactoryTab.id)
+  const onEnterTabName = (event: KeyboardEvent) => {
+    (event.target as HTMLInputElement).blur()
   }
-
 </script>
+
+<style lang="scss" scoped>
+.tab-name {
+  transition: background-color 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #535353;
+  }
+}
+</style>
