@@ -10,16 +10,8 @@ export const addProductToFactory = (
     recipe?: string,
   }
 ) => {
-  // In order to allow multiple products of the same product but using different recipes to be added, we need to generate a unique ID using the product's ID as well as the recipe ID.
-
-  let productId = ''
-
-  if (options.id && options.recipe) {
-    productId = `${options.id}-${options.recipe}`
-  }
-
   factory.products.push({
-    id: productId,
+    id: options.id ?? '',
     amount: options.amount ?? 1,
     recipe: options.recipe ?? '',
     displayOrder: factory.products.length,
