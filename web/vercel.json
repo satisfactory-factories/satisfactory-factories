@@ -4,6 +4,15 @@
   ],
   "headers": [
     {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        }
+      ]
+    },
+    {
       "source": "/assets/game/images/(.*)",
       "headers": [
         {
