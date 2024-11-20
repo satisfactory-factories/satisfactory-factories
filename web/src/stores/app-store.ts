@@ -10,7 +10,7 @@ export const useAppStore = defineStore('app', () => {
   if (factoryTabs.value.length === 0) {
     factoryTabs.value = [
       {
-        id: 'default',
+        id: crypto.randomUUID(),
         name: 'Default',
         // Fill the tabs from the legacy factories array if present so no data gets lost
         factories: JSON.parse(localStorage.getItem('factories') ?? '[]'),
