@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-  const tab = null
+  const tab = ref(null)
   const items = [
     { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
     { title: 'Graph (WIP)', icon: 'fas fa-project-diagram', href: '/graph' },
