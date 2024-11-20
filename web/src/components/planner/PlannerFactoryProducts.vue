@@ -197,6 +197,7 @@
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -206,6 +207,8 @@
     gameData: DataInterface
     helpText: boolean;
   }>()
+
+  const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
 
   const route = useRoute()
 
@@ -247,13 +250,6 @@
 
   const autocompletePartItems = autocompletePartItemsGenerator()
 
-  const getRecipesForPart = (part: string) => {
-    return props.gameData.recipes.filter(recipe => {
-      // Filter the recipe product array to return only the recipes that produce the part
-      return recipe.products.filter(product => product.part === part).length > 0
-    })
-  }
-
   const getRecipesForPartSelector = (part: string) => {
     // Return each recipe in the format of { title: 'Recipe Name', value: 'Recipe ID' }
     // If there's "Alternate" in the name, shorten it to "Alt" for display.
@@ -266,25 +262,8 @@
   }
 
   const updateProductSelection = (product: FactoryItem, factory: Factory) => {
-    // If the user update's the product within the subject selection, we need to wipe the recipe otherwise the user could somehow put in invalid recipes for the product.
-    product.recipe = ''
+    product.recipe = getDefaultRecipeForPart(product.id)
     product.amount = 1
-
-    // If there is only one recipe for the product just automatically select it
-    const recipes = getRecipesForPart(product.id)
-    if (recipes.length === 1) {
-      product.recipe = recipes[0].id
-    }
-
-    const exactRecipe = recipes.find(recipe => recipe.id === product.id)
-    if (exactRecipe) {
-      product.recipe = exactRecipe.id
-    } else {
-      const defaultRecipes = recipes.filter(recipe => !recipe.isAlternate)
-      if (defaultRecipes.length === 1) {
-        product.recipe = defaultRecipes[0].id
-      }
-    }
 
     updateFactory(factory)
   }

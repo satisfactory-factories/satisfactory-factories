@@ -43,5 +43,41 @@ export const useGameDataStore = defineStore('game-data', () => {
     return gameData.value
   }
 
-  return { gameData, getGameData, loadGameData }
+  const getRecipesForPart = (part: string) => {
+    if (!gameData.value) {
+      return []
+    }
+
+    return gameData.value.recipes.filter(recipe => {
+      // Filter the recipe product array to return only the recipes that produce the part
+      return recipe.products.filter(product => product.part === part).length > 0
+    })
+  }
+
+  const getDefaultRecipeForPart = (part: string) => {
+    const recipes = getRecipesForPart(part)
+    if (recipes.length === 1) {
+      return recipes[0].id
+    }
+
+    const exactRecipe = recipes.find(recipe => recipe.id === part)
+    if (exactRecipe) {
+      return exactRecipe.id
+    } else {
+      const defaultRecipes = recipes.filter(recipe => !recipe.isAlternate)
+      if (defaultRecipes.length === 1) {
+        return defaultRecipes[0].id
+      }
+    }
+
+    return ''
+  }
+
+  return {
+    gameData,
+    getGameData,
+    loadGameData,
+    getRecipesForPart,
+    getDefaultRecipeForPart,
+  }
 })

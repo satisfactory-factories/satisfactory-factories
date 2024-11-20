@@ -69,7 +69,7 @@
                   color="primary"
                   size="small"
                   variant="outlined"
-                  @click="addProduct(factory, partId)"
+                  @click="addProduct(factory, partId, part.amountRemaining)"
                 >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
                 </v-btn>
                 <v-btn
@@ -148,6 +148,7 @@
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -158,6 +159,8 @@
     factory: Factory;
     helpText: boolean;
   }>()
+
+  const { getDefaultRecipeForPart } = useGameDataStore()
 
   // Calculated function showing parts displayed if the amountRequired > 0
   const satisfactionDisplay = computed(() => {
@@ -177,11 +180,13 @@
     }
   }
 
-  const addProduct = (factory: Factory, part: string): void => {
+  const addProduct = (factory: Factory, part: string, amount: number): void => {
     addProductToFactory(factory, {
       id: part,
-      amount: 0,
+      amount,
+      recipe: getDefaultRecipeForPart(part),
     })
+
     updateFactory(factory)
   }
 
