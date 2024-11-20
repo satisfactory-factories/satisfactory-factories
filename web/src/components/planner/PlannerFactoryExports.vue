@@ -19,24 +19,24 @@
         <span class="ml-3">Factory Satisfaction is not fulfilled! The below numbers are not accurate to realistic output!</span>
       </p>
       <v-row
-        v-for="surplus in exportsDisplay.filter(item => item !== null)"
-        :key="`${factory.id}-${surplus?.productId}`"
+        v-for="exportItem in exportsDisplay.filter(item => item !== null)"
+        :key="`${factory.id}-${exportItem?.id}`"
         class="sub-card border-md my-4 mx-0 text-body-1 rounded d-flex no-bottom"
-        :style="requestStyling(factory, surplus.productId)"
+        :style="requestStyling(factory, exportItem.id)"
       >
         <v-col class="border-e-md" cols="12" md="5">
           <div class="mb-4 d-flex align-center">
             <game-asset
               height="48"
-              :subject="surplus.productId"
+              :subject="exportItem.id"
               type="item"
               width="48"
             />
-            <span class="ml-2 text-h6">{{ getPartDisplayName(surplus.productId) }}</span>
+            <span class="ml-2 text-h6">{{ getPartDisplayName(exportItem.id) }}</span>
           </div>
-          <div v-if="getRequestsForFactoryByProduct(factory, surplus.productId).length > 0" class="mb-4">
+          <div v-if="getRequestsForFactoryByProduct(factory, exportItem.id).length > 0" class="mb-4">
             <span
-              v-if="requestSatisfied(factory, surplus.productId)"
+              v-if="requestSatisfied(factory, exportItem.id)"
               class="text-green"
             >
               <i class="fas fa-check" />
@@ -45,48 +45,48 @@
                 class="ml-2"
                 color="green"
               >
-                <b>{{ formatNumber(getDifference(factory, surplus.productId)) }}</b>&nbsp;available for export
+                <b>{{ formatNumber(getDifference(factory, exportItem.id)) }}</b>&nbsp;available for export
               </v-chip>
             </span>
             <span
-              v-if="!requestSatisfied(factory, surplus.productId)"
+              v-if="!requestSatisfied(factory, exportItem.id)"
               class="text-red"
             >
               <span>
                 <i class="fas fa-times" />
                 <span class="ml-2 font-weight-bold">
-                  Shortage of {{ formatNumber(getShortageAmount(factory, surplus.productId)) }}/min
+                  Shortage of {{ formatNumber(getShortageAmount(factory, exportItem.id)) }}/min
                 </span>
                 <v-btn
                   class="ml-2"
                   color="green"
                   size="small"
                   variant="flat"
-                  @click="fixShortage(factory, getProduct(factory, surplus.productId))"
+                  @click="fixShortage(factory, getProduct(factory, exportItem.id))"
                 >Fix production</v-btn>
               </span>
             </span>
           </div>
           <div class="ml-n1">
             <v-chip class="ma-1 mt-0">
-              <b>Surplus:</b>&nbsp;{{ formatNumber(factory.surplus[surplus.productId].amount) }}/min
+              <b>Surplus:</b>&nbsp;{{ formatNumber(factory.surplus[exportItem.id]?.amount ?? 0) }}/min
             </v-chip>
             <v-chip class="ma-1 mt-0">
-              <b>Demands:</b>&nbsp;{{ formatNumber(getRequestMetricsForFactoryByPart(factory, surplus.productId)?.request ?? 0) }}/min
+              <b>Demands:</b>&nbsp;{{ formatNumber(getRequestMetricsForFactoryByPart(factory, exportItem.id)?.request ?? 0) }}/min
             </v-chip>
           </div>
           <div
-            v-if="getRequestsForFactoryByProduct(factory, surplus.productId).length > 0"
+            v-if="getRequestsForFactoryByProduct(factory, exportItem.id).length > 0"
             class="mt-4"
           >
             <p class="text-body-1 font-weight-bold mb-2">Requested by:</p>
             <v-chip
-              v-for="request in getRequestsForFactoryByProduct(factory, surplus.productId)"
+              v-for="request in getRequestsForFactoryByProduct(factory, exportItem.id)"
               :key="request.factoryId"
               class="sf-chip small mb-0"
-              :color="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'primary' : ''"
-              :style="isRequestSelected(factory, request.factoryId, surplus.productId) ? 'border-color: rgb(0, 123, 255) !important' : ''"
-              @click="changeCalculatorSelection(factory, request.factoryId, surplus.productId)"
+              :color="isRequestSelected(factory, request.factoryId, exportItem.id) ? 'primary' : ''"
+              :style="isRequestSelected(factory, request.factoryId, exportItem.id) ? 'border-color: rgb(0, 123, 255) !important' : ''"
+              @click="changeCalculatorSelection(factory, request.factoryId, exportItem.id)"
             >
               <i class="fas fa-industry" />
               <span class="ml-2"><b>{{ findFactory(request.factoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
@@ -95,22 +95,22 @@
         </v-col>
         <v-col cols="12" md="7">
           <planner-factory-export-calculator
-            v-if="isCalculatorReady(factory, surplus.productId)"
-            :key="`${factory.id}-${surplus.productId}`"
-            :dest-factory="findFactory(Number(getCalculatorSettings(factory, surplus.productId)!.selected))"
+            v-if="isCalculatorReady(factory, exportItem.id)"
+            :key="`${factory.id}-${exportItem.id}`"
+            :dest-factory="findFactory(Number(getCalculatorSettings(factory, exportItem.id)!.selected))"
             :dest-factory-settings="getCalculatorDestFacSettings(
               factory,
-              surplus.productId,
-              getCalculatorSettings(factory, surplus.productId)!.selected
+              exportItem.id,
+              getCalculatorSettings(factory, exportItem.id)!.selected
             )"
             :factory="factory"
             :game-data="gameData"
             :help-text="helpText"
-            :product="getProduct(factory, surplus.productId)"
+            :product="getProduct(factory, exportItem.id)"
             :request="getRequestForPartByDestFac(
               factory,
-              surplus.productId,
-              getCalculatorSettings(factory, surplus.productId)!.selected!,
+              exportItem.id,
+              getCalculatorSettings(factory, exportItem.id)!.selected!,
             )"
           />
           <div v-else class="text-center">
@@ -139,7 +139,7 @@
     Factory,
     FactoryDependencyMetrics,
     FactoryDependencyRequest,
-    FactoryItem, FactorySurplusItem,
+    FactoryExportItem, FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
@@ -156,39 +156,43 @@
     helpText: boolean;
   }>()
 
-  interface ExportsDisplay extends FactorySurplusItem {
-    productId: string;
-    displayOrder?: number;
-  }
+  const getExportsDisplay = (factory: Factory): FactoryExportItem[] => {
+    // Get the products from the factory, and filter out any products that BOTH do not have a surplus and are NOT requested by other factories
+    const products = Object.entries(factory.products ?? {})
+    if (products.length === 0) {
+      return []
+    }
 
-  const exportsDisplay = computed((): ExportsDisplay[] => {
-    // Get the surplus entries as key-value pairs
-    const surplus = Object.entries(props.factory.surplus)
+    // Map through the products and check if the product both has a surplus or requests set upon it
+    const exports = products.map(([key, product]) => {
+      // Now check if the product has any demands set upon it by other factories
+      const requests = getRequestsForFactoryByProduct(factory, product.id)
+      const hasSurplus = factory.surplus[product.id] ?? false
 
-    // Map through the surplus to add the sort order from factory.products
-    const surplusWithOrder = surplus.map(([key, value]) => {
-      const product = props.factory.products.filter(product => product.id === key)[0]
-      const byProduct = props.factory.byProducts.filter(product => product.id === key)[0]
-      if (!product && !byProduct) {
-        return null // Return null when product is not found, as it is not a surplus designated for export.
+      if (requests.length === 0 && !hasSurplus) {
+        return null // Return null when product is not requested by other factories and has no surplus
       }
 
+      const byProduct = factory.byProducts.find(byProduct => byProduct.id === product.id)
+
       // If byproduct, we need to get the product to get the display order
-      const productParent = byProduct ? props.factory.products.filter(product => product.id === byProduct.byProductOf)[0] : product
+      const productParent = byProduct ? factory.products.filter(product => product.id === byProduct.byProductOf)[0] : product
       const displayOrder = productParent?.displayOrder
 
       return {
-        ...value,
+        ...product,
         productId: key, // Add the product name to retain the reference
+        surplus: hasSurplus.amount ?? 0,
+        demands: requests.reduce((acc, request) => acc + request.amount, 0),
         displayOrder,
-      } as ExportsDisplay
+      } as FactoryExportItem
     })
 
-    // Filter out any `null` values from the mapped array
-    const filteredSurplusWithOrder = surplusWithOrder.filter((item): item is ExportsDisplay => item !== null)
+    // Filter out any `null` values from the mapped array, keeps typescript happy
+    const validExports = exports.filter((item): item is FactoryExportItem => item !== null)
 
     // Sort the filtered surplus entries based on sortOrder
-    filteredSurplusWithOrder.sort((a, b) => {
+    validExports.sort((a, b) => {
       if (a.displayOrder && b.displayOrder) {
         return a.displayOrder - b.displayOrder
       } else if (a.displayOrder) {
@@ -198,7 +202,11 @@
       }
     })
 
-    return filteredSurplusWithOrder
+    return validExports
+  }
+
+  const exportsDisplay = computed((): FactoryExportItem[] => {
+    return getExportsDisplay(props.factory) // Proxied like this so we can test it better
   })
 
   const requestStyling = (factory: Factory, productId: string) => {

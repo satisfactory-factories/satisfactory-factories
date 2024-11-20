@@ -31,8 +31,9 @@ export interface FactoryItem {
   byProducts?: ByProductItem[];
 }
 
-export interface FactorySurplusItem {
-  amount: number;
+export interface FactoryExportItem extends FactoryItem {
+  surplus: number;
+  demands: number;
 }
 
 export interface FactoryDependencyRequest {
@@ -92,7 +93,7 @@ export interface Factory {
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
   totalPower: number;
-  surplus: { [key: string]: FactorySurplusItem };
+  surplus: { [key: string]: FactoryExportItem };
   dependencies: FactoryDependency;
   exportCalculator: { [key: string]: ExportCalculatorSettings };
   rawResources: { [key: string]: WorldRawResource };
