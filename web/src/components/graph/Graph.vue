@@ -37,6 +37,7 @@
   }
 
   const appStore = useAppStore()
+  const factories = appStore.getFactories()
 
   const nodes = ref<CustomNode[]>([])
   const edges = ref<Edge[]>([])
