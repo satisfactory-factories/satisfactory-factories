@@ -53,13 +53,13 @@
               Exporting:
             </p>
             <div
-              v-for="(product, part) in data.factory.surplus"
+              v-for="(product, part) in data.factory.exports"
               :key="`${data.factory.id}-${part}`"
               class="position-relative"
             >
               <v-chip class="sf-chip">
                 <game-asset :subject="part.toString() ?? 'unknown'" type="item" />
-                <span class="ml-2">{{ getPartDisplayName(part) }}: {{ formatNumber(product.amount) }}/min</span>
+                <span class="ml-2">{{ getPartDisplayName(part) }}: {{ formatNumber(product.surplus) }}/min</span>
               </v-chip>
               <Handle
                 :id="`${data.factory.id}-${part}`"

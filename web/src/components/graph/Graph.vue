@@ -24,7 +24,6 @@
   import { defineProps, onMounted, ref } from 'vue'
   import { Edge, VueFlow } from '@vue-flow/core'
   import { useAppStore } from '@/stores/app-store'
-  import { storeToRefs } from 'pinia'
   import FactoryNode from '@/components/graph/FactoryNode.vue'
   import { MiniMap } from '@vue-flow/minimap'
   import { CustomNode, generateEdges, generateNodes } from '@/utils/graphUtils'
@@ -38,7 +37,6 @@
   }
 
   const appStore = useAppStore()
-  const { factories } = storeToRefs(appStore)
 
   const nodes = ref<CustomNode[]>([])
   const edges = ref<Edge[]>([])
@@ -49,8 +47,8 @@
 
   // Apply the layout to organize nodes after generation
   function initializeGraph () {
-    nodes.value = generateNodes(factories.value)
-    edges.value = generateEdges(factories.value, nodes.value)
+    nodes.value = generateNodes(appStore.getFactories())
+    edges.value = generateEdges(appStore.getFactories(), nodes.value)
   }
 
   // Handle node rendered and nodesInitialized events

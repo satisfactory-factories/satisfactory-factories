@@ -13,6 +13,7 @@
             >
           </v-col>
           <v-col class="text-right" cols="4">
+            <factory-debug :subject="factory" subject-type="Factory" />
             <v-btn
               class="mr-2 rounded"
               color="primary"
@@ -88,14 +89,6 @@
             :game-data="gameData"
             :help-text="helpText"
           />
-          <v-divider v-if="devMode" class="my-4 mx-n4" color="white" thickness="2px" />
-          <v-btn v-if="devMode" color="primary" @click="showDebug = !showDebug">
-            <i class="fas fa-bug" />
-            <span class="ml-2">Show Debug Data</span>
-          </v-btn>
-          <div v-show="showDebug">
-            <pre>{{ factory }}</pre>
-          </div>
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
@@ -189,9 +182,6 @@
     helpText: boolean
     totalFactories: number;
   }>()
-
-  const showDebug = ref(false)
-  const devMode = ref(false)
 
   const factoryClass = (factory: Factory) => {
     return {

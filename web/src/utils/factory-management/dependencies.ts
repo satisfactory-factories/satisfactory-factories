@@ -26,6 +26,7 @@ export const addDependency = (
   }
 
   requests.push({
+    requestingFactoryId: factory.id,
     part: input.outputPart,
     amount: input.amount,
   })
@@ -97,15 +98,11 @@ export const calculateDependencyMetrics = (factory: Factory) => {
       const part = request.part
       const metrics = factory.dependencies.metrics
 
-      if (!factory.surplus[part]) {
-        console.warn(`calculateDependencyMetrics: Could not find a surplus for part ${part}.`, part)
-      }
-
       if (!metrics[part]) {
         metrics[part] = {
           part,
           request: 0,
-          supply: factory.surplus[part]?.amount ?? 0,
+          supply: Math.abs(factory.parts[part].amountRemaining) ?? 0,
           isRequestSatisfied: false,
           difference: 0,
         }

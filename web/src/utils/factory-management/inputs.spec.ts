@@ -3,7 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-describe('dependencies', () => {
+describe('inputs', () => {
   let mockFactory: Factory
   let mockDependantFactory: Factory
 

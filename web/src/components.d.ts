@@ -10,6 +10,7 @@ declare module 'vue' {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Auth: typeof import('./components/Auth.vue')['default']
     DiscordSplash: typeof import('./components/DiscordSplash.vue')['default']
+    FactoryDebug: typeof import('./components/FactoryDebug.vue')['default']
     FactoryNode: typeof import('./components/graph/FactoryNode.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
     Graph: typeof import('./components/graph/Graph.vue')['default']
@@ -34,7 +35,9 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ShareButton: typeof import('./components/ShareButton.vue')['default']
+    Sharing: typeof import('./components/Sharing.vue')['default']
     TabNavigation: typeof import('./components/TabNavigation.vue')['default']
+    Templates: typeof import('./components/Templates.vue')['default']
     Todo: typeof import('./components/graph/Todo.vue')['default']
   }
 }

@@ -151,7 +151,7 @@
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
-  const validFactoriesForImports = inject('factoriesWithSurplus') as ComputedRef<Factory[]>
+  const validFactoriesForImports = inject('factoriesWithSurplusExports') as ComputedRef<Factory[]>
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -173,6 +173,7 @@
   }
 
   // Check if the factory is able to import requirements from other factories
+  // TODO: Change for #107!
   const possibleImports = computed(() => {
     const factories = []
 
@@ -180,7 +181,7 @@
     for (const part in props.factory.parts) {
       // Find any factories that have a surplus of this part
       const availableFactories = validFactoriesForImports.value.filter(
-        oFac => oFac.surplus[part] && oFac.surplus[part].amount > 0
+        oFac => oFac.exports[part] && oFac.exports[part].surplus > 0
       )
 
       // Add those factories to the list of possible imports if they have a surplus
@@ -272,7 +273,7 @@
     // Only return true if there's at least one factory with a surplus of a required part
     return validFactories.some(otherFactory => {
       return Object.keys(factory.parts).some(requiredPart => {
-        return otherFactory.surplus[requiredPart] && otherFactory.surplus[requiredPart].amount > 0
+        return otherFactory.exports[requiredPart] && otherFactory.exports[requiredPart].surplus > 0
       })
     })
   }
@@ -281,11 +282,11 @@
     // Check if there are still any valid imports remaining that are not already fully used
     return possibleImports.value.some(otherFactory => {
       return Object.keys(factory.parts).some(requiredPart => {
-        const surplus = otherFactory.surplus[requiredPart]
+        const exports = otherFactory.exports[requiredPart]
         const totalRequested = factory.inputs
           .filter(input => input.outputPart === requiredPart && input.factoryId === otherFactory.id)
           .reduce((sum, input) => sum + input.amount, 0)
-        return surplus && surplus.amount > totalRequested
+        return exports && exports.surplus > totalRequested
       })
     })
   }
@@ -317,7 +318,7 @@
       .filter(part => part !== '') // Remove empty selections
 
     // Filter out already selected parts from the factory's available surplus
-    return Object.keys(factory.surplus)
+    return Object.keys(factory.exports)
       .filter(partKey => !alreadySelectedParts.includes(partKey) && partKey in props.factory.parts) // Exclude already-selected parts and parts not required
       .map(partKey => ({
         title: getPartDisplayName(partKey), // For display purposes

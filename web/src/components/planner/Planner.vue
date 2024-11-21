@@ -88,21 +88,11 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useAppStore } from '@/stores/app-store'
   import { storeToRefs } from 'pinia'
-  import { calculateInputs } from '@/utils/factory-management/inputs'
-  import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
-  import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
-  import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
-  import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
-  import { calculateSurplus } from '@/utils/factory-management/surplus'
   import {
-    calculateDependencyMetrics,
-    constructDependencies,
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
-  import { calculateHasProblem } from '@/utils/factory-management/problems'
   import { findFac, newFactory } from '@/utils/factory-management/factory'
-  import { demoFactories } from '@/utils/demoFactories'
+  import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -126,24 +116,24 @@
 
   const createFactory = () => {
     const factory = newFactory()
-    factory.displayOrder = factories.value.length
-    factories.value.push(factory)
+    factory.displayOrder = appStore.getFactories().length
+    appStore.addFactory(factory)
     navigateToFactory(factory.id)
   }
 
-  const factoriesWithSurplus = computed(() => {
+  const factoriesWithSurplusExports = computed(() => {
     // Loop through all factories and see if any have any surplus
-    return factories.value.filter(factory => Object.keys(factory.surplus).length > 0)
+    return appStore.getFactories().filter(factory => Object.keys(factory.exports).length > 0)
   })
 
   // This function calculates the world resources available after each group has consumed Raw Resources.
-  // This is done here globally as it loops all factories.value. It is not appropriate to be done on group updates.
+  // This is done here globally as it loops all appStore.getFactories(). It is not appropriate to be done on group updates.
   const updateWorldRawResources = (gameData: DataInterface): void => {
     // Generate fresh world resources as a baseline for calculation.
     Object.assign(worldRawResources, generateRawResources(gameData))
 
     // Loop through each group's products to calculate usage of raw resources.
-    factories.value.forEach(factory => {
+    appStore.getFactories().forEach(factory => {
       factory.products.forEach(product => {
         const recipe = gameData.recipes.find(r => r.id === product.recipe)
         if (!recipe) {
@@ -197,91 +187,38 @@
   }
 
   const findFactory = (factoryId: string | number): Factory | null => {
-    return findFac(factoryId, factories.value)
+    return findFac(factoryId, appStore.getFactories())
   }
 
   const updateFactories = (newFactories: Factory[]) => {
-    factories.value = newFactories
+    appStore.setFactories(newFactories)
     forceSort()
     console.log('Factories updated and re-sorted')
   }
 
-  // We update the factory in layers of calculations. This makes it much easier to conceptualize.
+  // Proxy method so we don't have to pass the gameData and appStore.getFactories() around to every single subcomponent
   const updateFactory = (factory: Factory) => {
-    factory.rawResources = {}
-    factory.parts = {}
-
-    const gameData = props.gameData
-    if (!gameData) {
-      console.error('No game data provided to updateFactory!')
-      return factory
-    }
-
-    updateWorldRawResources(gameData)
-
-    // Calculate what is inputted into the factory to be used by products.
-    calculateInputs(factory)
-
-    // Calculate what is produced and required by the products.
-    calculateProducts(factory, gameData)
-
-    // And calculate Byproducts
-    calculateByProducts(factory, gameData)
-
-    // Calculate building requirements for each product based on the selected recipe and product amount.
-    calculateBuildingRequirements(factory, gameData)
-
-    // Calculate if we have products satisfied by raw resources.
-    calculateRawSupply(factory, gameData)
-
-    // Calculate if we have any internal products that can be used to satisfy requirements.
-    calculateInternalProducts(factory, gameData)
-
-    // Then we calculate the satisfaction of the factory.
-    calculateFactorySatisfaction(factory)
-
-    // We then calculate the building and power demands to make the factory.
-    calculateBuildingsAndPower(factory)
-
-    // Then we calculate the output state of the factory (including surplus etc).
-    calculateSurplus(factory)
-
-    // Check all other factories to see if they are affected by this factory change.
-    constructDependencies(factories.value)
-    factories.value.forEach(factory => {
-      calculateDependencyMetrics(factory)
-    })
-
-    // Export Calculator stuff
-    configureExportCalculator(factories.value)
-
-    // Add a flag to denote if we're only using raw resources to make products.
-    calculateUsingRawResourcesOnly(factory, gameData)
-
-    // Go through all factories and check if they have any problems.
-    calculateHasProblem(factories.value)
-
-    return factory
+    calculateFactory(factory, appStore.getFactories(), gameData)
   }
 
   const copyFactory = (originalFactory: Factory) => {
     // Make a shallow copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
-    factories.value.push({
+    const newFactory = {
       ...originalFactory,
       id: newId,
       name: `${originalFactory.name} (copy)`,
       displayOrder: originalFactory.displayOrder + 1,
-    })
+    }
+    appStore.getFactories().push(newFactory)
 
-    // Update the display order of the other factories
-    factories.value = factories.value
-      .map(factory => {
-        if (factory.displayOrder > originalFactory.displayOrder && factory.id !== newId) {
-          factory.displayOrder += 1
-        }
-        return updateFactory(factory)
-      })
+    // Update the display order of the other factory
+    if (newFactory.displayOrder > originalFactory.displayOrder && newFactory.id !== newId) {
+      newFactory.displayOrder += 1
+    }
+
+    // Now call calculateFactories in case the clone's imports cause a deficit
+    calculateFactories(appStore.getFactories(), gameData)
 
     regenerateSortOrders()
     navigateToFactory(newId)
@@ -289,16 +226,16 @@
 
   const deleteFactory = (factory: Factory) => {
     // Find the index of the factory to delete
-    const index = factories.value.findIndex(fac => fac.id === factory.id)
+    const index = appStore.getFactories().findIndex(fac => fac.id === factory.id)
 
     if (index !== -1) {
-      removeFactoryDependants(factory, factories.value)
+      removeFactoryDependants(factory, appStore.getFactories())
 
-      factories.value.splice(index, 1) // Remove the factory at the found index
+      appStore.getFactories().splice(index, 1) // Remove the factory at the found index
       updateWorldRawResources(gameData) // Recalculate the world resources
 
       // After deleting the factory, loop through all factories and update them as inputs / exports have likely changed.
-      factories.value.forEach(fac => updateFactory(fac))
+      calculateFactories(appStore.getFactories(), gameData)
 
       // Regenerate the sort orders
       regenerateSortOrders()
@@ -308,7 +245,7 @@
   }
 
   const clearAll = () => {
-    factories.value.length = 0
+    appStore.clearFactories()
     updateWorldRawResources(gameData)
   }
 
@@ -338,7 +275,7 @@
   }
 
   const showHideAll = (mode: 'show' | 'hide') => {
-    factories.value.forEach(factory => factory.hidden = mode === 'hide')
+    appStore.getFactories().forEach(factory => factory.hidden = mode === 'hide')
   }
 
   const toggleHelp = () => {
@@ -347,7 +284,7 @@
 
   const navigateToFactory = (factoryId: number | string) => {
     const facId = parseInt(factoryId.toString(), 10)
-    const factory = findFac(facId, factories.value)
+    const factory = findFac(facId, appStore.getFactories())
     if (!factory) {
       console.error(`navigateToFactory: Factory ${factoryId} not found!`)
       return
@@ -371,14 +308,14 @@
 
     if (direction === 'up' && currentOrder > 0) {
       targetOrder = currentOrder - 1
-    } else if (direction === 'down' && currentOrder < factories.value.length - 1) {
+    } else if (direction === 'down' && currentOrder < appStore.getFactories().length - 1) {
       targetOrder = currentOrder + 1
     } else {
       return // Invalid move
     }
 
     // Find the target factory and swap display orders
-    const targetFactory = factories.value.find(fac => fac.displayOrder === targetOrder)
+    const targetFactory = appStore.getFactories().find(fac => fac.displayOrder === targetOrder)
     if (targetFactory) {
       targetFactory.displayOrder = currentOrder
       factory.displayOrder = targetOrder
@@ -389,20 +326,20 @@
 
   const regenerateSortOrders = () => {
     // Sort now, which may have sorted them weirdly
-    factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
+    appStore.setFactories(appStore.getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
 
     // Ensure that the display order is correct
-    factories.value.forEach((factory, index) => {
+    appStore.getFactories().forEach((factory, index) => {
       factory.displayOrder = index
     })
 
     // Now re-sort
-    factories.value = factories.value.sort((a, b) => a.displayOrder - b.displayOrder)
+    appStore.setFactories(appStore.getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
   }
 
   const forceSort = () => {
     // Forcefully regenerate the displayOrder counting upwards.
-    factories.value.forEach((factory, index) => {
+    appStore.getFactories().forEach((factory, index) => {
       factory.displayOrder = index
     })
   }
@@ -419,7 +356,7 @@
   // Initialize during setup
   initializeFactories()
 
-  provide('factoriesWithSurplus', factoriesWithSurplus)
+  provide('factoriesWithSurplusExports', factoriesWithSurplusExports)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)
@@ -436,14 +373,14 @@
 
   const setupDemo = () => {
     closeIntro()
-    if (factories.value.length > 0) {
+    if (appStore.getFactories().length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
         console.log('Replacing factories with Demo')
-        factories.value = demoFactories
+        appStore.setFactories(complexDemoPlan().getFactories())
       }
     } else {
       console.log('Adding demo factories')
-      factories.value = demoFactories
+      appStore.setFactories(complexDemoPlan().getFactories())
     }
   }
 

@@ -2,6 +2,8 @@
 import { defineStore } from 'pinia'
 import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
+import { calculateFactories } from '@/utils/factory-management/factory'
+import { useGameDataStore } from '@/stores/game-data-store'
 
 export const useAppStore = defineStore('app', () => {
   // Define state using Composition API
@@ -34,6 +36,8 @@ export const useAppStore = defineStore('app', () => {
   const token = ref<string>(localStorage.getItem('token') ?? '')
   const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
   const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
+  const isDebugMode = ref<boolean>(false)
+  const gameDataStore = useGameDataStore()
 
   // Watch the factories array for changes
   watch(factoryTabs, () => {
@@ -41,11 +45,15 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
-  // Getters
-  const getFactory = (id: number) => {
-    return factories.value.find(factory => factory.id === id)
-  }
+  // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
+    // Patch for old data pre #116
+    factories.value.forEach(factory => {
+      if (!factory.exports) {
+        factory.exports = {}
+      }
+    })
+
     return factories.value
   }
   const getLastEdit = () => {
@@ -58,16 +66,9 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeFactory = (id: number) => {
-    const index = factories.value.findIndex(factory => factory.id === id)
+    const index = getFactories().findIndex(factory => factory.id === id)
     if (index !== -1) {
       factories.value.splice(index, 1)
-    }
-  }
-
-  const updateFactory = (factory: Factory) => {
-    const foundFactory = factories.value.find(f => f.id === factory.id)
-    if (foundFactory) {
-      Object.assign(foundFactory, factory)
     }
   }
 
@@ -91,8 +92,21 @@ export const useAppStore = defineStore('app', () => {
 
   const setFactories = (newFactories: Factory[]) => {
     console.log('Setting factories', newFactories)
+    const gameData = gameDataStore.getGameData()
+    if (!gameData) {
+      console.error('Unable to load game data!')
+      return
+    }
+
     factories.value = newFactories
+    // Trigger calculations
+    calculateFactories(factories.value, gameData)
     // Will also call the watcher.
+  }
+
+  const clearFactories = () => {
+    factories.value.length = 0
+    factories.value = []
   }
 
   const setLastEdit = () => {
@@ -129,6 +143,17 @@ export const useAppStore = defineStore('app', () => {
     currentFactoryTabIndex.value = Math.min(currentFactoryTabIndex.value, factoryTabs.value.length - 1)
   }
 
+  const debugMode = () => {
+    const route = useRoute()
+
+    if (window.location.hostname !== 'satisfactory-factories.app') {
+      return true
+    }
+    return route.query.debug === 'true'
+  }
+
+  isDebugMode.value = debugMode()
+
   // Return state, actions, and getters
   return {
     currentFactoryTab,
@@ -139,12 +164,12 @@ export const useAppStore = defineStore('app', () => {
     token,
     lastSave,
     lastEdit,
-    getFactory,
+    isDebugMode,
     getFactories,
     getLastEdit,
     addFactory,
     removeFactory,
-    updateFactory,
+    clearFactories,
     setLoggedInUser,
     setToken,
     setLastSave,
