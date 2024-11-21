@@ -10,6 +10,7 @@ export const useAppStore = defineStore('app', () => {
   const token = ref<string>(localStorage.getItem('token') ?? '')
   const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
   const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
+  const isDebugMode = ref<boolean>(false)
 
   // Watch the factories array for changes
   watch(factories, () => {
@@ -82,6 +83,17 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('lastSave', lastSave.value.toISOString())
   }
 
+  const debugMode = () => {
+    const route = useRoute()
+
+    if (window.location.hostname !== 'satisfactory-factories.app') {
+      return true
+    }
+    return route.query.debug === 'true'
+  }
+
+  isDebugMode.value = debugMode()
+
   // Return state, actions, and getters
   return {
     factories,
@@ -89,6 +101,7 @@ export const useAppStore = defineStore('app', () => {
     token,
     lastSave,
     lastEdit,
+    isDebugMode,
     getFactories,
     getLastEdit,
     addFactory,

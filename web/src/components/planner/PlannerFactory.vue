@@ -13,6 +13,35 @@
             >
           </v-col>
           <v-col class="text-right" cols="4">
+            <v-dialog v-if="isDebugMode" scrollable width="auto">
+              <template #activator="{ props: activatorProps }">
+                <v-btn
+                  v-bind="activatorProps"
+                  class="mr-2"
+                  color="primary"
+                  prepend-icon="fas fa-bug"
+                  ripple
+                  variant="flat"
+                >
+                  Show data
+                </v-btn>
+              </template>
+              <template #default="{ isActive }">
+                <v-card title="Factory debug info">
+                  <v-card-text>
+                    <pre>
+                {{ factory }}
+              </pre>
+                  </v-card-text>
+                  <v-card-actions class="sticky">
+                    <v-btn
+                      text="Close Dialog"
+                      @click="isActive.value = false"
+                    />
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
             <v-btn
               class="mr-2 rounded"
               color="primary"
@@ -88,14 +117,6 @@
             :game-data="gameData"
             :help-text="helpText"
           />
-          <v-divider v-if="devMode" class="my-4 mx-n4" color="white" thickness="2px" />
-          <v-btn v-if="devMode" color="primary" @click="showDebug = !showDebug">
-            <i class="fas fa-bug" />
-            <span class="ml-2">Show Debug Data</span>
-          </v-btn>
-          <div v-show="showDebug">
-            <pre>{{ factory }}</pre>
-          </div>
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
@@ -175,6 +196,7 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { useAppStore } from '@/stores/app-store'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -182,6 +204,7 @@
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
+  const { isDebugMode } = useAppStore()
 
   defineProps<{
     factory: Factory
@@ -189,9 +212,6 @@
     helpText: boolean
     totalFactories: number;
   }>()
-
-  const showDebug = ref(false)
-  const devMode = ref(false)
 
   const factoryClass = (factory: Factory) => {
     return {
