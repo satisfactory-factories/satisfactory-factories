@@ -60,7 +60,7 @@ describe('Simple factory plan', () => {
       smeltermk1: {
         name: 'smeltermk1',
         amount: 3.3333333333333335, // I hate this so much
-        powerPerBuilding: '4', // Should be a number really
+        powerPerBuilding: 4, // Should be a number really
         totalPower: 13.333333333333334,
       },
     })

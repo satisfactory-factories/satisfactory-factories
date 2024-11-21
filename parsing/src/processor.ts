@@ -244,12 +244,12 @@ function getRecipes(
             })
 
 
-            // Log for debugging NobeliskGas specifically
-            if (recipe.ClassName === "Recipe_NobeliskGas_C") {
-                console.log("Recipe:", recipe);
-                console.log("Raw Building Keys:", rawBuildingKeys);
-                console.log("Valid Building:", validBuilding);
-            }
+            // // Log for debugging NobeliskGas specifically
+            // if (recipe.ClassName === "Recipe_NobeliskGas_C") {
+            //     console.log("Recipe:", recipe);
+            //     console.log("Raw Building Keys:", rawBuildingKeys);
+            //     console.log("Valid Building:", validBuilding);
+            // }
 
             return validBuilding;
         })
@@ -317,11 +317,21 @@ function getRecipes(
             if (validBuildings.length > 0) {
                 // Sum up power for all valid buildings
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
+                    // if (recipe.ClassName === "Recipe_Silica_C") {
+                    //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
+                    //     console.log(products);
+                    // }
+                    if (recipe.ClassName === "Recipe_Plastic_C") {
+                        console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
+                        console.log(products);
+                    }
                     if (producingBuildings[building]) {
-                        const buildingPower = Object.values(products).reduce(
-                            (total, product) => total + (product.amount > 0 ? producingBuildings[building] / product.amount : 0),
-                            0
-                        );
+                        const buildingPower = producingBuildings[building]
+                        //const buildingPower = Object.values(products).reduce(
+                        //     // Calculate power for this product amount
+                        //     (total, product) => total + producingBuildings[building],
+                        //     0
+                        // );
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
                         return totalPower + buildingPower; // Add power for this building
                     }
@@ -433,7 +443,7 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            console.log(`Removing rubbish item: ${part}`);
+            // console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });

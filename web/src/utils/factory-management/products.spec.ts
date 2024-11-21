@@ -20,6 +20,7 @@ describe('products', () => {
 
   beforeEach(() => {
     mockFactory = newFactory('Iron Ingots')
+    mockFactory.totalPower = 32.382
   })
 
   describe('addProductToFactory', () => {
@@ -73,6 +74,7 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(123)
       expect(mockFactory.parts.IronIngot.amountRemaining).toBe(-123)
       expect(mockFactory.parts.IronIngot.satisfied).toBe(true)
+      expect(mockFactory.totalPower).toBe(32.382) //4.1xiron ingot smelters + 4.1xcopper ingot smelters
 
       // Expect the raw resources to exist
       expect(mockFactory.rawResources.OreIron).toBeDefined()
