@@ -55,7 +55,7 @@
   const templates = [
     {
       name: 'Demo',
-      description: 'The demo template containing 5 factories with a mix of fluids, solids and multiple dependencies.',
+      description: 'The demo template containing 5 factories with a mix of fluids, solids and multiple dependencies. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature.',
       data: complexDemoPlan().getFactories(),
     },
     {
