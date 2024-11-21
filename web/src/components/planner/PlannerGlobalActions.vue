@@ -47,6 +47,7 @@
       >
         Clear
       </v-btn>
+      <templates />
     </v-col>
   </v-row>
 </template>
