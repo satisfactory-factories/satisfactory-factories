@@ -92,7 +92,7 @@
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
   import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
-  import { demo } from '@/utils/factory-setups/demo'
+  import { createDemo } from '@/utils/factory-setups/demo'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
 
@@ -376,11 +376,11 @@
     if (appStore.getFactories().length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
         console.log('Replacing factories with Demo')
-        appStore.setFactories(demo())
+        appStore.setFactories(createDemo().getFactories())
       }
     } else {
       console.log('Adding demo factories')
-      appStore.setFactories(demo())
+      appStore.setFactories(createDemo().getFactories())
     }
   }
 

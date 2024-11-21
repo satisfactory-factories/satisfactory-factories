@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from '@jest/globals'
-import { demo } from '@/utils/factory-setups/demo'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
 import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
+import { createDemo } from '@/utils/factory-setups/demo'
 
 let factories: Factory[]
 let oilFac: Factory
@@ -13,7 +13,7 @@ let computersFac: Factory
 // This test file in effect tests most of the functionality we expect from the data.
 describe('Complex Plan test', () => {
   beforeEach(() => {
-    factories = demo()
+    factories = createDemo().getFactories()
     oilFac = findFacByName('Oil Processing', factories)
     circuitBoardsFac = findFacByName('Circuit Boards', factories)
     computersFac = findFacByName('Computers (end product)', factories)
