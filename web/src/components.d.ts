@@ -35,6 +35,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sharing: typeof import('./components/Sharing.vue')['default']
+    Templates: typeof import('./components/Templates.vue')['default']
     Todo: typeof import('./components/graph/Todo.vue')['default']
   }
 }
