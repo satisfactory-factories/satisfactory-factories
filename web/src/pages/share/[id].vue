@@ -61,6 +61,16 @@
           alert('Failed to load share link, it contained invalid data.')
           return
         }
+
+        // This is for legacy reasons, as previously created share links may contain an array of factories instead of a factory tab
+        if (Array.isArray(data.data)) {
+          return {
+            id: crypto.randomUUID(),
+            name: 'Shared Data',
+            factories: data.data,
+          }
+        }
+
         return data.data
       } else {
         console.error('Loading share data failed:', data)
