@@ -2,6 +2,8 @@
 import { defineStore } from 'pinia'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
+import { calculateFactories } from '@/utils/factory-management/factory'
+import { useGameDataStore } from '@/stores/game-data-store'
 
 export const useAppStore = defineStore('app', () => {
   // Define state using Composition API
@@ -11,6 +13,7 @@ export const useAppStore = defineStore('app', () => {
   const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
   const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
   const isDebugMode = ref<boolean>(false)
+  const gameDataStore = useGameDataStore()
 
   // Watch the factories array for changes
   watch(factories, () => {
@@ -65,7 +68,15 @@ export const useAppStore = defineStore('app', () => {
 
   const setFactories = (newFactories: Factory[]) => {
     console.log('Setting factories', newFactories)
+    const gameData = gameDataStore.getGameData()
+    if (!gameData) {
+      console.error('Unable to load game data!')
+      return
+    }
+
     factories.value = newFactories
+    // Trigger calculations
+    calculateFactories(factories.value, gameData)
     // Will also call the watcher.
   }
 
