@@ -2,25 +2,26 @@ import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
-import { template } from '@/utils/factory-setups/template'
+import { createTemplate } from '@/utils/factory-setups/template'
 
 let factories: Factory[]
 let factory: Factory
 
 describe('Simple factory plan test', () => {
   beforeEach(() => {
-    factories = template()
+    const templateInstance = createTemplate()
+    factories = templateInstance.getFactories()
     factory = findFacByName('Iron Ingots', factories)
     calculateFactories(factories, gameData)
   })
   it('should have a name', () => {
-    factory.name = 'Iron Ingots'
+    expect(factory.name).toBe('Iron Ingots')
   })
   it('should have a product', () => {
     expect(factory.products.length).toBe(1)
     expect(factory.products[0].id).toBe('IronIngot')
     expect(factory.products[0].amount).toBe(100)
-    expect(factory.products[0].recipe).toBe('IronIngot')
+    expect(factory.products[0].recipe).toBe('IngotIron')
   })
   it('should have correctly calculated product requirements', () => {
     expect(factory.products[0].requirements).toStrictEqual({ OreIron: { amount: 100 } })
