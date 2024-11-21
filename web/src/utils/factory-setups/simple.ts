@@ -3,7 +3,7 @@ import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-export const createTemplate = (): { getFactories: () => Factory[] } => {
+export const createSimple = (): { getFactories: () => Factory[] } => {
   // Local variables to ensure a fresh instance on every call
   const ironIngotFac = newFactory('Iron Ingots')
   const ironPlateFac = newFactory('Iron Plates')

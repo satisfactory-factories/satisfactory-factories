@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from '@jest/globals'
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
-import { createTemplate } from '@/utils/factory-setups/template'
+import { createSimple } from '@/utils/factory-setups/simple'
 
 let factories: Factory[]
 let factory: Factory
 
 describe('Simple factory plan test', () => {
   beforeEach(() => {
-    const templateInstance = createTemplate()
+    const templateInstance = createSimple()
     factories = templateInstance.getFactories()
     factory = findFacByName('Iron Ingots', factories)
     calculateFactories(factories, gameData)
@@ -82,6 +82,17 @@ describe('Simple factory plan test', () => {
         amount: 100,
       }],
     })
+  })
+  it('should have the correct dependency metrics', () => {
+    // const ironPlateFac = findFacByName('Iron Plates', factories)
+    const metrics: FactoryDependencyMetrics = {
+      part: 'IronIngot',
+      request: 100,
+      supply: 100,
+      difference: 0,
+      isRequestSatisfied: true,
+    }
+    expect(factory.dependencies.metrics).toStrictEqual({ IronIngot: metrics })
   })
   it('should have the correct raw resources info', () => {
     expect(factory.rawResources).toStrictEqual({
