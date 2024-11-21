@@ -180,6 +180,9 @@ function getProducingBuildings(data: any[]): string[] {
                 if (producedInBuildings) {
                     producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
                 }
+            } else if (entry.ClassName === "Desc_NuclearWaste_C") { 
+                producingBuildingsSet.add("nuclearpowerplant");
+                //console.log("Nuclear power plant found");
             }
         });
 
@@ -506,6 +509,7 @@ async function processFile(inputFile: string, outputFile: string) {
 
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
+        console.log(producingBuildings);
 
         // Get power consumption for the producing buildings
         const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
