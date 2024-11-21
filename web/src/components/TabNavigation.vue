@@ -1,36 +1,49 @@
 <template>
   <div>
-    <div class="border-t-md d-flex bg-grey-darken-3 align-center" density="compact">
-      <v-tabs
-        v-model="appStore.currentFactoryTabIndex"
-        color="deep-orange"
-      >
-        <v-tab
-          v-for="(item, index) in appStore.factoryTabs"
-          :key="item.name"
-          class="text-none"
-          :text="item.name"
-          :value="index"
+    <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between" density="compact">
+      <div class="d-flex align-center">
+        <v-tabs
+          v-model="appStore.currentFactoryTabIndex"
+          color="deep-orange"
+        >
+          <v-tab
+            v-for="(item, index) in appStore.factoryTabs"
+            :key="item.id"
+            class="text-none"
+            :ripple="!isCurrentTab(index)"
+            :slim="isCurrentTab(index)"
+            :value="index"
+          >
+            <input
+              v-if="isCurrentTab(index) && isEditingName"
+              v-model="currentTabName"
+              class="pa-1 rounded border bg-grey-darken-2"
+              @keyup.enter="onClickEditTabName"
+            >
+            <span v-else>
+              {{ item.name }}
+            </span>
+            <v-btn
+              v-if="isCurrentTab(index)"
+              :key="`${isEditingName}`"
+              color="grey-darken-3"
+              :icon="`fas ${isEditingName ? 'fa-check': 'fa-pen'}`"
+              size="x-small"
+              variant="flat"
+              @click="onClickEditTabName"
+            />
+          </v-tab>
+        </v-tabs>
+        <v-btn
+          color="grey-darken-3"
+          icon="fas fa-plus"
+          size="x-small"
+          variant="flat"
+          @click="appStore.addTab()"
         />
+      </div>
 
-      </v-tabs>
-      <v-btn
-        color="grey-darken-3"
-        icon="fas fa-plus"
-        size="x-small"
-        variant="flat"
-        @click="appStore.addTab()"
-      />
-    </div>
-
-    <div class="bg-grey-darken-2 py-1 px-2 d-flex align-center justify-space-between" dark density="compact">
-      <input
-        v-model.lazy="appStore.currentFactoryTab.name"
-        class="pa-1 rounded tab-name"
-        @keyup.enter="onEnterTabName"
-      >
-
-      <div class="d-flex align-center h-100 ga-2">
+      <div class="d-flex align-center h-100 ga-2 mr-1">
         <ShareButton />
         <v-btn
           v-if="appStore.factoryTabs.length > 1"
@@ -50,18 +63,20 @@
 
   const appStore = useAppStore()
 
-  const onEnterTabName = (event: KeyboardEvent) => {
-    (event.target as HTMLInputElement).blur()
+  const isEditingName = ref(false)
+  const currentTabName = ref(appStore.currentFactoryTab.name)
+
+  const isCurrentTab = (index:number) => index === appStore.currentFactoryTabIndex
+
+  const onClickEditTabName = () => {
+    isEditingName.value = !isEditingName.value
+    if (!isEditingName.value) {
+      appStore.currentFactoryTab.name = currentTabName.value
+    }
   }
+
+  watch(() => appStore.currentFactoryTabIndex, () => {
+    isEditingName.value = false
+    currentTabName.value = appStore.currentFactoryTab.name
+  })
 </script>
-
-<style lang="scss" scoped>
-.tab-name {
-  transition: background-color 0.3s;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #535353;
-  }
-}
-</style>

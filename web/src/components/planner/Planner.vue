@@ -268,10 +268,10 @@
     // Make a shallow copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
     factories.value.push({
-      ...originalFactory, 
-      id: newId, 
-      name: `${originalFactory.name} (copy)`, 
-      displayOrder: originalFactory.displayOrder + 1 
+      ...originalFactory,
+      id: newId,
+      name: `${originalFactory.name} (copy)`,
+      displayOrder: originalFactory.displayOrder + 1,
     })
 
     // Update the display order of the other factories
@@ -462,7 +462,7 @@
 <style scoped lang="scss">
 .planner-container {
   width: 100%;
-  height: calc(100vh - 64px - 98px);
+  height: calc(100vh - 64px - 50px);
 
   @media screen and (min-width: 2000px) {
     margin-left: 10vw;
@@ -486,7 +486,7 @@
 
   .main-content {
     width: 100%;
-    max-height: calc(100vh - 64px - 98px);
+    max-height: calc(100vh - 64px - 50px);
     overflow-y: auto;
 
     @media screen and (min-width: 2000px) {
