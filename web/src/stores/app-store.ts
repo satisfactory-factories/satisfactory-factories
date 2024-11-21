@@ -41,6 +41,17 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
+  // Getters
+  const getFactory = (id: number) => {
+    return factories.value.find(factory => factory.id === id)
+  }
+  const getFactories = () => {
+    return factories.value
+  }
+  const getLastEdit = () => {
+    return lastEdit.value
+  }
+
   // Define actions
   const addFactory = (factory: Factory) => {
     factories.value.push(factory)
@@ -128,6 +139,9 @@ export const useAppStore = defineStore('app', () => {
     token,
     lastSave,
     lastEdit,
+    getFactory,
+    getFactories,
+    getLastEdit,
     addFactory,
     removeFactory,
     updateFactory,

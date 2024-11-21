@@ -1,6 +1,7 @@
 <template>
   <v-btn
     color="blue rounded"
+    :disabled="creating"
     icon="fas fa-share-alt"
     size="small"
     variant="flat"

@@ -30,12 +30,13 @@
 
   const loadShareData = async () => {
     const shareId = (route.params as { id: string }).id
-    if (!shareId) return
 
-    loadedFactoryData.value = await getDataFromShare(shareId)
+    if (shareId) {
+      loadedFactoryData.value = await getDataFromShare(shareId)
 
-    if (loadedFactoryData.value) {
-      appStore.addTab(loadedFactoryData.value)
+      if (loadedFactoryData.value) {
+        appStore.addTab(loadedFactoryData.value)
+      }
     }
 
     router.push('/')
