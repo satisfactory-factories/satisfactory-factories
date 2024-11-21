@@ -106,3 +106,9 @@ export interface Factory {
   hasProblem: boolean
   displayOrder: number;
 }
+
+export interface FactoryTab {
+  id: string;
+  name: string;
+  factories: Factory[];
+}

@@ -1,4 +1,4 @@
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 export interface ShareDataCreationResponse {
   status: string;
@@ -6,5 +6,5 @@ export interface ShareDataCreationResponse {
 }
 
 export interface ShareDataReturnResponse {
-  data: Factory[]
+  data: Factory[] | FactoryTab
 }

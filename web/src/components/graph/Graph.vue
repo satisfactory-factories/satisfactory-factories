@@ -37,6 +37,7 @@
   }
 
   const appStore = useAppStore()
+  const factories = appStore.getFactories()
 
   const nodes = ref<CustomNode[]>([])
   const edges = ref<Edge[]>([])
@@ -72,6 +73,10 @@
     initializeGraph()
     console.log('Initial nodes:', nodes.value)
     console.log('Initial edges:', edges.value)
+  })
+
+  watch(factories, () => {
+    initializeGraph()
   })
 </script>
 

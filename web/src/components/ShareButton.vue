@@ -1,14 +1,12 @@
 <template>
   <v-btn
-    class="ml-2"
-    color="blue"
+    color="blue rounded"
     :disabled="creating"
+    icon="fas fa-share-alt"
+    size="small"
     variant="flat"
     @click="createShareLink"
-  >
-    <i class="fas fa-share-alt" /><span class="ml-2">Share Plan</span>
-  </v-btn>
-
+  />
   <v-snackbar v-model="toast" color="success" top>
     Link copied to clipboard!
   </v-snackbar>
@@ -18,27 +16,27 @@
   import { config } from '@/config/config'
   import { storeToRefs } from 'pinia'
   import { useAppStore } from '@/stores/app-store'
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
   import { ShareDataCreationResponse } from '@/interfaces/ShareDataInterface'
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
-  const { token } = storeToRefs(appStore)
+  const { token, currentFactoryTab } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
   const toast = ref(false)
   const creating = ref(false)
 
   const createShareLink = async () => {
-    if (!appStore.getFactories() || appStore.getFactories().length === 0) {
+    if (!currentFactoryTab.value.factories || currentFactoryTab.value.factories.length === 0) {
       alert('No factory data to share!')
       return
     }
 
-    await handleCreation(appStore.getFactories())
+    await handleCreation(currentFactoryTab.value)
   }
 
-  const handleCreation = async (factoryData: Factory[]) => {
+  const handleCreation = async (factoryTabData: FactoryTab) => {
     creating.value = true
     try {
       const response = await fetch(`${apiUrl}/share`, {
@@ -47,7 +45,7 @@
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token.value}`,
         },
-        body: JSON.stringify(factoryData),
+        body: JSON.stringify(factoryTabData),
       })
       if (response.ok) {
         const data: ShareDataCreationResponse = await response.json()
