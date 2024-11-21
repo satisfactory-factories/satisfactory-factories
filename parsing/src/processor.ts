@@ -321,12 +321,17 @@ function getRecipes(
                     //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
                     //     console.log(products);
                     // }
+                    if (recipe.ClassName === "Recipe_Plastic_C") {
+                        console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
+                        console.log(products);
+                    }
                     if (producingBuildings[building]) {
-                        const buildingPower = Object.values(products).reduce(
-                            // Calculate power for this product amount
-                            (total, product) => total + (producingBuildings[building]),
-                            0
-                        );
+                        const buildingPower = producingBuildings[building]
+                        //const buildingPower = Object.values(products).reduce(
+                        //     // Calculate power for this product amount
+                        //     (total, product) => total + producingBuildings[building],
+                        //     0
+                        // );
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
                         return totalPower + buildingPower; // Add power for this building
                     }

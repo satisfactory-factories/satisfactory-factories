@@ -1092,7 +1092,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1223,7 +1223,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1356,7 +1356,7 @@
             "products": [],
             "building": {
                 "name": "assemblermk1",
-                "power": 0
+                "power": 15
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2142,7 +2142,7 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2243,7 +2243,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2309,7 +2309,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2445,7 +2445,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2811,7 +2811,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2927,7 +2927,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3268,7 +3268,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3534,7 +3534,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3715,7 +3715,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4711,7 +4711,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4802,7 +4802,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -4943,7 +4943,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6009,7 +6009,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6459,7 +6459,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6490,7 +6490,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6846,7 +6846,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7237,7 +7237,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7408,7 +7408,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7894,7 +7894,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8475,7 +8475,7 @@
             ],
             "building": {
                 "name": "blender",
-                "power": 150
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8536,7 +8536,7 @@
             ],
             "building": {
                 "name": "oilrefinery",
-                "power": 60
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9197,7 +9197,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9273,7 +9273,7 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 0.2
+                "power": 0.1
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9509,7 +9509,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9540,7 +9540,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9571,7 +9571,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9602,7 +9602,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9633,7 +9633,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9664,7 +9664,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9695,7 +9695,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9726,7 +9726,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9757,7 +9757,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9788,7 +9788,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9819,7 +9819,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9850,7 +9850,7 @@
             ],
             "building": {
                 "name": "packager",
-                "power": 20
+                "power": 10
             },
             "isAlternate": false,
             "isFicsmas": false
