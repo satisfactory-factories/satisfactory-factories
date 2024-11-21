@@ -3,8 +3,10 @@ import { addProductToFactory } from '@/utils/factory-management/products'
 import { findFacByName, newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-// A factory function to encapsulate the creation of demo factories
-export const createDemo = (): { getFactories: () => Factory[] } => {
+// This is a more complex setup with multiple factories with dependencies going in a straight chain from Computers to Ingots and Oil Processing.
+// This setup is used to test the more complex factory management functions.
+// Copper Basics has a deliberate shortage of Copper Ingots to highlight that functionality to new users.
+export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
   // Initialize factories
   const factories = [
     newFactory('Oil Processing'), // Factory with a byproduct
@@ -38,12 +40,12 @@ export const createDemo = (): { getFactories: () => Factory[] } => {
     const copperBasicsFac = findFacByName('Copper Basics', factories)
     addProductToFactory(copperBasicsFac, {
       id: 'Wire',
-      amount: 320,
+      amount: 400,
       recipe: 'Wire',
     })
     addProductToFactory(copperBasicsFac, {
       id: 'Cable',
-      amount: 160,
+      amount: 200,
       recipe: 'Cable',
     })
     addProductToFactory(copperBasicsFac, {
@@ -73,14 +75,14 @@ export const createDemo = (): { getFactories: () => Factory[] } => {
     addInputToFactory(copperBasicsFac, {
       factoryId: copperIngotsFac.id,
       outputPart: 'CopperIngot',
-      amount: 320,
+      amount: 320, // Deliberate shortage, should be 520.
     })
 
     const circuitBoardsFac = findFacByName('Circuit Boards', factories)
     const oilProcessingFac = findFacByName('Oil Processing', factories)
     addInputToFactory(circuitBoardsFac, {
       factoryId: copperBasicsFac.id,
-      outputPart: 'Cable',
+      outputPart: 'CopperSheet',
       amount: 160,
     })
     addInputToFactory(circuitBoardsFac, {

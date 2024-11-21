@@ -13,7 +13,7 @@ const wireFac = newFactory('Wire')
 const statorFac = newFactory('Stators')
 
 // You can construct this however you wish, but try to keep it mostly consistent.
-export const internalProductionDeficit = (): Factory[] => {
+export const internalProductionDeficitPlan = (): Factory[] => {
   const factories = [
     copperIngotFac,
     wireFac,

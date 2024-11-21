@@ -37,8 +37,8 @@
     </v-card>
   </v-dialog></template>
 <script lang="ts" setup>
-  import { createDemo } from '@/utils/factory-setups/demo'
-  import { createSimple } from '@/utils/factory-setups/simple'
+  import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
+  import { createSimple } from '@/utils/factory-setups/simple-plan'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
 
@@ -56,7 +56,7 @@
     {
       name: 'Demo',
       description: 'The demo template containing 5 factories with a mix of fluids, solids and multiple dependencies.',
-      data: createDemo().getFactories(),
+      data: complexDemoPlan().getFactories(),
     },
     {
       name: 'Simple',

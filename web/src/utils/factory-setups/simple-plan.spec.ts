@@ -2,12 +2,12 @@ import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
-import { createSimple } from '@/utils/factory-setups/simple'
+import { createSimple } from '@/utils/factory-setups/simple-plan'
 
 let factories: Factory[]
 let factory: Factory
 
-describe('Simple factory plan test', () => {
+describe('Simple factory plan', () => {
   beforeEach(() => {
     const templateInstance = createSimple()
     factories = templateInstance.getFactories()

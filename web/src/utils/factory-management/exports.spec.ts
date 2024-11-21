@@ -3,7 +3,7 @@ import { calculateFactories, findFacByName, newFactory } from '@/utils/factory-m
 import { gameData } from '@/utils/gameData'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 import { addProductToFactory } from '@/utils/factory-management/products'
-import { internalProductionDeficit } from '@/utils/factory-setups/internal-production-deficit'
+import { internalProductionDeficitPlan } from '@/utils/factory-setups/internal-production-deficit-plan'
 
 let ironIngotFac = newFactory('Iron Ingots')
 let ironPlateFac = newFactory('Iron Plates')
@@ -115,7 +115,7 @@ describe('exports', () => {
       expect(ironIngotFac.exports.IronPlate.demands).toBe(0)
     })
     it('should calculate exports correctly with confirmed bugged factory', () => {
-      const factories = internalProductionDeficit()
+      const factories = internalProductionDeficitPlan()
 
       calculateFactories(factories, gameData)
 
