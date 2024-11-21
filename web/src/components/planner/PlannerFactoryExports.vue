@@ -148,7 +148,7 @@
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
   const findFactory = inject('findFactory') as (id: number) => Factory
-  const updateFactory = inject('calculateFactory') as (factory: Factory) => Factory
+  const updateFactory = inject('updateFactory') as (factory: Factory) => Factory
   const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
   defineProps<{
