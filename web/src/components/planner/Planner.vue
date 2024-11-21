@@ -91,7 +91,7 @@
   import {
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { findFac, newFactory } from '@/utils/factory-management/factory'
+  import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
