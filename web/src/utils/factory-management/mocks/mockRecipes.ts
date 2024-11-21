@@ -71,7 +71,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'constructormk1',
-      power: 2,
+      power: 4,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -127,7 +127,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'oilrefinery',
-      power: 17.5,
+      power: 30,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -163,7 +163,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'oilrefinery',
-      power: 8.5,
+      power: 30,
     },
     isAlternate: false,
     isFicsmas: false,
@@ -193,7 +193,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'assemblermk1',
-      power: 2.142857142857143,
+      power: 15,
     },
     isAlternate: true,
     isFicsmas: false,
@@ -223,7 +223,7 @@ export const mockRecipes: Recipe[] = [
     ],
     building: {
       name: 'assemblermk1',
-      power: 1.5,
+      power: 15,
     },
     isAlternate: true,
     isFicsmas: false,
