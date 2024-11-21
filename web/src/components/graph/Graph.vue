@@ -90,7 +90,7 @@
 .notice {
   width: 1000px;
   position: absolute;
-  top: 16vh;
+  top: 12vh;
   left: calc(50% - 500px);
   z-index: 100;
 }
