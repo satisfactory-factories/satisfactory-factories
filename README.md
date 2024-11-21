@@ -22,13 +22,26 @@ This project has the following requirements:
 
 Visit http://localhost:3000 to view the project.
 
-### Parsing
-1. `cd parsing`
-2. `pnpm install`
-3. `pnpm dev`
-
 #### Testing
 There are tests for the frontend project, run them with `pnpm test`. Tests must pass for PRs to be accepted. Note as of writing the coverage isn't 100%.
+
+### Parsing
+The parser is responsible for processing the `Docs.json` from the game and reconstructing a more readable version for our use, since the game's docs file is overwhelmingly large and not very human-readable. The file is located under `X\steamapps\common\Satisfactory\CommunityResources` on Windows. Replace X with where you have installed your steam library.
+
+#### Running the parser and updating the gameData
+To run the parser:
+
+```sh
+cd parsing
+pnpm install
+pnpm dev
+```
+
+When the parser is run, it outputs to file `/parser/gameData.json`. This file needs copying to `/web/public/gameData_v1.x-xx.json`. The version must directly correlate with the minor version of the game (unless a patch messes with a recipe, unlikely). e.g. `v1.0-11.json` would increment to `v1.0-12.json`. 
+
+Once the new file has been placed, you must also edit `/web/src/config/config.ts` and update the version there too.
+
+This instructs web clients to re-download the game data file with the new version upon refresh and replace their locally stored version.
 
 ### Backend
 Required for the login and syncing of data features, not required for local development.
