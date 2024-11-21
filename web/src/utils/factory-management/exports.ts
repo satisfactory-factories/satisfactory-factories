@@ -27,6 +27,8 @@ export const getRequestsForFactoryByProduct = (
 
 export const productSurplus = (product: FactoryItem, factory: Factory) => {
   const part = factory.parts[product.id]
+
+  // Return a positive value as negative values == surplus
   return part.amountRemaining < 0 ? Math.abs(part.amountRemaining) : 0
 }
 
@@ -55,9 +57,11 @@ export const calculateExports = (factories: Factory[]) => {
           : product
         const displayOrder = productParent?.displayOrder ?? 0
 
+        const surplus = productSurplus(product, factory) ?? 0
+
         return {
           productId: product.id,
-          surplus: productSurplus(product, factory) ?? 0,
+          surplus,
           demands: factory.dependencies.metrics[product.id]?.request ?? 0,
           displayOrder,
         }
