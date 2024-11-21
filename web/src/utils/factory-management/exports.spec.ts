@@ -52,6 +52,7 @@ describe('exports', () => {
         productId: 'IronIngot',
         surplus: 100,
         demands: 100,
+        difference: 0,
         displayOrder: 0,
       })
     })
