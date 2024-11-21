@@ -13,35 +13,7 @@
             >
           </v-col>
           <v-col class="text-right" cols="4">
-            <v-dialog v-if="isDebugMode" scrollable width="auto">
-              <template #activator="{ props: activatorProps }">
-                <v-btn
-                  v-bind="activatorProps"
-                  class="mr-2"
-                  color="primary"
-                  prepend-icon="fas fa-bug"
-                  ripple
-                  variant="flat"
-                >
-                  Show data
-                </v-btn>
-              </template>
-              <template #default="{ isActive }">
-                <v-card title="Factory debug info">
-                  <v-card-text>
-                    <pre>
-                {{ factory }}
-              </pre>
-                  </v-card-text>
-                  <v-card-actions class="sticky">
-                    <v-btn
-                      text="Close Dialog"
-                      @click="isActive.value = false"
-                    />
-                  </v-card-actions>
-                </v-card>
-              </template>
-            </v-dialog>
+            <factory-debug :subject="factory" subject-type="Factory" />
             <v-btn
               class="mr-2 rounded"
               color="primary"
@@ -196,7 +168,6 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
-  import { useAppStore } from '@/stores/app-store'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -204,7 +175,6 @@
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
-  const { isDebugMode } = useAppStore()
 
   defineProps<{
     factory: Factory
