@@ -35,6 +35,7 @@ export interface FactoryExportItem {
   productId: string;
   surplus: number;
   demands: number;
+  difference: number;
   displayOrder: number;
 }
 

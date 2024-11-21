@@ -55,16 +55,16 @@ export const calculateExports = (factories: Factory[]) => {
         const productParent = byProduct
           ? factory.products.find(product => product.id === byProduct.byProductOf)
           : product
-        const displayOrder = productParent?.displayOrder ?? 0
 
-        const surplus = productSurplus(product, factory) ?? 0
-
-        return {
+        const data = {
           productId: product.id,
-          surplus,
+          surplus: productSurplus(product, factory) ?? 0,
           demands: factory.dependencies.metrics[product.id]?.request ?? 0,
-          displayOrder,
+          difference: 0,
+          displayOrder: productParent?.displayOrder ?? 0,
         }
+        data.difference = data.surplus - data.demands
+        return data
       })
       .filter((item): item is FactoryExportItem => item !== null)
       .sort((a, b) => {

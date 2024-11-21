@@ -36,7 +36,7 @@
           </div>
           <div class="mb-4">
             <span
-              v-if="requestSatisfied(factory, exportItem.productId)"
+              v-if="exportItem.difference >= 0"
               class="text-green"
             >
               <i class="fas fa-check" />
@@ -45,11 +45,11 @@
                 class="ml-2"
                 color="green"
               >
-                <b>{{ formatNumber(exportItem.surplus) }}</b>&nbsp;available for export
+                <b>{{ formatNumber(exportItem.difference) }}</b>&nbsp;available for export
               </v-chip>
             </span>
             <span
-              v-if="!requestSatisfied(factory, exportItem.productId)"
+              v-if="exportItem.difference < 0"
               class="text-red"
             >
               <span>
