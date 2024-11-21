@@ -160,34 +160,6 @@
       >
         Add Product
       </v-btn>
-      <v-dialog v-if="showDebugButton" scrollable width="auto">
-        <template #activator="{ props: activatorProps }">
-          <v-btn
-            v-bind="activatorProps"
-            color="secondary"
-            prepend-icon="fas fa-bug"
-            ripple
-            variant="flat"
-          >
-            Show debug info
-          </v-btn>
-        </template>
-        <template #default="{ isActive }">
-          <v-card title="Factory debug info">
-            <v-card-text>
-              <pre>
-                {{ factory }}
-              </pre>
-            </v-card-text>
-            <v-card-actions class="sticky">
-              <v-btn
-                text="Close Dialog"
-                @click="isActive.value = false"
-              />
-            </v-card-actions>
-          </v-card>
-        </template>
-      </v-dialog>
     </div>
   </div>
 </template>
@@ -209,15 +181,6 @@
   }>()
 
   const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
-
-  const route = useRoute()
-
-  const showDebugButton = computed(() => {
-    if (window.location.hostname !== 'satisfactory-factories.app') {
-      return true
-    }
-    return route.query.debug === 'true'
-  })
 
   const addEmptyProduct = (factory: Factory) => {
     addProductToFactory(factory, {

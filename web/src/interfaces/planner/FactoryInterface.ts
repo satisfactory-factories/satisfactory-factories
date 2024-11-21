@@ -31,11 +31,16 @@ export interface FactoryItem {
   byProducts?: ByProductItem[];
 }
 
-export interface FactorySurplusItem {
-  amount: number;
+export interface FactoryExportItem {
+  productId: string;
+  surplus: number;
+  demands: number;
+  difference: number;
+  displayOrder: number;
 }
 
 export interface FactoryDependencyRequest {
+  requestingFactoryId: number;
   part: string;
   amount: number;
 }
@@ -92,9 +97,9 @@ export interface Factory {
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
   totalPower: number;
-  surplus: { [key: string]: FactorySurplusItem };
-  dependencies: FactoryDependency;
+  exports: { [key: string]: FactoryExportItem };
   exportCalculator: { [key: string]: ExportCalculatorSettings };
+  dependencies: FactoryDependency;
   rawResources: { [key: string]: WorldRawResource };
   usingRawResourcesOnly: boolean;
   hidden: boolean; // Whether to hide the card or not

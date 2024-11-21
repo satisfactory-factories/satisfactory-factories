@@ -4,7 +4,7 @@ import { createNewPart } from '@/utils/factory-management/common'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 
-describe('commonFactoryCalculations', () => {
+describe('common', () => {
   let mockFactory: Factory
 
   beforeEach(() => {

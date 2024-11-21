@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from '@jest/globals'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory, calculateByProducts, calculateProducts } from '@/utils/factory-management/products'
-import { mockGameData } from '@/utils/factory-management/mocks/mockGameData'
+import { gameData } from '@/utils/gameData'
 
 const mockIngotIron = {
   id: 'IronIngot',
@@ -63,7 +63,7 @@ describe('products', () => {
     it('should calculate the products and produce the correct part info', () => {
       addProductToFactory(mockFactory, mockIngotIron)
       addProductToFactory(mockFactory, mockIngotCopper)
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       // Expect the parts to exist
       expect(mockFactory.parts.IronIngot).toBeDefined()
@@ -101,7 +101,7 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProduct)
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(98)
       expect(mockFactory.parts.HighSpeedWire.amountRequired).toBe(420) // Nice
@@ -115,7 +115,7 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProduct)
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
       expect(Number(mockFactory.parts.HighSpeedWire.amountRequired.toFixed(3))).toBe(428.571)
@@ -145,7 +145,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProductIronPlate)
       addProductToFactory(mockFactory, mockProductIronRod)
 
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       // Expect the ingredient requirements to be correct
       // Iron Plate ratio is 3:2 so 150 iron ingots are required
@@ -175,7 +175,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct1)
       addProductToFactory(mockFactory, mockProduct2)
 
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       // This should result in 200 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(200)
@@ -198,7 +198,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct1)
       addProductToFactory(mockFactory, mockProduct2)
 
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       // This should result in 200 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(300)
@@ -227,7 +227,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct2)
       addProductToFactory(mockFactory, mockProduct3)
 
-      calculateProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
 
       // This should result in 200 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(150)
@@ -249,8 +249,8 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProductWithoutByProducts)
-      calculateProducts(mockFactory, mockGameData)
-      calculateByProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
+      calculateByProducts(mockFactory, gameData)
 
       expect(mockFactory.products[0].byProducts).toHaveLength(0)
     })
@@ -262,8 +262,8 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProductWithByProducts)
-      calculateProducts(mockFactory, mockGameData)
-      calculateByProducts(mockFactory, mockGameData)
+      calculateProducts(mockFactory, gameData)
+      calculateByProducts(mockFactory, gameData)
 
       expect(mockFactory.products[0].id).toBe('LiquidFuel')
       expect(mockFactory.products[0].byProducts).toHaveLength(1)

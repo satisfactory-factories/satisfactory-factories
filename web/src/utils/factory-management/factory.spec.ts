@@ -10,4 +10,6 @@ describe('Factory Management', () => {
       expect(fac.products.length).toBe(0)
     })
   })
+
+  // Todo: Calculation tests
 })
