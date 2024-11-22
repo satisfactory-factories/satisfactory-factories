@@ -113,7 +113,7 @@ function getItems(data: any[]): PartDataInterface {
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
-            if (!entry.mProducedIn) return;                
+            if (!entry.mProducedIn) return;
 
             if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
