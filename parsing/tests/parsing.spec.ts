@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from '@jest/globals'
-// import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { processFile } from '@/processor'
 // import { createNewPart } from '@/utils/factory-management/common'
 // import { newFactory } from '@/utils/factory-management/factory'
 // import { addProductToFactory } from '@/utils/factory-management/products'
@@ -16,9 +16,23 @@ describe('common', () => {
 //     })
 //   })
 
-  describe('generic test', () => {
-    test('should create a new test', () => {
+  describe('parsing tests', () => {
+    test('parts test', () => {
         //arrange
+        const inputFile = '../game-docs.json';
+        const outputFile = 'game-docs.json';
+
+        //act
+        let results = processFile(inputFile, outputFile);
+        console.log(results.items.length);
+
+        //assert
+        expect(results.items.length).toBe(100);
+    })
+
+    test('recipe test', () => {
+        //arrange
+
 
         //act
 
