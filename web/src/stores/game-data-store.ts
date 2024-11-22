@@ -44,7 +44,7 @@ export const useGameDataStore = defineStore('game-data', () => {
   }
 
   const getRecipesForPart = (part: string) => {
-    if (!gameData.value) {
+    if (!gameData.value || !part) {
       return []
     }
 
