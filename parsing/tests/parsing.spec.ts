@@ -23,8 +23,8 @@ describe('common', () => {
 
 
         //act
-        console.log('parts:');
-        console.log(results.items.parts);
+        // console.log('parts:');
+        // console.log(results.items.parts);
         // const partsLength = results?.items ? Object.keys(results.items).length : 0;
         // console.log(partsLength);
 
@@ -40,6 +40,17 @@ describe('common', () => {
 
         //assert
         expect(results.recipes.length).toBe(293);
+    })
+
+    test('buildings test', () => {
+        //arrange
+
+        //act
+        console.log('buildings:');
+        console.log(results.buildings);
+
+        //assert
+        expect(Object.keys(results.buildings).length).toBe(12);
     })
 
   })
