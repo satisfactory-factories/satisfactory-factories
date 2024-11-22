@@ -83,6 +83,7 @@
     ByProductItem,
     Factory,
     FactoryItem,
+    PartMetrics,
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
@@ -255,6 +256,11 @@
     return product ?? byProduct ?? undefined
   }
 
+  const getPart = (factory: Factory, partId: string): PartMetrics | undefined => {
+    const part = factory.parts[partId]
+    return part ?? undefined
+  }
+
   const getBuildingDisplayName = (building: string) => {
     const buildingFriendly = new Map<string, string>([
       ['assemblermk1', 'Assembler'],
@@ -366,6 +372,7 @@
   provide('moveFactory', moveFactory)
   provide('isItemRawResource', isItemRawResource)
   provide('getProduct', getProduct)
+  provide('getPart', getPart)
 
   // Grab from local storage if the user has already dismissed this popup
   // If they have, don't show it again.

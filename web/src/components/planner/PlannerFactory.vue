@@ -164,7 +164,7 @@
 
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -175,6 +175,7 @@
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
+  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
 
   defineProps<{
     factory: Factory
@@ -209,6 +210,22 @@
     if (!factory.dependencies?.requests) return false
     return Object.keys(factory.dependencies.requests).length > 0
   }
+
+  const fixProduction = (factory: Factory, partIndex: string): void => {
+    const product = getProduct(factory, partIndex)
+
+    // If the product is not found, return
+    if (!product) {
+      console.error(`Could not find product for ${partIndex} to fix!`)
+      return
+    }
+
+    // Update the production amount to match requirement
+    product.amount = factory.parts[partIndex].amountRequired
+    updateFactory(factory)
+  }
+
+  provide('fixProduction', fixProduction)
 </script>
 
 <style lang="scss" scoped>

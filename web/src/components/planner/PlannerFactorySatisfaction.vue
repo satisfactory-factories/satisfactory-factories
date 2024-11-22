@@ -75,9 +75,8 @@
                 <v-btn
                   v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
                   class="ml-2 my-1"
-                  color="primary"
+                  color="green"
                   size="small"
-                  variant="outlined"
                   @click="fixProduction(factory, partId)"
                 ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
                 </v-btn>
