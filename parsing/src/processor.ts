@@ -591,7 +591,7 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
 }
 
 // Central function to process the file and generate the output
-async function processFile(inputFile: string, outputFile: string) {
+async function processFile(inputFile: string, outputFile: string) : Promise<any> {
     try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
@@ -630,6 +630,8 @@ async function processFile(inputFile: string, outputFile: string) {
         // Write the output to the file
         await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
+
+        return items.parts;
     } catch (error) {
         if (error instanceof Error) {
             console.error(`Error processing file: ${error.message}`);

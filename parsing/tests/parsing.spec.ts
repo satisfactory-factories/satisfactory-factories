@@ -17,17 +17,18 @@ describe('common', () => {
 //   })
 
   describe('parsing tests', () => {
-    test('parts test', () => {
+    test('parts test', async () => {
         //arrange
-        const inputFile = '../game-docs.json';
-        const outputFile = 'game-docs.json';
+        const inputFile = '../parsing/game-docs.json';
+        const outputFile = '../parsing/gameData.json';
 
         //act
-        let results = processFile(inputFile, outputFile);
-        console.log(results.items.length);
+        let parts = await processFile(inputFile, outputFile);
+        console.log('parts:');
+        console.log(Object.keys(parts).length);
 
         //assert
-        expect(results.items.length).toBe(100);
+        expect(Object.keys(parts).length).toBe(161);
     })
 
     test('recipe test', () => {
