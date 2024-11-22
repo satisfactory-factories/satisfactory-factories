@@ -65,7 +65,7 @@
           @input="updateFactory(factory)"
         />
         <v-btn
-          v-if="!getPart(factory, product.id).satisfied"
+          v-if="!factory.parts[product.id]?.satisfied"
           class="rounded mr-2"
           color="green"
           @click="fixProduction(factory, product.id)"
@@ -171,7 +171,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Factory, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
@@ -181,7 +181,6 @@
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
-  const getPart = inject('getPart') as (factory: Factory, partId: string) => PartMetrics
 
   const props = defineProps<{
     factory: Factory;
