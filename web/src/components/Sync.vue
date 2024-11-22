@@ -11,6 +11,14 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <p class="mb-4">
+    <i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}
+  </p>
+
+  <v-btn
+    color="primary"
+    @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
+  >Force Download</v-btn>
 
   <div v-show="isSaving">
     <p class="text-body-1">

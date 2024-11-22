@@ -15,8 +15,12 @@
     </v-card>
   </v-dialog>
   <div class="position-absolute right-0 ma-2 mt-3 text-right">
-    <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
-    <v-btn v-else @click="toggleTray"><i class="fas fa-user" /><span class="ml-2">{{ loggedInUser }}</span></v-btn>
+    <v-btn v-if="!loggedInUser" @click="toggleTray">
+      <i class="fas fa-sign-in mr-2" />Sign In, Pioneer!
+    </v-btn>
+    <v-btn v-else @click="toggleTray">
+      <i class="fas fa-user mr-2" />{{ loggedInUser }}
+    </v-btn>
 
     <v-slide-x-transition>
       <v-card v-if="trayOpen" class="tray">
@@ -27,12 +31,16 @@
                 color="primary"
                 :variant="showLogin === true ? 'flat' : 'tonal'"
                 @click="showLoginForm"
-              >Login</v-btn>
+              >
+                <i class="fas fa-sign-in mr-2" />Sign In
+              </v-btn>
               <v-btn
                 color="green"
                 :variant="showRegister ? 'flat' : 'tonal'"
                 @click="showRegisterForm"
-              >Register</v-btn>
+              >
+                <i class="fas fa-pencil mr-2" />Register
+              </v-btn>
             </v-btn-group>
           </div>
           <p class="text-body-2 text-left mb-4">
@@ -72,22 +80,17 @@
         </v-card-text>
 
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
-          <p class="mb-4">
-            You are signed in. Your factory data will automatically saved. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
-          </p>
-          <p class="mb-4">
-            <i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}
-          </p>
           <v-btn
             class="mr-2"
-            color="warning"
-            @click="handleLogout"
-          >Log out</v-btn>
-          <v-btn
             color="primary"
-            @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
-          >Force Download</v-btn>
-
+            @click="handleLogout"
+          >
+            <i class="fas fa-sign-out mr-2" />Logout
+          </v-btn>
+          <p class="mt-4">
+            You are signed in. Your factory data will automatically saved every 10s upon a change. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
+          </p>
+          <!--          <sync />-->
         </v-card-text>
       </v-card>
 
@@ -186,6 +189,22 @@
       loggedInUser.value = authStore.getLoggedInUser()
     } else {
       errorMessage.value = `Login failed: ${result}`
+    }
+  }
+
+  const handleRegisterForm = async () => {
+    errorMessage.value = ''
+    if (username.value === '' || password.value === '') {
+      errorMessage.value = 'Please fill in both fields.'
+      return
+    }
+
+    // Also logs them in
+    const result = await authStore.handleRegister(username.value, password.value)
+    if (result === true) {
+      loggedInUser.value = authStore.getLoggedInUser()
+    } else {
+      errorMessage.value = `Registration failed: ${result}`
     }
   }
 
