@@ -20,6 +20,7 @@
               :disabled="factory.displayOrder === 0"
               icon="fas fa-arrow-up"
               size="small"
+              title="Move Factory Up"
               variant="outlined"
               @click="moveFactory(factory, 'up')"
             />
@@ -29,6 +30,7 @@
               :disabled="factory.displayOrder === totalFactories - 1"
               icon="fas fa-arrow-down"
               size="small"
+              title="Move Factory Down"
               variant="outlined"
               @click="moveFactory(factory, 'down')"
             />
@@ -38,6 +40,7 @@
               color="secondary"
               icon="fas fa-compress-alt"
               size="small"
+              title="Collapse Factory"
               variant="outlined"
               @click="factory.hidden = true"
             />
@@ -47,6 +50,7 @@
               color="secondary"
               icon="fas fa-expand-alt"
               size="small"
+              title="Expand Factory"
               variant="outlined"
               @click="factory.hidden = false"
             />
@@ -55,6 +59,7 @@
               color="orange rounded"
               icon="fa fa-copy"
               size="small"
+              title="Copy Factory"
               variant="outlined"
               @click="copyFactory(factory)"
             />
@@ -62,6 +67,7 @@
               color="red rounded"
               icon="fas fa-trash"
               size="small"
+              title="Delete Factory"
               variant="outlined"
               @click="confirmDelete() && deleteFactory(factory)"
             />
