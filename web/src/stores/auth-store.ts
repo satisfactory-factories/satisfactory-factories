@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { config } from '@/config/config'
-import { handleDataLoad } from '@/utils/backend/syncing'
 
 export const useAuthStore = defineStore('auth', () => {
   const apiUrl = config.apiUrl
@@ -19,10 +18,14 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const getToken = () => {
+  const getToken = async () => {
+    if (!await validateToken(token.value)) {
+      throw new Error('Token did not validate')
+    }
     return token.value ?? ''
   }
   // ==== END TOKEN MANAGEMENT
+
   // ==== AUTH FLOWS
   const handleLogin = async (username: string, password: string): Promise<string | boolean> => {
     try {
@@ -37,7 +40,6 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.ok) {
         setLoggedInUser(username)
         setToken(data.token)
-        await handleDataLoad()
         return true
       } else if (response.status === 400) {
         console.warn('Login: Invalid credentials.', response, data)
@@ -84,7 +86,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const validateToken = async (token: string): Promise<boolean | string> => {
+  const validateToken = async (token?: string): Promise<boolean | string> => {
+    token = token ?? await getToken() // Make this optional
     if (!token) {
       console.error('No token provided!')
       return false
@@ -118,6 +121,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
   // ==== END AUTH FLOWS
 
+  // ==== USER MANAGEMENT
   const setLoggedInUser = (username: string) => {
     loggedInUser.value = username ?? ''
     if (username === '') {
@@ -135,6 +139,7 @@ export const useAuthStore = defineStore('auth', () => {
     setLoggedInUser('')
     setToken('')
   }
+  // ==== END USER MANAGEMENT
 
   // Return state, actions, and getters
   return {

@@ -90,7 +90,7 @@
           <p class="mt-4">
             You are signed in. Your factory data will automatically saved every 10s upon a change. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
           </p>
-          <!--          <sync />-->
+          <sync />
         </v-card-text>
       </v-card>
 
@@ -101,6 +101,7 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { useAuthStore } from '@/stores/auth-store'
+  import Sync from '@/components/Sync.vue'
 
   const authStore = useAuthStore()
 
