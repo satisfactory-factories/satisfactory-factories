@@ -148,7 +148,7 @@ app.post('/login', async (req: TypedRequestBody<{ username: string; password: st
       return res.status(400).json({ message: 'Invalid credentials' });
     }
     const secret = process.env.JWT_SECRET ?? 'secret';
-    const token = jwt.sign({ id: user._id, username: user.username }, secret, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user._id, username: user.username }, secret, { expiresIn: '30d' });
 
     console.log(`Successfully signed in user ${username}`);
     res.json({ token });
