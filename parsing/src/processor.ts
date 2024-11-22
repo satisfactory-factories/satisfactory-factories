@@ -557,7 +557,7 @@ async function processFile(inputFile: string, outputFile: string) {
             sortedItems[key] = items.parts[key];
         });
         items.parts = sortedItems;
-        
+
         // Construct the final JSON object
         const finalData = {
             buildings,
