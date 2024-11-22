@@ -206,7 +206,7 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
                 if (producingBuildings.includes(buildingName)) {
                     buildingsPowerMap[buildingName] = parseFloat(building.mPowerConsumption) || 0;
                 }
-            } 
+            }
         });
 
         //Manually add nuclear power plant
