@@ -93,6 +93,64 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
+            
+            //These are exception products that aren't produced by mines or extractors, they are raw materials
+            if (entry.ClassName === "Desc_Leaves_C") {
+                parts["Leaves"] = {
+                    name: "Leaves",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }     
+            if (entry.ClassName === "Desc_Wood_C") {
+                parts["Wood"] = {
+                    name: "Wood",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }        
+            if (entry.ClassName === "Desc_Mycelia_C") {
+                parts["Mycelia"] = {
+                    name: "Mycelia",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }      
+            if (entry.ClassName === "Desc_HogParts_C") {
+                parts["HogParts"] = {
+                    name: "Hog Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }           
+            if (entry.ClassName === "Desc_SpitterParts_C") {
+                parts["SpitterParts"] = {
+                    name: "Spitter Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }           
+            if (entry.ClassName === "Desc_StingerParts_C") {
+                parts["StingerParts"] = {
+                    name: "Stinger Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }     
+            if (entry.ClassName === "Desc_HatcherParts_C") {
+                parts["HatcherParts"] = {
+                    name: "Hatcher Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
 
@@ -227,6 +285,10 @@ function getRecipes(
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
+            // if (recipe.ClassName === "Recipe_Biomass_Leaves_C") {
+            //     console.log("Recipe:", recipe);
+            // }
+
             if (!recipe.mProducedIn) return false;
             if (blacklist.every(building => recipe.mProducedIn.includes(building))) return false;
 
@@ -321,10 +383,10 @@ function getRecipes(
                     //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
                     //     console.log(products);
                     // }
-                    if (recipe.ClassName === "Recipe_Plastic_C") {
-                        console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
-                        console.log(products);
-                    }
+                    // if (recipe.ClassName === "Recipe_Plastic_C") {
+                    //     console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
+                    //     console.log(products);
+                    // }
                     if (producingBuildings[building]) {
                         const buildingPower = producingBuildings[building]
                         //const buildingPower = Object.values(products).reduce(
@@ -339,12 +401,11 @@ function getRecipes(
                 }, 0);
             }
 
-// Create building object with the selected building and calculated power
+            // Create building object with the selected building and calculated power
             const building = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
-
 
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
@@ -356,6 +417,26 @@ function getRecipes(
                 isFicsmas: isFicsmas(recipe.mDisplayName)
             });
         });
+
+    // // Manually add Leaves, Wood, My, HogParts, SpitterParts, StingerParts, HatcherParts recipes
+    // recipes.push({
+    //     id: "NuclearWaste",
+    //     displayName: "Uranium Waste",
+    //     ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
+    //     products: [{ part: "NuclearWaste", amount: 1, perMin: 50 }],
+    //     building: { name: "nuclearpowerplant", power: 0 },
+    //     isAlternate: false,
+    //     isFicsmas: false
+    // });
+    // recipes.push({
+    //     id: "PlutoniumWaste",
+    //     displayName: "Plutonium Waste",
+    //     ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
+    //     products: [{ part: "PlutoniumWaste", amount: 1, perMin: 10 }],
+    //     building: { name: "nuclearpowerplant", power: 0 },
+    //     isAlternate: false,
+    //     isFicsmas: false
+    // });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
@@ -382,6 +463,7 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         "Stone": 69900,
         "Sulfur": 10800,
         "Water": 9007199254740991,
+        "Leaves": 100000
     }
 
     data
@@ -438,12 +520,15 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
         recipe.products.forEach(product => {
             recipeProducts.add(product.part);
         });
+        recipe.ingredients.forEach(ingredient => {
+            recipeProducts.add(ingredient.part);
+        });
     });
 
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            // console.log(`Removing rubbish item: ${part}`);
+            console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });
