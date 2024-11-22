@@ -38,39 +38,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref, watch } from 'vue'
+  import { ref } from 'vue'
   import { useSyncStore } from '@/stores/sync-store'
-  import { useAppStore } from '@/stores/app-store'
 
   const showOverwriteDialog = ref(false)
   const lastSavedDisplay = ref('Not saved yet, make a change!')
   const syncing = ref(false)
 
   const syncStore = useSyncStore()
-  const appStore = useAppStore()
-
-  onMounted(() => {
-
-  })
-
-  onBeforeUnmount(() => {
-    // Clear the interval to avoid memory leaks when component unmounts
-    if (saveInterval) {
-      clearInterval(saveInterval)
-    }
-  })
-
-  onUnmounted(() => {
-    // Clear interval again in case onBeforeUnmount is not triggered (hot reloads)
-    if (saveInterval) {
-      clearInterval(saveInterval)
-    }
-  })
-
-  // Feels dirty to have to use the appStore.factories directly here but I don't know any other way to get it to react.
-  watch(appStore.factories, newValue => {
-    syncStore.detectedChange(newValue)
-  }, { deep: true })
 
   // Handles loading of the data. If out of sync, the user will be prompted on what to do about it.
   const handleDataLoad = async (forceLoad = false) => {

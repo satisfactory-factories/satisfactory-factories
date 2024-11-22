@@ -37,7 +37,7 @@ export const useAppStore = defineStore('app', () => {
   const gameDataStore = useGameDataStore()
 
   // Watch the factories array for changes
-  watch(factoryTabs, () => {
+  watch(factoryTabs.value, () => {
     localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })

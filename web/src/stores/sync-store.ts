@@ -3,6 +3,7 @@ import { config } from '@/config/config'
 import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
+import eventBus from '@/utils/eventBus'
 
 export const useSyncStore = defineStore('sync', () => {
   const authStore = useAuthStore()
@@ -12,25 +13,26 @@ export const useSyncStore = defineStore('sync', () => {
 
   const dataSavePending = ref<boolean>(false)
   const dataLastSaved = ref<Date | null>(null)
-  const stopSyncing = ref<boolean>(false)
-  let saveInterval: NodeJS.Timeout
+  const stopSyncing = ref<boolean>(false) // Disable syncing until refactor code is in
+  let syncInterval: NodeJS.Timeout
 
   const setupTick = () => {
-    clearInterval(saveInterval) // Prevents double-clocking
+    clearInterval(syncInterval) // Prevents double-clocking
     // Start interval to check if data needs to be saved
-    console.log('Sync: Setting up tick...')
-    saveInterval = setInterval(async () => {
+    syncInterval = setInterval(async () => {
       await tickSync()
     }, 10000)
+    console.log('syncStore: Tick setup')
   }
 
   const tickSync = async () => {
+    console.log('syncStore: Ticking...')
     if (stopSyncing.value) {
-      console.warn('Sync: Syncing is disabled.')
+      console.warn('syncStore: Syncing is disabled.')
       return
     }
     if (dataSavePending.value) {
-      console.debug('Sync: Syncing...')
+      console.debug('syncStore: Syncing...')
       await saveData()
     }
   }
@@ -172,9 +174,12 @@ export const useSyncStore = defineStore('sync', () => {
   }
 
   const detectedChange = () => {
-    console.log('detectedChange: Detected change in data.')
+    console.log('syncStore: Detected change in data.')
     dataSavePending.value = true
   }
+
+  eventBus.on('factoryUpdated', detectedChange)
+  console.log('syncStore: Listening for changes...')
 
   return {
     dataSavePending,
