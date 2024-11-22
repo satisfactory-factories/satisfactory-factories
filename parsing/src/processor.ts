@@ -102,17 +102,14 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }
-            if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+            } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
                 parts["PlutoniumWaste"] = {
                     name: "Plutonium Waste",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }
-
-            
+            }         
             //These are exception products that aren't produced by mines or extractors, they are raw materials
             if (entry.ClassName === "Desc_Leaves_C") {
                 parts["Leaves"] = {
@@ -121,52 +118,54 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }     
-            if (entry.ClassName === "Desc_Wood_C") {
+            } else if (entry.ClassName === "Desc_Wood_C") {
                 parts["Wood"] = {
                     name: "Wood",
                     stackSize: 200, //SS_BIG
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }        
-            if (entry.ClassName === "Desc_Mycelia_C") {
+            } else if (entry.ClassName === "Desc_Mycelia_C") {
                 parts["Mycelia"] = {
                     name: "Mycelia",
                     stackSize: 200, //SS_BIG
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }      
-            if (entry.ClassName === "Desc_HogParts_C") {
+            } else if (entry.ClassName === "Desc_HogParts_C") {
                 parts["HogParts"] = {
                     name: "Hog Remains",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }           
-            if (entry.ClassName === "Desc_SpitterParts_C") {
+            } else if (entry.ClassName === "Desc_SpitterParts_C") {
                 parts["SpitterParts"] = {
                     name: "Spitter Remains",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }           
-            if (entry.ClassName === "Desc_StingerParts_C") {
+            } else if (entry.ClassName === "Desc_StingerParts_C") {
                 parts["StingerParts"] = {
                     name: "Stinger Remains",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }     
-            if (entry.ClassName === "Desc_HatcherParts_C") {
+            } else if (entry.ClassName === "Desc_HatcherParts_C") {
                 parts["HatcherParts"] = {
                     name: "Hatcher Remains",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
+                // This is a special intermediate alt product
+                parts["DissolvedSilica"] = {
+                    name: "Dissolved Silica",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
                     isFicsmas: false,
                 };
             }

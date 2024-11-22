@@ -207,6 +207,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "DissolvedSilica": {
+                "name": "Dissolved Silica",
+                "stackSize": 0,
+                "isFluid": true,
+                "isFicsmas": false
+            },
             "ElectromagneticControlRod": {
                 "name": "Electromagnetic Control Rod",
                 "stackSize": 100,
