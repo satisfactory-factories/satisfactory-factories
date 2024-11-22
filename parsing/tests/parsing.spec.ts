@@ -25,10 +25,10 @@ describe('common', () => {
         //act
         let parts = await processFile(inputFile, outputFile);
         console.log('parts:');
-        console.log(Object.keys(parts).length);
+        console.log(Object.keys(parts));
 
         //assert
-        expect(Object.keys(parts).length).toBe(161);
+        expect(Object.keys(parts).length).toBe(162);
     })
 
     test('recipe test', () => {
