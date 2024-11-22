@@ -7,6 +7,7 @@
         "foundrymk1": 16,
         "hadroncollider": 0.1,
         "manufacturermk1": 55,
+        "nuclearpowerplant": 0,
         "oilrefinery": 30,
         "packager": 10,
         "quantumencoder": 0.1,
@@ -500,6 +501,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "NuclearWaste": {
+                "name": "Uranium Waste",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "OreBauxite": {
                 "name": "Bauxite",
                 "stackSize": 100,
@@ -623,6 +630,12 @@
             "PlutoniumPellet": {
                 "name": "Plutonium Pellet",
                 "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "PlutoniumWaste": {
+                "name": "Plutonium Waste",
+                "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -8012,6 +8025,35 @@
             "isFicsmas": false
         },
         {
+            "id": "PlutoniumWaste",
+            "displayName": "Plutonium Waste",
+            "ingredients": [
+                {
+                    "part": "PlutoniumFuelRod",
+                    "amount": 1,
+                    "perMin": 0.1
+                },
+                {
+                    "part": "Water",
+                    "amount": 2400,
+                    "perMin": 240
+                }
+            ],
+            "products": [
+                {
+                    "part": "PlutoniumWaste",
+                    "amount": 1,
+                    "perMin": 10
+                }
+            ],
+            "building": {
+                "name": "nuclearpowerplant",
+                "power": 0
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
             "id": "PowerCrystalShard_1",
             "displayName": "Power Shard (1)",
             "ingredients": [
@@ -9958,6 +10000,35 @@
             "building": {
                 "name": "converter",
                 "power": 0.1
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "NuclearWaste",
+            "displayName": "Uranium Waste",
+            "ingredients": [
+                {
+                    "part": "NuclearFuelRod",
+                    "amount": 1,
+                    "perMin": 0.2
+                },
+                {
+                    "part": "Water",
+                    "amount": 1200,
+                    "perMin": 240
+                }
+            ],
+            "products": [
+                {
+                    "part": "NuclearWaste",
+                    "amount": 1,
+                    "perMin": 50
+                }
+            ],
+            "building": {
+                "name": "nuclearpowerplant",
+                "power": 0
             },
             "isAlternate": false,
             "isFicsmas": false

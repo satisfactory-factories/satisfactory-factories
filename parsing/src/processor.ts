@@ -93,6 +93,25 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
+            // There are two exception products we need to check for and add to the parts list
+            if (entry.ClassName === "Desc_NuclearWaste_C") {
+                // Note that this part id is NuclearWaste, not Uranium Waste
+                parts["NuclearWaste"] = { 
+                    name: "Uranium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }
+            if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+                parts["PlutoniumWaste"] = {
+                    name: "Plutonium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }
+
             
             //These are exception products that aren't produced by mines or extractors, they are raw materials
             if (entry.ClassName === "Desc_Leaves_C") {
@@ -238,6 +257,8 @@ function getProducingBuildings(data: any[]): string[] {
                 if (producedInBuildings) {
                     producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
                 }
+            } else if (entry.ClassName === "Desc_NuclearWaste_C") { 
+                producingBuildingsSet.add("nuclearpowerplant");
             }
         });
 
@@ -263,6 +284,9 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
                 }
             }
         });
+
+        //Manually add nuclear power plant
+        buildingsPowerMap["nuclearpowerplant"] = 0;
 
     // Finally sort the map by key
     const sortedMap: { [key: string]: number } = {};
@@ -406,6 +430,26 @@ function getRecipes(
                 isFicsmas: isFicsmas(recipe.mDisplayName)
             });
         });
+
+    // Manually add Nuclear waste recipes
+    recipes.push({
+        id: "NuclearWaste",
+        displayName: "Uranium Waste",
+        ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
+        products: [{ part: "NuclearWaste", amount: 1, perMin: 50 }],
+        building: { name: "nuclearpowerplant", power: 0 },
+        isAlternate: false,
+        isFicsmas: false
+    });
+    recipes.push({
+        id: "PlutoniumWaste",
+        displayName: "Plutonium Waste",
+        ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
+        products: [{ part: "PlutoniumWaste", amount: 1, perMin: 10 }],
+        building: { name: "nuclearpowerplant", power: 0 },
+        isAlternate: false,
+        isFicsmas: false
+    });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
