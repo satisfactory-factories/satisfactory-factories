@@ -1,13 +1,13 @@
 <template>
   <v-dialog
-    max-width="400"
+    max-width="600"
     :model-value="showSessionExpiredAlert"
   >
     <v-card class="border-md">
       <v-card-title class="text-h5">Session Expired</v-card-title>
       <v-card-text>
         <p>Your session has expired, Pioneer. Please log in again!</p>
-        <p>If this keeps happening repeatedly, please report it on Discord!</p>
+        <p>If this keeps happening repeatedly or much sooner than expected (30 days), please report it on Discord!</p>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" variant="elevated" @click="closeSessionExpiredAlert">Ok</v-btn>
@@ -36,10 +36,10 @@
             </v-btn-group>
           </div>
           <p class="text-body-2 text-left mb-4">
-            Register or log in to save your factories. Whenever you make changes it will be automatically saved. You can also sync your factories between devices!
+            Register or log in to save your Plan(s). Whenever you make changes it will be automatically saved. You can also sync your factories between devices!
           </p>
           <v-divider />
-          <v-form v-if="showLogin" @submit.prevent="handleSignIn">
+          <v-form v-if="showLogin" @submit.prevent="handleLoginForm">
             <v-text-field
               v-model="username"
               label="Username"
@@ -53,7 +53,7 @@
             />
             <v-btn color="primary" type="submit">Log in</v-btn>
           </v-form>
-          <v-form v-if="showRegister" @submit.prevent="handleRegister">
+          <v-form v-if="showRegister" @submit.prevent="handleRegisterForm">
             <v-text-field
               v-model="username"
               label="Username"
@@ -68,7 +68,7 @@
             <p class="text-left mb-2"><b>NOTE:</b> There is currently no password reset system implemented. If you lose your login details, you'll have to create a new account!</p>
             <v-btn color="green" type="submit">Register</v-btn>
           </v-form>
-          <p v-if="errorMessage" class="lightRed">{{ errorMessage }}</p>
+          <p v-if="errorMessage" class="text-red font-weight-bold mt-2">{{ errorMessage }}</p>
         </v-card-text>
 
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
@@ -97,13 +97,9 @@
 
 <script setup lang="ts">
   import { ref } from 'vue'
-  import { useAppStore } from '@/stores/app-store'
-  import { storeToRefs } from 'pinia'
   import { useAuthStore } from '@/stores/auth-store'
 
-  const appStore = useAppStore()
   const authStore = useAuthStore()
-  const { loggedInUser, token, factories, lastSave, lastEdit } = storeToRefs(appStore)
 
   const trayOpen = ref(false)
   const username = ref('')
@@ -111,12 +107,38 @@
   const showLogin = ref(true)
   const showRegister = ref(false)
   const errorMessage = ref('')
+  const loggedInUser = ref(authStore.getLoggedInUser())
 
   const showSessionExpiredAlert = ref(false)
 
   const toggleTray = () => {
     trayOpen.value = !trayOpen.value
   }
+
+  // onMounted check if token is valid
+  onMounted(async () => {
+    const token = ref<string>(localStorage.getItem('token') ?? '')
+
+    if (!token.value) {
+      return
+    }
+
+    switch (await authStore.validateToken(token.value)) {
+      case true:
+        loggedInUser.value = authStore.getLoggedInUser()
+        break
+      case 'invalid-token':
+        sessionHasExpired()
+        break
+      case 'backend-offline':
+        errorMessage.value = 'The backend is currently offline. Please report this on Discord!'
+        break
+      case 'unexpected-response':
+      default:
+        errorMessage.value = 'An unexpected error occurred validating your token. Please report this on Discord!'
+        break
+    }
+  })
 
   // Received from click events elsewhere
   const closeTray = () => {
@@ -145,17 +167,32 @@
     showLoginForm()
   }
 
-  const sessionHasExpired = async () => {
-    if (loggedInUser.value !== '') {
-      showSessionExpiredAlert.value = true
-      trayOpen.value = false
-      authStore.handleLogout()
-      showLogin.value = true
-    }
-    // Otherwise do nothing, the user was never logged in.
+  const sessionHasExpired = () => {
+    showSessionExpiredAlert.value = true
+    trayOpen.value = false
+    showLogin.value = true
+    loggedInUser.value = authStore.getLoggedInUser() // Should be ''
   }
 
-  const handleSigninForm
+  const handleLoginForm = async () => {
+    errorMessage.value = ''
+    if (username.value === '' || password.value === '') {
+      errorMessage.value = 'Please fill in both fields.'
+      return
+    }
+
+    const result = await authStore.handleLogin(username.value, password.value)
+    if (result === true) {
+      loggedInUser.value = authStore.getLoggedInUser()
+    } else {
+      errorMessage.value = `Login failed: ${result}`
+    }
+  }
+
+  const handleLogout = async () => {
+    authStore.handleLogout()
+    loggedInUser.value = ''
+  }
 
 </script>
 

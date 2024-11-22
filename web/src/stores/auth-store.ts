@@ -20,10 +20,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const getToken = () => {
-    return token.value
+    return token.value ?? ''
   }
-
-  const handleSignIn = async (username: string, password: string) => {
+  // ==== END TOKEN MANAGEMENT
+  // ==== AUTH FLOWS
+  const handleLogin = async (username: string, password: string): Promise<string | boolean> => {
     try {
       const response = await fetch(`${apiUrl}/login`, {
         method: 'POST',
@@ -37,68 +38,85 @@ export const useAuthStore = defineStore('auth', () => {
         setLoggedInUser(username)
         setToken(data.token)
         await handleDataLoad()
+        return true
+      } else if (response.status === 400) {
+        console.warn('Login: Invalid credentials.', response, data)
+        return 'Credentials incorrect. Please try again.'
+      } else if (response.status === 500) {
+        console.error('Login: Backend 500ed!', response, data)
+        return `Backend server error! Please report this on Discord!`
       } else {
-        console.warn('Login failed:', data)
-        errorMessage.value = data.message
+        console.error('Login: Unknown response!', response, data)
+        return 'Unknown response! Please report this on Discord!'
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === 'Failed to fetch') {
-          errorMessage.value = 'Could not connect to the server.'
-          console.error('Error:', error)
-        }
+        console.error('Login Error:', error)
+        return 'Backend server offline. Please report this on Discord!'
       }
+      return false
     }
   }
 
-  const handleRegister = async () => {
+  const handleRegister = async (username: string, password: string): Promise<string | boolean> => {
     try {
       const response = await fetch(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: username.value, password: password.value }),
+        body: JSON.stringify({ username, password }),
       })
       const data = await response.json()
       if (response.ok) {
-        await handleSignIn()
+        // Log the user in automatically
+        return await handleLogin(username, password)
       } else {
-        console.error('Registration failed:', data)
-        errorMessage.value = `Registration failed. ${data.errorResponse?.errmsg || data.message}`
+        console.error('Registration failed:', response, data)
+        return `Registration failed. ${data.errorResponse?.errmsg || data.message}`
       }
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
-        errorMessage.value = error.message
+        return `Registration failed due to unknown error: ${error.message}`
       }
+      return false
     }
   }
 
-  const validateToken = async (): Promise<boolean> => {
+  const validateToken = async (token: string): Promise<boolean | string> => {
+    if (!token) {
+      console.error('No token provided!')
+      return false
+    }
     try {
       const response = await fetch(`${apiUrl}/validate-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token.value}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ token: token.value }),
+        body: JSON.stringify({ token }),
       })
       if (response.ok) {
         return true
-      } else {
+      } else if (response.status === 401) {
         console.warn('Token invalid!')
-        await sessionHasExpired()
-        return false
+        handleLogout()
+        return 'invalid-token'
+      } else if (response.status === 500) {
+        console.error('Backend is offline!')
+        return 'backend-offline'
+      } else {
+        return 'unexpected-response'
       }
     } catch (error) {
-      await sessionHasExpired()
+      handleLogout()
       console.error('Error during token validation:', error)
-      return false
+      return 'unknown-error'
     }
   }
-  // ==== END TOKEN MANAGEMENT
+  // ==== END AUTH FLOWS
 
   const setLoggedInUser = (username: string) => {
     loggedInUser.value = username ?? ''
@@ -109,11 +127,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const getLoggedInUser = () => {
-    return loggedInUser.value
+  const getLoggedInUser = (): string => {
+    return loggedInUser.value ?? ''
   }
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     setLoggedInUser('')
     setToken('')
   }
@@ -122,5 +140,10 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     getToken,
     setToken,
+    handleLogin,
+    handleLogout,
+    handleRegister,
+    validateToken,
+    getLoggedInUser,
   }
 })
