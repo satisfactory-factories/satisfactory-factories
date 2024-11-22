@@ -206,8 +206,11 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
                 if (producingBuildings.includes(buildingName)) {
                     buildingsPowerMap[buildingName] = parseFloat(building.mPowerConsumption) || 0;
                 }
-            }
+            } 
         });
+
+        //Manually add nuclear power plant
+        buildingsPowerMap["nuclearpowerplant"] = 0;
 
     // Finally sort the map by key
     const sortedMap: { [key: string]: number } = {};
@@ -324,10 +327,10 @@ function getRecipes(
                     //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
                     //     console.log(products);
                     // }
-                    if (recipe.ClassName === "Recipe_Plastic_C") {
-                        console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
-                        console.log(products);
-                    }
+                    // if (recipe.ClassName === "Recipe_Plastic_C") {
+                    //     console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
+                    //     console.log(products);
+                    // }
                     if (producingBuildings[building]) {
                         const buildingPower = producingBuildings[building]
                         //const buildingPower = Object.values(products).reduce(
@@ -509,10 +512,11 @@ async function processFile(inputFile: string, outputFile: string) {
 
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
-        console.log(producingBuildings);
+        //console.log(producingBuildings);
 
         // Get power consumption for the producing buildings
         const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
+        //console.log(buildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
         const recipes = getRecipes(data, buildings);
