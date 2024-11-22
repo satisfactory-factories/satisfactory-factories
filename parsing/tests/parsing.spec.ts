@@ -1,34 +1,35 @@
-import { beforeEach, describe, expect, test } from '@jest/globals'
+import { beforeAll, beforeEach, describe, expect, test } from '@jest/globals'
 import { processFile } from '@/processor'
 // import { createNewPart } from '@/utils/factory-management/common'
 // import { newFactory } from '@/utils/factory-management/factory'
 // import { addProductToFactory } from '@/utils/factory-management/products'
 
 describe('common', () => {
-//   let mockFactory: Factory
+  let results: any;
 
-//   beforeEach(() => {
-//     mockFactory = newFactory('Test Factory')
-//     addProductToFactory(mockFactory, {
-//       id: 'CompactedCoal',
-//       amount: 1234,
-//       recipe: 'CompactedCoal',
-//     })
-//   })
-
-  describe('parsing tests', () => {
-    test('parts test', async () => {
+  beforeAll(async () => {
         //arrange
         const inputFile = '../parsing/game-docs.json';
         const outputFile = '../parsing/gameData.json';
 
         //act
-        let parts = await processFile(inputFile, outputFile);
+        results = await processFile(inputFile, outputFile);
+
+  })
+
+  describe('parsing tests', () => {
+    test('parts test', async () => {
+        //arrange
+
+
+        //act
         console.log('parts:');
-        console.log(Object.keys(parts));
+        console.log(results.items.parts);
+        // const partsLength = results?.items ? Object.keys(results.items).length : 0;
+        // console.log(partsLength);
 
         //assert
-        expect(Object.keys(parts).length).toBe(162);
+        expect(Object.keys(results.items.parts).length).toBe(162);
     })
 
     test('recipe test', () => {
@@ -38,7 +39,7 @@ describe('common', () => {
         //act
 
         //assert
-        expect(true).toBe(true);
+        expect(results.recipes.length).toBe(293);
     })
 
   })
