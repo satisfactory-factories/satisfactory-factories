@@ -269,6 +269,7 @@
       ['quantumencoder', 'Quantum Encoder'],
       ['smeltermk1', 'Smelter'],
       ['waterExtractor', 'Water Extractor'],
+      ['nuclearpowerplant', 'Nuclear Power Plant'],
     ])
 
     return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`
