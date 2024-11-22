@@ -94,7 +94,24 @@ function getItems(data: any[]): PartDataInterface {
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
-            if (!entry.mProducedIn) return;
+            if (entry.ClassName === "Desc_NuclearWaste_C") {
+                parts["Desc_NuclearWaste_C"] = {
+                    name: "Uranium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }
+            if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+                parts["Desc_PlutoniumWaste_C"] = {
+                    name: "Plutonium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }
+
+            if (!entry.mProducedIn) return;                
 
             if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
@@ -182,7 +199,6 @@ function getProducingBuildings(data: any[]): string[] {
                 }
             } else if (entry.ClassName === "Desc_NuclearWaste_C") { 
                 producingBuildingsSet.add("nuclearpowerplant");
-                //console.log("Nuclear power plant found");
             }
         });
 
