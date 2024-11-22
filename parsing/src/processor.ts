@@ -323,14 +323,6 @@ function getRecipes(
             if (validBuildings.length > 0) {
                 // Sum up power for all valid buildings
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
-                    // if (recipe.ClassName === "Recipe_Silica_C") {
-                    //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
-                    //     console.log(products);
-                    // }
-                    // if (recipe.ClassName === "Recipe_Plastic_C") {
-                    //     console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
-                    //     console.log(products);
-                    // }
                     if (producingBuildings[building]) {
                         const buildingPower = producingBuildings[building]
                         //const buildingPower = Object.values(products).reduce(
@@ -532,11 +524,9 @@ async function processFile(inputFile: string, outputFile: string) {
 
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
-        //console.log(producingBuildings);
 
         // Get power consumption for the producing buildings
         const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
-        //console.log(buildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
         const recipes = getRecipes(data, buildings);
