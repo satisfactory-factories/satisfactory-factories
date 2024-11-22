@@ -285,7 +285,6 @@ function getRecipes(
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
-
             if (!recipe.mProducedIn) return false;
             if (blacklist.every(building => recipe.mProducedIn.includes(building))) return false;
 
