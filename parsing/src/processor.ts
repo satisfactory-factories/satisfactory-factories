@@ -95,7 +95,8 @@ function getItems(data: any[]): PartDataInterface {
         .forEach((entry: any) => {
             // There are two exception products we need to check for and add to the parts list
             if (entry.ClassName === "Desc_NuclearWaste_C") {
-                parts["UraniumWaste"] = {
+                // Note that this part id is NuclearWaste, not Uranium Waste
+                parts["NuclearWaste"] = { 
                     name: "Uranium Waste",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
@@ -374,10 +375,10 @@ function getRecipes(
 
     // Manually add Nuclear waste recipes
     recipes.push({
-        id: "UraniumWaste",
+        id: "NuclearWaste",
         displayName: "Uranium Waste",
         ingredients: [{ part: 'UraniumFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
-        products: [{ part: "UraniumWaste", amount: 1, perMin: 50 }],
+        products: [{ part: "NuclearWaste", amount: 1, perMin: 50 }],
         building: { name: "nuclearpowerplant", power: 0 },
         isAlternate: false,
         isFicsmas: false

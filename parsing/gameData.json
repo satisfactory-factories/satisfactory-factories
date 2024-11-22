@@ -477,6 +477,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "NuclearWaste": {
+                "name": "Uranium Waste",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "OreBauxite": {
                 "name": "Bauxite",
                 "stackSize": 100,
@@ -864,12 +870,6 @@
             "UraniumCell": {
                 "name": "Encased Uranium Cell",
                 "stackSize": 200,
-                "isFluid": false,
-                "isFicsmas": false
-            },
-            "UraniumWaste": {
-                "name": "Uranium Waste",
-                "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -9963,7 +9963,7 @@
             "isFicsmas": false
         },
         {
-            "id": "UraniumWaste",
+            "id": "NuclearWaste",
             "displayName": "Uranium Waste",
             "ingredients": [
                 {
@@ -9979,7 +9979,7 @@
             ],
             "products": [
                 {
-                    "part": "UraniumWaste",
+                    "part": "NuclearWaste",
                     "amount": 1,
                     "perMin": 50
                 }
