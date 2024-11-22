@@ -9967,7 +9967,7 @@
             "displayName": "Uranium Waste",
             "ingredients": [
                 {
-                    "part": "UraniumFuelRod",
+                    "part": "NuclearFuelRod",
                     "amount": 1,
                     "perMin": 0.2
                 },
