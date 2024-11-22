@@ -395,6 +395,7 @@ function getRecipes(
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
 
+
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
                 displayName: recipe.mDisplayName,
