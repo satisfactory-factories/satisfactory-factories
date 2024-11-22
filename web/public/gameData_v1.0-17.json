@@ -207,6 +207,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "DissolvedSilica": {
+                "name": "Dissolved Silica",
+                "stackSize": 0,
+                "isFluid": true,
+                "isFicsmas": false
+            },
             "ElectromagneticControlRod": {
                 "name": "Electromagnetic Control Rod",
                 "stackSize": 100,
@@ -309,6 +315,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "HatcherParts": {
+                "name": "Hatcher Remains",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "HazmatFilter": {
                 "name": "Iodine-Infused Filter",
                 "stackSize": 50,
@@ -330,6 +342,12 @@
             "HighSpeedWire": {
                 "name": "Quickwire",
                 "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "HogParts": {
+                "name": "Hog Remains",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -365,6 +383,12 @@
             },
             "IronScrew": {
                 "name": "Screw",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Leaves": {
+                "name": "Leaves",
                 "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": false
@@ -420,6 +444,12 @@
             "MotorLightweight": {
                 "name": "Turbo Motor",
                 "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Mycelia": {
+                "name": "Mycelia",
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -801,6 +831,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "SpitterParts": {
+                "name": "Spitter Remains",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "Stator": {
                 "name": "Stator",
                 "stackSize": 100,
@@ -828,6 +864,12 @@
             "SteelPlateReinforced": {
                 "name": "Encased Industrial Beam",
                 "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "StingerParts": {
+                "name": "Stinger Remains",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -882,6 +924,12 @@
             "Wire": {
                 "name": "Wire",
                 "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Wood": {
+                "name": "Wood",
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": false
             },
