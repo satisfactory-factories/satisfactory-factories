@@ -418,26 +418,6 @@ function getRecipes(
             });
         });
 
-    // // Manually add Leaves, Wood, My, HogParts, SpitterParts, StingerParts, HatcherParts recipes
-    // recipes.push({
-    //     id: "NuclearWaste",
-    //     displayName: "Uranium Waste",
-    //     ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
-    //     products: [{ part: "NuclearWaste", amount: 1, perMin: 50 }],
-    //     building: { name: "nuclearpowerplant", power: 0 },
-    //     isAlternate: false,
-    //     isFicsmas: false
-    // });
-    // recipes.push({
-    //     id: "PlutoniumWaste",
-    //     displayName: "Plutonium Waste",
-    //     ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
-    //     products: [{ part: "PlutoniumWaste", amount: 1, perMin: 10 }],
-    //     building: { name: "nuclearpowerplant", power: 0 },
-    //     isAlternate: false,
-    //     isFicsmas: false
-    // });
-
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
