@@ -95,7 +95,7 @@ function getItems(data: any[]): PartDataInterface {
         .forEach((entry: any) => {
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (entry.ClassName === "Desc_NuclearWaste_C") {
-                parts["Desc_NuclearWaste_C"] = {
+                parts["UraniumWaste"] = {
                     name: "Uranium Waste",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
@@ -103,7 +103,7 @@ function getItems(data: any[]): PartDataInterface {
                 };
             }
             if (entry.ClassName === "Desc_PlutoniumWaste_C") {
-                parts["Desc_PlutoniumWaste_C"] = {
+                parts["PlutoniumWaste"] = {
                     name: "Plutonium Waste",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
@@ -477,7 +477,7 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            // console.log(`Removing rubbish item: ${part}`);
+            //console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });
@@ -556,7 +556,7 @@ async function processFile(inputFile: string, outputFile: string) {
             sortedItems[key] = items.parts[key];
         });
         items.parts = sortedItems;
-
+        
         // Construct the final JSON object
         const finalData = {
             buildings,

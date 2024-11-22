@@ -603,6 +603,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "PlutoniumWaste": {
+                "name": "Plutonium Waste",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "PolymerResin": {
                 "name": "Polymer Resin",
                 "stackSize": 200,
@@ -858,6 +864,12 @@
             "UraniumCell": {
                 "name": "Encased Uranium Cell",
                 "stackSize": 200,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "UraniumWaste": {
+                "name": "Uranium Waste",
+                "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": false
             },
