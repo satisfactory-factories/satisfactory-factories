@@ -93,7 +93,7 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
-            // Ensures it's a recipe, we only care about items that are produced within a recipe.
+            // There are two exception products we need to check for and add to the parts list
             if (entry.ClassName === "Desc_NuclearWaste_C") {
                 parts["UraniumWaste"] = {
                     name: "Uranium Waste",
@@ -111,6 +111,7 @@ function getItems(data: any[]): PartDataInterface {
                 };
             }
 
+            // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;                
 
             if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
