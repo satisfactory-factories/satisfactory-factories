@@ -168,6 +168,14 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: true,
                     isFicsmas: false,
                 };
+            } else if (entry.ClassName === "Desc_LiquidOil_C") {
+                // This is a special liquid raw material
+                parts["LiquidOil"] = {
+                    name: "Liquid Oil",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                };
             }
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;

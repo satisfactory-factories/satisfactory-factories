@@ -405,6 +405,12 @@
                 "isFluid": true,
                 "isFicsmas": false
             },
+            "LiquidOil": {
+                "name": "Liquid Oil",
+                "stackSize": 0,
+                "isFluid": true,
+                "isFicsmas": false
+            },
             "LiquidTurboFuel": {
                 "name": "Turbofuel",
                 "stackSize": 0,
