@@ -57,7 +57,7 @@ describe('common', () => {
           const partName = ingredient.part;
           // Check if the ingredient exists in the parts list
           if (partName in results.items.parts) {
-              expect(results.items.parts[partName).toBeDefined();
+              expect(results.items.parts[partName]).toBeDefined();
           } else {
             expect(`Recipe ingredient '${partName}' not found in parts list`).toBe("");
           }
@@ -66,7 +66,7 @@ describe('common', () => {
           const partName = product.part;
           // Check if the product exists in the parts list
           if (partName in results.items.parts) {
-              expect(results.items.parts[partName).toBeDefined();
+              expect(results.items.parts[partName]).toBeDefined();
           } else {
             expect(`Recipe product '${partName}' not found in parts list`).toBe("");
           }
