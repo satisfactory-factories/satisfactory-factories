@@ -592,7 +592,7 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            // console.log(`Removing rubbish item: ${part}`);
+            //console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });
