@@ -170,7 +170,7 @@
 
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
-  import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -181,6 +181,7 @@
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
+  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem
 
   defineProps<{
     factory: Factory
@@ -215,6 +216,57 @@
     if (!factory.dependencies?.requests) return false
     return Object.keys(factory.dependencies.requests).length > 0
   }
+
+  const fixProduction = (factory: Factory, productId: string): void => {
+    const product = getProduct(factory, productId)
+
+    // If the product is not found, return
+    if (!product) {
+      console.error(`Could not find product for ${productId} to fix!`)
+      return
+    }
+
+    // Update the production amount to match requirement
+    product.amount = factory.parts[productId].amountRequired
+    updateFactory(factory)
+  }
+
+  const fixExport = (factory: Factory, productId: string) => {
+    const product = getProduct(factory, productId)
+
+    // If the product is not found, return
+    if (!product) {
+      console.error(`Could not find product for ${productId} to fix!`)
+      return
+    }
+
+    const metric = getRequestMetricsForFactoryByPart(factory, product.id)
+
+    if (!metric) {
+      console.error(`Could not get request metric to fix shortage for ${product.id}`)
+      return
+    }
+
+    const difference = Math.abs(metric.difference)
+    product.amount = product.amount + difference
+    updateFactory(factory)
+  }
+
+  const getRequestMetricsForFactoryByPart = (
+    factory: Factory,
+    part: string
+  ): FactoryDependencyMetrics | undefined => {
+    // Requests may be empty.
+    if (!factory?.dependencies.metrics || !part || !factory.id) {
+      return undefined
+    }
+
+    return factory.dependencies?.metrics[part] ?? {}
+  }
+
+  provide('fixProduction', fixProduction)
+  provide('fixExport', fixExport)
+  provide('getRequestMetricsForFactoryByPart', getRequestMetricsForFactoryByPart)
 </script>
 
 <style lang="scss" scoped>
