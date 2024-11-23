@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals'
+
 const localStorageMock: Storage = (() => {
   let store: Record<string, string> = {}
   return {

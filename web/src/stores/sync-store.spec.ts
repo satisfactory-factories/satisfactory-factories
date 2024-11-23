@@ -2,6 +2,12 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 import { createPinia, setActivePinia } from 'pinia'
 import { useSyncStore } from '@/stores/sync-store'
 
+jest.mock('@/config/config', () => ({
+  config: {
+    apiUrl: 'http://mocked-api-url.com',
+  },
+}))
+
 jest.mock('@/stores/app-store', () => ({
   useAppStore: jest.fn(), // Mock the function itself
 }))
@@ -19,12 +25,6 @@ jest.mock('@/stores/app-store', () => ({
   })),
 }))
 
-jest.mock('@/config/config', () => ({
-  config: {
-    apiUrl: 'http://mocked-api-url.com', // Replace with a mocked value
-  },
-}))
-
 describe('sync-store tests', () => {
   beforeEach(() => {
     setActivePinia(createPinia()) // Initialize Pinia for each test
@@ -40,6 +40,6 @@ describe('sync-store tests', () => {
       lastSaved: lastSavedDate,
     } as any)
 
-    expect(result).toBe(true) // Replace with expected behavior
+    expect(result).toBe(true)
   })
 })

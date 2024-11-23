@@ -4,6 +4,7 @@ import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataRespo
 import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
 import eventBus from '@/utils/eventBus'
+import { ref } from 'vue'
 
 export const useSyncStore = defineStore('sync', () => {
   const authStore = useAuthStore()

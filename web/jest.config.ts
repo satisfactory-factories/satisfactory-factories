@@ -22,9 +22,4 @@ export default {
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'], // Add `.vue` for component testing
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json', // Ensure ts-jest uses your project’s tsconfig.json
-    },
-  },
 }
