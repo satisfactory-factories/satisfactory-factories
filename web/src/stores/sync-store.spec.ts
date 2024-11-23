@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { createPinia, setActivePinia, Store } from 'pinia'
 import { useSyncStore } from '@/stores/sync-store'
+let syncStore: Store<'sync', Pick<any, any>>
 
 vi.mock('@/config/config', () => ({
   config: {
@@ -25,21 +26,40 @@ vi.mock('@/stores/app-store', () => ({
   })),
 }))
 
-describe('sync-store tests', () => {
+describe('sync-store', () => {
   beforeEach(() => {
     setActivePinia(createPinia()) // Initialize Pinia for each test
+    syncStore = useSyncStore()
   })
 
-  it('should detect out-of-sync data', () => {
-    const syncStore = useSyncStore()
-    const lastSavedDate = new Date()
-    lastSavedDate.setMinutes(lastSavedDate.getMinutes() - 1)
+  describe('getServerData', () => {
+    it('should fetch data from the server', async () => {
+      const response = {
+        ok: true,
+        json: jest.fn(() => ({ data: 'mock-data' })),
+      }
+      global.fetch = jest.fn() as jest.MockedFunction<typeof fetch>
+      global.fetch.mockResolvedValue(response as any)
+      const result = await syncStore.getServerData()
 
-    // Mock checkForOOS behavior
-    const result = syncStore.checkForOOS({
-      lastSaved: lastSavedDate,
-    } as any)
+      expect(result).toBe('mock-data')
+    })
+  })
 
-    expect(result).toBe(true)
+  describe('handleDataLoad', () => {
+
+  })
+
+  describe('checkOOS', () => {
+    it('should detect out-of-sync data', () => {
+      const lastSavedDate = new Date()
+      lastSavedDate.setMinutes(lastSavedDate.getMinutes() - 1)
+
+      const result = syncStore.checkForOOS({
+        lastSaved: lastSavedDate,
+      } as any)
+
+      expect(result).toBe(true)
+    })
   })
 })
