@@ -939,12 +939,6 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
-            "TurboFuel": {
-                "name": "Packaged Turbofuel",
-                "stackSize": 100,
-                "isFluid": false,
-                "isFicsmas": false
-            },
             "UraniumCell": {
                 "name": "Encased Uranium Cell",
                 "stackSize": 200,

@@ -625,6 +625,15 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
         isFluid: true,
         isFicsmas: false,
     };
+    //rename the packaged item to packagedturbofuel
+    items.parts["PackagedTurboFuel"] = {
+        name: "Packaged Turbofuel",
+        stackSize: 100, //SS_MEDIUM
+        isFluid: false,
+        isFicsmas: false,
+    };
+    //remove the old turbofuel
+    delete items.parts["TurboFuel"];
 
     // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
     recipes.forEach(recipe => {
