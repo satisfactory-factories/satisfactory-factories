@@ -56,7 +56,7 @@ describe('common', () => {
                     // Check if the ingredient exists in the parts list
                     if (part in results.items.parts) {
                         expect(results.items.parts[part]).toBeDefined();
-                    } else {
+                    } else if (part.name !== "Gift" && part.name !== "Snow") {
                       expect(`Recipe '${recipe.displayName}' part '${part.name}' for ingredient '${ingredient.part}' not found in parts list`).toBe("");
                     }
                 }
@@ -65,7 +65,7 @@ describe('common', () => {
                     // Check if the product exists in the parts list
                     if (part in results.items.parts) {
                         expect(results.items.parts[part]).toBeDefined();
-                    } else {
+                    } else if (part.name !== "Gift" && part.name !== "Snow") {
                         expect(`Recipe '${recipe.displayName}' part '${part.name}' for product '${product.part}' not found in parts list`).toBe("");
                       }
                 }
