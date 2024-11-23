@@ -298,7 +298,7 @@
                 "isFicsmas": false
             },
             "Gift": {
-                "name": "FICSMAS Gift",
+                "name": "Gift",
                 "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": true

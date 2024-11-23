@@ -179,12 +179,11 @@ function getItems(data: any[]): PartDataInterface {
             } else if (entry.ClassName === "Desc_Gift_C") {
                 // this is a ficsmas collectable
                 parts["Gift"] = {
-                    name: "FICSMAS Gift",
+                    name: "Gift",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: true,
-                };
-                
+                };   
             } else if (entry.ClassName === "Desc_Snow_C") {
                 // this is a ficsmas collectable
                 parts["Snow"] = {
@@ -565,7 +564,7 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            //console.log(`Removing rubbish item: ${part}`);
+            console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });
