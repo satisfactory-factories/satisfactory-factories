@@ -24,6 +24,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
       const buildingCount = product.amount / productInRecipe.perMin
       // When calculating the building power cost, we need to apply a special formular when overclocking or underclocking. 
       // Initially we will handle underclocking, which requires us to only run the formula on the fractional part of the building count 
+      // See the official wiki for details: https://satisfactory.wiki.gg/wiki/Clock_speed
       const wholeBuildingCount = Math.floor(buildingCount);
       const fractionalBuildingCount = buildingCount - wholeBuildingCount;
 
