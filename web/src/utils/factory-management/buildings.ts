@@ -22,12 +22,16 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
 
       const buildingData = recipe.building
       const buildingCount = product.amount / productInRecipe.perMin
+      // When calculating the building power cost, we need to apply a special formular when overclocking or underclocking. 
+      // Initially we will handle underclocking, which requires us to only run the formula on the fractional part of the building count 
+      const wholeBuildingCount = Math.floor(buildingCount);
+      const fractionalBuildingCount = buildingCount - wholeBuildingCount;
 
       product.buildingRequirements = {
         name: buildingData.name,
         amount: buildingCount,
         powerPerBuilding: buildingData.power,
-        totalPower: buildingData.power * buildingCount,
+        totalPower: (buildingData.power * wholeBuildingCount) + (buildingData.power * Math.pow(fractionalBuildingCount, 1.321928)), // Power usage = initial power usage x (clock speed / 100)1.321928
       }
     } else {
       product.buildingRequirements = {} as BuildingRequirement
