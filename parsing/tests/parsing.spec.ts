@@ -82,6 +82,19 @@ describe('common', () => {
 
         //assert
         expect(Object.keys(results.buildings).length).toBe(12);
+        expect(results.buildings).toStrictEqual({
+            blender: 75,
+            constructormk1: 4,
+            converter: 0.1, // TODO: This isn't right, it has a variable power consumption
+            foundrymk1: 16,
+            hadroncollider: 0.1,  // TODO: This isn't right, it has a variable power consumption
+            manufacturermk1: 55,
+            nuclearpowerplant: 0, // TODO: Nuclear Power Generates power, it doesn't consume
+            oilrefinery: 30,
+            packager: 10,
+            quantumencoder: 0.1,  // TODO: This isn't right, it has a variable power consumption
+            smeltermk1: 4,
+        })
     })
 
   })
