@@ -29,7 +29,7 @@ describe('common', () => {
             // console.log(partsLength);
 
             //assert
-            expect(Object.keys(results.items.parts).length).toBe(164);
+            expect(Object.keys(results.items.parts).length).toBe(168);
         })
 
         test('recipe test', () => {
@@ -142,8 +142,8 @@ describe('common', () => {
     })
 
     // TODO: Resolve Turbofuel and Slug issues
-    describe('sanity checks', () => {
-        it('should properly calculate the correct number of parts used in recipes', () => {
+    describe('Recipe tests', () => {
+        it('should properly calculate the correct number of parts used and produced in recipes', () => {
             // First, scan all ingredients and products in all recipes to produce a list of parts that are used
             const parts = new Set<string>();
             for (const recipe of results.recipes) {

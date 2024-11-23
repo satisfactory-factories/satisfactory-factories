@@ -177,6 +177,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "Crystal": {
+                "name": "Blue Power Slug",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "CrystalOscillator": {
                 "name": "Crystal Oscillator",
                 "stackSize": 100,
@@ -186,6 +192,18 @@
             "CrystalShard": {
                 "name": "Synthetic Power Shard",
                 "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Crystal_mk2": {
+                "name": "Yellow Power Slug",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Crystal_mk3": {
+                "name": "Purple Power Slug",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -726,6 +744,12 @@
             "Rubber": {
                 "name": "Rubber",
                 "stackSize": 200,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "SAM": {
+                "name": "SAM",
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false
             },

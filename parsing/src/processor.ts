@@ -192,28 +192,28 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: true,
                 };                
-            } else if (entry.ClassName === "Crystal") {
+            } else if (entry.ClassName === "Desc_Crystal_C") {
                 parts["Crystal"] = {
                     name: "Blue Power Slug",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };                
-            } else if (entry.ClassName === "Crystal_mk2") {
+            } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
                 parts["Crystal_mk2"] = {
                     name: "Yellow Power Slug",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };                
-            } else if (entry.ClassName === "Crystal_mk3") {
+            } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
                 parts["Crystal_mk3"] = {
                     name: "Purple Power Slug",
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
                 };                
-            } else if (entry.ClassName === "SAM") {
+            } else if (entry.ClassName === "Desc_SAM_C") {
                 parts["SAM"] = {
                     name: "SAM",
                     stackSize: 100, //SS_MEDIUM
