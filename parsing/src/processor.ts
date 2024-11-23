@@ -102,14 +102,124 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 };
-            }
-            if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+            } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
                 parts["PlutoniumWaste"] = {
                     name: "Plutonium Waste",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: false,
                 };
+            }         
+            //These are exception products that aren't produced by mines or extractors, they are raw materials
+            if (entry.ClassName === "Desc_Leaves_C") {
+                parts["Leaves"] = {
+                    name: "Leaves",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_Wood_C") {
+                parts["Wood"] = {
+                    name: "Wood",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_Mycelia_C") {
+                parts["Mycelia"] = {
+                    name: "Mycelia",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_HogParts_C") {
+                parts["HogParts"] = {
+                    name: "Hog Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_SpitterParts_C") {
+                parts["SpitterParts"] = {
+                    name: "Spitter Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_StingerParts_C") {
+                parts["StingerParts"] = {
+                    name: "Stinger Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_HatcherParts_C") {
+                parts["HatcherParts"] = {
+                    name: "Hatcher Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
+                // This is a special intermediate alt product
+                parts["DissolvedSilica"] = {
+                    name: "Dissolved Silica",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_LiquidOil_C") {
+                // This is a special liquid raw material
+                parts["LiquidOil"] = {
+                    name: "Liquid Oil",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                }; 
+            } else if (entry.ClassName === "Desc_Gift_C") {
+                // this is a ficsmas collectable
+                parts["Gift"] = {
+                    name: "Gift",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                };   
+            } else if (entry.ClassName === "Desc_Snow_C") {
+                // this is a ficsmas collectable
+                parts["Snow"] = {
+                    name: "Snow",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_C") {
+                parts["Crystal"] = {
+                    name: "Blue Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
+                parts["Crystal_mk2"] = {
+                    name: "Yellow Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
+                parts["Crystal_mk3"] = {
+                    name: "Purple Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_SAM_C") {
+                parts["SAM"] = {
+                    name: "SAM",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
@@ -474,6 +584,9 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
         recipe.products.forEach(product => {
             recipeProducts.add(product.part);
         });
+        recipe.ingredients.forEach(ingredient => {
+            recipeProducts.add(ingredient.part);
+        });
     });
 
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
@@ -512,6 +625,15 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
         isFluid: true,
         isFicsmas: false,
     };
+    //rename the packaged item to PackagedTurboFuel
+    items.parts["PackagedTurboFuel"] = {
+        name: "Packaged Turbofuel",
+        stackSize: 100, //SS_MEDIUM
+        isFluid: false,
+        isFicsmas: false,
+    };
+    //remove the incorrect packaged turbofuel
+    delete items.parts["TurboFuel"];
 
     // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
     recipes.forEach(recipe => {
@@ -530,7 +652,7 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
 }
 
 // Central function to process the file and generate the output
-async function processFile(inputFile: string, outputFile: string) {
+async function processFile(inputFile: string, outputFile: string) : Promise<{ buildings: { [key: string]: number }; items: PartDataInterface; recipes: Recipe[] } | undefined> {
     try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
@@ -569,6 +691,8 @@ async function processFile(inputFile: string, outputFile: string) {
         // Write the output to the file
         await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
+
+        return finalData;
     } catch (error) {
         if (error instanceof Error) {
             console.error(`Error processing file: ${error.message}`);
