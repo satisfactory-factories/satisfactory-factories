@@ -29,7 +29,7 @@ describe('common', () => {
             // console.log(partsLength);
 
             //assert
-            expect(Object.keys(results.items.parts).length).toBe(163);
+            expect(Object.keys(results.items.parts).length).toBe(164);
         })
 
         test('recipe test', () => {

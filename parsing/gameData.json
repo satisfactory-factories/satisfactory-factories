@@ -297,6 +297,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "Gift": {
+                "name": "FICSMAS Gift",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": true
+            },
             "GoldIngot": {
                 "name": "Caterium Ingot",
                 "stackSize": 100,
