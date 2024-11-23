@@ -249,9 +249,9 @@
     updateWorldRawResources(gameData)
   }
 
-  const getProduct = (factory: Factory, part: string): FactoryItem | ByProductItem | undefined => {
-    const product = factory.products.find(product => product.id === part)
-    const byProduct = factory.byProducts.find(product => product.id === part)
+  const getProduct = (factory: Factory, productId: string): FactoryItem | ByProductItem | undefined => {
+    const product = factory.products.find(product => product.id === productId)
+    const byProduct = factory.byProducts.find(product => product.id === productId)
     return product ?? byProduct ?? undefined
   }
 

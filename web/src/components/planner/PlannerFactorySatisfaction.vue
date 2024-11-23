@@ -149,10 +149,11 @@
   import { formatNumber } from '@/utils/numberFormatter'
   import { useGameDataStore } from '@/stores/game-data-store'
 
+  const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
-  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem | undefined
+  const updateFactory = inject('updateFactory') as (factory: Factory) => void
 
   const props = defineProps<{
     factory: Factory;
@@ -189,20 +190,6 @@
     updateFactory(factory)
   }
 
-  const fixProduction = (factory: Factory, partIndex: string): void => {
-    const product = getProduct(factory, partIndex)
-
-    // If the product is not found, return
-    if (!product) {
-      console.error(`Could not find product for ${partIndex} to fix!`)
-      return
-    }
-
-    // Update the production amount to match requirement
-    product.amount = factory.parts[partIndex].amountRequired
-    updateFactory(factory)
-  }
-
   const getImport = (factory: Factory, partIndex: string): FactoryInput | undefined => {
     // Search the inputs array for the outputPart using the part index
     return factory.inputs.find(input => input.outputPart === partIndex)
@@ -211,8 +198,11 @@
   const fixSatisfactionImport = (factory: Factory, partIndex: string) => {
     const itemImport = getImport(factory, partIndex)
 
-    // If the import is not found, return
-    if (!itemImport) return
+    // If the import is not found
+    if (!itemImport) {
+      console.error(`Could not find import for ${partIndex} to fix!`)
+      return
+    }
 
     // Set the import amount to the required amount
     itemImport.amount = factory.parts[partIndex].amountRequired
