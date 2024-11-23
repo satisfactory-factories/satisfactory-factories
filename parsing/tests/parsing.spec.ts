@@ -44,7 +44,7 @@ describe('common', () => {
 
     
 
-    test('recipe ingredients and products test', () => {
+    test('recipe ingredients and products exist test', () => {
       //arrange
 
       //act
@@ -55,17 +55,22 @@ describe('common', () => {
       for (const recipe of results.recipes) {
         for (const ingredient of recipe.ingredients) {
           const partName = ingredient.part;
-          // Check if the part name exists in the parts list
+          // Check if the ingredient exists in the parts list
           if (partName in results.items.parts) {
               expect(results.items.parts[partName).toBeDefined();
           } else {
-            expect(`Part '${partName}' not found in parts list`).toBe("");
+            expect(`Recipe ingredient '${partName}' not found in parts list`).toBe("");
           }
         }
-      //   for (const product of recipe.products) {
-      //     const part = results.items.parts[product.part];
-      //     expect(part).toBeDefined();
-      //   }
+        for (const product of recipe.products) {
+          const partName = product.part;
+          // Check if the product exists in the parts list
+          if (partName in results.items.parts) {
+              expect(results.items.parts[partName).toBeDefined();
+          } else {
+            expect(`Recipe product '${partName}' not found in parts list`).toBe("");
+          }
+        }
       }
   })
 
