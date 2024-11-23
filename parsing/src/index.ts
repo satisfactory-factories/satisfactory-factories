@@ -9,6 +9,6 @@ if (!inputFile || !outputFile) {
 }
 
 // Run the recipe processing
-processFile(inputFile, outputFile).then(() => {
+export const processing = processFile(inputFile, outputFile).then(() => {
     console.log('Processing complete');
 });

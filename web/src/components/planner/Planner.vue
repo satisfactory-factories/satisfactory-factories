@@ -202,10 +202,10 @@
   }
 
   const copyFactory = (originalFactory: Factory) => {
-    // Make a shallow copy of the factory with a new ID
+    // Make a deep copy of the factory with a new ID
     const newId = Math.floor(Math.random() * 10000)
     const newFactory = {
-      ...originalFactory,
+      ...JSON.parse(JSON.stringify(originalFactory)),
       id: newId,
       name: `${originalFactory.name} (copy)`,
       displayOrder: originalFactory.displayOrder + 1,
@@ -269,6 +269,7 @@
       ['quantumencoder', 'Quantum Encoder'],
       ['smeltermk1', 'Smelter'],
       ['waterExtractor', 'Water Extractor'],
+      ['nuclearpowerplant', 'Nuclear Power Plant'],
     ])
 
     return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`

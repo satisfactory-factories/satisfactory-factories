@@ -93,6 +93,135 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
+            // There are two exception products we need to check for and add to the parts list
+            if (entry.ClassName === "Desc_NuclearWaste_C") {
+                // Note that this part id is NuclearWaste, not Uranium Waste
+                parts["NuclearWaste"] = { 
+                    name: "Uranium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+                parts["PlutoniumWaste"] = {
+                    name: "Plutonium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            }         
+            //These are exception products that aren't produced by mines or extractors, they are raw materials
+            if (entry.ClassName === "Desc_Leaves_C") {
+                parts["Leaves"] = {
+                    name: "Leaves",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_Wood_C") {
+                parts["Wood"] = {
+                    name: "Wood",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_Mycelia_C") {
+                parts["Mycelia"] = {
+                    name: "Mycelia",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_HogParts_C") {
+                parts["HogParts"] = {
+                    name: "Hog Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_SpitterParts_C") {
+                parts["SpitterParts"] = {
+                    name: "Spitter Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_StingerParts_C") {
+                parts["StingerParts"] = {
+                    name: "Stinger Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_HatcherParts_C") {
+                parts["HatcherParts"] = {
+                    name: "Hatcher Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
+                // This is a special intermediate alt product
+                parts["DissolvedSilica"] = {
+                    name: "Dissolved Silica",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                };
+            } else if (entry.ClassName === "Desc_LiquidOil_C") {
+                // This is a special liquid raw material
+                parts["LiquidOil"] = {
+                    name: "Liquid Oil",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                }; 
+            } else if (entry.ClassName === "Desc_Gift_C") {
+                // this is a ficsmas collectable
+                parts["Gift"] = {
+                    name: "Gift",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                };   
+            } else if (entry.ClassName === "Desc_Snow_C") {
+                // this is a ficsmas collectable
+                parts["Snow"] = {
+                    name: "Snow",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_C") {
+                parts["Crystal"] = {
+                    name: "Blue Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
+                parts["Crystal_mk2"] = {
+                    name: "Yellow Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
+                parts["Crystal_mk3"] = {
+                    name: "Purple Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Desc_SAM_C") {
+                parts["SAM"] = {
+                    name: "SAM",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            }
+
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
 
@@ -180,6 +309,8 @@ function getProducingBuildings(data: any[]): string[] {
                 if (producedInBuildings) {
                     producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
                 }
+            } else if (entry.ClassName === "Desc_NuclearWaste_C") { 
+                producingBuildingsSet.add("nuclearpowerplant");
             }
         });
 
@@ -205,6 +336,9 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
                 }
             }
         });
+
+        //Manually add nuclear power plant
+        buildingsPowerMap["nuclearpowerplant"] = 0;
 
     // Finally sort the map by key
     const sortedMap: { [key: string]: number } = {};
@@ -317,14 +451,6 @@ function getRecipes(
             if (validBuildings.length > 0) {
                 // Sum up power for all valid buildings
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
-                    // if (recipe.ClassName === "Recipe_Silica_C") {
-                    //     console.log("totalPower:"+ totalPower + "building:", building + "product.amount:");
-                    //     console.log(products);
-                    // }
-                    if (recipe.ClassName === "Recipe_Plastic_C") {
-                        console.log("totalPower:"+ totalPower + ", building:", building + ", building power: " + producingBuildings[building] + ", product.amount:");
-                        console.log(products);
-                    }
                     if (producingBuildings[building]) {
                         const buildingPower = producingBuildings[building]
                         //const buildingPower = Object.values(products).reduce(
@@ -339,7 +465,7 @@ function getRecipes(
                 }, 0);
             }
 
-// Create building object with the selected building and calculated power
+            // Create building object with the selected building and calculated power
             const building = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
                 power: powerPerBuilding || 0, // Use calculated power or 0
@@ -356,6 +482,26 @@ function getRecipes(
                 isFicsmas: isFicsmas(recipe.mDisplayName)
             });
         });
+
+    // Manually add Nuclear waste recipes
+    recipes.push({
+        id: "NuclearWaste",
+        displayName: "Uranium Waste",
+        ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
+        products: [{ part: "NuclearWaste", amount: 1, perMin: 50 }],
+        building: { name: "nuclearpowerplant", power: 0 },
+        isAlternate: false,
+        isFicsmas: false
+    });
+    recipes.push({
+        id: "PlutoniumWaste",
+        displayName: "Plutonium Waste",
+        ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
+        products: [{ part: "PlutoniumWaste", amount: 1, perMin: 10 }],
+        building: { name: "nuclearpowerplant", power: 0 },
+        isAlternate: false,
+        isFicsmas: false
+    });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
@@ -438,12 +584,15 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
         recipe.products.forEach(product => {
             recipeProducts.add(product.part);
         });
+        recipe.ingredients.forEach(ingredient => {
+            recipeProducts.add(ingredient.part);
+        });
     });
 
     // Loop through each item in items.parts and remove any entries that do not exist in recipeProducts
     Object.keys(items.parts).forEach(part => {
         if (!recipeProducts.has(part)) {
-            // console.log(`Removing rubbish item: ${part}`);
+            //console.log(`Removing rubbish item: ${part}`);
             delete items.parts[part];
         }
     });
@@ -476,6 +625,15 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
         isFluid: true,
         isFicsmas: false,
     };
+    //rename the packaged item to PackagedTurboFuel
+    items.parts["PackagedTurboFuel"] = {
+        name: "Packaged Turbofuel",
+        stackSize: 100, //SS_MEDIUM
+        isFluid: false,
+        isFicsmas: false,
+    };
+    //remove the incorrect packaged turbofuel
+    delete items.parts["TurboFuel"];
 
     // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
     recipes.forEach(recipe => {
@@ -494,7 +652,7 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
 }
 
 // Central function to process the file and generate the output
-async function processFile(inputFile: string, outputFile: string) {
+async function processFile(inputFile: string, outputFile: string) : Promise<{ buildings: { [key: string]: number }; items: PartDataInterface; recipes: Recipe[] } | undefined> {
     try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
@@ -533,6 +691,8 @@ async function processFile(inputFile: string, outputFile: string) {
         // Write the output to the file
         await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
+
+        return finalData;
     } catch (error) {
         if (error instanceof Error) {
             console.error(`Error processing file: ${error.message}`);

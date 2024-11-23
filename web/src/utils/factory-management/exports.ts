@@ -27,6 +27,7 @@ export const getRequestsForFactoryByProduct = (
 
 export const productSurplus = (product: FactoryItem, factory: Factory) => {
   const part = factory.parts[product.id]
+  if (!part) return 0
 
   // Return a positive value as negative values == surplus
   return part.amountRemaining < 0 ? Math.abs(part.amountRemaining) : 0

@@ -124,5 +124,16 @@ describe('exports', () => {
       expect(wireFac.exports.Wire.surplus).toBe(0)
       expect(wireFac.exports.Wire.demands).toBe(170)
     })
+    it('should calculate no exports when id of product is unset', () => {
+      const factory = newFactory('Iron Ingots')
+      addProductToFactory(factory, {
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+
+      calculateFactories([factory], gameData)
+
+      expect(factory.exports).toEqual({})
+    })
   })
 })
