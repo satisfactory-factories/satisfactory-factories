@@ -42,7 +42,7 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
-  const getLastEdit = () => {
+  const getLastEdit = (): Date => {
     return lastEdit.value
   }
 
