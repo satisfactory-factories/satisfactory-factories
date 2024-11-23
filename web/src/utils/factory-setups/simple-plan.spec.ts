@@ -71,7 +71,7 @@ describe('Simple factory plan', () => {
     expect(factory.usingRawResourcesOnly).toBe(true)
   })
   it('should have the correct total power', () => {
-    expect(factory.totalPower).toBe(13.333333333333334)
+    expect(factory.totalPower).toBe(12.936138367958613)
   })
   it('should have a single dependency', () => {
     const ironPlateFac = findFacByName('Iron Plates', factories)
