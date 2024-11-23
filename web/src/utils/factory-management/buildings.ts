@@ -42,6 +42,9 @@ export const calculateBuildingsAndPower = (factory: Factory) => {
   // Loop through each product and sum the power requirements based off the metrics already there.
   factory.products.forEach(product => {
     const building = product.buildingRequirements
+
+    if (Object.keys(building).length === 0) return
+
     if (!factory.buildingRequirements[building.name]) {
       factory.buildingRequirements[building.name] = {
         name: building.name,
