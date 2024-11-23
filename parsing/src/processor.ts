@@ -175,7 +175,25 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 0, //SS_FLUID
                     isFluid: true,
                     isFicsmas: false,
+                }; 
+            } else if (entry.ClassName === "Desc_Gift_C") {
+                // this is a ficsmas collectable
+                parts["Gift"] = {
+                    name: "FICSMAS Gift",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
                 };
+                
+            } else if (entry.ClassName === "Desc_Snow_C") {
+                // this is a ficsmas collectable
+                parts["Snow"] = {
+                    name: "Snow",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                };
+                
             }
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;

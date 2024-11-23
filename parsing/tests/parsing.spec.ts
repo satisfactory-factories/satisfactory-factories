@@ -29,12 +29,11 @@ describe('common', () => {
             // console.log(partsLength);
 
             //assert
-            expect(Object.keys(results.items.parts).length).toBe(163);
+            expect(Object.keys(results.items.parts).length).toBe(165);
         })
 
         test('recipe test', () => {
             //arrange
-
 
             //act
 
@@ -57,7 +56,7 @@ describe('common', () => {
                     if (part in results.items.parts) {
                         expect(results.items.parts[part]).toBeDefined();
                     } else {
-                        expect(`Recipe ingredient '${part}' not found in parts list`).toBe("");
+                      expect(`Recipe '${recipe.displayName}' part '${part.name}' for ingredient '${ingredient.part}' not found in parts list`).toBe("");
                     }
                 }
                 for (const product of recipe.products) {
@@ -66,8 +65,8 @@ describe('common', () => {
                     if (part in results.items.parts) {
                         expect(results.items.parts[part]).toBeDefined();
                     } else {
-                        expect(`Recipe product '${part}' not found in parts list`).toBe("");
-                    }
+                        expect(`Recipe '${recipe.displayName}' part '${part.name}' for product '${product.part}' not found in parts list`).toBe("");
+                      }
                 }
             }
         })
