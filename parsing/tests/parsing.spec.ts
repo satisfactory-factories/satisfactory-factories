@@ -1,4 +1,4 @@
-import {beforeAll, beforeEach, describe, expect, test} from '@jest/globals'
+import { beforeAll, describe, expect, it, test } from '@jest/globals'
 import {processFile} from '@/processor'
 // import { createNewPart } from '@/utils/factory-management/common'
 // import { newFactory } from '@/utils/factory-management/factory'
@@ -99,5 +99,31 @@ describe('common', () => {
 
     })
 
+    describe('sanity checks', () => {
+        it('should properly calculate the correct number of parts used in recipes', () => {
+            // First, scan all ingredients and products in all recipes to produce a list of parts that are used
+            const parts = new Set<string>();
+            for (const recipe of results.recipes) {
+                for (const ingredient of recipe.ingredients) {
+                    parts.add(ingredient.part);
+                }
+                for (const product of recipe.products) {
+                    parts.add(product.part);
+                }
+            }
 
+            // Now we have our list of parts, asset that the number of parts we've generated actually match
+            const partsList = Object.keys(results.items.parts);
+            const missingParts = partsList.filter(part => !parts.has(part));
+            const extraParts = Array.from(parts).filter(part => !partsList.includes(part));
+
+            console.log('Missing parts:', missingParts);
+            console.log('Extra parts:', extraParts);
+            expect(missingParts.length).toBe(0);
+            expect(extraParts.length).toBe(0);
+
+            expect(Object.keys(results.items.parts).length).toBe(parts.size);
+            // Display the difference between the two lists
+        });
+    })
 })
