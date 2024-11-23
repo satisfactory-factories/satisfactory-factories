@@ -51,17 +51,22 @@ describe('common', () => {
 
       //assert
       // verify that each recipe has ingredients and products that exist in the parts list
-      console.log(results.recipes[0].ingredients)
-      // for (const recipe of results.recipes) {
-      //   for (const ingredient of recipe.ingredients) {
-      //     const part = results.items.parts[ingredient.part];
-      //     expect(part).toBeDefined();
-      //   }
+      //console.log(results.recipes[0].ingredients)
+      for (const recipe of results.recipes) {
+        for (const ingredient of recipe.ingredients) {
+          const partName = ingredient.part;
+          // Check if the part name exists in the parts list
+          if (partName in results.items.parts) {
+              expect(results.items.parts[partName).toBeDefined();
+          } else {
+            expect(`Part '${partName}' not found in parts list`).toBe("");
+          }
+        }
       //   for (const product of recipe.products) {
       //     const part = results.items.parts[product.part];
       //     expect(part).toBeDefined();
       //   }
-      // }
+      }
   })
 
     test('buildings test', () => {
@@ -69,7 +74,7 @@ describe('common', () => {
 
         //act
         // console.log('buildings:');
-        console.log(results.buildings);
+        // console.log(results.buildings);
 
         //assert
         expect(Object.keys(results.buildings).length).toBe(12);
