@@ -65,6 +65,20 @@
           @input="updateFactory(factory)"
         />
         <v-btn
+          v-if="!factory.parts[product.id]?.satisfied"
+          class="rounded mr-2"
+          color="green"
+          @click="fixProduction(factory, product.id)"
+        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+        </v-btn>
+        <v-btn
+          v-if="factory.dependencies.metrics[product.id]?.difference < 0"
+          class="rounded mr-2"
+          color="green"
+          @click="fixExport(factory, product.id)"
+        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+        </v-btn>
+        <v-btn
           class="rounded mr-2"
           color="blue"
           :disabled="product.displayOrder === 0"
@@ -173,6 +187,8 @@
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
+  const fixExport = inject('fixExport') as (factory: Factory, productId: string) => void
 
   const props = defineProps<{
     factory: Factory;
