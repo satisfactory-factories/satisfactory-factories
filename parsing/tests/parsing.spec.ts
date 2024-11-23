@@ -54,11 +54,21 @@ describe('common', () => {
       for (const recipe of results.recipes) {
         for (const ingredient of recipe.ingredients) {
           const part = results.items.parts[ingredient.part];
-          expect(part).toBeDefined();
+          // Check if the ingredient exists in the parts list
+          if (part in results.items.parts) {
+            expect(results.items.parts[part]).toBeDefined();
+          } else {
+            expect(`Recipe ingredient '${part}' not found in parts list`).toBe("");
+          }
         }
         for (const product of recipe.products) {
           const part = results.items.parts[product.part];
-          expect(part).toBeDefined();
+          // Check if the product exists in the parts list
+          if (part in results.items.parts) {
+            expect(results.items.parts[part]).toBeDefined();
+          } else {
+            expect(`Recipe product '${part}' not found in parts list`).toBe("");
+          }
         }
       }
   })
@@ -67,8 +77,8 @@ describe('common', () => {
         //arrange
 
         //act
-        console.log('buildings:');
-        console.log(results.buildings);
+        // console.log('buildings:');
+        // console.log(results.buildings);
 
         //assert
         expect(Object.keys(results.buildings).length).toBe(12);
