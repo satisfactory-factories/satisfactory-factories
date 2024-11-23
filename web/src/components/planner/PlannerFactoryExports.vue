@@ -62,8 +62,8 @@
                   color="green"
                   size="small"
                   variant="flat"
-                  @click="fixShortage(factory, getProduct(factory, exportItem.productId))"
-                >Fix production</v-btn>
+                  @click="fixExport(factory, exportItem.productId)"
+                >Fix Production</v-btn>
               </span>
             </span>
           </div>
@@ -144,12 +144,13 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
-
   import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
+
   const findFactory = inject('findFactory') as (id: number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => Factory
-  const getProduct = inject('getProduct') as (factory: Factory, part: string) => FactoryItem
+  const fixExport = inject('fixExport') as (factory: Factory, productId: string) => void
+  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem
+  const getRequestMetricsForFactoryByPart = inject('getRequestMetricsForFactoryByPart') as (factory: Factory, part: string) => FactoryDependencyMetrics | undefined
 
   defineProps<{
     factory: Factory;
@@ -172,18 +173,6 @@
     return requests.find(request => request.part === part)
   }
 
-  const getRequestMetricsForFactoryByPart = (
-    factory: Factory,
-    part: string
-  ): FactoryDependencyMetrics | undefined => {
-    // Requests may be empty.
-    if (!factory?.dependencies.metrics || !part || !factory.id) {
-      return undefined
-    }
-
-    return factory.dependencies?.metrics[part] ?? {}
-  }
-
   const requestSatisfied = (factory: Factory, part: string) => {
     const metric = getRequestMetricsForFactoryByPart(factory, part)
 
@@ -197,19 +186,6 @@
       return true
     }
     return metric.isRequestSatisfied
-  }
-
-  const fixShortage = (factory: Factory, product: FactoryItem) => {
-    const metric = getRequestMetricsForFactoryByPart(factory, product.id)
-
-    if (!metric) {
-      console.error(`Could not get request metric to fix shortage for ${product.id}`)
-      return
-    }
-
-    const difference = Math.abs(metric.difference)
-    product.amount = product.amount + difference
-    updateFactory(factory)
   }
 
   const isCalculatorReady = (factory: Factory, part: string) => {
