@@ -177,6 +177,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "Crystal": {
+                "name": "Blue Power Slug",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "CrystalOscillator": {
                 "name": "Crystal Oscillator",
                 "stackSize": 100,
@@ -186,6 +192,18 @@
             "CrystalShard": {
                 "name": "Synthetic Power Shard",
                 "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Crystal_mk2": {
+                "name": "Yellow Power Slug",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
+            "Crystal_mk3": {
+                "name": "Purple Power Slug",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false
             },
@@ -297,6 +315,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "Gift": {
+                "name": "Gift",
+                "stackSize": 500,
+                "isFluid": false,
+                "isFicsmas": true
+            },
             "GoldIngot": {
                 "name": "Caterium Ingot",
                 "stackSize": 100,
@@ -401,6 +425,12 @@
             },
             "LiquidFuel": {
                 "name": "Fuel",
+                "stackSize": 0,
+                "isFluid": true,
+                "isFicsmas": false
+            },
+            "LiquidOil": {
+                "name": "Liquid Oil",
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false
@@ -717,6 +747,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "SAM": {
+                "name": "SAM",
+                "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "SAMFluctuator": {
                 "name": "SAM Fluctuator",
                 "stackSize": 100,
@@ -900,12 +936,6 @@
             "TimeCrystal": {
                 "name": "Time Crystal",
                 "stackSize": 200,
-                "isFluid": false,
-                "isFicsmas": false
-            },
-            "TurboFuel": {
-                "name": "Packaged Turbofuel",
-                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false
             },
