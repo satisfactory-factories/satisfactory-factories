@@ -1,27 +1,27 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useSyncStore } from '@/stores/sync-store'
 
-jest.mock('@/config/config', () => ({
+vi.mock('@/config/config', () => ({
   config: {
     apiUrl: 'http://mocked-api-url.com',
   },
 }))
 
-jest.mock('@/stores/app-store', () => ({
-  useAppStore: jest.fn(), // Mock the function itself
+vi.mock('@/stores/app-store', () => ({
+  useAppStore: vi.fn(), // Mock the function itself
 }))
 
-jest.mock('@/stores/auth-store', () => ({
-  useAuthStore: jest.fn(() => ({
-    getToken: jest.fn(() => 'mock-token'),
+vi.mock('@/stores/auth-store', () => ({
+  useAuthStore: vi.fn(() => ({
+    getToken: vi.fn(() => 'mock-token'),
   })),
 }))
 
-jest.mock('@/stores/app-store', () => ({
-  useAppStore: jest.fn(() => ({
-    getLastEdit: jest.fn(() => new Date()),
-    setFactories: jest.fn(),
+vi.mock('@/stores/app-store', () => ({
+  useAppStore: vi.fn(() => ({
+    getLastEdit: vi.fn(() => new Date()),
+    setFactories: vi.fn(),
   })),
 }))
 
