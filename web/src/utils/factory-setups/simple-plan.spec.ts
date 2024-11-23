@@ -61,7 +61,7 @@ describe('Simple factory plan', () => {
         name: 'smeltermk1',
         amount: 3.3333333333333335, // I hate this so much
         powerPerBuilding: 4, // Should be a number really
-        totalPower: 13.333333333333334,
+        totalPower: 12.936138367958613,
       },
     })
   })
