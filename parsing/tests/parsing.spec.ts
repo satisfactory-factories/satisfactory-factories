@@ -83,6 +83,7 @@ describe('common', () => {
         //assert
         expect(Object.keys(results.buildings).length).toBe(12);
         expect(results.buildings).toStrictEqual({
+            assemblermk1: 15,
             blender: 75,
             constructormk1: 4,
             converter: 0.1, // TODO: This isn't right, it has a variable power consumption
