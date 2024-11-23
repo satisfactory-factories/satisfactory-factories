@@ -143,12 +143,22 @@ describe('sync-store', () => {
   })
 
   describe('checkOOS', () => {
-    it('should detect out-of-sync data', () => {
-      const lastSavedDate = new Date()
-      lastSavedDate.setMinutes(lastSavedDate.getMinutes() - 1)
+    it('should detect when in sync', () => {
+      const serverSaved = new Date()
+      serverSaved.setMinutes(serverSaved.getMinutes() - 10)
 
       const result = syncStore.checkForOOS({
-        lastSaved: lastSavedDate,
+        lastSaved: serverSaved,
+      } as any)
+
+      expect(result).toBe(false)
+    })
+    it('should detect out-of-sync data', () => {
+      const serverSaved = new Date()
+      serverSaved.setMinutes(serverSaved.getMinutes() + 10)
+
+      const result = syncStore.checkForOOS({
+        lastSaved: serverSaved,
       } as any)
 
       expect(result).toBe(true)

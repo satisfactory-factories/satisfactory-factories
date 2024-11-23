@@ -108,9 +108,9 @@ export const useSyncStore = defineStore('sync', () => {
   }
 
   const checkForOOS = (data: BackendFactoryDataResponse): boolean => {
-    const lastSaved = new Date(data.lastSaved)
-    const lastEdit = appStore.getLastEdit()
-    if (lastEdit > lastSaved) {
+    const serverSaved = new Date(data.lastSaved)
+    const clientEdited = appStore.getLastEdit()
+    if (clientEdited < serverSaved) {
       console.warn('Local data is out of sync with server data.')
       return true
     }
