@@ -18,12 +18,7 @@ describe('common', () => {
         test('parts test', async () => {
             //arrange
 
-
             //act
-            // console.log('parts:');
-            // console.log(results.items.parts);
-            // const partsLength = results?.items ? Object.keys(results.items).length : 0;
-            // console.log(partsLength);
 
             //assert
             expect(Object.keys(results.items.parts).length).toBe(167);
@@ -43,8 +38,6 @@ describe('common', () => {
             //arrange
 
             //act
-            // console.log('buildings:');
-            // console.log(results.buildings);
 
             //assert
             expect(Object.keys(results.buildings).length).toBe(12);
@@ -69,8 +62,11 @@ describe('common', () => {
     // TODO: Resolve Turbofuel and Slug issues
     describe('Recipe tests', () => {
         it('should properly calculate the correct number of parts used and produced in recipes', () => {
-            // First, scan all ingredients and products in all recipes to produce a list of parts that are used
+            //arrange
             const parts = new Set<string>();
+
+            //act
+            // Scan all ingredients and products in all recipes to produce a list of parts that are used
             for (const recipe of results.recipes) {
                 for (const ingredient of recipe.ingredients) {
                     parts.add(ingredient.part);
@@ -85,6 +81,7 @@ describe('common', () => {
             const missingParts = partsList.filter(part => !parts.has(part));
             const extraParts = Array.from(parts).filter(part => !partsList.includes(part));
 
+            //assert
             console.log('Missing parts:');
             console.log(missingParts);
             console.log('Extra parts:', extraParts);
@@ -92,7 +89,6 @@ describe('common', () => {
             expect(extraParts.length).toBe(0);
 
             expect(Object.keys(results.items.parts).length).toBe(parts.size);
-            // Display the difference between the two lists
         });
     })
 })
