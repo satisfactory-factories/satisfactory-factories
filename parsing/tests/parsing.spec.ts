@@ -83,18 +83,19 @@ describe('common', () => {
 
         //assert
         expect(Object.keys(results.buildings).length).toBe(12);
-        expect(results.buildings['assemblermk1']).toBe(15);
-        expect(results.buildings['blender']).toBe(75);
-        expect(results.buildings['constructormk1']).toBe(4);
-        expect(results.buildings['converter']).toBe(0.1); //TODO: This isn't right, it has a variable power consumption
-        expect(results.buildings['foundrymk1']).toBe(16);
-        expect(results.buildings['hadroncollider']).toBe(0.1); //TODO: This isn't right, it has a variable power consumption
-        expect(results.buildings['manufacturermk1']).toBe(55);
-        expect(results.buildings['nuclearpowerplant']).toBe(0); // Nuclear Power Generates power, it doesn't consume
-        expect(results.buildings['oilrefinery']).toBe(30);
-        expect(results.buildings['packager']).toBe(10);
-        expect(results.buildings['quantumencoder']).toBe(0.1); //TODO: This isn't right, it has a variable power consumption
-        expect(results.buildings['smeltermk1']).toBe(4);
+        expect(results.buildings).toStrictEqual({
+            blender: 75,
+            constructormk1: 4,
+            converter: 0.1, // TODO: This isn't right, it has a variable power consumption
+            foundrymk1: 16,
+            hadroncollider: 0.1,  // TODO: This isn't right, it has a variable power consumption
+            manufacturermk1: 55,
+            nuclearpowerplant: 0, // TODO: Nuclear Power Generates power, it doesn't consume
+            oilrefinery: 30,
+            packager: 10,
+            quantumencoder: 0.1,  // TODO: This isn't right, it has a variable power consumption
+            smeltermk1: 4,
+        })
     })
 
   })
