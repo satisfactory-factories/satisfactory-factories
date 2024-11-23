@@ -191,9 +191,37 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: true,
-                };
-                
+                };                
+            } else if (entry.ClassName === "Crystal") {
+                parts["Crystal"] = {
+                    name: "Blue Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Crystal_mk2") {
+                parts["Crystal_mk2"] = {
+                    name: "Yellow Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "Crystal_mk3") {
+                parts["Crystal_mk3"] = {
+                    name: "Purple Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
+            } else if (entry.ClassName === "SAM") {
+                parts["SAM"] = {
+                    name: "SAM",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
             }
+
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
 
@@ -643,7 +671,6 @@ async function processFile(inputFile: string, outputFile: string) : Promise<{ bu
             sortedItems[key] = items.parts[key];
         });
         items.parts = sortedItems;
-        console.log(sortedItems);
 
         // Construct the final JSON object
         const finalData = {
