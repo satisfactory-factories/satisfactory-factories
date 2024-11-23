@@ -45,6 +45,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.4.0",
     "eslint-plugin-vue": "^9.27.0",
+    "jsdom": "^25.0.1",
     "sass": "1.77.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",

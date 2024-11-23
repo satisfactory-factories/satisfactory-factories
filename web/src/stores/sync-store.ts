@@ -56,11 +56,9 @@ export const useSyncStore = defineStore('sync', () => {
 
     if (response.ok) {
       if (!data) {
-        console.warn('No data found in response.')
-        return false
+        throw new Error('Data load responded weirdly!')
       }
-      console.log('Data loaded:', data)
-      throw new Error('Data load responded weirdly!')
+      return data
     } else {
       console.error('Data load failed:', object)
       throw new Error('Backend server unreachable for data load!')
@@ -69,7 +67,8 @@ export const useSyncStore = defineStore('sync', () => {
 
   const handleDataLoad = async (forceLoad = false) => {
     const token = await authStore.getToken()
-    if (!(await authStore.validateToken(token))) {
+    const isTokenValid = await authStore.validateToken(token)
+    if (!isTokenValid) {
       return
     }
 
