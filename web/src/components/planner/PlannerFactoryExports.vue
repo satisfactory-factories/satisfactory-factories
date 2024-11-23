@@ -63,7 +63,7 @@
                   size="small"
                   variant="flat"
                   @click="fixExport(factory, exportItem.productId)"
-                >Fix Export</v-btn>
+                >Fix Production</v-btn>
               </span>
             </span>
           </div>
