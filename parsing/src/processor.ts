@@ -643,6 +643,7 @@ async function processFile(inputFile: string, outputFile: string) : Promise<{ bu
             sortedItems[key] = items.parts[key];
         });
         items.parts = sortedItems;
+        console.log(sortedItems);
 
         // Construct the final JSON object
         const finalData = {
