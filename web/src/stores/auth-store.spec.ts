@@ -90,9 +90,26 @@ describe('auth-store', () => {
         'Validate-token could not be performed!'
       )
     })
+    it('should handle empty responses during validation', async () => {
+      // Mock fetch to throw an error
+      mockFetch.mockResolvedValue(undefined)
+
+      await expect(authStore.validateToken('mock-token')).rejects.toThrowError(
+        'No response from server!'
+      )
+    })
+
+    it('should handle unknown responses during validation', async () => {
+      // Mock fetch to throw an error
+      mockFetch.mockResolvedValueOnce({ ok: false, status: 1337 } as any)
+
+      await expect(authStore.validateToken('mock-token')).rejects.toThrowError(
+        'validateToken: Unknown response during token validation'
+      )
+    })
   })
 
-  describe('Login', () => {
+  describe('handleLogin', () => {
     it('should log in a user with valid credentials', async () => {
       // Mock fetch response for login
       mockFetch.mockResolvedValueOnce({
@@ -176,7 +193,7 @@ describe('auth-store', () => {
     })
   })
 
-  describe('Logout', () => {
+  describe('handleLogout', () => {
     it('should clear the logged-in user and token on logout', () => {
       authStore.setLoggedInUser('test-user')
       authStore.setToken('mock-token')
@@ -189,7 +206,7 @@ describe('auth-store', () => {
     })
   })
 
-  describe('Registration', () => {
+  describe('handleRegister', () => {
     it('should register and log in a new user', async () => {
       // Mock fetch response for registration
       mockFetch.mockResolvedValueOnce({ ok: true, json: vi.fn().mockResolvedValue({}) } as any)
@@ -235,6 +252,14 @@ describe('auth-store', () => {
 
       const result = await authStore.handleRegister('new-user', 'password123')
       expect(result).toBe("Registration failed with an unknown error that wasn't caught!")
+    })
+
+    it('should handle empty responses gracefully', async () => {
+      // Mock fetch response for registration error
+      mockFetch.mockResolvedValueOnce(undefined)
+
+      const result = await authStore.handleRegister('new-user', 'password123')
+      expect(result).toBe('Registration failed due to no response from the server!')
     })
   })
 })

@@ -56,7 +56,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
       console.error('validateToken: Backend is offline!')
       throw new BackendOutageError()
     } else {
-      throw new Error('validateToken: Unknown error during token validation')
+      throw new Error('validateToken: Unknown response during token validation')
     }
   }
   // ==== END TOKEN MANAGEMENT
@@ -96,28 +96,36 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   }
 
   const handleRegister = async (username: string, password: string): Promise<string | boolean> => {
+    let response: Response
     try {
-      const response = await fetchInstance(`${apiUrl}/register`, {
+      response = await fetchInstance(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       })
-      const data = await response.json()
-      if (response.ok) {
-        // Log the user in automatically
-        return await handleLogin(username, password)
-      } else {
-        console.error('Registration failed:', response, data)
-        return `Registration failed. ${data.errorResponse?.errmsg || data.message}`
-      }
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
         return `Registration failed due to unknown error: ${error.message}`
       }
       return "Registration failed with an unknown error that wasn't caught!"
+    }
+
+    if (!response) {
+      console.error('Registration failed: No response from server!', response)
+      return 'Registration failed due to no response from the server!'
+    }
+
+    const data = await response.json()
+
+    if (response.ok) {
+      // Log the user in automatically
+      return await handleLogin(username, password)
+    } else {
+      console.error('Registration failed:', response, data)
+      return `Registration failed. ${data.errorResponse?.errmsg || data.message}`
     }
   }
   // ==== END AUTH FLOWS
