@@ -21,7 +21,7 @@ describe('common', () => {
             //act
 
             //assert
-            expect(Object.keys(results.items.parts).length).toBe(167);
+            expect(Object.keys(results.items.parts).length).toBe(168);
         })
 
         test('recipe test', () => {
