@@ -1,9 +1,8 @@
-// Utilities
-import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { config } from '@/config/config'
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = (fetchOverride?: typeof fetch) => {
+  const fetchInstance = fetchOverride || fetch // Allow dependency injection for fetch
   const apiUrl = config.apiUrl
   const loggedInUser = ref<string>(localStorage.getItem('loggedInUser') ?? '')
   const token = ref<string>(localStorage.getItem('token') ?? '')
@@ -19,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const getToken = async () => {
-    if (!await validateToken(token.value)) {
+    if (!(await validateToken(token.value))) {
       throw new Error('Token did not validate')
     }
     return token.value ?? ''
@@ -29,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
   // ==== AUTH FLOWS
   const handleLogin = async (username: string, password: string): Promise<string | boolean> => {
     try {
-      const response = await fetch(`${apiUrl}/login`, {
+      const response = await fetchInstance(`${apiUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +61,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const handleRegister = async (username: string, password: string): Promise<string | boolean> => {
     try {
-      const response = await fetch(`${apiUrl}/register`, {
+      const response = await fetchInstance(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,13 +86,13 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const validateToken = async (token?: string): Promise<boolean | string> => {
-    token = token ?? await getToken() // Make this optional
+    token = token ?? (await getToken()) // Make this optional
     if (!token) {
       console.error('No token provided!')
       return false
     }
     try {
-      const response = await fetch(`${apiUrl}/validate-token`, {
+      const response = await fetchInstance(`${apiUrl}/validate-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,4 +150,4 @@ export const useAuthStore = defineStore('auth', () => {
     validateToken,
     getLoggedInUser,
   }
-})
+}
