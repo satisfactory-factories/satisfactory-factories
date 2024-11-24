@@ -220,6 +220,13 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 };                
+            } else if (entry.ClassName === "Desc_CrystalShard_C") {
+                parts["CrystalShard"] = {
+                    name: "Power Shard",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
