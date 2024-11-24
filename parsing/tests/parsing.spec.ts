@@ -45,14 +45,14 @@ describe('common', () => {
                 assemblermk1: 15,
                 blender: 75,
                 constructormk1: 4,
-                converter: 0.1, // TODO: This needs to be corrected, it has a variable power consumption
+                converter: 0,  // This has variable power consumption and is calculated in the recipe
                 foundrymk1: 16,
-                hadroncollider: 0.1,  // TODO: This needs to be corrected, it has a variable power consumption
+                hadroncollider: 0,  // This has variable power consumption and is calculated in the recipe
                 manufacturermk1: 55,
                 nuclearpowerplant: 0, // TODO: Nuclear Power Generates power, it doesn't consume
                 oilrefinery: 30,
                 packager: 10,
-                quantumencoder: 0.1,  // TODO: This needs to be corrected, it has a variable power consumption
+                quantumencoder: 0,  // This has variable power consumption and is calculated in the recipe
                 smeltermk1: 4,
             })
         })

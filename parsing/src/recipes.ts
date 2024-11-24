@@ -115,17 +115,23 @@ function getRecipes(
                     return totalPower;
                 }, 0);
             }
-            let lowPower = null;
-            let highPower = null;
-            if (selectedBuilding === 'hadroncollider') {
+            let lowPower: number | null = null;
+            let highPower: number | null = null;
+            if (selectedBuilding === 'hadroncollider' || selectedBuilding === 'converter') {
                 // get the power from the recipe instead of the building
                 lowPower = recipe.mVariablePowerConsumptionConstant;
                 highPower = recipe.mVariablePowerConsumptionFactor;
                 // calculate the average power
-                powerPerBuilding = (lowPower + highPower) / 2;
-                console.log("Hadron Collider low power:", lowPower);
-                console.log("Hadron Collider high power:", highPower);
-                console.log("Hadron Collider average power:", powerPerBuilding);
+                console.log(selectedBuilding + " low power:", lowPower);
+                console.log(selectedBuilding + " high power:", highPower);
+                if (lowPower !== null && lowPower !== undefined && highPower !== null && highPower !== undefined) {
+                    powerPerBuilding = (lowPower + highPower) / 2;
+                    console.log(selectedBuilding + " average power:", powerPerBuilding);
+                } else {
+                    console.error(selectedBuilding + " invalid lowPower or highPower values:", lowPower, highPower);
+                }
+            } else if (selectedBuilding === 'quantumencoder') {
+                // TODO: Do whatever we need to do for quantum encoder
             }
 
             // Create building object with the selected building and calculated power

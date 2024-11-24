@@ -2239,7 +2239,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3481,7 +3483,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -5078,7 +5082,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5108,7 +5114,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5403,7 +5411,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5433,7 +5443,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5523,7 +5535,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5553,7 +5567,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5738,7 +5754,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5768,7 +5786,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5910,7 +5930,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6137,7 +6159,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6262,7 +6286,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6292,7 +6318,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6322,7 +6350,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7042,7 +7072,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7147,7 +7179,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7413,7 +7447,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7443,7 +7479,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8358,7 +8396,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8388,7 +8428,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9195,7 +9237,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9225,7 +9269,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9482,7 +9528,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -10059,7 +10107,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 0,
+                "minPower": "100.000000",
+                "maxPower": "300.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
