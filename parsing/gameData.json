@@ -190,7 +190,7 @@
                 "isFicsmas": false
             },
             "CrystalShard": {
-                "name": "Synthetic Power Shard",
+                "name": "Power Shard",
                 "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false

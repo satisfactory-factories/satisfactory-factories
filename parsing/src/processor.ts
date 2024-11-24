@@ -220,6 +220,13 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 };                
+            } else if (entry.ClassName === "Desc_CrystalShard_C") {
+                parts["CrystalShard"] = {
+                    name: "Power Shard",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                };                
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
@@ -257,6 +264,11 @@ function getItems(data: any[]): PartDataInterface {
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
+                    if (partName === "CrystalShard") {
+                        console.log("friendlyName:", friendlyName);
+                        console.log("entry:", entry);
+                        console.log("displayName:", entry.mDisplayName);    
+                    }
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
