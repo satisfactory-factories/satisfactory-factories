@@ -77,7 +77,7 @@
     link: string
   }
 
-  const currentChangeId = '2024-11-18' // Change this when the list gets updated to prompt people to have a look
+  const currentChangeId = '2024-11-24' // Change this when the list gets updated to prompt people to have a look
   const lastSeenChangeId = ref<string>(
     localStorage.getItem('lastSeenChangeId') ?? ''
   )
