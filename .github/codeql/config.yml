@@ -1,0 +1,6 @@
+name: "satisfactory-factories CodeQL configuration"
+queries:
+  - name: "Ignore false positives for mock-token"
+    where:
+      - pattern: "mock-token"
+    reason: "This is a mock token used for testing purposes and should not be flagged by CodeQL."
