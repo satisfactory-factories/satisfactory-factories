@@ -13,6 +13,8 @@ export interface Recipe {
   building: {
     name: string;
     power: number;
+    minPower?: number;
+    maxPower?: number;
   }
   isAlternate: boolean;
   isFicsmas: boolean;
