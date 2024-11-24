@@ -40,16 +40,6 @@ describe('sync-store', () => {
       getLastEdit: vi.fn(() => new Date()),
     }
 
-    const mockSyncStore = {
-      getServerData: vi.fn(),
-      handleDataLoad: vi.fn(),
-      checkForOOS: vi.fn(),
-      saveData: vi.fn(),
-      stopSync: vi.fn(),
-      detectedChange: vi.fn(),
-    }
-
-    vi.mocked(useSyncStore).mockReturnValue(mockSyncStore as any)
     vi.mocked(useAuthStore).mockReturnValue(mockAuthStore as any)
     vi.mocked(useAppStore).mockReturnValue(mockAppStore as any)
   })
@@ -152,15 +142,23 @@ describe('sync-store', () => {
     })
 
     it('should handle OOS situations', async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue({
+          lastSaved: new Date(new Date().getTime() + 1000),
+        }),
+      })
+
       const authStore = useAuthStore()
-      const syncStore = {
-        ...useSyncStore(),
-        getServerData: vi.fn().mockResolvedValue({ lastSaved: new Date() }),
-        checkForOOS: vi.fn().mockReturnValueOnce(true),
-      }
+      const syncStore = useSyncStore()
+      // const syncStore = {
+      //   ...useSyncStore(),
+      //   getServerData: vi.fn().mockResolvedValue({ lastSaved: new Date() }),
+      //   checkForOOS: vi.fn().mockReturnValueOnce(true),
+      // }
 
       // Mocks
-      authStore.validateToken = vi.fn().mockResolvedValue(true)
+      // authStore.validateToken = vi.fn().mockResolvedValue(true)
 
       // Assert
       expect(await syncStore.handleDataLoad()).toBe('oos')
@@ -183,7 +181,7 @@ describe('sync-store', () => {
 
     it('should detect out-of-sync data', () => {
       const syncStore = useSyncStore()
-      const serverSaved = new Date(new Date().getTime() + 1000)
+      const serverSaved = new Date()
       serverSaved.setMinutes(serverSaved.getMinutes() + 10)
 
       const result = syncStore.checkForOOS({
