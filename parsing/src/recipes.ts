@@ -96,7 +96,7 @@ function getRecipes(
                 .filter((building: string) => building && !['bp_workbenchcomponent', 'bp_workshopcomponent', 'factorygame'].includes(building));
 
             // Calculate power per building and choose the most relevant one
-            let powerPerBuilding = null;
+            let powerPerBuilding: number = 0;
             let selectedBuilding: string | number = '';
 
             if (validBuildings.length > 0) {
@@ -104,17 +104,14 @@ function getRecipes(
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
                     if (producingBuildings[building]) {
                         const buildingPower = producingBuildings[building]
-                        //const buildingPower = Object.values(products).reduce(
-                        //     // Calculate power for this product amount
-                        //     (total, product) => total + producingBuildings[building],
-                        //     0
-                        // );
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
                         return totalPower + buildingPower; // Add power for this building
                     }
                     return totalPower;
                 }, 0);
             }
+
+            // Calculate variable power for recipes that need it
             let lowPower: number | null = null;
             let highPower: number | null = null;
             if (selectedBuilding === 'hadroncollider' || selectedBuilding === 'converter') {
@@ -123,10 +120,8 @@ function getRecipes(
                 highPower = recipe.mVariablePowerConsumptionFactor;
                 // calculate the average power
                 console.log(selectedBuilding + " low power:", lowPower);
-                console.log(lowPower);
                 console.log(selectedBuilding + " high power:", highPower);
-                console.log(highPower);
-                if (lowPower !== null && lowPower !== undefined && highPower !== null && highPower !== undefined) {
+                if (lowPower != null && highPower != null) {
                     powerPerBuilding = (lowPower + highPower) / 2;
                     console.log(selectedBuilding + " average power:", powerPerBuilding);
                 } else {
