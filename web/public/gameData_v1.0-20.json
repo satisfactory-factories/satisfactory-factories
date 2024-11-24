@@ -681,6 +681,12 @@
                 "isFluid": false,
                 "isFicsmas": false
             },
+            "PortableMiner": {
+                "name": "Portable Miner",
+                "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false
+            },
             "PressureConversionCube": {
                 "name": "Pressure Conversion Cube",
                 "stackSize": 50,
@@ -1444,7 +1450,14 @@
                     "perMin": 4
                 }
             ],
-            "products": [],
+            "products": [
+                {
+                    "part": "PortableMiner",
+                    "amount": 1,
+                    "perMin": 1,
+                    "isByProduct": false
+                }
+            ],
             "building": {
                 "name": "assemblermk1",
                 "power": 15
