@@ -115,6 +115,13 @@ function getRecipes(
                     return totalPower;
                 }, 0);
             }
+            if (selectedBuilding === 'hadroncollider') {
+                // get the power from the recipe instead of the building
+                let lowPower = recipe.mVariablePowerConsumptionConstant;
+                let highPower = recipe.mVariablePowerConsumptionFactor;
+                // calculate the average power
+                powerPerBuilding = (lowPower + highPower) / 2;
+            }
 
             // Create building object with the selected building and calculated power
             const building = {
