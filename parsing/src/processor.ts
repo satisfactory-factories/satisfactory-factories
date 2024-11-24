@@ -264,11 +264,6 @@ function getItems(data: any[]): PartDataInterface {
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
-                    if (partName === "CrystalShard") {
-                        console.log("friendlyName:", friendlyName);
-                        console.log("entry:", entry);
-                        console.log("displayName:", entry.mDisplayName);    
-                    }
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
