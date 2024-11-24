@@ -60,7 +60,7 @@
 
   const replaceRemoteData = async () => {
     syncing.value = true
-    const result = await syncStore.saveData()
+    const result = await syncStore.handleSync()
     syncing.value = false
     if (result) {
       lastSavedDisplay.value = lastSaveDateFormat(new Date())
