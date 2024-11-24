@@ -77,7 +77,7 @@ describe('common', () => {
                 }
                 if (recipe.products.length === 0) {
                     console.log('No products for recipe:', recipe.id);
-                    expect(recipe.id + ' has no products').toBe('');
+                    expect('Recipe ' + recipe.id + ' has no products').toBe('');
                 }
             }
 
