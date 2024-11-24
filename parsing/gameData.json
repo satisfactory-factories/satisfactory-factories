@@ -1837,7 +1837,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2167,7 +2169,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "500.000000",
+                "maxPower": "1000.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2197,7 +2201,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "500.000000",
+                "maxPower": "1000.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2972,7 +2978,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3414,7 +3422,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3439,7 +3449,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4586,7 +4598,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -5869,7 +5883,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "500.000000",
+                "maxPower": "1000.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5919,7 +5935,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6504,7 +6522,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "500.000000",
+                "maxPower": "1000.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7529,7 +7549,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "500.000000",
+                "maxPower": "1000.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8055,7 +8077,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0
+                "power": 0,
+                "minPower": "250.000000",
+                "maxPower": "500.000000"
             },
             "isAlternate": false,
             "isFicsmas": false

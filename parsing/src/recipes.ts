@@ -1,4 +1,4 @@
-import {Recipe} from "./interfaces/Recipe";
+import {Building, Recipe} from "./interfaces/Recipe";
 import {blacklist,isFluid,isFicsmas} from "./common";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
@@ -115,20 +115,28 @@ function getRecipes(
                     return totalPower;
                 }, 0);
             }
+            let lowPower = null;
+            let highPower = null;
             if (selectedBuilding === 'hadroncollider') {
                 // get the power from the recipe instead of the building
-                let lowPower = recipe.mVariablePowerConsumptionConstant;
-                let highPower = recipe.mVariablePowerConsumptionFactor;
+                lowPower = recipe.mVariablePowerConsumptionConstant;
+                highPower = recipe.mVariablePowerConsumptionFactor;
                 // calculate the average power
                 powerPerBuilding = (lowPower + highPower) / 2;
+                console.log("Hadron Collider low power:", lowPower);
+                console.log("Hadron Collider high power:", highPower);
+                console.log("Hadron Collider average power:", powerPerBuilding);
             }
 
             // Create building object with the selected building and calculated power
-            const building = {
+            let building : Building = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
-
+            if (lowPower && highPower) {
+                building.minPower = lowPower;
+                building.maxPower = highPower;
+            }
 
             recipes.push({
                 id: recipe.ClassName.replace("Recipe_", "").replace(/_C$/, ""),
