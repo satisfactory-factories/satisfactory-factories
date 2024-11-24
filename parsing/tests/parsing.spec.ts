@@ -76,8 +76,8 @@ describe('common', () => {
                     parts.add(product.part);
                 }
                 if (recipe.products.length === 0) {
-                    console.log('No products for recipe:', recipe.id);
-                    expect('Recipe ' + recipe.id + ' has no products').toBe('');
+                    console.error('Recipe ' + recipe.id + ' has no products');
+                    expect(recipe.products.length).not.toBe(0);
                 }
             }
 
