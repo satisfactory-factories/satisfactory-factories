@@ -116,16 +116,11 @@ function getRecipes(
             let highPower: number | null = null;
             if (selectedBuilding === 'hadroncollider' || selectedBuilding === 'converter') {
                 // get the power from the recipe instead of the building
-                lowPower = recipe.mVariablePowerConsumptionConstant;
-                highPower = recipe.mVariablePowerConsumptionFactor;
+                lowPower = Number(recipe.mVariablePowerConsumptionConstant);
+                highPower = Number(recipe.mVariablePowerConsumptionFactor);
                 // calculate the average power
-                console.log(selectedBuilding + " low power:", lowPower);
-                console.log(selectedBuilding + " high power:", highPower);
-                if (lowPower != null && highPower != null) {
+                if (lowPower && highPower) {
                     powerPerBuilding = (lowPower + highPower) / 2;
-                    console.log(selectedBuilding + " average power:", powerPerBuilding);
-                } else {
-                    console.error(selectedBuilding + " invalid lowPower or highPower values:", lowPower, highPower);
                 }
             } else if (selectedBuilding === 'quantumencoder') {
                 // TODO: Do whatever we need to do for quantum encoder
