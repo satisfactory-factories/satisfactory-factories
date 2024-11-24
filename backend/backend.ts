@@ -21,7 +21,7 @@ const PORT = 3001;
 // Setup Express
 // *************************************************
 
-// Configure rate limiter: maximum of 100 requests per 5 minutes (20 a minute)
+// Configure rate limiter: maximum of 200 requests per 5 minutes (40 a minute)
 const apiRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 200
