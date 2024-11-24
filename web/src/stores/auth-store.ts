@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 import { config } from '@/config/config'
+import { InvalidTokenError } from '@/errors/InvalidTokenError'
+import { BackendOutageError } from '@/errors/BackendOutageError'
 
 export const useAuthStore = (fetchOverride?: typeof fetch) => {
   const fetchInstance = fetchOverride || fetch // Allow dependency injection for fetch
@@ -18,10 +20,44 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   }
 
   const getToken = async () => {
-    if (!(await validateToken(token.value))) {
-      throw new Error('Token did not validate')
-    }
+    await validateToken(token.value) // Will fail if it throws an error
     return token.value ?? ''
+  }
+
+  const validateToken = async (token?: string): Promise<boolean | string> => {
+    if (!token) {
+      throw new InvalidTokenError('No token provided')
+    }
+    let response: Response
+    try {
+      response = await fetchInstance(`${apiUrl}/validate-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ token }),
+      })
+    } catch (error) {
+      console.error('validateToken: Error during token validation:', error)
+      throw new Error('validate-token could not be performed!')
+    }
+    if (!response) {
+      console.error('validateToken: No response from server!')
+      throw new Error('No response from server!')
+    }
+    if (response.ok) {
+      return true
+    } else if (response.status === 401) {
+      console.warn('validateToken: Token invalid!')
+      handleLogout()
+      throw new InvalidTokenError()
+    } else if (response.status === 500 || response.status === 502) {
+      console.error('validateToken: Backend is offline!')
+      throw new BackendOutageError()
+    } else {
+      throw new Error('validateToken: Unknown error during token validation')
+    }
   }
   // ==== END TOKEN MANAGEMENT
 
@@ -41,13 +77,13 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
         setToken(data.token)
         return true
       } else if (response.status === 400) {
-        console.warn('Login: Invalid credentials.', response, data)
+        console.warn('handleLogin: Invalid credentials.', response, data)
         return 'Credentials incorrect. Please try again.'
-      } else if (response.status === 500) {
-        console.error('Login: Backend 500ed!', response, data)
+      } else if (response.status === 500 || response.status === 502) {
+        console.error('handleLogin: Backend 5xxed!', response, data)
         return `Backend server error! Please report this on Discord!`
       } else {
-        console.error('Login: Unknown response!', response, data)
+        console.error('handleLogin: Unknown response!', response, data)
         return 'Unknown response! Please report this on Discord!'
       }
     } catch (error) {
@@ -55,7 +91,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
         console.error('Login Error:', error)
         return 'Backend server offline. Please report this on Discord!'
       }
-      return false
+      return 'An unknown login error occurred that could not be handled! Please report this on Discord!'
     }
   }
 
@@ -81,41 +117,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
         console.error('Error:', error)
         return `Registration failed due to unknown error: ${error.message}`
       }
-      return false
-    }
-  }
-
-  const validateToken = async (token?: string): Promise<boolean | string> => {
-    token = token ?? (await getToken()) // Make this optional
-    if (!token) {
-      console.error('No token provided!')
-      return false
-    }
-    try {
-      const response = await fetchInstance(`${apiUrl}/validate-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ token }),
-      })
-      if (response.ok) {
-        return true
-      } else if (response.status === 401) {
-        console.warn('Token invalid!')
-        handleLogout()
-        return 'invalid-token'
-      } else if (response.status === 500) {
-        console.error('Backend is offline!')
-        return 'backend-offline'
-      } else {
-        return 'unexpected-response'
-      }
-    } catch (error) {
-      handleLogout()
-      console.error('Error during token validation:', error)
-      return 'unknown-error'
+      return "Registration failed with an unknown error that wasn't caught!"
     }
   }
   // ==== END AUTH FLOWS
@@ -149,5 +151,6 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
     handleRegister,
     validateToken,
     getLoggedInUser,
+    setLoggedInUser,
   }
 }

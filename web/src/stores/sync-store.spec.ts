@@ -9,6 +9,7 @@ let authStore: ReturnType<typeof useAuthStore>
 
 const apiUrl = 'http://mock.com'
 const mockData = { data: 'mock-data' }
+let mockFetch: ReturnType<typeof vi.fn>
 
 const mockAuthStore = {
   getToken: vi.fn().mockResolvedValue('mock-token'),
@@ -50,10 +51,13 @@ describe('sync-store', () => {
       stubActions: false, // Allow actions to run their original implementation
     })
 
+    // Create a mock fetch function
+    mockFetch = vi.fn()
+
     // Initialize the stores dynamically
     syncStore = useSyncStore(mockAuthStore, mockAppStore)
     appStore = useAppStore(testingPinia)
-    authStore = useAuthStore(testingPinia)
+    authStore = useAuthStore(mockFetch)
   })
 
   describe('getServerData', () => {
