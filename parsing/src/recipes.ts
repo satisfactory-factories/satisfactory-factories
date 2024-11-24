@@ -123,7 +123,9 @@ function getRecipes(
                 highPower = recipe.mVariablePowerConsumptionFactor;
                 // calculate the average power
                 console.log(selectedBuilding + " low power:", lowPower);
+                console.log(lowPower);
                 console.log(selectedBuilding + " high power:", highPower);
+                console.log(highPower);
                 if (lowPower !== null && lowPower !== undefined && highPower !== null && highPower !== undefined) {
                     powerPerBuilding = (lowPower + highPower) / 2;
                     console.log(selectedBuilding + " average power:", powerPerBuilding);
