@@ -8154,7 +8154,7 @@
                 {
                     "part": "PlutoniumWaste",
                     "amount": 1,
-                    "perMin": 10
+                    "perMin": 1
                 }
             ],
             "building": {
