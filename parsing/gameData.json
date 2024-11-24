@@ -10146,7 +10146,7 @@
                 {
                     "part": "NuclearWaste",
                     "amount": 1,
-                    "perMin": 50
+                    "perMin": 10
                 }
             ],
             "building": {
