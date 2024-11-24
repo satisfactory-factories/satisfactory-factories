@@ -145,6 +145,13 @@ function getItems(data: any[]): PartDataInterface {
                     isFluid: false,
                     isFicsmas: false,
                 }; 
+            } else if (entry.ClassName === "BP_ItemDescriptorPortableMiner_C") {
+                parts["PortableMiner"] = {
+                    name: "Portable Miner",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                }; 
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
@@ -219,8 +226,6 @@ function isCollectable(ingredients: string): boolean {
     ];
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
-
-
 
 function stackSizeConvert(stackSize: string) {
     // Convert e.g. SS_HUGE to 500
