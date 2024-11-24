@@ -58,7 +58,7 @@ export const useSyncStore = defineStore('sync', () => {
       if (!data) {
         throw new Error('Data load responded weirdly!')
       }
-      return data
+      return object
     } else {
       console.error('Data load failed:', object)
       throw new Error('Backend server unreachable for data load!')
@@ -72,11 +72,11 @@ export const useSyncStore = defineStore('sync', () => {
       return
     }
 
-    let data: BackendFactoryDataResponse | boolean
+    let dataObject
     try {
-      data = await getServerData()
+      dataObject = await getServerData()
 
-      if (!data) {
+      if (!dataObject) {
         console.warn('No data found on server. Aborting data load.')
         return
       }
@@ -88,22 +88,22 @@ export const useSyncStore = defineStore('sync', () => {
       return
     }
 
-    if (!data) {
+    if (!dataObject) {
       console.warn('No data found in response. Could be the first time the user has logged in.')
       return
+    }
+
+    // Check for OOS
+    if (!forceLoad && checkForOOS(dataObject)) {
+      return 'oos'
     }
 
     if (forceLoad) {
       console.log('Forcing data load...')
     }
 
-    // Check for OOS
-    if (!forceLoad && checkForOOS(data)) {
-      return 'oos'
-    }
-
     // Since it's not out of sync, and the local data is older than the remote, simply replace the data now.
-    appStore.setFactories(data.data)
+    appStore.setFactories(dataObject.data)
     return true
   }
 
