@@ -140,38 +140,59 @@ describe('common', () => {
             expect(recipe.isAlternate).toBe(false);
         });
 
-        it('validate a recipe with multiple products (residue plastic)', () => {
+        it('validate a recipe with multiple products (plastic)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'ModularFrame');
+            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'Plastic');
 
             //act
 
             //assert
             expect(recipe).toBeDefined();
-            expect(recipe.displayName).toBe('Modular Frame');
-            expect(recipe.ingredients.length).toBe(2);
-            expect(recipe.ingredients[0].part).toBe('IronPlateReinforced');
+            expect(recipe.displayName).toBe('Plastic');
+            expect(recipe.ingredients.length).toBe(1);
+            expect(recipe.ingredients[0].part).toBe('LiquidOil');
             expect(recipe.ingredients[0].amount).toBe(3);
-            expect(recipe.ingredients[0].perMin).toBe(3);
-            expect(recipe.ingredients[1].part).toBe('IronRod');
-            expect(recipe.ingredients[1].amount).toBe(12);
-            expect(recipe.ingredients[1].perMin).toBe(12);
-            expect(recipe.products.length).toBe(1);
-            expect(recipe.products[0].part).toBe('ModularFrame');
+            expect(recipe.ingredients[0].perMin).toBe(30);
+            expect(recipe.products.length).toBe(2);
+            expect(recipe.products[0].part).toBe('Plastic');
             expect(recipe.products[0].amount).toBe(2);
-            expect(recipe.products[0].perMin).toBe(2);
+            expect(recipe.products[0].perMin).toBe(20);
             expect(recipe.products[0].isByProduct).toBe(false);
-            expect(recipe.building.name).toBe('assemblermk1');
-            expect(recipe.building.power).toBe(15);
+            expect(recipe.products[1].part).toBe('HeavyOilResidue');
+            expect(recipe.products[1].amount).toBe(1);
+            expect(recipe.products[1].perMin).toBe(10);
+            expect(recipe.products[1].isByProduct).toBe(true);
+            expect(recipe.building.name).toBe('oilrefinery');
+            expect(recipe.building.power).toBe(30);
             expect(recipe.isAlternate).toBe(false);
         });
 
         it('validate a recipe with variable power (nuclear pasta)', () => {
             //arrange
+            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'SpaceElevatorPart_9');
 
             //act
 
             //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Nuclear Pasta');
+            expect(recipe.ingredients.length).toBe(2);
+            expect(recipe.ingredients[0].part).toBe('CopperDust');
+            expect(recipe.ingredients[0].amount).toBe(200);
+            expect(recipe.ingredients[0].perMin).toBe(100);
+            expect(recipe.ingredients[1].part).toBe('PressureConversionCube');
+            expect(recipe.ingredients[1].amount).toBe(1);
+            expect(recipe.ingredients[1].perMin).toBe(0.5);
+            expect(recipe.products.length).toBe(1);
+            expect(recipe.products[0].part).toBe('SpaceElevatorPart_9');
+            expect(recipe.products[0].amount).toBe(1);
+            expect(recipe.products[0].perMin).toBe(0.5);
+            expect(recipe.products[0].isByProduct).toBe(false);
+            expect(recipe.building.name).toBe('hadroncollider');
+            expect(recipe.building.power).toBe(750);
+            expect(recipe.building.minPower).toBe(500);
+            expect(recipe.building.maxPower).toBe(1000);
+            expect(recipe.isAlternate).toBe(false);
         });
     })
 })
