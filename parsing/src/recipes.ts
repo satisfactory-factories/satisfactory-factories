@@ -61,6 +61,7 @@ function getRecipes(
 
             // Parse mProduct to extract all products
             let productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
+            // exception for automated miner recipes - as the product is a BP_ItemDescriptor
             if (recipe.ClassName === "Recipe_Alternate_AutomatedMiner_C") {
                 productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/BP_ItemDescriptor(.*?)\.BP_ItemDescriptor.*?",Amount=(\d+)/g)];
             }
@@ -111,7 +112,9 @@ function getRecipes(
             // Calculate variable power for recipes that need it
             let lowPower: number | null = null;
             let highPower: number | null = null;
-            if (selectedBuilding === 'hadroncollider' || selectedBuilding === 'converter') {
+            if (selectedBuilding === 'hadroncollider' || 
+                selectedBuilding === 'converter' || 
+                selectedBuilding === 'quantumencoder') {
                 // get the power from the recipe instead of the building
                 lowPower = Number(recipe.mVariablePowerConsumptionConstant);
                 highPower = Number(recipe.mVariablePowerConsumptionFactor);
@@ -119,8 +122,6 @@ function getRecipes(
                 if (lowPower && highPower) {
                     powerPerBuilding = (lowPower + highPower) / 2;
                 }
-            } else if (selectedBuilding === 'quantumencoder') {
-                // TODO: Do whatever we need to do for quantum encoder
             }
 
             // Create building object with the selected building and calculated power
