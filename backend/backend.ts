@@ -21,10 +21,10 @@ const PORT = 3001;
 // Setup Express
 // *************************************************
 
-// Configure rate limiter: maximum of 100 requests per 5 minutes (10 a minute)
+// Configure rate limiter: maximum of 100 requests per 5 minutes (20 a minute)
 const apiRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 100
+  max: 200
 });
 // Prevent people / bots from spamming the crap out of the button to 1 share a minute
 const shareRateLimit = rateLimit({
