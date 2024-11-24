@@ -23,7 +23,7 @@ function getProducingBuildings(data: any[]): string[] {
                 if (producedInBuildings) {
                     producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
                 }
-            } else if (entry.ClassName === "Desc_NuclearWaste_C") { 
+            } else if (entry.ClassName === "Desc_NuclearWaste_C") { // manually add nuclear power plant, as it produces nuclear waste
                 producingBuildingsSet.add("nuclearpowerplant");
             }
         });

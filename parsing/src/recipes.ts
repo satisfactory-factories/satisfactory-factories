@@ -12,33 +12,27 @@ function getRecipes(
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
+
+            // Filter out recipes that don't have a producing building
             if (!recipe.mProducedIn) return false;
+            // Filter out recipes that are in the blacklist (typically items produced by the Build Gun)
             if (blacklist.every(building => recipe.mProducedIn.includes(building))) return false;
 
             // Extract all producing buildings
             const rawBuildingKeys = recipe.mProducedIn.match(/\/([^/]+)\./g);
-
             if (!rawBuildingKeys) {
                 return false;
             }
-
             // Process all buildings and check if any match the producingBuildings map
             const validBuilding = rawBuildingKeys.some((rawBuilding: string) => {
                 const buildingKey = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
                 return producingBuildings[buildingKey];
             })
 
-
-            // // Log for debugging NobeliskGas specifically
-            // if (recipe.ClassName === "Recipe_NobeliskGas_C") {
-            //     console.log("Recipe:", recipe);
-            //     console.log("Raw Building Keys:", rawBuildingKeys);
-            //     console.log("Valid Building:", validBuilding);
-            // }
-
             return validBuilding;
         })
         .forEach((recipe: any) => {
+
             const ingredients = recipe.mIngredients
                 ? recipe.mIngredients
                     .match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
@@ -66,7 +60,10 @@ function getRecipes(
                 : [];
 
             // Parse mProduct to extract all products
-            const productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
+            let productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
+            if (recipe.ClassName === "Recipe_Alternate_AutomatedMiner_C") {
+                productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/BP_ItemDescriptor(.*?)\.BP_ItemDescriptor.*?",Amount=(\d+)/g)];
+            }
 
             let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
