@@ -1,61 +1,71 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createPinia, setActivePinia, Store } from 'pinia'
 import { useSyncStore } from '@/stores/sync-store'
 import { useAppStore } from '@/stores/app-store'
+import { useAuthStore } from '@/stores/auth-store'
 
-let syncStore: Store<'sync', Pick<any, any>>
-
-const mockLoadData = {
-  data: 'mock-data',
-}
-
-// Mock App Store methods
-const appStoreMock = {
-  getLastEdit: vi.fn(() => new Date()),
-  setFactories: vi.fn(),
-}
+let syncStore: ReturnType<typeof useSyncStore>
+let appStore: ReturnType<typeof useAppStore>
+let authStore: ReturnType<typeof useAuthStore>
 
 const apiUrl = 'http://mock.com'
+const mockData = { data: 'mock-data' }
+
+const mockAuthStore = {
+  getToken: vi.fn().mockResolvedValue('mock-token'),
+  validateToken: vi.fn().mockResolvedValue(true),
+}
+
+const mockAppStore = {
+  setFactories: vi.fn(),
+  getLastEdit: vi.fn(() => new Date()),
+  getFactories: vi.fn(() => ({ someData: 'test' })),
+}
 
 describe('sync-store', () => {
-  beforeEach(() => {
-    // Mock the configuration and other stores
+  beforeEach(async () => {
+    // Clear all modules and mocks
+    vi.resetModules()
+
+    // Mock auth store with default behavior
+    vi.doMock('@/stores/auth-store', () => ({
+      useAuthStore: vi.fn(() => mockAuthStore),
+    }))
+    vi.doMock('@/stores/app-store', () => ({
+      useAppStore: vi.fn(() => mockAppStore),
+    }))
     vi.mock('@/config/config', () => ({
       config: {
-        apiUrl: 'http://mock.com', // Mock API URL
+        apiUrl: 'http://mock.com',
+        dataVersion: '1.0.0',
       },
     }))
 
-    vi.mock('@/stores/auth-store', () => ({
-      useAuthStore: vi.fn(() => ({
-        getToken: vi.fn(() => 'mock-token'),
-        validateToken: vi.fn().mockResolvedValue(true), // Default valid token
-      })),
-    }))
+    // Create a fresh Pinia instance for testing
+    const { createTestingPinia } = await import('@pinia/testing')
+    const { useSyncStore } = await import('@/stores/sync-store')
+    const { useAppStore } = await import('@/stores/app-store')
+    const { useAuthStore } = await import('@/stores/auth-store')
 
-    vi.mock('@/stores/app-store', () => ({
-      useAppStore: vi.fn(() => appStoreMock), // Mock App Store
-    }))
+    const testingPinia = createTestingPinia({
+      stubActions: false, // Allow actions to run their original implementation
+    })
 
-    // Reset mocks before each test
-    appStoreMock.getLastEdit.mockClear()
-    appStoreMock.setFactories.mockClear()
-
-    // Initialize Pinia
-    setActivePinia(createPinia())
-    syncStore = useSyncStore()
+    // Initialize the stores dynamically
+    syncStore = useSyncStore(mockAuthStore, mockAppStore)
+    appStore = useAppStore(testingPinia)
+    authStore = useAuthStore(testingPinia)
   })
 
   describe('getServerData', () => {
     it('should fetch valid data from the server', async () => {
       global.fetch = vi.fn().mockResolvedValue({
         ok: true,
-        json: vi.fn().mockResolvedValue(mockLoadData),
+        json: vi.fn().mockResolvedValue(mockData),
       } as any)
 
       const result = await syncStore.getServerData()
 
-      expect(result).toBe(mockLoadData)
+      expect(result).toStrictEqual(mockData)
       expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
         headers: {
@@ -71,7 +81,9 @@ describe('sync-store', () => {
         json: vi.fn().mockResolvedValue({ someData: {} }),
       } as any)
 
-      await expect(syncStore.getServerData()).rejects.toThrowError('Data load responded weirdly!')
+      await expect(syncStore.getServerData()).rejects.toThrowError(
+        'Data load responded weirdly!'
+      )
 
       expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
@@ -88,7 +100,9 @@ describe('sync-store', () => {
         json: vi.fn().mockResolvedValue({}),
       } as any)
 
-      await expect(syncStore.getServerData()).rejects.toThrowError('Backend server unreachable for data load!')
+      await expect(syncStore.getServerData()).rejects.toThrowError(
+        'Backend server unreachable for data load!'
+      )
 
       expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
@@ -102,58 +116,30 @@ describe('sync-store', () => {
 
   describe('handleDataLoad', () => {
     it('should return valid data and make the call to setFactories', async () => {
-      // Dynamically mock useAppStore to return appStoreMock
-      vi.doMock('@/stores/app-store', () => ({
-        useAppStore: vi.fn(() => ({
-          getLastEdit: vi.fn(() => new Date()),
-          setFactories: vi.fn(), // Mocked setFactories
-        })),
-      }))
-
-      // Dynamically mock useAuthStore to return a valid token
-      vi.doMock('@/stores/auth-store', () => ({
-        useAuthStore: vi.fn(() => ({
-          getToken: vi.fn(() => 'mock-token'),
-          validateToken: vi.fn(() => Promise.resolve(true)), // Token is valid
-        })),
-      }))
-
-      // Reinitialize syncStore and appStore after the mocks
-      syncStore = useSyncStore()
-      const appStore = useAppStore()
-
-      // Mock global.fetch to simulate the server response
+      // Mock global.fetch to simulate server response
       global.fetch = vi.fn().mockResolvedValue({
         ok: true,
-        json: vi.fn().mockResolvedValue(mockLoadData),
+        json: vi.fn().mockResolvedValue({ data: 'mock-data' }),
       } as any)
+
+      // Mock validateToken to return true
+      authStore.validateToken = vi.fn().mockResolvedValue(true)
 
       // Call handleDataLoad
       const result = await syncStore.handleDataLoad()
 
       // Assertions
       expect(result).toStrictEqual(true)
-      expect(appStore.setFactories).toHaveBeenCalledWith(mockLoadData.data)
+      expect(appStore.setFactories).toHaveBeenCalledWith('mock-data')
     })
 
-    // I give up trying to get this to work... the validateToken method is not being mocked properly, it is always returning false and I'm ripping my hair out trying to figure out why we cannot override the mock.
-    // Running it on it's own passes. Running it amongst other tests even in the same describe fails. Every time.
-    // I don't care anymore. Bollocks to Store tests, I hate them so much.
-    // it('should return undefined if the token is invalid', async () => {
-    //   vi.doMock('@/stores/auth-store', () => ({
-    //     useAuthStore: vi.fn(() => ({
-    //       getToken: vi.fn(() => 'mock-token'),
-    //       validateToken: vi.fn(() => Promise.resolve(false)), // Invalid token
-    //     })),
-    //   }))
-    //
-    //   // Dynamically import `useSyncStore` after mocks are applied
-    //   const { useSyncStore } = await import('@/stores/sync-store')
-    //   const syncStore = useSyncStore()
-    //
-    //   // Call handleDataLoad and verify behavior
-    //   await expect(syncStore.handleDataLoad()).resolves.toBeUndefined()
-    // })
+    it('should return undefined if the token is invalid', async () => {
+      // Mock validateToken to return false
+      authStore.validateToken = vi.fn().mockResolvedValue(false)
+
+      // Call handleDataLoad and expect undefined
+      await expect(syncStore.handleDataLoad()).resolves.toBeUndefined()
+    })
   })
 
   describe('checkOOS', () => {
@@ -167,6 +153,7 @@ describe('sync-store', () => {
 
       expect(result).toBe(false)
     })
+
     it('should detect out-of-sync data', () => {
       const serverSaved = new Date()
       serverSaved.setMinutes(serverSaved.getMinutes() + 10)

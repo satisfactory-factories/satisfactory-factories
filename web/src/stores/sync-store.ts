@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia'
 import { config } from '@/config/config'
 import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 import { useAuthStore } from '@/stores/auth-store'
@@ -6,9 +5,12 @@ import { useAppStore } from '@/stores/app-store'
 import eventBus from '@/utils/eventBus'
 import { ref } from 'vue'
 
-export const useSyncStore = defineStore('sync', () => {
-  const authStore = useAuthStore()
-  const appStore = useAppStore()
+export const useSyncStore = (
+  authStoreOverride: null | any = null,
+  appStoreOverride: null | any = null
+) => {
+  const authStore = authStoreOverride || useAuthStore()
+  const appStore = appStoreOverride || useAppStore()
 
   const apiUrl = config.apiUrl
 
@@ -19,7 +21,6 @@ export const useSyncStore = defineStore('sync', () => {
 
   const setupTick = () => {
     clearInterval(syncInterval) // Prevents double-clocking
-    // Start interval to check if data needs to be saved
     syncInterval = setInterval(async () => {
       await tickSync()
     }, 10000)
@@ -102,7 +103,6 @@ export const useSyncStore = defineStore('sync', () => {
       console.log('Forcing data load...')
     }
 
-    // Since it's not out of sync, and the local data is older than the remote, simply replace the data now.
     appStore.setFactories(dataObject.data)
     return true
   }
@@ -117,13 +117,11 @@ export const useSyncStore = defineStore('sync', () => {
     return false
   }
 
-  // Sends the API request off to save the data.
   const saveData = async () => {
     if (stopSyncing.value) {
       console.warn('saveData: Syncing is disabled.')
       return
     }
-    // If there's no detected changes, don't bother.
     if (!dataSavePending.value) {
       return
     }
@@ -192,4 +190,4 @@ export const useSyncStore = defineStore('sync', () => {
     saveData,
     detectedChange,
   }
-})
+}
