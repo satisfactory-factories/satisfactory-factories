@@ -3,8 +3,7 @@ import { config } from '@/config/config'
 import { InvalidTokenError } from '@/errors/InvalidTokenError'
 import { BackendOutageError } from '@/errors/BackendOutageError'
 
-export const useAuthStore = (fetchOverride?: typeof fetch) => {
-  const fetchInstance = fetchOverride || fetch // Allow dependency injection for fetch
+export const useAuthStore = () => {
   const apiUrl = config.apiUrl
   const loggedInUser = ref<string>(localStorage.getItem('loggedInUser') ?? '')
   const token = ref<string>(localStorage.getItem('token') ?? '')
@@ -30,7 +29,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
     }
     let response: Response
     try {
-      response = await fetchInstance(`${apiUrl}/validate-token`, {
+      response = await fetch(`${apiUrl}/validate-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +63,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   // ==== AUTH FLOWS
   const handleLogin = async (username: string, password: string): Promise<string | boolean> => {
     try {
-      const response = await fetchInstance(`${apiUrl}/login`, {
+      const response = await fetch(`${apiUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +97,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   const handleRegister = async (username: string, password: string): Promise<string | boolean> => {
     let response: Response
     try {
-      response = await fetchInstance(`${apiUrl}/register`, {
+      response = await fetch(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

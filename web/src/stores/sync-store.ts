@@ -5,12 +5,9 @@ import { useAppStore } from '@/stores/app-store'
 import eventBus from '@/utils/eventBus'
 import { ref } from 'vue'
 
-export const useSyncStore = (
-  authStoreOverride: null | any = null,
-  appStoreOverride: null | any = null
-) => {
-  const authStore = authStoreOverride || useAuthStore()
-  const appStore = appStoreOverride || useAppStore()
+export const useSyncStore = () => {
+  const authStore = useAuthStore()
+  const appStore = useAppStore()
 
   const apiUrl = config.apiUrl
 
