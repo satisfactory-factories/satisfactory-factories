@@ -5,12 +5,9 @@ import { useAppStore } from '@/stores/app-store'
 import eventBus from '@/utils/eventBus'
 import { ref } from 'vue'
 
-export const useSyncStore = (
-  authStoreOverride: null | any = null,
-  appStoreOverride: null | any = null
-) => {
-  const authStore = authStoreOverride || useAuthStore()
-  const appStore = appStoreOverride || useAppStore()
+export const useSyncStore = () => {
+  const authStore = useAuthStore()
+  const appStore = useAppStore()
 
   const apiUrl = config.apiUrl
 
@@ -126,20 +123,29 @@ export const useSyncStore = (
       return
     }
 
-    const token = await authStore.getToken()
-    if (!token) {
-      console.error('saveData: No token found!')
-      return
+    let token
+    try {
+      token = await authStore.getToken()
+      if (!token) {
+        console.error('saveData: No token found!')
+        return
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('saveData: Token error:', error.message)
+        return
+      }
     }
 
     const data = appStore.getFactories()
-    if (!data) {
+    if (!data || !Object.keys(data).length) {
       console.warn('saveData: No data to save!')
       return
     }
 
+    let response: Response
     try {
-      const response = await fetch(`${apiUrl}/save`, {
+      response = await fetch(`${apiUrl}/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,26 +153,30 @@ export const useSyncStore = (
         },
         body: JSON.stringify({ data }),
       })
-      const object = await response.json()
-
-      if (response.ok) {
-        console.log('saveData: Data saved:', object)
-        dataSavePending.value = false
-        dataLastSaved.value = new Date()
-        localStorage.setItem('lastEdit', dataLastSaved.value.toISOString())
-        return true
-      } else if (response.status === 500) {
-        console.error('saveData: Data save failed:', object)
-        stopSyncing.value = true
-        alert(`There was an error saving your data with the server. Syncing has been disabled until page refresh in case of server outage. Please report this to Discord: "saveData: Server 500 error"`)
-        return false
-      }
     } catch (error) {
       if (error instanceof Error) {
         console.error('Data save failed:', error)
-        stopSyncing.value = true
+        stopSync()
         alert(`There was an error saving your data with the server. Syncing has been disabled until page refresh in case of server outage. Please report this to Discord" "saveData: Unexpected Response - ${error.message}"`)
       }
+      return false
+    }
+    if (!response) {
+      console.error('saveData: No response from server!')
+      return false
+    }
+    const object = await response.json()
+
+    if (response.ok) {
+      console.log('saveData: Data saved:', object)
+      dataSavePending.value = false
+      dataLastSaved.value = new Date()
+      localStorage.setItem('lastEdit', dataLastSaved.value.toISOString())
+      return true
+    } else if (response.status === 500 || response.status === 502) {
+      console.error('saveData: Data save failed:', object)
+      stopSync()
+      alert(`There was an error saving your data with the server. Syncing has been disabled until page refresh in case of server outage. Please report this to Discord: "saveData: Server ${response.status} error"`)
       return false
     }
   }
@@ -174,6 +184,11 @@ export const useSyncStore = (
   const detectedChange = () => {
     console.log('syncStore: Detected change in data.')
     dataSavePending.value = true
+  }
+
+  const stopSync = () => {
+    clearInterval(syncInterval)
+    stopSyncing.value = true
   }
 
   eventBus.on('factoryUpdated', detectedChange)
@@ -189,5 +204,6 @@ export const useSyncStore = (
     checkForOOS,
     saveData,
     detectedChange,
+    stopSync,
   }
 }

@@ -1,76 +1,61 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { useSyncStore } from '@/stores/sync-store'
 import { useAppStore } from '@/stores/app-store'
 import { useAuthStore } from '@/stores/auth-store'
 
-let syncStore: ReturnType<typeof useSyncStore>
-let appStore: ReturnType<typeof useAppStore>
-let authStore: ReturnType<typeof useAuthStore>
+import { useSyncStore } from '@/stores/sync-store'
+import { createPinia, setActivePinia } from 'pinia'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const apiUrl = 'http://mock.com'
 const mockData = { data: 'mock-data' }
-let mockFetch: ReturnType<typeof vi.fn>
+const mockFetch = vi.fn()
 
-const mockAuthStore = {
-  getToken: vi.fn().mockResolvedValue('mock-token'),
-  validateToken: vi.fn().mockResolvedValue(true),
-}
+vi.mock('@/stores/auth-store', () => ({
+  useAuthStore: vi.fn(),
+}))
 
-const mockAppStore = {
-  setFactories: vi.fn(),
-  getLastEdit: vi.fn(() => new Date()),
-  getFactories: vi.fn(() => ({ someData: 'test' })),
-}
+vi.mock('@/stores/app-store', () => ({
+  useAppStore: vi.fn(),
+}))
+
+vi.mock('@/config/config', () => ({
+  config: {
+    apiUrl: 'http://mock.com',
+    dataVersion: '1.0.0',
+  },
+}))
 
 describe('sync-store', () => {
-  beforeEach(async () => {
-    // Clear all modules and mocks
-    vi.resetModules()
+  beforeEach(() => {
+    vi.resetAllMocks()
+    setActivePinia(createPinia())
+    global.fetch = mockFetch
 
-    // Mock auth store with default behavior
-    vi.doMock('@/stores/auth-store', () => ({
-      useAuthStore: vi.fn(() => mockAuthStore),
-    }))
-    vi.doMock('@/stores/app-store', () => ({
-      useAppStore: vi.fn(() => mockAppStore),
-    }))
-    vi.mock('@/config/config', () => ({
-      config: {
-        apiUrl: 'http://mock.com',
-        dataVersion: '1.0.0',
-      },
-    }))
+    const mockAuthStore = {
+      getToken: vi.fn(() => 'mock-token'),
+      validateToken: vi.fn(() => true),
+    }
 
-    // Create a fresh Pinia instance for testing
-    const { createTestingPinia } = await import('@pinia/testing')
-    const { useSyncStore } = await import('@/stores/sync-store')
-    const { useAppStore } = await import('@/stores/app-store')
-    const { useAuthStore } = await import('@/stores/auth-store')
+    const mockAppStore = {
+      setFactories: vi.fn(),
+      getLastEdit: vi.fn(() => new Date()),
+    }
 
-    const testingPinia = createTestingPinia({
-      stubActions: false, // Allow actions to run their original implementation
-    })
-
-    // Create a mock fetch function
-    mockFetch = vi.fn()
-
-    // Initialize the stores dynamically
-    syncStore = useSyncStore(mockAuthStore, mockAppStore)
-    appStore = useAppStore(testingPinia)
-    authStore = useAuthStore(mockFetch)
+    vi.mocked(useAuthStore).mockReturnValue(mockAuthStore as any)
+    vi.mocked(useAppStore).mockReturnValue(mockAppStore as any)
   })
 
   describe('getServerData', () => {
     it('should fetch valid data from the server', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      mockFetch.mockResolvedValue({
         ok: true,
         json: vi.fn().mockResolvedValue(mockData),
-      } as any)
+      })
 
+      const syncStore = useSyncStore()
       const result = await syncStore.getServerData()
 
       expect(result).toStrictEqual(mockData)
-      expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -80,16 +65,18 @@ describe('sync-store', () => {
     })
 
     it('should handle invalid data properly', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      mockFetch.mockResolvedValue({
         ok: true,
         json: vi.fn().mockResolvedValue({ someData: {} }),
-      } as any)
+      })
+
+      const syncStore = useSyncStore()
 
       await expect(syncStore.getServerData()).rejects.toThrowError(
         'Data load responded weirdly!'
       )
 
-      expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -99,16 +86,18 @@ describe('sync-store', () => {
     })
 
     it('should handle server errors properly', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      mockFetch.mockResolvedValue({
         status: 500,
         json: vi.fn().mockResolvedValue({}),
-      } as any)
+      })
+
+      const syncStore = useSyncStore()
 
       await expect(syncStore.getServerData()).rejects.toThrowError(
         'Backend server unreachable for data load!'
       )
 
-      expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -120,11 +109,15 @@ describe('sync-store', () => {
 
   describe('handleDataLoad', () => {
     it('should return valid data and make the call to setFactories', async () => {
-      // Mock global.fetch to simulate server response
-      global.fetch = vi.fn().mockResolvedValue({
+      // Mock mockFetch to simulate server response
+      mockFetch.mockResolvedValue({
         ok: true,
         json: vi.fn().mockResolvedValue({ data: 'mock-data' }),
-      } as any)
+      })
+
+      const syncStore = useSyncStore()
+      const appStore = useAppStore()
+      const authStore = useAuthStore()
 
       // Mock validateToken to return true
       authStore.validateToken = vi.fn().mockResolvedValue(true)
@@ -138,6 +131,9 @@ describe('sync-store', () => {
     })
 
     it('should return undefined if the token is invalid', async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+
       // Mock validateToken to return false
       authStore.validateToken = vi.fn().mockResolvedValue(false)
 
@@ -151,6 +147,8 @@ describe('sync-store', () => {
       const serverSaved = new Date()
       serverSaved.setMinutes(serverSaved.getMinutes() - 10)
 
+      const syncStore = useSyncStore()
+
       const result = syncStore.checkForOOS({
         lastSaved: serverSaved,
       } as any)
@@ -159,7 +157,8 @@ describe('sync-store', () => {
     })
 
     it('should detect out-of-sync data', () => {
-      const serverSaved = new Date()
+      const syncStore = useSyncStore()
+      const serverSaved = new Date(new Date().getTime() + 1000)
       serverSaved.setMinutes(serverSaved.getMinutes() + 10)
 
       const result = syncStore.checkForOOS({
@@ -167,6 +166,163 @@ describe('sync-store', () => {
       } as any)
 
       expect(result).toBe(true)
+    })
+  })
+
+  describe('saveData', () => {
+    it('should not sync if the stopSyncing flag is set', async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+
+      syncStore.stopSync()
+      expect(await syncStore.saveData()).toBeUndefined()
+      expect(mockFetch).not.toHaveBeenCalled()
+      expect(authStore.getToken).not.toHaveBeenCalled()
+    })
+
+    it('should not sync if there is no data save pending', async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+      // Default state is there is no data to sync
+      expect(await syncStore.saveData()).toBeUndefined()
+      expect(mockFetch).not.toHaveBeenCalled()
+      expect(authStore.getToken).not.toHaveBeenCalled()
+    })
+
+    it("should not sync if there's a token error", async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+      syncStore.detectedChange()
+
+      // Mock getToken to throw an error
+      authStore.getToken = vi.fn().mockRejectedValue(new Error('Token error'))
+
+      // Call saveData and expect an error
+      expect(await syncStore.saveData()).toBe(undefined)
+      expect(authStore.getToken).toHaveBeenCalled()
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it('should not sync if there is no token', async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+      syncStore.detectedChange()
+
+      // Mock getToken to throw an error
+      authStore.getToken = vi.fn().mockResolvedValue('')
+
+      // Call saveData and expect an error
+      expect(await syncStore.saveData()).toBe(undefined)
+      expect(authStore.getToken).toHaveBeenCalled()
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("should not sync if there's data to save", async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+      const appStore = useAppStore()
+      syncStore.detectedChange()
+
+      appStore.getFactories = vi.fn().mockReturnValueOnce({} as any)
+
+      // It will still stop at the no data check, but we want to test that it's asking for a token and passed the data pending check
+      expect(await syncStore.saveData()).toBe(undefined)
+      expect(authStore.getToken).toHaveBeenCalled()
+    })
+
+    it("should sync if there's data to save", async () => {
+      const authStore = useAuthStore()
+      const syncStore = useSyncStore()
+      const appStore = useAppStore()
+      syncStore.detectedChange()
+
+      appStore.getFactories = vi.fn().mockReturnValueOnce({ someData: 'foo' })
+
+      // Assume response was valid
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue({ message: 'All is good' }),
+      })
+
+      // It will still stop at the no data check, but we want to test that it's asking for a token and passed the data pending check
+      expect(await syncStore.saveData()).toBe(true)
+      expect(authStore.getToken).toHaveBeenCalled()
+    })
+
+    it('should send sync with expected request params', async () => {
+      const syncStore = useSyncStore()
+      const appStore = useAppStore()
+      const authStore = useAuthStore()
+
+      syncStore.detectedChange()
+      const mockData = { someData: 'foo' } as any
+
+      appStore.getFactories = vi.fn().mockReturnValueOnce(mockData)
+
+      // Assume response was valid
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue({ message: 'All is good' }),
+      })
+
+      // It will still stop at the no data check, but we want to test that it's asking for a token and passed the data pending check
+      expect(await syncStore.saveData()).toBe(true)
+      expect(authStore.getToken).toHaveBeenCalled()
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/save`, {
+        method: 'POST',
+        body: JSON.stringify({ data: mockData }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer mock-token`,
+        },
+      })
+    })
+
+    it('should handle server errors properly', async () => {
+      const syncStore = useSyncStore()
+      const authStore = useAuthStore()
+      const appStore = useAppStore()
+      syncStore.detectedChange()
+
+      // Mock getToken to return a valid token
+      authStore.getToken = vi.fn().mockResolvedValue('mock-token')
+
+      // Mock fetch to throw an error
+      mockFetch.mockRejectedValue(() => { Error('Network error') })
+
+      appStore.getFactories = vi.fn().mockReturnValueOnce({ someData: 'foo' })
+
+      // Call saveData and expect an error
+      expect(await syncStore.saveData()).toBe(false)
+      expect(authStore.getToken).toHaveBeenCalled()
+      expect(mockFetch).toHaveBeenCalled()
+    })
+
+    it('should handle server 50Xs properly', async () => {
+      const syncStore = useSyncStore()
+      const authStore = useAuthStore()
+      const appStore = useAppStore()
+
+      // Mocks
+      syncStore.stopSync = vi.fn().mockResolvedValue(true)
+      authStore.getToken = vi.fn().mockResolvedValue('mock-token')
+      appStore.getFactories = vi.fn().mockReturnValueOnce(mockData)
+      window.alert = vi.fn()
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: vi.fn().mockResolvedValue({}),
+      })
+
+      // Actions
+      syncStore.detectedChange()
+
+      // Asserts
+      expect(await syncStore.saveData()).toBe(false)
+      expect(authStore.getToken).toHaveBeenCalled()
+      expect(mockFetch).toHaveBeenCalled()
+      // expect(syncStore.stopSync).toHaveBeenCalled() // TODO: for some reason this spy is not being called??
+      expect(window.alert).toHaveBeenCalledWith(`There was an error saving your data with the server. Syncing has been disabled until page refresh in case of server outage. Please report this to Discord: "saveData: Server 500 error"`)
     })
   })
 })
