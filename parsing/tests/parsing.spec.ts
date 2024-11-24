@@ -75,6 +75,10 @@ describe('common', () => {
                 for (const product of recipe.products) {
                     parts.add(product.part);
                 }
+                if (recipe.products.length === 0) {
+                    console.log('No products for recipe:', recipe.id);
+                    expect(recipe.id + ' has no products').toBe('');
+                }
             }
 
             // Now we have our list of parts, asset that the number of parts we've generated actually match
@@ -88,7 +92,6 @@ describe('common', () => {
             console.log('Extra parts:', extraParts);
             expect(missingParts.length).toBe(0);
             expect(extraParts.length).toBe(0);
-
             expect(Object.keys(results.items.parts).length).toBe(parts.size);
         });
 
