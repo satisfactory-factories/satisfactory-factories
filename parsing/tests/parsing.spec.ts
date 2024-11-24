@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it, test } from '@jest/globals'
-import {processFile} from '@/processor'
+import { processFile } from '../src/processor'
+import { Recipe } from '../src/interfaces/Recipe'
 
 describe('common', () => {
     let results: any;
@@ -89,6 +90,49 @@ describe('common', () => {
             expect(extraParts.length).toBe(0);
 
             expect(Object.keys(results.items.parts).length).toBe(parts.size);
+        });
+
+        it('validate a recipe with a single ingredient and product (iron plates)', () => {
+            //arrange
+            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'IronPlate');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.ingredients.length).toBe(1);
+            expect(recipe.products.length).toBe(1);
+            expect(recipe.ingredients[0].part).toBe('IronIngot');
+            expect(recipe.ingredients[0].amount).toBe(1);
+            expect(recipe.products[0].part).toBe('IronPlate');
+            expect(recipe.products[0].amount).toBe(1);
+            expect(recipe.building.name).toBe('constructormk1');
+            expect(recipe.building.power).toBe(4);
+            expect(recipe.isAlternate).toBe(false);
+        });
+
+        it('validate a recipe with multiple ingredients (modular frames)', () => {
+            //arrange
+
+            //act
+
+            //assert
+        });
+
+        it('validate a recipe with multiple products (residue plastic)', () => {
+            //arrange
+
+            //act
+
+            //assert
+        });
+
+        it('validate a recipe with variable power (nuclear pasta)', () => {
+            //arrange
+
+            //act
+
+            //assert
         });
     })
 })
