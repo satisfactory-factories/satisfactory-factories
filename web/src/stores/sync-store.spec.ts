@@ -40,6 +40,16 @@ describe('sync-store', () => {
       getLastEdit: vi.fn(() => new Date()),
     }
 
+    const mockSyncStore = {
+      getServerData: vi.fn(),
+      handleDataLoad: vi.fn(),
+      checkForOOS: vi.fn(),
+      saveData: vi.fn(),
+      stopSync: vi.fn(),
+      detectedChange: vi.fn(),
+    }
+
+    vi.mocked(useSyncStore).mockReturnValue(mockSyncStore as any)
     vi.mocked(useAuthStore).mockReturnValue(mockAuthStore as any)
     vi.mocked(useAppStore).mockReturnValue(mockAppStore as any)
   })
@@ -139,6 +149,21 @@ describe('sync-store', () => {
 
       // Call handleDataLoad and expect undefined
       await expect(syncStore.handleDataLoad()).resolves.toBeUndefined()
+    })
+
+    it('should handle OOS situations', async () => {
+      const authStore = useAuthStore()
+      const syncStore = {
+        ...useSyncStore(),
+        getServerData: vi.fn().mockResolvedValue({ lastSaved: new Date() }),
+        checkForOOS: vi.fn().mockReturnValueOnce(true),
+      }
+
+      // Mocks
+      authStore.validateToken = vi.fn().mockResolvedValue(true)
+
+      // Assert
+      expect(await syncStore.handleDataLoad()).toBe('oos')
     })
   })
 
