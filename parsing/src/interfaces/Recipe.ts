@@ -10,10 +10,14 @@ export interface Recipe {
   displayName: string;
   ingredients: RecipeItem[];
   products: RecipeItem[];
-  building: {
-    name: string;
-    power: number;
-  }
+  building: Building;
   isAlternate: boolean;
   isFicsmas: boolean;
+}
+
+export interface Building {
+  name: string;
+  power: number;
+  minPower?: number;
+  maxPower?: number;
 }
