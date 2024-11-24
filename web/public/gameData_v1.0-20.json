@@ -1837,7 +1837,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2167,7 +2169,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 750,
+                "minPower": 500,
+                "maxPower": 1000
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2197,7 +2201,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 750,
+                "minPower": 500,
+                "maxPower": 1000
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2233,7 +2239,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -2972,7 +2980,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3414,7 +3424,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3439,7 +3451,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -3469,7 +3483,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -4586,7 +4602,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": true,
             "isFicsmas": false
@@ -5064,7 +5082,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5094,7 +5114,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5389,7 +5411,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5419,7 +5443,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5509,7 +5535,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5539,7 +5567,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5724,7 +5754,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5754,7 +5786,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5869,7 +5903,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 750,
+                "minPower": 500,
+                "maxPower": 1000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5894,7 +5930,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -5919,7 +5957,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6119,7 +6159,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6244,7 +6286,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6274,7 +6318,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6304,7 +6350,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6504,7 +6552,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 750,
+                "minPower": 500,
+                "maxPower": 1000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7022,7 +7072,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7127,7 +7179,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7393,7 +7447,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7423,7 +7479,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7529,7 +7587,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 750,
+                "minPower": 500,
+                "maxPower": 1000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8055,7 +8115,9 @@
             ],
             "building": {
                 "name": "hadroncollider",
-                "power": 0.1
+                "power": 375,
+                "minPower": 250,
+                "maxPower": 500
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8334,7 +8396,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -8364,7 +8428,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9171,7 +9237,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9201,7 +9269,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9458,7 +9528,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -10035,7 +10107,9 @@
             ],
             "building": {
                 "name": "converter",
-                "power": 0.1
+                "power": 200,
+                "minPower": 100,
+                "maxPower": 300
             },
             "isAlternate": false,
             "isFicsmas": false
