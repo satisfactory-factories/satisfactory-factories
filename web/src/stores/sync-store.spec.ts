@@ -4,8 +4,6 @@ import { useSyncStore } from '@/stores/sync-store'
 import { useAppStore } from '@/stores/app-store'
 
 let syncStore: Store<'sync', Pick<any, any>>
-let appStore: Store<'app', Pick<any, any>>
-let authStore: Store<'auth', Pick<any, any>>
 
 const mockLoadData = {
   data: 'mock-data',
@@ -46,7 +44,6 @@ describe('sync-store', () => {
     // Initialize Pinia
     setActivePinia(createPinia())
     syncStore = useSyncStore()
-    appStore = useAppStore()
   })
 
   describe('getServerData', () => {
