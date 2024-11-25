@@ -4,16 +4,16 @@ import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
 import { SyncActions } from '@/stores/sync/sync-actions'
 
-export const useSyncStore = () => {
+export const useSyncStore = (syncActionsInject?: any | undefined) => {
   const dataSavePending = ref<boolean>(false)
   const dataLastSaved = ref<Date | null>(null)
-  const stopSyncing = ref<boolean>(true)
+  const stopSyncing = ref<boolean>(false)
   let syncInterval: NodeJS.Timeout
 
   const authStore = useAuthStore()
   const appStore = useAppStore()
 
-  const syncActions = new SyncActions(authStore, appStore)
+  const syncActions = syncActionsInject ?? new SyncActions(authStore, appStore)
 
   const setupTick = () => {
     clearInterval(syncInterval) // Prevents double-clocking
@@ -90,10 +90,12 @@ export const useSyncStore = () => {
   return {
     dataSavePending,
     dataLastSaved,
+    stopSyncing,
     syncActions,
     handleDataLoad,
     handleSync,
     setupTick,
+    tickSync,
     detectedChange,
     stopSync,
   }
