@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { config } from '@/config/config'
 import { InvalidTokenError } from '@/errors/InvalidTokenError'
 import { BackendOutageError } from '@/errors/BackendOutageError'
+import eventBus from '@/utils/eventBus'
 
 export const useAuthStore = (fetchOverride?: typeof fetch) => {
   const fetchInstance = fetchOverride || fetch // Allow dependency injection for fetch
@@ -78,6 +79,9 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
       if (response.ok) {
         setLoggedInUser(username)
         setToken(data.token)
+        // Emit an event to tell the sync service to pull in the data from the remote
+        eventBus.emit('loggedIn')
+
         return true
       } else if (response.status === 400) {
         console.warn('handleLogin: Invalid credentials.', response, data)
