@@ -4,7 +4,7 @@
       <v-card class="factory-card">
         <v-row class="header">
           <v-col class="text-h4 flex-grow-1" cols="8">
-            <i class="fas fa-globe" /><span class="ml-3">World Statistics</span>
+            <i class="fas fa-globe" /><span class="ml-3">Plan  Statistics</span>
           </v-col>
           <v-col class="text-right" cols="4">
             <v-btn
@@ -49,7 +49,7 @@
           </p>
           <h1 class="text-h5 mb-4">
             <i class="fas fa-bolt " />
-            <span class="ml-3">World Power Consumption and Generation</span>
+            <span class="ml-3">Power Consumption and Generation</span>
           </h1>
           <span class="ml-2"><b>[Coming soon!!]</b></span>
         </v-card-text>
@@ -59,7 +59,7 @@
   </v-row>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts">  
   import { ref, watch } from 'vue'
   import { WorldRawResource } from '@/interfaces/planner/FactoryInterface'
 

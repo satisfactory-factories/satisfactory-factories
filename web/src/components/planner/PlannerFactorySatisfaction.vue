@@ -93,7 +93,6 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <br><br>
       <v-col cols="12" md="5">
         <v-card class="sub-card border-md">
           <v-card-title>
@@ -123,6 +122,7 @@
             </div>
           </v-card-text>
         </v-card>
+        <v-divider color="#ccc" thickness="2px" />
         <v-card class="sub-card border-md">
           <v-card-title>
             <h2 class="text-h6">
