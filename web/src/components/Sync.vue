@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showOverwriteDialog" max-width="600">
+  <v-dialog v-model="showOOSDecisionDialog" max-width="600" persistent>
     <v-card>
       <v-card-title class="text-h5">Data out of sync!</v-card-title>
       <v-card-text>
@@ -25,10 +25,15 @@
   </div>
 
   <v-btn
-    color="primary"
+    color="orange"
     @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
-  >Force Download</v-btn>
-  <v-btn v-if="isDebugMode" color="secondary" @click="handleOutOfSyncEvent">Trigger OOS</v-btn>
+  ><i class="fas fa-download mr-2" />Force Download</v-btn>
+  <v-btn
+    v-if="isDebugMode"
+    class="ml-2"
+    color="secondary"
+    @click="handleOutOfSyncEvent"
+  ><i class="fas fa-bug mr-2" />Trigger OOS</v-btn>
 
   <div v-show="syncing">
     <p class="text-body-1">
@@ -44,7 +49,7 @@
   import eventBus from '@/utils/eventBus'
   import { useAppStore } from '@/stores/app-store'
 
-  const showOverwriteDialog = ref(false)
+  const showOOSDecisionDialog = ref(false)
   const lastSavedDisplay = ref('Not saved yet, make a change!')
   const syncing = ref(false)
 
@@ -66,7 +71,7 @@
     syncing.value = false
 
     if (result === 'oos') {
-      showOverwriteDialog.value = true
+      showOOSDecisionDialog.value = true
     }
   }
 
@@ -76,6 +81,7 @@
     syncing.value = false
     if (result) {
       lastSavedDisplay.value = lastSaveDateFormat(new Date())
+      showOOSDecisionDialog.value = false
     }
   }
 
@@ -85,7 +91,7 @@
 
   const handleOutOfSyncEvent = () => {
     console.log('Sync: Received OOS event!')
-    showOverwriteDialog.value = true
+    showOOSDecisionDialog.value = true
   }
 
   // Function to convert date object to desired format
