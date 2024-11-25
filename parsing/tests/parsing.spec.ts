@@ -50,7 +50,7 @@ describe('common', () => {
                 foundrymk1: 16,
                 hadroncollider: 0.1,  // This has variable power consumption and is calculated in the recipe
                 manufacturermk1: 55,
-                nuclearpowerplant: 0, // TODO: Nuclear Power Generates power, it doesn't consume
+                "nuclear-power-plant": 0, // TODO: Nuclear Power Generates power, it doesn't consume
                 oilrefinery: 30,
                 packager: 10,
                 quantumencoder: 0.1,  // This has variable power consumption and is calculated in the recipe

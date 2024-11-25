@@ -7,7 +7,7 @@
         "foundrymk1": 16,
         "hadroncollider": 0.1,
         "manufacturermk1": 55,
-        "nuclearpowerplant": 0,
+        "nuclear-power-plant": 0,
         "oilrefinery": 30,
         "packager": 10,
         "quantumencoder": 0.1,
@@ -8158,7 +8158,7 @@
                 }
             ],
             "building": {
-                "name": "nuclearpowerplant",
+                "name": "nuclear-power-plant",
                 "power": 0
             },
             "isAlternate": false,
@@ -10150,7 +10150,7 @@
                 }
             ],
             "building": {
-                "name": "nuclearpowerplant",
+                "name": "nuclear-power-plant",
                 "power": 0
             },
             "isAlternate": false,

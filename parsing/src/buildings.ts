@@ -24,7 +24,7 @@ function getProducingBuildings(data: any[]): string[] {
                     producedInBuildings.forEach((buildingName: string) => producingBuildingsSet.add(buildingName));
                 }
             } else if (entry.ClassName === "Desc_NuclearWaste_C") { // manually add nuclear power plant, as it produces nuclear waste
-                producingBuildingsSet.add("nuclearpowerplant");
+                producingBuildingsSet.add("nuclear-power-plant");
             }
         });
 
@@ -52,7 +52,7 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
         });
 
         //Manually add nuclear power plant
-        buildingsPowerMap["nuclearpowerplant"] = 0;
+        buildingsPowerMap["nuclear-power-plant"] = 0;
 
     // Finally sort the map by key
     const sortedMap: { [key: string]: number } = {};
