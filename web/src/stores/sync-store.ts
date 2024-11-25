@@ -79,7 +79,7 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
 
   const handleSync = async () => {
     console.log('syncStore: Syncing...')
-    return await syncActions.syncData(stopSyncing.value, dataSavePending.value)
+    return syncActions.syncData(stopSyncing.value, dataSavePending.value)
   }
 
   const detectedChange = () => {

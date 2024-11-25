@@ -26,6 +26,14 @@ const mockAppStore = {
   setFactories: vi.fn(),
 }
 
+const mockServerData = {
+  user: 'foo',
+  data: [
+    newFactory('Foo1'),
+  ],
+  lastSaved: new Date(),
+}
+
 describe('SyncActions', () => {
   let syncActions: SyncActions
 
@@ -89,25 +97,29 @@ describe('SyncActions', () => {
   })
 
   describe('loadServerData', () => {
-    it('should fetch and set factories when valid data is retrieved', async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        json: vi.fn().mockResolvedValue(mockData),
-      })
+    beforeEach(() => {
+      // Reset mocks
+      vi.clearAllMocks()
+      vi.spyOn(mockAuthStore, 'validateToken').mockResolvedValue(true)
+    })
+    it('should fetch and do nothing when OOS is false', async () => {
+      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockServerData)
+      vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(false)
 
-      const result = await syncActions.loadServerData()
+      await syncActions.loadServerData()
+      expect(syncActions.getServerData).toHaveBeenCalledTimes(1)
+      expect(mockAppStore.setFactories).not.toHaveBeenCalled()
+    })
+    it('should fetch and do nothing when no data detected', async () => {
+      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(false)
 
-      expect(result).toBe(true)
-      expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
+      expect(await syncActions.loadServerData()).toBe(undefined)
+      expect(mockAppStore.setFactories).not.toHaveBeenCalled()
     })
 
-    it('should return "oos" when out-of-sync data is detected', async () => {
-      const mockOutOfSyncData = {
-        lastSaved: new Date(Date.now() + 1000 * 60).toISOString(), // Future date
-        data: {},
-      } as any
-
-      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockOutOfSyncData)
+    it('should return "oos" when out-of-sync data is detected and is not force loaded', async () => {
+      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockServerData)
+      vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
       const result = await syncActions.loadServerData()
       expect(result).toBe('oos')
@@ -120,24 +132,6 @@ describe('SyncActions', () => {
       expect(result).toBeUndefined()
     })
 
-    it('should do nothing upon being OOS and not force loaded', async () => {
-      const mockData = {
-        user: 'foo',
-        data: [
-          newFactory('Foo1'),
-        ],
-        lastSaved: new Date(),
-      }
-
-      // Stub the getServerData
-      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
-      vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
-
-      expect(await syncActions.loadServerData()).toBe('oos')
-
-      expect(mockAppStore.setFactories).not.toHaveBeenCalled()
-    })
-
     it('should correctly force load the factory data into appStore', async () => {
       const mockData = {
         user: 'foo',
@@ -148,10 +142,10 @@ describe('SyncActions', () => {
         lastSaved: new Date(),
       }
 
-      // Stub the getServerData
       vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
       vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
+      console.log('foo')
       await syncActions.loadServerData(true)
 
       expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
@@ -188,7 +182,7 @@ describe('SyncActions', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer mock-token`,
         },
-        body: JSON.stringify({ data: { someData: 'foo' } }),
+        body: JSON.stringify({ someData: 'foo' }),
       })
     })
 

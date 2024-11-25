@@ -19,7 +19,7 @@ export class SyncActions {
       return
     }
 
-    let dataObject
+    let dataObject: BackendFactoryDataResponse | false
     try {
       dataObject = await this.getServerData()
 
@@ -37,7 +37,7 @@ export class SyncActions {
 
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
-      console.log('Forcing data load...', dataObject)
+      console.log('Forcing data load...', dataObject.data)
       this.appStore.setFactories(dataObject.data)
       return
     }
@@ -82,7 +82,7 @@ export class SyncActions {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ data }),
+        body: JSON.stringify(data),
       })
     } catch (error) {
       if (error instanceof Error) {
