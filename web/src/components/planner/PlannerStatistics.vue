@@ -51,7 +51,25 @@
             <i class="fas fa-plug" />
             <span class="ml-3">Power Consumption and Generation</span>
           </h1>
-          <span class="ml-2"><b>[Coming soon!!]</b></span>
+          <span class="ml-2"><b>[Coming soon!!]<br></b></span>
+          <v-chip
+              class="sf-chip yellow"
+              variant="tonal"
+            >
+              <i class="fas fa-bolt" />
+              <span class="ml-2">
+                [n] MW consumed
+              </span>
+            </v-chip>
+            <v-chip
+              class="sf-chip green"
+              variant="tonal"
+            >
+              <i class="fas fa-bolt" />
+              <span class="ml-2">
+                [n] MW generated
+              </span>
+            </v-chip>
         </v-card-text>
 
       </v-card>
