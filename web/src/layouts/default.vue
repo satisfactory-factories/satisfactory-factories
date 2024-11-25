@@ -12,7 +12,7 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router'
 
-  // Disable auth
+  // Disable auth and other elements if an error is present as they will likely error themselves.
   const hasError = localStorage.getItem('error') ?? null
   const route = useRoute()
 
