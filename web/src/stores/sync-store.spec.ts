@@ -1,6 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useSyncStore } from '@/stores/sync-store'
-import { SyncActions } from '@/stores/sync/sync-actions'
 import eventBus from '@/utils/eventBus'
 
 vi.mock('@/utils/eventBus', () => ({
@@ -47,7 +46,7 @@ describe('useSyncStore', () => {
   it('should initialize with default values', () => {
     expect(syncStore.dataSavePending.value).toBe(false)
     expect(syncStore.dataLastSaved.value).toBeNull()
-    expect(syncStore.stopSyncing.value).toBe(true)
+    expect(syncStore.stopSyncing.value).toBe(false)
     expect(eventBus.on).toHaveBeenCalledWith('factoryUpdated', expect.any(Function))
   })
 
@@ -129,6 +128,14 @@ describe('useSyncStore', () => {
     it('should pass forceLoad to loadServerData', async () => {
       const result = await syncStore.handleDataLoad(true)
       expect(syncStore.syncActions.loadServerData).toHaveBeenCalledWith(true)
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('handleSync', () => {
+    it('should pass stopSyncing and dataSavePending to syncData', async () => {
+      const result = await syncStore.handleSync()
+      expect(syncStore.syncActions.syncData).toHaveBeenCalledWith(false, false)
       expect(result).toBe(true)
     })
   })
