@@ -4,7 +4,7 @@
       <v-card class="factory-card">
         <v-row class="header">
           <v-col class="text-h4 flex-grow-1" cols="8">
-            <i class="fas fa-globe" /><span class="ml-3">Plan  Statistics</span>
+            <i class="fas fa-globe" /><span class="ml-3">Plan Statistics</span>
           </v-col>
           <v-col class="text-right" cols="4">
             <v-btn
@@ -48,7 +48,7 @@
             <i class="fas fa-info-circle" />Showing all of the world power consumption and generation.
           </p>
           <h1 class="text-h5 mb-4">
-            <i class="fas fa-bolt " />
+            <i class="fas fa-plug" />
             <span class="ml-3">Power Consumption and Generation</span>
           </h1>
           <span class="ml-2"><b>[Coming soon!!]</b></span>
