@@ -2,9 +2,9 @@ import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataRespo
 import { config } from '@/config/config'
 
 export class SyncActions {
-  private authStore: any
-  private appStore: any
-  private apiUrl: string
+  private readonly authStore: any
+  private readonly appStore: any
+  private readonly apiUrl: string
 
   constructor (authStore: any, appStore: any) {
     this.authStore = authStore
