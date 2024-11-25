@@ -79,6 +79,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
       if (response.ok) {
         setLoggedInUser(username)
         setToken(data.token)
+
         // Emit an event to tell the sync service to pull in the data from the remote
         eventBus.emit('loggedIn')
 
