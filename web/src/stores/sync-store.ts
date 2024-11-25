@@ -60,6 +60,7 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
       dataSavePending.value = false
       dataLastSaved.value = new Date()
       localStorage.setItem('lastEdit', dataLastSaved.value.toISOString())
+      eventBus.emit('dataSynced')
     } else {
       console.error('syncStore: No result for syncData!')
       handleSyncError(new Error('No result for syncData!'))
@@ -72,9 +73,12 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     alert(`An error occurred while saving your data. Syncing has been disabled until page refresh in case of server outage. Please report this to Discord: ${error.message}`)
   }
 
-  const handleDataLoad = (forceLoad = false) => {
+  const handleDataLoad = async (forceLoad = false): Promise<void | 'oos'> => {
     console.log('syncStore: Loading data...')
-    return syncActions.loadServerData(forceLoad)
+    const result = await syncActions.loadServerData(forceLoad)
+    if (result === 'oos') {
+      eventBus.emit('dataOutOfSync')
+    }
   }
 
   const handleSync = async () => {
@@ -92,16 +96,16 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     stopSyncing.value = true
   }
 
-  const handleLoggedInEvent = () => {
+  const handleLoggedInEvent = async () => {
     console.log('Got logged in event, requesting data load')
 
     // If the user has no factory data, assume we want to force a load
     if (!appStore.getFactories().length) {
-      handleDataLoad(true)
+      await handleDataLoad(true)
       return
     }
 
-    handleDataLoad()
+    await handleDataLoad()
   }
 
   eventBus.on('factoryUpdated', detectedChange)

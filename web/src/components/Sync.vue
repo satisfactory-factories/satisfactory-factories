@@ -1,15 +1,16 @@
 <template>
-  <v-dialog max-width="600" :v-model="!showOverwriteDialog">
+  <v-dialog v-model="showOverwriteDialog" max-width="600">
     <v-card>
-      <v-card-title class="headline">Data out of sync!</v-card-title>
+      <v-card-title class="text-h5">Data out of sync!</v-card-title>
       <v-card-text>
         <p class="mb-4">Your local data and saved server data are out of sync. Please decide how to resolve this issue:</p>
-        <v-btn color="primary" @click="handleDataLoad(true)">
+        <v-btn class="mr-2" color="primary" @click="replaceRemoteData()">
+          Use local data*
+        </v-btn>
+        <v-btn color="secondary" @click="handleDataLoad(true)">
           Use server data
         </v-btn>
-        <v-btn color="secondary" @click="replaceRemoteData()">
-          Use local data
-        </v-btn>
+        <p class="mt-4 text-body-2">*Recommended if you have made changes recently. Upon your next change to the plan, it will overwrite the server data.</p>
       </v-card-text>
 
     </v-card>
@@ -21,13 +22,13 @@
     <p v-else>
       <i class="fas fa-sync fa-spin" /><span class="ml-2 font-weight-bold">Syncing...</span>
     </p>
-
   </div>
 
   <v-btn
     color="primary"
     @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
   >Force Download</v-btn>
+  <v-btn v-if="isDebugMode" color="secondary" @click="handleOutOfSyncEvent">Trigger OOS</v-btn>
 
   <div v-show="syncing">
     <p class="text-body-1">
@@ -40,12 +41,23 @@
 <script lang="ts" setup>
   import { ref } from 'vue'
   import { useSyncStore } from '@/stores/sync-store'
+  import eventBus from '@/utils/eventBus'
+  import { useAppStore } from '@/stores/app-store'
 
   const showOverwriteDialog = ref(false)
   const lastSavedDisplay = ref('Not saved yet, make a change!')
   const syncing = ref(false)
 
   const syncStore = useSyncStore()
+  const { isDebugMode } = useAppStore()
+
+  onMounted(() => {
+    console.log('Sync: listening for sync events')
+    eventBus.on('dataOutOfSync', handleOutOfSyncEvent)
+    eventBus.on('dataSynced', () => {
+      lastSavedDisplay.value = lastSaveDateFormat(new Date())
+    })
+  })
 
   // Handles loading of the data. If out of sync, the user will be prompted on what to do about it.
   const handleDataLoad = async (forceLoad = false) => {
@@ -69,6 +81,11 @@
 
   const confirmForceSync = (message: string) => {
     return confirm(message)
+  }
+
+  const handleOutOfSyncEvent = () => {
+    console.log('Sync: Received OOS event!')
+    showOverwriteDialog.value = true
   }
 
   // Function to convert date object to desired format
