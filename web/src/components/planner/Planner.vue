@@ -1,7 +1,6 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-
     <!--    &lt;!&ndash; The Drawer for Mobile &ndash;&gt;-->
     <!--    <v-navigation-drawer-->
     <!--      v-model="drawer"-->
