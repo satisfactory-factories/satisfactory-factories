@@ -53,45 +53,45 @@ describe('useSyncStore', () => {
     expect(eventBus.on).toHaveBeenCalledWith('factoryUpdated', expect.any(Function))
   })
 
-  describe('setupTick', () => {
-    beforeEach(() => {
-      vi.useFakeTimers()
-    })
+  // describe('setupTick', () => {
+  //   beforeEach(() => {
+  //     vi.useFakeTimers()
+  //   })
+  //
+  //   afterEach(() => {
+  //     vi.useRealTimers()
+  //   })
 
-    afterEach(() => {
-      vi.useRealTimers()
-    })
+  // TODO: Can't get the spy to work properly, it fails haveBeenCalled assertion.
+  // it('should set up a ticking interval', () => {
+  //   // Spy on tickSync before calling setupTick
+  //   const tickSyncSpy = vi.spyOn(syncStore, 'tickSync')
+  //
+  //   // Call setupTick to start the interval
+  //   syncStore.setupTick()
+  //
+  //   // Log active timers for debugging
+  //   console.log('Active timers after setupTick:', vi.getTimerCount())
+  //
+  //   // Advance the timer to trigger the interval
+  //   vi.advanceTimersByTime(11000) // Move forward 11 seconds to trigger the interval
+  //
+  //   // Assert that tickSync was called
+  //   expect(tickSyncSpy).toHaveBeenCalled()
+  // })
 
-    // TODO: Can't get the spy to work properly, it fails haveBeenCalled assertion.
-    // it('should set up a ticking interval', () => {
-    //   // Spy on tickSync before calling setupTick
-    //   const tickSyncSpy = vi.spyOn(syncStore, 'tickSync')
-    //
-    //   // Call setupTick to start the interval
-    //   syncStore.setupTick()
-    //
-    //   // Log active timers for debugging
-    //   console.log('Active timers after setupTick:', vi.getTimerCount())
-    //
-    //   // Advance the timer to trigger the interval
-    //   vi.advanceTimersByTime(11000) // Move forward 11 seconds to trigger the interval
-    //
-    //   // Assert that tickSync was called
-    //   expect(tickSyncSpy).toHaveBeenCalled()
-    // })
-
-    // TODO: Can't get clearInterval to mock properly.
-    // it('should clear the existing interval when stopped', () => {
-    //   // Call setupTick to start the interval
-    //   syncStore.setupTick()
-    //
-    //   // Stop syncing, which should clear the interval
-    //   syncStore.stopSync()
-    //
-    //   // Assert that clearInterval was called
-    //   expect(clearInterval).toHaveBeenCalled()
-    // })
-  })
+  // TODO: Can't get clearInterval to mock properly.
+  // it('should clear the existing interval when stopped', () => {
+  //   // Call setupTick to start the interval
+  //   syncStore.setupTick()
+  //
+  //   // Stop syncing, which should clear the interval
+  //   syncStore.stopSync()
+  //
+  //   // Assert that clearInterval was called
+  //   expect(clearInterval).toHaveBeenCalled()
+  // })
+  // })
 
   describe('tickSync', () => {
     it('should not sync if user is not logged in', async () => {
