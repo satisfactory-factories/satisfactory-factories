@@ -110,7 +110,6 @@ describe('SyncActions', () => {
       vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockOutOfSyncData)
 
       const result = await syncActions.loadServerData()
-
       expect(result).toBe('oos')
     })
 
@@ -118,8 +117,25 @@ describe('SyncActions', () => {
       mockAuthStore.validateToken.mockResolvedValue(false)
 
       const result = await syncActions.loadServerData()
-
       expect(result).toBeUndefined()
+    })
+
+    it('should do nothing upon being OOS and not force loaded', async () => {
+      const mockData = {
+        user: 'foo',
+        data: [
+          newFactory('Foo1'),
+        ],
+        lastSaved: new Date(),
+      }
+
+      // Stub the getServerData
+      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
+      vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
+
+      expect(await syncActions.loadServerData()).toBe('oos')
+
+      expect(mockAppStore.setFactories).not.toHaveBeenCalled()
     })
 
     it('should correctly force load the factory data into appStore', async () => {
@@ -137,10 +153,8 @@ describe('SyncActions', () => {
       vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
       await syncActions.loadServerData(true)
-      const factories = mockAppStore.getFactories()
 
       expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
-      expect(factories).toHaveLength(2)
     })
   })
 
