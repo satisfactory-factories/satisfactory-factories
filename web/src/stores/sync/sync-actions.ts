@@ -42,7 +42,10 @@ export class SyncActions {
       return
     }
 
-    return this.checkForOOS(dataObject) ? 'oos' : undefined
+    const isOOS = this.checkForOOS(dataObject)
+    console.log('loadServerData: OSS status:', isOOS)
+
+    return isOOS ? 'oos' : undefined
   }
 
   async syncData (stopSyncing: boolean, dataSavePending: boolean): Promise<boolean | void> {
