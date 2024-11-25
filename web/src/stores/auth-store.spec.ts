@@ -33,7 +33,7 @@ describe('auth-store', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: vi.fn().mockResolvedValue({ token: 'mock-token' }),
-      } as any)
+      })
       const token = await authStore.getToken()
       expect(token).toBe('mock-token')
     })
@@ -57,7 +57,7 @@ describe('auth-store', () => {
   describe('validateToken', () => {
     it('should validate a valid token successfully', async () => {
       // Mock fetch response for token validation
-      mockFetch.mockResolvedValueOnce({ ok: true } as any)
+      mockFetch.mockResolvedValueOnce({ ok: true })
 
       const result = await authStore.validateToken('mock-token')
       expect(result).toBe(true)
@@ -66,17 +66,17 @@ describe('auth-store', () => {
 
     it('should throw InvalidTokenError for invalid tokens during validation', async () => {
       // Mock fetch response for invalid token
-      mockFetch.mockResolvedValueOnce({ ok: false, status: 401 } as any)
+      mockFetch.mockResolvedValueOnce({ ok: false, status: 401 })
 
       await expect(authStore.validateToken('invalid-token')).rejects.toThrowError(InvalidTokenError)
     })
 
     it('should throw BackendOutageError for server errors during validation', async () => {
       // Mock fetch response for server error
-      mockFetch.mockResolvedValueOnce({ ok: false, status: 500 } as any)
+      mockFetch.mockResolvedValueOnce({ ok: false, status: 500 })
       await expect(authStore.validateToken('mock-token')).rejects.toThrowError(BackendOutageError)
 
-      mockFetch.mockResolvedValueOnce({ ok: false, status: 502 } as any)
+      mockFetch.mockResolvedValueOnce({ ok: false, status: 502 })
       await expect(authStore.validateToken('mock-token')).rejects.toThrowError(BackendOutageError)
     })
 
@@ -101,7 +101,7 @@ describe('auth-store', () => {
 
     it('should handle unknown responses during validation', async () => {
       // Mock fetch to throw an error
-      mockFetch.mockResolvedValueOnce({ ok: false, status: 1337 } as any)
+      mockFetch.mockResolvedValueOnce({ ok: false, status: 1337 })
 
       await expect(authStore.validateToken('mock-token')).rejects.toThrowError(
         'validateToken: Unknown response during token validation'
@@ -115,7 +115,7 @@ describe('auth-store', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: vi.fn().mockResolvedValue({ token: 'mock-token' }),
-      } as any)
+      })
 
       const result = await authStore.handleLogin('test-user', 'password123')
       expect(result).toBe(true)
@@ -129,7 +129,7 @@ describe('auth-store', () => {
         ok: false,
         status: 400,
         json: vi.fn().mockResolvedValue({}),
-      } as any)
+      })
 
       const result = await authStore.handleLogin('test-user', 'wrong-password')
       expect(result).toBe('Credentials incorrect. Please try again.')
@@ -141,7 +141,7 @@ describe('auth-store', () => {
         ok: false,
         status: 500,
         json: vi.fn().mockResolvedValue({}),
-      } as any)
+      })
 
       const result = await authStore.handleLogin('test-user', 'password123')
       expect(result).toBe('Backend server error! Please report this on Discord!')
@@ -153,10 +153,10 @@ describe('auth-store', () => {
         ok: false,
         status: 502,
         json: vi.fn().mockResolvedValue({}),
-      } as any)
+      })
 
       const result = await authStore.handleLogin('test-user', 'password123')
-      expect(result).toBe('Backend server error! Please report this on Discord!')
+      expect(result).toBe('Backend server offline! Please report this to Maelstrome on Discord!')
     })
 
     it('should handle unknown responses during login', async () => {
@@ -165,7 +165,7 @@ describe('auth-store', () => {
         ok: false,
         status: 1337,
         json: vi.fn().mockResolvedValue({}),
-      } as any)
+      })
 
       const result = await authStore.handleLogin('test-user', 'password123')
       expect(result).toBe('Unknown response! Please report this on Discord!')
@@ -209,13 +209,13 @@ describe('auth-store', () => {
   describe('handleRegister', () => {
     it('should register and log in a new user', async () => {
       // Mock fetch response for registration
-      mockFetch.mockResolvedValueOnce({ ok: true, json: vi.fn().mockResolvedValue({}) } as any)
+      mockFetch.mockResolvedValueOnce({ ok: true, json: vi.fn().mockResolvedValue({}) })
 
       // Mock fetch response for login
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: vi.fn().mockResolvedValue({ token: 'mock-token' }),
-      } as any)
+      })
 
       const result = await authStore.handleRegister('new-user', 'password123')
       expect(result).toBe(true)
@@ -228,7 +228,7 @@ describe('auth-store', () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
         json: vi.fn().mockResolvedValue({ message: 'Username already exists' }),
-      } as any)
+      })
 
       const result = await authStore.handleRegister('new-user', 'password123')
       expect(result).toBe('Registration failed. Username already exists')
@@ -260,6 +260,41 @@ describe('auth-store', () => {
 
       const result = await authStore.handleRegister('new-user', 'password123')
       expect(result).toBe('Registration failed due to no response from the server!')
+    })
+
+    it('should handle already registered usernames', async () => {
+      // Mock fetch response for registration error
+      mockFetch.mockResolvedValueOnce(mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        json: vi.fn().mockResolvedValue({}),
+      }))
+
+      const result = await authStore.handleRegister('new-user', 'password123')
+      expect(result).toBe('User new-user has already been registered.')
+    })
+
+    it('should handle backend errors gracefully', async () => {
+      // Mock fetch response for registration error
+      mockFetch.mockResolvedValueOnce(mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        json: vi.fn().mockResolvedValue({}),
+      }))
+
+      const result = await authStore.handleRegister('new-user', 'password123')
+      expect(result).toBe('Backend server error! Please report this on Discord!')
+    })
+    it('should handle backend outages gracefully', async () => {
+      // Mock fetch response for registration error
+      mockFetch.mockResolvedValueOnce(mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 502,
+        json: vi.fn().mockResolvedValue({}),
+      }))
+
+      const result = await authStore.handleRegister('new-user', 'password123')
+      expect(result).toBe('Backend server offline! Please report this to Maelstrome on Discord!')
     })
   })
 })

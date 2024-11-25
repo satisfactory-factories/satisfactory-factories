@@ -79,9 +79,12 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
       } else if (response.status === 400) {
         console.warn('handleLogin: Invalid credentials.', response, data)
         return 'Credentials incorrect. Please try again.'
-      } else if (response.status === 500 || response.status === 502) {
-        console.error('handleLogin: Backend 5xxed!', response, data)
+      } else if (response.status === 500) {
+        console.error('handleLogin: Backend 500ed!', response, data)
         return `Backend server error! Please report this on Discord!`
+      } else if (response.status === 502) {
+        console.error('handleLogin: Backend 502ed!', response, data)
+        return `Backend server offline! Please report this to Maelstrome on Discord!`
       } else {
         console.error('handleLogin: Unknown response!', response, data)
         return 'Unknown response! Please report this on Discord!'
@@ -122,7 +125,16 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
 
     if (response.ok) {
       // Log the user in automatically
-      return await handleLogin(username, password)
+      return handleLogin(username, password)
+    } else if (response.status === 400) {
+      console.warn('handleRegister: Invalid details', response, data)
+      return `User ${username} has already been registered.`
+    } else if (response.status === 500) {
+      console.error('handleRegister: Backend 500ed!', response, data)
+      return `Backend server error! Please report this on Discord!`
+    } else if (response.status === 502) {
+      console.error('handleRegister: Backend 502ed!', response, data)
+      return `Backend server offline! Please report this to Maelstrome on Discord!`
     } else {
       console.error('Registration failed:', response, data)
       return `Registration failed. ${data.errorResponse?.errmsg || data.message}`
