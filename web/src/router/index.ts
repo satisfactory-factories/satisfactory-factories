@@ -39,7 +39,6 @@ router.beforeEach(async (to, from, next) => {
 
   // Check if the factory data has corrupted
   try {
-    console.log('Router: Testing factory data')
     const appStore = useAppStore()
     appStore.getFactories()
   } catch (error) {
