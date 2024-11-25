@@ -178,7 +178,7 @@ describe('auth-store', () => {
       })
 
       const result = await authStore.handleLogin('test-user', 'password123')
-      expect(result).toBe('Backend server offline. Please report this on Discord!')
+      expect(result).toBe('Backend server offline! Please report this error on Discord: "Network error"')
     })
 
     it('should handle unknown errors', async () => {
@@ -241,7 +241,7 @@ describe('auth-store', () => {
       })
 
       const result = await authStore.handleRegister('new-user', 'password123')
-      expect(result).toBe(`Registration failed due to unknown error: Something went bang`)
+      expect(result).toBe(`Backend server offline! Please report this error on Discord: "Something went bang"`)
     })
     it('should handle unexpected registration non instanced errors gracefully', async () => {
       // Mock fetch response for registration error
@@ -259,7 +259,7 @@ describe('auth-store', () => {
       mockFetch.mockResolvedValueOnce(undefined)
 
       const result = await authStore.handleRegister('new-user', 'password123')
-      expect(result).toBe('Registration failed due to no response from the server!')
+      expect(result).toBe('Registration failed due to incorrect response from the server! Please report this on Discord!')
     })
 
     it('should handle already registered usernames', async () => {
