@@ -20,8 +20,11 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   }
 
   const getToken = async () => {
-    await validateToken(token.value) // Will fail if it throws an error
-    return token.value ?? ''
+    // This is a hack to get round the need of dependency injection for the store, using localStorage as a middleman.
+    // It's not ideal, but it works for now.
+    const token = localStorage.getItem('token') ?? ''
+    await validateToken(token) // Will fail if it throws an error
+    return token ?? ''
   }
 
   const validateToken = async (token?: string): Promise<boolean | string> => {
@@ -151,7 +154,11 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   }
 
   const getLoggedInUser = (): string => {
-    return loggedInUser.value ?? ''
+    // This is a hack to get round the need of depenedency injection for the store.
+    // We're using here localStorage as a proxy for storing state, which is not ideal.
+    const user = localStorage.getItem('loggedInUser') ?? ''
+    console.log('getLoggedInUser:', user)
+    return user
   }
 
   const handleLogout = () => {
