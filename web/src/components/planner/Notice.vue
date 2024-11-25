@@ -77,7 +77,7 @@
     link: string
   }
 
-  const currentChangeId = '2024-11-18' // Change this when the list gets updated to prompt people to have a look
+  const currentChangeId = '2024-11-24' // Change this when the list gets updated to prompt people to have a look
   const lastSeenChangeId = ref<string>(
     localStorage.getItem('lastSeenChangeId') ?? ''
   )
@@ -112,22 +112,6 @@
 
   const issues: Issue[] = [
     {
-      description: "Various recipes are reporting incorrect power values. Don't trust the power values until this is resolved.",
-      type: 'bug',
-      severity: 'major',
-      status: 'open',
-      updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/35',
-    },
-    {
-      description: 'Quantum Encoder & Particle Accelerator has no power values.',
-      type: 'bug',
-      severity: 'minor',
-      status: 'open',
-      updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/26',
-    },
-    {
       description: 'Imports are not showing up for collapsed / hidden factories.',
       type: 'bug',
       severity: 'minor',
@@ -150,14 +134,6 @@
       status: 'open',
       updated: new Date('2024-11-18 15:01:00Z+0000'),
       link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/11',
-    },
-    {
-      description: 'Quantum Converter support (omitted for Alpha release), it\'s a surprisingly complex thing to get right...',
-      type: 'feature',
-      severity: 'major',
-      status: 'open',
-      updated: new Date('2024-11-18 15:01:00Z+0000'),
-      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/64',
     },
     {
       description: 'Goal Maker - Configure a goal to show on the right side enable the creation of factories to meet the demand.',
@@ -233,6 +209,30 @@
     },
 
     // CLOSED
+    {
+      description: "Various recipes are reporting incorrect power values. Don't trust the power values until this is resolved.",
+      type: 'bug',
+      severity: 'major',
+      status: 'closed',
+      updated: new Date('2024-11-24 23:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/35',
+    },
+    {
+      description: 'Quantum Encoder & Particle Accelerator has no power values.',
+      type: 'bug',
+      severity: 'minor',
+      status: 'closed',
+      updated: new Date('2024-11-24 23:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/26',
+    },
+    {
+      description: 'Quantum Converter support (omitted for Alpha release), it\'s a surprisingly complex thing to get right...',
+      type: 'feature',
+      severity: 'major',
+      status: 'closed',
+      updated: new Date('2024-11-24 23:01:00Z+0000'),
+      link: 'https://github.com/Maelstromeous/satisfactory-factories/issues/64',
+    },
     {
       description: 'Inflated ingredient amounts for recipes creating more than 1 item per run.',
       type: 'bug',
