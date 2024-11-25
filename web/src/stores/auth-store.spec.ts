@@ -87,7 +87,7 @@ describe('auth-store', () => {
       })
 
       await expect(authStore.validateToken('mock-token')).rejects.toThrowError(
-        'Validate-token could not be performed!'
+        'validate-token could not be performed!'
       )
     })
     it('should handle empty responses during validation', async () => {
