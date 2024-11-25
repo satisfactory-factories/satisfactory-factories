@@ -1,9 +1,8 @@
 import mitt from 'mitt'
 
-// Define the events you want to emit and listen for
 type Events = {
-  factoryUpdated: void;
-  loggedIn: void;
+  factoryUpdated: undefined; // No payload for this event
+  loggedIn: undefined; // No payload for this event
 };
 
 const eventBus = mitt<Events>()
