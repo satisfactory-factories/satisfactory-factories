@@ -144,9 +144,11 @@ export class SyncActions {
     const serverSaved = new Date(data.lastSaved)
     const clientEdited = this.appStore.getLastEdit()
     if (clientEdited < serverSaved) {
-      console.warn('Local data is out of sync with server data.')
+      console.warn('Server data is ahead of remote, assuming out of sync.')
       return true
     }
+    console.debug('Server data is behind client data, assuming local is correct.')
+
     return false
   }
 }

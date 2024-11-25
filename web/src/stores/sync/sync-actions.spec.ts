@@ -174,23 +174,29 @@ describe('SyncActions', () => {
   })
 
   describe('checkForOOS', () => {
-    it('should detect when data is in sync', () => {
+    it('should detect when server data is behind local (not OOS)', () => {
       const mockData = {
-        lastSaved: new Date(Date.now() - 1000 * 60).toISOString(), // 1 minute ago
+        lastSaved: new Date(Date.now() - 2000 * 60), // 2 minutes ago
       }
 
-      const result = syncActions.checkForOOS(mockData as any)
+      // Apply mocks
+      mockAppStore.getLastEdit = vi.fn().mockReturnValue(new Date()) // Now
+      syncActions = new SyncActions(mockAuthStore, mockAppStore)
 
+      const result = syncActions.checkForOOS(mockData as any)
       expect(result).toBe(false)
     })
 
-    it('should detect out-of-sync data', () => {
+    it('should detect when server data is ahead of local (potential OOS)', () => {
       const mockData = {
-        lastSaved: new Date(Date.now() + 1000 * 60).toISOString(), // Future date
+        lastSaved: new Date(), // Now
       }
 
-      const result = syncActions.checkForOOS(mockData as any)
+      // Apply mocks
+      mockAppStore.getLastEdit = vi.fn().mockReturnValue(new Date(Date.now() - 2000 * 60)) // 2 mins ago
+      syncActions = new SyncActions(mockAuthStore, mockAppStore)
 
+      const result = syncActions.checkForOOS(mockData as any)
       expect(result).toBe(true)
     })
   })
