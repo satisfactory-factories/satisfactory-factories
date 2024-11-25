@@ -36,18 +36,14 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
       return
     }
 
-    console.log('syncStore: Ticking...')
     if (stopSyncing.value) {
-      console.warn('syncStore: Syncing is disabled.')
       return
     }
 
     if (!dataSavePending.value) {
-      console.debug('syncStore: No data to save.')
       return
     }
 
-    console.debug('syncStore: Syncing...')
     let result
 
     try {
