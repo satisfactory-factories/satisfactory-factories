@@ -94,6 +94,13 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
 
   const handleLoggedInEvent = () => {
     console.log('Got logged in event, requesting data load')
+
+    // If the user has no factory data, assume we want to force a load
+    if (!appStore.getFactories().length) {
+      handleDataLoad(true)
+      return
+    }
+
     handleDataLoad()
   }
 

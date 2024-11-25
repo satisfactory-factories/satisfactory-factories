@@ -16,6 +16,7 @@ export class SyncActions {
     const token = await this.authStore.getToken()
     const isTokenValid = await this.authStore.validateToken(token)
     if (!isTokenValid) {
+      console.error('loadServerData: Token is invalid!')
       return
     }
 
@@ -24,12 +25,12 @@ export class SyncActions {
       dataObject = await this.getServerData()
 
       if (!dataObject) {
-        console.warn('No data found on server. Aborting data load.')
+        console.warn('loadServerData: No data found on server. Aborting data load.')
         return
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Data load failed:', error)
+        console.error('loadServerData: Data load failed:', error)
         alert(`Unable to complete data load due to a server error. Please report the following error to Discord: ${error.message}`)
       }
       return
@@ -37,7 +38,7 @@ export class SyncActions {
 
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
-      console.log('Forcing data load...', dataObject.data)
+      console.log('loadServerData: Forcing data load...', dataObject.data)
       this.appStore.setFactories(dataObject.data)
       return
     }
