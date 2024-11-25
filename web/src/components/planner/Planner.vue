@@ -269,8 +269,7 @@
       ['quantumencoder', 'Quantum Encoder'],
       ['smeltermk1', 'Smelter'],
       ['waterExtractor', 'Water Extractor'],
-      ['nuclear-power-plant', 'Nuclear Power Plant'],
-      ['nuclearpowerplant', 'Nuclear Power Plant'], // TODO: shouldn't need both lines here - but I suspect some caching is happening while testing locally. Revisit after PR is merged and website is refreshed
+      ['nuclearpowerplant', 'Nuclear Power Plant'],
     ])
 
     return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`
