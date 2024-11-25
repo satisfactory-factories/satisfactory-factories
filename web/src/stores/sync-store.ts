@@ -92,8 +92,13 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     stopSyncing.value = true
   }
 
+  const handleLoggedInEvent = () => {
+    console.log('Got logged in event, requesting data load')
+    handleDataLoad()
+  }
+
   eventBus.on('factoryUpdated', detectedChange)
-  eventBus.on('loggedIn', handleDataLoad)
+  eventBus.on('loggedIn', handleLoggedInEvent)
   console.log('syncStore: Listening for changes...')
 
   return {
