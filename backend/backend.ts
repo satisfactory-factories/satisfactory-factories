@@ -33,8 +33,9 @@ const shareRateLimit = rateLimit({
 });
 
 const app: Express.Application = Express();
-app.use(Express.urlencoded({ extended: true }));
-app.use(Express.json());
+// Fixes #172 413 Payload Too Large errors
+app.use(Express.json({ limit: '20mb' }));
+app.use(Express.urlencoded({ limit: '20mb', extended: true }));
 app.set('trust proxy', 1); // Trust first proxy
 app.use(apiRateLimit);
 
