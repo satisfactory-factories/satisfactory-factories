@@ -4,16 +4,22 @@ import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
 import { SyncActions } from '@/stores/sync/sync-actions'
 
-export const useSyncStore = (syncActionsInject?: any | undefined) => {
+// Overrides used for dependency injecting mocks into the store when under test.
+interface SyncStoreOverrides {
+  authStore?: ReturnType<typeof useAuthStore>
+  appStore?: ReturnType<typeof useAppStore>
+  syncActions?: any
+}
+
+export const useSyncStore = (overrides?: SyncStoreOverrides) => {
   const dataSavePending = ref<boolean>(false)
   const dataLastSaved = ref<Date | null>(null)
   const stopSyncing = ref<boolean>(false)
   let syncInterval: NodeJS.Timeout
 
-  const authStore = useAuthStore()
-  const appStore = useAppStore()
-
-  const syncActions = syncActionsInject ?? new SyncActions(authStore, appStore)
+  const authStore = overrides?.authStore ?? useAuthStore()
+  const appStore = overrides?.appStore ?? useAppStore()
+  const syncActions = overrides?.syncActions ?? new SyncActions(authStore, appStore)
 
   const setupTick = () => {
     clearInterval(syncInterval) // Prevents double-clocking
@@ -24,6 +30,12 @@ export const useSyncStore = (syncActionsInject?: any | undefined) => {
   }
 
   const tickSync = async () => {
+    const isLoggedIn = authStore.getLoggedInUser()
+    if (!isLoggedIn) {
+      console.debug('syncStore: Not logged in. Skipping sync.')
+      return
+    }
+
     console.log('syncStore: Ticking...')
     if (stopSyncing.value) {
       console.warn('syncStore: Syncing is disabled.')
@@ -71,7 +83,7 @@ export const useSyncStore = (syncActionsInject?: any | undefined) => {
 
   const handleSync = async () => {
     console.log('syncStore: Syncing...')
-    return syncActions.syncData(stopSyncing.value, dataSavePending.value)
+    return await syncActions.syncData(stopSyncing.value, dataSavePending.value)
   }
 
   const detectedChange = () => {
