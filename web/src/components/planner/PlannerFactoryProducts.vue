@@ -125,7 +125,7 @@
         </v-chip>
       </v-row>
       <v-row
-        v-if="Object.keys(product.requirements).length > 0"
+        v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements.amount > 0 || product.buildingRequirements.totalPower > 0"
         class="my-2 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
