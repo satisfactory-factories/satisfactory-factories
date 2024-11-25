@@ -1,5 +1,6 @@
 import { SyncActions } from '@/stores/sync/sync-actions'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { newFactory } from '@/utils/factory-management/factory'
 
 const apiUrl = 'http://mock.com'
 const mockData = { data: 'mock-data' }
@@ -119,6 +120,27 @@ describe('SyncActions', () => {
       const result = await syncActions.loadServerData()
 
       expect(result).toBeUndefined()
+    })
+
+    it('should correctly force load the factory data into appStore', async () => {
+      const mockData = {
+        user: 'foo',
+        data: [
+          newFactory('Foo1'),
+          newFactory('Foo2'),
+        ],
+        lastSaved: new Date(),
+      }
+
+      // Stub the getServerData
+      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
+      vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
+
+      await syncActions.loadServerData(true)
+      const factories = mockAppStore.getFactories()
+
+      expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
+      expect(factories).toHaveLength(2)
     })
   })
 

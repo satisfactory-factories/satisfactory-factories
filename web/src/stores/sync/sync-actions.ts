@@ -12,7 +12,7 @@ export class SyncActions {
     this.apiUrl = config.apiUrl
   }
 
-  async loadServerData (forceLoad = false): Promise<'oos' | true | void> {
+  async loadServerData (forceLoad = false): Promise<'oos' | void> {
     const token = await this.authStore.getToken()
     const isTokenValid = await this.authStore.validateToken(token)
     if (!isTokenValid) {
@@ -35,22 +35,14 @@ export class SyncActions {
       return
     }
 
-    if (!dataObject) {
-      console.warn('No data found in response. Could be the first time the user has logged in.')
+    // Don't care about sync state if we're forcing a load
+    if (forceLoad) {
+      console.log('Forcing data load...', dataObject)
+      this.appStore.setFactories(dataObject.data)
       return
     }
 
-    // Check for OOS
-    if (!forceLoad && this.checkForOOS(dataObject)) {
-      return 'oos'
-    }
-
-    if (forceLoad) {
-      console.log('Forcing data load...')
-    }
-
-    this.appStore.setFactories(dataObject.data)
-    return true
+    return this.checkForOOS(dataObject) ? 'oos' : undefined
   }
 
   async syncData (stopSyncing: boolean, dataSavePending: boolean): Promise<boolean | void> {
