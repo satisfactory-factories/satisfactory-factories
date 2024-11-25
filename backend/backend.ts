@@ -127,8 +127,10 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
       return res.status(400).json({ message: 'User already exists.' });
     }
 
+
     const user = new User({ username, password: hashedPassword });
     await user.save();
+    console.log(`Successfully registered new user ${username}!`);
     res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
     res.status(400).json({ message: 'Registration failed.', error });
