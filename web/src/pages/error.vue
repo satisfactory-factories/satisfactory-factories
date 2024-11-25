@@ -44,7 +44,6 @@
 
 </template>
 <script setup lang="ts">
-  import router from '@/router'
   const copied = ref(false)
 
   const error = localStorage.getItem('error') ?? ''
