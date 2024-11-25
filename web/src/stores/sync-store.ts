@@ -6,8 +6,8 @@ import { SyncActions } from '@/stores/sync/sync-actions'
 
 // Overrides used for dependency injecting mocks into the store when under test.
 interface SyncStoreOverrides {
-  authStore?: ReturnType<typeof useAuthStore>
-  appStore?: ReturnType<typeof useAppStore>
+  authStore?: any
+  appStore?: any
   syncActions?: any
 }
 

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useSyncStore } from '@/stores/sync-store'
 import eventBus from '@/utils/eventBus'
 
@@ -12,9 +12,9 @@ const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {})
 
 describe('useSyncStore', () => {
   let syncStore: ReturnType<typeof useSyncStore>
-  let mockAuthStore
-  let mockAppStore
-  let mockSyncActions
+  let mockAuthStore: Record<string, any>
+  let mockAppStore: Record<string, any>
+  let mockSyncActions: Record<string, any>
 
   beforeEach(() => {
     vi.resetAllMocks()
