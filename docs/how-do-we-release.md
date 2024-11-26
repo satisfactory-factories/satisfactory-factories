@@ -24,7 +24,7 @@ The backend system is hosted on Mael's private NAS server in his home. It is pro
 
 However, this does mean that only he will have the ability to deploy the backend system. This is not ideal, but it is the current state of the project.
 
-It is done so by running `/backend/publish.sh`, which has an SSH connection to run a simple `docker compose pull && docker compose down/up` commands to deploy the docker container.
+It is done so by running `/backend/publish.sh`, which has an SSH connection to run a simple `docker-compose pull && docker-compose down && docker-compose up` commands to deploy the docker container.
 
 It is intended that this will be automated in the future where as of building a docker container, it will be detected and pulled by the server, and the server will automatically restart the container.
 
