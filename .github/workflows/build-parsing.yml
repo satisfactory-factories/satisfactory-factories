@@ -1,4 +1,4 @@
-name: Parsing builds
+name: Parsing Checks
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: Backend builds
+name: Backend Checks
 on:
   push:
     branches:

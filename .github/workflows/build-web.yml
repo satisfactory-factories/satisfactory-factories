@@ -1,4 +1,4 @@
-name: Component Builds
+name: Web Checks
 on:
   push:
     branches:
