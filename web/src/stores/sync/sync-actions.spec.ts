@@ -145,9 +145,7 @@ describe('SyncActions', () => {
       vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
       vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
-      console.log('foo')
-      await syncActions.loadServerData(true)
-
+      expect(await syncActions.loadServerData(true)).toBe(true)
       expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
     })
   })

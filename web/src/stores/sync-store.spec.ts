@@ -152,6 +152,16 @@ describe('useSyncStore', () => {
       expect(syncStore.syncActions.loadServerData).toHaveBeenCalledWith(false)
     })
 
+    it('should return true if loadServerData also returns true', async () => {
+      syncStore.syncActions.loadServerData = vi.fn().mockResolvedValue(true)
+      expect(await syncStore.handleDataLoad()).toBe(true)
+    })
+
+    it('should return undefined if loadServerData also returns undefined', async () => {
+      syncStore.syncActions.loadServerData = vi.fn().mockResolvedValue(undefined)
+      expect(await syncStore.handleDataLoad()).toBe(undefined)
+    })
+
     it('should pass forceLoad to loadServerData', async () => {
       await syncStore.handleDataLoad(true)
       expect(syncStore.syncActions.loadServerData).toHaveBeenCalledWith(true)

@@ -12,7 +12,7 @@ export class SyncActions {
     this.apiUrl = config.apiUrl
   }
 
-  async loadServerData (forceLoad = false): Promise<'oos' | void> {
+  async loadServerData (forceLoad = false): Promise<'oos' | void | true> {
     const token = await this.authStore.getToken()
     const isTokenValid = await this.authStore.validateToken(token)
     if (!isTokenValid) {
@@ -38,9 +38,9 @@ export class SyncActions {
 
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
-      console.log('loadServerData: Forcing data load...', dataObject.data)
+      console.log('loadServerData: Forcing data load.')
       this.appStore.setFactories(dataObject.data)
-      return
+      return true
     }
 
     const isOOS = this.checkForOOS(dataObject)

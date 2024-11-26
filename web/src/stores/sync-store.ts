@@ -79,6 +79,8 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     if (result === 'oos') {
       eventBus.emit('dataOutOfSync')
     }
+
+    return result
   }
 
   const handleSync = async () => {

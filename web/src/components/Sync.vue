@@ -66,6 +66,10 @@
     if (result === 'oos') {
       showOOSDecisionDialog.value = true
     }
+
+    if (result) {
+      showOOSDecisionDialog.value = false
+    }
   }
 
   const replaceRemoteData = async () => {
