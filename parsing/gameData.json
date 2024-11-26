@@ -10226,49 +10226,49 @@
     ],
     "powerGenerationRecipes": [
         {
-            "id": "Build_GeneratorBiomass_Automated_C",
+            "id": "GeneratorBiomass_Automated",
             "displayName": "Build_GeneratorBiomass_Automated_C",
             "ingredients": [],
             "products": [],
             "building": {
-                "name": "",
-                "power": 0
+                "name": "GeneratorBiomass_Automated",
+                "power": "30.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
         },
         {
-            "id": "Build_GeneratorCoal_C",
+            "id": "GeneratorCoal",
             "displayName": "Build_GeneratorCoal_C",
             "ingredients": [],
             "products": [],
             "building": {
-                "name": "",
-                "power": 0
+                "name": "GeneratorCoal",
+                "power": "75.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
         },
         {
-            "id": "Build_GeneratorFuel_C",
+            "id": "GeneratorFuel",
             "displayName": "Build_GeneratorFuel_C",
             "ingredients": [],
             "products": [],
             "building": {
-                "name": "",
-                "power": 0
+                "name": "GeneratorFuel",
+                "power": "250.000000"
             },
             "isAlternate": false,
             "isFicsmas": false
         },
         {
-            "id": "Build_GeneratorNuclear_C",
+            "id": "GeneratorNuclear",
             "displayName": "Build_GeneratorNuclear_C",
             "ingredients": [],
             "products": [],
             "building": {
-                "name": "",
-                "power": 0
+                "name": "GeneratorNuclear",
+                "power": "2500.000000"
             },
             "isAlternate": false,
             "isFicsmas": false

@@ -191,15 +191,65 @@ function getPowerGeneratingRecipes(
         .forEach((recipe: any) => {
             //console.log(recipe.ClassName);   
 
-            let ingredients: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
-            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];   
+            const ingredients = <any>[];
+            // const ingredients = recipe.mIngredients
+            //     ? recipe.mIngredients
+            //         .match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
+            //         ?.map((ingredientStr: string) => {
+            //             const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
+            //             if (match) {
+            //                 const partName = match[1];
+            //                 let amount = parseInt(match[2], 10);
+
+            //                 if (isFluid(partName)) {
+            //                     amount = amount / 1000;
+            //                 }
+
+            //                 const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+
+            //                 return {
+            //                     part: partName,
+            //                     amount,
+            //                     perMin
+            //                 };
+            //             }
+            //             return null;
+            //         })
+            //         .filter((ingredient: any) => ingredient !== null)
+            //     : [];
+
+            // // Parse mProduct to extract all products
+            // let productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
+            // // exception for automated miner recipes - as the product is a BP_ItemDescriptor
+            // if (recipe.ClassName === "Recipe_Alternate_AutomatedMiner_C") {
+            //     productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/BP_ItemDescriptor(.*?)\.BP_ItemDescriptor.*?",Amount=(\d+)/g)];
+            // }
+
+            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
+            // productMatches.forEach(match => {
+            //     const productName = match[1];
+            //     let amount = parseInt(match[2], 10);
+
+            //     if (isFluid(productName)) {
+            //         amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
+            //     }
+
+            //     const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+
+            //     products.push({
+            //         part: productName,
+            //         amount,
+            //         perMin,
+            //         isByProduct: products.length > 0
+            //     });
+            // }); 
             let building : Building = {
-                name: '', // Use the first valid building, or empty string if none
-                power: 0, // Use calculated power or 0
+                name: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""), // Use the first valid building, or empty string if none
+                power: recipe.mPowerProduction, // generated power
             };    
 
             recipes.push({
-                id: recipe.ClassName,//.replace("Build_", "").replace(/_C$/, ""),
+                id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
                 displayName: recipe.ClassName,
                 ingredients,
                 products,
