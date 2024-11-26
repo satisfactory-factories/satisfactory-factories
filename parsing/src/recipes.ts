@@ -118,8 +118,8 @@ function getRecipes(
                 // get the power from the recipe instead of the building
                 lowPower = Number(recipe.mVariablePowerConsumptionConstant);
                 highPower = Number(recipe.mVariablePowerConsumptionFactor);
-                // calculate the average power
-                if (lowPower && highPower) {
+                // calculate the average power: Note that because low power can be 0, (and often is), we can't use truthy checks to validate these values
+                if (lowPower !== null && highPower !== null) {
                     powerPerBuilding = (lowPower + highPower) / 2;
                 }
             }
@@ -130,7 +130,7 @@ function getRecipes(
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
             // keeping this in a separate conditional prevents a ton of properties with null values from being added to the building object
-            if (lowPower && highPower) {
+            if (lowPower !== null && highPower !== null) {
                 building.minPower = lowPower;
                 building.maxPower = highPower;
             }
