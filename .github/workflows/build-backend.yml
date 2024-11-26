@@ -1,0 +1,41 @@
+name: Backend builds
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+jobs:
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+# Will add later after all files have been fixed to linting standards
+#      - name: linter check
+#        run: pnpm lint-check
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Backend
+        run: pnpm build
