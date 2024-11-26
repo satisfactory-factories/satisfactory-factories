@@ -120,7 +120,7 @@
                 </span>
               </v-chip>
             </div>
-            <v-divider color="#ccc" thickness="2px" />
+            <v-divider class="my-2" color="#ccc" thickness="2px" />
             <div>
               <h2 class="text-h6">
                 <i class="fas fa-plug" />
