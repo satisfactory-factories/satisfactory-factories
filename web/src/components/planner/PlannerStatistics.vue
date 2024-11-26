@@ -45,7 +45,7 @@
         </v-card-text>
         <v-card-text v-show="!hidden" class="text-body-1">
           <p v-show="helpText" class="mb-4">
-            <i class="fas fa-info-circle" />Showing all of the world power consumption and generation.
+            <i class="fas fa-info-circle mr-2" />Showing all of the world power consumption and generation.
           </p>
           <h1 class="text-h5 mb-4">
             <i class="fas fa-power-off" />
