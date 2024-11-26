@@ -39,7 +39,7 @@
             class="sf-chip blue"
           >
             <game-asset :subject="ore.id" type="item" />
-            <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ ore.amount }}</span>
+            <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ formatNumber(ore.amount) }}</span>
             <span v-else class="ml-2">Water: <i class="fas fa-infinity" /></span>
           </v-chip>
           <v-divider class="my-2" />
@@ -74,6 +74,7 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue'
   import { WorldRawResource } from '@/interfaces/planner/FactoryInterface'
+  import { formatNumber } from '@/utils/numberFormatter'
 
   defineProps<{
     worldRawResources: { [key: string]: WorldRawResource };
