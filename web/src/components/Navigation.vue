@@ -35,6 +35,7 @@
     v-if="smAndDown"
     v-model="isDrawerOpen"
     class="pa-2"
+    width="300"
   >
     <div id="navigationDrawer" />
     <template #append>
