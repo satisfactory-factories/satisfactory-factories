@@ -120,21 +120,22 @@
                 </span>
               </v-chip>
             </div>
-        <v-divider color="#ccc" thickness="2px" />
-        <div>
-          <h2 class="text-h6">
-            <i class="fas fa-plug" />
-              <span class="ml-3">Factory Power</span>
-           </h2>
-            <v-chip
-              class="sf-chip yellow"
-              variant="tonal"
-            >
-              <i class="fas fa-bolt" />
-              <span class="ml-2">
-                {{ formatNumber(factory.totalPower) }} MW
-              </span>
-            </v-chip>
+            <v-divider color="#ccc" thickness="2px" />
+            <div>
+              <h2 class="text-h6">
+                <i class="fas fa-plug" />
+                  <span class="ml-3">Factory Power</span>
+              </h2>
+              <v-chip
+                class="sf-chip yellow"
+                variant="tonal"
+              >
+                <i class="fas fa-bolt" />
+                <span class="ml-2">
+                  {{ formatNumber(factory.totalPower) }} MW
+                </span>
+              </v-chip>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
