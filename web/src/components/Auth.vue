@@ -88,6 +88,7 @@
             <i class="fas fa-sign-out mr-2" />Logout
           </v-btn>
           <v-btn
+            v-if="isDebugMode"
             class="mr-2"
             color="secondary"
             @click="mangleToken"
@@ -110,8 +111,10 @@
   import { useAuthStore } from '@/stores/auth-store'
   import Sync from '@/components/Sync.vue'
   import eventBus from '@/utils/eventBus'
+  import { useAppStore } from '@/stores/app-store'
 
   const authStore = useAuthStore()
+  const { isDebugMode } = useAppStore()
 
   const trayOpen = ref(false)
   const username = ref('')
