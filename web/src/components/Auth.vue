@@ -1,24 +1,13 @@
 <template>
-  <v-dialog v-model="showOverwriteDialog" max-width="400">
-    <v-card>
-      <v-card-title class="headline">Confirm Overwrite</v-card-title>
-      <v-card-text>
-        You have unsaved changes locally. Do you want to overwrite your changes with the saved data from the server?
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="primary" @click="confirmOverwrite">Overwrite</v-btn>
-        <v-btn color="secondary" @click="cancelOverwrite">Cancel</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
   <v-dialog
-    max-width="400"
-    :model-value="showSessionExpiredAlert"
+    v-model="showSessionExpiredDialog"
+    max-width="600"
   >
     <v-card class="border-md">
-      <v-card-title class="text-h5">Session Expired</v-card-title>
+      <v-card-title class="text-h5">Session Expired!</v-card-title>
       <v-card-text>
-        <p>Your session has expired, Pioneer. Please log in again!</p>
+        <p class="mb-4">Your session has expired, Pioneer. Please log in again!</p>
+        <p>If this keeps happening repeatedly or much sooner than expected (30 days), please report it on Discord!</p>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" variant="elevated" @click="closeSessionExpiredAlert">Ok</v-btn>
@@ -26,14 +15,13 @@
     </v-card>
   </v-dialog>
   <div class="position-absolute right-0 ma-2 mt-3 text-right">
-    <v-btn v-if="!loggedInUser" @click="toggleTray">Sign In, Pioneer!</v-btn>
-    <v-btn v-else @click="toggleTray"><i class="fas fa-user" /><span class="ml-2">{{ loggedInUser }}</span></v-btn>
-    <div v-show="isSaving">
-      <p class="text-body-1">
-        <i class="fas fa-sync fa-spin" /><span class="ml-2">Saving
-        </span>
-      </p>
-    </div>
+    <v-btn v-if="!loggedInUser" @click="toggleTray">
+      <i class="fas fa-sign-in mr-2" />Sign In, Pioneer!
+    </v-btn>
+    <v-btn v-else @click="toggleTray">
+      <i class="fas fa-user mr-2" />{{ loggedInUser }}
+    </v-btn>
+
     <v-slide-x-transition>
       <v-card v-if="trayOpen" class="tray">
         <v-card-text v-if="!loggedInUser">
@@ -43,19 +31,23 @@
                 color="primary"
                 :variant="showLogin === true ? 'flat' : 'tonal'"
                 @click="showLoginForm"
-              >Login</v-btn>
+              >
+                <i class="fas fa-sign-in mr-2" />Sign In
+              </v-btn>
               <v-btn
                 color="green"
                 :variant="showRegister ? 'flat' : 'tonal'"
                 @click="showRegisterForm"
-              >Register</v-btn>
+              >
+                <i class="fas fa-pencil mr-2" />Register
+              </v-btn>
             </v-btn-group>
           </div>
           <p class="text-body-2 text-left mb-4">
-            Register or log in to save your factories. Whenever you make changes it will be automatically saved. You can also sync your factories between devices!
+            Register or log in to save your Plan(s). Whenever you make changes it will be automatically saved. You can also sync your factories between devices!
           </p>
           <v-divider />
-          <v-form v-if="showLogin" @submit.prevent="handleSignIn">
+          <v-form v-if="showLogin" @submit.prevent="handleLoginForm">
             <v-text-field
               v-model="username"
               label="Username"
@@ -69,7 +61,7 @@
             />
             <v-btn color="primary" type="submit">Log in</v-btn>
           </v-form>
-          <v-form v-if="showRegister" @submit.prevent="handleRegister">
+          <v-form v-if="showRegister" @submit.prevent="handleRegisterForm">
             <v-text-field
               v-model="username"
               label="Username"
@@ -84,26 +76,28 @@
             <p class="text-left mb-2"><b>NOTE:</b> There is currently no password reset system implemented. If you lose your login details, you'll have to create a new account!</p>
             <v-btn color="green" type="submit">Register</v-btn>
           </v-form>
-          <p v-if="errorMessage" class="lightRed">{{ errorMessage }}</p>
+          <p v-if="errorMessage" class="text-red font-weight-bold mt-2">{{ errorMessage }}</p>
         </v-card-text>
 
         <v-card-text v-if="loggedInUser" class="text-left text-body-1">
-          <p class="mb-4">
-            You are signed in. Your factory data will automatically saved. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
-          </p>
-          <p class="mb-4">
-            <i class="fas fa-save" /><span class="ml-2 font-weight-bold">Last saved:</span> {{ lastSavedDisplay }}
-          </p>
           <v-btn
             class="mr-2"
-            color="warning"
-            @click="handleLogout"
-          >Log out</v-btn>
-          <v-btn
             color="primary"
-            @click="confirmForceSync('This will delete your local data and pull it from the server. Continue?') && handleDataLoad(true)"
-          >Force Download</v-btn>
-
+            @click="handleLogout"
+          >
+            <i class="fas fa-sign-out mr-2" />Logout
+          </v-btn>
+          <v-btn
+            class="mr-2"
+            color="secondary"
+            @click="mangleToken"
+          >
+            <i class="fas fa-bug mr-2" />Mangle token
+          </v-btn>
+          <p class="mt-4">
+            You are signed in. Your factory data will automatically saved every 10s upon a change. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
+          </p>
+          <sync />
         </v-card-text>
       </v-card>
 
@@ -112,10 +106,12 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, watch } from 'vue'
-  import { useAppStore } from '@/stores/app-store'
-  import { storeToRefs } from 'pinia'
-  import { config } from '@/config/config'
+  import { ref } from 'vue'
+  import { useAuthStore } from '@/stores/auth-store'
+  import Sync from '@/components/Sync.vue'
+  import eventBus from '@/utils/eventBus'
+
+  const authStore = useAuthStore()
 
   const trayOpen = ref(false)
   const username = ref('')
@@ -123,57 +119,40 @@
   const showLogin = ref(true)
   const showRegister = ref(false)
   const errorMessage = ref('')
-  const apiUrl = config.apiUrl
-  const lastSavedDisplay = ref('Not saved yet, make a change!')
-  const isSaving = ref(false)
-  const showSessionExpiredAlert = ref(false)
-  const showOverwriteDialog = ref(false)
+  const loggedInUser = ref(authStore.getLoggedInUser())
 
-  const dataToSave = ref({})
-  const dataSavePending = ref(false)
-  let saveInterval: NodeJS.Timeout
+  const showSessionExpiredDialog = ref(false)
 
-  const appStore = useAppStore()
-  const { loggedInUser, token, factories, lastSave, lastEdit } = storeToRefs(appStore)
-
-  watch(factories, newValue => {
-    if (appStore.loggedInUser) {
-      dataToSave.value = newValue
-      dataSavePending.value = true
-    }
-  }, { deep: true })
-
-  watch(lastSave, newValue => {
-    lastSavedDisplay.value = lastSaveDateFormat(newValue)
-  }, { deep: true })
-
-  onMounted(() => {
-    // Start interval to check if data needs to be saved
-    saveInterval = setInterval(async () => {
-      if (dataSavePending.value) {
-        await handleDataSave(dataToSave.value)
-        dataSavePending.value = false // Reset the pending save flag after save
-      }
-    }, 10000)
-
-    if (loggedInUser && token) {
-      validateToken()
-    }
-
-    console.log(process.env)
-  })
-
-  onBeforeUnmount(() => {
-    // Clear the interval to avoid memory leaks when component unmounts
-    if (saveInterval) {
-      clearInterval(saveInterval)
+  // If the user closes the session expired dialog by clicking outside of it, still open the login form
+  watch(showSessionExpiredDialog, newVal => {
+    if (newVal === false) {
+      closeSessionExpiredAlert()
     }
   })
 
-  onUnmounted(() => {
-    // Clear interval again in case onBeforeUnmount is not triggered (hot reloads)
-    if (saveInterval) {
-      clearInterval(saveInterval)
+  // onMounted check if token is valid
+  onMounted(async () => {
+    eventBus.on('sessionExpired', handleSessionExpiredEvent)
+    const token = ref<string>(localStorage.getItem('token') ?? '')
+
+    if (!token.value) {
+      return
+    }
+
+    switch (await authStore.validateToken(token.value)) {
+      case true:
+        loggedInUser.value = authStore.getLoggedInUser()
+        break
+      case 'invalid-token':
+        sessionHasExpired()
+        break
+      case 'backend-offline':
+        errorMessage.value = 'The backend is currently offline. Please report this on Discord!'
+        break
+      case 'unexpected-response':
+      default:
+        errorMessage.value = 'An unexpected error occurred validating your token. Please report this on Discord!'
+        break
     }
   })
 
@@ -190,66 +169,6 @@
     closeTray,
   })
 
-  const handleSignIn = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: username.value, password: password.value }),
-      })
-      const data = await response.json()
-      if (response.ok) {
-        appStore.setLoggedInUser(username.value)
-        appStore.setToken(data.token)
-        username.value = ''
-        password.value = ''
-        await handleDataLoad()
-      } else {
-        console.warn('Login failed:', data)
-        errorMessage.value = data.message
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === 'Failed to fetch') {
-          errorMessage.value = 'Could not connect to the server.'
-          console.error('Error:', error)
-        }
-      }
-    }
-  }
-
-  const handleRegister = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: username.value, password: password.value }),
-      })
-      const data = await response.json()
-      if (response.ok) {
-        await handleSignIn()
-      } else {
-        console.error('Registration failed:', data)
-        errorMessage.value = `Registration failed. ${data.errorResponse?.errmsg || data.message}`
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error:', error)
-        errorMessage.value = error.message
-      }
-    }
-  }
-
-  const handleLogout = async () => {
-    appStore.setLoggedInUser('')
-    appStore.setToken('')
-    showLogin.value = true
-  }
-
   const showLoginForm = () => {
     showLogin.value = true
     showRegister.value = false
@@ -263,159 +182,71 @@
   }
 
   const closeSessionExpiredAlert = () => {
-    showSessionExpiredAlert.value = false
+    showSessionExpiredDialog.value = false
     trayOpen.value = true
     showLoginForm()
   }
 
-  const sessionHasExpired = async () => {
-    if (loggedInUser.value !== '') {
-      showSessionExpiredAlert.value = true
-      trayOpen.value = false
-      await handleLogout()
-    }
-    // Otherwise do nothing, the user was never logged in.
+  const sessionHasExpired = () => {
+    handleLogout()
+    showSessionExpiredDialog.value = true
+    trayOpen.value = false
+    showLogin.value = true
+    loggedInUser.value = authStore.getLoggedInUser() // Should be ''
   }
 
-  const validateToken = async (): Promise<boolean> => {
-    try {
-      const response = await fetch(`${apiUrl}/validate-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token.value}`,
-        },
-        body: JSON.stringify({ token: token.value }),
-      })
-      if (response.ok) {
-        return true
-      } else {
-        console.warn('Token invalid!')
-        await sessionHasExpired()
-        return false
-      }
-    } catch (error) {
-      await sessionHasExpired()
-      console.error('Error during token validation:', error)
-      return false
-    }
-  }
-
-  const handleDataSave = async (data: any) => {
-    // If user is not logged in we do nothing
-    if (loggedInUser.value === '') {
+  const handleLoginForm = async () => {
+    errorMessage.value = ''
+    if (username.value === '' || password.value === '') {
+      errorMessage.value = 'Please fill in both fields.'
       return
     }
 
-    isSaving.value = true
+    const result = await authStore.handleLogin(username.value, password.value)
+    if (result === true) {
+      loggedInUser.value = authStore.getLoggedInUser()
+    } else {
+      errorMessage.value = `Login failed: ${result}`
+    }
+  }
 
-    if (!await validateToken()) {
-      isSaving.value = false
+  const handleRegisterForm = async () => {
+    errorMessage.value = ''
+    if (username.value === '' || password.value === '') {
+      errorMessage.value = 'Please fill in both fields.'
       return
     }
 
-    console.log('Saving data:', data)
-    // Send a POST request to the /sync endpoint with the data in question
-    try {
-      const response = await fetch(`${apiUrl}/save`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token.value}`,
-        },
-        body: JSON.stringify(data),
-      })
-      await response.json()
-      if (response.ok) {
-        console.log('Data was saved.')
-        appStore.setLastSave()
-        isSaving.value = false
-      } else {
-        console.error('Data save failed at response!', data)
-      }
-    } catch (error) {
-      console.error('Data save errored!', data)
+    // Also logs them in
+    const result = await authStore.handleRegister(username.value, password.value)
+    if (result === true) {
+      loggedInUser.value = authStore.getLoggedInUser()
+    } else {
+      errorMessage.value = `Registration failed: ${result}`
     }
   }
 
-  // This function checks if there is any local data and the last time it was edited.
-  // If it was edited after the last save, it will prompt the user to load the data.
-  // Otherwise, it will immediately load the data into the store.
-  const handleDataLoad = async (forceLoad = false) => {
-    if (!await validateToken()) {
-      return
-    }
+  const handleLogout = async () => {
+    authStore.handleLogout()
+    loggedInUser.value = ''
+  }
 
-    if (forceLoad) {
-      console.log('Forcing data load...')
-    }
+  const handleSessionExpiredEvent = () => {
+    console.log('Auth: Received sessionExpired event')
+    sessionHasExpired()
+  }
 
-    try {
-      const response = await fetch(`${apiUrl}/load`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token.value}`,
-        },
-      })
-      const data = await response.json()
-      const realData = data?.data
-      if (response.ok) {
-        if (!realData) {
-          console.warn('No data found in response. Could be first time user has logged in.')
-          return
-        }
-
-        if (forceLoad) {
-          console.log('Forcing data load...')
-          appStore.setFactories(realData)
-          return
-        }
-
-        const lastSaved = new Date(realData.lastSaved)
-        const oos = lastEdit.value && lastEdit.value > lastSaved // Check for desync
-
-        if (oos) {
-          console.log('Data is out of sync. Prompting user for overwrite.')
-          showOverwriteDialog.value = true
-          return
-        }
-
-        console.log('Data loaded:', realData)
-        appStore.setFactories(realData)
-      } else {
-        console.error('Data load failed:', data)
-      }
-    } catch (error) {
-      console.error('Data load errored:', error)
+  // Debug feature to mangle the users' token and attempt a validation, which should trigger the session expired event
+  const mangleToken = () => {
+    const token = localStorage.getItem('token') ?? null
+    if (token) {
+      const mangledToken = `mangled${token}`
+      localStorage.setItem('token', mangledToken)
+      console.log('Auth: Mangled token')
+      authStore.validateToken(mangledToken) // Disable this if you want to test without revalidation
     }
   }
 
-  // Function to convert date object to desired format
-  const lastSaveDateFormat = (date: Date) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = months[date.getMonth()]
-    const year = date.getFullYear()
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
-    const seconds = String(date.getSeconds()).padStart(2, '0')
-    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
-  }
-
-  const confirmOverwrite = () => {
-    console.log('Overwriting local data with server data...')
-    handleDataLoad(true)
-    showOverwriteDialog.value = false
-  }
-
-  const cancelOverwrite = () => {
-    showOverwriteDialog.value = false
-  }
-
-  const confirmForceSync = (message: string) => {
-    return confirm(message)
-  }
 </script>
 
 <style lang="scss" scoped>
@@ -426,8 +257,5 @@
   width: 400px;
   z-index: 10 !important;
   border: 1px solid rgb(108, 108, 108);
-}
-.lightRed {
-  color: lightcoral;
 }
 </style>
