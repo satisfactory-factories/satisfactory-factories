@@ -126,13 +126,11 @@
   import { ref, watch, computed } from "vue";
   import {
     Factory,
-    BuildingRequirement,
   } from "@/interfaces/planner/FactoryInterface";
   import { formatNumber } from "@/utils/numberFormatter";
   import {
     getPartDisplayName,
     hasMetricsForPart,
-    differenceClass,
   } from "@/utils/helpers";
   
   const props = defineProps<{
