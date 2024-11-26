@@ -119,7 +119,7 @@ function getRecipes(
                 lowPower = Number(recipe.mVariablePowerConsumptionConstant);
                 highPower = Number(recipe.mVariablePowerConsumptionFactor);
                 // calculate the average power
-                if (lowPower && highPower) {
+                if (lowPower != null && highPower != null) {
                     powerPerBuilding = (lowPower + highPower) / 2;
                 }
             }
