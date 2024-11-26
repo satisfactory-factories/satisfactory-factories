@@ -36,8 +36,14 @@ There is none. We are not enforcing any form of branching naming strategy. Branc
 ## Test standards
 New code should ideally be covered by a test. Our testing tool of choice is [Vitest](https://vitest.dev/guide/) which is a drop in replacement for Jest tests. It is recommended we use this tool as it is faster and more lightweight than Jest, and the web project is built in Vite, which is super performant.
 
-However, it is appreciated that not all contributors are at the point in their professional careers where they see the point of writing tests or are proficient at writing them. As such, it is not a hard requirement to write tests, but it is highly recommended, and this is the perfect project for you to learn to do this.
+### How we determine what needs tests written
+**`web`**:
+Generally, tests for `.vue` files are not mandatory, however if you have the knowledge on how to test them, please do include them. You may be asked to write them on a case by case bsis. As of writing, tests in `web` correlate around the factory calculations and various other important parts of the system.
 
+**`backend` / `parsing`**:
+For TypeScript only components, tests are going to be **strongly** encouraged. 
+
+Please do not be dismayed if you are asked to provide tests for your PR. Should a contributor have the time, they will try to help guide you writing them. Take this as a learning experience opportunity!
 There are however some exceptions to this:
 
 * Parser **MUST** be backed by tests. There is no excuse with this component as it is all TypeScript, no DOM manipulation, and is a perfect candidate for testing.
