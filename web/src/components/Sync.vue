@@ -34,13 +34,6 @@
     color="secondary"
     @click="handleOutOfSyncEvent"
   ><i class="fas fa-bug mr-2" />Trigger OOS</v-btn>
-
-  <div v-show="syncing">
-    <p class="text-body-1">
-      <i class="fas fa-sync fa-spin" /><span class="ml-2">Syncing...
-      </span>
-    </p>
-  </div>
 </template>
 
 <script lang="ts" setup>
