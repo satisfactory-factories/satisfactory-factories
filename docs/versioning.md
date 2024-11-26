@@ -15,7 +15,9 @@ However, what is important to denote versioning for is for public users. They wo
 ## So how do we version?
 The intention is to use Semver (Semantic Versioning) for the monorepo. This means that we will have a version number that looks like `MAJOR.MINOR.PATCH`.
 
-**This will be applied across all components at the same time**. Since they all have tight integration with each other `web` will be the one most likely in sync with versioning, other components may be updated alongside it. For simplicity sakes, we are using a `universal` versioning system that applies to all components, even if they are not updated as part of that version.
+**This will be applied across all components at the same time**. Since they all have tight integration with each other. `web` will be the one most likely in sync with versioning the most, other components may be updated alongside it. 
+
+For simplicity’s sake, we are using a `universal` versioning system that applies to all components, even if they are not updated as part of that version.
 
 Below describe what justifies as a versioning change:
 
