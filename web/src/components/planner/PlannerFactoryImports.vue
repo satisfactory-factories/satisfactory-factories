@@ -33,13 +33,12 @@
       <div
         v-for="(input, inputIndex) in factory.inputs"
         :key="`${inputIndex}-${input.outputPart}`"
-        class="selectors d-flex flex-column flex-md-row ga-3 pa-4 my-2 border-md rounded sub-card align-center"
+        class="selectors d-flex flex-column flex-md-row ga-3 pa-4 my-2 border-md rounded sub-card"
       >
         <div class="input-row d-flex align-center">
           <i class="fas fa-industry mr-2" style="width: 32px; height: 32px;" />
           <v-autocomplete
             v-model="input.factoryId"
-            class="mr-3"
             hide-details
             :items="validImportFactories(factory, inputIndex)"
             label="Factory"
@@ -64,7 +63,6 @@
           </span>
           <v-autocomplete
             v-model="input.outputPart"
-            class="mr-3"
             :disabled="!input.factoryId"
             hide-details
             :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
@@ -74,13 +72,14 @@
             width="350px"
             @input="updateFactory(factory)"
           />
+        </div>
+        <div class="input-row d-flex align-center">
           <v-text-field
             v-model.number="input.amount"
-            class="mr-3"
             :disabled="!input.outputPart"
             hide-details
             label="Qty /min"
-            max-width="110px"
+            :max-width="smAndDown ? undefined : '110px'"
             type="number"
             variant="outlined"
             @input="updateFactory(factory)"
@@ -130,16 +129,18 @@
             @click="deleteInput(inputIndex, factory)"
           />
         </div>
-        <v-btn
-          v-show="Object.keys(factory.parts).length > 0"
-          color="green"
-          :disabled="!hasAvailableImports(factory) || !hasValidImportsRemaining(factory)"
-          prepend-icon="fas fa-dolly"
-          ripple
-          :variant="hasAvailableImports(factory) && hasValidImportsRemaining(factory) ? 'flat' : 'outlined'"
-          @click="addEmptyInput(factory)"
-        >Add Import
-        </v-btn>
+        <div class="input-row d-flex align-center">
+          <v-btn
+            v-show="Object.keys(factory.parts).length > 0"
+            color="green"
+            :disabled="!hasAvailableImports(factory) || !hasValidImportsRemaining(factory)"
+            prepend-icon="fas fa-dolly"
+            ripple
+            :variant="hasAvailableImports(factory) && hasValidImportsRemaining(factory) ? 'flat' : 'outlined'"
+            @click="addEmptyInput(factory)"
+          >Add Import
+          </v-btn>
+        </div>
         <span v-if="ableToImport(factory) === 'noFacs'" class="ml-2">(Add another Factory with Exports!)</span>
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
         <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports able to supply this factory.)</span>
@@ -155,6 +156,7 @@
   import { addInputToFactory } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { useDisplay } from 'vuetify'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -165,6 +167,8 @@
     factory: Factory;
     helpText: boolean;
   }>()
+
+  const { smAndDown } = useDisplay()
 
   const addEmptyInput = (factory: Factory) => {
     addInputToFactory(factory, {

@@ -46,7 +46,6 @@
           <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
           <v-autocomplete
             v-model="product.recipe"
-            class="mr-3"
             :disabled="!product.id"
             hide-details
             :items="getRecipesForPartSelector(product.id)"
@@ -56,11 +55,13 @@
             width="350px"
             @update:model-value="updateFactory(factory)"
           />
+        </div>
+        <div class="input-row d-flex align-center">
           <v-text-field
             v-model.number="product.amount"
             hide-details
             label="Qty /min"
-            max-width="110px"
+            :max-width="smAndDown ? undefined : '110px'"
             type="number"
             variant="outlined"
             @input="updateFactory(factory)"
@@ -188,6 +189,7 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useGameDataStore } from '@/stores/game-data-store'
+  import { useDisplay } from 'vuetify'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -199,6 +201,8 @@
     gameData: DataInterface
     helpText: boolean;
   }>()
+
+  const { smAndDown } = useDisplay()
 
   const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
 
