@@ -28,7 +28,7 @@ See [Versioning](./versioning.md) on why this is important and why we use it in 
 - Must have a newline at the end of the file
 - Must comply with the ESLint specifications (typescript)
 
-To aid this, developers can run `pnpm lint` in any component which will run ESLint checks and fix them. You must do this before commiting or the CI will block the PR via a status check.
+To aid this, developers can run `pnpm lint` in any component which will run ESLint checks and fix them. You must do this before committing or the CI will block the PR via a status check.
 
 ## Branching naming strategy
 There is none. We are not enforcing any form of branching naming strategy. Branch stragegy itself is Trunk based, more info [in how we do releases](./how-do-we-release.md).
