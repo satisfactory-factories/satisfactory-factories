@@ -153,6 +153,10 @@ describe('exports', () => {
 
       calculateFactories(factories, gameData)
 
+      expect(oilFac.byProducts.length).toBe(1)
+      expect(oilFac.byProducts[0].id).toBe('PolymerResin')
+      expect(oilFac.byProducts[0].amount).toBe(20)
+
       expect(oilFac.exports.PolymerResin).toBeDefined()
       expect(oilFac.exports.PolymerResin.surplus).toBe(20)
     })
