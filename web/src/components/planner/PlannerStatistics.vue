@@ -61,7 +61,7 @@
               class="sf-chip green"
               variant="tonal"
             >
-              <i class="fas fa-solar-panel m2-2" />[n] MW generated
+              <i class="fas fa-solar-panel mr-2" />[n] MW generated
             </v-chip>
           </div>
         </v-card-text>
