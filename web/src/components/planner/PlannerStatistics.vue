@@ -48,7 +48,7 @@
             <i class="fas fa-info-circle" />Showing all of the world power consumption and generation.
           </p>
           <h1 class="text-h5 mb-4">
-            <i class="fas fa-plug" />
+            <i class="fas fa-power-off" />
             <span class="ml-3">Power Consumption and Generation</span>
           </h1>
           <span class="ml-2"><b>[Coming soon!!]<br></b></span>
