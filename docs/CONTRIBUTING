@@ -14,8 +14,8 @@ Please follow this guide to make sure your contributions are as effective as pos
 1. Check if there is already an issue open for what you want to change. **Please do not start work without an attached issue!**
     1. If there is one, please comment on it to let us know you are working on it.
 2. If there is not one, please open a new issue.
-  1. Clearly describe the issue you are experiencing or the feature you are wanting to add.
-  2. If you are able to, please provide a UI mockup to really get your point across.
+    1. Clearly describe the issue you are experiencing or the feature you are wanting to add.
+    2. If you are able to, please provide a UI mockup to really get your point across.
 3. Fork the repository.
 4. Create a new branch for your changes.
 5. Make your changes.
