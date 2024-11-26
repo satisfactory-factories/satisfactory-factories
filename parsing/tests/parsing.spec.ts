@@ -197,5 +197,43 @@ describe('common', () => {
             expect(recipe.building.maxPower).toBe(1000);
             expect(recipe.isAlternate).toBe(false);
         });
+
+        it('validate a recipe with variable power with a Quantum encoder (Neural-Quantum Processor)', () => {
+            //arrange
+            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'TemporalProcessor');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Neural-Quantum Processor');
+            expect(recipe.ingredients.length).toBe(4);
+            expect(recipe.ingredients[0].part).toBe('TimeCrystal');
+            expect(recipe.ingredients[0].amount).toBe(5);
+            expect(recipe.ingredients[0].perMin).toBe(15);
+            expect(recipe.ingredients[1].part).toBe('ComputerSuper');
+            expect(recipe.ingredients[1].amount).toBe(1);
+            expect(recipe.ingredients[1].perMin).toBe(3);
+            expect(recipe.ingredients[2].part).toBe('FicsiteMesh');
+            expect(recipe.ingredients[2].amount).toBe(15);
+            expect(recipe.ingredients[2].perMin).toBe(45);
+            expect(recipe.ingredients[3].part).toBe('QuantumEnergy');
+            expect(recipe.ingredients[3].amount).toBe(25);
+            expect(recipe.ingredients[3].perMin).toBe(75);
+            expect(recipe.products.length).toBe(2);
+            expect(recipe.products[0].part).toBe('TemporalProcessor');
+            expect(recipe.products[0].amount).toBe(1);
+            expect(recipe.products[0].perMin).toBe(3);
+            expect(recipe.products[0].isByProduct).toBe(false);
+            expect(recipe.products[1].part).toBe('DarkEnergy');
+            expect(recipe.products[1].amount).toBe(25);
+            expect(recipe.products[1].perMin).toBe(75);
+            expect(recipe.products[1].isByProduct).toBe(true);
+            expect(recipe.building.name).toBe('quantumencoder');
+            expect(recipe.building.power).toBe(1000);
+            expect(recipe.building.minPower).toBe(0);
+            expect(recipe.building.maxPower).toBe(2000);
+            expect(recipe.isAlternate).toBe(false);
+        });
     })
 })
