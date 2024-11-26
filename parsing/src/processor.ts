@@ -89,11 +89,11 @@ async function processFile(
         const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
-        const productionRecipes = getProductionRecipes(data, buildings);
+        const recipes = getProductionRecipes(data, buildings);
         const powerGenerationRecipes = getPowerGeneratingRecipes(data);
 
-        removeRubbishItems(items, productionRecipes);
-        fixTurbofuel(items, productionRecipes);
+        removeRubbishItems(items, recipes);
+        fixTurbofuel(items, recipes);
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
@@ -106,7 +106,7 @@ async function processFile(
         const finalData = {
             buildings,
             items,
-            recipes: productionRecipes,
+            recipes,
             powerGenerationRecipes
         };
 
