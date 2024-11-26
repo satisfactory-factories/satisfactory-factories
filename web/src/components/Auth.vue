@@ -123,7 +123,7 @@
 
   const showSessionExpiredDialog = ref(false)
 
-  // If the user closes the tray by clicking outside of it, still open the login form
+  // If the user closes the session expired dialog by clicking outside of it, still open the login form
   watch(showSessionExpiredDialog, newVal => {
     if (newVal === false) {
       closeSessionExpiredAlert()
