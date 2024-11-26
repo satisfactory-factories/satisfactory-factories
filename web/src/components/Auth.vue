@@ -14,7 +14,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-btn variant="flat" @click="toggleTray">
+  <v-btn :color="buttonColor" variant="flat">
     <div v-if="loggedInUser">
       <i class="fas fa-user mr-2" />
       {{ loggedInUser }}
@@ -24,6 +24,7 @@
       Sign In, Pioneer!
     </span>
     <v-overlay
+      v-model="trayOpen"
       activator="parent"
       location="bottom end"
       location-strategy="connected"
@@ -119,6 +120,10 @@
   import Sync from '@/components/Sync.vue'
   import eventBus from '@/utils/eventBus'
 
+  defineProps<{
+    buttonColor?: string
+  }>()
+
   const authStore = useAuthStore()
 
   const trayOpen = ref(false)
@@ -162,19 +167,6 @@
         errorMessage.value = 'An unexpected error occurred validating your token. Please report this on Discord!'
         break
     }
-  })
-
-  const toggleTray = () => {
-    trayOpen.value = !trayOpen.value
-  }
-
-  // Received from click events elsewhere
-  const closeTray = () => {
-    trayOpen.value = false
-  }
-
-  defineExpose({
-    closeTray,
   })
 
   const showLoginForm = () => {

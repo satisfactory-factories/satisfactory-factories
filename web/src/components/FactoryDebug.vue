@@ -2,6 +2,17 @@
   <v-dialog v-if="isDebugMode" scrollable width="auto">
     <template #activator="{ props: activatorProps }">
       <v-btn
+        v-if="isCompact"
+        v-bind="activatorProps"
+        class="mr-2 rounded"
+        color="primary"
+        icon="fas fa-bug"
+        ripple
+        size="small"
+        variant="flat"
+      />
+      <v-btn
+        v-else
         v-bind="activatorProps"
         class="mr-2"
         color="primary"
@@ -50,6 +61,7 @@
   import { useAppStore } from '@/stores/app-store'
 
   const props = defineProps<{
+    isCompact?: boolean;
     subject: any;
     subjectType: string;
   }>()

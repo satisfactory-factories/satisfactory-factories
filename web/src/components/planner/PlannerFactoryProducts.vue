@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">
+    <h1 class="text-h6 text-md-h5 mb-4">
       <i class="fas fa-conveyor-belt-alt" />
       <span class="ml-3">Products</span>
     </h1>

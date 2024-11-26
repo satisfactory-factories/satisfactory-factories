@@ -3,7 +3,7 @@
     <template v-if="!hasError">
       <navigation>
         <template #append>
-          <auth />
+          <auth :button-color="authButtonColor" />
         </template>
       </navigation>
 
@@ -18,6 +18,10 @@
 
 <script setup lang="ts">
   import { useRoute } from 'vue-router'
+  import { useDisplay } from 'vuetify'
+
+  const { smAndDown } = useDisplay()
+  const authButtonColor = computed(() => smAndDown.value ? 'grey-darken-3' : undefined)
 
   // Disable auth and other elements if an error is present as they will likely error themselves.
   const hasError = localStorage.getItem('error') ?? null
