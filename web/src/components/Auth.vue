@@ -1,12 +1,12 @@
 <template>
   <v-dialog
+    v-model="showSessionExpiredDialog"
     max-width="600"
-    :model-value="showSessionExpiredAlert"
   >
     <v-card class="border-md">
-      <v-card-title class="text-h5">Session Expired</v-card-title>
+      <v-card-title class="text-h5">Session Expired!</v-card-title>
       <v-card-text>
-        <p>Your session has expired, Pioneer. Please log in again!</p>
+        <p class="mb-4">Your session has expired, Pioneer. Please log in again!</p>
         <p>If this keeps happening repeatedly or much sooner than expected (30 days), please report it on Discord!</p>
       </v-card-text>
       <v-card-actions>
@@ -87,6 +87,13 @@
           >
             <i class="fas fa-sign-out mr-2" />Logout
           </v-btn>
+          <v-btn
+            class="mr-2"
+            color="secondary"
+            @click="mangleToken"
+          >
+            <i class="fas fa-bug mr-2" />Mangle token
+          </v-btn>
           <p class="mt-4">
             You are signed in. Your factory data will automatically saved every 10s upon a change. Should you wish to transfer the data to another device, ensure you're signed in then click the "Force Download" button.
           </p>
@@ -102,6 +109,7 @@
   import { ref } from 'vue'
   import { useAuthStore } from '@/stores/auth-store'
   import Sync from '@/components/Sync.vue'
+  import eventBus from '@/utils/eventBus'
 
   const authStore = useAuthStore()
 
@@ -113,14 +121,18 @@
   const errorMessage = ref('')
   const loggedInUser = ref(authStore.getLoggedInUser())
 
-  const showSessionExpiredAlert = ref(false)
+  const showSessionExpiredDialog = ref(false)
 
-  const toggleTray = () => {
-    trayOpen.value = !trayOpen.value
-  }
+  // If the user closes the tray by clicking outside of it, still open the login form
+  watch(showSessionExpiredDialog, newVal => {
+    if (newVal === false) {
+      closeSessionExpiredAlert()
+    }
+  })
 
   // onMounted check if token is valid
   onMounted(async () => {
+    eventBus.on('sessionExpired', handleSessionExpiredEvent)
     const token = ref<string>(localStorage.getItem('token') ?? '')
 
     if (!token.value) {
@@ -144,6 +156,10 @@
     }
   })
 
+  const toggleTray = () => {
+    trayOpen.value = !trayOpen.value
+  }
+
   // Received from click events elsewhere
   const closeTray = () => {
     trayOpen.value = false
@@ -166,13 +182,14 @@
   }
 
   const closeSessionExpiredAlert = () => {
-    showSessionExpiredAlert.value = false
+    showSessionExpiredDialog.value = false
     trayOpen.value = true
     showLoginForm()
   }
 
   const sessionHasExpired = () => {
-    showSessionExpiredAlert.value = true
+    handleLogout()
+    showSessionExpiredDialog.value = true
     trayOpen.value = false
     showLogin.value = true
     loggedInUser.value = authStore.getLoggedInUser() // Should be ''
@@ -212,6 +229,22 @@
   const handleLogout = async () => {
     authStore.handleLogout()
     loggedInUser.value = ''
+  }
+
+  const handleSessionExpiredEvent = () => {
+    console.log('Auth: Received sessionExpired event')
+    sessionHasExpired()
+  }
+
+  // Debug feature to mangle the users' token and attempt a validation, which should trigger the session expired event
+  const mangleToken = () => {
+    const token = localStorage.getItem('token') ?? null
+    if (token) {
+      const mangledToken = `mangled${token}`
+      localStorage.setItem('token', mangledToken)
+      console.log('Auth: Mangled token')
+      authStore.validateToken(mangledToken)
+    }
   }
 
 </script>
