@@ -42,34 +42,28 @@
             <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ ore.amount }}</span>
             <span v-else class="ml-2">Water: <i class="fas fa-infinity" /></span>
           </v-chip>
-        </v-card-text>
-        <v-card-text v-show="!hidden" class="text-body-1">
-          <p v-show="helpText" class="mb-4">
-            <i class="fas fa-info-circle mr-2" />Showing all of the world power consumption and generation.
-          </p>
-          <h1 class="text-h5 mb-4">
-            <i class="fas fa-power-off" />
-            <span class="ml-3">Power Consumption and Generation</span>
-          </h1>
-          <span class="ml-2"><b>[Coming soon!!]<br></b></span>
-          <v-chip
+          <v-divider class="my-2" />
+          <div class="px-2">
+            <h1 class="text-h5 mb-4">
+              <i class="fas fa-power-off mr-3" />Power Consumption and Generation
+            </h1>
+            <p v-show="helpText" class="mb-4">
+              <i class="fas fa-info-circle mr-2" />Shows world level power consumption and generation data.
+            </p>
+            <p class="font-weight-bold mb-4">[Coming soon!!]</p>
+            <v-chip
               class="sf-chip yellow"
               variant="tonal"
             >
-              <i class="fas fa-bolt" />
-              <span class="ml-2">
-                [n] MW consumed
-              </span>
+              <i class="fas fa-bolt mr-2" />[n] MW consumed
             </v-chip>
             <v-chip
               class="sf-chip green"
               variant="tonal"
             >
-              <i class="fas fa-solar-panel" />
-              <span class="ml-2">
-                [n] MW generated
-              </span>
+              <i class="fas fa-solar-panel m2-2" />[n] MW generated
             </v-chip>
+          </div>
         </v-card-text>
 
       </v-card>
