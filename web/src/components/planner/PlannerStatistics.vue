@@ -65,7 +65,7 @@
               class="sf-chip green"
               variant="tonal"
             >
-              <i class="fas fa-wind-turbine" />
+              <i class="fas fa-solar-panel" />
               <span class="ml-2">
                 [n] MW generated
               </span>
