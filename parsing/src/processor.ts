@@ -4,7 +4,7 @@ import * as iconv from 'iconv-lite';
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface} from "./interfaces/Part";
 import {getItems,fixItemNames,fixTurbofuel} from './parts';
-import {getRecipes} from './recipes';
+import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
 import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
 
 // Function to detect if the file is UTF-16
@@ -65,7 +65,14 @@ function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
 }
 
 // Central function to process the file and generate the output
-async function processFile(inputFile: string, outputFile: string) : Promise<{ buildings: { [key: string]: number }; items: PartDataInterface; recipes: Recipe[] } | undefined> {
+async function processFile(
+    inputFile: string, 
+    outputFile: string) : Promise<{ buildings: { 
+                                        [key: string]: number }; 
+                                        items: PartDataInterface; 
+                                        recipes: Recipe[],
+                                        powerGenerationRecipes: Recipe[]; 
+                                    } | undefined> {
     try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
@@ -82,10 +89,11 @@ async function processFile(inputFile: string, outputFile: string) : Promise<{ bu
         const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
-        const recipes = getRecipes(data, buildings);
+        const productionRecipes = getProductionRecipes(data, buildings);
+        const powerGenerationRecipes = getPowerGeneratingRecipes(data);
 
-        removeRubbishItems(items, recipes);
-        fixTurbofuel(items, recipes);
+        removeRubbishItems(items, productionRecipes);
+        fixTurbofuel(items, productionRecipes);
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
@@ -98,7 +106,8 @@ async function processFile(inputFile: string, outputFile: string) : Promise<{ bu
         const finalData = {
             buildings,
             items,
-            recipes
+            recipes: productionRecipes,
+            powerGenerationRecipes
         };
 
         // Write the output to the file

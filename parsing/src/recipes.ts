@@ -2,7 +2,7 @@ import {Building, Recipe} from "./interfaces/Recipe";
 import {blacklist,isFluid,isFicsmas} from "./common";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
-function getRecipes(
+function getProductionRecipes(
     data: any[],
     producingBuildings: { [key: string]: number }
 ): Recipe[] {
@@ -169,5 +169,26 @@ function getRecipes(
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
+function getPowerGeneratingRecipes(
+    data: any[],
+): Recipe[] {
+
+    const recipes: any[] = [];
+
+    data
+        .filter((entry: any) => entry.Classes)
+        .flatMap((entry: any) => entry.Classes)
+        .filter((recipe: any) => {
+
+            // Filter out recipes that don't have a producing building
+            if (!recipe.mProducedIn) return false;
+        })
+        .forEach((recipe: any) => {
+            console.log(recipe.ClassName);            
+        });
+
+    return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+}
+
 // Export getRecipes for use
-export {getRecipes}
+export {getProductionRecipes,getPowerGeneratingRecipes}
