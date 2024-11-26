@@ -74,9 +74,10 @@
 
   const replaceRemoteData = async () => {
     syncing.value = true
-    const result = await syncStore.handleSync()
+    const result = await syncStore.handleSync(true)
     syncing.value = false
     if (result) {
+      console.log('Sync: Replaced remote data with local data')
       lastSavedDisplay.value = lastSaveDateFormat(new Date())
       showOOSDecisionDialog.value = false
     }

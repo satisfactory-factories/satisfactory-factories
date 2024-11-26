@@ -49,7 +49,10 @@ export class SyncActions {
     return isOOS ? 'oos' : undefined
   }
 
-  async syncData (stopSyncing: boolean, dataSavePending: boolean): Promise<boolean | void> {
+  async syncData (
+    stopSyncing: boolean,
+    dataSavePending: boolean
+  ): Promise<boolean | void> {
     if (stopSyncing) {
       console.warn('syncData: Syncing is disabled.')
       return

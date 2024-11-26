@@ -83,8 +83,13 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     return result
   }
 
-  const handleSync = async () => {
-    console.log('syncStore: Syncing...')
+  const handleSync = async (force = false) => {
+    console.log('syncStore - handleSync: Syncing...')
+
+    if (force) {
+      console.log('syncStore - handleSync: Forcing sync...')
+      return syncActions.syncData(false, true)
+    }
     return syncActions.syncData(stopSyncing.value, dataSavePending.value)
   }
 
