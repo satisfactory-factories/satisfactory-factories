@@ -31,7 +31,7 @@
           </p>
           <h1 class="text-h5 mb-4">
             <i class="fas fa-warehouse" />
-            <span class="ml-3">World Raw Resources</span>
+            <span class="ml-3">Raw Resources</span>
           </h1>
           <v-chip
             v-for="ore in worldRawResources"
