@@ -130,7 +130,7 @@ function getRecipes(
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
             // keeping this in a separate conditional prevents a ton of properties with null values from being added to the building object
-            if (lowPower && highPower) {
+            if (lowPower !== null && highPower !== null) {
                 building.minPower = lowPower;
                 building.maxPower = highPower;
             }

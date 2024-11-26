@@ -1189,7 +1189,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -1320,7 +1322,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -6613,7 +6617,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -7395,7 +7401,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9400,7 +9408,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
@@ -9476,7 +9486,9 @@
             ],
             "building": {
                 "name": "quantumencoder",
-                "power": 1000
+                "power": 1000,
+                "minPower": 0,
+                "maxPower": 2000
             },
             "isAlternate": false,
             "isFicsmas": false
