@@ -7,6 +7,7 @@ import { internalProductionDeficitPlan } from '@/utils/factory-setups/internal-p
 
 let ironIngotFac = newFactory('Iron Ingots')
 let ironPlateFac = newFactory('Iron Plates')
+let oilFac = newFactory('Oil Factory')
 
 describe('exports', () => {
   describe('calculateExports', () => {
@@ -14,6 +15,7 @@ describe('exports', () => {
     // Reset the mocks
       ironIngotFac = newFactory('Iron Ingots')
       ironPlateFac = newFactory('Iron Plates')
+      oilFac = newFactory('Oil Factory')
 
       addProductToFactory(ironIngotFac, {
         id: 'IronIngot',
@@ -25,6 +27,17 @@ describe('exports', () => {
         id: 'IronPlate',
         amount: 100,
         recipe: 'IronPlate',
+      })
+
+      addProductToFactory(oilFac, {
+        id: 'LiquidOil',
+        amount: 30,
+      })
+
+      addProductToFactory(oilFac, {
+        id: 'HeavyOilResidue',
+        amount: 40,
+        recipe: 'Alternate_HeavyOilResidue',
       })
     })
     it('should calculate exports correctly when no factories requesting it', () => {
@@ -134,6 +147,18 @@ describe('exports', () => {
       calculateFactories([factory], gameData)
 
       expect(factory.exports).toEqual({})
+    })
+    it('should calculate exports correctly with products that have byproduct(s)', () => {
+      const factories = [oilFac]
+
+      calculateFactories(factories, gameData)
+
+      expect(oilFac.byProducts.length).toBe(1)
+      expect(oilFac.byProducts[0].id).toBe('PolymerResin')
+      expect(oilFac.byProducts[0].amount).toBe(20)
+
+      expect(oilFac.exports.PolymerResin).toBeDefined()
+      expect(oilFac.exports.PolymerResin.surplus).toBe(20)
     })
   })
 })

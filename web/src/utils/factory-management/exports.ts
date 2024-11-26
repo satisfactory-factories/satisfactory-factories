@@ -1,4 +1,4 @@
-import { Factory, FactoryDependencyRequest, FactoryExportItem, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory, FactoryDependencyRequest, FactoryExportItem, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 
 export const getRequestsForFactoryByProduct = (
   factory: Factory,
@@ -41,8 +41,23 @@ export const calculateExports = (factories: Factory[]) => {
       return []
     }
 
+    // Hacky way to include byProducts but still leave the map to use 'FactoryItem'
+    const mappedByProducts = factory.byProducts
+      .map(byproduct => {
+        const tempProduct: FactoryItem = {
+          id: byproduct.id,
+          recipe: '',
+          amount: 0,
+          displayOrder: 0,
+          requirements: {},
+          buildingRequirements: {} as BuildingRequirement,
+        }
+
+        return tempProduct
+      })
+
     // Map through the products and check if the product both has a surplus or requests set upon it
-    const factoryExports: FactoryExportItem[] = factory.products
+    const factoryExports: FactoryExportItem[] = [...factory.products, ...mappedByProducts]
       .map(product => {
         const requests = getRequestsForFactoryByProduct(factory, product.id)
 
