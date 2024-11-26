@@ -10224,5 +10224,54 @@
             "isFicsmas": false
         }
     ],
-    "powerGenerationRecipes": []
+    "powerGenerationRecipes": [
+        {
+            "id": "Build_GeneratorBiomass_Automated_C",
+            "displayName": "Build_GeneratorBiomass_Automated_C",
+            "ingredients": [],
+            "products": [],
+            "building": {
+                "name": "",
+                "power": 0
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "Build_GeneratorCoal_C",
+            "displayName": "Build_GeneratorCoal_C",
+            "ingredients": [],
+            "products": [],
+            "building": {
+                "name": "",
+                "power": 0
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "Build_GeneratorFuel_C",
+            "displayName": "Build_GeneratorFuel_C",
+            "ingredients": [],
+            "products": [],
+            "building": {
+                "name": "",
+                "power": 0
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        },
+        {
+            "id": "Build_GeneratorNuclear_C",
+            "displayName": "Build_GeneratorNuclear_C",
+            "ingredients": [],
+            "products": [],
+            "building": {
+                "name": "",
+                "power": 0
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        }
+    ]
 }

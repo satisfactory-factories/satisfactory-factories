@@ -179,13 +179,37 @@ function getPowerGeneratingRecipes(
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
+            
+            // Filter out recipes that don't have a fuel component
+            if (!recipe.mFuel)  { 
+                return false; 
+            } else {
+                return true;
+            }
 
-            // Filter out recipes that don't have a producing building
-            if (!recipe.mProducedIn) return false;
         })
         .forEach((recipe: any) => {
-            console.log(recipe.ClassName);            
+            //console.log(recipe.ClassName);   
+
+            let ingredients: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
+            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];   
+            let building : Building = {
+                name: '', // Use the first valid building, or empty string if none
+                power: 0, // Use calculated power or 0
+            };    
+
+            recipes.push({
+                id: recipe.ClassName,//.replace("Build_", "").replace(/_C$/, ""),
+                displayName: recipe.ClassName,
+                ingredients,
+                products,
+                building,
+                isAlternate: false,
+                isFicsmas: false
+            });        
         });
+
+    console.log(recipes);
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
