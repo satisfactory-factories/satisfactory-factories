@@ -98,6 +98,60 @@
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
+          <div
+            v-if="factory.inputs.length > 0 || Object.keys(factory.rawResources).length > 0"
+            class="text-body-1 py-2 px-4 pb-1"
+            :class="factory.products.length > 0 ? 'border-b-md' : ''"
+          >
+            <div class="d-flex align-center">
+              <p class="mr-2">Imports:</p>
+              <div
+                v-for="(input, inputIndex) in factory.inputs"
+                :key="inputIndex"
+                class="mr-2 pl-2 no-bottom rounded factory-link"
+                @click="navigateToFactory(input.factoryId as number)"
+              >
+                <i class="fas fa-industry" />
+                <span class="ml-2">
+                  <b>{{ findFactory(input.factoryId as number).name }}:</b>
+                </span>
+                <v-chip
+                  class="sf-chip blue ml-2"
+                >
+                  <game-asset
+                    v-if="input.outputPart"
+                    height="32"
+                    :subject="input.outputPart"
+                    type="item"
+                    width="32"
+                  />
+                  <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
+                </v-chip>
+              </div>
+              <div
+                v-for="(resource, resourceKey) in factory.rawResources"
+                :key="resourceKey"
+                class="mr-2 pl-2 no-bottom rounded"
+              >
+                <i class="fas fa-hard-hat" />
+                <span class="ml-2">
+                  <b>{{ "Raw Resource(s)" }}:</b>
+                </span>
+                <v-chip
+                  class="sf-chip blue ml-2"
+                >
+                  <game-asset
+                    v-if="resource.id"
+                    height="32"
+                    :subject="resource.id"
+                    type="item"
+                    width="32"
+                  />
+                  <span class="ml-2"><b>{{ getPartDisplayName(resource.id) }}:</b> {{ formatNumber(resource.amount) }}/min</span>
+                </v-chip>
+              </div>
+            </div>
+          </div>
           <v-row
             class="py-2 px-4 my-0 mx-0"
             :class="hasExports(factory) ? 'border-b-md' : ''"

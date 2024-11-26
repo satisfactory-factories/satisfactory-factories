@@ -4,7 +4,7 @@
       <img alt="Site logo" src="/SF.png" style="max-width: 48px;">
       <span class="ml-3">Satisfactory Factories</span>
       <span class="ml-2">
-        <v-chip class="sf-chip blue small">ALPHA</v-chip>
+        <v-chip class="sf-chip blue small">v0.2 ALPHA</v-chip>
       </span>
     </div>
     <v-tabs
