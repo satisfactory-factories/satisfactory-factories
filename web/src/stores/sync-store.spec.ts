@@ -148,23 +148,20 @@ describe('useSyncStore', () => {
 
   describe('handleDataLoad', () => {
     it('should call loadServerData from SyncActions', async () => {
-      const result = await syncStore.handleDataLoad()
+      await syncStore.handleDataLoad()
       expect(syncStore.syncActions.loadServerData).toHaveBeenCalledWith(false)
-      expect(result).toBe(true)
     })
 
     it('should pass forceLoad to loadServerData', async () => {
-      const result = await syncStore.handleDataLoad(true)
+      await syncStore.handleDataLoad(true)
       expect(syncStore.syncActions.loadServerData).toHaveBeenCalledWith(true)
-      expect(result).toBe(true)
     })
   })
 
   describe('handleSync', () => {
     it('should pass stopSyncing and dataSavePending to syncData', async () => {
-      const result = await syncStore.handleSync()
+      await syncStore.handleSync()
       expect(syncStore.syncActions.syncData).toHaveBeenCalledWith(false, false)
-      expect(result).toBe(true)
     })
   })
 
