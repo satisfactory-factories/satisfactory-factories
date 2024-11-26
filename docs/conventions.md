@@ -42,4 +42,4 @@ There are however some exceptions to this:
 
 * Parser **MUST** be backed by tests. There is no excuse with this component as it is all TypeScript, no DOM manipulation, and is a perfect candidate for testing.
   * The parser is the most critical component of the project, and it is essential that it is tested to ensure that it is working correctly. It literally provides everything required for the calculations of the tool.
-  * 100% code coverage is expected for this tool.
+  * High 90's % code coverage is expected for the parsing tool.
