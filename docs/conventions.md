@@ -2,7 +2,7 @@
 This document plans to illustrate the expectations set upon developers contributing to this project. It is intended for such conventions to be relatively lightweight and not overly restrictive, but to provide a baseline for how the project is structured and maintained.
 
 ## Language
-All code is to be written in `TypeScript` unless there is a specific reason to use another language. This is to ensure that the codebase is consistent and that all developers can understand the codebase and sing off the same hymn sheet.
+All code is to be written in `TypeScript` unless there is a specific reason to use another language. This is to ensure that the codebase is consistent and that all developers can understand the codebase and sing from the same hymn sheet.
 
 ## Commit messages
 This project is following the [Conventional Commits Standard](https://www.conventionalcommits.org/en/v1.0.0/#summary). This is to ensure that commit messages maintain a level of consistency describing:
