@@ -243,7 +243,7 @@
       const mangledToken = `mangled${token}`
       localStorage.setItem('token', mangledToken)
       console.log('Auth: Mangled token')
-      authStore.validateToken(mangledToken)
+      authStore.validateToken(mangledToken) // Disable this if you want to test without revalidation
     }
   }
 
