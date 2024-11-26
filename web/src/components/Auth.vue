@@ -258,7 +258,4 @@
   z-index: 10 !important;
   border: 1px solid rgb(108, 108, 108);
 }
-.lightRed {
-  color: lightcoral;
-}
 </style>
