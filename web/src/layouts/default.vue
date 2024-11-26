@@ -1,9 +1,16 @@
 <template>
   <v-app>
-    <navigation v-if="!hasError" @click="closeAuthTray" />
-    <auth v-if="!hasError" ref="authRef" />
-    <tab-navigation v-if="showTabNavigation && !hasError" />
-    <v-main @click="closeAuthTray">
+    <template v-if="!hasError">
+      <navigation>
+        <template #append>
+          <auth />
+        </template>
+      </navigation>
+
+      <tab-navigation v-if="showTabNavigation" />
+    </template>
+
+    <v-main>
       <router-view />
     </v-main>
   </v-app>
@@ -19,13 +26,4 @@
   const showTabNavigation = computed(() => {
     return route.path === '/' || route.path === '/graph'
   })
-
-  const authRef = ref(null)
-
-  const closeAuthTray = () => {
-    if (authRef.value) {
-      // @ts-ignore
-      authRef.value.closeTray()
-    }
-  }
 </script>

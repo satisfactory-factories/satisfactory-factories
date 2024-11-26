@@ -14,16 +14,25 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <div class="position-absolute right-0 ma-2 mt-3 text-right">
-    <v-btn v-if="!loggedInUser" @click="toggleTray">
-      <i class="fas fa-sign-in mr-2" />Sign In, Pioneer!
-    </v-btn>
-    <v-btn v-else @click="toggleTray">
-      <i class="fas fa-user mr-2" />{{ loggedInUser }}
-    </v-btn>
-
-    <v-slide-x-transition>
-      <v-card v-if="trayOpen" class="tray">
+  <v-btn variant="flat" @click="toggleTray">
+    <div v-if="loggedInUser">
+      <i class="fas fa-user mr-2" />
+      {{ loggedInUser }}
+    </div>
+    <span v-else>
+      <i class="fas fa-sign-in mr-2" />
+      Sign In, Pioneer!
+    </span>
+    <v-overlay
+      activator="parent"
+      location="bottom end"
+      location-strategy="connected"
+      max-width="400"
+      origin="auto"
+      :scrim="false"
+      transition="slide-y-transition"
+    >
+      <v-card class="border-md mt-1">
         <v-card-text v-if="!loggedInUser">
           <div class="text-center mb-4">
             <v-btn-group>
@@ -100,9 +109,8 @@
           <sync />
         </v-card-text>
       </v-card>
-
-    </v-slide-x-transition>
-  </div>
+    </v-overlay>
+  </v-btn>
 </template>
 
 <script setup lang="ts">
@@ -248,14 +256,3 @@
   }
 
 </script>
-
-<style lang="scss" scoped>
-.tray {
-  position: absolute;
-  top: 45px;
-  right: 0;
-  width: 400px;
-  z-index: 10 !important;
-  border: 1px solid rgb(108, 108, 108);
-}
-</style>
