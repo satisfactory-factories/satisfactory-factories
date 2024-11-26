@@ -30,8 +30,8 @@ See [Versioning](./versioning.md) on why this is important and why we use it in 
 
 To aid this, developers can run `pnpm lint` in any component which will run ESLint checks and fix them. You must do this before commiting or the CI will block the PR via a status check.
 
-## Branching strategy
-There is none. We are not enforcing any form of branching naming strategy. 
+## Branching naming strategy
+There is none. We are not enforcing any form of branching naming strategy. Branch stragegy itself is Trunk based, more info [in how we do releases](./how-do-we-release.md).
 
 ## Test standards
 New code should ideally be covered by a test. Our testing tool of choice is [Vitest](https://vitest.dev/guide/) which is a drop in replacement for Jest tests. It is recommended we use this tool as it is faster and more lightweight than Jest, and the web project is built in Vite, which is super performant.
