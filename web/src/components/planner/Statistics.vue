@@ -125,14 +125,12 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import {
-  Factory,
-  BuildingRequirement,
+  Factory
 } from "@/interfaces/planner/FactoryInterface";
 import { formatNumber } from "@/utils/numberFormatter";
 import {
   getPartDisplayName,
   hasMetricsForPart,
-  differenceClass,
 } from "@/utils/helpers";
 
 const props = defineProps<{
