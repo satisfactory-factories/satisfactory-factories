@@ -99,7 +99,7 @@
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
           <div
-            v-if="factory.inputs.length > 0"
+            v-if="factory.inputs.length > 0 || Object.keys(factory.rawResources).length > 0"
             class="text-body-1 py-2 px-4 pb-1"
             :class="factory.products.length > 0 ? 'border-b-md' : ''"
           >
@@ -126,6 +126,28 @@
                     width="32"
                   />
                   <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
+                </v-chip>
+              </div>
+              <div
+                v-for="(resource, resourceKey) in factory.rawResources"
+                :key="resourceKey"
+                class="mr-2 pl-2 no-bottom rounded"
+              >
+                <i class="fas fa-hard-hat" />
+                <span class="ml-2">
+                  <b>{{ "Raw Resource(s)" }}:</b>
+                </span>
+                <v-chip
+                  class="sf-chip blue ml-2"
+                >
+                  <game-asset
+                    v-if="resource.id"
+                    height="32"
+                    :subject="resource.id"
+                    type="item"
+                    width="32"
+                  />
+                  <span class="ml-2"><b>{{ getPartDisplayName(resource.id) }}:</b> {{ formatNumber(resource.amount) }}/min</span>
                 </v-chip>
               </div>
             </div>
