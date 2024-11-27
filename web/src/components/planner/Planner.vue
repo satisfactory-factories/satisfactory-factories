@@ -1,30 +1,23 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-    <!--    &lt;!&ndash; The Drawer for Mobile &ndash;&gt;-->
-    <!--    <v-navigation-drawer-->
-    <!--      v-model="drawer"-->
-    <!--      app-->
-    <!--      class="d-md-none"-->
-    <!--      temporary-->
-    <!--    >-->
-    <!--      <v-divider color="#ccc" thickness="2px" />-->
-    <!--      <planner-factory-list-->
-    <!--        :factories="factories"-->
-    <!--        :total-factories="factories.length"-->
-    <!--        @create-factory="createFactory"-->
-    <!--        @update-factories="updateFactories"-->
-    <!--      />-->
-    <!--      <planner-global-actions-->
-    <!--        class="py-4"-->
-    <!--        :help-text-shown="helpText"-->
-    <!--        @clear-all="clearAll"-->
-    <!--        @hide-all="showHideAll('hide')"-->
-    <!--        @show-all="showHideAll('show')"-->
-    <!--        @show-intro="showIntro"-->
-    <!--        @toggle-help-text="toggleHelp()"-->
-    <!--      />-->
-    <!--    </v-navigation-drawer>-->
+    <Teleport defer to="#navigationDrawer">
+      <planner-factory-list
+        :factories="factories"
+        :total-factories="factories.length"
+        @create-factory="createFactory"
+        @update-factories="updateFactoriesList"
+      />
+      <planner-global-actions
+        class="py-4"
+        :help-text-shown="helpText"
+        @clear-all="clearAll"
+        @hide-all="showHideAll('hide')"
+        @show-all="showHideAll('show')"
+        @show-intro="showIntro"
+        @toggle-help-text="toggleHelp()"
+      />
+    </Teleport>
     <v-row class="two-pane-container">
       <!-- Sticky Sidebar for Desktop -->
       <v-col class="d-none d-md-flex sticky-sidebar">
@@ -33,7 +26,7 @@
             :factories="factories"
             :total-factories="factories.length"
             @create-factory="createFactory"
-            @update-factories="updateFactories"
+            @update-factories="updateFactoriesList"
           />
           <v-divider color="#ccc" thickness="2px" />
           <planner-global-actions
@@ -50,7 +43,7 @@
       <!-- Main Content Area -->
       <v-col class="border-s-md pa-3 main-content">
         <notice />
-        <planner-world-resources
+        <planner-statistics
           :help-text="helpText"
           :world-raw-resources="worldRawResources"
         />
@@ -106,7 +99,6 @@
   const { factories } = storeToRefs(appStore)
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
-  // const drawer = ref(false)
   const helpText = ref(localStorage.getItem('helpText') === 'true')
 
   // ==== WATCHES
@@ -190,7 +182,7 @@
     return findFac(factoryId, appStore.getFactories())
   }
 
-  const updateFactories = (newFactories: Factory[]) => {
+  const updateFactoriesList = (newFactories: Factory[]) => {
     appStore.setFactories(newFactories)
     forceSort()
     console.log('Factories updated and re-sorted')

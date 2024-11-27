@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">
+    <h1 class="text-h6 text-md-h5 mb-4">
       <i class="fas fa-conveyor-belt-alt" />
       <span class="ml-3">Products</span>
     </h1>
@@ -17,97 +17,103 @@
       :key="productIndex"
       class="px-4 my-2 border-md rounded sub-card"
     >
-      <v-row class="selectors align-center ml-0 mt-3 mb-0">
-        <span v-show="!product.id" class="mr-2">
-          <i class="fas fa-cube" style="width: 32px; height: 32px" />
-        </span>
-        <span v-if="product.id" class="mr-2">
-          <game-asset
-            :key="product.id"
-            height="32px"
-            :subject="product.id"
-            type="item"
-            width="32px"
+      <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
+        <div class="input-row d-flex align-center">
+          <span v-show="!product.id" class="mr-2">
+            <i class="fas fa-cube" style="width: 32px; height: 32px" />
+          </span>
+          <span v-if="product.id" class="mr-2">
+            <game-asset
+              :key="product.id"
+              height="32px"
+              :subject="product.id"
+              type="item"
+              width="32px"
+            />
+          </span>
+          <v-autocomplete
+            v-model="product.id"
+            hide-details
+            :items="autocompletePartItems"
+            label="Item"
+            max-width="300px"
+            variant="outlined"
+            width="300px"
+            @update:model-value="updateProductSelection(product, factory)"
           />
-        </span>
-        <v-autocomplete
-          v-model="product.id"
-          class="mr-3"
-          hide-details
-          :items="autocompletePartItems"
-          label="Item"
-          max-width="300px"
-          variant="outlined"
-          width="300px"
-          @update:model-value="updateProductSelection(product, factory)"
-        />
-        <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
-        <v-autocomplete
-          v-model="product.recipe"
-          class="mr-3"
-          :disabled="!product.id"
-          hide-details
-          :items="getRecipesForPartSelector(product.id)"
-          label="Recipe"
-          max-width="350px"
-          variant="outlined"
-          width="350px"
-          @update:model-value="updateFactory(factory)"
-        />
-        <v-text-field
-          v-model.number="product.amount"
-          class="mr-3"
-          hide-details
-          label="Qty /min"
-          max-width="110px"
-          type="number"
-          variant="outlined"
-          @input="updateFactory(factory)"
-        />
-        <v-btn
-          v-if="!factory.parts[product.id]?.satisfied"
-          class="rounded mr-2"
-          color="green"
-          @click="fixProduction(factory, product.id)"
-        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-        </v-btn>
-        <v-btn
-          v-if="factory.dependencies.metrics[product.id]?.difference < 0"
-          class="rounded mr-2"
-          color="green"
-          @click="fixExport(factory, product.id)"
-        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-        </v-btn>
-        <v-btn
-          class="rounded mr-2"
-          color="blue"
-          :disabled="product.displayOrder === 0"
-          icon="fas fa-arrow-up"
-          size="small"
-          variant="outlined"
-          @click="updateOrder('up', product)"
-        />
-        <v-btn
-          class="rounded mr-2"
-          color="blue"
-          :disabled="product.displayOrder === factory.products.length - 1"
-          icon="fas fa-arrow-down"
-          size="small"
-          variant="outlined"
-          @click="updateOrder('down', product)"
-        />
-        <v-btn
-          class="rounded"
-          color="red"
-          icon="fas fa-trash"
-          size="small"
-          variant="outlined"
-          @click="deleteProduct(productIndex, factory)"
-        />
-        <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
-          Internal
-        </v-chip>
-      </v-row>
+        </div>
+        <div class="input-row d-flex align-center">
+          <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
+          <v-autocomplete
+            v-model="product.recipe"
+            :disabled="!product.id"
+            hide-details
+            :items="getRecipesForPartSelector(product.id)"
+            label="Recipe"
+            max-width="350px"
+            variant="outlined"
+            width="350px"
+            @update:model-value="updateFactory(factory)"
+          />
+        </div>
+        <div class="input-row d-flex align-center">
+          <v-text-field
+            v-model.number="product.amount"
+            hide-details
+            label="Qty /min"
+            :max-width="smAndDown ? undefined : '110px'"
+            :min-width="smAndDown ? undefined : '100px'"
+            type="number"
+            variant="outlined"
+            @input="updateFactory(factory)"
+          />
+        </div>
+        <div class="input-row d-flex align-center">
+          <v-btn
+            v-if="!factory.parts[product.id]?.satisfied"
+            class="rounded mr-2"
+            color="green"
+            @click="fixProduction(factory, product.id)"
+          ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+          </v-btn>
+          <v-btn
+            v-if="factory.dependencies.metrics[product.id]?.difference < 0"
+            class="rounded mr-2"
+            color="green"
+            @click="fixExport(factory, product.id)"
+          ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+          </v-btn>
+          <v-btn
+            class="rounded mr-2"
+            color="blue"
+            :disabled="product.displayOrder === 0"
+            icon="fas fa-arrow-up"
+            size="small"
+            variant="outlined"
+            @click="updateOrder('up', product)"
+          />
+          <v-btn
+            class="rounded mr-2"
+            color="blue"
+            :disabled="product.displayOrder === factory.products.length - 1"
+            icon="fas fa-arrow-down"
+            size="small"
+            variant="outlined"
+            @click="updateOrder('down', product)"
+          />
+          <v-btn
+            class="rounded"
+            color="red"
+            icon="fas fa-trash"
+            size="small"
+            variant="outlined"
+            @click="deleteProduct(productIndex, factory)"
+          />
+          <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
+            Internal
+          </v-chip>
+        </div>
+      </div>
       <v-row
         v-if="product.byProducts && product.byProducts.length > 0"
         class="my-2 mb-n1 px-2 text-body-1 d-flex align-center"
@@ -184,6 +190,7 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useGameDataStore } from '@/stores/game-data-store'
+  import { useDisplay } from 'vuetify'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -195,6 +202,8 @@
     gameData: DataInterface
     helpText: boolean;
   }>()
+
+  const { smAndDown } = useDisplay()
 
   const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
 
@@ -269,3 +278,9 @@
   }
 
 </script>
+
+<style lang="scss" scoped>
+  .input-row {
+    max-width: 100%;
+  }
+</style>

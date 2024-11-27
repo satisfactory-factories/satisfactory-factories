@@ -62,7 +62,7 @@
                   </span>
                 </p>
               </v-col>
-              <v-col align-self="center" class="text-right flex-shrink-0 py-0">
+              <v-col align-self="center" class="text-right flex-shrink-0 py-0" cols="auto">
                 <v-btn
                   v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
                   class="ml-2 my-1"
@@ -98,7 +98,7 @@
           <v-card-title>
             <h2 class="text-h6">
               <i class="fas fa-building" />
-              <span class="ml-3">Buildings & Power</span>
+              <span class="ml-3">Factory Buildings</span>
             </h2>
           </v-card-title>
           <v-card-text class="text-body-1 pb-2">
@@ -120,15 +120,22 @@
                 </span>
               </v-chip>
             </div>
-            <v-chip
-              class="sf-chip yellow"
-              variant="tonal"
-            >
-              <i class="fas fa-bolt" />
-              <span class="ml-2">
-                {{ formatNumber(factory.totalPower) }} MW
-              </span>
-            </v-chip>
+            <v-divider class="my-2" color="#ccc" thickness="2px" />
+            <div>
+              <h2 class="text-h6">
+                <i class="fas fa-plug" />
+                <span class="ml-3">Factory Power</span>
+              </h2>
+              <v-chip
+                class="sf-chip yellow"
+                variant="tonal"
+              >
+                <i class="fas fa-bolt" />
+                <span class="ml-2">
+                  {{ formatNumber(factory.totalPower) }} MW
+                </span>
+              </v-chip>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>

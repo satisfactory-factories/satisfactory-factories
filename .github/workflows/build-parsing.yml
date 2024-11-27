@@ -1,0 +1,44 @@
+name: Parsing Checks
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'parsing/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'parsing/**'
+jobs:
+  build-parsing:
+    name: Build Parsing
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: parsing
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+# Will add later after all files have been fixed to linting standards
+#      - name: Lint check
+#        run: pnpm lint-check
+
+      - name: Build Parsing
+        run: pnpm build
+
+      - name: Test Parsing
+        run: pnpm test
