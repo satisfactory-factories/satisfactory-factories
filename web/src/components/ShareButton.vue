@@ -40,7 +40,7 @@
 
   const handleCreation = async (factoryTabData: FactoryTab) => {
     creating.value = true
-    const token = authStore.getToken()
+    const token = await authStore.getToken()
     try {
       const response = await fetch(`${apiUrl}/share`, {
         method: 'POST',
