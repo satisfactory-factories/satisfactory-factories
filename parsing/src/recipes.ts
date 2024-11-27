@@ -153,18 +153,20 @@ function getProductionRecipes(
         displayName: "Uranium Waste",
         ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
         products: [{ part: "NuclearWaste", amount: 1, perMin: 10 }],
-        building: { name: "nuclearpowerplant", power: 0 },
+        building: { name: "nuclearpowerplant", power: 2500 },
         isAlternate: false,
-        isFicsmas: false
+        isFicsmas: false,
+        isPowerGenerator: true
     });
     recipes.push({
         id: "PlutoniumWaste",
         displayName: "Plutonium Waste",
         ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
         products: [{ part: "PlutoniumWaste", amount: 1, perMin: 1 }],
-        building: { name: "nuclearpowerplant", power: 0 },
+        building: { name: "nuclearpowerplant", power: 2500 },
         isAlternate: false,
-        isFicsmas: false
+        isFicsmas: false,
+        isPowerGenerator: true
     });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -264,12 +266,13 @@ function getPowerGeneratingRecipes(
 
                         recipes.push({
                             id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
-                            displayName: recipe.mDisplayName,
+                            displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                             ingredients,
                             products,
                             building,
                             isAlternate: false,
-                            isFicsmas: false
+                            isFicsmas: false,
+                            isPowerGenerator: true
                         });  
                     }
                 }

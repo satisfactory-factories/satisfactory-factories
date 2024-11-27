@@ -343,7 +343,8 @@
                 "name": "Hatcher Remains",
                 "stackSize": 50,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 250
             },
             "HazmatFilter": {
                 "name": "Iodine-Infused Filter",
@@ -373,7 +374,8 @@
                 "name": "Hog Remains",
                 "stackSize": 50,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 250
             },
             "IonizedFuel": {
                 "name": "Ionized Fuel",
@@ -482,7 +484,8 @@
                 "name": "Mycelia",
                 "stackSize": 200,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 20
             },
             "NitricAcid": {
                 "name": "Nitric Acid",
@@ -878,7 +881,8 @@
                 "name": "Spitter Remains",
                 "stackSize": 50,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 250
             },
             "Stator": {
                 "name": "Stator",
@@ -914,7 +918,8 @@
                 "name": "Stinger Remains",
                 "stackSize": 50,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 250
             },
             "Stone": {
                 "name": "Limestone",
@@ -968,7 +973,8 @@
                 "name": "Wood",
                 "stackSize": 200,
                 "isFluid": false,
-                "isFicsmas": false
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 100
             },
             "XmasBall1": {
                 "name": "Red FICSMAS Ornament",
@@ -8168,10 +8174,11 @@
             ],
             "building": {
                 "name": "nuclearpowerplant",
-                "power": 0
+                "power": 2500
             },
             "isAlternate": false,
-            "isFicsmas": false
+            "isFicsmas": false,
+            "isPowerGenerator": true
         },
         {
             "id": "PowerCrystalShard_1",
@@ -10164,10 +10171,11 @@
             ],
             "building": {
                 "name": "nuclearpowerplant",
-                "power": 0
+                "power": 2500
             },
             "isAlternate": false,
-            "isFicsmas": false
+            "isFicsmas": false,
+            "isPowerGenerator": true
         },
         {
             "id": "SpaceElevatorPart_2",
@@ -10228,7 +10236,7 @@
     "powerGenerationRecipes": [
         {
             "id": "GeneratorBiomass_Automated",
-            "displayName": "Biomass Burner",
+            "displayName": "Biomass Burner (Leaves)",
             "ingredients": [
                 {
                     "part": "Desc_Leaves_C",
@@ -10242,7 +10250,46 @@
                 "power": "30.000000"
             },
             "isAlternate": false,
-            "isFicsmas": false
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated",
+            "displayName": "Biomass Burner (Mycelia)",
+            "ingredients": [
+                {
+                    "part": "Desc_Mycelia_C",
+                    "amount": 1.5,
+                    "perMin": 90
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Biomass Burner",
+                "power": "30.000000"
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated",
+            "displayName": "Biomass Burner (Wood)",
+            "ingredients": [
+                {
+                    "part": "Desc_Wood_C",
+                    "amount": 0.3,
+                    "perMin": 18
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Biomass Burner",
+                "power": "30.000000"
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
         }
     ]
 }

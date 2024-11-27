@@ -43,6 +43,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 200, //SS_BIG
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 100
                 };
             } else if (entry.ClassName === "Desc_Mycelia_C") {
                 parts["Mycelia"] = {
@@ -50,6 +51,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 200, //SS_BIG
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 20
                 };
             } else if (entry.ClassName === "Desc_HogParts_C") {
                 parts["HogParts"] = {
@@ -57,6 +59,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 250
                 };
             } else if (entry.ClassName === "Desc_SpitterParts_C") {
                 parts["SpitterParts"] = {
@@ -64,6 +67,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 250
                 };
             } else if (entry.ClassName === "Desc_StingerParts_C") {
                 parts["StingerParts"] = {
@@ -71,6 +75,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 250
                 };
             } else if (entry.ClassName === "Desc_HatcherParts_C") {
                 parts["HatcherParts"] = {
@@ -78,6 +83,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 250
                 };
             } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
                 // This is a special intermediate alt product
