@@ -250,7 +250,7 @@ function getPowerGeneratingRecipes(
 
             recipes.push({
                 id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
-                displayName: recipe.ClassName,
+                displayName: recipe.mDisplayName,
                 ingredients,
                 products,
                 building,

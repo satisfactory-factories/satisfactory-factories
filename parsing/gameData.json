@@ -10227,7 +10227,7 @@
     "powerGenerationRecipes": [
         {
             "id": "GeneratorBiomass_Automated",
-            "displayName": "Build_GeneratorBiomass_Automated_C",
+            "displayName": "Biomass Burner",
             "ingredients": [],
             "products": [],
             "building": {
@@ -10239,7 +10239,7 @@
         },
         {
             "id": "GeneratorCoal",
-            "displayName": "Build_GeneratorCoal_C",
+            "displayName": "Coal-Powered Generator",
             "ingredients": [],
             "products": [],
             "building": {
@@ -10251,7 +10251,7 @@
         },
         {
             "id": "GeneratorFuel",
-            "displayName": "Build_GeneratorFuel_C",
+            "displayName": "Fuel-Powered Generator",
             "ingredients": [],
             "products": [],
             "building": {
@@ -10263,7 +10263,7 @@
         },
         {
             "id": "GeneratorNuclear",
-            "displayName": "Build_GeneratorNuclear_C",
+            "displayName": "Nuclear Power Plant",
             "ingredients": [],
             "products": [],
             "building": {
