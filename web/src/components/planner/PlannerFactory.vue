@@ -9,7 +9,6 @@
               v-model="factory.name"
               class="ml-3 pl-0 factory-name"
               placeholder="Factory Name"
-              @input="updateFactory(factory)"
             >
           </v-col>
           <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
@@ -57,7 +56,7 @@
             <v-btn
               class="mr-2"
               color="orange rounded"
-              icon="fa fa-copy"
+              icon="fas fa-copy"
               size="small"
               title="Copy Factory"
               variant="outlined"
@@ -76,7 +75,6 @@
         <v-card-text v-show="!factory.hidden">
           <planner-factory-products
             :factory="factory"
-            :game-data="gameData"
             :help-text="helpText"
           />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />

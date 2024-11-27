@@ -67,7 +67,7 @@ function getProductionRecipes(
                 productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/BP_ItemDescriptor(.*?)\.BP_ItemDescriptor.*?",Amount=(\d+)/g)];
             }
 
-            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
+            const products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
                 const productName = match[1];
                 let amount = parseInt(match[2], 10);
@@ -126,7 +126,7 @@ function getProductionRecipes(
             }
 
             // Create building object with the selected building and calculated power
-            let building : Building = {
+            const building : Building = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };

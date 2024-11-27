@@ -1,17 +1,20 @@
-import Express from 'express';
 import http from 'http';
+
+import Express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-// @ts-ignore Types exist???
+// @ts-expect-error Types exist???
 import { Send } from "express-serve-static-core";
-import {FactoryData} from "./models/FactoyDataSchema";
-import {User} from "./models/UsersSchema";
 import cors from 'cors';
-import {Share, ShareDataSchema} from "./models/ShareSchema";
 import rateLimit from 'express-rate-limit';
 import { generateSlug } from "random-word-slugs";
+
+import {FactoryData} from "./models/FactoyDataSchema";
+import {User} from "./models/UsersSchema";
+import {Share, ShareDataSchema} from "./models/ShareSchema";
+
 
 dotenv.config();
 
