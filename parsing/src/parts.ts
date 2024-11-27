@@ -1,6 +1,6 @@
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface,RawResource} from "./interfaces/Part";
-import {blacklist,isFluid,isFicsmas} from "./common";
+import {blacklist,whitelist,isFluid,isFicsmas} from "./common";
 
 function getItems(data: any[]): PartDataInterface {
     const parts: { [key: string]: Part } = {};
@@ -35,7 +35,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: false,
-                    energyMJ: 15
+                    energyGeneratedInMJ: 15
                 };
             } else if (entry.ClassName === "Desc_Wood_C") {
                 parts["Wood"] = {
@@ -157,8 +157,10 @@ function getItems(data: any[]): PartDataInterface {
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
+            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && !entry.mProducedIn) return;
 
             if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
+            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
@@ -195,6 +197,7 @@ function getItems(data: any[]): PartDataInterface {
                         stackSize,
                         isFluid: isFluid(partName),
                         isFicsmas: isFicsmas(entry.mDisplayName),
+                        energyGeneratedInMJ: entry.mEnergyValue,
                     };
                 }
             });

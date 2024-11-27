@@ -416,7 +416,7 @@
                 "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": false,
-                "energy": 15
+                "energyGeneratedInMJ": 15
             },
             "LiquidBiofuel": {
                 "name": "Liquid Biofuel",
@@ -10225,24 +10225,5 @@
             "isFicsmas": false
         }
     ],
-    "powerGenerationRecipes": [
-        {
-            "id": "GeneratorBiomass_Automated",
-            "displayName": "Biomass Burner",
-            "ingredients": [
-                {
-                    "part": "Desc_Leaves_C",
-                    "amount": 2,
-                    "perMin": 120
-                }
-            ],
-            "products": [],
-            "building": {
-                "name": "Biomass Burner",
-                "power": "30.000000"
-            },
-            "isAlternate": false,
-            "isFicsmas": false
-        }
-    ]
+    "powerGenerationRecipes": []
 }
