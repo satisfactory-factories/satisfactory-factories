@@ -62,6 +62,7 @@
             hide-details
             label="Qty /min"
             :max-width="smAndDown ? undefined : '110px'"
+            :min-width="smAndDown ? undefined : '100px'"
             type="number"
             variant="outlined"
             @input="updateFactory(factory)"
