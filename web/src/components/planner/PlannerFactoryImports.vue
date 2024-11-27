@@ -29,7 +29,6 @@
         </v-card-text>
       </v-card>
 
-      <!-- class="px-4 py-3 my-2 mx-0 align-center selectors sub-card border-md rounded" -->
       <div
         v-for="(input, inputIndex) in factory.inputs"
         :key="`${inputIndex}-${input.outputPart}`"
@@ -80,6 +79,7 @@
             hide-details
             label="Qty /min"
             :max-width="smAndDown ? undefined : '110px'"
+            :min-width="smAndDown ? undefined : '100px'"
             type="number"
             variant="outlined"
             @input="updateFactory(factory)"
