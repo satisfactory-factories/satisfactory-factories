@@ -212,7 +212,7 @@ function getItems(data: any[]): PartDataInterface {
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
-                    console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
+                    //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,

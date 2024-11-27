@@ -281,8 +281,6 @@ function getPowerGeneratingRecipes(
         
         });
 
-    console.log(recipes);
-
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
