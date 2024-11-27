@@ -1,9 +1,16 @@
 <template>
   <v-app>
-    <navigation v-if="!hasError" @click="closeAuthTray" />
-    <auth v-if="!hasError" ref="authRef" />
-    <tab-navigation v-if="showTabNavigation && !hasError" />
-    <v-main @click="closeAuthTray">
+    <template v-if="!hasError">
+      <navigation>
+        <template #append>
+          <auth :button-color="authButtonColor" />
+        </template>
+      </navigation>
+
+      <tab-navigation v-if="showTabNavigation" />
+    </template>
+
+    <v-main>
       <router-view />
     </v-main>
   </v-app>
@@ -11,6 +18,10 @@
 
 <script setup lang="ts">
   import { useRoute } from 'vue-router'
+  import { useDisplay } from 'vuetify'
+
+  const { smAndDown } = useDisplay()
+  const authButtonColor = computed(() => smAndDown.value ? 'grey-darken-3' : undefined)
 
   // Disable auth and other elements if an error is present as they will likely error themselves.
   const hasError = localStorage.getItem('error') ?? null
@@ -19,13 +30,4 @@
   const showTabNavigation = computed(() => {
     return route.path === '/' || route.path === '/graph'
   })
-
-  const authRef = ref(null)
-
-  const closeAuthTray = () => {
-    if (authRef.value) {
-      // @ts-ignore
-      authRef.value.closeTray()
-    }
-  }
 </script>

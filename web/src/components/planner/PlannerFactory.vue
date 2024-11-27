@@ -3,17 +3,17 @@
     <v-col>
       <v-card :id="factory.id" :class="factoryClass(factory)">
         <v-row class="header">
-          <v-col class="text-h4 flex-grow-1" cols="8">
-            <i class="fas fa-industry" style="width: 35px" />
+          <v-col class="text-h5 text-md-h4 flex-grow-1" cols="auto" md="8">
+            <i class="fas fa-industry" />
             <input
               v-model="factory.name"
-              class="ml-3 factory-name"
+              class="ml-3 pl-0 factory-name"
               placeholder="Factory Name"
               @input="updateFactory(factory)"
             >
           </v-col>
-          <v-col class="text-right" cols="4">
-            <factory-debug :subject="factory" subject-type="Factory" />
+          <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
+            <factory-debug :is-compact="smAndDown" :subject="factory" subject-type="Factory" />
             <v-btn
               class="mr-2 rounded"
               color="primary"
@@ -228,6 +228,7 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { useDisplay } from 'vuetify'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -243,6 +244,8 @@
     helpText: boolean
     totalFactories: number;
   }>()
+
+  const { smAndDown } = useDisplay()
 
   const factoryClass = (factory: Factory) => {
     return {

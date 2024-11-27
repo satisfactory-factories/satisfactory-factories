@@ -62,7 +62,7 @@
                   </span>
                 </p>
               </v-col>
-              <v-col align-self="center" class="text-right flex-shrink-0 py-0">
+              <v-col align-self="center" class="text-right flex-shrink-0 py-0" cols="auto">
                 <v-btn
                   v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
                   class="ml-2 my-1"
@@ -124,7 +124,7 @@
             <div>
               <h2 class="text-h6">
                 <i class="fas fa-plug" />
-                  <span class="ml-3">Factory Power</span>
+                <span class="ml-3">Factory Power</span>
               </h2>
               <v-chip
                 class="sf-chip yellow"

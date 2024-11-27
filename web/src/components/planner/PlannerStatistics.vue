@@ -3,7 +3,7 @@
     <v-col>
       <v-card class="factory-card">
         <v-row class="header">
-          <v-col class="text-h4 flex-grow-1" cols="8">
+          <v-col class="text-h5 text-md-h4 flex-grow-1" cols="8">
             <i class="fas fa-globe" /><span class="ml-3">Plan Statistics</span>
           </v-col>
           <v-col class="text-right" cols="4">

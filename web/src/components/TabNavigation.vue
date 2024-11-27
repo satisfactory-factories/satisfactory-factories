@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between" density="compact">
-      <div class="d-flex align-center">
+    <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between w-100" density="compact">
+      <div class="d-flex align-center" style="min-width: 0">
         <v-tabs
           v-model="appStore.currentFactoryTabIndex"
           color="deep-orange"
