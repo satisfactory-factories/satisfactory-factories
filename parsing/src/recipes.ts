@@ -211,63 +211,67 @@ function getPowerGeneratingRecipes(
                 //console.log(primaryFuel);
                 const match = primaryFuel.match(/Desc_(.*?)_C/);
                 const extractedPartText = match ? match[1] : null;
-                console.log('extractedPartText:'+extractedPartText);
+                if (extractedPartText !== "LiquidTurboFuel") {
+                    console.log('extractedPartText:'+extractedPartText);
 
-                const primaryFuelPart: Part = parts.parts[extractedPartText];
-                if (primaryFuelPart) {
-                    console.log('primaryFuelPart: ' + primaryFuelPart.name);
-                } else {
-                    console.log('fail: ' + extractedPartText);
-                }
-                console.log(primaryFuelPart);
-                let primaryPerMin: number = 0; 
-                if (primaryFuelPart.energy) {
-                    console.log('extractedPartText: ' + extractedPartText);
-                    primaryPerMin = powerMJ / primaryFuelPart.energy;
-                }
-                let primaryAmount : number = 0;
-                if (primaryPerMin > 0) {
-                    primaryAmount = primaryPerMin / 60;
+                    const primaryFuelPart: Part = parts.parts[extractedPartText];
+                    if (primaryFuelPart) {
+                        console.log('primaryFuelPart: ' + primaryFuelPart.name);
+                    } else {
+                        console.log('fail: ' + extractedPartText);
+                        console.log(parts.parts);
+                        console.log('fail: ' + extractedPartText);
+                    }
+                    console.log(primaryFuelPart);
+                    let primaryPerMin: number = 0; 
+                    if (primaryFuelPart.energy) {
+                        console.log('extractedPartText: ' + extractedPartText);
+                        primaryPerMin = powerMJ / primaryFuelPart.energy;
+                    }
+                    let primaryAmount : number = 0;
+                    if (primaryPerMin > 0) {
+                        primaryAmount = primaryPerMin / 60;
 
-                    const ingredients = <any>[];
-                    ingredients.push(
-                        { 
-                            part: primaryFuel,
-                            amount: primaryAmount,
-                            perMin: primaryPerMin
-                        }
-                    )
-                    if (supplementalResource) {
+                        const ingredients = <any>[];
                         ingredients.push(
                             { 
-                                part: supplementalResource,
-                                amount: 0,
-                                perMin: 0
+                                part: primaryFuel,
+                                amount: primaryAmount,
+                                perMin: primaryPerMin
                             }
                         )
-                    }
-                    
-                    const products = <any>[];
-                    if (byProduct) {
-                        products.push(
-                            {
-                                part: byProduct,
-                                amount: 0,
-                                perMin: byProductAmount,
-                                isByProduct: true
-                            }
-                        );
-                    }
+                        if (supplementalResource) {
+                            ingredients.push(
+                                { 
+                                    part: supplementalResource,
+                                    amount: 0,
+                                    perMin: 0
+                                }
+                            )
+                        }
+                        
+                        const products = <any>[];
+                        if (byProduct) {
+                            products.push(
+                                {
+                                    part: byProduct,
+                                    amount: 0,
+                                    perMin: byProductAmount,
+                                    isByProduct: true
+                                }
+                            );
+                        }
 
-                    recipes.push({
-                        id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
-                        displayName: recipe.mDisplayName,
-                        ingredients,
-                        products,
-                        building,
-                        isAlternate: false,
-                        isFicsmas: false
-                    });  
+                        recipes.push({
+                            id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
+                            displayName: recipe.mDisplayName,
+                            ingredients,
+                            products,
+                            building,
+                            isAlternate: false,
+                            isFicsmas: false
+                        });  
+                    }
                 }
             });
         
