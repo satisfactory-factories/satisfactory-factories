@@ -75,7 +75,6 @@
         <v-card-text v-show="!factory.hidden">
           <planner-factory-products
             :factory="factory"
-            :game-data="gameData"
             :help-text="helpText"
           />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />

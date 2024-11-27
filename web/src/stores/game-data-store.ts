@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { config } from '@/config/config'
+import { Recipe } from '@/interfaces/Recipe'
 
 export const useGameDataStore = defineStore('game-data', () => {
   const gameData = ref<DataInterface | null>(JSON.parse(<string>localStorage.getItem('gameData') ?? 'null'))
@@ -39,8 +40,20 @@ export const useGameDataStore = defineStore('game-data', () => {
     }
   }
 
-  const getGameData = (): DataInterface | null => {
+  const getGameData = (): DataInterface => {
+    if (!gameData.value) {
+      alert('Game data is somehow empty! Please reload!')
+      throw new Error('Game data is empty!')
+    }
     return gameData.value
+  }
+
+  const getRecipeById = (id: string): Recipe | null => {
+    if (!gameData.value || !id) {
+      return null
+    }
+
+    return gameData.value.recipes.find(recipe => recipe.id === id) ?? null
   }
 
   const getRecipesForPart = (part: string) => {
@@ -77,6 +90,7 @@ export const useGameDataStore = defineStore('game-data', () => {
     gameData,
     getGameData,
     loadGameData,
+    getRecipeById,
     getRecipesForPart,
     getDefaultRecipeForPart,
   }
