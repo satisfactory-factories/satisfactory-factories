@@ -13,7 +13,7 @@ export interface Recipe {
   building: Building;
   isAlternate: boolean;
   isFicsmas: boolean;
-  isPowerGenerater: boolean;
+  isPowerGenerator: boolean;
 }
 
 export interface Building {
