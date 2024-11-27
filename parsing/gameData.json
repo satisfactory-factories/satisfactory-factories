@@ -10235,7 +10235,7 @@
     ],
     "powerGenerationRecipes": [
         {
-            "id": "GeneratorBiomass_Automated",
+            "id": "GeneratorBiomass_Automated_Leaves",
             "displayName": "Biomass Burner (Leaves)",
             "ingredients": [
                 {
@@ -10246,7 +10246,7 @@
             ],
             "products": [],
             "building": {
-                "name": "Biomass Burner",
+                "name": "BiomassBurner",
                 "power": "30.000000"
             },
             "isAlternate": false,
@@ -10254,7 +10254,7 @@
             "isPowerGenerator": true
         },
         {
-            "id": "GeneratorBiomass_Automated",
+            "id": "GeneratorBiomass_Automated_Mycelia",
             "displayName": "Biomass Burner (Mycelia)",
             "ingredients": [
                 {
@@ -10265,7 +10265,7 @@
             ],
             "products": [],
             "building": {
-                "name": "Biomass Burner",
+                "name": "BiomassBurner",
                 "power": "30.000000"
             },
             "isAlternate": false,
@@ -10273,7 +10273,7 @@
             "isPowerGenerator": true
         },
         {
-            "id": "GeneratorBiomass_Automated",
+            "id": "GeneratorBiomass_Automated_Wood",
             "displayName": "Biomass Burner (Wood)",
             "ingredients": [
                 {
@@ -10284,7 +10284,7 @@
             ],
             "products": [],
             "building": {
-                "name": "Biomass Burner",
+                "name": "BiomassBurner",
                 "power": "30.000000"
             },
             "isAlternate": false,

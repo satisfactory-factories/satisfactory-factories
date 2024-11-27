@@ -196,7 +196,7 @@ function getPowerGeneratingRecipes(
             //console.log(recipe.ClassName); 
              
             let building : Building = {
-                name: recipe.mDisplayName, // Use the first valid building, or empty string if none
+                name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
                 power: recipe.mPowerProduction, // generated power
             };   
             const powerMJ = (recipe.mPowerProduction / 60) / (1/3600)
@@ -251,6 +251,7 @@ function getPowerGeneratingRecipes(
                                 }
                             )
                         }
+                        console.log(ingredients);
                         
                         const products = <any>[];
                         if (byProduct) {
@@ -265,7 +266,7 @@ function getPowerGeneratingRecipes(
                         }
 
                         recipes.push({
-                            id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
+                            id: recipe.ClassName.replace("Build_", "").replace(/_C$/, "") +'_'+ primaryFuelPart.name,
                             displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                             ingredients,
                             products,
