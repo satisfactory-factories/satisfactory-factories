@@ -9,7 +9,6 @@
               v-model="factory.name"
               class="ml-3 pl-0 factory-name"
               placeholder="Factory Name"
-              @input="updateFactory(factory)"
             >
           </v-col>
           <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
