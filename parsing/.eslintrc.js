@@ -45,7 +45,7 @@ module.exports = {
   },
   env: {
     node: true, // For Node.js environment
-    browser: true, // If your app runs in a browser
+    browser: false, // If your app runs in a browser
     es2020: true, // Use modern ES features
   },
 };
