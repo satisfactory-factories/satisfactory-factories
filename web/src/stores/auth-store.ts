@@ -20,15 +20,15 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
     }
   }
 
-  const getToken = async (invalidateSession = true) => {
+  const getToken = async () => {
     // This is a hack to get round the need of dependency injection for the store, using localStorage as a middleman.
     // It's not ideal, but it works for now.
     const token = localStorage.getItem('token') ?? ''
-    await validateToken(invalidateSession, token) // Will fail if it throws an error
+    await validateToken(token) // Will fail if it throws an error
     return token ?? ''
   }
 
-  const validateToken = async (invalidateSession = true, token?: string): Promise<boolean | string> => {
+  const validateToken = async (token?: string): Promise<boolean | string> => {
     if (!token) {
       console.error('validateToken: No token provided!')
       throw new InvalidTokenError('No token provided')
@@ -55,11 +55,8 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
       return true
     } else if (response.status === 401) {
       console.warn('validateToken: Token invalid!')
-
-      if (invalidateSession) {
-        eventBus.emit('sessionExpired')
-        handleLogout()
-      }
+      eventBus.emit('sessionExpired')
+      handleLogout()
       throw new InvalidTokenError()
     } else if (response.status === 500 || response.status === 502) {
       console.error('validateToken: Backend is offline!')
