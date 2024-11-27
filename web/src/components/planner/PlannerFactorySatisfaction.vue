@@ -103,7 +103,7 @@
           </v-card-title>
           <v-card-text class="text-body-1 pb-2">
             <div
-              v-for="([_, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
+              v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
               :key="buildingIndex"
               style="display: inline;"
             >

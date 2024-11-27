@@ -101,7 +101,7 @@
   const issuesShow = ref<boolean>(
     localStorage.getItem('issuesShow') === null
       ? false
-      : localStorage.getItem('issuesShow') === 'false'
+      : localStorage.getItem('issuesShow') === 'true' // true if true, false if not
   )
 
   // Watch for changes to issuesShow

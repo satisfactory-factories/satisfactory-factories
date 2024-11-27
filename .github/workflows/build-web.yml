@@ -1,0 +1,43 @@
+name: Web Checks
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+jobs:
+  build-web:
+    name: Build & Test Web
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: web
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint check
+        run: pnpm lint-check
+
+      - name: Build Web
+        run: pnpm build
+
+      - name: Test Web
+        run: pnpm test

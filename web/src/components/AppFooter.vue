@@ -15,7 +15,7 @@
         &copy;{{ new Date().getFullYear() }} Matt Cavanagh<br>
         All assets (images, recipe data etc) are the sole property of Coffee Stain Studios, who are the owners of the Satisfactory&trade; video game.<br>
         This project is not affiliated with Coffee Stain Studios in any way.
-        </v-col>
+      </v-col>
     </v-row>
   </v-footer>
 </template>

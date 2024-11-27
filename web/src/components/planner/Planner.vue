@@ -1,7 +1,7 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-    <Teleport defer to="#navigationDrawer">
+    <Teleport v-if="smAndDown" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="factories"
         :total-factories="factories.length"
@@ -86,8 +86,10 @@
   } from '@/utils/factory-management/dependencies'
   import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
+  import { useDisplay } from 'vuetify'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
+  const { smAndDown } = useDisplay()
 
   const gameData = props.gameData
   if (!gameData) {
