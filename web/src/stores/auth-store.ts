@@ -31,7 +31,6 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
   const validateToken = async (token?: string): Promise<boolean | string> => {
     if (!token) {
       console.error('validateToken: No token provided!')
-      eventBus.emit('sessionExpired')
       throw new InvalidTokenError('No token provided')
     }
     let response: Response
