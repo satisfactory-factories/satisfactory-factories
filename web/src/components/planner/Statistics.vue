@@ -66,31 +66,10 @@
             </span>
             <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
   
-            <!-- Produced Items Area -->
-            <h1 class="text-h5 mb-4">
-              <i class="fas fa-conveyor-belt-alt" />
-              <span class="ml-3">Produced Items</span>
-            </h1>
-            <p v-show="helpText" class="mb-4">
-              <i class="fas fa-info-circle" /> Shows all the items produced by all
-              your factories.
-            </p>
-            <v-chip
-              v-for="(product, id) in allFactoryProducts"
-              :key="id"
-              class="sf-chip"
-            >
-              <span class="mr-2">
-                <game-asset :subject="id" type="item" />
-              </span>
-              <span>
-                <b>{{ product.name }}</b
-                >: {{ formatNumber(product.totalAmount) }}/min
-              </span>
-            </v-chip>
-            <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
+            
   
             <!-- Excess Product Area -->
+             
             <h1 class="text-h5 mb-4">
               <i class="fas fa-warehouse" />
               <span class="ml-3">Product Surplus & Deficit</span>
@@ -116,6 +95,52 @@
                 >: {{ formatNumber(product.totalDifference) }}/min
               </span>
             </v-chip>
+            <!-- Produced Items Area -->
+            <div v-show="!productsHidden">
+              <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
+                <h1 class="text-h5 mb-4">
+                <i class="fas fa-conveyor-belt-alt" />
+                <span class="ml-3">Produced Items</span>
+            </h1>
+                 
+            <p v-show="helpText" class="mb-4">
+              <i class="fas fa-info-circle" /> Shows all the items produced by all
+              your factories.
+            </p>
+            <v-chip
+              v-for="(product) in allFactoryProducts"
+              :key="product.id"
+              class="sf-chip"
+            >
+              <span class="mr-2">
+                <game-asset :subject="product.id" type="item" />
+              </span>
+              <span>
+                <b>{{ product.name }}</b
+                >: {{ formatNumber(product.totalAmount) }}/min
+              </span>
+            </v-chip>
+            </div>
+            
+            <div class="mt-4 text-center">
+          
+            <v-col class="text-center">
+              <v-btn
+                v-show="!productsHidden"
+                color="primary"
+                variant="outlined"
+                @click="toggleProductsVisibility"
+                >Hide All products
+              </v-btn>
+              <v-btn
+                v-show="productsHidden"
+                color="primary"
+                variant="outlined"
+                @click="toggleProductsVisibility"
+                >Show All products
+              </v-btn>
+            </v-col>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -142,15 +167,26 @@
   const hidden = ref<boolean>(
     localStorage.getItem("statisticsHidden") === "true"
   );
+  const productsHidden = ref<boolean>(
+    localStorage.getItem("statisticsProductsHidden") === "true"
+  );
   
   // Watch the 'hidden' ref and update localStorage whenever it changes
   watch(hidden, (newValue) => {
     localStorage.setItem("statisticsHidden", newValue.toString());
   });
+  // Watch the 'hidden' ref and update localStorage whenever it changes
+  watch(productsHidden, (newValue) => {
+    localStorage.setItem("statisticsProductsHidden", newValue.toString());
+  });
   
   // Function to toggle visibility
   const toggleVisibility = () => {
     hidden.value = !hidden.value;
+  };
+  // Function to toggle products visibility
+  const toggleProductsVisibility = () => {
+    productsHidden.value = !productsHidden.value;
   };
   
   const getBuildingDisplayName = inject("getBuildingDisplayName") as (
@@ -188,20 +224,24 @@
       );
     });
   
-    return buildings;
+    // Convert the object to an array and sort it alphabetically by display name
+  return Object.values(buildings).sort((a, b) =>
+    getBuildingDisplayName(a.name).localeCompare(getBuildingDisplayName(b.name))
+  );
   });
   
   // This function calculates total number of products produced
   const allFactoryProducts = computed(() => {
     const products: Record<
       string,
-      { name: string; totalAmount: number; totalDifference: number }
+      { id: string; name: string; totalAmount: number; totalDifference: number }
     > = {};
   
     props.factories.forEach((factory) => {
       factory.products.forEach((product) => {
         if (!products[product.id]) {
           products[product.id] = {
+            id: product.id,
             name: getPartDisplayName(product.id) ?? product.id,
             totalAmount: 0,
             totalDifference: 0,
@@ -220,31 +260,38 @@
       });
     });
   
-    return products;
+    //return products;
+    // Convert the object to an array and sort it alphabetically by display name
+  return Object.values(products).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
   });
   
   // This function calculates total number of raw resources required for all the factories combined
   const allFactoryRawResources = computed(() => {
-    const rawResources: Record<string, { id: string; totalAmount: number }> = {};
-  
-    props.factories.forEach((factory) => {
-      Object.values(factory.rawResources).forEach((resource) => {
-        if (!rawResources[resource.id]) {
-          // Initialize the raw resource entry
-          rawResources[resource.id] = {
-            id: resource.id,
-            totalAmount: 0,
-          };
-        }
-  
-        // Accumulate the resource amount
-        rawResources[resource.id].totalAmount += resource.amount;
-      });
+  const rawResources: Record<string, { id: string; totalAmount: number }> = {};
+
+  props.factories.forEach((factory) => {
+    Object.values(factory.rawResources).forEach((resource) => {
+      if (!rawResources[resource.id]) {
+        // Initialize the raw resource entry
+        rawResources[resource.id] = {
+          id: resource.id,
+          totalAmount: 0,
+        };
+      }
+
+      // Accumulate the resource amount
+      rawResources[resource.id].totalAmount += resource.amount;
     });
-  
-    return rawResources;
   });
   
+  // Convert the object to an array and sort it alphabetically by display name
+  return Object.values(rawResources).sort((a, b) =>
+    getPartDisplayName(a.id).localeCompare(getPartDisplayName(b.id))
+  );
+});
+
   // This function calculates total number of products produced and gets the difference between demand and supply (to see if we have a surplus of products or not)
   const factoryProductDifferences = computed(() => {
     const differences: Record<string, { name: string; totalDifference: number }> =
