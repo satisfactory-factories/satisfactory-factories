@@ -35,7 +35,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: false,
-                    energy: 15
+                    energyMJ: 15
                 };
             } else if (entry.ClassName === "Desc_Wood_C") {
                 parts["Wood"] = {

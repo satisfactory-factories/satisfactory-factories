@@ -3,7 +3,7 @@ export interface Part {
     stackSize: number;
     isFluid: boolean;
     isFicsmas: boolean;
-    energy?: number;
+    energyMJ?: number;
 }
 
 export interface PartDataInterface {
