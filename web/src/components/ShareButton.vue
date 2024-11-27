@@ -10,6 +10,18 @@
   <v-snackbar v-model="toast" color="success" top>
     Link copied to clipboard!
   </v-snackbar>
+  <v-dialog v-model="showCopyDialog" max-width="600">
+    <v-card>
+      <v-card-title>Copy the link below</v-card-title>
+      <v-card-text>
+        <p class="mb-4">Annoyingly your device / browser doesn't support copying to clipboard automatically. Please copy the link below manually.</p>
+        <v-text-field v-model="link" readonly />
+        <div class="text-center">
+          <v-btn color="green" variant="flat" @click="copyLink(link)"><i class="fas fa-copy mr-2" />Copy</v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -28,6 +40,8 @@
   const apiUrl = config.apiUrl
   const toast = ref(false)
   const creating = ref(false)
+  const link = ref()
+  const showCopyDialog = ref(false)
 
   const createShareLink = async () => {
     if (!currentFactoryTab.value.factories || currentFactoryTab.value.factories.length === 0) {
@@ -35,7 +49,25 @@
       return
     }
 
-    await handleCreation(currentFactoryTab.value)
+    creating.value = true
+    link.value = await handleCreation(currentFactoryTab.value) ?? ''
+    creating.value = false
+
+    // If no link was returned assume server errors
+    if (!link.value) {
+      return
+    }
+
+    console.log('ShareButton: Link created', link.value)
+
+    try {
+      await copyLink(link.value)
+    } catch (err) {
+      if (err instanceof Error && err.message.includes('not allowed by the user agent')) {
+        console.error('Failed to copy link to clipboard, showing share dialog', err)
+        showCopyDialog.value = true
+      }
+    }
   }
 
   const handleCreation = async (factoryTabData: FactoryTab) => {
@@ -46,7 +78,6 @@
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
-        creating.value = false
         alert('Your session has expired, please log in and try sharing again.')
       }
       return
@@ -63,9 +94,7 @@
       })
       if (response.ok) {
         const data: ShareDataCreationResponse = await response.json()
-        await navigator.clipboard.writeText(`${window.location.origin}/share/${data.shareId}`)
-        toast.value = true // Shows toast
-        creating.value = false
+        return `${window.location.origin}/share/${data.shareId}`
       } else if (response.status === 429) {
         alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
       } else if (response.status === 500) {
@@ -82,5 +111,11 @@
         alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${error}"`)
       }
     }
+  }
+
+  const copyLink = async (url: string) => {
+    await navigator.clipboard.writeText(url)
+    toast.value = true
+    showCopyDialog.value = false
   }
 </script>
