@@ -10700,7 +10700,7 @@
                 {
                     "part": "Desc_PlutoniumWaste_C",
                     "amount": 0,
-                    "perMin": "10",
+                    "perMin": 10,
                     "isByProduct": true
                 }
             ],
@@ -10731,7 +10731,7 @@
                 {
                     "part": "Desc_NuclearWaste_C",
                     "amount": 0,
-                    "perMin": "50",
+                    "perMin": 50,
                     "isByProduct": true
                 }
             ],

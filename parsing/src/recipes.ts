@@ -207,7 +207,7 @@ function getPowerGeneratingRecipes(
                 const primaryFuel = fuel.mFuelClass;
                 const supplementalResource = fuel.mSupplementalResourceClass;
                 const byProduct = fuel.mByproduct;
-                const byProductAmount: number = fuel.mByproductAmount;
+                const byProductAmount: number = Number(fuel.mByproductAmount);
 
                 //Find the part for the primary fuel
                 //console.log(primaryFuel);
