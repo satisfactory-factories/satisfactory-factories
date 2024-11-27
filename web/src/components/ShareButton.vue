@@ -40,7 +40,17 @@
 
   const handleCreation = async (factoryTabData: FactoryTab) => {
     creating.value = true
-    const token = await authStore.getToken()
+    let token: string
+    try {
+      token = await authStore.getToken()
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error:', error)
+        alert('Your session has expired, please log in and try sharing again.')
+      }
+      return
+    }
+
     try {
       const response = await fetch(`${apiUrl}/share`, {
         method: 'POST',
@@ -57,6 +67,10 @@
         creating.value = false
       } else if (response.status === 429) {
         alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
+      } else if (response.status === 500) {
+        alert('A server error has occurred trying to create the share link. Please report this on Discord!')
+      } else if (response.status === 502) {
+        alert('The backend server is offline! Please report this with some urgency on Discord!')
       } else {
         console.error('Creating share link failed:', response.body)
         alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${response.body}"`)
