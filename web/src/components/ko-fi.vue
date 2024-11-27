@@ -3,6 +3,7 @@
     class="cursor-pointer"
     max-width="200px"
     src="/assets/img/support_me_on_kofi_dark.webp"
+    width="200px"
     @click="open = true"
   />
   <v-dialog
