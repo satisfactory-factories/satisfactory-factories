@@ -90,7 +90,7 @@ async function processFile(
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
         const recipes = getProductionRecipes(data, buildings);
-        const powerGenerationRecipes = getPowerGeneratingRecipes(data);
+        const powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
 
         removeRubbishItems(items, recipes);
         fixTurbofuel(items, recipes);

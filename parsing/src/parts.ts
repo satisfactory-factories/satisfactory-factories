@@ -17,8 +17,8 @@ function getItems(data: any[]): PartDataInterface {
                 parts["NuclearWaste"] = { 
                     name: "Uranium Waste",
                     stackSize: 500, //SS_HUGE
-                    isFluid: false,
-                    isFicsmas: false,
+                    isFluid: isFluid("NuclearWaste"),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
                 };
             } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
                 parts["PlutoniumWaste"] = {
@@ -35,6 +35,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: false,
+                    energy: 15
                 };
             } else if (entry.ClassName === "Desc_Wood_C") {
                 parts["Wood"] = {
