@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, test } from '@jest/globals'
+
 import { processFile } from '../src/processor'
 import { Recipe } from '../src/interfaces/Recipe'
 
@@ -97,7 +98,7 @@ describe('common', () => {
 
         it('validate a recipe with a single ingredient and product (iron plates)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'IronPlate');
+            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'IronPlate');
             //act
 
             //assert
@@ -119,7 +120,7 @@ describe('common', () => {
 
         it('validate a recipe with multiple ingredients (modular frames)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'ModularFrame');
+            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'ModularFrame');
 
             //act
 
@@ -145,7 +146,7 @@ describe('common', () => {
 
         it('validate a recipe with multiple products (plastic)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'Plastic');
+            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'Plastic');
 
             //act
 
@@ -172,7 +173,7 @@ describe('common', () => {
 
         it('validate a recipe with variable power (nuclear pasta)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'SpaceElevatorPart_9');
+            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'SpaceElevatorPart_9');
 
             //act
 
@@ -200,7 +201,7 @@ describe('common', () => {
 
         it('validate a recipe with variable power with a Quantum encoder (Neural-Quantum Processor)', () => {
             //arrange
-            let recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'TemporalProcessor');
+            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'TemporalProcessor');
 
             //act
 
