@@ -189,43 +189,64 @@ function getPowerGeneratingRecipes(
 
         })
         .forEach((recipe: any) => {
-            //console.log(recipe.ClassName);   
+            //console.log(recipe.ClassName); 
+             
+            let building : Building = {
+                name: recipe.mDisplayName, // Use the first valid building, or empty string if none
+                power: recipe.mPowerProduction, // generated power
+            };    
 
-            const ingredients = <any>[];
-            // const ingredients = recipe.mIngredients
-            //     ? recipe.mIngredients
-            //         .match(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)
-            //         ?.map((ingredientStr: string) => {
-            //             const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
-            //             if (match) {
-            //                 const partName = match[1];
-            //                 let amount = parseInt(match[2], 10);
+            // const ingredients = <any>[];
+            const fuels = recipe.mFuel       
+            fuels.forEach((fuel: any) => {
+                const primaryFuel = fuel.mFuelClass;
+                const supplementalResource = fuel.mSupplementalResourceClass;
+                const byProduct = fuel.mByproduct;
+                const byProductAmount : number = fuel.mByproductAmount;
 
-            //                 if (isFluid(partName)) {
-            //                     amount = amount / 1000;
-            //                 }
+                const ingredients = <any>[];
+                ingredients.push(
+                    { 
+                        part: primaryFuel,
+                        amount: 0,
+                        perMin: 0
+                    }
+                )
+                if (supplementalResource) {
+                    ingredients.push(
+                        { 
+                            part: supplementalResource,
+                            amount: 0,
+                            perMin: 0
+                        }
+                    )
+                }
+                
+                const products = <any>[];
+                if (byProduct) {
+                    products.push(
+                        {
+                            part: byProduct,
+                            amount: 0,
+                            perMin: 0,
+                            isByProduct: true
+                        }
+                    );
+                }
 
-            //                 const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+                recipes.push({
+                    id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
+                    displayName: recipe.mDisplayName,
+                    ingredients,
+                    products,
+                    building,
+                    isAlternate: false,
+                    isFicsmas: false
+                });  
 
-            //                 return {
-            //                     part: partName,
-            //                     amount,
-            //                     perMin
-            //                 };
-            //             }
-            //             return null;
-            //         })
-            //         .filter((ingredient: any) => ingredient !== null)
-            //     : [];
+            });
 
-            // // Parse mProduct to extract all products
-            // let productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
-            // // exception for automated miner recipes - as the product is a BP_ItemDescriptor
-            // if (recipe.ClassName === "Recipe_Alternate_AutomatedMiner_C") {
-            //     productMatches = [...recipe.mProduct.matchAll(/ItemClass=".*?\/BP_ItemDescriptor(.*?)\.BP_ItemDescriptor.*?",Amount=(\d+)/g)];
-            // }
-
-            let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
+            //let products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             // productMatches.forEach(match => {
             //     const productName = match[1];
             //     let amount = parseInt(match[2], 10);
@@ -242,21 +263,7 @@ function getPowerGeneratingRecipes(
             //         perMin,
             //         isByProduct: products.length > 0
             //     });
-            // }); 
-            let building : Building = {
-                name: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""), // Use the first valid building, or empty string if none
-                power: recipe.mPowerProduction, // generated power
-            };    
-
-            recipes.push({
-                id: recipe.ClassName.replace("Build_", "").replace(/_C$/, ""),
-                displayName: recipe.mDisplayName,
-                ingredients,
-                products,
-                building,
-                isAlternate: false,
-                isFicsmas: false
-            });        
+            // });         
         });
 
     console.log(recipes);
