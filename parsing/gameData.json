@@ -10408,7 +10408,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10427,7 +10427,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10446,7 +10446,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10465,7 +10465,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10484,7 +10484,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10503,7 +10503,7 @@
             "products": [],
             "building": {
                 "name": "BiomassBurner",
-                "power": "30.000000"
+                "power": 30
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10527,7 +10527,7 @@
             "products": [],
             "building": {
                 "name": "Coal-PoweredGenerator",
-                "power": "75.000000"
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10551,7 +10551,7 @@
             "products": [],
             "building": {
                 "name": "Coal-PoweredGenerator",
-                "power": "75.000000"
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10575,7 +10575,7 @@
             "products": [],
             "building": {
                 "name": "Coal-PoweredGenerator",
-                "power": "75.000000"
+                "power": 75
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10594,7 +10594,7 @@
             "products": [],
             "building": {
                 "name": "Fuel-PoweredGenerator",
-                "power": "250.000000"
+                "power": 250
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10613,7 +10613,7 @@
             "products": [],
             "building": {
                 "name": "Fuel-PoweredGenerator",
-                "power": "250.000000"
+                "power": 250
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10632,7 +10632,7 @@
             "products": [],
             "building": {
                 "name": "Fuel-PoweredGenerator",
-                "power": "250.000000"
+                "power": 250
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10651,7 +10651,7 @@
             "products": [],
             "building": {
                 "name": "Fuel-PoweredGenerator",
-                "power": "250.000000"
+                "power": 250
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10675,7 +10675,7 @@
             "products": [],
             "building": {
                 "name": "NuclearPowerPlant",
-                "power": "2500.000000"
+                "power": 2500
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10706,7 +10706,7 @@
             ],
             "building": {
                 "name": "NuclearPowerPlant",
-                "power": "2500.000000"
+                "power": 2500
             },
             "isAlternate": false,
             "isFicsmas": false,
@@ -10737,7 +10737,7 @@
             ],
             "building": {
                 "name": "NuclearPowerPlant",
-                "power": "2500.000000"
+                "power": 2500
             },
             "isAlternate": false,
             "isFicsmas": false,

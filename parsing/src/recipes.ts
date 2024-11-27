@@ -197,7 +197,7 @@ function getPowerGeneratingRecipes(
              
             let building : Building = {
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
-                power: recipe.mPowerProduction, // generated power
+                power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
             const powerMJ = (recipe.mPowerProduction / 60) / (1/3600)
 
