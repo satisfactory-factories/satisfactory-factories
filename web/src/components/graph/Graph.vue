@@ -30,9 +30,9 @@
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useLayout } from '@/utils/graphLayout'
 
-  const props = defineProps<{ gameData: DataInterface | null }>()
+  const compProps = defineProps<{ gameData: DataInterface | null }>()
 
-  if (props.gameData === null) {
+  if (compProps.gameData === null) {
     throw new Error('No game data provided to Planner!')
   }
 

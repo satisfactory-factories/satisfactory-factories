@@ -15,11 +15,10 @@ module.exports = {
   extends: [
     'eslint:recommended', // Use recommended rules from ESLint
     'plugin:@typescript-eslint/recommended', // Use recommended rules from the @typescript-eslint plugin
-    'prettier', // Prettier integration (optional, ensures formatting rules don't conflict)
   ],
   rules: {
     // General ESLint rules
-    'no-console': 'warn', // Warn on console logs
+    'no-console': 'off', // Don't warn on console.logs
     'no-unused-vars': 'off', // Disable as it conflicts with @typescript-eslint/no-unused-vars
     'no-empty-function': 'off', // Disable as it conflicts with @typescript-eslint/no-empty-function
 
@@ -39,13 +38,23 @@ module.exports = {
     ],
   },
   settings: {
-    'import/resolver': {
-      typescript: {}, // Use TypeScript resolver for `import` rules
-    },
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true // Always try to resolve types under `@types` directory even if not explicitly imported
+      },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"] // Include TypeScript extensions
+      }
+    }
   },
   env: {
     node: true, // For Node.js environment
     browser: false, // If your app runs in a browser
     es2020: true, // Use modern ES features
   },
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    'init-mongo.js'
+  ]
 };
