@@ -69,12 +69,12 @@
     showDialog.value = props.introShow
   })
 
-  // Setup a watcher to close the dialog when the prop changes
+  // Set up a watcher to close the dialog when the prop changes
   watch(() => props.introShow, value => {
     showDialog.value = value
   })
 
-  // Setup a watcher if the dialogue is changed to closed, we emit the event by calling close()
+  // Set up a watcher if the dialogue is changed to closed, we emit the event by calling close()
   watch(() => showDialog.value, value => {
     if (!value) {
       console.log('Closing intro via watch')
@@ -82,6 +82,7 @@
     }
   })
 
+  // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
     (event: 'showDemo'): void;
     (event: 'closeIntro'): void;

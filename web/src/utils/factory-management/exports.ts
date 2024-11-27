@@ -19,7 +19,7 @@ export const getRequestsForFactoryByProduct = (
 
   // Return all requests for a particular part
   return Object.entries(factoryRequests)
-    .map(([factoryId, requests]) => {
+    .map(([, requests]) => {
       return requests.filter(request => request.part === part)
     })
     .flat()
