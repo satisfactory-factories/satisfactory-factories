@@ -205,18 +205,20 @@ function getItems(data: any[]): PartDataInterface {
 
                 // Extract stack size
                 const stackSize = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
+                // Extract the energy value
+                const energyValue = classDescriptor?.mEnergyValue;
 
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
-                    console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${entry.mEnergyValue}`);
+                    console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
                         isFluid: isFluid(partName),
                         isFicsmas: isFicsmas(entry.mDisplayName),
-                        energyGeneratedInMJ: entry.mEnergyValue,
+                        energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
                     };
                 }
             });
