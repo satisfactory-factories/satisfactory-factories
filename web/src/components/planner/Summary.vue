@@ -31,14 +31,15 @@
               with the name, machines and their production.
             </p>
   
-            <v-table>
+            <v-table height="500px"
+            fixed-header>
               <thead>
                 <tr>
-                  <th class="text-left">Factory Name</th>
-                  <th class="text-left">Machines</th>
-                  <th class="text-left">Producing</th>
-                  <th class="text-left">Importing</th>
-                  <th class="text-left">Exporting</th>
+                  <th class="text-left table-column" >Factory Name</th>
+                  <th class="text-left table-column">Machines</th>
+                  <th class="text-left table-column">Producing</th>
+                  <th class="text-left table-column">Importing</th>
+                  <th class="text-left table-column">Exporting</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,12 +48,11 @@
                   :class="factoryClass(factory)"
                   class="header"
                 >
-                  <td class="header">{{ factory.name }}</td>
+                  <td class="header">{{ truncateFactoryName(factory.name) }}</td>
                   <td class="header">
                     <span
-                      v-for="([_, buildingData], buildingIndex) in Object.entries(
-                        factory.buildingRequirements
-                      )"
+                      v-for="([_, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)
+                        .sort(([, a], [, b]) => getBuildingDisplayName(a.name).localeCompare(getBuildingDisplayName(b.name)))"
                       :key="buildingIndex"
                       style="display: inline"
                     >
@@ -69,12 +69,15 @@
                         </span>
                       </v-chip>
                     </span>
+
                   </td>
                   <td class="header">
                     <v-chip
-                      v-for="part in factory.products"
-                      :key="`${factory.id}-${part.id}`"
-                      class="sf-chip"
+                    v-for="part in factory.products
+                      .slice()
+                      .sort((a, b) => getPartDisplayName(a.id).localeCompare(getPartDisplayName(b.id)))"
+                    :key="`${factory.id}-${part.id}`"
+                    class="sf-chip"
                     >
                       <span class="mr-2">
                         <game-asset
@@ -109,44 +112,44 @@
                   <td class="header">
                     <v-chip
                       v-for="(
-                        totalAmount, outputPart
+                        totals
                       ) in calculateTotalDependencies(factory.inputs)"
-                      :key="`${factory.id}-${outputPart}`"
+                      :key="`${factory.id}-${totals.outputPart}`"
                       class="sf-chip ml-2"
                     >
                       <game-asset
-                        v-if="outputPart"
+                        v-if="totals.outputPart"
                         height="32"
-                        :subject="outputPart"
+                        :subject="totals.outputPart"
                         type="item"
                         width="32"
                       />
                       <span class="ml-2">
-                        <b>{{ getPartDisplayName(outputPart) }}:</b>
-                        {{ formatNumber(totalAmount) }}/min
+                        <b>{{ getPartDisplayName(totals.outputPart) }}:</b>
+                        {{ formatNumber(totals.totalAmount) }}/min
                       </span>
                     </v-chip>
                   </td>
                   <td class="header">
                     <v-chip
                       v-for="(
-                        totalAmount, part
+                        totals
                       ) in calculateTotalDependencyRequests(
                         factory.dependencies.requests
                       )"
-                      :key="part"
+                      :key="totals.part"
                       class="sf-chip ml-2"
                     >
                       <game-asset
-                        v-if="part"
+                        v-if="totals.part"
                         height="32"
-                        :subject="part"
+                        :subject="totals.part"
                         type="item"
                         width="32"
                       />
                       <span class="ml-2">
-                        <b>{{ getPartDisplayName(part) }}:</b>
-                        {{ formatNumber(totalAmount) }}/min
+                        <b>{{ getPartDisplayName(totals.part) }}:</b>
+                        {{ formatNumber(totals.totalAmount) }}/min
                       </span>
                     </v-chip>
                   </td>
@@ -191,6 +194,11 @@
   const getBuildingDisplayName = inject("getBuildingDisplayName") as (
     part: string
   ) => string;
+
+  const truncateFactoryName = (name: string, limit: number = 24) => {
+    return name.length > limit ? name.substring(0, limit) + '...' : name
+  }
+
   
   const factoryClass = (factory: Factory) => {
     return {
@@ -213,7 +221,9 @@
       }
     });
   
-    return totals;
+    return Object.entries(totals)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => ({ outputPart: key, totalAmount: value }));
   };
   
   // This function finds out which items are being exported from the factory and their quantity
@@ -235,7 +245,14 @@
       });
     });
   
-    return totals;
+    return Object.entries(totals)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => ({ part: key, totalAmount: value }));
   };
   </script>
   
+  <style lang="scss" scoped>
+.table-column {
+  min-width: 200px;
+}
+</style>
