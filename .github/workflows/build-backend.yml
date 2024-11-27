@@ -30,11 +30,11 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Lint check
-        run: pnpm lint-check
-
       - name: Install dependencies
         run: pnpm install
+
+      - name: Lint check
+        run: pnpm lint-check
 
       - name: Build Backend
         run: pnpm build
