@@ -46,6 +46,7 @@
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error:', error)
+        creating.value = false
         alert('Your session has expired, please log in and try sharing again.')
       }
       return
