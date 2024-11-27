@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
 # Will add later after all files have been fixed to linting standards
-#      - name: linter check
+#      - name: Lint check
 #        run: pnpm lint-check
 
       - name: Build Parsing
