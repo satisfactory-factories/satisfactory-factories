@@ -226,7 +226,7 @@ function getPowerGeneratingRecipes(
                     let primaryPerMin: number = 0; 
                     if (primaryFuelPart.energyGeneratedInMJ) {
                         console.log('extractedPartText: ' + extractedPartText);
-                        //primaryPerMin = powerMJ / primaryFuelPart.energyGeneratedInMJ;
+                        primaryPerMin = powerMJ / primaryFuelPart.energyGeneratedInMJ;
                     }
                     let primaryAmount : number = 0;
                     if (primaryPerMin > 0) {

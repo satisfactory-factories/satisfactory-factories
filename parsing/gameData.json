@@ -10225,5 +10225,24 @@
             "isFicsmas": false
         }
     ],
-    "powerGenerationRecipes": []
+    "powerGenerationRecipes": [
+        {
+            "id": "GeneratorBiomass_Automated",
+            "displayName": "Biomass Burner",
+            "ingredients": [
+                {
+                    "part": "Desc_Leaves_C",
+                    "amount": 2,
+                    "perMin": 120
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Biomass Burner",
+                "power": "30.000000"
+            },
+            "isAlternate": false,
+            "isFicsmas": false
+        }
+    ]
 }
