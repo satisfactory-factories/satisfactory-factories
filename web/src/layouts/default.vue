@@ -31,3 +31,7 @@
     return route.path === '/' || route.path === '/graph'
   })
 </script>
+
+<style lang="scss">
+@import "../../public/css/sitewide.scss";
+</style>
