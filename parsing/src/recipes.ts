@@ -214,20 +214,20 @@ function getPowerGeneratingRecipes(
                 const match = primaryFuel.match(/Desc_(.*?)_C/);
                 const extractedPartText = match ? match[1] : null;
                 if (extractedPartText !== "LiquidTurboFuel") {
-                    console.log('extractedPartText:'+extractedPartText);
+                    //console.log('extractedPartText:'+extractedPartText);
 
                     const primaryFuelPart: Part = parts.parts[extractedPartText];
                     if (primaryFuelPart) {
-                        console.log('primaryFuelPart: ' + primaryFuelPart.name);
+                        //console.log('primaryFuelPart: ' + primaryFuelPart.name);
                     } else {
                         console.log('fail: ' + extractedPartText);
                         console.log(parts.parts);
                         console.log('fail: ' + extractedPartText);
                     }
-                    console.log(primaryFuelPart);
+                    //console.log(primaryFuelPart);
                     let primaryPerMin: number = 0; 
                     if (primaryFuelPart.energyGeneratedInMJ) {
-                        console.log('extractedPartText: ' + extractedPartText);
+                        //console.log('extractedPartText: ' + extractedPartText);
                         primaryPerMin = powerMJ / primaryFuelPart.energyGeneratedInMJ;
                     }
                     let primaryAmount : number = 0;
@@ -251,7 +251,7 @@ function getPowerGeneratingRecipes(
                                 }
                             )
                         }
-                        console.log(ingredients);
+                        //console.log(ingredients);
                         
                         const products = <any>[];
                         if (byProduct) {

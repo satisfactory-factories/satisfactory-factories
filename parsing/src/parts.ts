@@ -19,13 +19,15 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: isFluid("NuclearWaste"),
                     isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
                 parts["PlutoniumWaste"] = {
                     name: "Plutonium Waste",
                     stackSize: 500, //SS_HUGE
-                    isFluid: false,
-                    isFicsmas: false,
+                    isFluid: isFluid("PlutoniumWaste"),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: 0
                 };
             }         
             //These are exception products that aren't produced by mines or extractors, they are raw materials
@@ -92,6 +94,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 0, //SS_FLUID
                     isFluid: true,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_LiquidOil_C") {
                 // This is a special liquid raw material
@@ -100,6 +103,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 0, //SS_FLUID
                     isFluid: true,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 }; 
             } else if (entry.ClassName === "Desc_Gift_C") {
                 // this is a ficsmas collectable
@@ -108,6 +112,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: true,
+                    energyGeneratedInMJ: 0
                 };   
             } else if (entry.ClassName === "Desc_Snow_C") {
                 // this is a ficsmas collectable
@@ -116,6 +121,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: true,
+                    energyGeneratedInMJ: 0
                 };                
             } else if (entry.ClassName === "Desc_Crystal_C") {
                 parts["Crystal"] = {
@@ -123,6 +129,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 };                
             } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
                 parts["Crystal_mk2"] = {
@@ -130,6 +137,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 };                
             } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
                 parts["Crystal_mk3"] = {
@@ -137,6 +145,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 };                
             } else if (entry.ClassName === "Desc_SAM_C") {
                 parts["SAM"] = {
@@ -144,6 +153,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 100, //SS_MEDIUM
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 };                
             } else if (entry.ClassName === "Desc_CrystalShard_C") {
                 parts["CrystalShard"] = {
@@ -151,6 +161,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 100, //SS_MEDIUM
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 }; 
             } else if (entry.ClassName === "BP_ItemDescriptorPortableMiner_C") {
                 parts["PortableMiner"] = {
@@ -158,6 +169,7 @@ function getItems(data: any[]): PartDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
+                    energyGeneratedInMJ: 0
                 }; 
             }
 
@@ -198,6 +210,7 @@ function getItems(data: any[]): PartDataInterface {
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
+                    console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${entry.mEnergyValue}`);
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
@@ -327,6 +340,7 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
         stackSize: 0,
         isFluid: true,
         isFicsmas: false,
+        energyGeneratedInMJ: 2000
     };
     //rename the packaged item to PackagedTurboFuel
     items.parts["PackagedTurboFuel"] = {
@@ -334,6 +348,7 @@ function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
         stackSize: 100, //SS_MEDIUM
         isFluid: false,
         isFicsmas: false,
+        energyGeneratedInMJ: 2000
     };
     //remove the incorrect packaged turbofuel
     delete items.parts["TurboFuel"];
