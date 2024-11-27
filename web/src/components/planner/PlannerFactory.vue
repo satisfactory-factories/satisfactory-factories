@@ -56,7 +56,7 @@
             <v-btn
               class="mr-2"
               color="orange rounded"
-              icon="fa fa-copy"
+              icon="fas fa-copy"
               size="small"
               title="Copy Factory"
               variant="outlined"
