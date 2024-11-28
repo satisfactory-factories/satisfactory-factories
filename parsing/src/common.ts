@@ -57,8 +57,11 @@ function getRecipeName(name: string): string {
 
 function getPartName(name: string): string {
     name = name.replace('Desc_', '').replace(/_C$/, '');
-    if (name === "Turbofuel") {
+    if (name === "TurboFuel") {
         name = "PackagedTurboFuel";
+        console.log("TurboFuel renamed to PackagedTurboFuel");
+    } else if (name === "LiquidTurboFuel") {
+        console.log("LiquidTurboFuel found");
     }
     return name;
 }

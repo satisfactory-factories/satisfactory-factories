@@ -174,11 +174,11 @@ function getItems(data: any[]): PartDataInterface {
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
-            //if (!entry.mProducedIn) return;
-            if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && !entry.mProducedIn) return;
+            if (!entry.mProducedIn) return;
+            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && !entry.mProducedIn) return;
 
-            //if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
-            if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && blacklist.some(building => entry.mProducedIn.includes(building))) return;
+            if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
+            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
@@ -190,7 +190,10 @@ function getItems(data: any[]): PartDataInterface {
             const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
             productMatches.forEach(match => {
-                let partName: string = match[1];  // Use the mProduct part name
+                let partName: string = getPartName(match[1]);  // Use the mProduct part name
+                if (partName === "TurboFuel") {
+                    console.error(partName + " found in mProduct, stopping");
+                }
                 let friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
 
                 // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size

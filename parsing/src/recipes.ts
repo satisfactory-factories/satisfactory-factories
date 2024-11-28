@@ -216,9 +216,12 @@ function getPowerGeneratingRecipes(
                 // const match: any = primaryFuel.match(/Desc_(.*?)_C/);
                 // let extractedPartText: string = match ? match[1] : null;
                 let extractedPartText: string = getPartName(fuelItem.primaryFuel);
+                if (extractedPartText === "LiquidTurboFuel") {
+                    //console.log(parts.parts);
+                }
                 const primaryFuelPart: Part = parts.parts[extractedPartText];
                 console.log('key: ' + extractedPartText);
-                console.log(primaryFuelPart);
+                //console.log(primaryFuelPart);
                 console.log('name: ' + primaryFuelPart.name);
                 console.log('energyGeneratedInMJ: ' + primaryFuelPart.energyGeneratedInMJ);
                 let primaryPerMin: number = 0; 
