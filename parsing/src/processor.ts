@@ -5,9 +5,9 @@ import * as iconv from 'iconv-lite';
 
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface} from "./interfaces/Part";
-import {getItems,fixItemNames} from './parts';
-import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
-import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
+import {getItems,fixItemNames,fixTurbofuel} from './parts';
+import {getProductionRecipes,getPowerGeneratingRecipes} from './recipes';
+import {getProducingBuildings,getPowerConsumptionForBuildings} from './buildings';
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -92,14 +92,14 @@ async function processFile(
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
         let recipes = getProductionRecipes(data, buildings);
-        const powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
+        const powerGenerationRecipes: any[] = [];// getPowerGeneratingRecipes(data, items);
     
         // merge the powerGenerationRecipes with the recipes
         // recipes.push(...powerGenerationRecipes);
         // recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
         removeRubbishItems(items, recipes);
-        //fixTurbofuel(items, recipes);
+        fixTurbofuel(items, recipes);
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
