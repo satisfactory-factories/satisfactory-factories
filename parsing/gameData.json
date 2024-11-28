@@ -10539,8 +10539,8 @@
             "ingredients": [
                 {
                     "part": "Desc_CompactedCoal_C",
-                    "amount": 0.11904761904761905,
-                    "perMin": 7.142857142857143
+                    "amount": 0.11904833333333334,
+                    "perMin": 7.1429
                 },
                 {
                     "part": "Desc_Water_C",
@@ -10587,8 +10587,8 @@
             "ingredients": [
                 {
                     "part": "Desc_LiquidFuel_C",
-                    "amount": 250.00000000000003,
-                    "perMin": 15000.000000000002
+                    "amount": 250,
+                    "perMin": 15000
                 }
             ],
             "products": [],
@@ -10606,8 +10606,8 @@
             "ingredients": [
                 {
                     "part": "Desc_IonizedFuel_C",
-                    "amount": 50.00000000000001,
-                    "perMin": 3000.0000000000005
+                    "amount": 50,
+                    "perMin": 3000
                 }
             ],
             "products": [],
@@ -10625,8 +10625,8 @@
             "ingredients": [
                 {
                     "part": "Desc_LiquidBiofuel_C",
-                    "amount": 250.00000000000003,
-                    "perMin": 15000.000000000002
+                    "amount": 250,
+                    "perMin": 15000
                 }
             ],
             "products": [],
@@ -10644,8 +10644,8 @@
             "ingredients": [
                 {
                     "part": "Desc_RocketFuel_C",
-                    "amount": 62.50000000000001,
-                    "perMin": 3750.0000000000005
+                    "amount": 62.5,
+                    "perMin": 3750
                 }
             ],
             "products": [],

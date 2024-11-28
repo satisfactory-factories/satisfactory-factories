@@ -199,6 +199,10 @@ function getPowerGeneratingRecipes(
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
+            // 1. Generator MW generated. This is an hourly value.
+            // 2. Divide by 60, to get the minute value
+            // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
+            // 4. Now divide this number by the part energy to calculate how many pieces per min
             const powerMJ = (recipe.mPowerProduction / 60) / (1/3600)
 
             // const ingredients = <any>[];
@@ -214,21 +218,14 @@ function getPowerGeneratingRecipes(
                 const match = primaryFuel.match(/Desc_(.*?)_C/);
                 const extractedPartText = match ? match[1] : null;
                 if (extractedPartText !== "LiquidTurboFuel") {
-                    //console.log('extractedPartText:'+extractedPartText);
 
                     const primaryFuelPart: Part = parts.parts[extractedPartText];
-                    if (primaryFuelPart) {
-                        //console.log('primaryFuelPart: ' + primaryFuelPart.name);
-                    } else {
-                        console.log('fail: ' + extractedPartText);
-                        console.log(parts.parts);
-                        console.log('fail: ' + extractedPartText);
-                    }
                     //console.log(primaryFuelPart);
                     let primaryPerMin: number = 0; 
                     if (primaryFuelPart.energyGeneratedInMJ) {
-                        //console.log('extractedPartText: ' + extractedPartText);
-                        primaryPerMin = powerMJ / primaryFuelPart.energyGeneratedInMJ;
+                        // The rounding here is important to remove floating point errors that appear with some types 
+                        // (this is step 4 from above)
+                        primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
                     }
                     let primaryAmount : number = 0;
                     if (primaryPerMin > 0) {
@@ -251,7 +248,6 @@ function getPowerGeneratingRecipes(
                                 }
                             )
                         }
-                        //console.log(ingredients);
                         
                         const products = <any>[];
                         if (byProduct) {
