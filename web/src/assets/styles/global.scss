@@ -114,3 +114,12 @@
 .border-light-gray {
   border-color: rgb(186, 186, 186) !important;
 }
+
+.inline-inputs {
+  margin-left: 5px;
+
+  input {
+    padding: 0;
+    text-align: center
+  }
+}
