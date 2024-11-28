@@ -10400,7 +10400,7 @@
             "displayName": "Biomass Burner (Biomass)",
             "ingredients": [
                 {
-                    "part": "Desc_GenericBiomass_C",
+                    "part": "GenericBiomass",
                     "amount": 0.16666666666666666,
                     "perMin": 10
                 }
@@ -10419,7 +10419,7 @@
             "displayName": "Biomass Burner (Leaves)",
             "ingredients": [
                 {
-                    "part": "Desc_Leaves_C",
+                    "part": "Leaves",
                     "amount": 2,
                     "perMin": 120
                 }
@@ -10438,7 +10438,7 @@
             "displayName": "Biomass Burner (Mycelia)",
             "ingredients": [
                 {
-                    "part": "Desc_Mycelia_C",
+                    "part": "Mycelia",
                     "amount": 1.5,
                     "perMin": 90
                 }
@@ -10457,7 +10457,7 @@
             "displayName": "Biomass Burner (Packaged Liquid Biofuel)",
             "ingredients": [
                 {
-                    "part": "Desc_PackagedBiofuel_C",
+                    "part": "PackagedBiofuel",
                     "amount": 0.04,
                     "perMin": 2.4
                 }
@@ -10476,7 +10476,7 @@
             "displayName": "Biomass Burner (Solid Biofuel)",
             "ingredients": [
                 {
-                    "part": "Desc_Biofuel_C",
+                    "part": "Biofuel",
                     "amount": 0.06666666666666667,
                     "perMin": 4
                 }
@@ -10495,7 +10495,7 @@
             "displayName": "Biomass Burner (Wood)",
             "ingredients": [
                 {
-                    "part": "Desc_Wood_C",
+                    "part": "Wood",
                     "amount": 0.3,
                     "perMin": 18
                 }
@@ -10514,12 +10514,12 @@
             "displayName": "Coal-Powered Generator (Coal)",
             "ingredients": [
                 {
-                    "part": "Desc_Coal_C",
+                    "part": "Coal",
                     "amount": 0.25,
                     "perMin": 15
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }
@@ -10538,12 +10538,12 @@
             "displayName": "Coal-Powered Generator (Compacted Coal)",
             "ingredients": [
                 {
-                    "part": "Desc_CompactedCoal_C",
+                    "part": "CompactedCoal",
                     "amount": 0.11904833333333334,
                     "perMin": 7.1429
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }
@@ -10562,12 +10562,12 @@
             "displayName": "Coal-Powered Generator (Petroleum Coke)",
             "ingredients": [
                 {
-                    "part": "Desc_PetroleumCoke_C",
+                    "part": "PetroleumCoke",
                     "amount": 0.4166666666666667,
                     "perMin": 25
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }
@@ -10586,7 +10586,7 @@
             "displayName": "Fuel-Powered Generator (Fuel)",
             "ingredients": [
                 {
-                    "part": "Desc_LiquidFuel_C",
+                    "part": "LiquidFuel",
                     "amount": 250,
                     "perMin": 15000
                 }
@@ -10605,7 +10605,7 @@
             "displayName": "Fuel-Powered Generator (Ionized Fuel)",
             "ingredients": [
                 {
-                    "part": "Desc_IonizedFuel_C",
+                    "part": "IonizedFuel",
                     "amount": 50,
                     "perMin": 3000
                 }
@@ -10624,7 +10624,7 @@
             "displayName": "Fuel-Powered Generator (Liquid Biofuel)",
             "ingredients": [
                 {
-                    "part": "Desc_LiquidBiofuel_C",
+                    "part": "LiquidBiofuel",
                     "amount": 250,
                     "perMin": 15000
                 }
@@ -10643,7 +10643,7 @@
             "displayName": "Fuel-Powered Generator (Rocket Fuel)",
             "ingredients": [
                 {
-                    "part": "Desc_RocketFuel_C",
+                    "part": "RocketFuel",
                     "amount": 62.5,
                     "perMin": 3750
                 }
@@ -10662,12 +10662,12 @@
             "displayName": "Nuclear Power Plant (Ficsonium Fuel Rod)",
             "ingredients": [
                 {
-                    "part": "Desc_FicsoniumFuelRod_C",
+                    "part": "FicsoniumFuelRod",
                     "amount": 0.016666666666666666,
                     "perMin": 1
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }
@@ -10686,12 +10686,12 @@
             "displayName": "Nuclear Power Plant (Plutonium Fuel Rod)",
             "ingredients": [
                 {
-                    "part": "Desc_PlutoniumFuelRod_C",
+                    "part": "PlutoniumFuelRod",
                     "amount": 0.0016666666666666668,
                     "perMin": 0.1
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }
@@ -10717,12 +10717,12 @@
             "displayName": "Nuclear Power Plant (Uranium Fuel Rod)",
             "ingredients": [
                 {
-                    "part": "Desc_NuclearFuelRod_C",
+                    "part": "NuclearFuelRod",
                     "amount": 0.0033333333333333335,
                     "perMin": 0.2
                 },
                 {
-                    "part": "Desc_Water_C",
+                    "part": "Water",
                     "amount": 0,
                     "perMin": 0
                 }

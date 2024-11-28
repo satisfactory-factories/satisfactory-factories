@@ -228,13 +228,13 @@ function getPowerGeneratingRecipes(
                         primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
                     }
                     let primaryAmount : number = 0;
-                    if (primaryPerMin > 0) {
+                    if (primaryPerMin > 0) {                        
                         primaryAmount = primaryPerMin / 60;
 
                         const ingredients = <any>[];
                         ingredients.push(
                             { 
-                                part: primaryFuel,
+                                part: getPartName(primaryFuel),
                                 amount: primaryAmount,
                                 perMin: primaryPerMin
                             }
@@ -242,7 +242,7 @@ function getPowerGeneratingRecipes(
                         if (supplementalResource) {
                             ingredients.push(
                                 { 
-                                    part: supplementalResource,
+                                    part: getPartName(supplementalResource),
                                     amount: 0,
                                     perMin: 0
                                 }
