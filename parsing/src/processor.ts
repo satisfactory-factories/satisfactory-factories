@@ -95,8 +95,8 @@ async function processFile(
         const powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
     
         // merge the powerGenerationRecipes with the recipes
-        recipes.push(...powerGenerationRecipes);
-        recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+        // recipes.push(...powerGenerationRecipes);
+        // recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
         removeRubbishItems(items, recipes);
         fixTurbofuel(items, recipes);
