@@ -16,6 +16,13 @@ export interface Recipe {
   isPowerGenerator: boolean;
 }
 
+export interface Fuel {
+  primaryFuel: string;
+  supplementalResource: string;
+  byProduct: string;
+  byProductAmount: number;
+}
+
 export interface Building {
   name: string;
   power: number;

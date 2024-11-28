@@ -29,7 +29,7 @@ const whitelist = [
     // Special items 
     "Desc_CrystalShard_C",
     "BP_ItemDescriptorPortableMiner_C"
-]
+];
 
 // Helper function to check if a recipe is likely to be liquid based on building type and amount
 function isFluid(productName: string): boolean {
@@ -56,7 +56,11 @@ function getRecipeName(name: string): string {
 }
 
 function getPartName(name: string): string {
-    return name.replace('Desc_', '').replace(/_C$/, '');
+    name = name.replace('Desc_', '').replace(/_C$/, '');
+    if (name === "Turbofuel") {
+        name = "PackagedTurboFuel";
+    }
+    return name;
 }
 
 function getFriendlyName(name: string): string {

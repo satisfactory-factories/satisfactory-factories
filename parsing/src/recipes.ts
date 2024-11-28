@@ -1,6 +1,6 @@
-import {Building, Recipe} from "./interfaces/Recipe";
-import {blacklist,isFluid,isFicsmas,getRecipeName,getPartName,getFriendlyName} from "./common";
-import { PartDataInterface, Part } from "./interfaces/Part";
+import {Building, Recipe, Fuel} from "./interfaces/Recipe";
+import {blacklist, isFluid, isFicsmas, getRecipeName, getPartName, getFriendlyName} from "./common";
+import {PartDataInterface, Part} from "./interfaces/Part";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
 function getProductionRecipes(
@@ -206,72 +206,79 @@ function getPowerGeneratingRecipes(
             const powerMJ = (recipe.mPowerProduction / 60) / (1/3600)
 
             // const ingredients = <any>[];
-            const fuels = recipe.mFuel       
+            const fuels: Fuel[] = recipe.mFuel       
             fuels.forEach((fuel: any) => {
-                const primaryFuel = fuel.mFuelClass;
-                const supplementalResource = fuel.mSupplementalResourceClass;
-                const byProduct = fuel.mByproduct;
-                const byProductAmount: number = Number(fuel.mByproductAmount);
+                let fuelItem: Fuel = {
+                    primaryFuel: getPartName(fuel.mFuelClass),
+                    supplementalResource: getPartName(fuel.mSupplementalResourceClass),
+                    byProduct: fuel.mByproduct,
+                    byProductAmount: Number(fuel.mByproductAmount)
+                }
 
                 //Find the part for the primary fuel
                 //console.log(primaryFuel);
-                const match = primaryFuel.match(/Desc_(.*?)_C/);
-                const extractedPartText = match ? match[1] : null;
-                if (extractedPartText !== "LiquidTurboFuel") {
+                // const match: any = primaryFuel.match(/Desc_(.*?)_C/);
+                // let extractedPartText: string = match ? match[1] : null;
+                let extractedPartText: string = fuelItem.primaryFuel;
+                // wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel" to match the part name
+                // if (extractedPartText === "TurboFuel") {
+                //     extractedPartText = "PackagedTurboFuel";
+                // }
+                const primaryFuelPart: Part = parts.parts[extractedPartText];
+                console.log(extractedPartText);
+                console.log(primaryFuelPart);
+                console.log(primaryFuelPart.name);
+                console.log(primaryFuelPart.energyGeneratedInMJ);
+                let primaryPerMin: number = 0; 
+                if (primaryFuelPart.energyGeneratedInMJ > 0) {
+                    // The rounding here is important to remove floating point errors that appear with some types 
+                    // (this is step 4 from above)
+                    primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
+                }
+                let primaryAmount : number = 0;
+                if (primaryPerMin > 0) {                        
+                    primaryAmount = primaryPerMin / 60;
 
-                    const primaryFuelPart: Part = parts.parts[extractedPartText];
-                    //console.log(primaryFuelPart);
-                    let primaryPerMin: number = 0; 
-                    if (primaryFuelPart.energyGeneratedInMJ) {
-                        // The rounding here is important to remove floating point errors that appear with some types 
-                        // (this is step 4 from above)
-                        primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
-                    }
-                    let primaryAmount : number = 0;
-                    if (primaryPerMin > 0) {                        
-                        primaryAmount = primaryPerMin / 60;
-
-                        const ingredients = <any>[];
+                    const ingredients = <any>[];
+                    ingredients.push(
+                        { 
+                            part: fuelItem.primaryFuel,
+                            amount: primaryAmount,
+                            perMin: primaryPerMin
+                        }
+                    )
+                    if (fuelItem.supplementalResource) {
                         ingredients.push(
                             { 
-                                part: getPartName(primaryFuel),
-                                amount: primaryAmount,
-                                perMin: primaryPerMin
+                                part: fuelItem.supplementalResource,
+                                amount: 0,
+                                perMin: 0
                             }
                         )
-                        if (supplementalResource) {
-                            ingredients.push(
-                                { 
-                                    part: getPartName(supplementalResource),
-                                    amount: 0,
-                                    perMin: 0
-                                }
-                            )
-                        }
-                        
-                        const products = <any>[];
-                        if (byProduct) {
-                            products.push(
-                                {
-                                    part: byProduct,
-                                    amount: 0,
-                                    perMin: byProductAmount,
-                                    isByProduct: true
-                                }
-                            );
-                        }
-
-                        recipes.push({
-                            id: getRecipeName(recipe.ClassName) +'_'+ primaryFuelPart.name,
-                            displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
-                            ingredients,
-                            products,
-                            building,
-                            isAlternate: false,
-                            isFicsmas: false,
-                            isPowerGenerator: true
-                        });  
                     }
+                    
+                    const products = <any>[];
+                    if (fuelItem.byProduct) {
+                        products.push(
+                            {
+                                part: fuelItem.byProduct,
+                                amount: 0,
+                                perMin: fuelItem.byProductAmount,
+                                isByProduct: true
+                            }
+                        );
+                    }
+
+                    recipes.push({
+                        id: getRecipeName(recipe.ClassName) +'_'+ primaryFuelPart.name,
+                        displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
+                        ingredients,
+                        products,
+                        building,
+                        isAlternate: false,
+                        isFicsmas: false,
+                        isPowerGenerator: true
+                    });  
                 }
             });
         

@@ -5,7 +5,7 @@ import * as iconv from 'iconv-lite';
 
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface} from "./interfaces/Part";
-import {getItems,fixItemNames,fixTurbofuel} from './parts';
+import {getItems,fixItemNames} from './parts';
 import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
 import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
 
@@ -75,7 +75,7 @@ async function processFile(
                                         recipes: Recipe[],
                                         powerGenerationRecipes: Recipe[]; 
                                     } | undefined> {
-    try {
+    // try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
         const data = JSON.parse(cleanedContent);
@@ -99,7 +99,7 @@ async function processFile(
         // recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
         removeRubbishItems(items, recipes);
-        fixTurbofuel(items, recipes);
+        //fixTurbofuel(items, recipes);
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
@@ -121,13 +121,13 @@ async function processFile(
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
 
         return finalData;
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(`Error processing file: ${error.message}`);
-        } else {
-            console.error(`Error processing file: ${error}`);
-        }
-    }
+    // } catch (error) {
+    //     if (error instanceof Error) {
+    //         console.error(`Error processing file: ${error.message}`);
+    //     } else {
+    //         console.error(`Error processing file: ${error}`);
+    //     }
+    // }
 }
 
 // Export processFile for use

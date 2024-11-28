@@ -174,11 +174,11 @@ function getItems(data: any[]): PartDataInterface {
             }
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
-            if (!entry.mProducedIn) return;
-            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && !entry.mProducedIn) return;
+            //if (!entry.mProducedIn) return;
+            if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && !entry.mProducedIn) return;
 
-            if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
-            //if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && blacklist.some(building => entry.mProducedIn.includes(building))) return;
+            //if (blacklist.some(building => entry.mProducedIn.includes(building))) return;
+            if (!whitelist.some(part => entry.ClassName && entry.ClassName.includes(part)) && blacklist.some(building => entry.mProducedIn.includes(building))) return;
 
             // Check if it's an alternate recipe and skip it for parts
             if (entry.ClassName.startsWith("Recipe_Alternate")) return;
@@ -190,11 +190,8 @@ function getItems(data: any[]): PartDataInterface {
             const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
             productMatches.forEach(match => {
-                const partName = match[1];  // Use the mProduct part name
-                let friendlyName = entry.mDisplayName;  // Use the friendly name
-
-                // Remove any text within brackets, including the brackets themselves
-                friendlyName = friendlyName.replace(/\s*\(.*?\)/g, '');
+                let partName: string = match[1];  // Use the mProduct part name
+                let friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
 
                 // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size
                 const productClass = match[0].match(/Desc_(.*?)\.Desc_/)?.[1];
@@ -204,9 +201,9 @@ function getItems(data: any[]): PartDataInterface {
                     .find((entry: any) => entry.ClassName === `Desc_${productClass}_C`);
 
                 // Extract stack size
-                const stackSize = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
+                const stackSize: number = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
                 // Extract the energy value
-                const energyValue = classDescriptor?.mEnergyValue;
+                const energyValue: number = classDescriptor?.mEnergyValue;
 
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
@@ -252,7 +249,7 @@ function isCollectable(ingredients: string): boolean {
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
-function stackSizeConvert(stackSize: string) {
+function stackSizeConvert(stackSize: string):number {
     // Convert e.g. SS_HUGE to 500
     switch (stackSize) {
         case "SS_HUGE":
@@ -329,43 +326,43 @@ function fixItemNames(items: PartDataInterface): void {
     }
 }
 
-function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
-    // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
-    items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
+// function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
+//     // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
+//     items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
 
-    // Add the actual "Turbofuel" as a new item
-    items.parts["LiquidTurboFuel"] = {
-        name: "Turbofuel",
-        stackSize: 0,
-        isFluid: true,
-        isFicsmas: false,
-        energyGeneratedInMJ: 2000
-    };
-    //rename the packaged item to PackagedTurboFuel
-    items.parts["PackagedTurboFuel"] = {
-        name: "Packaged Turbofuel",
-        stackSize: 100, //SS_MEDIUM
-        isFluid: false,
-        isFicsmas: false,
-        energyGeneratedInMJ: 2000
-    };
-    //remove the incorrect packaged turbofuel
-    delete items.parts["TurboFuel"];
+//     // Add the actual "Turbofuel" as a new item
+//     items.parts["LiquidTurboFuel"] = {
+//         name: "Turbofuel",
+//         stackSize: 0,
+//         isFluid: true,
+//         isFicsmas: false,
+//         energyGeneratedInMJ: 2000
+//     };
+//     //rename the packaged item to PackagedTurboFuel
+//     items.parts["PackagedTurboFuel"] = {
+//         name: "Packaged Turbofuel",
+//         stackSize: 100, //SS_MEDIUM
+//         isFluid: false,
+//         isFicsmas: false,
+//         energyGeneratedInMJ: 2000
+//     };
+//     //remove the incorrect packaged turbofuel
+//     delete items.parts["TurboFuel"];
 
-    // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
-    recipes.forEach(recipe => {
-        recipe.products.forEach(product => {
-            if (product.part === "TurboFuel") {
-                product.part = "PackagedTurboFuel";
-            }
-        });
+//     // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
+//     recipes.forEach(recipe => {
+//         recipe.products.forEach(product => {
+//             if (product.part === "TurboFuel") {
+//                 product.part = "PackagedTurboFuel";
+//             }
+//         });
 
-        recipe.ingredients.forEach(ingredient => {
-            if (ingredient.part === "TurboFuel") {
-                ingredient.part = "PackagedTurboFuel";
-            }
-        });
-    });
-}
+//         recipe.ingredients.forEach(ingredient => {
+//             if (ingredient.part === "TurboFuel") {
+//                 ingredient.part = "PackagedTurboFuel";
+//             }
+//         });
+//     });
+// }
 
-export { getItems, fixItemNames, fixTurbofuel };
+export { getItems, fixItemNames };
