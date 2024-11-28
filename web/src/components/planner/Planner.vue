@@ -415,9 +415,9 @@
     max-height: 87vh; // For some reason this is not relative to the container
     overflow-y: auto; /* Make it scrollable */
 
-    @media screen and (min-width: 1280px) {
-      width: 300px;
-      max-width: 300px;
+    @media screen and (max-width: 1500px) {
+      width: 275px;
+      max-width: 275px;
     }
   }
 
