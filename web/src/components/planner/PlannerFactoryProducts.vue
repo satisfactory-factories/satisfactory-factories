@@ -163,7 +163,7 @@
                 hide-details
                 hide-spin-buttons
                 min="0"
-                min-width="45px"
+                min-width="60px"
                 :product="product.id"
 
                 type="number"
