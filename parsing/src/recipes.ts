@@ -70,13 +70,12 @@ function getProductionRecipes(
             const products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
                 const productName = match[1];
-                let amount = parseInt(match[2], 10);
-
+                let amount: number = parseInt(match[2], 10);
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
 
-                const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+                const perMin: number = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                 products.push({
                     part: productName,
