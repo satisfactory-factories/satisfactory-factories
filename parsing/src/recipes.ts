@@ -40,14 +40,12 @@ function getProductionRecipes(
                     ?.map((ingredientStr: string) => {
                         const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
                         if (match) {
-                            const partName = match[1];
-                            let amount = parseInt(match[2], 10);
-
+                            const partName: string = match[1];
+                            let amount: number = parseInt(match[2], 10);
                             if (isFluid(partName)) {
                                 amount = amount / 1000;
                             }
-
-                            const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+                            const perMin: number = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                             return {
                                 part: partName,
@@ -74,7 +72,6 @@ function getProductionRecipes(
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
-
                 const perMin: number = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                 products.push({
@@ -218,16 +215,12 @@ function getPowerGeneratingRecipes(
                 //console.log(primaryFuel);
                 // const match: any = primaryFuel.match(/Desc_(.*?)_C/);
                 // let extractedPartText: string = match ? match[1] : null;
-                let extractedPartText: string = fuelItem.primaryFuel;
-                // wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel" to match the part name
-                // if (extractedPartText === "TurboFuel") {
-                //     extractedPartText = "PackagedTurboFuel";
-                // }
+                let extractedPartText: string = getPartName(fuelItem.primaryFuel);
                 const primaryFuelPart: Part = parts.parts[extractedPartText];
-                console.log(extractedPartText);
+                console.log('key: ' + extractedPartText);
                 console.log(primaryFuelPart);
-                console.log(primaryFuelPart.name);
-                console.log(primaryFuelPart.energyGeneratedInMJ);
+                console.log('name: ' + primaryFuelPart.name);
+                console.log('energyGeneratedInMJ: ' + primaryFuelPart.energyGeneratedInMJ);
                 let primaryPerMin: number = 0; 
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
