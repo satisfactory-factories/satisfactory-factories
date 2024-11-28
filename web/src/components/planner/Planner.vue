@@ -1,7 +1,7 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <div class="planner-container">
-    <Teleport v-if="smAndDown" defer to="#navigationDrawer">
+    <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="factories"
         :total-factories="factories.length"
@@ -20,7 +20,7 @@
     </Teleport>
     <v-row class="two-pane-container">
       <!-- Sticky Sidebar for Desktop -->
-      <v-col class="d-none d-md-flex sticky-sidebar">
+      <v-col class="d-none d-lg-flex sticky-sidebar">
         <v-container class="pa-0">
           <planner-factory-list
             :factories="factories"
@@ -41,7 +41,7 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-md pa-3 main-content">
+      <v-col class="border-s-lg pa-3 main-content">
         <notice />
         <planner-statistics
           :help-text="helpText"
@@ -91,7 +91,7 @@
   import { useDisplay } from 'vuetify'
 
   const props = defineProps<{ gameData: DataInterface | null }>()
-  const { smAndDown } = useDisplay()
+  const { mdAndDown } = useDisplay()
 
   const gameData = props.gameData
   if (!gameData) {
@@ -416,6 +416,11 @@
     max-width: 375px;
     max-height: 87vh; // For some reason this is not relative to the container
     overflow-y: auto; /* Make it scrollable */
+
+    @media screen and (max-width: 1500px) {
+      width: 275px;
+      max-width: 275px;
+    }
   }
 
   .main-content {

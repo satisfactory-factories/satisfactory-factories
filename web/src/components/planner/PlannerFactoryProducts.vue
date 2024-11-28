@@ -154,8 +154,21 @@
             >
               <game-asset :subject="product.buildingRequirements.name" type="building" />
               <span class="ml-2">
-                <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>: {{ formatNumber(product.buildingRequirements.amount) }}x
+                <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>:
               </span>
+              <v-text-field
+                v-model.number="product.buildingRequirements.amount"
+                class="inline-inputs"
+                flat
+                hide-details
+                hide-spin-buttons
+                min="0"
+                min-width="45px"
+                :product="product.id"
+
+                type="number"
+                @input="increaseProductQtyByBuilding(product)"
+              />
             </v-chip>
             <v-chip
               class="sf-chip yellow"
@@ -185,7 +198,6 @@
 </template>
 <script lang="ts" setup>
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
-  import { DataInterface } from '@/interfaces/DataInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -199,11 +211,11 @@
 
   const props = defineProps<{
     factory: Factory;
-    gameData: DataInterface
     helpText: boolean;
   }>()
 
   const { smAndDown } = useDisplay()
+  const gameDataStore = useGameDataStore()
 
   const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
 
@@ -225,7 +237,8 @@
   }
 
   const autocompletePartItemsGenerator = () => {
-    const data = Object.keys(props.gameData.items.parts).map(part => {
+    const gameDataParts = gameDataStore.getGameData().items.parts
+    const data = Object.keys(gameDataParts).map(part => {
       return {
         title: getPartDisplayName(part),
         value: part,
@@ -275,6 +288,29 @@
     otherProduct.displayOrder = tempOrder
 
     props.factory.products.sort((a, b) => a.displayOrder - b.displayOrder)
+  }
+
+  const increaseProductQtyByBuilding = (product: FactoryItem) => {
+    // Get what is now the new buildingRequirement for the product
+    const newVal = product.buildingRequirements.amount
+
+    if (newVal < 0 || !newVal) {
+      product.buildingRequirements.amount = 0 // Prevents the product being totally deleted
+      return
+    }
+
+    // Get the recipe for the product in order to get the new quantity
+    const recipe = gameDataStore.getRecipeById(product.recipe)
+
+    if (!recipe) {
+      console.error('No recipe found for product!', product)
+      throw new Error('No recipe found for product!')
+    }
+
+    // Set the new quantity of the product
+    product.amount = recipe.products[0].perMin * newVal
+
+    updateFactory(props.factory)
   }
 
 </script>
