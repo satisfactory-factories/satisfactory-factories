@@ -1,3 +1,7 @@
+:root {
+  color-scheme: dark;
+}
+
 .sf-chip {
   padding: 20px 12px !important;
   border: 2px solid #7f7f7f !important;
@@ -88,7 +92,7 @@
   }
 
   &.problem {
-    border: 2px solid #dc3545;
+    border: 2px solid #a00 !important;
 
     .header {
       background-color: rgba(140, 9, 21, 0.4);
