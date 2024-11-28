@@ -1,5 +1,5 @@
 import {Building, Recipe} from "./interfaces/Recipe";
-import {blacklist,isFluid,isFicsmas} from "./common";
+import {blacklist,isFluid,isFicsmas,getRecipeName,getPartName,getFriendlyName} from "./common";
 import { PartDataInterface, Part } from "./interfaces/Part";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
@@ -262,7 +262,7 @@ function getPowerGeneratingRecipes(
                         }
 
                         recipes.push({
-                            id: recipe.ClassName.replace("Build_", "").replace(/_C$/, "") +'_'+ primaryFuelPart.name,
+                            id: getRecipeName(recipe.ClassName) +'_'+ primaryFuelPart.name,
                             displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                             ingredients,
                             products,

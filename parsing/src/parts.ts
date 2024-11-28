@@ -1,6 +1,6 @@
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface,RawResource} from "./interfaces/Part";
-import {blacklist,whitelist,isFluid,isFicsmas} from "./common";
+import {blacklist,whitelist,isFluid,isFicsmas,getPartName,getFriendlyName} from "./common";
 
 function getItems(data: any[]): PartDataInterface {
     const parts: { [key: string]: Part } = {};
@@ -291,10 +291,7 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
         .flatMap((entry: any) => entry.Classes)
         .forEach((resource: any) => {
-            const className = resource.ClassName
-                .replace('Desc_', '')
-                .replace(/_C$/, '')
-                .toString();
+            const className = getPartName(resource.ClassName);
             const displayName = resource.mDisplayName;
 
             const data = {

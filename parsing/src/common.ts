@@ -51,5 +51,18 @@ function isFicsmas(displayName: string): boolean {
         displayName.includes("Fireworks");
 }
 
+function getRecipeName(name: string): string {
+    return name.replace("Build_", "").replace(/_C$/, "");
+}
+
+function getPartName(name: string): string {
+    return name.replace('Desc_', '').replace(/_C$/, '');
+}
+
+function getFriendlyName(name: string): string {
+    // Remove any text within brackets, including the brackets themselves
+    return name.replace(/\s*\(.*?\)/g, '');
+}
+
 // Export various items for use
-export {blacklist,whitelist,isFluid,isFicsmas}
+export {blacklist,whitelist,isFluid,isFicsmas,getRecipeName,getPartName,getFriendlyName}
