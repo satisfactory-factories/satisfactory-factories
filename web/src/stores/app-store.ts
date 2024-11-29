@@ -137,15 +137,11 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== MISC
   const debugMode = () => {
-    const route = useRoute()
-
     if (window.location.hostname !== 'satisfactory-factories.app') {
       return true
     }
 
-    console.log('DEBUG MODE', route.query, !!route.query.debug)
-
-    return !!route.query.debug
+    return window.location.search.includes('debug')
   }
 
   isDebugMode.value = debugMode()
