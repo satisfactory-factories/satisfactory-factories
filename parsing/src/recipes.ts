@@ -200,7 +200,7 @@ function getPowerGeneratingRecipes(
             // 2. Divide by 60, to get the minute value
             // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
             // 4. Now divide this number by the part energy to calculate how many pieces per min
-            const powerMJ = (recipe.mPowerProduction / 60) / (1/3600)
+            const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600)
 
             // const ingredients = <any>[];
             const fuels: Fuel[] = recipe.mFuel       
@@ -249,7 +249,7 @@ function getPowerGeneratingRecipes(
                             { 
                                 part: fuelItem.supplementalResource,
                                 amount: 0,
-                                perMin: (3 / 50) * supplementalRatio * recipe.mPowerProduction
+                                perMin: (3 / 50) * supplementalRatio * building.power // Calculate the ratio of the supplemental resource to the primary fuel
                             }
                         )
                     }
