@@ -271,7 +271,7 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
-      needsSync: factory.inSync !== null ? !factory.inSync : false,
+      needsSync: !factory.hasProblem && factory.inSync !== null ? !factory.inSync : false,
     }
   }
 

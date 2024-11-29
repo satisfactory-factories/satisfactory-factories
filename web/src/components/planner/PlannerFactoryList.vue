@@ -13,21 +13,34 @@
               <i class="fas fa-industry mr-2" />
               <span>{{ truncateFactoryName(element.name) }}</span>
             </v-col>
-            <v-col
-              class="pa-0 align-content-center text-center pa-2"
-              :class="syncStateClass(element)"
-              cols="1"
-            >
-              <div v-if="element.inSync" class="d-inline">
-                <i class="fas fa-check" />
-              </div>
-              <div v-if="element.inSync === false" class="d-inline">
-                <i class="fas fa-times" />
-              </div>
-              <div v-if="element.inSync === null" class="d-inline">
-                <i class="fas fa-question" />
-              </div>
-            </v-col>
+            <v-tooltip left>
+              <template #activator="{ props }">
+                <v-col
+                  class="pa-0 align-content-center text-center"
+                  :class="syncStateClass(element)"
+                  cols="1"
+                  v-bind="props"
+                >
+                  <div v-if="element.inSync" class="d-inline">
+                    <i class="fas fa-check" />
+                  </div>
+                  <div v-if="element.inSync === false" class="d-inline">
+                    <i class="fas fa-times" />
+                  </div>
+                  <div v-if="element.inSync === null" class="d-inline">
+                    <i class="fas fa-question" />
+                  </div>
+                </v-col>
+              </template>
+              <span>
+                {{ element.inSync === true
+                  ? 'In sync with game'
+                  : element.inSync === false
+                    ? 'Out of sync with game'
+                    : 'Game sync unknown'
+                }}
+              </span>
+            </v-tooltip>
           </v-row>
         </v-card>
       </div>
@@ -70,7 +83,7 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
-      needsSync: factory.inSync === false,
+      needsSync: !factory.hasProblem && factory.inSync === false,
     }
   }
 
@@ -88,9 +101,9 @@
 
   const syncStateClass = (factory: Factory) => {
     return {
-      'bg-green': factory.inSync,
-      'bg-orange': factory.inSync === false,
-      'bg-grey': factory.inSync === null,
+      'bg-green-darken-2': factory.inSync,
+      'bg-orange-darken-2': factory.inSync === false,
+      'bg-grey-darken-2': factory.inSync === null,
     }
   }
 </script>
