@@ -6027,7 +6027,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -6051,7 +6051,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -6075,7 +6075,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -8283,7 +8283,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
@@ -8307,14 +8307,14 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
             "products": [
                 {
                     "part": "PlutoniumWaste",
-                    "amount": 0,
+                    "amount": 0.16666666666666666,
                     "perMin": 10,
                     "isByProduct": true
                 }
@@ -8338,14 +8338,14 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
             "products": [
                 {
                     "part": "NuclearWaste",
-                    "amount": 0,
+                    "amount": 0.8333333333333334,
                     "perMin": 50,
                     "isByProduct": true
                 }
@@ -11118,7 +11118,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -11142,7 +11142,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -11166,7 +11166,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 0.75,
                     "perMin": 45
                 }
             ],
@@ -11285,7 +11285,7 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
@@ -11309,14 +11309,14 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
             "products": [
                 {
                     "part": "PlutoniumWaste",
-                    "amount": 0,
+                    "amount": 0.16666666666666666,
                     "perMin": 10,
                     "isByProduct": true
                 }
@@ -11340,14 +11340,14 @@
                 },
                 {
                     "part": "Water",
-                    "amount": 0,
+                    "amount": 4,
                     "perMin": 240
                 }
             ],
             "products": [
                 {
                     "part": "NuclearWaste",
-                    "amount": 0,
+                    "amount": 0.8333333333333334,
                     "perMin": 50,
                     "isByProduct": true
                 }

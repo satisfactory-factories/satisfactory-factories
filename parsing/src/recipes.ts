@@ -237,7 +237,7 @@ function getPowerGeneratingRecipes(
                         ingredients.push(
                             { 
                                 part: fuelItem.supplementalResource,
-                                amount: 0,
+                                amount: (3 / 50) * supplementalRatio * building.power / 60,
                                 perMin: (3 / 50) * supplementalRatio * building.power // Calculate the ratio of the supplemental resource to the primary fuel
                             }
                         )
@@ -248,7 +248,7 @@ function getPowerGeneratingRecipes(
                         products.push(
                             {
                                 part: fuelItem.byProduct,
-                                amount: 0,
+                                amount: fuelItem.byProductAmount/60,
                                 perMin: fuelItem.byProductAmount,
                                 isByProduct: true
                             }
