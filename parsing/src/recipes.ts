@@ -190,7 +190,6 @@ function getPowerGeneratingRecipes(
 
         })
         .forEach((recipe: any) => {
-            //console.log(recipe.ClassName); 
              
             let building : Building = {
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
@@ -214,19 +213,8 @@ function getPowerGeneratingRecipes(
                 }
 
                 //Find the part for the primary fuel
-                //console.log(primaryFuel);
-                // const match: any = primaryFuel.match(/Desc_(.*?)_C/);
-                // let extractedPartText: string = match ? match[1] : null;
                 let extractedPartText: string = getPartName(fuelItem.primaryFuel);
-                // if (extractedPartText === "TurboFuel") {
-                //     extractedPartText = "PackagedTurboFuel";
-                // }
-                //console.log('key: ' + extractedPartText);
-                //console.log(parts.parts);
                 const primaryFuelPart: Part = parts.parts[extractedPartText];
-                //console.log(primaryFuelPart);
-                //console.log('name: ' + primaryFuelPart.name);
-                //console.log('energyGeneratedInMJ: ' + primaryFuelPart.energyGeneratedInMJ);
                 let primaryPerMin: number = 0; 
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
