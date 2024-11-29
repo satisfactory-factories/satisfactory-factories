@@ -98,8 +98,8 @@ async function processFile(
         const powerGenerationRecipes: any[] = getPowerGeneratingRecipes(data, items);
     
         // merge the powerGenerationRecipes with the recipes
-        // recipes.push(...powerGenerationRecipes);
-        // recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+        recipes.push(...powerGenerationRecipes);
+        recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
 
         // Since we've done some manipulation of the items data, re-sort it

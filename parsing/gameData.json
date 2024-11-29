@@ -5442,6 +5442,120 @@
             "isFicsmas": false
         },
         {
+            "id": "GeneratorBiomass_Automated_GenericBiomass",
+            "displayName": "Biomass Burner (Biomass)",
+            "ingredients": [
+                {
+                    "part": "GenericBiomass",
+                    "amount": 0.16666666666666666,
+                    "perMin": 10
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated_Leaves",
+            "displayName": "Biomass Burner (Leaves)",
+            "ingredients": [
+                {
+                    "part": "Leaves",
+                    "amount": 2,
+                    "perMin": 120
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated_Mycelia",
+            "displayName": "Biomass Burner (Mycelia)",
+            "ingredients": [
+                {
+                    "part": "Mycelia",
+                    "amount": 1.5,
+                    "perMin": 90
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated_PackagedBiofuel",
+            "displayName": "Biomass Burner (Packaged Liquid Biofuel)",
+            "ingredients": [
+                {
+                    "part": "PackagedBiofuel",
+                    "amount": 0.04,
+                    "perMin": 2.4
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated_Biofuel",
+            "displayName": "Biomass Burner (Solid Biofuel)",
+            "ingredients": [
+                {
+                    "part": "Biofuel",
+                    "amount": 0.06666666666666667,
+                    "perMin": 4
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorBiomass_Automated_Wood",
+            "displayName": "Biomass Burner (Wood)",
+            "ingredients": [
+                {
+                    "part": "Wood",
+                    "amount": 0.3,
+                    "perMin": 18
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "BiomassBurner",
+                "power": 30
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
             "id": "Gunpowder",
             "displayName": "Black Powder",
             "ingredients": [
@@ -5758,6 +5872,78 @@
             },
             "isAlternate": false,
             "isFicsmas": false
+        },
+        {
+            "id": "GeneratorCoal_Coal",
+            "displayName": "Coal-Powered Generator (Coal)",
+            "ingredients": [
+                {
+                    "part": "Coal",
+                    "amount": 0.25,
+                    "perMin": 15
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Coal-PoweredGenerator",
+                "power": 75
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorCoal_CompactedCoal",
+            "displayName": "Coal-Powered Generator (Compacted Coal)",
+            "ingredients": [
+                {
+                    "part": "CompactedCoal",
+                    "amount": 0.11904833333333334,
+                    "perMin": 7.1429
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Coal-PoweredGenerator",
+                "power": 75
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorCoal_PetroleumCoke",
+            "displayName": "Coal-Powered Generator (Petroleum Coke)",
+            "ingredients": [
+                {
+                    "part": "PetroleumCoke",
+                    "amount": 0.4166666666666667,
+                    "perMin": 25
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Coal-PoweredGenerator",
+                "power": 75
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
         },
         {
             "id": "Computer",
@@ -6824,6 +7010,101 @@
             "isFicsmas": false
         },
         {
+            "id": "GeneratorFuel_LiquidFuel",
+            "displayName": "Fuel-Powered Generator (Fuel)",
+            "ingredients": [
+                {
+                    "part": "LiquidFuel",
+                    "amount": 250,
+                    "perMin": 15000
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Fuel-PoweredGenerator",
+                "power": 250
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorFuel_IonizedFuel",
+            "displayName": "Fuel-Powered Generator (Ionized Fuel)",
+            "ingredients": [
+                {
+                    "part": "IonizedFuel",
+                    "amount": 50,
+                    "perMin": 3000
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Fuel-PoweredGenerator",
+                "power": 250
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorFuel_LiquidBiofuel",
+            "displayName": "Fuel-Powered Generator (Liquid Biofuel)",
+            "ingredients": [
+                {
+                    "part": "LiquidBiofuel",
+                    "amount": 250,
+                    "perMin": 15000
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Fuel-PoweredGenerator",
+                "power": 250
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorFuel_RocketFuel",
+            "displayName": "Fuel-Powered Generator (Rocket Fuel)",
+            "ingredients": [
+                {
+                    "part": "RocketFuel",
+                    "amount": 62.5,
+                    "perMin": 3750
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Fuel-PoweredGenerator",
+                "power": 250
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorFuel_LiquidTurboFuel",
+            "displayName": "Fuel-Powered Generator (Turbofuel)",
+            "ingredients": [
+                {
+                    "part": "LiquidTurboFuel",
+                    "amount": 0.125,
+                    "perMin": 7.5
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "Fuel-PoweredGenerator",
+                "power": 250
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
             "id": "FusedModularFrame",
             "displayName": "Fused Modular Frame",
             "ingredients": [
@@ -7782,6 +8063,92 @@
             },
             "isAlternate": false,
             "isFicsmas": false
+        },
+        {
+            "id": "GeneratorNuclear_FicsoniumFuelRod",
+            "displayName": "Nuclear Power Plant (Ficsonium Fuel Rod)",
+            "ingredients": [
+                {
+                    "part": "FicsoniumFuelRod",
+                    "amount": 0.016666666666666666,
+                    "perMin": 1
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [],
+            "building": {
+                "name": "NuclearPowerPlant",
+                "power": 2500
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorNuclear_PlutoniumFuelRod",
+            "displayName": "Nuclear Power Plant (Plutonium Fuel Rod)",
+            "ingredients": [
+                {
+                    "part": "PlutoniumFuelRod",
+                    "amount": 0.0016666666666666668,
+                    "perMin": 0.1
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [
+                {
+                    "part": "Desc_PlutoniumWaste_C",
+                    "amount": 0,
+                    "perMin": 10,
+                    "isByProduct": true
+                }
+            ],
+            "building": {
+                "name": "NuclearPowerPlant",
+                "power": 2500
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
+        },
+        {
+            "id": "GeneratorNuclear_NuclearFuelRod",
+            "displayName": "Nuclear Power Plant (Uranium Fuel Rod)",
+            "ingredients": [
+                {
+                    "part": "NuclearFuelRod",
+                    "amount": 0.0033333333333333335,
+                    "perMin": 0.2
+                },
+                {
+                    "part": "Water",
+                    "amount": 0,
+                    "perMin": 0
+                }
+            ],
+            "products": [
+                {
+                    "part": "Desc_NuclearWaste_C",
+                    "amount": 0,
+                    "perMin": 50,
+                    "isByProduct": true
+                }
+            ],
+            "building": {
+                "name": "NuclearPowerPlant",
+                "power": 2500
+            },
+            "isAlternate": false,
+            "isFicsmas": false,
+            "isPowerGenerator": true
         },
         {
             "id": "NobeliskNuke",
