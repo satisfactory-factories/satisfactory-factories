@@ -32,6 +32,12 @@
         </v-card-text>
         <v-card-actions class="sticky">
           <v-btn
+            color="yellow"
+            prepend-icon="fas fa-file"
+            text="Replace from Clipboard"
+            @click="replaceWithClipboard(subject)"
+          />
+          <v-btn
             v-if="!isCopied"
             color="green"
             prepend-icon="fas fa-file"
@@ -74,5 +80,17 @@
     navigator.clipboard.writeText(JSON.stringify(subject))
     isCopied.value = true
     console.log(`Copied ${props.subjectType} data to clipboard`)
+  }
+
+  const replaceWithClipboard = (subject: any) => {
+    navigator.clipboard.readText().then(text => {
+      try {
+        const data = JSON.parse(text)
+        Object.assign(subject, data)
+        console.log(`Replaced ${props.subjectType} data with clipboard data`)
+      } catch (error) {
+        console.error(`Failed to replace ${props.subjectType} data with clipboard data`, error)
+      }
+    })
   }
 </script>
