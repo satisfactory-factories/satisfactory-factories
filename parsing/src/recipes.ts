@@ -206,9 +206,9 @@ function getPowerGeneratingRecipes(
             fuels.forEach((fuel: any) => {
                 let fuelItem: Fuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
-                    supplementalResource: getPartName(fuel.mSupplementalResourceClass),
-                    byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : undefined,
-                    byProductAmount: Number(fuel.mByproductAmount)
+                    supplementalResource: fuel.mSupplementalResourceClass ? getPartName(fuel.mSupplementalResourceClass) : "",
+                    byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : "",
+                    byProductAmount: fuel.mByproductAmount ? Number(fuel.mByproductAmount) : 0
                 }
 
                 //Find the part for the primary fuel
