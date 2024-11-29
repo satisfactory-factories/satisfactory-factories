@@ -7,7 +7,7 @@ function getProductionRecipes(
     data: any[],
     producingBuildings: { [key: string]: number }
 ): Recipe[] {
-    const recipes: any[] = [];
+    const recipes: Recipe[] = [];
 
     data
         .filter((entry: any) => entry.Classes)
@@ -139,31 +139,32 @@ function getProductionRecipes(
                 products,
                 building,
                 isAlternate: recipe.mDisplayName.includes("Alternate"),
-                isFicsmas: isFicsmas(recipe.mDisplayName)
+                isFicsmas: isFicsmas(recipe.mDisplayName),
+                isPowerGenerator: false
             });
         });
 
-    // Manually add Nuclear waste recipes
-    recipes.push({
-        id: "NuclearWaste",
-        displayName: "Uranium Waste",
-        ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
-        products: [{ part: "NuclearWaste", amount: 1, perMin: 10 }],
-        building: { name: "nuclearpowerplant", power: 2500 },
-        isAlternate: false,
-        isFicsmas: false,
-        isPowerGenerator: true
-    });
-    recipes.push({
-        id: "PlutoniumWaste",
-        displayName: "Plutonium Waste",
-        ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
-        products: [{ part: "PlutoniumWaste", amount: 1, perMin: 1 }],
-        building: { name: "nuclearpowerplant", power: 2500 },
-        isAlternate: false,
-        isFicsmas: false,
-        isPowerGenerator: true
-    });
+    // // Manually add Nuclear waste recipes
+    // recipes.push({
+    //     id: "NuclearWaste",
+    //     displayName: "Uranium Waste",
+    //     ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
+    //     products: [{ part: "NuclearWaste", amount: 1, perMin: 10 }],
+    //     building: { name: "nuclearpowerplant", power: 2500 },
+    //     isAlternate: false,
+    //     isFicsmas: false,
+    //     isPowerGenerator: true
+    // });
+    // recipes.push({
+    //     id: "PlutoniumWaste",
+    //     displayName: "Plutonium Waste",
+    //     ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
+    //     products: [{ part: "PlutoniumWaste", amount: 1, perMin: 1 }],
+    //     building: { name: "nuclearpowerplant", power: 2500 },
+    //     isAlternate: false,
+    //     isFicsmas: false,
+    //     isPowerGenerator: true
+    // });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
@@ -208,7 +209,7 @@ function getPowerGeneratingRecipes(
                 let fuelItem: Fuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
                     supplementalResource: getPartName(fuel.mSupplementalResourceClass),
-                    byProduct: fuel.mByproduct,
+                    byProduct: getPartName(fuel.mByproduct),
                     byProductAmount: Number(fuel.mByproductAmount)
                 }
 

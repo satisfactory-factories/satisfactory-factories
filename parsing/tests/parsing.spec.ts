@@ -32,7 +32,7 @@ describe('common', () => {
             //act
 
             //assert
-            expect(results.recipes.length).toBe(293);
+            expect(results.recipes.length).toBe(308);
         })
 
 
@@ -76,7 +76,7 @@ describe('common', () => {
                 for (const product of recipe.products) {
                     parts.add(product.part);
                 }
-                if (recipe.products.length === 0) {
+                if (recipe.products.length === 0 && !recipe.isPowerGenerator) {
                     console.error('Recipe ' + recipe.id + ' has no products');
                     expect(recipe.products.length).not.toBe(0);
                 }
