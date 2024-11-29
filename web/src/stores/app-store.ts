@@ -68,6 +68,10 @@ export const useAppStore = defineStore('app', () => {
       if (factory.inSync === undefined) {
         factory.inSync = null
       }
+
+      if (factory.syncState === undefined) {
+        factory.syncState = {}
+      }
     })
 
     return factories.value

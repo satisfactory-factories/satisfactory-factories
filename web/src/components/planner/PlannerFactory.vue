@@ -14,19 +14,19 @@
             </div>
             <div class="d-flex align-center">
               <div v-if="factory.inSync">
-                <v-chip class="sf-chip small green no-margin" @click="changeSync(factory)">
+                <v-chip class="sf-chip small green no-margin" @click="setSync(factory)">
                   <i class="fas fa-check-square" />
                   <span class="ml-2">In sync with game</span>
                 </v-chip>
               </div>
               <div v-if="factory.inSync === false">
-                <v-chip class="sf-chip small orange no-margin" @click="changeSync(factory)">
+                <v-chip class="sf-chip small orange no-margin" @click="setSync(factory)">
                   <i class="fas fa-times-square" />
-                  <span class="ml-2">Needs updating in game</span>
+                  <span class="ml-2">Out of sync with game</span>
                 </v-chip>
               </div>
               <div v-if="factory.inSync === null">
-                <v-chip class="border border-gray border-dashed" @click="changeSync(factory)">
+                <v-chip class="border border-gray border-dashed" :disabled="!factory.products[0]?.id" @click="setSync(factory)">
                   <i class="fas fa-question" />
                   <span class="ml-2">Mark as in sync with game</span>
                 </v-chip>
@@ -37,7 +37,8 @@
                     <i class="fas fa-info-circle" />
                   </div>
                 </template>
-                <span>Game Sync is when you have implemented the factory into your game.<br> When it drops out of sync, there are changes that you need to implement.</span>
+                <span>Game Sync is when you have implemented the factory inside the game.<br> When it drops out of sync, there are changes that you need to implement.<br> When a factory's products are changed, the factory will be out of sync, or if you set it manually.
+                </span>
               </v-tooltip>
             </div>
           </v-col>
@@ -350,8 +351,18 @@
     return factory.dependencies?.metrics[part] ?? {}
   }
 
-  const changeSync = (factory: Factory) => {
+  const setSync = (factory: Factory) => {
     factory.inSync = !factory.inSync
+
+    // Record what the sync'ed state is
+    if (factory.inSync) {
+      factory.syncState = {}
+
+      // Get the current products of the factory and set them
+      factory.products.forEach(product => {
+        factory.syncState[product.id] = product.amount
+      })
+    }
   }
 
   provide('fixProduction', fixProduction)

@@ -10,6 +10,7 @@ import { configureExportCalculator } from '@/utils/factory-management/exportCalc
 import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
+import { calculateSyncState } from '@/utils/factory-management/syncState'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -62,6 +63,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     hidden: false,
     hasProblem: false,
     inSync: null,
+    syncState: {},
     displayOrder: -1, // this will get set by the planner
   }
 }
@@ -83,6 +85,9 @@ export const calculateFactory = (
 
   // And calculate Byproducts
   calculateByProducts(factory, gameData)
+
+  // Calculate if there have been any changes the player needs to enact.
+  calculateSyncState(factory)
 
   // Calculate building requirements for each product based on the selected recipe and product amount.
   calculateBuildingRequirements(factory, gameData)
