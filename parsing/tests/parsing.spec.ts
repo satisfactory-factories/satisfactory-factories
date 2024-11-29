@@ -272,11 +272,11 @@ describe('common', () => {
             expect(recipe.ingredients[0].amount).toBe(0.2/60);
             expect(recipe.ingredients[0].perMin).toBe(0.2);
             expect(recipe.ingredients[1].part).toBe('Water');
-            expect(recipe.ingredients[1].amount).toBe(0);
+            expect(recipe.ingredients[1].amount).toBe(4);
             expect(recipe.ingredients[1].perMin).toBe(240);
             expect(recipe.products.length).toBe(1);
             expect(recipe.products[0].part).toBe('NuclearWaste');
-            expect(recipe.products[0].amount).toBe(0);
+            expect(recipe.products[0].amount).toBe(0.8333333333333334);
             expect(recipe.products[0].perMin).toBe(50);
             expect(recipe.products[0].isByProduct).toBe(true);
             expect(recipe.building.name).toBe('NuclearPowerPlant');
