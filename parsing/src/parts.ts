@@ -291,8 +291,8 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
         .flatMap((entry: any) => entry.Classes)
         .forEach((resource: any) => {
-            const className = getPartName(resource.ClassName);
-            const displayName = resource.mDisplayName;
+            const className: string = getPartName(resource.ClassName);
+            const displayName: string = resource.mDisplayName;
 
             const data = {
                 name: displayName,
