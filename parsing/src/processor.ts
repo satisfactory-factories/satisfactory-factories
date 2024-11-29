@@ -101,7 +101,6 @@ async function processFile(
         recipes.push(...powerGenerationRecipes);
         recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
-
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
         Object.keys(items.parts).sort().forEach(key => {
@@ -114,7 +113,7 @@ async function processFile(
             buildings,
             items,
             recipes,
-            powerGenerationRecipes
+            powerGenerationRecipes: []
         };
 
         // Write the output to the file
