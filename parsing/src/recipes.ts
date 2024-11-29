@@ -195,6 +195,7 @@ function getPowerGeneratingRecipes(
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
+            let supplementalRatio: number = Number(recipe.mSupplementalToPowerRatio);
             // 1. Generator MW generated. This is an hourly value.
             // 2. Divide by 60, to get the minute value
             // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
@@ -248,7 +249,7 @@ function getPowerGeneratingRecipes(
                             { 
                                 part: fuelItem.supplementalResource,
                                 amount: 0,
-                                perMin: 0
+                                perMin: (3 / 50) * supplementalRatio * recipe.mPowerProduction
                             }
                         )
                     }
