@@ -13,7 +13,7 @@
               <i class="fas fa-industry mr-2" />
               <span>{{ truncateFactoryName(element.name) }}</span>
             </v-col>
-            <v-tooltip left>
+            <v-tooltip right>
               <template #activator="{ props }">
                 <v-col
                   class="pa-0 align-content-center text-center"
