@@ -58,10 +58,15 @@ export const useAppStore = defineStore('app', () => {
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
-    // Patch for old data pre #116
     factories.value.forEach(factory => {
+      // Patch for old data pre #116
       if (!factory.exports) {
         factory.exports = {}
+      }
+
+      // Patch for #222
+      if (factory.inSync === undefined) {
+        factory.inSync = null
       }
     })
 
