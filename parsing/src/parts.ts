@@ -188,16 +188,12 @@ function getItems(data: any[]): PartDataInterface {
 
             // Check if it's an unpackage recipe and skip it for parts
             if (entry.mDisplayName.includes("Unpackage")) return;
-            //console.log(entry.ClassName);
 
             // Extract the part name
             const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
             productMatches.forEach(match => {
                 let partName: string = getPartName(match[1]);  // Use the mProduct part name
-                // if (partName === "TurboFuel") {
-                //     console.error(partName + " found in mProduct, stopping");
-                // }
                 let friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
 
                 // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size
@@ -224,7 +220,6 @@ function getItems(data: any[]): PartDataInterface {
                         isFicsmas: isFicsmas(entry.mDisplayName),
                         energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
                     };
-                    //console.log(parts);
                 }
             });
         });
