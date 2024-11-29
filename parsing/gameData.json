@@ -1247,6 +1247,18 @@
             "LiquidOil": {
                 "name": "Crude Oil",
                 "limit": 12600
+            },
+            "Leaves": {
+                "name": "Leaves",
+                "limit": 100000
+            },
+            "Wood": {
+                "name": "Wood",
+                "limit": 100000
+            },
+            "Mycelia": {
+                "name": "Mycelia",
+                "limit": 100000
             }
         }
     },

@@ -285,7 +285,7 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         "Stone": 69900,
         "Sulfur": 10800,
         "Water": 9007199254740991,
-    }
+    };
 
     data
         .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
@@ -303,6 +303,22 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
                 rawResources[className] = data;
             }
         });
+
+    // Manually add "Leaves" and "Wood" to the rawResources list
+    rawResources["Leaves"] = {
+        name: "Leaves",
+        limit: limits["Leaves"] || 100000
+    };
+
+    rawResources["Wood"] = {
+        name: "Wood",
+        limit: limits["Wood"] || 100000
+    };
+
+    rawResources["Mycelia"] = {
+        name: "Mycelia",
+        limit: limits["Mycelia"] || 100000
+    };
 
     return rawResources;
 }
