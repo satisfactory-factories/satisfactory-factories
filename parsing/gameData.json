@@ -8313,7 +8313,7 @@
             ],
             "products": [
                 {
-                    "part": "Desc_PlutoniumWaste_C",
+                    "part": "PlutoniumWaste",
                     "amount": 0,
                     "perMin": 10,
                     "isByProduct": true
@@ -8344,7 +8344,7 @@
             ],
             "products": [
                 {
-                    "part": "Desc_NuclearWaste_C",
+                    "part": "NuclearWaste",
                     "amount": 0,
                     "perMin": 50,
                     "isByProduct": true
@@ -11315,7 +11315,7 @@
             ],
             "products": [
                 {
-                    "part": "Desc_PlutoniumWaste_C",
+                    "part": "PlutoniumWaste",
                     "amount": 0,
                     "perMin": 10,
                     "isByProduct": true
@@ -11346,7 +11346,7 @@
             ],
             "products": [
                 {
-                    "part": "Desc_NuclearWaste_C",
+                    "part": "NuclearWaste",
                     "amount": 0,
                     "perMin": 50,
                     "isByProduct": true
