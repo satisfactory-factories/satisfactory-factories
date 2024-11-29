@@ -11,169 +11,169 @@ function getItems(data: any[]): PartDataInterface {
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .forEach((entry: any) => {
-            // // There are two exception products we need to check for and add to the parts list
-            // if (entry.ClassName === "Desc_NuclearWaste_C") {
-            //     // Note that this part id is NuclearWaste, not Uranium Waste
-            //     parts["NuclearWaste"] = { 
-            //         name: "Uranium Waste",
-            //         stackSize: 500, //SS_HUGE
-            //         isFluid: isFluid("NuclearWaste"),
-            //         isFicsmas: isFicsmas(entry.mDisplayName),
-            //         energyGeneratedInMJ: 0
-            //     };
-            // } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
-            //     parts["PlutoniumWaste"] = {
-            //         name: "Plutonium Waste",
-            //         stackSize: 500, //SS_HUGE
-            //         isFluid: isFluid("PlutoniumWaste"),
-            //         isFicsmas: isFicsmas(entry.mDisplayName),
-            //         energyGeneratedInMJ: 0
-            //     };
-            // }         
-            // //These are exception products that aren't produced by mines or extractors, they are raw materials
-            // if (entry.ClassName === "Desc_Leaves_C") {
-            //     parts["Leaves"] = {
-            //         name: "Leaves",
-            //         stackSize: 500, //SS_HUGE
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 15
-            //     };
-            // } else if (entry.ClassName === "Desc_Wood_C") {
-            //     parts["Wood"] = {
-            //         name: "Wood",
-            //         stackSize: 200, //SS_BIG
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 100
-            //     };
-            // } else if (entry.ClassName === "Desc_Mycelia_C") {
-            //     parts["Mycelia"] = {
-            //         name: "Mycelia",
-            //         stackSize: 200, //SS_BIG
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 20
-            //     };
-            // } else if (entry.ClassName === "Desc_HogParts_C") {
-            //     parts["HogParts"] = {
-            //         name: "Hog Remains",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 250
-            //     };
-            // } else if (entry.ClassName === "Desc_SpitterParts_C") {
-            //     parts["SpitterParts"] = {
-            //         name: "Spitter Remains",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 250
-            //     };
-            // } else if (entry.ClassName === "Desc_StingerParts_C") {
-            //     parts["StingerParts"] = {
-            //         name: "Stinger Remains",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 250
-            //     };
-            // } else if (entry.ClassName === "Desc_HatcherParts_C") {
-            //     parts["HatcherParts"] = {
-            //         name: "Hatcher Remains",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 250
-            //     };
-            // } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
-            //     // This is a special intermediate alt product
-            //     parts["DissolvedSilica"] = {
-            //         name: "Dissolved Silica",
-            //         stackSize: 0, //SS_FLUID
-            //         isFluid: true,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     };
-            // } else if (entry.ClassName === "Desc_LiquidOil_C") {
-            //     // This is a special liquid raw material
-            //     parts["LiquidOil"] = {
-            //         name: "Liquid Oil",
-            //         stackSize: 0, //SS_FLUID
-            //         isFluid: true,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     }; 
-            // } else if (entry.ClassName === "Desc_Gift_C") {
-            //     // this is a ficsmas collectable
-            //     parts["Gift"] = {
-            //         name: "Gift",
-            //         stackSize: 500, //SS_HUGE
-            //         isFluid: false,
-            //         isFicsmas: true,
-            //         energyGeneratedInMJ: 0
-            //     };   
-            // } else if (entry.ClassName === "Desc_Snow_C") {
-            //     // this is a ficsmas collectable
-            //     parts["Snow"] = {
-            //         name: "Snow",
-            //         stackSize: 500, //SS_HUGE
-            //         isFluid: false,
-            //         isFicsmas: true,
-            //         energyGeneratedInMJ: 0
-            //     };                
-            // } else if (entry.ClassName === "Desc_Crystal_C") {
-            //     parts["Crystal"] = {
-            //         name: "Blue Power Slug",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     };                
-            // } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
-            //     parts["Crystal_mk2"] = {
-            //         name: "Yellow Power Slug",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     };                
-            // } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
-            //     parts["Crystal_mk3"] = {
-            //         name: "Purple Power Slug",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     };                
-            // } else if (entry.ClassName === "Desc_SAM_C") {
-            //     parts["SAM"] = {
-            //         name: "SAM",
-            //         stackSize: 100, //SS_MEDIUM
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     };                
-            // } else if (entry.ClassName === "Desc_CrystalShard_C") {
-            //     parts["CrystalShard"] = {
-            //         name: "Power Shard",
-            //         stackSize: 100, //SS_MEDIUM
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     }; 
-            // } else if (entry.ClassName === "BP_ItemDescriptorPortableMiner_C") {
-            //     parts["PortableMiner"] = {
-            //         name: "Portable Miner",
-            //         stackSize: 50, //SS_SMALL
-            //         isFluid: false,
-            //         isFicsmas: false,
-            //         energyGeneratedInMJ: 0
-            //     }; 
-            // }
+            // There are two exception products we need to check for and add to the parts list
+            if (entry.ClassName === "Desc_NuclearWaste_C") {
+                // Note that this part id is NuclearWaste, not Uranium Waste
+                parts["NuclearWaste"] = { 
+                    name: "Uranium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: isFluid("NuclearWaste"),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: 0
+                };
+            } else if (entry.ClassName === "Desc_PlutoniumWaste_C") {
+                parts["PlutoniumWaste"] = {
+                    name: "Plutonium Waste",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: isFluid("PlutoniumWaste"),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: 0
+                };
+            }         
+            //These are exception products that aren't produced by mines or extractors, they are raw materials
+            if (entry.ClassName === "Desc_Leaves_C") {
+                parts["Leaves"] = {
+                    name: "Leaves",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 15
+                };
+            } else if (entry.ClassName === "Desc_Wood_C") {
+                parts["Wood"] = {
+                    name: "Wood",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 100
+                };
+            } else if (entry.ClassName === "Desc_Mycelia_C") {
+                parts["Mycelia"] = {
+                    name: "Mycelia",
+                    stackSize: 200, //SS_BIG
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 20
+                };
+            } else if (entry.ClassName === "Desc_HogParts_C") {
+                parts["HogParts"] = {
+                    name: "Hog Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 250
+                };
+            } else if (entry.ClassName === "Desc_SpitterParts_C") {
+                parts["SpitterParts"] = {
+                    name: "Spitter Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 250
+                };
+            } else if (entry.ClassName === "Desc_StingerParts_C") {
+                parts["StingerParts"] = {
+                    name: "Stinger Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 250
+                };
+            } else if (entry.ClassName === "Desc_HatcherParts_C") {
+                parts["HatcherParts"] = {
+                    name: "Hatcher Remains",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 250
+                };
+            } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
+                // This is a special intermediate alt product
+                parts["DissolvedSilica"] = {
+                    name: "Dissolved Silica",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                };
+            } else if (entry.ClassName === "Desc_LiquidOil_C") {
+                // This is a special liquid raw material
+                parts["LiquidOil"] = {
+                    name: "Liquid Oil",
+                    stackSize: 0, //SS_FLUID
+                    isFluid: true,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                }; 
+            } else if (entry.ClassName === "Desc_Gift_C") {
+                // this is a ficsmas collectable
+                parts["Gift"] = {
+                    name: "Gift",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                    energyGeneratedInMJ: 0
+                };   
+            } else if (entry.ClassName === "Desc_Snow_C") {
+                // this is a ficsmas collectable
+                parts["Snow"] = {
+                    name: "Snow",
+                    stackSize: 500, //SS_HUGE
+                    isFluid: false,
+                    isFicsmas: true,
+                    energyGeneratedInMJ: 0
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_C") {
+                parts["Crystal"] = {
+                    name: "Blue Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk2_C") {
+                parts["Crystal_mk2"] = {
+                    name: "Yellow Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                };                
+            } else if (entry.ClassName === "Desc_Crystal_mk3_C") {
+                parts["Crystal_mk3"] = {
+                    name: "Purple Power Slug",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                };                
+            } else if (entry.ClassName === "Desc_SAM_C") {
+                parts["SAM"] = {
+                    name: "SAM",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                };                
+            } else if (entry.ClassName === "Desc_CrystalShard_C") {
+                parts["CrystalShard"] = {
+                    name: "Power Shard",
+                    stackSize: 100, //SS_MEDIUM
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                }; 
+            } else if (entry.ClassName === "BP_ItemDescriptorPortableMiner_C") {
+                parts["PortableMiner"] = {
+                    name: "Portable Miner",
+                    stackSize: 50, //SS_SMALL
+                    isFluid: false,
+                    isFicsmas: false,
+                    energyGeneratedInMJ: 0
+                }; 
+            }
 
-            if (!entry.ClassName || !entry.ClassName.includes("TurboFuel")) return;
+            if (!entry.ClassName) return;
 
             // Ensures it's a recipe, we only care about items that are produced within a recipe.
             if (!entry.mProducedIn) return;
@@ -187,15 +187,16 @@ function getItems(data: any[]): PartDataInterface {
 
             // Check if it's an unpackage recipe and skip it for parts
             if (entry.mDisplayName.includes("Unpackage")) return;
+            //console.log(entry.ClassName);
 
             // Extract the part name
             const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
             productMatches.forEach(match => {
                 let partName: string = getPartName(match[1]);  // Use the mProduct part name
-                if (partName === "TurboFuel") {
-                    console.error(partName + " found in mProduct, stopping");
-                }
+                // if (partName === "TurboFuel") {
+                //     console.error(partName + " found in mProduct, stopping");
+                // }
                 let friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
 
                 // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size
@@ -214,7 +215,7 @@ function getItems(data: any[]): PartDataInterface {
                 if (isCollectable(entry.mIngredients)) {
                     collectables[partName] = friendlyName;
                 } else {
-                    console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
+                    //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
                     parts[partName] = {
                         name: friendlyName,
                         stackSize,
@@ -222,6 +223,7 @@ function getItems(data: any[]): PartDataInterface {
                         isFicsmas: isFicsmas(entry.mDisplayName),
                         energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
                     };
+                    //console.log(parts);
                 }
             });
         });
@@ -332,42 +334,42 @@ function fixItemNames(items: PartDataInterface): void {
 }
 
 function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
-    // // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
-    // items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
+    // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
+    items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
 
-    // // Add the actual "Turbofuel" as a new item
-    // items.parts["LiquidTurboFuel"] = {
-    //     name: "Turbofuel",
-    //     stackSize: 0,
-    //     isFluid: true,
-    //     isFicsmas: false,
-    //     energyGeneratedInMJ: 2000
-    // };
-    // //rename the packaged item to PackagedTurboFuel
-    // items.parts["PackagedTurboFuel"] = {
-    //     name: "Packaged Turbofuel",
-    //     stackSize: 100, //SS_MEDIUM
-    //     isFluid: false,
-    //     isFicsmas: false,
-    //     energyGeneratedInMJ: 2000
-    // };
-    // //remove the incorrect packaged turbofuel
-    // delete items.parts["TurboFuel"];
+    // Add the actual "Turbofuel" as a new item
+    items.parts["LiquidTurboFuel"] = {
+        name: "Turbofuel",
+        stackSize: 0,
+        isFluid: true,
+        isFicsmas: false,
+        energyGeneratedInMJ: 2000
+    };
+    //rename the packaged item to PackagedTurboFuel
+    items.parts["PackagedTurboFuel"] = {
+        name: "Packaged Turbofuel",
+        stackSize: 100, //SS_MEDIUM
+        isFluid: false,
+        isFicsmas: false,
+        energyGeneratedInMJ: 2000
+    };
+    //remove the incorrect packaged turbofuel
+    delete items.parts["TurboFuel"];
 
-    // // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
-    // recipes.forEach(recipe => {
-    //     recipe.products.forEach(product => {
-    //         if (product.part === "TurboFuel") {
-    //             product.part = "PackagedTurboFuel";
-    //         }
-    //     });
+    // Now we need to go through the recipes and wherever "TurboFuel" is mentioned, it needs to be changed to "PackagedTurbofuel"
+    recipes.forEach(recipe => {
+        recipe.products.forEach(product => {
+            if (product.part === "TurboFuel") {
+                product.part = "PackagedTurboFuel";
+            }
+        });
 
-    //     recipe.ingredients.forEach(ingredient => {
-    //         if (ingredient.part === "TurboFuel") {
-    //             ingredient.part = "PackagedTurboFuel";
-    //         }
-    //     });
-    // });
+        recipe.ingredients.forEach(ingredient => {
+            if (ingredient.part === "TurboFuel") {
+                ingredient.part = "PackagedTurboFuel";
+            }
+        });
+    });
 }
 
 export { getItems, fixItemNames, fixTurbofuel };
