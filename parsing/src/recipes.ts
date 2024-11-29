@@ -216,14 +216,15 @@ function getPowerGeneratingRecipes(
                 // const match: any = primaryFuel.match(/Desc_(.*?)_C/);
                 // let extractedPartText: string = match ? match[1] : null;
                 let extractedPartText: string = getPartName(fuelItem.primaryFuel);
-                if (extractedPartText === "LiquidTurboFuel") {
-                    //console.log(parts.parts);
-                }
+                // if (extractedPartText === "TurboFuel") {
+                //     extractedPartText = "PackagedTurboFuel";
+                // }
+                //console.log('key: ' + extractedPartText);
+                //console.log(parts.parts);
                 const primaryFuelPart: Part = parts.parts[extractedPartText];
-                console.log('key: ' + extractedPartText);
                 //console.log(primaryFuelPart);
-                console.log('name: ' + primaryFuelPart.name);
-                console.log('energyGeneratedInMJ: ' + primaryFuelPart.energyGeneratedInMJ);
+                //console.log('name: ' + primaryFuelPart.name);
+                //console.log('energyGeneratedInMJ: ' + primaryFuelPart.energyGeneratedInMJ);
                 let primaryPerMin: number = 0; 
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
@@ -265,7 +266,7 @@ function getPowerGeneratingRecipes(
                     }
 
                     recipes.push({
-                        id: getRecipeName(recipe.ClassName) +'_'+ primaryFuelPart.name,
+                        id: getRecipeName(recipe.ClassName) +'_'+ fuelItem.primaryFuel,
                         displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                         ingredients,
                         products,

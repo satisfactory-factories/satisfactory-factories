@@ -7,6 +7,7 @@ function getItems(data: any[]): PartDataInterface {
     const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
 
+    // Scan all recipes (not parts), looking for parts that are used in recipes. 
     data
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
