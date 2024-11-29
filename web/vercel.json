@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/graph", "destination": "/" },
+    { "source": "/recipes", "destination": "/" },
     { "source": "/share/:path*", "destination": "/" }
   ],
   "headers": [

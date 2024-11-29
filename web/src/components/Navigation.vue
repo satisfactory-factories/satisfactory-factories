@@ -1,6 +1,6 @@
 <template>
   <v-toolbar dark :density="toolbarDensity">
-    <v-btn v-if="smAndDown" icon @click="toggleDrawer">
+    <v-btn v-if="mdAndDown" icon @click="toggleDrawer">
       <i class="fa fa-bars" />
     </v-btn>
     <template v-else>
@@ -23,16 +23,16 @@
       />
     </v-tabs>
 
-    <template v-if="!smAndDown">
+    <template v-if="!mdAndDown">
       <ko-fi />
       <join-discord text="Discord" />
     </template>
-    <template v-if="!smAndDown" #append>
+    <template v-if="!mdAndDown" #append>
       <slot name="append" />
     </template>
   </v-toolbar>
   <v-navigation-drawer
-    v-if="smAndDown"
+    v-if="mdAndDown"
     v-model="isDrawerOpen"
     class="pa-2"
     width="300"
@@ -52,9 +52,9 @@
 <script setup lang="ts">
   import { useDisplay } from 'vuetify'
 
-  const { smAndDown } = useDisplay()
+  const { mdAndDown } = useDisplay()
 
-  const toolbarDensity = computed(() => smAndDown.value ? 'compact' : undefined)
+  const toolbarDensity = computed(() => mdAndDown.value ? 'compact' : undefined)
   const isDrawerOpen = ref(false)
   const currentTab = ref(null)
 

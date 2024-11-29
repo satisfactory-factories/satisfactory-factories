@@ -158,11 +158,14 @@
               </span>
               <v-text-field
                 v-model.number="product.buildingRequirements.amount"
+                class="inline-inputs"
+                flat
                 hide-details
+                hide-spin-buttons
                 min="0"
-                min-width="80px"
                 :product="product.id"
                 type="number"
+                width="60px"
                 @input="increaseProductQtyByBuilding(product)"
               />
             </v-chip>

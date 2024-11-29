@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="showDialog" max-width="1000" scrollable>
-    <v-card>
+    <v-card class="my-2">
       <v-card-title class="text-h4 text-center pb-0">Welcome to Satisfactory Factories!</v-card-title>
       <v-card-subtitle class="text-center">Bringing sanity to the production chain!</v-card-subtitle>
       <v-card-text class="text-body-1 text-left">
