@@ -207,7 +207,7 @@ function getPowerGeneratingRecipes(
                 let fuelItem: Fuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
                     supplementalResource: getPartName(fuel.mSupplementalResourceClass),
-                    byProduct: getPartName(fuel.mByproduct),
+                    byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : undefined,
                     byProductAmount: Number(fuel.mByproductAmount)
                 }
 
