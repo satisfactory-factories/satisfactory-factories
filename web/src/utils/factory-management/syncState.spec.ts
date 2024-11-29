@@ -18,27 +18,31 @@ describe('syncState', () => {
     mockFactory.syncState = {
       IronIngot: 100,
     }
+
+    mockFactory.inSync = true
   })
 
   describe('calculateSyncState', () => {
     it('should not make changes to a synced factory', () => {
-      mockFactory.inSync = true
-
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(true)
     })
-    it('should detect a desynced factory', () => {
+
+    it('should detect a de-synced factory', () => {
       mockFactory.syncState.IronIngot = 50
 
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
     })
+
     it('should not affect a factory with no sync state', () => {
+      mockFactory.inSync = null
       mockFactory.syncState = {}
 
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(null)
     })
+
     it('should detect a desynced factory across multiple products', () => {
       addProductToFactory(mockFactory, {
         id: 'CopperIngot',
@@ -51,6 +55,7 @@ describe('syncState', () => {
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
     })
+
     it('should maintain a synced factory across multiple products', () => {
       addProductToFactory(mockFactory, {
         id: 'CopperIngot',
@@ -65,11 +70,12 @@ describe('syncState', () => {
       expect(mockFactory.inSync).toBe(true)
     })
 
-    it('should do nothing when there are no products', () => {
+    it('should drop factory out of sync when there are no products', () => {
       mockFactory.products = []
       calculateSyncState(mockFactory)
-      expect(mockFactory.inSync).toBe(null)
+      expect(mockFactory.inSync).toBe(false)
     })
+
     it('should mark a factory as out of sync when there are no products', () => {
       mockFactory.products = []
       calculateSyncState(mockFactory)
