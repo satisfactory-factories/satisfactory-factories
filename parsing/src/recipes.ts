@@ -26,7 +26,7 @@ function getProductionRecipes(
             }
             // Process all buildings and check if any match the producingBuildings map
             const validBuilding = rawBuildingKeys.some((rawBuilding: string) => {
-                const buildingKey = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
+                const buildingKey: string = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
                 return producingBuildings[buildingKey];
             })
 
@@ -67,7 +67,7 @@ function getProductionRecipes(
 
             const products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
-                const productName = match[1];
+                const productName: string = match[1];
                 let amount: number = parseInt(match[2], 10);
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
@@ -98,7 +98,7 @@ function getProductionRecipes(
                 // Sum up power for all valid buildings
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
                     if (producingBuildings[building]) {
-                        const buildingPower = producingBuildings[building]
+                        const buildingPower: number = producingBuildings[building]
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
                         return totalPower + buildingPower; // Add power for this building
                     }
@@ -202,7 +202,6 @@ function getPowerGeneratingRecipes(
             // 4. Now divide this number by the part energy to calculate how many pieces per min
             const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600)
 
-            // const ingredients = <any>[];
             const fuels: Fuel[] = recipe.mFuel       
             fuels.forEach((fuel: any) => {
                 let fuelItem: Fuel = {
