@@ -12,25 +12,33 @@
                 placeholder="Factory Name"
               >
             </div>
-            <div>
-              <div v-if="factory.inSync" class="d-inline">
+            <div class="d-flex align-center">
+              <div v-if="factory.inSync">
                 <v-chip class="sf-chip small green no-margin" @click="changeSync(factory)">
                   <i class="fas fa-check-square" />
                   <span class="ml-2">In sync with game</span>
                 </v-chip>
               </div>
-              <div v-if="factory.inSync === false" class="d-inline">
+              <div v-if="factory.inSync === false">
                 <v-chip class="sf-chip small orange no-margin" @click="changeSync(factory)">
                   <i class="fas fa-times-square" />
                   <span class="ml-2">Needs updating in game</span>
                 </v-chip>
               </div>
-              <div v-if="factory.inSync === null" class="d-inline">
+              <div v-if="factory.inSync === null">
                 <v-chip class="border border-gray border-dashed" @click="changeSync(factory)">
                   <i class="fas fa-question" />
                   <span class="ml-2">Mark as in sync with game</span>
                 </v-chip>
               </div>
+              <v-tooltip right>
+                <template #activator="{ props }">
+                  <div class="ml-2 text-grey" v-bind="props">
+                    <i class="fas fa-info-circle" />
+                  </div>
+                </template>
+                <span>Game Sync is when you have implemented the factory into your game.<br> When it drops out of sync, there are changes that you need to implement.</span>
+              </v-tooltip>
             </div>
           </v-col>
           <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
