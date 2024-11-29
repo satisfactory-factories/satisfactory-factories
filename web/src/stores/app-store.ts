@@ -143,6 +143,8 @@ export const useAppStore = defineStore('app', () => {
       return true
     }
 
+    console.log('DEBUG MODE', route.query.debug, !!route.query.debug)
+
     return !!route.query.debug
   }
 
