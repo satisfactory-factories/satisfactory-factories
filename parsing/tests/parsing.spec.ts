@@ -32,7 +32,7 @@ describe('common', () => {
             //act
 
             //assert
-            expect(results.recipes.length).toBe(308);
+            expect(results.recipes.length).toBe(291);
         })
 
 
@@ -240,7 +240,7 @@ describe('common', () => {
 
         it('validate a biomass power generation recipe (solid biomass)', () => {
             //arrange
-            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Biofuel');
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Biofuel');
 
             //act
 
@@ -260,7 +260,7 @@ describe('common', () => {
 
         it('validate a nuclear power generation recipe (Uranium Fuel Rod)', () => {
             //arrange
-            const recipe : Recipe = results.recipes.find((item: { id: string; }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
 
             //act
 

@@ -95,11 +95,16 @@ async function processFile(
         removeRubbishItems(items, recipes);
         fixTurbofuel(items, recipes);
 
-        const powerGenerationRecipes: any[] = getPowerGeneratingRecipes(data, items);
+        //IMPORTANT: The order here matters - don't run this because fixing the turbofuel. 
+        let powerGenerationRecipes: any[] = getPowerGeneratingRecipes(data, items);
     
-        // merge the powerGenerationRecipes with the recipes
-        recipes.push(...powerGenerationRecipes);
-        recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+        // merge the powerGenerationRecipes with the recipes, if this feature flad is on
+        const mergePowerGenerationInRecipes: boolean = false;
+        if (mergePowerGenerationInRecipes) {
+            recipes.push(...powerGenerationRecipes);
+            recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+            powerGenerationRecipes = [];
+        }
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
@@ -113,7 +118,7 @@ async function processFile(
             buildings,
             items,
             recipes,
-            powerGenerationRecipes: []
+            powerGenerationRecipes
         };
 
         // Write the output to the file
