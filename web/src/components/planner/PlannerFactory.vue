@@ -3,13 +3,35 @@
     <v-col>
       <v-card :id="factory.id" :class="factoryClass(factory)">
         <v-row class="header">
-          <v-col class="text-h5 text-md-h4 flex-grow-1" cols="auto" md="8">
-            <i class="fas fa-industry" />
-            <input
-              v-model="factory.name"
-              class="ml-3 pl-0 factory-name"
-              placeholder="Factory Name"
-            >
+          <v-col class="flex-grow-1" cols="auto" md="8">
+            <div class="text-h6 text-md-h5">
+              <i class="fas fa-industry" />
+              <input
+                v-model="factory.name"
+                class="ml-3 pl-0 factory-name"
+                placeholder="Factory Name"
+              >
+            </div>
+            <div>
+              <div v-if="factory.inSync" class="d-inline">
+                <v-chip class="sf-chip small green no-margin" @click="changeSync(factory)">
+                  <i class="fas fa-check-square" />
+                  <span class="ml-2">In sync with game</span>
+                </v-chip>
+              </div>
+              <div v-if="factory.inSync === false" class="d-inline">
+                <v-chip class="sf-chip small orange no-margin" @click="changeSync(factory)">
+                  <i class="fas fa-times-square" />
+                  <span class="ml-2">Needs updating in game</span>
+                </v-chip>
+              </div>
+              <div v-if="factory.inSync === null" class="d-inline">
+                <v-chip class="border border-gray border-dashed" @click="changeSync(factory)">
+                  <i class="fas fa-question" />
+                  <span class="ml-2">Mark as in sync with game</span>
+                </v-chip>
+              </div>
+            </div>
           </v-col>
           <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
             <factory-debug :is-compact="smAndDown" :subject="factory" subject-type="Factory" />
@@ -249,6 +271,7 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
+      needsSync: factory.inSync !== null ? !factory.inSync : false,
     }
   }
 
@@ -317,6 +340,10 @@
     }
 
     return factory.dependencies?.metrics[part] ?? {}
+  }
+
+  const changeSync = (factory: Factory) => {
+    factory.inSync = !factory.inSync
   }
 
   provide('fixProduction', fixProduction)

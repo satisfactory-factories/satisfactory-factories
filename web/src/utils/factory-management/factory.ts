@@ -61,6 +61,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     usingRawResourcesOnly: false,
     hidden: false,
     hasProblem: false,
+    inSync: null,
     displayOrder: -1, // this will get set by the planner
   }
 }
