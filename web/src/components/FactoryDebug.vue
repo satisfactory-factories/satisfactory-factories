@@ -28,7 +28,7 @@
         <v-card-text>
           <pre>
 {{ subject }}
-                    </pre>
+          </pre>
         </v-card-text>
         <v-card-actions class="sticky">
           <v-btn
