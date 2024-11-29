@@ -1,8 +1,11 @@
 import { beforeAll, describe, expect, it, test } from '@jest/globals'
-
 import { processFile } from '../src/processor'
+import { Part } from '../src/interfaces/Part'
 import { Recipe } from '../src/interfaces/Recipe'
 
+
+
+// TODO: break this into smaller files, this is getting too big.
 describe('common', () => {
     let results: any;
 
@@ -24,6 +27,21 @@ describe('common', () => {
 
             //assert
             expect(Object.keys(results.items.parts).length).toBe(168);
+        })
+
+        test('iron plate part test', async () => {
+            //arrange
+            const part : Part = results.items.parts["IronPlate"];
+
+            //act
+
+            //assert
+            expect(part).toBeDefined();
+            expect(part.name).toBe('Iron Plate');
+            expect(part.stackSize).toBe(200);
+            expect(part.isFluid).toBe(false);
+            expect(part.isFicsmas).toBe(false);
+            expect(part.energyGeneratedInMJ).toBe(0);
         })
 
         test('recipe test', () => {
