@@ -1,5 +1,5 @@
 import {Recipe} from "./interfaces/Recipe";
-import {Part,PartDataInterface,RawResource} from "./interfaces/Part";
+import {Part, PartDataInterface, RawResource} from "./interfaces/Part";
 import {
   blacklist,
   whitelist,
@@ -213,7 +213,7 @@ function getItems(data: any[]): PartDataInterface {
                 // Extract stack size
                 const stackSize: number = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
                 // Extract the energy value
-                const energyValue: number = classDescriptor?.mEnergyValue;
+                const energyValue: number = classDescriptor.mEnergyValue ?? 0;
 
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {
@@ -298,7 +298,7 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
         .filter((entry: any) => entry.NativeClass === "/Script/CoreUObject.Class'/Script/FactoryGame.FGResourceDescriptor'")
         .flatMap((entry: any) => entry.Classes)
         .forEach((resource: any) => {
-            const className: string = getPartName(resource.ClassName);
+            const className = getPartName(resource.ClassName);
             const displayName: string = resource.mDisplayName;
 
             const data = {
@@ -314,17 +314,17 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
     // Manually add "Leaves" and "Wood" to the rawResources list
     rawResources["Leaves"] = {
         name: "Leaves",
-        limit: limits["Leaves"] || 100000
+        limit: limits["Leaves"] || 100000000  
     };
 
     rawResources["Wood"] = {
         name: "Wood",
-        limit: limits["Wood"] || 100000
+        limit: limits["Wood"] || 100000000  
     };
 
     rawResources["Mycelia"] = {
         name: "Mycelia",
-        limit: limits["Mycelia"] || 100000
+        limit: limits["Mycelia"] || 100000000  
     };
 
     return rawResources;

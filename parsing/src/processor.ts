@@ -3,11 +3,11 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as iconv from 'iconv-lite';
 
-import {Recipe} from "./interfaces/Recipe";
-import {Part,PartDataInterface} from "./interfaces/Part";
-import {getItems,fixItemNames,fixTurbofuel} from './parts';
-import {getProductionRecipes,getPowerGeneratingRecipes} from './recipes';
-import {getProducingBuildings,getPowerConsumptionForBuildings} from './buildings';
+import {Recipe, PowerGenerationRecipe} from "./interfaces/Recipe";
+import {Part, PartDataInterface} from "./interfaces/Part";
+import {getItems, fixItemNames, fixTurbofuel} from './parts';
+import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
+import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -73,9 +73,9 @@ async function processFile(
                                         [key: string]: number }; 
                                         items: PartDataInterface; 
                                         recipes: Recipe[],
-                                        powerGenerationRecipes: Recipe[]; 
+                                        powerGenerationRecipes: PowerGenerationRecipe[]; 
                                     } | undefined> {
-    // try {
+    try {
         const fileContent = await readFileAsUtf8(inputFile);
         const cleanedContent = cleanInput(fileContent);
         const data = JSON.parse(cleanedContent);
@@ -96,10 +96,10 @@ async function processFile(
         fixTurbofuel(items, recipes);
 
         //IMPORTANT: The order here matters - don't run this because fixing the turbofuel. 
-        let powerGenerationRecipes: any[] = getPowerGeneratingRecipes(data, items);
+        let powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
     
-        // merge the powerGenerationRecipes with the recipes, if this feature flad is on
-        const mergePowerGenerationInRecipes: boolean = false;
+        // merge the powerGenerationRecipes with the recipes, if this feature flag is on
+        const mergePowerGenerationInRecipes = false;
         if (mergePowerGenerationInRecipes) {
             recipes.push(...powerGenerationRecipes);
             recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -126,13 +126,13 @@ async function processFile(
         console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
 
         return finalData;
-    // } catch (error) {
-    //     if (error instanceof Error) {
-    //         console.error(`Error processing file: ${error.message}`);
-    //     } else {
-    //         console.error(`Error processing file: ${error}`);
-    //     }
-    // }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`Error processing file: ${error.message}`);
+        } else {
+            console.error(`Error processing file: ${error}`);
+        }
+    }
 }
 
 // Export processFile for use

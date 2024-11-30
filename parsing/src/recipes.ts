@@ -72,7 +72,7 @@ function getProductionRecipes(
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
-                const perMin: number = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+                const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                 products.push({
                     part: productName,
@@ -272,4 +272,4 @@ function getPowerGeneratingRecipes(
 }
 
 // Export getRecipes for use
-export {getProductionRecipes,getPowerGeneratingRecipes}
+export {getProductionRecipes, getPowerGeneratingRecipes}
