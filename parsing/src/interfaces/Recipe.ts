@@ -24,8 +24,8 @@ export interface Recipe {
 export interface PowerGenerationRecipe {
   id: string;
   displayName: string;
-  ingredients: RecipeItem[];
-  products: RecipeItem[];
+  ingredients: Ingredient[];
+  products: Product[];
   building: Building;
 }
 
