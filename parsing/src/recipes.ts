@@ -1,12 +1,20 @@
-import {Building, Recipe} from "./interfaces/Recipe";
-import {blacklist,isFluid,isFicsmas} from "./common";
+import {Building, Recipe, Ingredient, Product, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
+import {
+    blacklist, 
+    isFluid, 
+    isFicsmas, 
+    getRecipeName, 
+    getPartName, 
+    getFriendlyName
+} from "./common";
+import {PartDataInterface, Part} from "./interfaces/Part";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
-function getRecipes(
+function getProductionRecipes(
     data: any[],
     producingBuildings: { [key: string]: number }
 ): Recipe[] {
-    const recipes: any[] = [];
+    const recipes: Recipe[] = [];
 
     data
         .filter((entry: any) => entry.Classes)
@@ -25,7 +33,7 @@ function getRecipes(
             }
             // Process all buildings and check if any match the producingBuildings map
             const validBuilding = rawBuildingKeys.some((rawBuilding: string) => {
-                const buildingKey = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
+                const buildingKey: string = rawBuilding.replace(/\//g, '').replace(/\./g, '').toLowerCase().replace('build_', '');
                 return producingBuildings[buildingKey];
             })
 
@@ -39,14 +47,12 @@ function getRecipes(
                     ?.map((ingredientStr: string) => {
                         const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
                         if (match) {
-                            const partName = match[1];
+                            const partName: string = match[1];
                             let amount = parseInt(match[2], 10);
-
                             if (isFluid(partName)) {
                                 amount = amount / 1000;
                             }
-
-                            const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
+                            const perMin: number = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                             return {
                                 part: partName,
@@ -68,13 +74,11 @@ function getRecipes(
 
             const products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
-                const productName = match[1];
+                const productName: string = match[1];
                 let amount = parseInt(match[2], 10);
-
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
-
                 const perMin = recipe.mManufactoringDuration && amount > 0 ? (60 / parseFloat(recipe.mManufactoringDuration)) * amount : 0;
 
                 products.push({
@@ -101,7 +105,7 @@ function getRecipes(
                 // Sum up power for all valid buildings
                 powerPerBuilding = validBuildings.reduce((totalPower: number, building: string | number) => {
                     if (producingBuildings[building]) {
-                        const buildingPower = producingBuildings[building]
+                        const buildingPower: number = producingBuildings[building]
                         selectedBuilding = selectedBuilding || building; // Set the first valid building as selected
                         return totalPower + buildingPower; // Add power for this building
                     }
@@ -142,32 +146,132 @@ function getRecipes(
                 products,
                 building,
                 isAlternate: recipe.mDisplayName.includes("Alternate"),
-                isFicsmas: isFicsmas(recipe.mDisplayName)
+                isFicsmas: isFicsmas(recipe.mDisplayName),
             });
         });
 
-    // Manually add Nuclear waste recipes
-    recipes.push({
-        id: "NuclearWaste",
-        displayName: "Uranium Waste",
-        ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
-        products: [{ part: "NuclearWaste", amount: 1, perMin: 10 }],
-        building: { name: "nuclearpowerplant", power: 0 },
-        isAlternate: false,
-        isFicsmas: false
-    });
-    recipes.push({
-        id: "PlutoniumWaste",
-        displayName: "Plutonium Waste",
-        ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
-        products: [{ part: "PlutoniumWaste", amount: 1, perMin: 1 }],
-        building: { name: "nuclearpowerplant", power: 0 },
-        isAlternate: false,
-        isFicsmas: false
-    });
+    // // Manually add Nuclear waste recipes
+    // recipes.push({
+    //     id: "NuclearWaste",
+    //     displayName: "Uranium Waste",
+    //     ingredients: [{ part: 'NuclearFuelRod', amount: 1, perMin: 0.2 }, { part: 'Water', amount: 1200, perMin: 240 }],
+    //     products: [{ part: "NuclearWaste", amount: 1, perMin: 10 }],
+    //     building: { name: "nuclearpowerplant", power: 2500 },
+    //     isAlternate: false,
+    //     isFicsmas: false,
+    // });
+    // recipes.push({
+    //     id: "PlutoniumWaste",
+    //     displayName: "Plutonium Waste",
+    //     ingredients: [{ part: 'PlutoniumFuelRod', amount: 1, perMin: 0.1 }, { part: 'Water', amount: 2400, perMin: 240 }],
+    //     products: [{ part: "PlutoniumWaste", amount: 1, perMin: 1 }],
+    //     building: { name: "nuclearpowerplant", power: 2500 },
+    //     isAlternate: false,
+    //     isFicsmas: false,
+    // });
+
+    return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
+}
+
+function getPowerGeneratingRecipes(
+    data: any[],
+    parts: PartDataInterface
+): PowerGenerationRecipe[] {
+
+    const recipes: any[] = [];
+
+    data
+        .filter((entry: any) => entry.Classes)
+        .flatMap((entry: any) => entry.Classes)
+        .filter((recipe: any) => {
+            
+            // Filter out recipes that don't have a fuel component
+            if (!recipe.mFuel)  { 
+                return false; 
+            } else {
+                return true;
+            }
+
+        })
+        .forEach((recipe: any) => {
+             
+            let building : Building = {
+                name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
+                power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
+            };   
+            let supplementalRatio = Number(recipe.mSupplementalToPowerRatio);
+            // 1. Generator MW generated. This is an hourly value.
+            // 2. Divide by 60, to get the minute value
+            // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
+            // 4. Now divide this number by the part energy to calculate how many pieces per min
+            const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600);
+
+            const fuels: Fuel[] = Array.isArray(recipe.mFuel) ? recipe.mFuel as Fuel[] : [];       
+            fuels.forEach((fuel: any) => {
+                let fuelItem: Fuel = {
+                    primaryFuel: getPartName(fuel.mFuelClass),
+                    supplementalResource: fuel.mSupplementalResourceClass ? getPartName(fuel.mSupplementalResourceClass) : "",
+                    byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : "",
+                    byProductAmount: fuel.mByproductAmount ? Number(fuel.mByproductAmount) : 0
+                };
+
+                //Find the part for the primary fuel
+                let extractedPartText = getPartName(fuelItem.primaryFuel);
+                const primaryFuelPart = parts.parts[extractedPartText];
+                let primaryPerMin = 0; 
+                if (primaryFuelPart.energyGeneratedInMJ > 0) {
+                    // The rounding here is important to remove floating point errors that appear with some types 
+                    // (this is step 4 from above)
+                    primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
+                };
+                let primaryAmount = 0;
+                if (primaryPerMin > 0) {                        
+                    primaryAmount = primaryPerMin / 60;
+
+                    const ingredients: Ingredient[] = [];
+                    ingredients.push(
+                        { 
+                            part: fuelItem.primaryFuel,
+                            amount: primaryAmount,
+                            perMin: primaryPerMin
+                        }
+                    )
+                    if (fuelItem.supplementalResource && supplementalRatio > 0) {
+                        ingredients.push(
+                            { 
+                                part: fuelItem.supplementalResource,
+                                amount: (3 / 50) * supplementalRatio * building.power / 60,
+                                perMin: (3 / 50) * supplementalRatio * building.power // Calculate the ratio of the supplemental resource to the primary fuel
+                            }
+                        )
+                    }
+                    
+                    const products: Product[] = [];
+                    if (fuelItem.byProduct) {
+                        products.push(
+                            {
+                                part: fuelItem.byProduct,
+                                amount: fuelItem.byProductAmount/60,
+                                perMin: fuelItem.byProductAmount,
+                                isByProduct: true
+                            }
+                        );
+                    }
+
+                    recipes.push({
+                        id: getRecipeName(recipe.ClassName) +'_'+ fuelItem.primaryFuel,
+                        displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
+                        ingredients,
+                        products,
+                        building
+                    });  
+                }
+            });
+        
+        });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
 // Export getRecipes for use
-export {getRecipes}
+export {getProductionRecipes, getPowerGeneratingRecipes}

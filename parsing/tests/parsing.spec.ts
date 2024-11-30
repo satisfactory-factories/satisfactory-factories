@@ -1,8 +1,11 @@
 import { beforeAll, describe, expect, it, test } from '@jest/globals'
-
 import { processFile } from '../src/processor'
+import { Part } from '../src/interfaces/Part'
 import { Recipe } from '../src/interfaces/Recipe'
 
+
+
+// TODO: break this into smaller files, this is getting too big.
 describe('common', () => {
     let results: any;
 
@@ -26,13 +29,28 @@ describe('common', () => {
             expect(Object.keys(results.items.parts).length).toBe(168);
         })
 
+        test('iron plate part test', async () => {
+            //arrange
+            const part : Part = results.items.parts["IronPlate"];
+
+            //act
+
+            //assert
+            expect(part).toBeDefined();
+            expect(part.name).toBe('Iron Plate');
+            expect(part.stackSize).toBe(200);
+            expect(part.isFluid).toBe(false);
+            expect(part.isFicsmas).toBe(false);
+            expect(part.energyGeneratedInMJ).toBe(0);
+        })
+
         test('recipe test', () => {
             //arrange
 
             //act
 
             //assert
-            expect(results.recipes.length).toBe(293);
+            expect(results.recipes.length).toBe(291);
         })
 
 
@@ -236,5 +254,69 @@ describe('common', () => {
             expect(recipe.building.maxPower).toBe(2000);
             expect(recipe.isAlternate).toBe(false);
         });
+
+
+        it('validate a biomass power generation recipe (solid biomass)', () => {
+            //arrange
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Biofuel');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Biomass Burner (Solid Biofuel)');
+            expect(recipe.ingredients.length).toBe(1);
+            expect(recipe.ingredients[0].part).toBe('Biofuel');
+            expect(recipe.ingredients[0].amount).toBe(0.06666666666666667);
+            expect(recipe.ingredients[0].perMin).toBe(4);
+            expect(recipe.products.length).toBe(0);
+            expect(recipe.building.name).toBe('BiomassBurner');
+            expect(recipe.building.power).toBe(30);
+        });
+
+        
+        it('validate a biomass power generation recipe (wood)', () => {
+            //arrange
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Wood');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Biomass Burner (Wood)');
+            expect(recipe.ingredients.length).toBe(1);
+            expect(recipe.ingredients[0].part).toBe('Wood');
+            expect(recipe.ingredients[0].amount).toBe(0.3);
+            expect(recipe.ingredients[0].perMin).toBe(18);
+            expect(recipe.products.length).toBe(0);
+            expect(recipe.building.name).toBe('BiomassBurner');
+            expect(recipe.building.power).toBe(30);
+        });
+
+        it('validate a nuclear power generation recipe (Uranium Fuel Rod)', () => {
+            //arrange
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Nuclear Power Plant (Uranium Fuel Rod)');
+            expect(recipe.ingredients.length).toBe(2);
+            expect(recipe.ingredients[0].part).toBe('NuclearFuelRod');
+            expect(recipe.ingredients[0].amount).toBe(0.2/60);
+            expect(recipe.ingredients[0].perMin).toBe(0.2);
+            expect(recipe.ingredients[1].part).toBe('Water');
+            expect(recipe.ingredients[1].amount).toBe(4);
+            expect(recipe.ingredients[1].perMin).toBe(240);
+            expect(recipe.products.length).toBe(1);
+            expect(recipe.products[0].part).toBe('NuclearWaste');
+            expect(recipe.products[0].amount).toBe(0.8333333333333334);
+            expect(recipe.products[0].perMin).toBe(50);
+            expect(recipe.products[0].isByProduct).toBe(true);
+            expect(recipe.building.name).toBe('NuclearPowerPlant');
+            expect(recipe.building.power).toBe(2500);
+        });
+
     })
 })

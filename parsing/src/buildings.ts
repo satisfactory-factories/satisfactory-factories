@@ -41,7 +41,7 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
         .forEach((building: any) => {
             if (building.ClassName && building.mPowerConsumption) {
                 // Normalize the building name by removing "_C" and lowercasing it
-                let buildingName = building.ClassName.replace(/_C$/, '').toLowerCase();
+                let buildingName: string = building.ClassName.replace(/_C$/, '').toLowerCase();
                 buildingName = buildingName.startsWith('build_') ? buildingName.replace('build_', '') : buildingName;
 
                 // Only include power data if the building is in the producingBuildings list
