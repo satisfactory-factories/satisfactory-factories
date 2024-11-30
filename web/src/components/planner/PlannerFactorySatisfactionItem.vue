@@ -12,7 +12,7 @@
       <p v-if="reactivePart.satisfied">
         <v-icon icon="fas fa-check" />
         <span class="ml-2">
-          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }}/min
+          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }} /min
         </span>
       </p>
       <p v-else>
