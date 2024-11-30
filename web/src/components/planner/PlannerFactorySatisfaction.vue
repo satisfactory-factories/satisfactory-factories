@@ -34,7 +34,7 @@
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <template v-for="(chunk, chunkIndex) in satisfactionDisplay" :key="'chunk-' + chunkIndex">
+            <template v-for="(chunk, ,) in satisfactionDisplay">
               <v-row class="border-b-md">
                 <template v-for="([partId, part], index) in chunk" :key="partId">
                   <v-col
