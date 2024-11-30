@@ -138,7 +138,6 @@
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
         <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports able to supply this factory.)</span>
       </div>
-
     </div>
     <p v-else class="text-body-1">Awaiting product selection.</p>
   </div>
