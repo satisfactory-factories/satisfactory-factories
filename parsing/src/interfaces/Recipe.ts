@@ -13,7 +13,14 @@ export interface Recipe {
   building: Building;
   isAlternate: boolean;
   isFicsmas: boolean;
-  isPowerGenerator: boolean;
+}
+
+export interface PowerGenerationRecipe {
+  id: string;
+  displayName: string;
+  ingredients: RecipeItem[];
+  products: RecipeItem[];
+  building: Building;
 }
 
 export interface Fuel {

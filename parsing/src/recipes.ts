@@ -1,4 +1,4 @@
-import {Building, Recipe, Fuel} from "./interfaces/Recipe";
+import {Building, Recipe, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
 import {blacklist, isFluid, isFicsmas, getRecipeName, getPartName, getFriendlyName} from "./common";
 import {PartDataInterface, Part} from "./interfaces/Part";
 
@@ -140,7 +140,6 @@ function getProductionRecipes(
                 building,
                 isAlternate: recipe.mDisplayName.includes("Alternate"),
                 isFicsmas: isFicsmas(recipe.mDisplayName),
-                isPowerGenerator: false
             });
         });
 
@@ -172,7 +171,7 @@ function getProductionRecipes(
 function getPowerGeneratingRecipes(
     data: any[],
     parts: PartDataInterface
-): Recipe[] {
+): PowerGenerationRecipe[] {
 
     const recipes: any[] = [];
 

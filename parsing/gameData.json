@@ -1286,8 +1286,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "SpaceElevatorPart_5",
@@ -1327,8 +1326,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_12",
@@ -1376,8 +1374,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AILimiter",
@@ -1407,8 +1404,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AluminumSheet",
@@ -1438,8 +1434,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AlienDNACapsule",
@@ -1464,8 +1459,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AlienPowerFuel",
@@ -1513,8 +1507,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AdheredIronPlate",
@@ -1544,8 +1537,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AlcladCasing",
@@ -1575,8 +1567,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelBeam_Aluminum",
@@ -1601,8 +1592,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AluminumRod",
@@ -1627,8 +1617,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AutomatedMiner",
@@ -1658,8 +1647,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HighSpeedWiring",
@@ -1694,8 +1682,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IronIngot_Basic",
@@ -1725,8 +1712,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Coal_2",
@@ -1751,8 +1737,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_BoltedFrame",
@@ -1782,8 +1767,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ReinforcedIronPlate_1",
@@ -1813,8 +1797,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Screw",
@@ -1839,8 +1822,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CircuitBoard_2",
@@ -1870,8 +1852,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Computer_1",
@@ -1906,8 +1887,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Wire_2",
@@ -1932,8 +1912,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Coal_1",
@@ -1958,8 +1937,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Silica",
@@ -1989,8 +1967,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ClassicBattery",
@@ -2030,8 +2007,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Cloudy",
@@ -2063,8 +2039,7 @@
                 "maxPower": 500
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedCable",
@@ -2094,8 +2069,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedIronCanister",
@@ -2125,8 +2099,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoatedIronPlate",
@@ -2156,8 +2129,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CokeSteelIngot",
@@ -2187,8 +2159,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_EnrichedCoal",
@@ -2218,8 +2189,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotSteel_2",
@@ -2249,8 +2219,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CoolingDevice",
@@ -2285,8 +2254,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperAlloyIngot",
@@ -2316,8 +2284,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperRotor",
@@ -2347,8 +2314,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Computer_2",
@@ -2378,8 +2344,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DarkMatter_Crystallization",
@@ -2406,8 +2371,7 @@
                 "maxPower": 1000
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DarkMatter_Trap",
@@ -2439,8 +2403,7 @@
                 "maxPower": 1000
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IonizedFuel_Dark",
@@ -2478,8 +2441,7 @@
                 "maxPower": 300
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DilutedFuel",
@@ -2509,8 +2471,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_DilutedPackagedFuel",
@@ -2540,8 +2501,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Silica_Distilled",
@@ -2582,8 +2542,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectricMotor",
@@ -2613,8 +2572,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectroAluminumScrap",
@@ -2650,8 +2608,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectrodeCircuitBoard",
@@ -2681,8 +2638,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ElectromagneticControlRod_1",
@@ -2712,8 +2668,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_EncasedIndustrialBeam",
@@ -2743,8 +2698,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FertileUranium",
@@ -2790,8 +2744,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Gunpowder_1",
@@ -2821,8 +2774,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Concrete",
@@ -2852,8 +2804,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FlexibleFramework",
@@ -2888,8 +2839,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quartz_Fused",
@@ -2919,8 +2869,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quickwire",
@@ -2950,8 +2899,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_FusedWire",
@@ -2981,8 +2929,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeatSink_1",
@@ -3012,8 +2959,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeatFusedFrame",
@@ -3053,8 +2999,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ModularFrameHeavy",
@@ -3094,8 +3039,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeavyFlexibleFrame",
@@ -3135,8 +3079,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HeavyOilResidue",
@@ -3167,8 +3110,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_UraniumCell_1",
@@ -3208,8 +3150,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_InstantPlutoniumCell",
@@ -3241,8 +3182,7 @@
                 "maxPower": 500
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_InstantScrap",
@@ -3288,8 +3228,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Cable_1",
@@ -3319,8 +3258,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CrystalOscillator",
@@ -3355,8 +3293,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotIron",
@@ -3386,8 +3323,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelPipe_Iron",
@@ -3412,8 +3348,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Wire_1",
@@ -3438,8 +3373,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CateriumIngot_Leached",
@@ -3469,8 +3403,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperIngot_Leached",
@@ -3500,8 +3433,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IronIngot_Leached",
@@ -3531,8 +3463,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelBeam_Molded",
@@ -3562,8 +3493,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelPipe_Molded",
@@ -3593,8 +3523,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RocketFuel_Nitro",
@@ -3640,8 +3569,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_OCSupercomputer",
@@ -3671,8 +3599,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_OilBased",
@@ -3699,8 +3626,7 @@
                 "maxPower": 500
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Petroleum",
@@ -3727,8 +3653,7 @@
                 "maxPower": 500
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Pink",
@@ -3760,8 +3685,7 @@
                 "maxPower": 300
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_AILimiter_Plastic",
@@ -3791,8 +3715,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PlasticSmartPlating",
@@ -3827,8 +3750,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PlutoniumFuelUnit",
@@ -3858,8 +3780,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PolyesterFabric",
@@ -3889,8 +3810,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PolymerResin",
@@ -3921,8 +3841,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PureAluminumIngot",
@@ -3947,8 +3866,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureCateriumIngot",
@@ -3978,8 +3896,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureCopperIngot",
@@ -4009,8 +3926,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureIronIngot",
@@ -4040,8 +3956,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_PureQuartzCrystal",
@@ -4071,8 +3986,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Quartz_Purified",
@@ -4108,8 +4022,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Cable_2",
@@ -4139,8 +4052,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Stator",
@@ -4170,8 +4082,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RadioControlUnit_1",
@@ -4206,8 +4117,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RadioControlSystem",
@@ -4247,8 +4157,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Plastic_1",
@@ -4278,8 +4187,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RecycledRubber",
@@ -4309,8 +4217,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Motor_1",
@@ -4345,8 +4252,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_RubberConcrete",
@@ -4376,8 +4282,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CircuitBoard_1",
@@ -4407,8 +4312,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_HighSpeedConnector",
@@ -4443,8 +4347,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SloppyAlumina",
@@ -4474,8 +4377,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_IngotSteel_1",
@@ -4505,8 +4407,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteamedCopperSheet",
@@ -4536,8 +4437,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelCanister",
@@ -4562,8 +4462,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelCastedPlate",
@@ -4593,8 +4492,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SteelRod",
@@ -4619,8 +4517,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Rotor",
@@ -4650,8 +4547,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Screw_2",
@@ -4676,8 +4572,7 @@
                 "power": 4
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ModularFrame",
@@ -4707,8 +4602,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_ReinforcedIronPlate_2",
@@ -4738,8 +4632,7 @@
                 "power": 15
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_SuperStateComputer",
@@ -4779,8 +4672,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CateriumIngot_Tempered",
@@ -4810,8 +4702,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_CopperIngot_Tempered",
@@ -4841,8 +4732,7 @@
                 "power": 16
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboBlendFuel",
@@ -4882,8 +4772,7 @@
                 "power": 75
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Diamond_Turbo",
@@ -4915,8 +4804,7 @@
                 "maxPower": 500
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboMotor_1",
@@ -4956,8 +4844,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboHeavyFuel",
@@ -4987,8 +4874,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_TurboPressureMotor",
@@ -5028,8 +4914,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_NuclearFuelRod_1",
@@ -5069,8 +4954,7 @@
                 "power": 55
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_WetConcrete",
@@ -5100,8 +4984,7 @@
                 "power": 30
             },
             "isAlternate": true,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AluminaSolution",
@@ -5137,8 +5020,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AluminumCasing",
@@ -5163,8 +5045,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IngotAluminum",
@@ -5194,8 +5075,7 @@
                 "power": 16
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "AluminumScrap",
@@ -5231,8 +5111,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_7",
@@ -5262,8 +5141,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_3",
@@ -5293,8 +5171,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_11",
@@ -5334,8 +5211,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Battery",
@@ -5376,8 +5252,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Bauxite_Caterium",
@@ -5409,8 +5284,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Bauxite_Copper",
@@ -5442,8 +5316,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_10",
@@ -5478,8 +5351,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Biomass_AlienProtein",
@@ -5504,8 +5376,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Leaves",
@@ -5530,8 +5401,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Mycelia",
@@ -5556,8 +5426,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Biomass_Wood",
@@ -5582,8 +5451,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Gunpowder",
@@ -5613,8 +5481,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "XmasBall2",
@@ -5639,8 +5506,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "Cable",
@@ -5665,8 +5531,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CandyCane",
@@ -5691,8 +5556,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "IngotCaterium",
@@ -5717,8 +5581,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Caterium_Copper",
@@ -5750,8 +5613,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Caterium_Quartz",
@@ -5783,8 +5645,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CircuitBoard",
@@ -5814,8 +5675,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NobeliskCluster",
@@ -5845,8 +5705,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Coal_Iron",
@@ -5878,8 +5737,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Coal_Limestone",
@@ -5911,8 +5769,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Computer",
@@ -5947,8 +5804,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Concrete",
@@ -5973,8 +5829,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CoolingSystem",
@@ -6014,8 +5869,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "XmasBall3",
@@ -6045,8 +5899,7 @@
                 "power": 16
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "IngotCopper",
@@ -6071,8 +5924,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Copper_Quartz",
@@ -6104,8 +5956,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Copper_Sulfur",
@@ -6137,8 +5988,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CopperDust",
@@ -6163,8 +6013,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CopperSheet",
@@ -6189,8 +6038,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CrystalOscillator",
@@ -6225,8 +6073,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "DarkMatter",
@@ -6258,8 +6105,7 @@
                 "maxPower": 1000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "DarkEnergy",
@@ -6286,8 +6132,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Diamond",
@@ -6314,8 +6159,7 @@
                 "maxPower": 500
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ElectromagneticControlRod",
@@ -6345,8 +6189,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FluidCanister",
@@ -6371,8 +6214,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "GasTank",
@@ -6397,8 +6239,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "EncasedIndustrialBeam",
@@ -6428,8 +6269,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PlutoniumCell",
@@ -6459,8 +6299,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UraniumCell",
@@ -6501,8 +6340,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "QuantumEnergy",
@@ -6523,8 +6361,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Explosive",
@@ -6559,8 +6396,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Fabric",
@@ -6590,8 +6426,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Fireworks_02",
@@ -6621,8 +6456,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "FicsiteIngot_AL",
@@ -6654,8 +6488,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FicsiteIngot_CAT",
@@ -6687,8 +6520,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FicsiteIngot_Iron",
@@ -6720,8 +6552,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FicsiteMesh",
@@ -6746,8 +6577,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "XmasBow",
@@ -6772,8 +6602,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "XmasWreath",
@@ -6803,8 +6632,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "XmasBallCluster",
@@ -6834,8 +6662,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "XmasBranch",
@@ -6860,8 +6687,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "XmasStar",
@@ -6891,8 +6717,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "Ficsonium",
@@ -6929,8 +6754,7 @@
                 "maxPower": 1000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FicsoniumFuelRod",
@@ -6978,8 +6802,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "LiquidFuel",
@@ -7010,8 +6833,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FusedModularFrame",
@@ -7046,8 +6868,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FilterGasMask",
@@ -7082,8 +6903,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NobeliskGas",
@@ -7113,8 +6933,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Protein_Crab",
@@ -7139,8 +6958,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "HeatSink",
@@ -7170,8 +6988,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ModularFrameHeavy",
@@ -7211,8 +7028,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "HighSpeedConnector",
@@ -7247,8 +7063,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Protein_Hog",
@@ -7273,8 +7088,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CartridgeSmart",
@@ -7304,8 +7118,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "FilterHazmat",
@@ -7340,8 +7153,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IonizedFuel",
@@ -7377,8 +7189,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "XmasBall4",
@@ -7408,8 +7219,7 @@
                 "power": 16
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "IngotIron",
@@ -7434,8 +7244,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Iron_Limestone",
@@ -7467,8 +7276,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IronPlate",
@@ -7493,8 +7301,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpikedRebar",
@@ -7519,8 +7326,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IronRod",
@@ -7545,8 +7351,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Limestone_Sulfur",
@@ -7578,8 +7383,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "LiquidBiofuel",
@@ -7609,8 +7413,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_6",
@@ -7640,8 +7443,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_4",
@@ -7676,8 +7478,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ModularFrame",
@@ -7707,8 +7508,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Motor",
@@ -7738,8 +7538,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "TemporalProcessor",
@@ -7787,8 +7586,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NitricAcid",
@@ -7823,8 +7621,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Nitrogen_Bauxite",
@@ -7856,8 +7653,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Nitrogen_Caterium",
@@ -7889,8 +7685,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Nobelisk",
@@ -7920,8 +7715,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NonFissileUranium",
@@ -7967,8 +7761,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_9",
@@ -8000,8 +7793,7 @@
                 "maxPower": 1000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NobeliskNuke",
@@ -8041,8 +7833,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedAlumina",
@@ -8072,8 +7863,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Fuel",
@@ -8103,8 +7893,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedOilResidue",
@@ -8134,8 +7923,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedIonizedFuel",
@@ -8165,8 +7953,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedBiofuel",
@@ -8196,8 +7983,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedNitricAcid",
@@ -8227,8 +8013,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedNitrogen",
@@ -8258,8 +8043,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedCrudeOil",
@@ -8289,8 +8073,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedRocketFuel",
@@ -8320,8 +8103,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedSulfuricAcid",
@@ -8351,8 +8133,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedTurboFuel",
@@ -8382,8 +8163,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PackagedWater",
@@ -8413,8 +8193,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PetroleumCoke",
@@ -8439,8 +8218,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Plastic",
@@ -8471,8 +8249,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PlutoniumFuelRod",
@@ -8512,8 +8289,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Plutonium",
@@ -8545,8 +8321,7 @@
                 "maxPower": 500
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_1",
@@ -8571,8 +8346,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_2",
@@ -8597,8 +8371,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PowerCrystalShard_3",
@@ -8623,8 +8396,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "PressureConversionCube",
@@ -8654,8 +8426,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NobeliskShockwave",
@@ -8685,8 +8456,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "QuartzCrystal",
@@ -8711,8 +8481,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Quickwire",
@@ -8737,8 +8506,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "RadioControlUnit",
@@ -8773,8 +8541,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Quartz_Bauxite",
@@ -8806,8 +8573,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Quartz_Coal",
@@ -8839,8 +8605,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IngotSAM",
@@ -8865,8 +8630,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "XmasBall1",
@@ -8891,8 +8655,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "IronPlateReinforced",
@@ -8922,8 +8685,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ResidualFuel",
@@ -8948,8 +8710,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ResidualPlastic",
@@ -8979,8 +8740,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ResidualRubber",
@@ -9010,8 +8770,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Cartridge",
@@ -9041,8 +8800,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "RocketFuel",
@@ -9078,8 +8836,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Rotor",
@@ -9109,8 +8866,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Rubber",
@@ -9141,8 +8897,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SAMFluctuator",
@@ -9177,8 +8932,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Screw",
@@ -9203,8 +8957,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Spreadshot",
@@ -9234,8 +8987,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Silica",
@@ -9260,8 +9012,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SingularityCell",
@@ -9301,8 +9052,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_1",
@@ -9332,8 +9082,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "GunpowderMK2",
@@ -9363,8 +9112,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Snowball",
@@ -9389,8 +9137,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "Biofuel",
@@ -9415,8 +9162,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Fireworks_03",
@@ -9446,8 +9192,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "Protein_Spitter",
@@ -9472,8 +9217,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Stator",
@@ -9503,8 +9247,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SteelBeam",
@@ -9529,8 +9272,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "IngotSteel",
@@ -9560,8 +9302,7 @@
                 "power": 16
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SteelPipe",
@@ -9586,8 +9327,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Protein_Stinger",
@@ -9612,8 +9352,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Rebar_Stunshot",
@@ -9643,8 +9382,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Sulfur_Coal",
@@ -9676,8 +9414,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Sulfur_Iron",
@@ -9709,8 +9446,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SulfuricAcid",
@@ -9740,8 +9476,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "ComputerSuper",
@@ -9781,8 +9516,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SuperpositionOscillator",
@@ -9830,8 +9564,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Fireworks_01",
@@ -9861,8 +9594,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": true,
-            "isPowerGenerator": false
+            "isFicsmas": true
         },
         {
             "id": "SyntheticPowerShard",
@@ -9910,8 +9642,7 @@
                 "maxPower": 2000
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_8",
@@ -9951,8 +9682,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "TimeCrystal",
@@ -9979,8 +9709,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "MotorTurbo",
@@ -10020,8 +9749,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CartridgeChaos_Packaged",
@@ -10056,8 +9784,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "CartridgeChaos",
@@ -10092,8 +9819,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Alternate_Turbofuel",
@@ -10123,8 +9849,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageAlumina",
@@ -10155,8 +9880,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageFuel",
@@ -10187,8 +9911,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageOilResidue",
@@ -10219,8 +9942,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageIonizedFuel",
@@ -10251,8 +9973,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageBioFuel",
@@ -10283,8 +10004,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageNitricAcid",
@@ -10315,8 +10035,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageNitrogen",
@@ -10347,8 +10066,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageOil",
@@ -10379,8 +10097,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageRocketFuel",
@@ -10411,8 +10128,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageSulfuricAcid",
@@ -10443,8 +10159,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageTurboFuel",
@@ -10475,8 +10190,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "UnpackageWater",
@@ -10507,8 +10221,7 @@
                 "power": 10
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "NuclearFuelRod",
@@ -10543,8 +10256,7 @@
                 "power": 55
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Uranium_Bauxite",
@@ -10576,8 +10288,7 @@
                 "maxPower": 300
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "SpaceElevatorPart_2",
@@ -10607,8 +10318,7 @@
                 "power": 15
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         },
         {
             "id": "Wire",
@@ -10633,8 +10343,7 @@
                 "power": 4
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": false
+            "isFicsmas": false
         }
     ],
     "powerGenerationRecipes": [
