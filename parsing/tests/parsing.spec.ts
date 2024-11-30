@@ -256,7 +256,7 @@ describe('common', () => {
         });
 
 
-        it('should create a biomass power generation recipe (solid biomass)', () => {
+        it('validate a biomass power generation recipe (solid biomass)', () => {
             //arrange
             const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Biofuel');
 
