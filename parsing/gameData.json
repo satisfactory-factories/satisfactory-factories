@@ -1250,15 +1250,15 @@
             },
             "Leaves": {
                 "name": "Leaves",
-                "limit": 100000
+                "limit": 100000000
             },
             "Wood": {
                 "name": "Wood",
-                "limit": 100000
+                "limit": 100000000
             },
             "Mycelia": {
                 "name": "Mycelia",
-                "limit": 100000
+                "limit": 100000000
             }
         }
     },
