@@ -29,107 +29,100 @@
         </v-card-text>
       </v-card>
 
-      <div
-        v-for="(input, inputIndex) in factory.inputs"
-        :key="`${inputIndex}-${input.outputPart}`"
-        class="selectors d-flex flex-column flex-md-row ga-3 pa-4 my-2 border-md rounded sub-card"
-      >
-        <div class="input-row d-flex align-center">
-          <i class="fas fa-industry mr-2" style="width: 32px; height: 32px;" />
-          <v-autocomplete
-            v-model="input.factoryId"
-            hide-details
-            :items="validImportFactories(factory, inputIndex)"
-            label="Factory"
-            max-width="300px"
-            variant="outlined"
-            width="300px"
-            @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
-          />
-        </div>
-        <div class="input-row d-flex align-center">
-          <span v-show="!input.outputPart" class="mr-2">
-            <i class="fas fa-cube" style="width: 32px; height: 32px" />
-          </span>
-          <span v-if="input.outputPart" class="mr-2">
-            <game-asset
-              :key="input.outputPart"
-              height="32px"
-              :subject="input.outputPart"
-              type="item"
-              width="32px"
+      <v-card class="rounded sub-card border-md mb-2">
+        <div
+          v-for="(input, inputIndex) in factory.inputs"
+          :key="`${inputIndex}-${input.outputPart}`"
+          class="selectors d-flex flex-column flex-md-row ga-3 px-4 pb-2 my-2 border-b-md no-bottom"
+        >
+          <div class="input-row d-flex align-center">
+            <i class="fas fa-industry mr-2" style="width: 32px; height: 32px;" />
+            <v-autocomplete
+              v-model="input.factoryId"
+              hide-details
+              :items="validImportFactories(factory, inputIndex)"
+              label="Factory"
+              max-width="300px"
+              variant="outlined"
+              width="300px"
+              @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
             />
-          </span>
-          <v-autocomplete
-            v-model="input.outputPart"
-            :disabled="!input.factoryId"
-            hide-details
-            :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
-            label="Item"
-            max-width="350px"
-            variant="outlined"
-            width="350px"
-            @input="updateFactory(factory)"
-          />
+          </div>
+          <div class="input-row d-flex align-center">
+            <span v-show="!input.outputPart" class="mr-2">
+              <i class="fas fa-cube" style="width: 32px; height: 32px" />
+            </span>
+            <span v-if="input.outputPart" class="mr-2">
+              <game-asset
+                :key="input.outputPart"
+                height="32px"
+                :subject="input.outputPart"
+                type="item"
+                width="32px"
+              />
+            </span>
+            <v-autocomplete
+              v-model="input.outputPart"
+              :disabled="!input.factoryId"
+              hide-details
+              :items="getFactoryOutputsForAutocomplete(input.factoryId, inputIndex)"
+              label="Item"
+              max-width="350px"
+              variant="outlined"
+              width="350px"
+              @input="updateFactory(factory)"
+            />
+          </div>
+          <div class="input-row d-flex align-center">
+            <v-text-field
+              v-model.number="input.amount"
+              :disabled="!input.outputPart"
+              hide-details
+              label="Qty /min"
+              :max-width="smAndDown ? undefined : '110px'"
+              :min-width="smAndDown ? undefined : '100px'"
+              type="number"
+              variant="outlined"
+              @input="updateFactory(factory)"
+            />
+          </div>
+          <div class="input-row d-flex align-center">
+            <v-btn
+              v-show="requirementSatisfied(factory, input.outputPart) && inputOverflow(factory, input.outputPart)"
+              class="rounded mr-2"
+              color="yellow"
+              prepend-icon="fas fa-arrow-down"
+              size="default"
+              @click="updateInputToSatisfy(factory, input)"
+            >Trim</v-btn>
+            <v-btn
+              v-show="input.outputPart && !requirementSatisfied(factory, input.outputPart)"
+              class="rounded mr-2"
+              color="green"
+              prepend-icon="fas fa-arrow-up"
+              size="default"
+              @click="updateInputToSatisfy(factory, input)"
+            >Satisfy</v-btn>
+            <v-btn
+              class="rounded"
+              color="primary"
+              :disabled="!input.factoryId"
+              prepend-icon="fas fa-industry"
+              size="default"
+              variant="outlined"
+              @click="navigateToFactory(input.factoryId)"
+            >View</v-btn>
+            <v-btn
+              class="rounded ml-2"
+              color="red"
+              icon="fas fa-trash"
+              size="small"
+              variant="outlined"
+              @click="deleteInput(inputIndex, factory)"
+            />
+          </div>
         </div>
-        <div class="input-row d-flex align-center">
-          <v-text-field
-            v-model.number="input.amount"
-            :disabled="!input.outputPart"
-            hide-details
-            label="Qty /min"
-            :max-width="smAndDown ? undefined : '110px'"
-            :min-width="smAndDown ? undefined : '100px'"
-            type="number"
-            variant="outlined"
-            @input="updateFactory(factory)"
-          />
-        </div>
-        <div class="input-row d-flex align-center">
-          <v-btn
-            v-show="input.amount > 0 && requirementSatisfied(factory, input.outputPart) && !inputOverflow(factory, input.outputPart)"
-            class="rounded mr-2"
-            color="green"
-            :disabled="true"
-            prepend-icon="fas fa-thumbs-up"
-            size="default"
-            variant="outlined"
-          >Satisfied!</v-btn>
-          <v-btn
-            v-show="requirementSatisfied(factory, input.outputPart) && inputOverflow(factory, input.outputPart)"
-            class="rounded mr-2"
-            color="yellow"
-            prepend-icon="fas fa-arrow-down"
-            size="default"
-            @click="updateInputToSatisfy(factory, input)"
-          >Trim</v-btn>
-          <v-btn
-            v-show="input.outputPart && !requirementSatisfied(factory, input.outputPart)"
-            class="rounded mr-2"
-            color="green"
-            prepend-icon="fas fa-arrow-up"
-            size="default"
-            @click="updateInputToSatisfy(factory, input)"
-          >Satisfy</v-btn>
-          <v-btn
-            class="rounded"
-            color="primary"
-            :disabled="!input.factoryId"
-            prepend-icon="fas fa-industry"
-            size="default"
-            variant="outlined"
-            @click="navigateToFactory(input.factoryId)"
-          >View</v-btn>
-          <v-btn
-            class="rounded ml-2"
-            color="red"
-            icon="fas fa-trash"
-            size="small"
-            variant="outlined"
-            @click="deleteInput(inputIndex, factory)"
-          />
-        </div>
-      </div>
+      </v-card>
       <div class="input-row d-flex align-center">
         <v-btn
           v-show="Object.keys(factory.parts).length > 0"
@@ -386,5 +379,11 @@
 <style lang="scss" scoped>
   .input-row {
     max-width: 100%;
+  }
+
+  .selectors {
+    &:last-of-type {
+      border-bottom: none !important;
+    }
   }
 </style>
