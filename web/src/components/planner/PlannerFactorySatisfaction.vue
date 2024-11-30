@@ -125,22 +125,14 @@
   // Reactive factory parts check
   const hasParts = computed(() => Object.keys(props.factory.parts).length > 0)
 
-  // Function to chunk the satisfactionDisplay into groups of two
-  const chunkArray = function <T> (array: [string, T][], chunkSize: number): [string, T][][] {
-    const result: [string, T][][] = []
-    for (let i = 0; i < array.length; i += chunkSize) {
-      result.push(array.slice(i, i + chunkSize))
+  // Generate chunks for the satisfaction display
+  const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
+    const parts: [string, PartMetrics][] = Object.entries(props.factory.parts)
+
+    const result: [string, PartMetrics][][] = []
+    for (let i = 0; i < parts.length; i += 2) {
+      result.push(parts.slice(i, i + 2))
     }
     return result
-  }
-
-  // Generate chunks for the satisfaction display
-  // @eslint-disable-next-line
-  const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
-    console.log('chunkedSatisfactionDisplay recomputed')
-    const filteredParts = Object.entries(props.factory.parts).filter(
-      ([, value]) => value.amountRequired > 0
-    )
-    return chunkArray(filteredParts, 2)
   })
 </script>
