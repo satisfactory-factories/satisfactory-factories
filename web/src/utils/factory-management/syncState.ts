@@ -14,6 +14,11 @@ export const calculateSyncState = (factory: Factory) => {
     }
   }
 
+  // If the number of products is different from the syncState, mark the factory as out of sync.
+  if (factory.products.length !== Object.keys(factory.syncState).length) {
+    factory.inSync = false
+  }
+
   factory.products.forEach(product => {
     // If the product has no syncState, skip.
     if (!factory.syncState[product.id]) {
@@ -24,7 +29,12 @@ export const calculateSyncState = (factory: Factory) => {
     const syncState = factory.syncState[product.id]
 
     // If the sync state does not match the product amount, mark the factory as out of sync.
-    if (syncState !== product.amount) {
+    if (syncState.amount !== product.amount) {
+      factory.inSync = false
+    }
+
+    // If the recipe has changed
+    if (syncState.recipe !== product.recipe) {
       factory.inSync = false
     }
   })
