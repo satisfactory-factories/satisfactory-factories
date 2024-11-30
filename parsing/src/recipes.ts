@@ -226,7 +226,7 @@ function getPowerGeneratingRecipes(
                     // (this is step 4 from above)
                     primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
                 }
-                let primaryAmount : number = 0;
+                let primaryAmount = 0;
                 if (primaryPerMin > 0) {                        
                     primaryAmount = primaryPerMin / 60;
 

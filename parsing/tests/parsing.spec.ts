@@ -275,6 +275,26 @@ describe('common', () => {
             expect(recipe.isAlternate).toBe(false);
         });
 
+        
+        it('validate a biomass power generation recipe (wood)', () => {
+            //arrange
+            const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Wood');
+
+            //act
+
+            //assert
+            expect(recipe).toBeDefined();
+            expect(recipe.displayName).toBe('Biomass Burner (Wood)');
+            expect(recipe.ingredients.length).toBe(1);
+            expect(recipe.ingredients[0].part).toBe('Wood');
+            expect(recipe.ingredients[0].amount).toBe(0.3);
+            expect(recipe.ingredients[0].perMin).toBe(18);
+            expect(recipe.products.length).toBe(0);
+            expect(recipe.building.name).toBe('BiomassBurner');
+            expect(recipe.building.power).toBe(30);
+            expect(recipe.isAlternate).toBe(false);
+        });
+
         it('validate a nuclear power generation recipe (Uranium Fuel Rod)', () => {
             //arrange
             const recipe : Recipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
