@@ -10363,8 +10363,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorBiomass_Automated_Leaves",
@@ -10382,8 +10381,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorBiomass_Automated_Mycelia",
@@ -10401,8 +10399,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorBiomass_Automated_PackagedBiofuel",
@@ -10420,8 +10417,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorBiomass_Automated_Biofuel",
@@ -10439,8 +10435,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorBiomass_Automated_Wood",
@@ -10458,8 +10453,7 @@
                 "power": 30
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorCoal_Coal",
@@ -10482,8 +10476,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorCoal_CompactedCoal",
@@ -10506,8 +10499,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorCoal_PetroleumCoke",
@@ -10530,8 +10522,7 @@
                 "power": 75
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorFuel_LiquidFuel",
@@ -10549,8 +10540,7 @@
                 "power": 250
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorFuel_IonizedFuel",
@@ -10568,8 +10558,7 @@
                 "power": 250
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorFuel_LiquidBiofuel",
@@ -10587,8 +10576,7 @@
                 "power": 250
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorFuel_RocketFuel",
@@ -10606,8 +10594,7 @@
                 "power": 250
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorFuel_LiquidTurboFuel",
@@ -10625,8 +10612,7 @@
                 "power": 250
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorNuclear_FicsoniumFuelRod",
@@ -10649,8 +10635,7 @@
                 "power": 2500
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorNuclear_PlutoniumFuelRod",
@@ -10680,8 +10665,7 @@
                 "power": 2500
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         },
         {
             "id": "GeneratorNuclear_NuclearFuelRod",
@@ -10711,8 +10695,7 @@
                 "power": 2500
             },
             "isAlternate": false,
-            "isFicsmas": false,
-            "isPowerGenerator": true
+            "isFicsmas": false
         }
     ]
 }

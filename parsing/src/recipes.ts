@@ -159,7 +159,6 @@ function getProductionRecipes(
     //     building: { name: "nuclearpowerplant", power: 2500 },
     //     isAlternate: false,
     //     isFicsmas: false,
-    //     isPowerGenerator: true
     // });
     // recipes.push({
     //     id: "PlutoniumWaste",
@@ -169,7 +168,6 @@ function getProductionRecipes(
     //     building: { name: "nuclearpowerplant", power: 2500 },
     //     isAlternate: false,
     //     isFicsmas: false,
-    //     isPowerGenerator: true
     // });
 
     return recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -267,8 +265,7 @@ function getPowerGeneratingRecipes(
                         products,
                         building,
                         isAlternate: false,
-                        isFicsmas: false,
-                        isPowerGenerator: true
+                        isFicsmas: false
                     });  
                 }
             });
