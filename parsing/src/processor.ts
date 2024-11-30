@@ -97,14 +97,6 @@ async function processFile(
 
         //IMPORTANT: The order here matters - don't run this because fixing the turbofuel. 
         let powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
-    
-        // merge the powerGenerationRecipes with the recipes, if this feature flag is on
-        const mergePowerGenerationInRecipes = false;
-        if (mergePowerGenerationInRecipes) {
-            recipes.push(...powerGenerationRecipes);
-            recipes = recipes.sort((a, b) => a.displayName.localeCompare(b.displayName));
-            powerGenerationRecipes = [];
-        }
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
