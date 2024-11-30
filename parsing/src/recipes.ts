@@ -1,5 +1,12 @@
 import {Building, Recipe, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
-import {blacklist, isFluid, isFicsmas, getRecipeName, getPartName, getFriendlyName} from "./common";
+import {
+    blacklist, 
+    isFluid, 
+    isFicsmas, 
+    getRecipeName, 
+    getPartName, 
+    getFriendlyName
+} from "./common";
 import {PartDataInterface, Part} from "./interfaces/Part";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!

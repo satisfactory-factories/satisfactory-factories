@@ -259,7 +259,7 @@ function isCollectable(ingredients: string): boolean {
     return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
-function stackSizeConvert(stackSize: string):number {
+function stackSizeConvert(stackSize: string): number {
     // Convert e.g. SS_HUGE to 500
     switch (stackSize) {
         case "SS_HUGE":

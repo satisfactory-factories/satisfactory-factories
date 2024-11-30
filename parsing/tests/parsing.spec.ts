@@ -94,7 +94,7 @@ describe('common', () => {
                 for (const product of recipe.products) {
                     parts.add(product.part);
                 }
-                if (recipe.products.length === 0 && !recipe.isPowerGenerator) {
+                if (recipe.products.length === 0) {
                     console.error('Recipe ' + recipe.id + ' has no products');
                     expect(recipe.products.length).not.toBe(0);
                 }
@@ -273,7 +273,6 @@ describe('common', () => {
             expect(recipe.building.name).toBe('BiomassBurner');
             expect(recipe.building.power).toBe(30);
             expect(recipe.isAlternate).toBe(false);
-            expect(recipe.isPowerGenerator).toBe(true);
         });
 
         it('validate a nuclear power generation recipe (Uranium Fuel Rod)', () => {
@@ -300,7 +299,6 @@ describe('common', () => {
             expect(recipe.building.name).toBe('NuclearPowerPlant');
             expect(recipe.building.power).toBe(2500);
             expect(recipe.isAlternate).toBe(false);
-            expect(recipe.isPowerGenerator).toBe(true);
         });
 
     })
