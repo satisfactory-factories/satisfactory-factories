@@ -1,6 +1,6 @@
 <template>
-  <v-row class="mx-2 my-3 px-0" :class="classes">
-    <v-col align-self="center" class="flex-grow-0 pa-0">
+  <v-row class="mx-2 my-3 px-0" :class="classes" style="height: 68px">
+    <v-col class="flex-grow-0 pa-0 align-content-center">
       <game-asset
         height="48"
         :subject="partId"
@@ -8,41 +8,41 @@
         width="48"
       />
     </v-col>
-    <v-col class="py-0">
-      <p v-if="part.satisfied">
+    <v-col class="py-0 align-content-center">
+      <p v-if="reactivePart.satisfied">
         <v-icon icon="fas fa-check" />
         <span class="ml-2">
-          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(part.amountSupplied) }}/{{ formatNumber(part.amountRequired) }}/min
+          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }}/min
         </span>
       </p>
       <p v-else>
         <v-icon icon="fas fa-times" />
         <span class="ml-2">
-          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(part.amountSupplied) }}/{{ formatNumber(part.amountRequired) }} /min
+          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }} /min
         </span>
       </p>
     </v-col>
-    <v-col align-self="center" class="text-right flex-shrink-0 py-0" cols="auto">
+    <v-col align-self="center" class="text-right align-content-center flex-shrink-0 py-0" cols="auto">
       <v-btn
-        v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
-        class="ml-2 my-1"
+        v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+        class="my-1 d-block"
         color="primary"
         size="small"
         variant="outlined"
-        @click="addProduct(factory, partId, part.amountRemaining)"
+        @click="addProduct(factory, partId, reactivePart.amountRemaining)"
       >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
       </v-btn>
       <v-btn
-        v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
-        class="ml-2 my-1"
+        v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+        class="my-1 d-block"
         color="green"
         size="small"
         @click="fixProduction(factory, partId)"
       ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
       </v-btn>
       <v-btn
-        v-if="getImport(factory, partId) && !part.satisfied"
-        class="ml-2 my-1"
+        v-if="getImport(factory, partId) && !reactivePart.satisfied"
+        class="my-1 d-block"
         color="green"
         size="small"
         @click="fixSatisfactionImport(factory, partId)"
@@ -70,13 +70,28 @@
 
   const props = defineProps<{
     factory: Factory;
-    classes: {'text-green': boolean, 'text-red': boolean},
     part: PartMetrics;
     partId: string;
   }>()
 
-  const part = ref<PartMetrics>(props.part)
+  const reactivePart = reactive(props.part)
   const partId = ref<string>(props.partId)
+
+  // This is required to make it reactive, as the part object is an array and thus not reactive.
+  // Yes it's a hack, no I don't care. I'm sick of this now.
+  watch(() => props.part, newPart => {
+    reactivePart.amountRequired = newPart.amountRequired
+    reactivePart.amountSupplied = newPart.amountSupplied
+    reactivePart.amountRemaining = newPart.amountRemaining
+    reactivePart.satisfied = newPart.satisfied
+  })
+
+  const classes = computed(() => {
+    return {
+      'text-green': reactivePart.satisfied,
+      'text-red': !reactivePart.satisfied,
+    }
+  })
 
   const addProduct = (factory: Factory, part: string, amount: number): void => {
     addProductToFactory(factory, {

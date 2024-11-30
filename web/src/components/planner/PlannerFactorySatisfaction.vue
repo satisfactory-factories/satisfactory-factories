@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2
-      v-show="factory.requirementsSatisfied && Object.keys(factory.parts).length > 0"
+      v-show="factory.requirementsSatisfied && hasParts"
       class="text-h5 mb-4"
     >
       <i class="fas fa-check" />
@@ -15,14 +15,14 @@
       <span class="ml-3">Satisfaction</span>
     </h2>
     <h2
-      v-show="factory.requirementsSatisfied && Object.keys(factory.parts).length === 0"
+      v-show="factory.requirementsSatisfied && !hasParts"
       class="text-h5 mb-4"
     >
       <i class="fas fa-question" />
       <span class="ml-3">Satisfaction</span>
     </h2>
 
-    <v-row v-if="Object.keys(factory.parts).length > 0">
+    <v-row v-if="hasParts">
       <v-col cols="12" md="7">
         <v-card class="border-md sub-card">
           <v-card-title>
@@ -34,17 +34,16 @@
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <template v-for="(chunk, chunkIndex) in chunkedSatisfactionDisplay" :key="chunkIndex">
+            <template v-for="(chunk, chunkIndex) in satisfactionDisplay" :key="'chunk-' + chunkIndex">
               <v-row class="border-b-md">
                 <template v-for="([partId, part], index) in chunk" :key="partId">
                   <v-col
                     cols="12"
                     md="6"
-                    class="pa-0"
+                    class="pa-0 align-content-center"
                     :class="index === 0 ? 'border-e-md' : ''"
                   >
                     <planner-factory-satisfaction-item
-                      :classes="isSatisfiedStyling(part)"
                       :factory="factory"
                       :part="part"
                       :part-id="partId"
@@ -67,7 +66,7 @@
           <v-card-text class="text-body-1 pb-2">
             <div
               v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
-              :key="buildingIndex"
+              :key="'building-' + buildingIndex"
               style="display: inline;"
             >
               <v-chip
@@ -106,22 +105,26 @@
     <p v-else class="text-body-1">Awaiting product selection or requirements outside of Raw Resources.</p>
   </div>
 </template>
+
 <script setup lang="ts">
   import {
     Factory,
     PartMetrics,
-  } from '@/interfaces/planner/FactoryInterface'
-  import { computed, inject } from 'vue'
+  } from '@/interfaces/planner/FactoryInterface';
+  import { inject, computed } from 'vue';
 
-  import { formatNumber } from '@/utils/numberFormatter'
-  import PlannerFactorySatisfactionItem from '@/components/planner/PlannerFactorySatisfactionItem.vue'
+  import { formatNumber } from '@/utils/numberFormatter';
+  import PlannerFactorySatisfactionItem from '@/components/planner/PlannerFactorySatisfactionItem.vue';
 
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
+  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string;
 
   const props = defineProps<{
     factory: Factory;
     helpText: boolean;
-  }>()
+  }>();
+
+  // Reactive factory parts check
+  const hasParts = computed(() => Object.keys(props.factory.parts).length > 0);
 
   // Function to chunk the satisfactionDisplay into groups of two
   const chunkArray = <T>(array: [string, T][], chunkSize: number): [string, T][][] => {
@@ -132,22 +135,12 @@
     return result;
   };
 
-  // Calculated function showing parts displayed if the amountRequired > 0
-  const satisfactionDisplay = computed(() => {
-    return Object.entries(props.factory.parts)
-      .filter(([_, value]) => value.amountRequired > 0);
+  // Generate chunks for the satisfaction display
+  const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
+    console.log('chunkedSatisfactionDisplay recomputed');
+    const filteredParts = Object.entries(props.factory.parts).filter(
+      ([_, value]) => value.amountRequired > 0
+    );
+    return chunkArray(filteredParts, 2);
   });
-
-  // Chunked satisfaction display for rows
-  const chunkedSatisfactionDisplay = computed(() => {
-    return chunkArray(satisfactionDisplay.value, 2);
-  });
-
-  const isSatisfiedStyling = (part: PartMetrics) => {
-    return {
-      'text-green': part.satisfied,
-      'text-red': !part.satisfied,
-    }
-  }
-
 </script>
