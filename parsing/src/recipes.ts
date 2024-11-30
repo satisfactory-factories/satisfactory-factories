@@ -195,11 +195,11 @@ function getPowerGeneratingRecipes(
         })
         .forEach((recipe: any) => {
              
-            let building : Building = {
+            const building : Building = {
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
-            let supplementalRatio = Number(recipe.mSupplementalToPowerRatio);
+            const supplementalRatio = Number(recipe.mSupplementalToPowerRatio);
             // 1. Generator MW generated. This is an hourly value.
             // 2. Divide by 60, to get the minute value
             // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
@@ -208,7 +208,7 @@ function getPowerGeneratingRecipes(
 
             const fuels: Fuel[] = Array.isArray(recipe.mFuel) ? recipe.mFuel as Fuel[] : [];       
             fuels.forEach((fuel: any) => {
-                let fuelItem: Fuel = {
+                const fuelItem: Fuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
                     supplementalResource: fuel.mSupplementalResourceClass ? getPartName(fuel.mSupplementalResourceClass) : "",
                     byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : "",
@@ -216,14 +216,14 @@ function getPowerGeneratingRecipes(
                 };
 
                 //Find the part for the primary fuel
-                let extractedPartText = getPartName(fuelItem.primaryFuel);
+                const extractedPartText = getPartName(fuelItem.primaryFuel);
                 const primaryFuelPart = parts.parts[extractedPartText];
                 let primaryPerMin = 0; 
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
                     // (this is step 4 from above)
                     primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
-                };
+                }
                 let primaryAmount = 0;
                 if (primaryPerMin > 0) {                        
                     primaryAmount = primaryPerMin / 60;

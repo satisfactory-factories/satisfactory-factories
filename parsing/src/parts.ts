@@ -200,8 +200,8 @@ function getItems(data: any[]): PartDataInterface {
             const productMatches = [...entry.mProduct.matchAll(/ItemClass=".*?\/Desc_(.*?)\.Desc_.*?",Amount=(\d+)/g)];
 
             productMatches.forEach(match => {
-                let partName: string = getPartName(match[1]);  // Use the mProduct part name
-                let friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
+                const partName: string = getPartName(match[1]);  // Use the mProduct part name
+                const friendlyName: string = getFriendlyName(entry.mDisplayName);  // Use the friendly name
 
                 // Extract the product's Desc_ class name so we can find it in the class descriptors to get the stack size
                 const productClass = match[0].match(/Desc_(.*?)\.Desc_/)?.[1];
