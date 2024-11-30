@@ -12,11 +12,14 @@ describe('syncState', () => {
     addProductToFactory(mockFactory, {
       id: 'IronIngot',
       amount: 100,
-      recipe: 'IronIngot',
+      recipe: 'IngotIron',
     })
 
     mockFactory.syncState = {
-      IronIngot: 100,
+      IronIngot: {
+        amount: 100,
+        recipe: 'IngotIron',
+      },
     }
 
     mockFactory.inSync = true
@@ -29,7 +32,7 @@ describe('syncState', () => {
     })
 
     it('should detect a de-synced factory', () => {
-      mockFactory.syncState.IronIngot = 50
+      mockFactory.syncState.IronIngot.amount = 50
 
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
@@ -49,8 +52,8 @@ describe('syncState', () => {
         amount: 100,
         recipe: 'CopperIngot',
       })
-      mockFactory.syncState.IronIngot = 50
-      mockFactory.syncState.CopperIngot = 100
+      mockFactory.syncState.IronIngot = { amount: 100, recipe: 'IronIngot' }
+      mockFactory.syncState.CopperIngot = { amount: 50, recipe: 'CopperIngot' }
 
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
@@ -63,8 +66,8 @@ describe('syncState', () => {
         recipe: 'CopperIngot',
       })
       mockFactory.inSync = true
-      mockFactory.syncState.IronIngot = 100
-      mockFactory.syncState.CopperIngot = 100
+      mockFactory.syncState.IronIngot.amount = 100
+      mockFactory.syncState.CopperIngot = { amount: 100, recipe: 'CopperIngot' }
 
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(true)
@@ -91,6 +94,15 @@ describe('syncState', () => {
         amount: 100,
         recipe: 'CopperIngot',
       })
+      calculateSyncState(mockFactory)
+      expect(mockFactory.inSync).toBe(false)
+    })
+
+    it('should mark a factory as out of sync when the recipe of a product is changed', () => {
+      calculateSyncState(mockFactory)
+      expect(mockFactory.inSync).toBe(true)
+
+      mockFactory.products[0].recipe = 'Alternate_IronIngot_Basic'
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
     })

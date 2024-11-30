@@ -86,6 +86,11 @@ export interface FactoryInternalProduct {
   amount: number
 }
 
+export interface FactorySyncState {
+  amount: number
+  recipe: string
+}
+
 export interface Factory {
   id: number;
   name: string;
@@ -105,7 +110,7 @@ export interface Factory {
   hidden: boolean; // Whether to hide the card or not
   hasProblem: boolean
   inSync: boolean | null;
-  syncState: { [key: string]: number };
+  syncState: { [key: string]: FactorySyncState };
   displayOrder: number;
 }
 
