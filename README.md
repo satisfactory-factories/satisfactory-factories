@@ -11,13 +11,13 @@ Since this is an open source project, all PR requests will be welcomed, as long 
 ___
 ## Local Development
 This project has the following requirements:
-- Node.js version 20.17.0+
-- pnpm version 9.3.0
+- Node.js version >20.17.0
+- pnpm version >9.14.4
 - Docker (for the backend)
 
 ### Frontend
 1. `cd web`
-2. `pnpm install`
+2. `pnpm install` Recommend brew for this `brew install pnpm@9.14.4`
 3. `pnpm dev`
 
 Visit http://localhost:3000 to view the project.
