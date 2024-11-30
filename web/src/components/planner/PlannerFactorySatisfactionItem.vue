@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mx-0 my-2 px-2" :class="classes" style="height: 68px">
+  <v-row class="mx-0 my-2 px-2 pl-4" :class="classes" style="height: 68px">
     <v-col class="flex-grow-0 pa-0 align-content-center">
       <game-asset
         height="48"
