@@ -81,5 +81,18 @@ describe('syncState', () => {
       calculateSyncState(mockFactory)
       expect(mockFactory.inSync).toBe(false)
     })
+
+    it('should mark a factory as out of sync when new products are added', () => {
+      calculateSyncState(mockFactory)
+      expect(mockFactory.inSync).toBe(true)
+
+      addProductToFactory(mockFactory, {
+        id: 'CopperIngot',
+        amount: 100,
+        recipe: 'CopperIngot',
+      })
+      calculateSyncState(mockFactory)
+      expect(mockFactory.inSync).toBe(false)
+    })
   })
 })
