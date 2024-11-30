@@ -56,7 +56,7 @@ export const scanForInvalidInputs = (factory: Factory, factories: Factory[]): vo
 
       // If the product does not exist, remove the dependency and the input.
       if (!product) {
-        console.warn(`Factory ${factory.id} does not have the product ${request.part} requested by ${dependantFactory.id}. Removing dependency and input.`)
+        console.warn(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
 
         // Filter out the dependency request(s) for the part from the erroneous factory.
         factory.dependencies.requests[requestedFactoryId] = factory.dependencies.requests[requestedFactoryId].filter(req => req.part !== request.part)
