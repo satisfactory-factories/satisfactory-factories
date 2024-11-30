@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { newFactory } from '@/utils/factory-management/factory'
+import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addDependency,
   calculateDependencyMetrics,
@@ -8,6 +8,8 @@ import {
   removeFactoryDependants,
 } from '@/utils/factory-management/dependencies'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
+import { gameData } from '@/utils/gameData'
+import { addProductToFactory } from '@/utils/factory-management/products'
 
 describe('dependencies', () => {
   let factories: Factory[] = []
@@ -226,6 +228,44 @@ describe('dependencies', () => {
 
       // And also check if the input has been filtered from the dependant
       expect(mockDependantFactory.inputs.length).toBe(0)
+    })
+  })
+
+  describe('scanForInvalidImports', () => {
+    it('should remove invalid import requests', () => {
+      const factory1 = newFactory('Factory 1')
+      const factory2 = newFactory('Factory 2')
+
+      // Legit product that we are requesting.
+      addProductToFactory(factory1, {
+        id: 'CopperIngot',
+        amount: 100,
+        recipe: 'IngotCopper',
+      })
+
+      // Invalid input
+      addInputToFactory(factory2, {
+        factoryId: factory1.id,
+        outputPart: 'IronIngot',
+        amount: 100,
+      })
+      // Valid input
+      addInputToFactory(factory2, {
+        factoryId: factory1.id,
+        outputPart: 'CopperIngot',
+        amount: 100,
+      })
+
+      calculateFactories([factory1, factory2], gameData)
+
+      expect(factory1.exports.IronIngot).not.toBeDefined()
+      expect(factory1.exports.CopperIngot).toBeDefined()
+      expect(factory1.products.length).toBe(1)
+      expect(factory2.inputs.length).toBe(1) // NOT 2
+      expect(factory2.inputs[0].outputPart).toBe('CopperIngot')
+
+      const foundInvalidInput = factory2.inputs.find(input => input.outputPart === 'IronIngot')
+      expect(foundInvalidInput).not.toBeDefined()
     })
   })
 })

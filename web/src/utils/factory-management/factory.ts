@@ -4,7 +4,11 @@ import { calculateByProducts, calculateInternalProducts, calculateProducts } fro
 import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
 import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
-import { calculateDependencyMetrics, constructDependencies } from '@/utils/factory-management/dependencies'
+import {
+  calculateDependencyMetrics,
+  constructDependencies,
+  scanForInvalidInputs,
+} from '@/utils/factory-management/dependencies'
 import { calculateExports } from '@/utils/factory-management/exports'
 import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
@@ -109,6 +113,11 @@ export const calculateFactory = (
 
   // Check all other factories to see if they are affected by this factory change.
   constructDependencies(allFactories)
+
+  // Check if we have any invalid inputs.
+  scanForInvalidInputs(factory, allFactories)
+
+  // Calculate the dependency metrics for the factory.
   allFactories.forEach(factory => {
     calculateDependencyMetrics(factory)
   })
