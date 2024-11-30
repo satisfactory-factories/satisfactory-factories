@@ -263,9 +263,7 @@ function getPowerGeneratingRecipes(
                         displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                         ingredients,
                         products,
-                        building,
-                        isAlternate: false,
-                        isFicsmas: false
+                        building
                     });  
                 }
             });
