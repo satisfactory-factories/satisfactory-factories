@@ -72,10 +72,10 @@
     (event: 'createFactory'): void;
     (event: 'updateFactories', factories: Factory[]): void;
   }>()
-  const props = defineProps<{ factories: Factory[], totalFactories: number }>()
-  const factoriesCopy = ref([...props.factories])
+  const compProps = defineProps<{ factories: Factory[], totalFactories: number }>()
+  const factoriesCopy = ref([...compProps.factories])
 
-  watch(() => props.factories, factories => {
+  watch(() => compProps.factories, factories => {
     factoriesCopy.value = [...factories]
   }, { deep: true })
 
