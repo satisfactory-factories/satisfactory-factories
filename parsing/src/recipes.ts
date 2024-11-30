@@ -236,7 +236,7 @@ function getPowerGeneratingRecipes(
                             perMin: primaryPerMin
                         }
                     )
-                    if (fuelItem.supplementalResource) {
+                    if (fuelItem.supplementalResource && supplementalRatio > 0) {
                         ingredients.push(
                             { 
                                 part: fuelItem.supplementalResource,
