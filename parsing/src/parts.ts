@@ -1,6 +1,13 @@
 import {Recipe} from "./interfaces/Recipe";
 import {Part,PartDataInterface,RawResource} from "./interfaces/Part";
-import {blacklist,whitelist,isFluid,isFicsmas,getPartName,getFriendlyName} from "./common";
+import {
+  blacklist,
+  whitelist,
+  isFluid,
+  isFicsmas,
+  getPartName,
+  getFriendlyName
+} from "./common";
 
 function getItems(data: any[]): PartDataInterface {
     const parts: { [key: string]: Part } = {};
