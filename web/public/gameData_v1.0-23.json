@@ -10361,9 +10361,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorBiomass_Automated_Leaves",
@@ -10379,9 +10377,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorBiomass_Automated_Mycelia",
@@ -10397,9 +10393,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorBiomass_Automated_PackagedBiofuel",
@@ -10415,9 +10409,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorBiomass_Automated_Biofuel",
@@ -10433,9 +10425,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorBiomass_Automated_Wood",
@@ -10451,9 +10441,7 @@
             "building": {
                 "name": "BiomassBurner",
                 "power": 30
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorCoal_Coal",
@@ -10474,9 +10462,7 @@
             "building": {
                 "name": "Coal-PoweredGenerator",
                 "power": 75
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorCoal_CompactedCoal",
@@ -10497,9 +10483,7 @@
             "building": {
                 "name": "Coal-PoweredGenerator",
                 "power": 75
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorCoal_PetroleumCoke",
@@ -10520,9 +10504,7 @@
             "building": {
                 "name": "Coal-PoweredGenerator",
                 "power": 75
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorFuel_LiquidFuel",
@@ -10538,9 +10520,7 @@
             "building": {
                 "name": "Fuel-PoweredGenerator",
                 "power": 250
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorFuel_IonizedFuel",
@@ -10556,9 +10536,7 @@
             "building": {
                 "name": "Fuel-PoweredGenerator",
                 "power": 250
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorFuel_LiquidBiofuel",
@@ -10574,9 +10552,7 @@
             "building": {
                 "name": "Fuel-PoweredGenerator",
                 "power": 250
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorFuel_RocketFuel",
@@ -10592,9 +10568,7 @@
             "building": {
                 "name": "Fuel-PoweredGenerator",
                 "power": 250
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorFuel_LiquidTurboFuel",
@@ -10610,9 +10584,7 @@
             "building": {
                 "name": "Fuel-PoweredGenerator",
                 "power": 250
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorNuclear_FicsoniumFuelRod",
@@ -10633,9 +10605,7 @@
             "building": {
                 "name": "NuclearPowerPlant",
                 "power": 2500
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorNuclear_PlutoniumFuelRod",
@@ -10663,9 +10633,7 @@
             "building": {
                 "name": "NuclearPowerPlant",
                 "power": 2500
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         },
         {
             "id": "GeneratorNuclear_NuclearFuelRod",
@@ -10693,9 +10661,7 @@
             "building": {
                 "name": "NuclearPowerPlant",
                 "power": 2500
-            },
-            "isAlternate": false,
-            "isFicsmas": false
+            }
         }
     ]
 }
