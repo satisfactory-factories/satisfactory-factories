@@ -48,12 +48,38 @@
         Clear
       </v-btn>
       <templates />
+
+      <div v-if="isDebugMode">
+        <v-btn
+          v-if="isDebugMode"
+          class="ma-1 mb-0"
+          color="secondary"
+          prepend-icon="fas fa-bug"
+          variant="tonal"
+          @click="copyPlanToClipboard"
+        >
+          Copy plan
+        </v-btn>
+        <v-btn
+          v-if="isDebugMode"
+          class="ma-1"
+          color="secondary"
+          prepend-icon="fas fa-bug"
+          variant="tonal"
+          @click="pastePlanFromClipboard"
+        >
+          Paste plan
+        </v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
   import { defineEmits, defineProps } from 'vue'
+  import { useAppStore } from '@/stores/app-store'
+
+  const { isDebugMode, getFactories, setFactories } = useAppStore()
 
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
@@ -67,6 +93,23 @@
 
   const confirmDelete = (message: string): boolean => {
     return confirm(message)
+  }
+
+  const copyPlanToClipboard = () => {
+    const plan = JSON.stringify(getFactories())
+    navigator.clipboard.writeText(plan)
+  }
+
+  const pastePlanFromClipboard = () => {
+    navigator.clipboard.readText().then(plan => {
+      try {
+        const parsedPlan = JSON.parse(plan)
+        emit('clear-all')
+        setFactories(parsedPlan)
+      } catch (e) {
+        alert('Invalid plan')
+      }
+    })
   }
 </script>
 

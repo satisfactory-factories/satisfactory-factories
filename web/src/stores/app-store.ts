@@ -58,10 +58,19 @@ export const useAppStore = defineStore('app', () => {
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
-    // Patch for old data pre #116
     factories.value.forEach(factory => {
+      // Patch for old data pre #116
       if (!factory.exports) {
         factory.exports = {}
+      }
+
+      // Patch for #222
+      if (factory.inSync === undefined) {
+        factory.inSync = null
+      }
+
+      if (factory.syncState === undefined) {
+        factory.syncState = {}
       }
     })
 
@@ -128,12 +137,11 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== MISC
   const debugMode = () => {
-    const route = useRoute()
-
     if (window.location.hostname !== 'satisfactory-factories.app') {
       return true
     }
-    return route.query.debug === 'true'
+
+    return window.location.search.includes('debug')
   }
 
   isDebugMode.value = debugMode()

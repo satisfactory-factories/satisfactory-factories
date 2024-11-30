@@ -3,13 +3,44 @@
     <v-col>
       <v-card :id="factory.id" :class="factoryClass(factory)">
         <v-row class="header">
-          <v-col class="text-h5 text-md-h4 flex-grow-1" cols="auto" md="8">
-            <i class="fas fa-industry" />
-            <input
-              v-model="factory.name"
-              class="ml-3 pl-0 factory-name"
-              placeholder="Factory Name"
-            >
+          <v-col class="flex-grow-1" cols="auto" md="8">
+            <div class="text-h6 text-md-h5">
+              <i class="fas fa-industry" />
+              <input
+                v-model="factory.name"
+                class="ml-3 pl-0 factory-name"
+                placeholder="Factory Name"
+              >
+            </div>
+            <div class="d-flex align-center">
+              <div v-if="factory.inSync">
+                <v-chip class="sf-chip small green no-margin" @click="setSync(factory)">
+                  <i class="fas fa-check-square" />
+                  <span class="ml-2">In sync with game</span>
+                </v-chip>
+              </div>
+              <div v-if="factory.inSync === false">
+                <v-chip class="sf-chip small orange no-margin" @click="setSync(factory)">
+                  <i class="fas fa-times-square" />
+                  <span class="ml-2">Out of sync with game</span>
+                </v-chip>
+              </div>
+              <div v-if="factory.inSync === null">
+                <v-chip class="border border-gray border-dashed" :disabled="!factory.products[0]?.id" @click="setSync(factory)">
+                  <i class="fas fa-question" />
+                  <span class="ml-2">Mark as in sync with game</span>
+                </v-chip>
+              </div>
+              <v-tooltip right>
+                <template #activator="{ props }">
+                  <div class="ml-2 text-grey" v-bind="props">
+                    <i class="fas fa-info-circle" />
+                  </div>
+                </template>
+                <span>Game Sync is when you have implemented the factory inside the game.<br> When it drops out of sync, there are changes that you need to implement.<br> When a factory's products are changed, the factory will be out of sync, or if you set it manually.
+                </span>
+              </v-tooltip>
+            </div>
           </v-col>
           <v-col class="text-right pt-0 pt-md-3" cols="auto" md="4">
             <factory-debug :is-compact="smAndDown" :subject="factory" subject-type="Factory" />
@@ -249,6 +280,7 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
+      needsSync: !factory.hasProblem && factory.inSync !== null ? !factory.inSync : false,
     }
   }
 
@@ -317,6 +349,20 @@
     }
 
     return factory.dependencies?.metrics[part] ?? {}
+  }
+
+  const setSync = (factory: Factory) => {
+    factory.inSync = !factory.inSync
+
+    // Record what the sync'ed state is
+    if (factory.inSync) {
+      factory.syncState = {}
+
+      // Get the current products of the factory and set them
+      factory.products.forEach(product => {
+        factory.syncState[product.id] = product.amount
+      })
+    }
   }
 
   provide('fixProduction', fixProduction)

@@ -3,18 +3,45 @@
     <template #item="{ element }">
       <div :key="element.id" class="mb-1 rounded" :class="factoryClass(element)">
         <v-card
-          class="w-100 header list"
+          class="w-100 header list px-0 rounded-0 "
+          style="box-shadow: none !important;"
           @click="navigateToFactory(element.id)"
         >
-          <v-card-title class="py-3">
-            <v-row>
-              <v-col align-self="end" class="text-body-1">
-                <i class="fas fa-bars text-grey-darken-1" />
-                <i class="fas fa-industry ml-2" />
-                <span class="ml-2">{{ truncateFactoryName(element.name) }}</span>
-              </v-col>
-            </v-row>
-          </v-card-title>
+          <v-row class="d-flex ma-0">
+            <v-col class="text-body-1 align-content-center pa-2" cols="11">
+              <i class="fas fa-bars text-grey-darken-1 mr-2" />
+              <i class="fas fa-industry mr-2" />
+              <span>{{ truncateFactoryName(element.name) }}</span>
+            </v-col>
+            <v-tooltip right>
+              <template #activator="{ props }">
+                <v-col
+                  class="pa-0 align-content-center text-center"
+                  :class="syncStateClass(element)"
+                  cols="1"
+                  v-bind="props"
+                >
+                  <div v-if="element.inSync" class="d-inline">
+                    <i class="fas fa-check" />
+                  </div>
+                  <div v-if="element.inSync === false" class="d-inline">
+                    <i class="fas fa-times" />
+                  </div>
+                  <div v-if="element.inSync === null" class="d-inline">
+                    <i class="fas fa-question" />
+                  </div>
+                </v-col>
+              </template>
+              <span>
+                {{ element.inSync === true
+                  ? 'In sync with game'
+                  : element.inSync === false
+                    ? 'Out of sync with game'
+                    : 'Game sync unknown'
+                }}
+              </span>
+            </v-tooltip>
+          </v-row>
         </v-card>
       </div>
     </template>
@@ -56,6 +83,7 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
+      needsSync: !factory.hasProblem && factory.inSync === false,
     }
   }
 
@@ -69,6 +97,14 @@
 
   const onDragEnd = () => {
     emit('updateFactories', factoriesCopy.value)
+  }
+
+  const syncStateClass = (factory: Factory) => {
+    return {
+      'bg-green-darken-2': factory.inSync,
+      'bg-orange-darken-2': factory.inSync === false,
+      'bg-grey-darken-2': factory.inSync === null,
+    }
   }
 </script>
 
