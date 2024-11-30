@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2
-      v-show="factory.requirementsSatisfied && Object.keys(factory.parts).length > 0"
+      v-show="factory.requirementsSatisfied && hasParts"
       class="text-h5 mb-4"
     >
       <i class="fas fa-check" />
@@ -15,14 +15,14 @@
       <span class="ml-3">Satisfaction</span>
     </h2>
     <h2
-      v-show="factory.requirementsSatisfied && Object.keys(factory.parts).length === 0"
+      v-show="factory.requirementsSatisfied && !hasParts"
       class="text-h5 mb-4"
     >
       <i class="fas fa-question" />
       <span class="ml-3">Satisfaction</span>
     </h2>
 
-    <v-row v-if="Object.keys(factory.parts).length > 0">
+    <v-row v-if="hasParts">
       <v-col cols="12" md="7">
         <v-card class="border-md sub-card">
           <v-card-title>
@@ -30,66 +30,27 @@
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1 pb-0 pt-4">
+          <v-card-text class="text-body-1 pb-2 px-0">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <v-row
-              v-for="(part, partId) in satisfactionDisplay"
-              :key="partId"
-              class="mx-n4 mb-2 pb-2 border-b no-bottom"
-              :class="isSatisfiedStyling(part)"
-            >
-              <v-col align-self="center" class="flex-grow-0 pa-0 pl-3">
-                <game-asset
-                  height="48"
-                  :subject="partId"
-                  type="item"
-                  width="48"
-                />
-              </v-col>
-              <v-col class="py-0">
-                <p v-if="part.satisfied">
-                  <v-icon icon="fas fa-check" />
-                  <span class="ml-2">
-                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(part.amountSupplied) }}/{{ formatNumber(part.amountRequired) }}/min
-                  </span>
-                </p>
-                <p v-else>
-                  <v-icon icon="fas fa-times" />
-                  <span class="ml-2">
-                    <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(part.amountSupplied) }}/{{ formatNumber(part.amountRequired) }} /min
-                  </span>
-                </p>
-              </v-col>
-              <v-col align-self="center" class="text-right flex-shrink-0 py-0" cols="auto">
-                <v-btn
-                  v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
-                  class="ml-2 my-1"
-                  color="primary"
-                  size="small"
-                  variant="outlined"
-                  @click="addProduct(factory, partId, part.amountRemaining)"
-                >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
-                </v-btn>
-                <v-btn
-                  v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
-                  class="ml-2 my-1"
-                  color="green"
-                  size="small"
-                  @click="fixProduction(factory, partId)"
-                ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-                </v-btn>
-                <v-btn
-                  v-if="getImport(factory, partId) && !part.satisfied"
-                  class="ml-2 my-1"
-                  color="green"
-                  size="small"
-                  @click="fixSatisfactionImport(factory, partId)"
-                >&nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
-                </v-btn>
-              </v-col>
+            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">              <v-row class="border-b-md mx-0">
+              <template v-for="([partId, part], index) in chunk" :key="partId">
+                <v-col
+                  class="pa-0 align-content-center"
+                  :class="index === 0 ? 'border-e-md' : ''"
+                  cols="12"
+                  md="6"
+                >
+                  <planner-factory-satisfaction-item
+                    :factory="factory"
+                    :part="part"
+                    :part-id="partId"
+                  />
+                </v-col>
+              </template>
             </v-row>
+            </template>
           </v-card-text>
         </v-card>
       </v-col>
@@ -104,7 +65,7 @@
           <v-card-text class="text-body-1 pb-2">
             <div
               v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
-              :key="buildingIndex"
+              :key="'building-' + buildingIndex"
               style="display: inline;"
             >
               <v-chip
@@ -143,76 +104,35 @@
     <p v-else class="text-body-1">Awaiting product selection or requirements outside of Raw Resources.</p>
   </div>
 </template>
+
 <script setup lang="ts">
   import {
     Factory,
-    FactoryInput,
-    FactoryItem,
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
   import { computed, inject } from 'vue'
-  import { addProductToFactory } from '@/utils/factory-management/products'
-  import { getPartDisplayName } from '@/utils/helpers'
-  import { formatNumber } from '@/utils/numberFormatter'
-  import { useGameDataStore } from '@/stores/game-data-store'
 
-  const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
+  import { formatNumber } from '@/utils/numberFormatter'
+  import PlannerFactorySatisfactionItem from '@/components/planner/PlannerFactorySatisfactionItem.vue'
+
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
-  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
-  const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
 
   const props = defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
 
-  const { getDefaultRecipeForPart } = useGameDataStore()
+  // Reactive factory parts check
+  const hasParts = computed(() => Object.keys(props.factory.parts).length > 0)
 
-  // Calculated function showing parts displayed if the amountRequired > 0
-  const satisfactionDisplay = computed(() => {
-    return Object.entries(props.factory.parts)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, value]) => value.amountRequired > 0)
-      .reduce((acc, [key, value]) => {
-        acc[key] = value
-        return acc
-      }, {} as Record<string, PartMetrics>)
+  // Generate chunks for the satisfaction display
+  const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
+    const parts: [string, PartMetrics][] = Object.entries(props.factory.parts)
+
+    const result: [string, PartMetrics][][] = []
+    for (let i = 0; i < parts.length; i += 2) {
+      result.push(parts.slice(i, i + 2))
+    }
+    return result
   })
-
-  const isSatisfiedStyling = (part: PartMetrics) => {
-    return {
-      'text-green': part.satisfied,
-      'text-red': !part.satisfied,
-    }
-  }
-
-  const addProduct = (factory: Factory, part: string, amount: number): void => {
-    addProductToFactory(factory, {
-      id: part,
-      amount,
-      recipe: getDefaultRecipeForPart(part),
-    })
-
-    updateFactory(factory)
-  }
-
-  const getImport = (factory: Factory, partIndex: string): FactoryInput | undefined => {
-    // Search the inputs array for the outputPart using the part index
-    return factory.inputs.find(input => input.outputPart === partIndex)
-  }
-
-  const fixSatisfactionImport = (factory: Factory, partIndex: string) => {
-    const itemImport = getImport(factory, partIndex)
-
-    // If the import is not found
-    if (!itemImport) {
-      console.error(`Could not find import for ${partIndex} to fix!`)
-      return
-    }
-
-    // Set the import amount to the required amount
-    itemImport.amount = factory.parts[partIndex].amountRequired
-    updateFactory(factory)
-  }
 </script>
