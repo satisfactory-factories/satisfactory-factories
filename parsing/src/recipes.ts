@@ -1,4 +1,4 @@
-import {Building, Recipe, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
+import {Building, Recipe, Ingredient, Product, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
 import {
     blacklist, 
     isFluid, 
@@ -206,16 +206,16 @@ function getPowerGeneratingRecipes(
             // 2. Divide by 60, to get the minute value
             // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
             // 4. Now divide this number by the part energy to calculate how many pieces per min
-            const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600)
+            const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600);
 
-            const fuels: Fuel[] = recipe.mFuel       
+            const fuels: Fuel[] = Array.isArray(recipe.mFuel) ? recipe.mFuel as Fuel[] : [];       
             fuels.forEach((fuel: any) => {
                 let fuelItem: Fuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
                     supplementalResource: fuel.mSupplementalResourceClass ? getPartName(fuel.mSupplementalResourceClass) : "",
                     byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : "",
                     byProductAmount: fuel.mByproductAmount ? Number(fuel.mByproductAmount) : 0
-                }
+                };
 
                 //Find the part for the primary fuel
                 let extractedPartText = getPartName(fuelItem.primaryFuel);
@@ -225,12 +225,12 @@ function getPowerGeneratingRecipes(
                     // The rounding here is important to remove floating point errors that appear with some types 
                     // (this is step 4 from above)
                     primaryPerMin = parseFloat((powerMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
-                }
+                };
                 let primaryAmount = 0;
                 if (primaryPerMin > 0) {                        
                     primaryAmount = primaryPerMin / 60;
 
-                    const ingredients = <any>[];
+                    const ingredients: Ingredient[] = [];
                     ingredients.push(
                         { 
                             part: fuelItem.primaryFuel,
@@ -248,7 +248,7 @@ function getPowerGeneratingRecipes(
                         )
                     }
                     
-                    const products = <any>[];
+                    const products: Product[] = [];
                     if (fuelItem.byProduct) {
                         products.push(
                             {

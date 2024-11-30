@@ -1,4 +1,10 @@
-export interface RecipeItem {
+export interface Ingredient {
+  part: string;
+  amount: number;
+  perMin: number;
+}
+
+export interface Product {
   part: string;
   amount: number;
   perMin: number;
