@@ -66,4 +66,12 @@ function getFriendlyName(name: string): string {
 }
 
 // Export various items for use
-export {blacklist,whitelist,isFluid,isFicsmas,getRecipeName,getPartName,getFriendlyName}
+export {
+  blacklist,
+  whitelist,
+  isFluid,
+  isFicsmas,
+  getRecipeName,
+  getPartName,
+  getFriendlyName
+}
