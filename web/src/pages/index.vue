@@ -1,5 +1,5 @@
 <template>
-  <discord-splash />
+  <splash />
   <planner v-if="data" :game-data="data" />
 </template>
 <script setup lang="ts">
@@ -7,7 +7,7 @@
   import Planner from '@/components/planner/Planner.vue'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useGameDataStore } from '@/stores/game-data-store'
-  import DiscordSplash from '@/components/DiscordSplash.vue'
+  import Splash from '@/components/Splash.vue'
 
   const data = ref<DataInterface | null>({} as DataInterface)
 
