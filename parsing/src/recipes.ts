@@ -41,7 +41,7 @@ function getProductionRecipes(
                         const match = RegExp(/Desc_(.*?)\.Desc_.*?,Amount=(\d+)/).exec(ingredientStr);
                         if (match) {
                             const partName: string = match[1];
-                            let amount: number = parseInt(match[2], 10);
+                            let amount = parseInt(match[2], 10);
                             if (isFluid(partName)) {
                                 amount = amount / 1000;
                             }
@@ -68,7 +68,7 @@ function getProductionRecipes(
             const products: { part: string, amount: number, perMin: number, isByProduct?: boolean }[] = [];
             productMatches.forEach(match => {
                 const productName: string = match[1];
-                let amount: number = parseInt(match[2], 10);
+                let amount = parseInt(match[2], 10);
                 if (isFluid(productName)) {
                     amount = amount / 1000;  // Divide by 1000 for liquid/gas amounts
                 }
@@ -194,7 +194,7 @@ function getPowerGeneratingRecipes(
                 name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
-            let supplementalRatio: number = Number(recipe.mSupplementalToPowerRatio);
+            let supplementalRatio = Number(recipe.mSupplementalToPowerRatio);
             // 1. Generator MW generated. This is an hourly value.
             // 2. Divide by 60, to get the minute value
             // 3. Now calculate the MJ, using the MJ->MW constant (1/3600), (https://en.wikipedia.org/wiki/Joule#Conversions) 
@@ -211,9 +211,9 @@ function getPowerGeneratingRecipes(
                 }
 
                 //Find the part for the primary fuel
-                let extractedPartText: string = getPartName(fuelItem.primaryFuel);
-                const primaryFuelPart: Part = parts.parts[extractedPartText];
-                let primaryPerMin: number = 0; 
+                let extractedPartText = getPartName(fuelItem.primaryFuel);
+                const primaryFuelPart = parts.parts[extractedPartText];
+                let primaryPerMin = 0; 
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
                     // (this is step 4 from above)
