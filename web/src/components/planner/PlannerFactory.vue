@@ -360,7 +360,10 @@
 
       // Get the current products of the factory and set them
       factory.products.forEach(product => {
-        factory.syncState[product.id] = product.amount
+        factory.syncState[product.id] = {
+          amount: product.amount,
+          recipe: product.recipe,
+        }
       })
     }
   }
