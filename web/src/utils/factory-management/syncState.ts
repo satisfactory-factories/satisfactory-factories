@@ -14,6 +14,11 @@ export const calculateSyncState = (factory: Factory) => {
     }
   }
 
+  // If the number of products is different from the syncState, mark the factory as out of sync.
+  if (factory.products.length !== Object.keys(factory.syncState).length) {
+    factory.inSync = false
+  }
+
   factory.products.forEach(product => {
     // If the product has no syncState, skip.
     if (!factory.syncState[product.id]) {
