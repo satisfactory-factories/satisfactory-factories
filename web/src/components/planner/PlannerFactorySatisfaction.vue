@@ -30,11 +30,11 @@
               <i class="fas fa-cube" /><span class="ml-2">Items</span>
             </h2>
           </v-card-title>
-          <v-card-text class="text-body-1 pb-2 pt-2">
+          <v-card-text class="text-body-1 pb-2 px-0">
             <p v-show="helpText" class="text-body-2 mb-4">
               <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
             </p>
-            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">              <v-row class="border-b-md">
+            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">              <v-row class="border-b-md mx-0">
               <template v-for="([partId, part], index) in chunk" :key="partId">
                 <v-col
                   class="pa-0 align-content-center"
