@@ -31,7 +31,7 @@
             with the name, machines and their production.
           </p>
 
-          <v-table fixed-header height="500px">
+          <v-table fixed-header max-height="750px">
             <thead>
               <tr>
                 <th class="text-left table-column">Factory Name</th>

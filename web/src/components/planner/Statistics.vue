@@ -35,14 +35,17 @@
             <i class="fas fa-info-circle" /> Shows the amount of raw resources
             consumed by all your factories.
           </p>
-          <span v-for="(resource, id) in allFactoryRawResources" :key="id">
-            <v-chip class="sf-chip blue" variant="tonal">
-              <game-asset :subject="resource.id.toString()" type="item" />
-              <span class="ml-2">
-                <b>{{ getPartDisplayName(resource.id.toString()) }}</b>: {{ formatNumber(resource.totalAmount) }}/min
-              </span>
-            </v-chip>
-          </span>
+          <div v-if="allFactoryRawResources.length > 0">
+            <span v-for="(resource, id) in allFactoryRawResources" :key="id">
+              <v-chip class="sf-chip blue" variant="tonal">
+                <game-asset :subject="resource.id.toString()" type="item" />
+                <span class="ml-2">
+                  <b>{{ getPartDisplayName(resource.id.toString()) }}</b>: {{ formatNumber(resource.totalAmount) }}/min
+                </span>
+              </v-chip>
+            </span>
+          </div>
+          <p v-else class="text-body-1">Awaiting Resource Consumption</p>
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
 
           <!-- Building Summary Area -->
@@ -54,14 +57,18 @@
             <i class="fas fa-info-circle" /> Shows the amount buildings of each
             type in all your factories.
           </p>
-          <span v-for="(building, type) in totalBuildingsByType" :key="type">
-            <v-chip class="sf-chip orange" variant="tonal">
-              <game-asset :subject="building.name" type="building" />
-              <span class="ml-1">
-                <b>{{ getBuildingDisplayName(building.name) ?? "UNKNOWN" }}</b>: {{ formatNumber(building.totalAmount) ?? 0 }}x
-              </span>
-            </v-chip>
-          </span>
+          <div v-if="totalBuildingsByType.length > 0">
+            <span v-for="(building, type) in totalBuildingsByType" :key="type">
+              <v-chip class="sf-chip orange" variant="tonal">
+                <game-asset :subject="building.name" type="building" />
+                <span class="ml-1">
+                  <b>{{ getBuildingDisplayName(building.name) ?? "UNKNOWN" }}</b>: {{ formatNumber(building.totalAmount) ?? 0 }}x
+                </span>
+              </v-chip>
+            </span>
+          </div>
+          <p v-else class="text-body-1">Awaiting Building Construction</p>
+
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
 
           <!-- Excess Product Area -->
@@ -75,20 +82,23 @@
             either need to be produced more (in red), or items that can be
             stored or sunk (in green)!
           </p>
-          <v-chip
-            v-for="(product) in factoryProductDifferences"
-            :key="product.id"
-            class="sf-chip"
-            :class="{
-              'text-green': product.totalDifference > 0,
-              'text-red': product.totalDifference < 0,
-            }"
-          >
-            <game-asset :subject="product.id" type="item" />
-            <span class="ml-2">
-              <b>{{ product.name }}</b>: {{ formatNumber(product.totalDifference) }}/min
-            </span>
-          </v-chip>
+          <div v-if="factoryProductDifferences.length > 0">
+            <v-chip
+              v-for="(product) in factoryProductDifferences"
+              :key="product.id"
+              class="sf-chip"
+              :class="{
+                'text-green': product.totalDifference > 0,
+                'text-red': product.totalDifference < 0,
+              }"
+            >
+              <game-asset :subject="product.id" type="item" />
+              <span class="ml-2">
+                <b>{{ product.name }}</b>: {{ formatNumber(product.totalDifference) }}/min
+              </span>
+            </v-chip>
+          </div>
+          <p v-else class="text-body-1">No Product Surplus or Deficit</p>
 
           <v-col class="text-center">
             <v-btn
@@ -120,19 +130,21 @@
               <i class="fas fa-info-circle" /> Shows all the items produced by all
               your factories.
             </p>
-            <v-chip
-              v-for="(product) in allFactoryProducts"
-              :key="product.id"
-              class="sf-chip"
-            >
-              <span class="mr-2">
-                <game-asset :subject="product.id" type="item" />
-              </span>
-              <span>
-                <b>{{ product.name }}</b>: {{ formatNumber(product.totalAmount) }}/min
-              </span>
-            </v-chip>
-
+            <div v-if="allFactoryProducts.length > 0">
+              <v-chip
+                v-for="(product) in allFactoryProducts"
+                :key="product.id"
+                class="sf-chip"
+              >
+                <span class="mr-2">
+                  <game-asset :subject="product.id" type="item" />
+                </span>
+                <span>
+                  <b>{{ product.name }}</b>: {{ formatNumber(product.totalAmount) }}/min
+                </span>
+              </v-chip>
+            </div>
+            <p v-else class="text-body-1">Awaiting Production</p>
           </div>
         </v-card-text>
       </v-card>
