@@ -47,31 +47,33 @@
           <b>{{ reactivePart.amountRemaining }} /min</b>
         </div>
       </div>
-      <v-btn
-        v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
-        class="my-1 d-block"
-        color="primary"
-        size="small"
-        variant="outlined"
-        @click="addProduct(factory, partId, reactivePart.amountRemaining)"
-      >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
-      </v-btn>
-      <v-btn
-        v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
-        class="my-1 d-block"
-        color="green"
-        size="small"
-        @click="fixProduction(factory, partId)"
-      ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-      </v-btn>
-      <v-btn
-        v-if="getImport(factory, partId) && !reactivePart.satisfied"
-        class="my-1 d-block"
-        color="green"
-        size="small"
-        @click="fixSatisfactionImport(factory, partId)"
-      >&nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
-      </v-btn>
+      <div class="mx-n1">
+        <v-btn
+          v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+          class="ma-1"
+          color="primary"
+          size="small"
+          variant="outlined"
+          @click="addProduct(factory, partId, reactivePart.amountRemaining)"
+        >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
+        </v-btn>
+        <v-btn
+          v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+          class="ma-1"
+          color="green"
+          size="small"
+          @click="fixProduction(factory, partId)"
+        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+        </v-btn>
+        <v-btn
+          v-if="getImport(factory, partId) && !reactivePart.satisfied"
+          class="ma-1"
+          color="green"
+          size="small"
+          @click="fixSatisfactionImport(factory, partId)"
+        >&nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
+        </v-btn>
+      </div>
     </v-col>
   </v-row>
 
