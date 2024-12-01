@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mx-0 my-2 px-2 pl-4" :class="classes" style="height: 100px">
+  <v-row class="mx-0 my-2 px-2 pl-4" :class="classes" style="height: 60px">
     <v-col class="flex-grow-0 pa-0 align-content-center">
       <game-asset
         height="48"
@@ -11,7 +11,7 @@
     <v-col class="py-0 align-content-center">
       <div>
         <div class="mb-1">
-          <span v-if="reactivePart.satisfied">
+          <span v-if="part.satisfied">
             <v-icon icon="fas fa-check" />
           </span>
           <span v-else>
@@ -23,42 +23,42 @@
           <v-tooltip bottom>
             <template #activator="{ props }">
               <v-chip class="sf-chip small gray no-border ma-0" v-bind="props">
-                <b>S: {{ reactivePart.amountSupplied }}</b>
+                <b>S: {{ part.amountSupplied }}</b>
               </v-chip> -
             </template>
-            <p>Supply: {{ reactivePart.amountSupplied }} /min</p>
+            <p>Supply: {{ part.amountSupplied }} /min</p>
             <ul class="ml-3">
-              <li>From production: {{ reactivePart.amountSuppliedViaProduction }} /min</li>
-              <li>From imports / raw extraction: {{ reactivePart.amountSuppliedViaInput }} /min</li>
+              <li>From production: {{ part.amountSuppliedViaProduction }} /min</li>
+              <li>From imports / raw extraction: {{ part.amountSuppliedViaInput }} /min</li>
             </ul>
           </v-tooltip>
           <v-tooltip bottom>
             <template #activator="{ props }">
               <v-chip class="sf-chip small gray no-border ma-0" v-bind="props">
-                <b>D: {{ reactivePart.amountRequired }}</b>
+                <b>D: {{ part.amountRequired }}</b>
               </v-chip> =
             </template>
-            <p>Demands: {{ reactivePart.amountRequired }} /min</p>
+            <p>Demands: {{ part.amountRequired }} /min</p>
             <ul class="ml-3">
-              <li>From production: {{ reactivePart.amountRequiredProduction }} /min</li>
-              <li>From exports: {{ reactivePart.amountRequiredExports }} /min</li>
+              <li>From production: {{ part.amountRequiredProduction }} /min</li>
+              <li>From exports: {{ part.amountRequiredExports }} /min</li>
             </ul>
           </v-tooltip>
-          <b>{{ reactivePart.amountRemaining }} /min</b>
+          <b>{{ part.amountRemaining }} /min</b>
         </div>
       </div>
       <div class="mx-n1">
         <v-btn
-          v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+          v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
           class="ma-1"
           color="primary"
           size="small"
           variant="outlined"
-          @click="addProduct(factory, partId, reactivePart.amountRemaining)"
+          @click="addProduct(factory, partId, part.amountRemaining)"
         >+&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
         </v-btn>
         <v-btn
-          v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
+          v-if="getProduct(factory, partId) && !isItemRawResource(partId) && !part.satisfied"
           class="ma-1"
           color="green"
           size="small"
@@ -66,7 +66,7 @@
         ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
         </v-btn>
         <v-btn
-          v-if="getImport(factory, partId) && !reactivePart.satisfied"
+          v-if="getImport(factory, partId) && !part.satisfied"
           class="ma-1"
           color="green"
           size="small"
@@ -99,19 +99,12 @@
     partId: string;
   }>()
 
-  const reactivePart = reactive(compProps.part)
   const partId = ref<string>(compProps.partId)
-
-  // This is required to make it reactive, as the part object is an array and thus not reactive.
-  // Yes it's a hack, no I don't care. I'm sick of this now.
-  watch(() => compProps.part, newPart => {
-    Object.assign(reactivePart, newPart) // Object.assign maintains reactivity
-  })
 
   const classes = computed(() => {
     return {
-      'text-green': reactivePart.satisfied,
-      'text-red': !reactivePart.satisfied,
+      'text-green': compProps.part.satisfied,
+      'text-red': !compProps.part.satisfied,
     }
   })
 
