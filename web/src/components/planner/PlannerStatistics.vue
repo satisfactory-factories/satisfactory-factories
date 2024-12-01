@@ -39,11 +39,11 @@
             class="sf-chip blue"
           >
             <game-asset :subject="ore.id" type="item" />
-            <span v-if="ore.name !== 'Leaves' && ore.name !== 'Mycelia' && ore.name !== 'Water' && ore.name !== 'Wood'" class="ml-2">{{ ore.name }}: {{ formatNumber(ore.amount) }}</span>
-            <span v-else-if="ore.name === 'Leaves'" class="ml-2">Leaves: <i class="fas fa-infinity" /></span>
+            <span v-if="ore.name === 'Leaves'" class="ml-2">Leaves: <i class="fas fa-infinity" /></span>
             <span v-else-if="ore.name === 'Mycelia'" class="ml-2">Mycelia: <i class="fas fa-infinity" /></span>
             <span v-else-if="ore.name === 'Water'" class="ml-2">Water: <i class="fas fa-infinity" /></span>
             <span v-else-if="ore.name === 'Wood'" class="ml-2">Wood: <i class="fas fa-infinity" /></span>
+            <span v-else class="ml-2">{{ ore.name }}: {{ formatNumber(ore.amount) }}</span>
           </v-chip>
           <v-divider class="my-2" />
           <div class="px-2">
