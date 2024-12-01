@@ -336,8 +336,8 @@
       return
     }
 
-    const exportable = Math.abs(metric.difference)
-    product.amount = product.amount + difference
+    const partData = factory.parts[product.id]
+    product.amount = partData.amountRequired // Fix both exports and production at the same time
     updateFactory(factory)
   }
 

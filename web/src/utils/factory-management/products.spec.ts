@@ -311,8 +311,14 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot.amountSuppliedViaProduction).toBe(150)
     })
     it('should do nothing if there is no part data', () => {
+      mockFactory.products = []
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 1000, // Way too many ingots
+        recipe: 'IngotIron',
+      })
       mockFactory.parts = {}
-      expect(trimProduct(mockIngotIron, mockFactory)).toBe(undefined)
+      expect(trimProduct(mockFactory.products[0], mockFactory)).toBe(undefined)
     })
   })
 
