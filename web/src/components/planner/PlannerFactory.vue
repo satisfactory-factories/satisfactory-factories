@@ -140,22 +140,24 @@
                 class="mr-2 pl-2 no-bottom rounded factory-link"
                 @click="navigateToFactory(input.factoryId as number)"
               >
-                <i class="fas fa-industry" />
-                <span class="ml-2">
-                  <b>{{ findFactory(input.factoryId as number).name }}:</b>
-                </span>
-                <v-chip
-                  class="sf-chip blue ml-2"
-                >
-                  <game-asset
-                    v-if="input.outputPart"
-                    height="32"
-                    :subject="input.outputPart"
-                    type="item"
-                    width="32"
-                  />
-                  <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
-                </v-chip>
+                <template v-if="input.factoryId">
+                  <i class="fas fa-industry" />
+                  <span class="ml-2">
+                    <b>{{ findFactory(input.factoryId as number).name }}:</b>
+                  </span>
+                  <v-chip
+                    class="sf-chip blue ml-2"
+                  >
+                    <game-asset
+                      v-if="input.outputPart"
+                      height="32"
+                      :subject="input.outputPart"
+                      type="item"
+                      width="32"
+                    />
+                    <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
+                  </v-chip>
+                </template>
               </div>
               <div
                 v-for="(resource, resourceKey) in factory.rawResources"
@@ -334,7 +336,7 @@
       return
     }
 
-    const difference = Math.abs(metric.difference)
+    const exportable = Math.abs(metric.difference)
     product.amount = product.amount + difference
     updateFactory(factory)
   }

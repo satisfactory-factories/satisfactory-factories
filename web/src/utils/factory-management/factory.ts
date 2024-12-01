@@ -119,11 +119,11 @@ export const calculateFactory = (
     calculateDependencyMetrics(factory)
   })
 
-  // Then we calculate the output state of all factories after dependencies have been configured
-  calculateExports(allFactories)
-
-  // Then we calculate the satisfaction of the factory. This requires Exports to be calculated first.
+  // Then we calculate the satisfaction of the factory. This requires Dependencies to be calculated first.
   calculateFactorySatisfaction(factory)
+
+  // Now we know the demands set upon the factory, now properly calculate the export display data
+  calculateExports(allFactories)
 
   // Export Calculator stuff
   configureExportCalculator(allFactories)

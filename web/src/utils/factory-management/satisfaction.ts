@@ -22,7 +22,7 @@ export const calculatePartMetrics = (factory: Factory, part: string) => {
     }
   })
 
-  // Get the amount required by exports
+  // Get the amount required by export dependencies
   partData.amountRequiredExports = 0
   getRequestsForFactoryByProduct(factory, part).forEach(request => {
     partData.amountRequiredExports += request.amount

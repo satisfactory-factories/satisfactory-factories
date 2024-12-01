@@ -31,25 +31,26 @@
             </h2>
           </v-card-title>
           <v-card-text class="text-body-1 pb-2 px-0">
-            <p v-show="helpText" class="text-body-2 mb-4">
-              <i class="fas fa-info-circle" /> Listed as [supply/demand]. Supply is created by adding imports to the factory or producing the product internally.
+            <p class="text-body-2 ml-4 mb-4">
+              <i class="fas fa-info-circle" />Represented as [Total Supply] - [Total Demand]. Hover over the circles for a breakdown of surplus / demand.
             </p>
-            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">              <v-row class="border-b-md mx-0">
-              <template v-for="([partId, part], index) in chunk" :key="partId">
-                <v-col
-                  class="pa-0 align-content-center"
-                  :class="index === 0 ? 'border-e-md' : ''"
-                  cols="12"
-                  md="6"
-                >
-                  <planner-factory-satisfaction-item
-                    :factory="factory"
-                    :part="part"
-                    :part-id="partId"
-                  />
-                </v-col>
-              </template>
-            </v-row>
+            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">
+              <v-row class="border-b-md mx-0">
+                <template v-for="([partId, part], index) in chunk" :key="partId">
+                  <v-col
+                    class="pa-0 align-content-center"
+                    :class="index === 0 ? 'border-e-md' : ''"
+                    cols="12"
+                    md="6"
+                  >
+                    <planner-factory-satisfaction-item
+                      :factory="factory"
+                      :part="part"
+                      :part-id="partId"
+                    />
+                  </v-col>
+                </template>
+              </v-row>
             </template>
           </v-card-text>
         </v-card>

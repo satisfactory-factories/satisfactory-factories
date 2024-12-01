@@ -14,7 +14,7 @@
         </v-card-title>
         <v-card-text class="text-body-2">
           <p class="mb-4">
-            <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll supply them sufficiently. It seemed a little pointless to force you to make a factory to input it directly into a factory.
+            <i class="fas fa-info-circle" /> Raw resources (e.g. Iron Ore) aren't defined as imports. It is assumed you'll surplus them sufficiently. It seemed a little pointless to force you to make a factory to input it directly into a factory.
           </p>
           <v-chip
             v-for="(resource, resourceKey) in factory.rawResources"
@@ -136,7 +136,7 @@
         </v-btn>
         <span v-if="ableToImport(factory) === 'noFacs'" class="ml-2">(Add another Factory with Exports!)</span>
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
-        <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports able to supply this factory.)</span>
+        <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports able to surplus this factory.)</span>
       </div>
     </div>
     <p v-else class="text-body-1">Awaiting product selection.</p>

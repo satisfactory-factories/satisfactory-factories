@@ -48,24 +48,27 @@ describe('exports', () => {
       expect(ironIngotFac.exports.IronIngot.surplus).toEqual(100)
       expect(ironIngotFac.exports.IronIngot.demands).toEqual(0)
     })
-    it('should calculate exports correctly', () => {
+
+    // Iron ingot production: 100
+    // Iron ingot demands from plate: 150
+    // 50 ingot deficit
+    // Should be a shortage of 50 ingots
+    it('should calculate export demands and shortages correctly', () => {
       const factories = [ironIngotFac, ironPlateFac]
 
       addInputToFactory(ironPlateFac, {
         factoryId: ironIngotFac.id,
         outputPart: 'IronIngot',
-        amount: 100,
+        amount: 150, // To produce 100 plates
       })
 
       // This should have added the dependency for us, thus calculateExports should have added the export because it's a dependant.
       calculateFactories(factories, gameData)
-
-      expect(ironIngotFac.exports).not.toEqual({})
       expect(ironIngotFac.exports.IronIngot).toEqual({
         productId: 'IronIngot',
-        surplus: 100,
-        demands: 100,
-        difference: 0,
+        surplus: -50, // All used up in production + export demand
+        demands: 150,
+        supply: 100, // 100 produced
         displayOrder: 0,
       })
     })
@@ -88,7 +91,7 @@ describe('exports', () => {
 
       expect(ironIngotFac.exports.IronIngot.demands).toEqual(125)
     })
-    it('should calculate exports correctly when factory is in a production deficit, without demands', () => {
+    it('should calculate exports correctly when factory is in a production deficit, without export demands', () => {
       const factories = [ironIngotFac]
 
       // Will produce a 200 ingot deficit
@@ -100,7 +103,14 @@ describe('exports', () => {
 
       calculateFactories(factories, gameData)
 
-      expect(ironIngotFac.exports.IronIngot).not.toBeDefined()
+      expect(ironIngotFac.exports.IronIngot).toStrictEqual({
+        productId: 'IronIngot',
+        surplus: -200, // Because surplus is all used up in internal production
+        demands: 0,
+        supply: 200,
+        difference: 0,
+        displayOrder: 0,
+      })
     })
 
     // Issue Ref: #107

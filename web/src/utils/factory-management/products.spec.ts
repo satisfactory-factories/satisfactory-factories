@@ -69,10 +69,10 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot).toBeDefined()
       expect(mockFactory.parts.CopperIngot).toBeDefined()
 
-      // Expect the parts to have the correct amount of supply data
+      // Expect the parts to have the correct amount of surplus data
       expect(mockFactory.parts.IronIngot.amountSuppliedViaProduction).toBe(123)
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(123)
-      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(-123)
+      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(123)
       expect(mockFactory.parts.IronIngot.satisfied).toBe(true)
       expect(mockFactory.totalPower).toBe(32.382) // 4.1x iron ingot smelters + 4.1x copper ingot smelters
 
@@ -154,8 +154,11 @@ describe('products', () => {
       expect(mockFactory.parts.IronIngot.amountRequired).toBe(250)
 
       // Expect the calculation to be correct
+      // Producing 100 iron ingots
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(100)
-      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(150)
+      // Therefore we expect a deficit of 150 iron ingots
+      expect(mockFactory.parts.IronIngot.amountRemaining).toBe(-150)
+      // Thus should not be satisfied
       expect(mockFactory.parts.IronIngot.satisfied).toBe(false)
     })
 
@@ -180,7 +183,7 @@ describe('products', () => {
       // This should result in 200 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(200)
       expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(200)
-      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-200)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(200) // Should be 200 left as there's no demand
       expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
     })
     it('should properly calculate metrics when products are duplicated using same recipe', () => {
@@ -200,10 +203,10 @@ describe('products', () => {
 
       calculateProducts(mockFactory, gameData)
 
-      // This should result in 200 iron plates being made.
+      // This should result in 300 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(300)
       expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(300)
-      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-300)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(300) // No demands, 300 left
       expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
     })
     it('should properly calculate metrics when products are duplicated 3 times using different recipes', () => {
@@ -229,10 +232,10 @@ describe('products', () => {
 
       calculateProducts(mockFactory, gameData)
 
-      // This should result in 200 iron plates being made.
+      // This should result in 150 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(150)
       expect(mockFactory.parts.IronPlate.amountSuppliedViaProduction).toBe(150)
-      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(-150)
+      expect(mockFactory.parts.IronPlate.amountRemaining).toBe(150) // No demands, 150 left
       expect(mockFactory.parts.IronPlate.amountSuppliedViaInput).toBe(0)
     })
   })

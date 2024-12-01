@@ -2,7 +2,7 @@ export interface PartMetrics {
   amountRequired: number; // Total amount required by all products on the line
   amountRequiredProduction: number; // Total amount required by production
   amountRequiredExports: number; // Total amount required by all exports
-  amountSupplied: number; // Total amount of supply used for display purposes
+  amountSupplied: number; // Total amount of surplus used for display purposes
   amountSuppliedViaInput: number; // This is the amount supplied by the inputs
   amountSuppliedViaProduction: number; // This is the amount supplied by internal products
   amountRemaining: number; // This is the amount remaining after all inputs and internal products are accounted for. Can be a minus number, which is used for surplus calculations.
@@ -37,7 +37,7 @@ export interface FactoryExportItem {
   productId: string;
   surplus: number;
   demands: number;
-  difference: number;
+  supply: number;
   displayOrder: number;
 }
 

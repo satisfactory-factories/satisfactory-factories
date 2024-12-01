@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mx-0 my-2 px-2 pl-4" :class="classes" style="height: 68px">
+  <v-row class="mx-0 my-2 px-2 pl-4" :class="classes" style="height: 100px">
     <v-col class="flex-grow-0 pa-0 align-content-center">
       <game-asset
         height="48"
@@ -9,20 +9,44 @@
       />
     </v-col>
     <v-col class="py-0 align-content-center">
-      <p v-if="reactivePart.satisfied">
-        <v-icon icon="fas fa-check" />
-        <span class="ml-2">
-          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }} /min
-        </span>
-      </p>
-      <p v-else>
-        <v-icon icon="fas fa-times" />
-        <span class="ml-2">
-          <b>{{ getPartDisplayName(partId) }}</b><br>{{ formatNumber(reactivePart.amountSupplied) }}/{{ formatNumber(reactivePart.amountRequired) }} /min
-        </span>
-      </p>
-    </v-col>
-    <v-col align-self="center" class="text-right align-content-center flex-shrink-0 py-0" cols="auto">
+      <div>
+        <div class="mb-1">
+          <span v-if="reactivePart.satisfied">
+            <v-icon icon="fas fa-check" />
+          </span>
+          <span v-else>
+            <v-icon icon="fas fa-times" />
+          </span>
+          <span class="ml-2"><b>{{ getPartDisplayName(partId) }}</b></span>
+        </div>
+        <div class="mb-1">
+          <v-tooltip bottom>
+            <template #activator="{ props }">
+              <v-chip class="sf-chip small gray no-border ma-0" v-bind="props">
+                <b>S: {{ reactivePart.amountSupplied }}</b>
+              </v-chip> -
+            </template>
+            <p>Supply: {{ reactivePart.amountSupplied }} /min</p>
+            <ul class="ml-3">
+              <li>From production: {{ reactivePart.amountSuppliedViaProduction }} /min</li>
+              <li>From imports / raw extraction: {{ reactivePart.amountSuppliedViaInput }} /min</li>
+            </ul>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template #activator="{ props }">
+              <v-chip class="sf-chip small gray no-border ma-0" v-bind="props">
+                <b>D: {{ reactivePart.amountRequired }}</b>
+              </v-chip> =
+            </template>
+            <p>Demands: {{ reactivePart.amountRequired }} /min</p>
+            <ul class="ml-3">
+              <li>From production: {{ reactivePart.amountRequiredProduction }} /min</li>
+              <li>From exports: {{ reactivePart.amountRequiredExports }} /min</li>
+            </ul>
+          </v-tooltip>
+          <b>{{ reactivePart.amountRemaining }} /min</b>
+        </div>
+      </div>
       <v-btn
         v-if="!getProduct(factory, partId) && !isItemRawResource(partId) && !reactivePart.satisfied"
         class="my-1 d-block"
@@ -56,7 +80,6 @@
 <script setup lang="ts">
   import { inject } from 'vue'
   import { getPartDisplayName } from '@/utils/helpers'
-  import { formatNumber } from '@/utils/numberFormatter'
   import { Factory, FactoryInput, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { useGameDataStore } from '@/stores/game-data-store'
@@ -80,10 +103,7 @@
   // This is required to make it reactive, as the part object is an array and thus not reactive.
   // Yes it's a hack, no I don't care. I'm sick of this now.
   watch(() => props.part, newPart => {
-    reactivePart.amountRequired = newPart.amountRequired
-    reactivePart.amountSupplied = newPart.amountSupplied
-    reactivePart.amountRemaining = newPart.amountRemaining
-    reactivePart.satisfied = newPart.satisfied
+    Object.assign(reactivePart, newPart) // Object.assign maintains reactivity
   })
 
   const classes = computed(() => {
