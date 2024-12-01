@@ -96,7 +96,7 @@
     hidden.value = !hidden.value
   }
 
-  // Function to toggle the inifinity symbol for parts with large, unknown quantities.
+  // Function to toggle the infinity symbol for parts with large, unknown quantities.
   const isInfinity = (oreName) => {
     switch (oreName) {
       case "Leaves":
