@@ -8,6 +8,7 @@
   margin-right: 8px;
   margin-bottom: 4px;
   margin-top: 4px;
+  color: white !important;
 
   &.small {
     padding: 12px 10px !important;
@@ -20,6 +21,11 @@
 
   &.no-margin {
     margin: 0 !important;
+  }
+
+  &.red {
+    color: #f44336 !important;
+    border-color: #f44336 !important;
   }
 
   &.blue {
@@ -40,6 +46,10 @@
   &.green {
     color: #4caf50 !important;
     border-color: #4caf50 !important;
+  }
+
+  &.no-border {
+    border: 0 !important;
   }
 }
 

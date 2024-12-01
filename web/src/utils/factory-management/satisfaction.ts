@@ -1,5 +1,6 @@
 // Calculate the remaining amount of parts required after all inputs and internal products are accounted for.
 import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
 
 export const calculatePartMetrics = (factory: Factory, part: string) => {
   const partData = factory.parts[part]
@@ -11,8 +12,30 @@ export const calculatePartMetrics = (factory: Factory, part: string) => {
     partData.amountSupplied = partData.amountSuppliedViaInput + partData.amountSuppliedViaProduction
   }
 
-  partData.amountRemaining = partData.amountRequired - partData.amountSupplied
-  partData.satisfied = partData.amountRemaining <= 0
+  // === Part Requirements ===
+  // Get the amount required by production
+  partData.amountRequiredProduction = 0
+  factory.products.forEach(product => {
+    // It may not be available at this point
+    if (product.requirements[part]?.amount) {
+      partData.amountRequiredProduction += product.requirements[part].amount
+    }
+  })
+
+  // Get the amount required by export dependencies
+  partData.amountRequiredExports = 0
+  getRequestsForFactoryByProduct(factory, part).forEach(request => {
+    partData.amountRequiredExports += request.amount
+  })
+
+  // Sum up requirements
+  partData.amountRequired = partData.amountRequiredProduction + partData.amountRequiredExports
+
+  // Sum up remaining amount
+  partData.amountRemaining = partData.amountSupplied - partData.amountRequired
+
+  // Now calculate if satisfied
+  partData.satisfied = partData.amountRemaining >= 0
 }
 
 export const calculateFactorySatisfaction = (factory: Factory) => {

@@ -36,7 +36,7 @@
           </div>
           <div class="mb-4">
             <span
-              v-if="exportItem.difference >= 0"
+              v-if="exportItem.surplus >= 0"
               class="text-green"
             >
               <i class="fas fa-check" />
@@ -45,17 +45,17 @@
                 class="ml-2"
                 color="green"
               >
-                <b>{{ formatNumber(exportItem.difference) }}</b>&nbsp;available for export
+                <b>{{ formatNumber(exportItem.surplus) }}</b>/min available for export
               </v-chip>
             </span>
             <span
-              v-if="exportItem.difference < 0"
+              v-if="exportItem.surplus < 0"
               class="text-red"
             >
               <span>
                 <i class="fas fa-times" />
                 <span class="ml-2 font-weight-bold">
-                  Shortage of {{ formatNumber(exportItem.demands - exportItem.surplus) }}/min
+                  Shortage of {{ formatNumber(Math.abs(exportItem.surplus)) }}/min
                 </span>
                 <v-btn
                   class="ml-2"
@@ -69,10 +69,7 @@
           </div>
           <div class="ml-n1">
             <v-chip class="ma-1 mt-0">
-              <b>Surplus:</b>&nbsp;{{ formatNumber(exportItem.surplus) }}/min
-            </v-chip>
-            <v-chip class="ma-1 mt-0">
-              <b>Demands:</b>&nbsp;{{ formatNumber(exportItem.demands) }}/min
+              <b>Total Export Demands:</b>&nbsp;{{ formatNumber(exportItem.demands) }}/min
             </v-chip>
           </div>
           <div

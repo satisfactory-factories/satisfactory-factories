@@ -37,16 +37,20 @@ describe('Simple factory plan', () => {
   })
   it('should have the correct part entries', () => {
     expect(factory.parts.IronIngot).toStrictEqual({
-      amountRequired: 0,
+      amountRequired: 100,
+      amountRequiredExports: 100,
+      amountRequiredProduction: 0,
       amountSupplied: 100,
       amountSuppliedViaInput: 0,
       amountSuppliedViaProduction: 100,
-      amountRemaining: -100,
+      amountRemaining: 0,
       satisfied: true,
       isRaw: false,
     })
     expect(factory.parts.OreIron).toStrictEqual({
       amountRequired: 100,
+      amountRequiredExports: 0,
+      amountRequiredProduction: 100,
       amountSupplied: 100,
       amountSuppliedViaInput: 100,
       amountSuppliedViaProduction: 0,
@@ -107,9 +111,9 @@ describe('Simple factory plan', () => {
     expect(factory.exports).toStrictEqual({
       IronIngot: {
         productId: 'IronIngot',
-        surplus: 100,
+        supply: 100,
+        surplus: 0,
         demands: 100,
-        difference: 0,
         displayOrder: 0,
       },
     })
