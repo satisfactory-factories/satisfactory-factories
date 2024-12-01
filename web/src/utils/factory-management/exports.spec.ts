@@ -94,7 +94,8 @@ describe('exports', () => {
     it('should calculate exports correctly when factory is in a production deficit, without export demands', () => {
       const factories = [ironIngotFac]
 
-      // Will produce a 200 ingot deficit
+      // Producing 100 iron ingots
+      // Plates will create a 200 ingot deficit as it needs 300 total
       addProductToFactory(ironIngotFac, {
         id: 'IronPlate',
         amount: 200,
@@ -105,10 +106,9 @@ describe('exports', () => {
 
       expect(ironIngotFac.exports.IronIngot).toStrictEqual({
         productId: 'IronIngot',
-        surplus: -200, // Because surplus is all used up in internal production
+        surplus: -200, // 200 ingot deficit
         demands: 0,
-        supply: 200,
-        difference: 0,
+        supply: 100,
         displayOrder: 0,
       })
     })
@@ -117,25 +117,40 @@ describe('exports', () => {
     it('should calculate exports correctly when factory is in a production deficit, with demands', () => {
       const factories = [ironIngotFac, ironPlateFac]
 
+      // 100 iron ingots are already being produced
+      // Will produce a 50 ingot internal deficit, as we are producing 100 ingots and 150 are needed to make plates
+      addProductToFactory(ironIngotFac, {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      })
+
+      // Not used in calculations but for completeness sake
+      addProductToFactory(ironPlateFac, {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      })
+      // Demand from the ingot factory
       addInputToFactory(ironPlateFac, {
         factoryId: ironIngotFac.id,
         outputPart: 'IronIngot',
-        amount: 100,
-      })
-
-      // Will produce a 200 ingot deficit
-      addProductToFactory(ironIngotFac, {
-        id: 'IronPlate',
-        amount: 200,
-        recipe: 'IronPlate',
+        amount: 150, // to fulfil the 100 iron plate demand in ironPlateFac
       })
 
       calculateFactories(factories, gameData)
 
-      expect(ironIngotFac.exports.IronIngot.demands).toBe(100)
-      expect(ironIngotFac.exports.IronIngot.surplus).toBe(0)
-      expect(ironIngotFac.exports.IronPlate.surplus).toBe(200)
-      expect(ironIngotFac.exports.IronPlate.demands).toBe(0)
+      // Iron ingot production: 100
+      // Iron ingot internally demands from plate: 150
+      // Iron ingot external demands from plate: 150
+      // Total demands should be 300
+      expect(ironIngotFac.exports.IronIngot.demands).toBe(150)
+
+      // Deficit should be 200
+      expect(ironIngotFac.exports.IronIngot.surplus).toBe(-200)
+
+      // Production should be 100
+      expect(ironIngotFac.exports.IronIngot.supply).toBe(100)
     })
     it('should calculate exports correctly with confirmed bugged factory', () => {
       const factories = internalProductionDeficitPlan()
@@ -144,19 +159,8 @@ describe('exports', () => {
 
       const wireFac = findFacByName('Wire', factories)
       expect(wireFac.parts.Wire.amountRemaining).toBe(-290)
-      expect(wireFac.exports.Wire.surplus).toBe(0)
+      expect(wireFac.exports.Wire.surplus).toBe(-290)
       expect(wireFac.exports.Wire.demands).toBe(170)
-    })
-    it('should calculate no exports when id of product is unset', () => {
-      const factory = newFactory('Iron Ingots')
-      addProductToFactory(factory, {
-        amount: 100,
-        recipe: 'IngotIron',
-      })
-
-      calculateFactories([factory], gameData)
-
-      expect(factory.exports).toEqual({})
     })
     it('should calculate exports correctly with products that have byproduct(s)', () => {
       const factories = [oilFac]

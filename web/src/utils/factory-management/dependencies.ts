@@ -147,15 +147,15 @@ export const calculateDependencyMetrics = (factory: Factory) => {
         metrics[part] = {
           part,
           request: 0,
-          supply: factory.parts[part]?.amountRemaining ?? 0,
+          supply: factory.parts[part]?.amountSupplied ?? 0,
           isRequestSatisfied: false,
           difference: 0,
         }
       }
 
       metrics[part].request += request.amount
-      metrics[part].isRequestSatisfied = metrics[part].supply >= metrics[part].request
       metrics[part].difference = metrics[part].supply - metrics[part].request
+      metrics[part].isRequestSatisfied = metrics[part].difference >= 0
     })
   })
 }
