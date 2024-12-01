@@ -39,7 +39,7 @@
             class="sf-chip blue"
           >
             <game-asset :subject="ore.id" type="item" />
-            <span> {{ ore.name }}:
+            <span>  {{ ore.name }}:
               <span v-if="isInfinity(ore.name)"> <i class="fas fa-infinity" /></span>
               <span v-else> {{ formatNumber(ore.amount) }}</span>
             </span>
