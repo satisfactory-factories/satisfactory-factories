@@ -168,8 +168,7 @@
   import { inject } from 'vue'
   import { getPartDisplayName } from '@/utils/helpers'
   import {
-    ExportCalculatorSettings,
-    Factory, FactoryDependencyRequest,
+    Factory,
     FactoryInput,
     FactoryItem,
     PartMetrics,
@@ -177,7 +176,6 @@
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
-  import PlannerFactoryExportCalculator from '@/components/planner/PlannerFactoryExportCalculator.vue'
   import { formatNumber } from '../../utils/numberFormatter'
 
   const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
@@ -242,22 +240,22 @@
     return factory.exportCalculator[part]?.selected === factoryId.toString()
   }
 
-  const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
-    if (part === null) {
-      console.error(`Could not get calculator settings for invalid part ${part}`)
-      return undefined
-    }
-    return factory.exportCalculator[part]
-  }
-
-  const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string): FactoryDependencyRequest | undefined => {
-    // Get the requests, then filter by the requesting factory to get the exact request for the port
-    const requests = factory.dependencies.requests[destFacId]
-    if (!requests) {
-      return undefined
-    }
-    return requests.find(request => request.part === part)
-  }
+  // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
+  //   if (part === null) {
+  //     console.error(`Could not get calculator settings for invalid part ${part}`)
+  //     return undefined
+  //   }
+  //   return factory.exportCalculator[part]
+  // }
+  //
+  // const getRequestForPartByDestFac = (factory: Factory, part: string, destFacId: string): FactoryDependencyRequest | undefined => {
+  //   // Get the requests, then filter by the requesting factory to get the exact request for the port
+  //   const requests = factory.dependencies.requests[destFacId]
+  //   if (!requests) {
+  //     return undefined
+  //   }
+  //   return requests.find(request => request.part === part)
+  // }
 
   const openCalculator = (factoryId: string, partId: string) => {
     if (openedCalculator.value === partId) {
