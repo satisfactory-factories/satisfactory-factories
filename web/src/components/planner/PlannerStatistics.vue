@@ -98,14 +98,14 @@
 
   // Function to toggle the inifinity symbol for parts with large, unknown quantities.
   const isInfinity = (oreName) => {
-  switch (oreName) {
-    case "Leaves":
-    case "Mycelia":
-    case "Water":
-    case "Wood":
-      return true
-    default:
-      return false
+    switch (oreName) {
+      case "Leaves":
+      case "Mycelia":
+      case "Water":
+      case "Wood":
+        return true
+      default:
+        return false
+    }
   }
-}
 </script>
