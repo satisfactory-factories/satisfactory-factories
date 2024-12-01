@@ -133,7 +133,7 @@ describe('exports', () => {
       calculateFactories(factories, gameData)
 
       const wireFac = findFacByName('Wire', factories)
-      expect(wireFac.parts.Wire.amountRemaining).toBe(120) // Currently, we do not add the exports into the parts calculations, we possibly could do.
+      expect(wireFac.parts.Wire.amountRemaining).toBe(-290)
       expect(wireFac.exports.Wire.surplus).toBe(0)
       expect(wireFac.exports.Wire.demands).toBe(170)
     })

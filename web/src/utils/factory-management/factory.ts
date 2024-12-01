@@ -105,9 +105,6 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
-  // Then we calculate the satisfaction of the factory.
-  calculateFactorySatisfaction(factory)
-
   // We then calculate the building and power demands to make the factory.
   calculateBuildingsAndPower(factory)
 
@@ -124,6 +121,9 @@ export const calculateFactory = (
 
   // Then we calculate the output state of all factories after dependencies have been configured
   calculateExports(allFactories)
+
+  // Then we calculate the satisfaction of the factory. This requires Exports to be calculated first.
+  calculateFactorySatisfaction(factory)
 
   // Export Calculator stuff
   configureExportCalculator(allFactories)

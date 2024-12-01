@@ -63,17 +63,13 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       // === Now we need to calculate the parts required per min to make the product ===
-      const productIngredientRatio = product.amount / recipe.products[0].perMin // This formular should have no rounding - the decimal points are important here for the floating point calculations
+      const productIngredientRatio = product.amount / recipe.products[0].perMin // This formula should have no rounding - the decimal points are important here for the floating point calculations
       let ingredientRequired = ingredient.perMin * productIngredientRatio
       ingredientRequired = Math.round(ingredientRequired * 1000) / 1000
 
-      // console.log(ingredient.part + ':product.amount (' + product.amount + ') / recipe.products[0].perMin (' + recipe.products[0].perMin + ') = productIngredientRatio (' + productIngredientRatio + ')')
-      // console.log(ingredient.part + ': ingredient.perMin (' + ingredient.perMin + ') * productIngredientRatio (' + productIngredientRatio + ') = ingredientRequired (' + ingredientRequired + ')')
-
-      // In every case, always add the ingredient to the parts list
+      // Handle the ingredients
       createNewPart(factory, ingredient.part)
       factory.parts[ingredient.part].amountRequired += ingredientRequired
-      calculatePartMetrics(factory, ingredient.part)
 
       // Raw resource handling
       if (gameData.items.rawResources[ingredient.part]) {
@@ -89,7 +85,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
 
         // Mark the part as raw which will eventually be marked as fully satisfied.
         factory.parts[ingredient.part].isRaw = true
-        calculatePartMetrics(factory, ingredient.part)
       }
 
       // Set the amount that the individual products need for display purposes.
@@ -100,6 +95,9 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       product.requirements[ingredient.part].amount += ingredientRequired
+
+      // Finally calculate the part metrics now we have the details for the ingredient.
+      calculatePartMetrics(factory, ingredient.part)
     })
   })
 }
