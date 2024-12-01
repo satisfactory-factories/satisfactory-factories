@@ -23,100 +23,32 @@
     </h2>
 
     <v-row v-if="hasParts">
-      <v-col cols="12" md="7">
-        <v-card class="border-md sub-card">
-          <v-card-title>
-            <h2 class="text-h6">
-              <i class="fas fa-cube" /><span class="ml-2">Items</span>
-            </h2>
-          </v-card-title>
-          <v-card-text class="text-body-1 pb-2 px-0">
-            <p class="text-body-2 ml-4 mb-4">
-              <i class="fas fa-info-circle" />Represented as [Total Supply] - [Total Demand]. Hover over the circles for a breakdown of surplus / demand.
-            </p>
-            <template v-for="(chunk, _chunkIndex) in satisfactionDisplay" :key="'chunk-' + _chunkIndex">
-              <v-row class="border-b-md mx-0">
-                <template v-for="([partId, part], index) in chunk" :key="partId">
-                  <v-col
-                    class="pa-0 align-content-center"
-                    :class="index === 0 ? 'border-e-md' : ''"
-                    cols="12"
-                    md="6"
-                  >
-                    <planner-factory-satisfaction-item
-                      :factory="factory"
-                      :part="part"
-                      :part-id="partId"
-                    />
-                  </v-col>
-                </template>
-              </v-row>
-            </template>
-          </v-card-text>
-        </v-card>
+      <v-col cols="12">
+        <planner-factory-satisfaction-items :factory="factory" />
       </v-col>
-      <v-col cols="12" md="5">
-        <v-card class="sub-card border-md">
-          <v-card-title>
-            <h2 class="text-h6">
-              <i class="fas fa-building" />
-              <span class="ml-3">Factory Buildings</span>
-            </h2>
-          </v-card-title>
-          <v-card-text class="text-body-1 pb-2">
-            <div
-              v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
-              :key="'building-' + buildingIndex"
-              style="display: inline;"
-            >
-              <v-chip
-                class="sf-chip orange"
-                variant="tonal"
-              >
-                <game-asset
-                  :subject="buildingData.name"
-                  type="building"
-                />
-                <span class="ml-2">
-                  <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ formatNumber(buildingData.amount) ?? 0 }}x
-                </span>
-              </v-chip>
-            </div>
-            <v-divider class="my-2" color="#ccc" thickness="2px" />
-            <div>
-              <h2 class="text-h6">
-                <i class="fas fa-plug" />
-                <span class="ml-3">Factory Power</span>
-              </h2>
-              <v-chip
-                class="sf-chip yellow"
-                variant="tonal"
-              >
-                <i class="fas fa-bolt" />
-                <span class="ml-2">
-                  {{ formatNumber(factory.totalPower) }} MW
-                </span>
-              </v-chip>
-            </div>
-          </v-card-text>
-        </v-card>
+      <v-col cols="12">
+        <planner-factory-satisfaction-buildings
+          :factory="factory"
+          :help-text="helpText"
+        />
       </v-col>
     </v-row>
-    <p v-else class="text-body-1">Awaiting product selection or requirements outside of Raw Resources.</p>
+    <p
+      v-else
+      class="
+          text-body-1"
+    >Awaiting product selection or requirements outside of Raw Resources.</p>
   </div>
 </template>
 
 <script setup lang="ts">
   import {
     Factory,
-    PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
-  import { computed, inject } from 'vue'
+  import { computed } from 'vue'
 
-  import { formatNumber } from '@/utils/numberFormatter'
-  import PlannerFactorySatisfactionItem from '@/components/planner/PlannerFactorySatisfactionItem.vue'
-
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
+  import PlannerFactorySatisfactionBuildings from '@/components/planner/PlannerFactorySatisfactionBuildings.vue'
+  import PlannerFactorySatisfactionItems from '@/components/planner/PlannerFactorySatisfactionItems.vue'
 
   const props = defineProps<{
     factory: Factory;
@@ -126,14 +58,4 @@
   // Reactive factory parts check
   const hasParts = computed(() => Object.keys(props.factory.parts).length > 0)
 
-  // Generate chunks for the satisfaction display
-  const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
-    const parts: [string, PartMetrics][] = Object.entries(props.factory.parts)
-
-    const result: [string, PartMetrics][][] = []
-    for (let i = 0; i < parts.length; i += 2) {
-      result.push(parts.slice(i, i + 2))
-    }
-    return result
-  })
 </script>
