@@ -255,7 +255,7 @@
   import { defineProps, inject } from 'vue'
   import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
-  import { getPartDisplayName, hasMetricsForPart, differenceClass } from '@/utils/helpers'
+  import { differenceClass, getPartDisplayName, hasMetricsForPart } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
 
