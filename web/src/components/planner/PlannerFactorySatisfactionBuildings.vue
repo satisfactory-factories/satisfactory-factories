@@ -3,10 +3,19 @@
     <v-card-title>
       <h2 class="text-h6">
         <i class="fas fa-building" />
-        <span class="ml-3">Buildings & Power</span>
+        <span class="ml-3">Power &amp; Buildings</span>
       </h2>
     </v-card-title>
     <v-card-text class="text-body-1 pb-2">
+      <v-chip
+        class="sf-chip yellow"
+        variant="tonal"
+      >
+        <i class="fas fa-bolt" />
+        <span class="ml-2">
+          {{ formatNumber(factory.totalPower) }} MW
+        </span>
+      </v-chip>
       <div
         v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)"
         :key="'building-' + buildingIndex"
@@ -24,15 +33,7 @@
             <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ formatNumber(buildingData.amount) ?? 0 }}x
           </span>
         </v-chip>
-        <v-chip
-          class="sf-chip yellow"
-          variant="tonal"
-        >
-          <i class="fas fa-bolt" />
-          <span class="ml-2">
-            {{ formatNumber(factory.totalPower) }} MW
-          </span>
-        </v-chip>
+
       </div>
     </v-card-text>
   </v-card>

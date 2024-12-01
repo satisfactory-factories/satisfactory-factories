@@ -61,26 +61,31 @@
   import { defineProps } from 'vue'
   import { formatNumber } from '@/utils/numberFormatter'
   import {
-    ExportCalculatorFactorySettings,
     Factory,
     FactoryDependencyRequest,
     FactoryItem,
   } from '@/interfaces/planner/FactoryInterface'
-  import { DataInterface } from '@/interfaces/DataInterface'
+  import { useGameDataStore } from '@/stores/game-data-store'
+
+  const gameData = useGameDataStore().getGameData()
 
   const props = defineProps<{
     factory: Factory;
     destFactory: Factory;
     request: FactoryDependencyRequest | undefined;
-    product: FactoryItem;
-    destFactorySettings: ExportCalculatorFactorySettings
-    gameData: DataInterface;
+    product: FactoryItem | undefined;
     helpText: boolean;
   }>()
 
   if (!props.request) {
-    console.error('No request provided!')
+    console.error('Export Calculator: No request provided!')
   }
+
+  if (!props.product) {
+    throw new Error('Export Calculator: No product provided!')
+  }
+
+  const settings = props.factory.exportCalculator[props.product.id.toString()][props.destFactory.id.toString()]
 
   const calculateBelts = (amount: number, beltType: string) => {
     // Simple math here to divide the amount by the belt's capacity
@@ -127,7 +132,7 @@
     const part = props.product.id
 
     // 1. Get the product info from game data
-    const data = props.gameData.items.parts[part]
+    const data = gameData.items.parts[part]
 
     if (!data.stackSize) {
       console.error(`Unable to get stack size for ${part}`)
@@ -159,7 +164,7 @@
   }
 
   const isFluid = (part: string) => {
-    return props.gameData.items.parts[part].isFluid
+    return gameData.items.parts[part].isFluid
   }
 
 </script>

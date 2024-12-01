@@ -24,7 +24,10 @@
 
     <v-row v-if="hasParts">
       <v-col class="pb-1" cols="12">
-        <planner-factory-satisfaction-items :factory="factory" />
+        <planner-factory-satisfaction-items
+          :factory="factory"
+          :help-text="helpText"
+        />
       </v-col>
       <v-col cols="12">
         <planner-factory-satisfaction-buildings
