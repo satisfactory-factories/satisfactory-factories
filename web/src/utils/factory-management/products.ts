@@ -1,4 +1,4 @@
-import { BuildingRequirement, Factory } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { createNewPart, getRecipe } from '@/utils/factory-management/common'
 import { calculatePartMetrics } from '@/utils/factory-management/satisfaction'
@@ -183,4 +183,61 @@ export const calculateInternalProducts = (factory: Factory, gameData: DataInterf
       }
     })
   })
+}
+
+export const shouldShowTrim = (product: FactoryItem, factory: Factory) => {
+  // Calculate whether the product should be trimmed or not by checking:
+  // 1. Part requirements of the item are more than internal demand
+  // 2. Exported difference is more than 0
+
+  if (!product.id) {
+    return false
+  }
+
+  const part = factory.parts[product.id]
+
+  if (!part) {
+    console.error(`Part not found for product ID ${product.id}!`)
+    return false
+  }
+
+  if (product.amount === 1) {
+    return false // It's likely a new product, no need to show trim
+  }
+
+  if (part.amountRemaining <= 0) {
+    return false // It's in demand internally or it's exactly right
+  }
+
+  // Must then mean there's a surplus
+  return true
+}
+
+export const trimProduct = (product: FactoryItem, factory: Factory) => {
+  // Using exports we can figure out the remaining surplus
+  const partData = factory.parts[product.id]
+
+  if (!partData) {
+    // Nothing to do
+    return
+  }
+
+  // Trim the product
+  product.amount = partData.amountRequired
+}
+
+export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) => {
+  // Calculate whether the product is in demand at all
+  if (!product.id) {
+    return false
+  }
+
+  if (product.amount === 0) {
+    // Product is not being produced
+    return true
+  }
+
+  const partRequired = factory.parts[product.id]?.amountRequired
+
+  return partRequired <= 0
 }

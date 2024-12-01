@@ -1,8 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { newFactory } from '@/utils/factory-management/factory'
-import { addProductToFactory, calculateByProducts, calculateProducts } from '@/utils/factory-management/products'
+import { calculateFactories, calculateFactory, newFactory } from '@/utils/factory-management/factory'
+import {
+  addProductToFactory,
+  calculateByProducts,
+  calculateProducts,
+  shouldShowNotInDemand,
+  trimProduct,
+} from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
+import { addInputToFactory } from '@/utils/factory-management/inputs'
 
 const mockIngotIron = {
   id: 'IronIngot',
@@ -278,6 +285,81 @@ describe('products', () => {
 
       // Expect that the byproduct has been added to the parts array for potential consumption by other products.
       expect(mockFactory.parts.PolymerResin.amountSupplied).toBe(75)
+    })
+  })
+  describe('trimProduct', () => {
+    it('should trim product to the correct amount', () => {
+      mockFactory.products = []
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 1000, // Way too many ingots
+        recipe: 'IngotIron',
+      })
+      addProductToFactory(mockFactory, {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      })
+      calculateFactories([mockFactory], gameData)
+      const product = mockFactory.products[0]
+
+      trimProduct(product, mockFactory)
+      calculateFactory(mockFactory, [mockFactory], gameData)
+
+      // Expect the Iron Ingot to be trimmed to the correct amount
+      expect(mockFactory.parts.IronIngot.amountSupplied).toBe(150)
+      expect(mockFactory.parts.IronIngot.amountSuppliedViaProduction).toBe(150)
+    })
+    it('should do nothing if there is no part data', () => {
+      mockFactory.parts = {}
+      expect(trimProduct(mockIngotIron, mockFactory)).toBe(undefined)
+    })
+  })
+
+  describe('shouldShowNotInDemand', () => {
+    it('should show the not in demand chip when the product is not in demand', () => {
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+
+      calculateFactories([mockFactory], gameData)
+
+      expect(shouldShowNotInDemand(mockFactory.products[0], mockFactory)).toBe(true)
+    })
+
+    it('should not show not in demand chip when product has internal usage', () => {
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+      addProductToFactory(mockFactory, {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      })
+
+      calculateFactories([mockFactory], gameData)
+
+      expect(shouldShowNotInDemand(mockFactory.products[0], mockFactory)).toBe(false)
+    })
+    it('should not show not in demand chip when product has export usage', () => {
+      const mockFactory2 = newFactory('Iron Plates')
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+      addInputToFactory(mockFactory2, {
+        factoryId: mockFactory.id,
+        amount: 100,
+        outputPart: 'IronIngot',
+      })
+      calculateFactories([mockFactory, mockFactory2], gameData)
+
+      expect(shouldShowNotInDemand(mockFactory.products[0], mockFactory)).toBe(false)
     })
   })
 })
