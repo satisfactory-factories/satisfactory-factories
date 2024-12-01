@@ -97,8 +97,8 @@
   }
 
   // Function to toggle the inifinity symbol for parts with large, unknown quantities.
-  const isInfinity = (ore) => {
-  switch (ore.name) {
+  const isInfinity = (oreName) => {
+  switch (oreName) {
     case "Leaves":
     case "Mycelia":
     case "Water":
