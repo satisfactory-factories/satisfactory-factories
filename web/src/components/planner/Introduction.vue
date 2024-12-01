@@ -17,7 +17,7 @@
           />
         </v-responsive>
         <p class="text-h5">Why does this tool exist?</p>
-        <p>TL;DR: Create production goals for each factory, create and manage dependencies between factories, visualise the flow of items and highlight bottlenecks / gaps in surplus as you scale your industrial prowess!</p>
+        <p>TL;DR: Create production goals for each factory, create and manage dependencies between factories, visualise the flow of items and highlight bottlenecks / gaps in supply as you scale your industrial prowess!</p>
         <p><b>Satisfactory Factories</b> helps plan and manage modular factory (or levels in mega-factories) production chains. Tracking interconnected factories and their dependencies can be overwhelming, leading to overlooked areas and bottlenecks when demands change. This tool automates calculations, ensuring proper scaling for new demands and saving time. Unlike other planners that focus on "what is needed to make X part", SF focuses on per-factory demand rather than <i>just</i> per-part demand. You can use it to determine part quantities and import requirements for future changes, maintaining the production chain and highlighting issues / bottlenecks.</p>
         <div class="py-2 mb-4 border-t-md border-b-md rounded">
           <p class="text-h5">Enough yapping, how does it work?</p>

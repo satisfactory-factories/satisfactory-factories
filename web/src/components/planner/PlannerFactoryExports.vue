@@ -10,7 +10,7 @@
       and use this factory as an import.
     </p>
     <p v-if="factory.exports && Object.keys(factory.exports).length === 0" class="text-body-1">
-      No difference products yet. Add a product!
+      No exportable products yet. Add a product!
     </p>
 
     <div v-if="factory.exports && Object.keys(factory.exports).length > 0">

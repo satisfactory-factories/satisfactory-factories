@@ -91,18 +91,18 @@
 
   const { getDefaultRecipeForPart } = useGameDataStore()
 
-  const props = defineProps<{
+  const compProps = defineProps<{
     factory: Factory;
     part: PartMetrics;
     partId: string;
   }>()
 
-  const reactivePart = reactive(props.part)
-  const partId = ref<string>(props.partId)
+  const reactivePart = reactive(compProps.part)
+  const partId = ref<string>(compProps.partId)
 
   // This is required to make it reactive, as the part object is an array and thus not reactive.
   // Yes it's a hack, no I don't care. I'm sick of this now.
-  watch(() => props.part, newPart => {
+  watch(() => compProps.part, newPart => {
     Object.assign(reactivePart, newPart) // Object.assign maintains reactivity
   })
 
