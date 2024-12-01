@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     Auth: typeof import('./components/Auth.vue')['default']
-    DiscordSplash: typeof import('./components/DiscordSplash.vue')['default']
     FactoryDebug: typeof import('./components/FactoryDebug.vue')['default']
     FactoryNode: typeof import('./components/graph/FactoryNode.vue')['default']
     GameAsset: typeof import('./components/GameAsset.vue')['default']
@@ -27,6 +26,7 @@ declare module 'vue' {
     PlannerFactoryList: typeof import('./components/planner/PlannerFactoryList.vue')['default']
     PlannerFactoryProducts: typeof import('./components/planner/PlannerFactoryProducts.vue')['default']
     PlannerFactorySatisfaction: typeof import('./components/planner/PlannerFactorySatisfaction.vue')['default']
+    PlannerFactorySatisfactionItem: typeof import('./components/planner/PlannerFactorySatisfactionItem.vue')['default']
     PlannerGlobalActions: typeof import('./components/planner/PlannerGlobalActions.vue')['default']
     PlannerStatistics: typeof import('./components/planner/PlannerStatistics.vue')['default']
     RecipeItem: typeof import('./components/recipes/RecipeItem.vue')['default']
@@ -37,6 +37,7 @@ declare module 'vue' {
     ShareButton: typeof import('./components/ShareButton.vue')['default']
     Statistics: typeof import('./components/planner/Statistics.vue')['default']
     Summary: typeof import('./components/planner/Summary.vue')['default']
+    Splash: typeof import('./components/Splash.vue')['default']
     Sync: typeof import('./components/Sync.vue')['default']
     TabNavigation: typeof import('./components/TabNavigation.vue')['default']
     Templates: typeof import('./components/Templates.vue')['default']

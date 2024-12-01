@@ -4,12 +4,17 @@ import { calculateByProducts, calculateInternalProducts, calculateProducts } fro
 import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
 import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
-import { calculateDependencyMetrics, constructDependencies } from '@/utils/factory-management/dependencies'
+import {
+  calculateDependencyMetrics,
+  constructDependencies,
+  scanForInvalidInputs,
+} from '@/utils/factory-management/dependencies'
 import { calculateExports } from '@/utils/factory-management/exports'
 import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
+import { calculateSyncState } from '@/utils/factory-management/syncState'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -61,6 +66,8 @@ export const newFactory = (name = 'A new factory'): Factory => {
     usingRawResourcesOnly: false,
     hidden: false,
     hasProblem: false,
+    inSync: null,
+    syncState: {},
     displayOrder: -1, // this will get set by the planner
   }
 }
@@ -83,6 +90,9 @@ export const calculateFactory = (
   // And calculate Byproducts
   calculateByProducts(factory, gameData)
 
+  // Calculate if there have been any changes the player needs to enact.
+  calculateSyncState(factory)
+
   // Calculate building requirements for each product based on the selected recipe and product amount.
   calculateBuildingRequirements(factory, gameData)
 
@@ -103,6 +113,11 @@ export const calculateFactory = (
 
   // Check all other factories to see if they are affected by this factory change.
   constructDependencies(allFactories)
+
+  // Check if we have any invalid inputs.
+  scanForInvalidInputs(factory, allFactories)
+
+  // Calculate the dependency metrics for the factory.
   allFactories.forEach(factory => {
     calculateDependencyMetrics(factory)
   })

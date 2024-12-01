@@ -163,10 +163,9 @@
                 hide-details
                 hide-spin-buttons
                 min="0"
-                min-width="45px"
                 :product="product.id"
-
                 type="number"
+                width="60px"
                 @input="increaseProductQtyByBuilding(product)"
               />
             </v-chip>

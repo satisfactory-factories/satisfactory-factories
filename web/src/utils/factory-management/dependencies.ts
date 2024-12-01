@@ -1,4 +1,4 @@
-import { Factory, FactoryInput } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryDependencyRequest, FactoryInput } from '@/interfaces/planner/FactoryInterface'
 import { findFac } from '@/utils/factory-management/factory'
 
 // Adds dependencies between two factories.
@@ -29,6 +29,51 @@ export const addDependency = (
     requestingFactoryId: factory.id,
     part: input.outputPart,
     amount: input.amount,
+  })
+}
+
+// Scans for invalid dependency requests and removes the request and the input from the erroneous factory.
+export const scanForInvalidInputs = (factory: Factory, factories: Factory[]): void => {
+  // If there's no requests, nothing to do.
+  if (!factory.dependencies?.requests) {
+    return
+  }
+
+  // Scan all requests for the factory
+  Object.keys(factory.dependencies?.requests).forEach(requestedFactoryId => {
+    const requests: FactoryDependencyRequest[] = factory.dependencies.requests[requestedFactoryId]
+
+    const dependantFactory = findFac(requestedFactoryId, factories)
+    // If the factory doesn't exist, somehow this data corrupted, clean it up now.
+    if (!dependantFactory) {
+      console.error(`Requested factory ${requestedFactoryId} not found!`)
+      delete factory.dependencies.requests[requestedFactoryId]
+    }
+
+    requests.forEach(request => {
+      // Check if the product exists within the factory
+      const product = factory.products.find(prod => prod.id === request.part)
+
+      // If the product does not exist, remove the dependency and the input.
+      if (!product) {
+        console.warn(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
+
+        // Filter out the dependency request(s) for the part from the erroneous factory.
+        factory.dependencies.requests[requestedFactoryId] = factory.dependencies.requests[requestedFactoryId].filter(req => req.part !== request.part)
+
+        // If all requests from the factory have been removed, also delete the key.
+        if (factory.dependencies.requests[requestedFactoryId].length === 0) {
+          delete factory.dependencies.requests[requestedFactoryId]
+        }
+
+        // Delete the input from the factory that caused the issue.
+        dependantFactory.inputs.forEach((input, index) => {
+          if (input.factoryId === factory.id && input.outputPart === request.part) {
+            dependantFactory.inputs.splice(index, 1)
+          }
+        })
+      }
+    })
   })
 }
 
