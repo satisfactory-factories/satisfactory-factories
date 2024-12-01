@@ -42,7 +42,7 @@
   import { inject } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
 
-  const props = defineProps<{
+  defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
