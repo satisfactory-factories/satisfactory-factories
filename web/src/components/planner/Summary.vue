@@ -31,7 +31,11 @@
             with the name, machines and their production.
           </p>
 
-          <v-table fixed-header max-height="750px">
+          <v-table
+            ref="tableRef"
+            fixed-header
+            :height="tableHeight"
+          >
             <thead>
               <tr>
                 <th class="text-left table-column">Factory Name</th>
@@ -41,7 +45,7 @@
                 <th class="text-left table-column">Exporting</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody ref="contentRef">
               <tr
                 v-for="factory in factories"
                 :key="factory.id"
@@ -159,7 +163,7 @@
 </template>
 
   <script setup lang="ts">
-  import { ref, watch } from 'vue'
+  import { nextTick, ref, watch } from 'vue'
   import {
     Factory,
     FactoryDependencyRequest,
@@ -171,10 +175,21 @@
     hasMetricsForPart,
   } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
-  defineProps<{
+  const props = defineProps<{
     factories: Factory[];
     helpText: boolean;
   }>()
+
+  // Call after the component is mounted
+  onMounted(() => {
+    nextTick(() => adjustTableHeight())
+  })
+
+  const tableRef = ref<HTMLElement | null>(null)
+  const contentRef = ref<HTMLElement | null>(null)
+  const headerHeight = 56 // Max height in px
+  const maxHeight = 750 // Max height in px
+  const tableHeight = ref('auto')
 
   // Initialize the 'hidden' ref based on the value in localStorage
   const hidden = ref<boolean>(localStorage.getItem('summaryHidden') === 'true')
@@ -182,6 +197,14 @@
   watch(hidden, newValue => {
     localStorage.setItem('summaryHidden', newValue.toString())
   })
+
+  watch(
+    () => props.factories, // The data to watch
+    () => {
+      nextTick(() => adjustTableHeight()) // Callback to adjust height after changes
+    },
+    { deep: true } // Option to deeply watch for changes within the array
+  )
 
   const toggleVisibility = () => {
     hidden.value = !hidden.value
@@ -195,6 +218,15 @@
     return {
       'factory-card': true,
       problem: factory.hasProblem,
+    }
+  }
+
+  const adjustTableHeight = () => {
+    if (contentRef.value) {
+      const contentHeight = contentRef.value.offsetHeight // Get current height of the content
+      const totalHeight = contentHeight + headerHeight // Add the fixed header height
+      const adjustedHeight = Math.min(Math.max(totalHeight), maxHeight) // Enforce min and max height
+      tableHeight.value = adjustedHeight + 'px'
     }
   }
 
