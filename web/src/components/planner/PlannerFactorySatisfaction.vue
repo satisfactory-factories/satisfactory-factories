@@ -23,7 +23,7 @@
     </h2>
 
     <v-row v-if="hasParts">
-      <v-col cols="12">
+      <v-col class="pb-1" cols="12">
         <planner-factory-satisfaction-items :factory="factory" />
       </v-col>
       <v-col cols="12">

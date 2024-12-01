@@ -3,7 +3,7 @@
     <v-card-title>
       <h2 class="text-h6">
         <i class="fas fa-building" />
-        <span class="ml-3">Factory Buildings</span>
+        <span class="ml-3">Buildings & Power</span>
       </h2>
     </v-card-title>
     <v-card-text class="text-body-1 pb-2">
@@ -24,13 +24,6 @@
             <b>{{ getBuildingDisplayName(buildingData.name) ?? 'UNKNOWN' }}</b>: {{ formatNumber(buildingData.amount) ?? 0 }}x
           </span>
         </v-chip>
-      </div>
-      <v-divider class="my-2" color="#ccc" thickness="2px" />
-      <div>
-        <h2 class="text-h6">
-          <i class="fas fa-plug" />
-          <span class="ml-3">Factory Power</span>
-        </h2>
         <v-chip
           class="sf-chip yellow"
           variant="tonal"
