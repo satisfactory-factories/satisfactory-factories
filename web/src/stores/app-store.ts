@@ -58,6 +58,8 @@ export const useAppStore = defineStore('app', () => {
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
+    let needsCalculation = false
+
     factories.value.forEach(factory => {
       // Patch for old data pre #116
       if (!factory.exports) {
@@ -68,11 +70,29 @@ export const useAppStore = defineStore('app', () => {
       if (factory.inSync === undefined) {
         factory.inSync = null
       }
-
       if (factory.syncState === undefined) {
         factory.syncState = {}
       }
+
+      // Patch for #244
+      // Detect if the factory.parts[part].amountRequiredExports is missing and calculate it.
+      Object.keys(factory.parts).forEach(part => {
+        if (factory.parts[part].amountRequiredExports === undefined) {
+          factory.parts[part].amountRequiredExports = 0
+          needsCalculation = true
+        }
+        // Same for amountRequiredProduction
+        if (factory.parts[part].amountRequiredProduction === undefined) {
+          factory.parts[part].amountRequiredProduction = 0
+          needsCalculation = true
+        }
+      })
     })
+
+    if (needsCalculation) {
+      console.log('Forcing calculation of factories due to data migration')
+      calculateFactories(factories.value, gameDataStore.getGameData())
+    }
 
     return factories.value
   }

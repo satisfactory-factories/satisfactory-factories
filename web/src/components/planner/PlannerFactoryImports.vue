@@ -350,7 +350,7 @@
       return false
     }
 
-    return requirement.amountRemaining <= 0
+    return requirement.amountRemaining >= 0
   }
 
   const inputOverflow = (factory: Factory, part: string | null): boolean => {
@@ -360,7 +360,7 @@
     }
     const requirement = factory.parts[part]
 
-    return requirement.amountRemaining < 0
+    return requirement.amountRemaining > 0
   }
 
   const updateInputToSatisfy = (factory: Factory, input: FactoryInput) => {

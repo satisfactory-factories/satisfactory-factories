@@ -1,6 +1,6 @@
 // This setup has the Wire factory configured where there are demands set upon Wire, which is also being used internally and it's not producing enough.
 // Issue #107 meant that the exports would not display wire as the surplus was eliminated.
-// Exports should show wire at a 170/min deficit and should prompt the user to fix.
+// Exports should show wire at a 290/min deficit and should prompt the user to fix.
 
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 
@@ -30,10 +30,9 @@ const addProductsToFactories = () => {
     amount: 340,
     recipe: 'IngotCopper',
   })
-
   addProductToFactory(wireFac, {
     id: 'Wire',
-    amount: 680,
+    amount: 680, // Total demands on this product is 800 from Cable, 170 from Stators = 970, deficit of 290
     recipe: 'Wire',
   })
   addProductToFactory(wireFac, {

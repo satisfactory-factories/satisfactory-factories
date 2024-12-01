@@ -84,6 +84,14 @@
           ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
           </v-btn>
           <v-btn
+            v-show="shouldShowTrim(product, factory)"
+            class="rounded mr-2"
+            color="yellow"
+            prepend-icon="fas fa-arrow-down"
+            size="default"
+            @click="doTrimProduct(product, factory)"
+          >Trim</v-btn>
+          <v-btn
             class="rounded mr-2"
             color="blue"
             :disabled="product.displayOrder === 0"
@@ -109,8 +117,11 @@
             variant="outlined"
             @click="deleteProduct(productIndex, factory)"
           />
-          <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="green">
+          <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="sf-chip small green">
             Internal
+          </v-chip>
+          <v-chip v-if="shouldShowNotInDemand(product, factory)" class=" ml-2 sf-chip small red">
+            Not in demand!
           </v-chip>
         </div>
       </div>
@@ -197,7 +208,12 @@
 </template>
 <script lang="ts" setup>
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
-  import { addProductToFactory } from '@/utils/factory-management/products'
+  import {
+    addProductToFactory,
+    shouldShowNotInDemand,
+    shouldShowTrim,
+    trimProduct,
+  } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useGameDataStore } from '@/stores/game-data-store'
@@ -310,6 +326,11 @@
     product.amount = recipe.products[0].perMin * newVal
 
     updateFactory(props.factory)
+  }
+
+  const doTrimProduct = (product: FactoryItem, factory: Factory) => {
+    trimProduct(product, factory)
+    updateFactory(factory)
   }
 
 </script>

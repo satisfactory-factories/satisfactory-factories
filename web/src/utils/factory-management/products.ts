@@ -1,4 +1,4 @@
-import { BuildingRequirement, Factory } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { createNewPart, getRecipe } from '@/utils/factory-management/common'
 import { calculatePartMetrics } from '@/utils/factory-management/satisfaction'
@@ -63,17 +63,13 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       // === Now we need to calculate the parts required per min to make the product ===
-      const productIngredientRatio = product.amount / recipe.products[0].perMin // This formular should have no rounding - the decimal points are important here for the floating point calculations
+      const productIngredientRatio = product.amount / recipe.products[0].perMin // This formula should have no rounding - the decimal points are important here for the floating point calculations
       let ingredientRequired = ingredient.perMin * productIngredientRatio
       ingredientRequired = Math.round(ingredientRequired * 1000) / 1000
 
-      // console.log(ingredient.part + ':product.amount (' + product.amount + ') / recipe.products[0].perMin (' + recipe.products[0].perMin + ') = productIngredientRatio (' + productIngredientRatio + ')')
-      // console.log(ingredient.part + ': ingredient.perMin (' + ingredient.perMin + ') * productIngredientRatio (' + productIngredientRatio + ') = ingredientRequired (' + ingredientRequired + ')')
-
-      // In every case, always add the ingredient to the parts list
+      // Handle the ingredients
       createNewPart(factory, ingredient.part)
       factory.parts[ingredient.part].amountRequired += ingredientRequired
-      calculatePartMetrics(factory, ingredient.part)
 
       // Raw resource handling
       if (gameData.items.rawResources[ingredient.part]) {
@@ -89,7 +85,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
 
         // Mark the part as raw which will eventually be marked as fully satisfied.
         factory.parts[ingredient.part].isRaw = true
-        calculatePartMetrics(factory, ingredient.part)
       }
 
       // Set the amount that the individual products need for display purposes.
@@ -100,6 +95,9 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       product.requirements[ingredient.part].amount += ingredientRequired
+
+      // Finally calculate the part metrics now we have the details for the ingredient.
+      calculatePartMetrics(factory, ingredient.part)
     })
   })
 }
@@ -185,4 +183,61 @@ export const calculateInternalProducts = (factory: Factory, gameData: DataInterf
       }
     })
   })
+}
+
+export const shouldShowTrim = (product: FactoryItem, factory: Factory) => {
+  // Calculate whether the product should be trimmed or not by checking:
+  // 1. Part requirements of the item are more than internal demand
+  // 2. Exported difference is more than 0
+
+  if (!product.id) {
+    return false
+  }
+
+  const part = factory.parts[product.id]
+
+  if (!part) {
+    console.error(`Part not found for product ID ${product.id}!`)
+    return false
+  }
+
+  if (product.amount === 1) {
+    return false // It's likely a new product, no need to show trim
+  }
+
+  if (part.amountRemaining <= 0) {
+    return false // It's in demand internally or it's exactly right
+  }
+
+  // Must then mean there's a surplus
+  return true
+}
+
+export const trimProduct = (product: FactoryItem, factory: Factory) => {
+  // Using exports we can figure out the remaining surplus
+  const partData = factory.parts[product.id]
+
+  if (!partData) {
+    // Nothing to do
+    return
+  }
+
+  // Trim the product
+  product.amount = partData.amountRequired
+}
+
+export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) => {
+  // Calculate whether the product is in demand at all
+  if (!product.id) {
+    return false
+  }
+
+  if (product.amount === 0) {
+    // Product is not being produced
+    return true
+  }
+
+  const partRequired = factory.parts[product.id]?.amountRequired
+
+  return partRequired <= 0
 }
