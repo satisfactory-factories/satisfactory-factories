@@ -126,6 +126,12 @@
                 :help-text="helpText"
               />
             </v-col>
+            <v-col cols="12" md="6">
+              <planner-factory-notes
+                :factory="factory"
+                :help-text="helpText"
+              />
+            </v-col>
           </v-row>
         </v-card-text>
         <!-- Hidden factory collapse -->

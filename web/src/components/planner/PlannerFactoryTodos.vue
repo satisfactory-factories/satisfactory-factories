@@ -12,7 +12,7 @@
         @keyup.enter="addTask"
       />
       <v-btn class="mt-1" color="primary" :disabled="newTask.length === 0" @click="addTask">Add Task</v-btn>
-      <v-table class="sub-card" :class="{ 'mt-2': factory.tasks.length > 0 }" density="compact">
+      <v-table v-if="factory.tasks.length > 0" class="sub-card" :class="{ 'mt-2': factory.tasks.length > 0 }" density="compact">
         <thead>
           <tr>
             <th class="text-center font-weight-bold" scope="row">Task</th>
