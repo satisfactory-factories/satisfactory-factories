@@ -1,26 +1,37 @@
 <template>
   <div>
-    <h2
-      v-show="factory.requirementsSatisfied && hasParts"
-      class="text-h5 mb-4"
-    >
-      <i class="fas fa-check" />
-      <span class="ml-3">Satisfaction</span>
-    </h2>
-    <h2
-      v-show="!factory.requirementsSatisfied"
-      class="text-h5 mb-4 text-red"
-    >
-      <i class="fas fa-times" />
-      <span class="ml-3">Satisfaction</span>
-    </h2>
-    <h2
-      v-show="factory.requirementsSatisfied && !hasParts"
-      class="text-h5 mb-4"
-    >
-      <i class="fas fa-question" />
-      <span class="ml-3">Satisfaction</span>
-    </h2>
+    <div class="d-flex align-center mb-4">
+      <h2
+        v-show="factory.requirementsSatisfied && hasParts"
+        class="text-h5"
+      >
+        <i class="fas fa-check" />
+        <span class="ml-3">Satisfaction</span>
+      </h2>
+      <h2
+        v-show="!factory.requirementsSatisfied"
+        class="text-h5 text-red"
+      >
+        <i class="fas fa-times" />
+        <span class="ml-3">Satisfaction</span>
+      </h2>
+      <h2
+        v-show="factory.requirementsSatisfied && !hasParts"
+        class="text-h5"
+      >
+        <i class="fas fa-question" />
+        <span class="ml-3">Satisfaction</span>
+      </h2>
+      <v-switch
+        class="ml-4"
+        color="primary"
+        hide-details
+        label="Show Satisfaction Breakdowns"
+        :model-value="showSatisfactionBreakdowns"
+        @change="changeSatisfactionBreakdowns"
+      />
+
+    </div>
 
     <v-row v-if="hasParts">
       <v-col class="pb-1" cols="12">
@@ -52,6 +63,16 @@
 
   import PlannerFactorySatisfactionBuildings from '@/components/planner/PlannerFactorySatisfactionBuildings.vue'
   import PlannerFactorySatisfactionItems from '@/components/planner/PlannerFactorySatisfactionItems.vue'
+  import { useAppStore } from '@/stores/app-store'
+
+  const appStore = useAppStore()
+
+  const showSatisfactionBreakdowns = appStore.getSatisfactionBreakdowns()
+
+  const changeSatisfactionBreakdowns = () => {
+    console.log('Change Satisfaction Breakdowns')
+    appStore.changeSatisfactoryBreakdowns()
+  }
 
   const props = defineProps<{
     factory: Factory;

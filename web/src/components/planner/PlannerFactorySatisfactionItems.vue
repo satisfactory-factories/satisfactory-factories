@@ -20,12 +20,6 @@
             </v-tooltip>
           </span>
         </th>
-        <th class="text-h6 border-e-md text-center" scope="row">
-          <i class="fas fa-container-storage" /><span class="ml-2">Supply</span>
-        </th>
-        <th class="text-h6 border-e-md text-center" scope="row">
-          <i class="fas fa-hammer" /><span class="ml-2">Demands</span>
-        </th>
         <th class="text-h6 text-center" scope="row">
           <i class="fas fa-truck-container" /><span class="ml-2">Exports</span>
         </th>
@@ -35,87 +29,83 @@
       <template v-for="(part, partId) in factory.parts" :key="partId">
         <tr>
           <td class="border-e-md name" :class="satisfactionShading(part)">
-            <div class="d-flex align-center" :class="classes(part)">
-              <game-asset
-                height="48"
-                :subject="partId.toString()"
-                type="item"
-                width="48"
-              />
-              <span v-if="part.satisfied" class="ml-2">
-                <v-icon icon="fas fa-check" />
-              </span>
-              <span v-else class="ml-2">
-                <v-icon icon="fas fa-times" />
-              </span>
-              <span class="ml-2 text-body-1"><b>{{ getPartDisplayName(partId.toString()) }}</b></span>
+            <div class="d-flex justify-space-between">
+              <div class="d-flex align-center" :class="classes(part)">
+                <game-asset
+                  height="48"
+                  :subject="partId.toString()"
+                  type="item"
+                  width="48"
+                />
+                <span v-if="part.satisfied" class="ml-2">
+                  <v-icon icon="fas fa-check" />
+                </span>
+                <span v-else class="ml-2">
+                  <v-icon icon="fas fa-times" />
+                </span>
+                <span class="ml-2 text-body-1"><b>{{ getPartDisplayName(partId.toString()) }}</b></span>
+              </div>
+              <!-- Action buttons -->
+              <div class="align-self-center text-right">
+                <v-btn
+                  v-if="!getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
+                  class="d-block mb-1"
+                  color="primary"
+                  size="small"
+                  variant="outlined"
+                  @click="addProduct(factory, partId.toString(), part.amountRemaining)"
+                >
+                  +&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
+                </v-btn>
+                <v-btn
+                  v-if="getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
+                  class="d-block my-1"
+                  color="green"
+                  size="small"
+                  @click="fixProduction(factory, partId.toString())"
+                >
+                  <i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+                </v-btn>
+                <v-btn
+                  v-if="getImport(factory, partId.toString()) && !part.satisfied"
+                  class="d-block mt-1"
+                  color="green"
+                  size="small"
+                  @click="fixSatisfactionImport(factory, partId.toString())"
+                >
+                  &nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
+                </v-btn>
+              </div>
             </div>
-            <!-- Action buttons -->
-            <div class="mx-n1">
-              <v-btn
-                v-if="!getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
-                class="mx-1"
-                color="primary"
-                size="small"
-                variant="outlined"
-                @click="addProduct(factory, partId.toString(), part.amountRemaining)"
-              >
-                +&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
-              </v-btn>
-              <v-btn
-                v-if="getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
-                class="mx-1"
-                color="green"
-                size="small"
-                @click="fixProduction(factory, partId.toString())"
-              >
-                <i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-              </v-btn>
-              <v-btn
-                v-if="getImport(factory, partId.toString()) && !part.satisfied"
-                class="mx-1"
-                color="green"
-                size="small"
-                @click="fixSatisfactionImport(factory, partId.toString())"
-              >
-                &nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
-              </v-btn>
-            </div>
+
           </td>
-          <td class="border-e-md text-center satisfaction" :class="satisfactionShading(part)">
-            <v-chip
-              class="sf-chip"
-              :class="part.satisfied ? 'green' : 'red'"
-            >
-              <b>{{ formatNumber(part.amountRemaining) }}/min</b>
-            </v-chip>
-          </td>
-          <td class="border-e-md metrics" :class="satisfactionShading(part)">
-            <div class="d-flex justify-space-between align-center">
-              <span>Production</span>
-              <span class="align-self-end text-right">{{ formatNumber(part.amountSuppliedViaProduction ) }}/min</span>
+          <td class="border-e-md satisfaction" :class="satisfactionShading(part)">
+            <div v-if="satisfactionBreakdowns">
+              <div class="text-green d-flex justify-space-between align-center">
+                <span>Production</span>
+                <span class="align-self-end text-right">+{{ formatNumber(part.amountSuppliedViaProduction) }}/min</span>
+              </div>
+              <div class="text-green d-flex justify-space-between align-center">
+                <span>Imports</span>
+                <span class="align-self-end text-right">+{{ formatNumber(part.amountSuppliedViaInput ) }}/min</span>
+              </div>
+              <div class="text-orange d-flex justify-space-between align-center">
+                <span>Internal Consumption</span>
+                <span class="align-self-end text-right">-{{ formatNumber(part.amountRequiredProduction ) }}/min</span>
+              </div>
+              <div class="text-orange d-flex justify-space-between align-center">
+                <span>Exports</span>
+                <span class="align-self-end text-right">-{{ formatNumber(part.amountRequiredExports ) }}/min</span>
+              </div>
+              <v-divider class="my-2" color="#ccc" />
             </div>
-            <div class="d-flex justify-space-between align-center">
-              <span>Imports</span>
-              <span class="align-self-end text-right">{{ formatNumber(part.amountSuppliedViaInput ) }}/min</span>
-            </div>
-            <div class="d-flex justify-space-between align-center border-t">
-              <span><b>Total</b></span>
-              <v-chip class="sf-chip small gray align-self-end mr-0"><b>{{ formatNumber(part.amountSupplied) }}/min</b></v-chip>
-            </div>
-          </td>
-          <td class="border-e-md metrics" :class="satisfactionShading(part)">
-            <div class="d-flex justify-space-between align-center">
-              <span>Production</span>
-              <span class="align-self-end text-right">{{ formatNumber(part.amountRequiredProduction ) }}/min</span>
-            </div>
-            <div class="d-flex justify-space-between align-center">
-              <span>Exports</span>
-              <span class="align-self-end text-right">{{ formatNumber(part.amountRequiredExports ) }}/min</span>
-            </div>
-            <div class="d-flex justify-space-between align-center border-t">
-              <span><b>Total</b></span>
-              <v-chip class="sf-chip small gray align-self-end mr-0"><b>{{ formatNumber(part.amountRequired) }}/min</b></v-chip>
+            <div class="text-center">
+              <v-chip
+                class="sf-chip small"
+                :class="part.satisfied ? 'green' : 'red'"
+              >
+                <b>{{ formatNumber(part.amountRemaining) }}/min</b>
+              </v-chip>
             </div>
           </td>
           <td :class="satisfactionShading(part)">
@@ -177,6 +167,7 @@
   import { useGameDataStore } from '@/stores/game-data-store'
   import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
   import { formatNumber } from '../../utils/numberFormatter'
+  import { useAppStore } from '@/stores/app-store'
 
   const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
   const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
@@ -184,8 +175,11 @@
   const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory
 
+  const appStore = useAppStore()
+
   const { getDefaultRecipeForPart } = useGameDataStore()
   const openedCalculator = ref('')
+  const satisfactionBreakdowns = appStore.getSatisfactionBreakdowns()
 
   defineProps<{
     factory: Factory;
@@ -280,7 +274,7 @@ table {
   tbody {
     tr {
       td {
-        padding: 1rem 1rem !important;
+        padding: 0.5rem 1rem !important;
         transition: background 0.5s ease-out !important;
         border-block: thin solid #4b4b4b !important;
 
@@ -290,7 +284,8 @@ table {
         }
 
         &.name {
-          width: 300px;
+          height: 78px !important;
+          width: 500px;
         }
 
         &.calculator-row {
@@ -299,11 +294,7 @@ table {
         }
 
         &.satisfaction {
-          width: 50px
-        }
-
-        &.metrics {
-          min-width: 180px
+          width: 300px
         }
       }
     }
