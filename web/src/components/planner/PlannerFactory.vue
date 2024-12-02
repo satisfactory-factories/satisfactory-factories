@@ -118,6 +118,13 @@
             :factory="factory"
             :help-text="helpText"
           />
+          <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
+          <v-col cols="12" md="6">
+            <planner-factory-todos
+              :factory="factory"
+              :help-text="helpText"
+            />
+          </v-col>
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">

@@ -93,6 +93,12 @@ export interface FactorySyncState {
   recipe: string
 }
 
+export interface FactoryTask {
+  title: string
+  completed: boolean
+  order: number
+}
+
 export interface Factory {
   id: number;
   name: string;
@@ -114,6 +120,8 @@ export interface Factory {
   inSync: boolean | null;
   syncState: { [key: string]: FactorySyncState };
   displayOrder: number;
+  tasks: FactoryTask[]
+  notes: string
 }
 
 export interface FactoryTab {

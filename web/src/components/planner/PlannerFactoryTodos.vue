@@ -1,0 +1,111 @@
+<template>
+  <v-card class="sub-card">
+    <v-card-title>Todos</v-card-title>
+    <v-card-text>
+      <v-text-field
+        v-model="newTask"
+        dense
+        hide-details
+        label="New Task"
+        outlined
+        placeholder="Add a task..."
+        @keyup.enter="addTask"
+      />
+      <v-btn class="mt-1" color="primary" :disabled="newTask.length === 0" @click="addTask">Add Task</v-btn>
+      <v-table class="sub-card" :class="{ 'mt-2': factory.tasks.length > 0 }" density="compact">
+        <thead>
+          <tr>
+            <th class="text-center font-weight-bold" scope="row">Task</th>
+            <th class="text-center font-weight-bold" scope="row">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(task, index) in factory.tasks" :key="index">
+            <td>
+              <span :class="{ 'text-done': task.completed }">{{ task.title }}</span>
+            </td>
+            <td class="actions">
+              <v-btn
+                v-if="!task.completed"
+                color="blue rounded"
+                density="comfortable"
+                icon="fas fa-check-square"
+                size="small"
+                @click="toggleTask(index)"
+              />
+              <v-btn
+                v-if="task.completed"
+                color="grey rounded"
+                density="comfortable"
+                icon="fas fa-times"
+                size="small"
+                @click="toggleTask(index)"
+              />
+              <v-btn
+                class="ml-1"
+                color="error rounded"
+                density="comfortable"
+                icon="fas fa-trash"
+                size="small"
+                @click="removeTask(index)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+    </v-card-text>
+  </v-card>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
+
+  const props = defineProps <{
+    factory: Factory;
+    helpText: boolean;
+  }>()
+
+  const newTask = ref('')
+
+  const addTask = () => {
+    // Only add a new task if there isn't already an empty one
+    props.factory.tasks.push({ title: newTask.value, completed: false })
+
+    newTask.value = ''
+  }
+
+  const toggleTask = index => {
+    props.factory.tasks[index].completed = !props.factory.tasks[index].completed
+  }
+
+  const removeTask = index => {
+    props.factory.tasks.splice(index, 1)
+  }
+</script>
+
+<style lang="scss" scoped>
+
+.v-table .v-table__wrapper > table {
+  tbody {
+    tr {
+      &:last-of-type {
+        td {
+          border-bottom: 0;
+        }
+      }
+
+      td {
+        &.actions {
+          text-align: right;
+          width: 165px !important;
+        }
+      }
+    }
+  }
+}
+.text-done {
+  text-decoration: line-through;
+  color: green
+}
+</style>
