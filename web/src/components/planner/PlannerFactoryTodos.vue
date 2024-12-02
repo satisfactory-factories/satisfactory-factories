@@ -11,18 +11,20 @@
         placeholder="Add a task..."
         @keyup.enter="addTask"
       />
-      <v-btn class="mt-1" color="primary" :disabled="newTask.length === 0" @click="addTask">Add Task</v-btn>
       <v-table v-if="factory.tasks.length > 0" class="sub-card" :class="{ 'mt-2': factory.tasks.length > 0 }" density="compact">
-        <thead>
-          <tr>
-            <th class="text-center font-weight-bold" scope="row">Task</th>
-            <th class="text-center font-weight-bold" scope="row">Actions</th>
-          </tr>
-        </thead>
         <tbody>
           <tr v-for="(task, index) in factory.tasks" :key="index">
             <td>
-              <span :class="{ 'text-done': task.completed }">{{ task.title }}</span>
+              <v-textarea
+                v-if="!task.completed"
+                v-model="task.title"
+                auto-grow
+                density="compact"
+                hide-details
+                rows="1"
+                variant="plain"
+              />
+              <span v-if="task.completed" class="text-done">{{ task.title }}</span>
             </td>
             <td class="actions">
               <v-btn
@@ -85,7 +87,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 .v-table .v-table__wrapper > table {
   tbody {
     tr {
@@ -96,9 +97,11 @@
       }
 
       td {
+        padding-bottom: 4px;
         &.actions {
           text-align: right;
-          width: 165px !important;
+          width: 60px !important;
+          padding: 0 0 0 0; // hack to get around textarea having invisible space at the top
         }
       }
     }
