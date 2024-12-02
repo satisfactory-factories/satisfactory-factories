@@ -34,7 +34,13 @@ export const useAppStore = defineStore('app', () => {
   const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
   const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
   const isDebugMode = ref<boolean>(false)
+  const showSatisfactionBreakdowns = ref<boolean>(
+    (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
+  )
   const gameDataStore = useGameDataStore()
+
+  console.log(localStorage.getItem('showSatisfactionBreakdowns'))
+  console.log(Boolean(localStorage.getItem('showSatisfactionBreakdowns')))
 
   // Watch the factories array for changes
   watch(factoryTabs.value, () => {
@@ -155,6 +161,14 @@ export const useAppStore = defineStore('app', () => {
   }
   // ==== END TAB MANAGEMENT
 
+  const getSatisfactionBreakdowns = () => {
+    return showSatisfactionBreakdowns
+  }
+  const changeSatisfactoryBreakdowns = () => {
+    showSatisfactionBreakdowns.value = !showSatisfactionBreakdowns.value
+    localStorage.setItem('showSatisfactionBreakdowns', showSatisfactionBreakdowns.value ? 'true' : 'false')
+  }
+
   // ==== MISC
   const debugMode = () => {
     if (window.location.hostname !== 'satisfactory-factories.app') {
@@ -185,5 +199,7 @@ export const useAppStore = defineStore('app', () => {
     clearFactories,
     addTab,
     removeCurrentTab,
+    getSatisfactionBreakdowns,
+    changeSatisfactoryBreakdowns,
   }
 })

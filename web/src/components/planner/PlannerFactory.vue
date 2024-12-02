@@ -118,12 +118,6 @@
             :factory="factory"
             :help-text="helpText"
           />
-          <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
-          <planner-factory-exports
-            :factory="factory"
-            :game-data="gameData"
-            :help-text="helpText"
-          />
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
