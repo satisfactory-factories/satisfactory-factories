@@ -186,7 +186,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
 
     console.log(userData);
 
-    // Check users are not doung naughty things with the notes and task fields
+    // Check users are not doing naughty things with the notes and task fields
     if (userData.notes) {
       // Make sure it doesn't exceed a certain character limit
       userData.notes = userData.notes.substring(0, 2000);
