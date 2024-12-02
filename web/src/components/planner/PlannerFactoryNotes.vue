@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import eventBus from '@/utils/eventBus'
 
   const props = defineProps <{
     factory: Factory;
@@ -29,6 +30,7 @@
     length: () => {
       // Check if the value length exceeds the character limit
       if (props.factory.notes.length >= charLimit) {
+        props.factory.notes = props.factory.notes.slice(0, charLimit) // Trim the value
         return `Max character length (${charLimit}) reached, condense your notes, pioneer!`
       }
       return true // Validation passes
@@ -36,4 +38,8 @@
   }
 
   const charLimit = 1000
+
+  watch(() => props.factory.notes, newValue => {
+    eventBus.emit('factoryUpdated') // Tell sync there's something changed
+  })
 </script>
