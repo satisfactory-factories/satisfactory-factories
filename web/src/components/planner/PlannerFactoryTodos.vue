@@ -1,5 +1,5 @@
 <template>
-  <v-card class="sub-card">
+  <v-card class="factory-card sub-card">
     <v-card-title>Todos</v-card-title>
     <v-card-text>
       <v-text-field
