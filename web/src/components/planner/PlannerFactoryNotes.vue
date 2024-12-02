@@ -5,13 +5,13 @@
       <v-textarea
         v-model="factory.notes"
         auto-grow
-        clearable
         :counter="charLimit"
         error-messages=""
         placeholder="Add some notes!"
         rows="1"
         :rules="[rules.length(charLimit)]"
       />
+      <v-btn v-if="factory.notes.length > 0" class="mt-1" color="primary" @click="factory.notes = ''">Clear Notes</v-btn>
     </v-card-text>
   </v-card>
 </template>
