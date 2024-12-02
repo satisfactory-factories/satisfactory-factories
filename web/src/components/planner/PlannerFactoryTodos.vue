@@ -4,11 +4,12 @@
     <v-card-text>
       <v-text-field
         v-model="newTask"
+        counter="200"
         dense
-        hide-details
         label="New Task"
         outlined
         placeholder="Add a task..."
+        :rules="[newTaskRules.length]"
         @keyup.enter="addTask"
       />
       <p v-if="factory.tasks.length >= 40" class="text-red">You are only allowed up to 50 tasks.</p>
@@ -72,6 +73,16 @@
 
   const newTask = ref('')
 
+  const newTaskRules = {
+    length: () => {
+      if (newTask.value.length >= 200) {
+        newTask.value = newTask.value.slice(0, 200)
+        return 'Max character limit (200) reached. Condense your thoughts pioneer!'
+      }
+      return true
+    },
+  }
+
   const addTask = () => {
     if (props.factory.tasks.length >= 50) {
       alert('You have reached the maximum number of tasks allowed (50).')
@@ -100,7 +111,7 @@
 
   const validateTaskLength = (task: { title: string }) => {
     if (task.title.length > 200) {
-      alert('Task is too long. Please keep it under 200 characters.')
+      alert('Max character limit (200) reached. Condense your thoughts pioneer!')
       task.title = task.title.slice(0, 200)
     }
   }
