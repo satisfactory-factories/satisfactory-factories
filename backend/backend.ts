@@ -187,6 +187,11 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
 
     // Check users are not doing naughty things with the notes and task fields
     factoryData.forEach((factory) => {
+      if (factory.name.length > 200) {
+        console.warn(`User ${username} tried to save a factory name that was too long!`);
+        factory.name = factory.name.substring(0, 200);
+      }
+
       if (factory.notes && factory.notes.length > 1000) {
         console.warn(`User ${username} tried to save a notes field that was too long!`);
         factory.notes = factory.notes.substring(0, 1000);
