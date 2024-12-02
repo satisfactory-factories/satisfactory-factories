@@ -126,16 +126,16 @@
                   <span class="ml-2"><b>{{ findFactory(request.requestingFactoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
                 </v-chip>
               </div>
-              <div class="text-center mt-2">
-                <v-btn
-                  color="primary"
-                  density="comfortable"
-                  variant="outlined"
-                  @click="openCalculator(factory.id.toString(), partId.toString())"
-                >
-                  <i class="fas fa-calculator" /><span class="ml-2">Open Calculator</span>
-                </v-btn>
-              </div>
+              <!--              <div class="text-center mt-2">-->
+              <!--                <v-btn-->
+              <!--                  color="primary"-->
+              <!--                  density="comfortable"-->
+              <!--                  variant="outlined"-->
+              <!--                  @click="openCalculator(factory.id.toString(), partId.toString())"-->
+              <!--                >-->
+              <!--                  <i class="fas fa-calculator" /><span class="ml-2">Open Calculator</span>-->
+              <!--                </v-btn>-->
+              <!--              </div>-->
             </div>
           </td>
         </tr>
