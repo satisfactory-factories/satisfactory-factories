@@ -11,6 +11,7 @@
         placeholder="Add a task..."
         @keyup.enter="addTask"
       />
+      <p v-if="factory.tasks.length >= 40" class="text-red">You are only allowed up to 50 tasks.</p>
       <v-table v-if="factory.tasks.length > 0" class="sub-card" :class="{ 'mt-2': factory.tasks.length > 0 }" density="compact">
         <tbody>
           <tr v-for="(task, index) in factory.tasks" :key="index">
@@ -71,6 +72,11 @@
   const newTask = ref('')
 
   const addTask = () => {
+    if (props.factory.tasks.length >= 50) {
+      alert('You have reached the maximum number of tasks allowed (50).')
+      return
+    }
+    if (newTask.value.length === 0) return
     // Only add a new task if there isn't already an empty one
     props.factory.tasks.push({ title: newTask.value, completed: false })
 
