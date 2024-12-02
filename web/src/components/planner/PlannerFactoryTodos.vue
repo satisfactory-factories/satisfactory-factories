@@ -25,7 +25,7 @@
                 rows="1"
                 variant="plain"
               />
-              <span v-if="task.completed" class="text-done">{{ task.title }}</span>
+              <p v-if="task.completed" class="text-done">{{ task.title }}</p>
             </td>
             <td class="actions">
               <v-btn
@@ -46,7 +46,7 @@
               />
               <v-btn
                 class="ml-1"
-                color="error rounded"
+                color="red rounded"
                 density="comfortable"
                 icon="fas fa-trash"
                 size="small"
@@ -115,6 +115,8 @@
 }
 .text-done {
   text-decoration: line-through;
-  color: green
+  color: green;
+  font-size: 16px;
+  margin-top: 8px;
 }
 </style>
