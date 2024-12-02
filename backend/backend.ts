@@ -14,7 +14,7 @@ import { generateSlug } from "random-word-slugs";
 import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import {Share, ShareDataSchema} from "./models/ShareSchema";
-
+import {Factory} from "./interfaces/FactoryInterface";
 
 dotenv.config();
 
@@ -183,18 +183,46 @@ app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Expr
 app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
-    const userData = req.body;
+    const factoryData: Factory[] = req.body;
 
+    // Check users are not doing naughty things with the notes and task fields
+    factoryData.forEach((factory) => {
+      if (factory.name.length > 200) {
+        console.warn(`User ${username} tried to save a factory name that was too long!`);
+        factory.name = factory.name.substring(0, 200);
+      }
+
+      if (factory.notes && factory.notes.length > 1000) {
+        console.warn(`User ${username} tried to save a notes field that was too long!`);
+        factory.notes = factory.notes.substring(0, 1000);
+      }
+
+      if (factory.tasks) {
+        // Make sure it doesn't exceed a certain character limit
+        factory.tasks.forEach((task) => {
+          if (task.title.length > 200) {
+            console.warn(`User ${username} tried to save a factory task that was way too long!`);
+            task.title = task.title.substring(0, 200);
+          }
+        });
+
+        // Make sure they can't take the piss with a stupid number of tasks
+        if (factory.tasks.length > 50) {
+          console.warn(`User ${username} tried to save a factory with too many tasks!`);
+          factory.tasks = factory.tasks.slice(0, 50);
+        }
+      }
+    })
 
     await FactoryData.findOneAndUpdate(
       { user: username },
-      { data: userData, lastSaved: new Date() },
+      { data: factoryData, lastSaved: new Date() },
       { new: true, upsert: true }
     );
 
     console.log(`Data saved for ${username}`);
 
-    res.json({ message: 'Data saved successfully', userData });
+    res.json({ message: 'Data saved successfully', userData: factoryData });
   } catch (error) {
     console.error(`Data save failed: ${error}`);
     res.status(500).json({ message: 'Data save failed', error });
