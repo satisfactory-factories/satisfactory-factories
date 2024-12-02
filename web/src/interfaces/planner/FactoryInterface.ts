@@ -96,7 +96,6 @@ export interface FactorySyncState {
 export interface FactoryTask {
   title: string
   completed: boolean
-  order: number
 }
 
 export interface Factory {

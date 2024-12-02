@@ -9,7 +9,7 @@
         error-messages=""
         placeholder="Add some notes!"
         rows="1"
-        :rules="[rules.length(charLimit)]"
+        :rules="[rules.length]"
       />
       <v-btn v-if="factory.notes.length > 0" class="mt-1" color="primary" @click="factory.notes = ''">Clear Notes</v-btn>
     </v-card-text>
@@ -26,7 +26,13 @@
 
   // Validation rule for the character limit
   const rules = {
-    length: len => v => (v || '').length < len || `Max character length (${len}) reached, condense your notes pioneer!`,
+    length: () => {
+      // Check if the value length exceeds the character limit
+      if (props.factory.notes.length >= charLimit) {
+        return `Max character length (${charLimit}) reached, condense your notes, pioneer!`
+      }
+      return true // Validation passes
+    },
   }
 
   const charLimit = 1000

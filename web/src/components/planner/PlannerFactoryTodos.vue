@@ -77,11 +77,11 @@
     newTask.value = ''
   }
 
-  const toggleTask = index => {
+  const toggleTask = (index: number) => {
     props.factory.tasks[index].completed = !props.factory.tasks[index].completed
   }
 
-  const removeTask = index => {
+  const removeTask = (index: number) => {
     props.factory.tasks.splice(index, 1)
   }
 </script>
