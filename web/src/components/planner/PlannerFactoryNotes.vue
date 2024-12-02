@@ -36,11 +36,4 @@
   }
 
   const charLimit = 1000
-
-  watch(() => props.factory.notes, () => {
-    // Prevent changes going beyond the character limit
-    if (props.factory.notes.length > charLimit) {
-      props.factory.notes = props.factory.notes.slice(0, charLimit)
-    }
-  })
 </script>
