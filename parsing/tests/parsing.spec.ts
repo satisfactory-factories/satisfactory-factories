@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, test } from '@jest/globals'
+
 import { processFile } from '../src/processor'
 import { Part } from '../src/interfaces/Part'
 import { Recipe } from '../src/interfaces/Recipe'
@@ -60,7 +61,7 @@ describe('common', () => {
             //act
 
             //assert
-            expect(Object.keys(results.buildings).length).toBe(12);
+            expect(Object.keys(results.buildings).length).toBe(13);
             expect(results.buildings).toStrictEqual({
                 assemblermk1: 15,
                 blender: 75,
@@ -74,6 +75,7 @@ describe('common', () => {
                 packager: 10,
                 quantumencoder: 0.1,  // This has variable power consumption and is calculated in the recipe
                 smeltermk1: 4,
+                resourcesink: 30,
             })
         })
 

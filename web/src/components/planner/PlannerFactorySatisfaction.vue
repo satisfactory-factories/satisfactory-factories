@@ -57,10 +57,20 @@
       <v-col cols="12" md="5">
         <v-card class="sub-card border-md">
           <v-card-title>
-            <h2 class="text-h6">
+            <h2 class="text-h6 mr-3" style="display: inline">
               <i class="fas fa-building" />
               <span class="ml-3">Factory Buildings</span>
             </h2>
+            <v-btn
+              v-if="!hasSinks"
+              color="orange mr-2"
+              prepend-icon="fas fa-cube"
+              ripple
+              variant="flat"
+              @click="addSinkBuildingRequirement()"
+            >
+              Add Sink
+            </v-btn>
           </v-card-title>
           <v-card-text class="text-body-1 pb-2">
             <div
@@ -114,8 +124,12 @@
 
   import { formatNumber } from '@/utils/numberFormatter'
   import PlannerFactorySatisfactionItem from '@/components/planner/PlannerFactorySatisfactionItem.vue'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
+  const updateFactory = inject('updateFactory') as (factory: Factory) => void
+
+  const gameDataStore = useGameDataStore()
 
   const props = defineProps<{
     factory: Factory;
@@ -124,6 +138,8 @@
 
   // Reactive factory parts check
   const hasParts = computed(() => Object.keys(props.factory.parts).length > 0)
+
+  const hasSinks = computed(() => props.factory.buildingRequirements && props.factory.buildingRequirements.resourcesink)
 
   // Generate chunks for the satisfaction display
   const satisfactionDisplay = computed<[string, PartMetrics][][]>(() => {
@@ -135,4 +151,34 @@
     }
     return result
   })
+
+  const addSinkBuildingRequirement = () => {
+    console.log('hasSinks')
+    console.log(hasSinks.value)
+
+    const amount = 1
+    const buildingPower = gameDataStore.getGameData().buildings.resourcesink
+
+    console.log('Found Building')
+    console.log(buildingPower)
+
+    if (!props.factory.buildingRequirements.resourcesink) {
+      console.log('New Sink needed!')
+
+      props.factory.buildingRequirements.resourcesink = {
+        name: 'resourcesink',
+        amount,
+        powerPerBuilding: buildingPower,
+        totalPower: buildingPower * amount,
+      }
+    }
+
+    console.log('Added Building!')
+    console.log(props.factory.buildingRequirements.resourcesink)
+
+    console.log('hasSinks')
+    console.log(hasSinks.value)
+
+    updateFactory(props.factory)
+  }
 </script>

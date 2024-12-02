@@ -7,7 +7,7 @@ import {Recipe, PowerGenerationRecipe} from "./interfaces/Recipe";
 import {Part, PartDataInterface} from "./interfaces/Part";
 import {getItems, fixItemNames, fixTurbofuel} from './parts';
 import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
-import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
+import {getProducingBuildings, getConsumingBuildings, getPowerConsumptionForBuildings} from './buildings';
 
 // Function to detect if the file is UTF-16
 async function isUtf16(inputFile: string): Promise<boolean> {
@@ -87,16 +87,19 @@ async function processFile(
         // Get an array of all buildings that produce something
         const producingBuildings = getProducingBuildings(data);
 
+        // Get an array of all buildings that consume something
+        const consumingBuildings = getConsumingBuildings(data);
+
         // Get power consumption for the producing buildings
-        const buildings = getPowerConsumptionForBuildings(data, producingBuildings);
+        const buildings = getPowerConsumptionForBuildings(data, [ ...producingBuildings, ...consumingBuildings]);
 
         // Pass the producing buildings with power data to getRecipes to calculate perMin and powerPerProduct
-        let recipes = getProductionRecipes(data, buildings);
+        const recipes = getProductionRecipes(data, buildings);
         removeRubbishItems(items, recipes);
         fixTurbofuel(items, recipes);
 
         //IMPORTANT: The order here matters - don't run this because fixing the turbofuel. 
-        let powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
+        const powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: Part } = {};
