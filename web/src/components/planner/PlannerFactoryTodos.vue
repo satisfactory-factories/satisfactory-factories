@@ -24,6 +24,7 @@
                 hide-details
                 rows="1"
                 variant="plain"
+                @change="validateTaskLength(task)"
               />
               <p v-if="task.completed" class="text-done">{{ task.title }}</p>
             </td>
@@ -80,6 +81,12 @@
     // Only add a new task if there isn't already an empty one
     props.factory.tasks.push({ title: newTask.value, completed: false })
 
+    // Prevent people from adding a stupidly long task
+    if (newTask.value.length > 200) {
+      alert('Task is too long. Please keep it under 200 characters.')
+      return
+    }
+
     newTask.value = ''
   }
 
@@ -89,6 +96,13 @@
 
   const removeTask = (index: number) => {
     props.factory.tasks.splice(index, 1)
+  }
+
+  const validateTaskLength = (task: { title: string }) => {
+    if (task.title.length > 200) {
+      alert('Task is too long. Please keep it under 200 characters.')
+      task.title = task.title.slice(0, 200)
+    }
   }
 </script>
 
