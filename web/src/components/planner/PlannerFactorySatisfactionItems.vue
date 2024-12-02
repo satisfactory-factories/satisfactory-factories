@@ -16,7 +16,7 @@
                   />
                 </div>
               </template>
-              <span>Amount of the item that is available after internal production needs and other export requests are taken into account.</span>
+              <span>Amount of the item that is available after internal production needs and other export requests are taken into account.<br>This amount is available for other factories to import.</span>
             </v-tooltip>
           </span>
         </th>
@@ -34,7 +34,7 @@
     <tbody>
       <template v-for="(part, partId) in factory.parts" :key="partId">
         <tr>
-          <td class="border-e-md">
+          <td class="border-e-md name" :class="satisfactionShading(part)">
             <div class="d-flex align-center" :class="classes(part)">
               <game-asset
                 height="48"
@@ -54,7 +54,7 @@
             <div class="mx-n1">
               <v-btn
                 v-if="!getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
-                class="ma-1"
+                class="mx-1"
                 color="primary"
                 size="small"
                 variant="outlined"
@@ -64,7 +64,7 @@
               </v-btn>
               <v-btn
                 v-if="getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
-                class="ma-1"
+                class="mx-1"
                 color="green"
                 size="small"
                 @click="fixProduction(factory, partId.toString())"
@@ -73,7 +73,7 @@
               </v-btn>
               <v-btn
                 v-if="getImport(factory, partId.toString()) && !part.satisfied"
-                class="ma-1"
+                class="mx-1"
                 color="green"
                 size="small"
                 @click="fixSatisfactionImport(factory, partId.toString())"
@@ -82,7 +82,7 @@
               </v-btn>
             </div>
           </td>
-          <td class="border-e-md text-center satisfaction">
+          <td class="border-e-md text-center satisfaction" :class="satisfactionShading(part)">
             <v-chip
               class="sf-chip"
               :class="part.satisfied ? 'green' : 'red'"
@@ -90,35 +90,35 @@
               <b>{{ formatNumber(part.amountRemaining) }}/min</b>
             </v-chip>
           </td>
-          <td class="border-e-md">
-            <div class="d-flex justify-space-between align-items-center">
+          <td class="border-e-md metrics" :class="satisfactionShading(part)">
+            <div class="d-flex justify-space-between align-center">
               <span>Production</span>
-              <span class="align-self-end">{{ formatNumber(part.amountSuppliedViaProduction ) }}/min</span>
+              <span class="align-self-end text-right">{{ formatNumber(part.amountSuppliedViaProduction ) }}/min</span>
             </div>
-            <div class="d-flex justify-space-between align-items-center">
+            <div class="d-flex justify-space-between align-center">
               <span>Imports</span>
-              <span class="align-self-end">{{ formatNumber(part.amountSuppliedViaInput ) }}/min</span>
+              <span class="align-self-end text-right">{{ formatNumber(part.amountSuppliedViaInput ) }}/min</span>
             </div>
             <div class="d-flex justify-space-between align-center border-t">
               <span><b>Total</b></span>
               <v-chip class="sf-chip small gray align-self-end mr-0"><b>{{ formatNumber(part.amountSupplied) }}/min</b></v-chip>
             </div>
           </td>
-          <td class="border-e-md">
-            <div class="d-flex justify-space-between align-items-center">
+          <td class="border-e-md metrics" :class="satisfactionShading(part)">
+            <div class="d-flex justify-space-between align-center">
               <span>Production</span>
-              <span class="align-self-end">{{ formatNumber(part.amountRequiredProduction ) }}/min</span>
+              <span class="align-self-end text-right">{{ formatNumber(part.amountRequiredProduction ) }}/min</span>
             </div>
-            <div class="d-flex justify-space-between align-items-center">
+            <div class="d-flex justify-space-between align-center">
               <span>Exports</span>
-              <span class="align-self-end">{{ formatNumber(part.amountRequiredExports ) }}/min</span>
+              <span class="align-self-end text-right">{{ formatNumber(part.amountRequiredExports ) }}/min</span>
             </div>
             <div class="d-flex justify-space-between align-center border-t">
               <span><b>Total</b></span>
               <v-chip class="sf-chip small gray align-self-end mr-0"><b>{{ formatNumber(part.amountRequired) }}/min</b></v-chip>
             </div>
           </td>
-          <td>
+          <td :class="satisfactionShading(part)">
             <p v-if="getRequestsForFactoryByProduct(factory, partId.toString()).length === 0" class="text-center">
               -
             </p>
@@ -199,6 +199,13 @@
     }
   }
 
+  const satisfactionShading = (part: PartMetrics) => {
+    return {
+      'border-green': part.satisfied,
+      'border-red': !part.satisfied,
+    }
+  }
+
   const addProduct = (factory: Factory, part: string, amount: number): void => {
     addProductToFactory(factory, {
       id: part,
@@ -274,13 +281,29 @@ table {
     tr {
       td {
         padding: 1rem 1rem !important;
+        transition: background 0.5s ease-out !important;
+        border-block: thin solid #4b4b4b !important;
+
+        &.border-red {
+          background: rgba(128, 0, 0, 0.50) !important;
+          border-block: thin solid #b50000 !important;
+        }
+
+        &.name {
+          width: 300px;
+        }
 
         &.calculator-row {
           padding: 0 !important;
+          border-block: 0 !important;
         }
 
         &.satisfaction {
           width: 50px
+        }
+
+        &.metrics {
+          min-width: 180px
         }
       }
     }
