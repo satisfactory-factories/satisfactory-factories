@@ -258,15 +258,15 @@
   //   return requests.find(request => request.part === part)
   // }
 
-  const openCalculator = (factoryId: string, partId: string) => {
-    if (openedCalculator.value === partId) {
-      // Close the currently opened calculator
-      openedCalculator.value = ''
-    } else {
-      // Open the clicked calculator and close others
-      openedCalculator.value = partId
-    }
-  }
+  // const openCalculator = (factoryId: string, partId: string) => {
+  //   if (openedCalculator.value === partId) {
+  //     // Close the currently opened calculator
+  //     openedCalculator.value = ''
+  //   } else {
+  //     // Open the clicked calculator and close others
+  //     openedCalculator.value = partId
+  //   }
+  // }
 </script>
 
 <style lang="scss" scoped>
