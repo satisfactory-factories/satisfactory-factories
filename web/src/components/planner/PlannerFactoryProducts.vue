@@ -203,6 +203,15 @@
       >
         Add Product
       </v-btn>
+      <v-btn
+        color="yellow mr-2"
+        prepend-icon="fas fa-bolt"
+        ripple
+        variant="flat"
+        @click="addEmptyPowerProduct(factory)"
+      >
+        Add Power Generator
+      </v-btn>
     </div>
   </div>
 </template>
