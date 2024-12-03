@@ -103,7 +103,7 @@ export interface FactoryPowerProducer {
   building: string;
   powerAmount: number; // Amount of energy to produce in MW
   fuelRecipe: string;
-  byproduct: string; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.
+  byproduct: { part: string, amount: number } | null; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.
 }
 
 export interface Factory {
@@ -113,7 +113,7 @@ export interface Factory {
   products: FactoryItem[];
   byProducts: ByProductItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
-  powerProducts: FactoryPowerProducer[];
+  powerProducers: FactoryPowerProducer[];
   parts: { [key: string]: PartMetrics };
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
