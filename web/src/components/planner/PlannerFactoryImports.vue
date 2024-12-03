@@ -190,6 +190,9 @@
       factories.push(...availableFactories)
     }
 
+    // Sort the factories by name
+    factories.sort((a, b) => a.name.localeCompare(b.name))
+
     return factories
   })
 
