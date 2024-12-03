@@ -123,6 +123,22 @@ app.get('/hello', function (_req: Express.Request, res: Express.Response) {
 app.post('/register', async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
   try {
     const { username, password } = req.body;
+
+    // Ensure the username isn't stupidly long
+    if (username.length > 100) {
+      return res.status(400).json({ message: 'Username too long.' });
+    }
+
+    // Ensure the password isn't stupidly long
+    if (password.length > 100) {
+      return res.status(400).json({ message: 'Password too long.' });
+    }
+
+    // Check if username is an email address
+    if (isEmailAddress(username)) {
+      return res.status(400).json({ message: 'Please do not register with an email address. We do not wish to store PII.' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Check if the user already exists
@@ -130,7 +146,6 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists.' });
     }
-
 
     const user = new User({ username, password: hashedPassword });
     await user.save();
@@ -331,3 +346,8 @@ const generateShareWords = async (count: number): Promise<string> => {
 
     return shareId;
 };
+
+const isEmailAddress = (input: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(input);
+}

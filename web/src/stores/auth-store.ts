@@ -129,7 +129,7 @@ export const useAuthStore = (fetchOverride?: typeof fetch) => {
         return handleLogin(username, password)
       } else if (response.status === 400) {
         console.warn('handleRegister: Invalid details', response, data)
-        return `User ${username} has already been registered.`
+        return data.errorResponse?.errmsg || data.message
       } else if (response.status === 500) {
         console.error('handleRegister: Backend 500ed!', response, data)
         return `Backend server error! Please report this on Discord!`
