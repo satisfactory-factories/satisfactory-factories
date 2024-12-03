@@ -41,6 +41,7 @@ declare module 'vue' {
     Sync: typeof import('./components/Sync.vue')['default']
     TabNavigation: typeof import('./components/TabNavigation.vue')['default']
     Templates: typeof import('./components/Templates.vue')['default']
+    Toast: typeof import('./components/Toast.vue')['default']
     Todo: typeof import('./components/graph/Todo.vue')['default']
   }
 }

@@ -7,9 +7,6 @@
     variant="flat"
     @click="createShareLink"
   />
-  <v-snackbar v-model="toast" color="success" top>
-    Link copied to clipboard!
-  </v-snackbar>
   <v-dialog v-model="showCopyDialog" max-width="600">
     <v-card>
       <v-card-title>Copy the link below</v-card-title>
@@ -31,6 +28,7 @@
   import { useAuthStore } from '@/stores/auth-store'
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
   import { ShareDataCreationResponse } from '@/interfaces/ShareDataInterface'
+  import eventBus from '@/utils/eventBus'
 
   // Get user auth stuff from the app store
   const appStore = useAppStore()
@@ -38,7 +36,6 @@
   const { currentFactoryTab } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
-  const toast = ref(false)
   const creating = ref(false)
   const link = ref()
   const showCopyDialog = ref(false)
@@ -93,26 +90,33 @@
         const data: ShareDataCreationResponse = await response.json()
         return `${window.location.origin}/share/${data.shareId}`
       } else if (response.status === 429) {
-        alert('You are being rate limited. Stop spamming that button! Please wait some time before trying again.')
+        console.error('Share Error: Rate limited')
+        eventBus.emit('toast', { message: 'You are being rate limited. Stop spamming that button! Please wait some time before trying again.', type: 'error' })
       } else if (response.status === 500) {
-        alert('A server error has occurred trying to create the share link. Please report this on Discord!')
+        console.error('Share Error: Server error', response)
+        eventBus.emit('toast', { message: 'A server error has occurred trying to create the share link. Please report this on <a href="https://discord.gg/zge68PrGJ7">Discord</a>!', type: 'error' })
       } else if (response.status === 502) {
-        alert('The backend server is offline! Please report this with some urgency on Discord!')
+        console.error('Share Error: Gateway timeout', response)
+        eventBus.emit('toast', { message: 'The backend server is offline! Please report this with urgency on <a href="https://discord.gg/zge68PrGJ7">Discord</a>, ping @Maelstrome directly!', type: 'error' })
       } else {
-        console.error('Creating share link failed:', response.body)
-        alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${response.body}"`)
+        console.error('Share Error: Unknown response', response.body)
+        eventBus.emit('toast', { message: 'Failed to create share link. Please report this error on our <a href="https://discord.gg/zge68PrGJ7">Discord</a>!', type: 'error' })
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Error:', error)
-        alert(`Failed to create share link. Please report this error on our GitHub site 'https://github.com/satisfactory-factories/application'! "${error}"`)
+        console.error('Share Error (catchall):', error)
+        if (error.message.includes('NetworkError')) {
+          eventBus.emit('toast', { message: 'The backend server is offline! Please report this with urgency on <a href="https://discord.gg/zge68PrGJ7">Discord</a>, ping @Maelstrome directly!', type: 'error' })
+          return
+        }
+        eventBus.emit('toast', { message: 'Failed to create share link due to unknown error. Please report this error on our <a href="https://discord.gg/zge68PrGJ7">Discord</a>!', type: 'error' })
       }
     }
   }
 
   const copyLink = async (url: string) => {
     await navigator.clipboard.writeText(url)
-    toast.value = true
+    eventBus.emit('toast', { message: 'Link copied to clipboard!' })
     showCopyDialog.value = false
   }
 </script>
