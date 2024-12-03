@@ -115,7 +115,7 @@
     navigateToFactory(factory.id)
   }
 
-  const factoriesWithSurplusExports = computed(() => {
+  const factoriesWithExports = computed(() => {
     // Loop through all factories and see if any have any surplus
     return appStore.getFactories().filter(factory => Object.keys(factory.exports).length > 0)
   })
@@ -351,7 +351,7 @@
   // Initialize during setup
   initializeFactories()
 
-  provide('factoriesWithSurplusExports', factoriesWithSurplusExports)
+  provide('factoriesWithExports', factoriesWithExports)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)
