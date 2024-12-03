@@ -34,7 +34,13 @@ export const useAppStore = defineStore('app', () => {
   const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
   const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
   const isDebugMode = ref<boolean>(false)
+  const showSatisfactionBreakdowns = ref<boolean>(
+    (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
+  )
   const gameDataStore = useGameDataStore()
+
+  console.log(localStorage.getItem('showSatisfactionBreakdowns'))
+  console.log(Boolean(localStorage.getItem('showSatisfactionBreakdowns')))
 
   // Watch the factories array for changes
   watch(factoryTabs.value, () => {
@@ -58,6 +64,8 @@ export const useAppStore = defineStore('app', () => {
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const getFactories = () => {
+    let needsCalculation = false
+
     factories.value.forEach(factory => {
       // Patch for old data pre #116
       if (!factory.exports) {
@@ -68,11 +76,37 @@ export const useAppStore = defineStore('app', () => {
       if (factory.inSync === undefined) {
         factory.inSync = null
       }
-
       if (factory.syncState === undefined) {
         factory.syncState = {}
       }
+
+      // Patch for #244
+      // Detect if the factory.parts[part].amountRequiredExports is missing and calculate it.
+      Object.keys(factory.parts).forEach(part => {
+        if (factory.parts[part].amountRequiredExports === undefined) {
+          factory.parts[part].amountRequiredExports = 0
+          needsCalculation = true
+        }
+        // Same for amountRequiredProduction
+        if (factory.parts[part].amountRequiredProduction === undefined) {
+          factory.parts[part].amountRequiredProduction = 0
+          needsCalculation = true
+        }
+      })
+
+      // Patch for #250
+      if (factory.tasks === undefined) {
+        factory.tasks = []
+      }
+      if (factory.notes === undefined) {
+        factory.notes = ''
+      }
     })
+
+    if (needsCalculation) {
+      console.log('Forcing calculation of factories due to data migration')
+      calculateFactories(factories.value, gameDataStore.getGameData())
+    }
 
     return factories.value
   }
@@ -135,6 +169,14 @@ export const useAppStore = defineStore('app', () => {
   }
   // ==== END TAB MANAGEMENT
 
+  const getSatisfactionBreakdowns = () => {
+    return showSatisfactionBreakdowns
+  }
+  const changeSatisfactoryBreakdowns = () => {
+    showSatisfactionBreakdowns.value = !showSatisfactionBreakdowns.value
+    localStorage.setItem('showSatisfactionBreakdowns', showSatisfactionBreakdowns.value ? 'true' : 'false')
+  }
+
   // ==== MISC
   const debugMode = () => {
     if (window.location.hostname !== 'satisfactory-factories.app') {
@@ -165,5 +207,7 @@ export const useAppStore = defineStore('app', () => {
     clearFactories,
     addTab,
     removeCurrentTab,
+    getSatisfactionBreakdowns,
+    changeSatisfactoryBreakdowns,
   }
 })

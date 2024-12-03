@@ -6,6 +6,8 @@ export const createNewPart = (factory: Factory, part: string) => {
   if (!factory.parts[part]) {
     factory.parts[part] = {
       amountRequired: 0,
+      amountRequiredExports: 0,
+      amountRequiredProduction: 0,
       amountSupplied: 0,
       amountSuppliedViaInput: 0,
       amountSuppliedViaProduction: 0,

@@ -69,6 +69,8 @@ export const newFactory = (name = 'A new factory'): Factory => {
     inSync: null,
     syncState: {},
     displayOrder: -1, // this will get set by the planner
+    tasks: [],
+    notes: '',
   }
 }
 
@@ -105,9 +107,6 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
-  // Then we calculate the satisfaction of the factory.
-  calculateFactorySatisfaction(factory)
-
   // We then calculate the building and power demands to make the factory.
   calculateBuildingsAndPower(factory)
 
@@ -122,7 +121,10 @@ export const calculateFactory = (
     calculateDependencyMetrics(factory)
   })
 
-  // Then we calculate the output state of all factories after dependencies have been configured
+  // Then we calculate the satisfaction of the factory. This requires Dependencies to be calculated first.
+  calculateFactorySatisfaction(factory)
+
+  // Now we know the demands set upon the factory, now properly calculate the export display data
   calculateExports(allFactories)
 
   // Export Calculator stuff

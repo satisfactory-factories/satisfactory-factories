@@ -3,7 +3,6 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addDependency,
-  calculateDependencyMetrics,
   constructDependencies,
   removeFactoryDependants,
 } from '@/utils/factory-management/dependencies'
@@ -135,28 +134,28 @@ describe('dependencies', () => {
 
   describe('calculateDependencyMetrics', () => {
     it('should calculate the dependency metrics for multiple inputs from a singular factory', () => {
-      const input = {
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 1000,
+        recipe: 'IngotIron',
+      })
+      addProductToFactory(mockFactory, {
+        id: 'CopperIngot',
+        amount: 23,
+        recipe: 'IngotCopper',
+      })
+      addInputToFactory(mockDependantFactory, {
         factoryId: mockFactory.id,
         outputPart: 'IronIngot',
         amount: 900,
-      }
-      const input2 = {
+      })
+      addInputToFactory(mockDependantFactory, {
         factoryId: mockFactory.id,
         outputPart: 'CopperIngot',
         amount: 123,
-      }
+      })
 
-      addInputToFactory(mockDependantFactory, input)
-      addInputToFactory(mockDependantFactory, input2)
-      constructDependencies(factories)
-      mockFactory.parts.IronIngot = {
-        amountRemaining: 1000,
-      } as any
-      mockFactory.parts.CopperIngot = {
-        amountRemaining: 23,
-      } as any
-
-      calculateDependencyMetrics(mockFactory)
+      calculateFactories(factories, gameData)
 
       expect(mockFactory.dependencies.metrics.IronIngot).toStrictEqual({
         part: 'IronIngot',
@@ -178,6 +177,12 @@ describe('dependencies', () => {
       // Ensure the new factory is in the list
       factories = [mockFactory, mockDependantFactory, mockDependantFactory2]
 
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 150,
+        recipe: 'IngotIron',
+      })
+
       const input = {
         factoryId: mockFactory.id,
         outputPart: 'IronIngot',
@@ -187,12 +192,7 @@ describe('dependencies', () => {
       addInputToFactory(mockDependantFactory, input)
       addInputToFactory(mockDependantFactory2, input)
 
-      constructDependencies(factories)
-      mockFactory.parts.IronIngot = {
-        amountRemaining: 150,
-      } as any // Naughty yes but typescript is being a pain
-
-      calculateDependencyMetrics(mockFactory)
+      calculateFactories(factories, gameData)
 
       expect(mockFactory.dependencies.metrics.IronIngot).toStrictEqual({
         part: 'IronIngot',
@@ -219,7 +219,7 @@ describe('dependencies', () => {
 
       addInputToFactory(mockDependantFactory, input)
       addInputToFactory(mockDependantFactory, input2)
-      constructDependencies(factories)
+      calculateFactories(factories, gameData)
       removeFactoryDependants(mockFactory, factories)
 
       // Assume the tests work and the dependency is added

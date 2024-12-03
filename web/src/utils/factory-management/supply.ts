@@ -1,4 +1,4 @@
-// Calculate the supply of parts via raw inputs. It is assumed that the raw resources are always available.
+// Calculate the surplus of parts via raw inputs. It is assumed that the raw resources are always available.
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { getRecipe } from '@/utils/factory-management/common'

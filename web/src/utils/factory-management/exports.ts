@@ -1,13 +1,15 @@
-import { BuildingRequirement, Factory, FactoryDependencyRequest, FactoryExportItem, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+import {
+  BuildingRequirement,
+  Factory,
+  FactoryDependencyRequest,
+  FactoryExportItem,
+  FactoryItem,
+} from '@/interfaces/planner/FactoryInterface'
 
 export const getRequestsForFactoryByProduct = (
   factory: Factory,
   part: string
 ): FactoryDependencyRequest[] => {
-  // If sent an empty factory, there's no request.
-  if (!factory) {
-    return []
-  }
   // Return an object containing the requests of all factories requesting a particular part
   // We need to get all requests set upon by other factories and check their part names
   // If the part name matches the one we're looking for, we add it to the list.
@@ -30,7 +32,7 @@ export const productSurplus = (product: FactoryItem, factory: Factory) => {
   if (!part) return 0
 
   // Return a positive value as negative values == surplus
-  return part.amountRemaining < 0 ? Math.abs(part.amountRemaining) : 0
+  return part.amountRemaining > 0 ? part.amountRemaining : 0
 }
 
 export const calculateExports = (factories: Factory[]) => {
@@ -59,10 +61,9 @@ export const calculateExports = (factories: Factory[]) => {
     // Map through the products and check if the product both has a surplus or requests set upon it
     const factoryExports: FactoryExportItem[] = [...factory.products, ...mappedByProducts]
       .map(product => {
-        const requests = getRequestsForFactoryByProduct(factory, product.id)
-
-        if (requests.length === 0 && productSurplus(product, factory) <= 0) {
-          return null // Skip products with no requests and no surplus
+        // This always should be present at this calculation stage.
+        if (!factory.parts[product.id]) {
+          throw new Error(`Part data for ${product.id} not found in factory ${factory.name}!`)
         }
 
         const byProduct = factory.byProducts.find(byProduct => byProduct.id === product.id)
@@ -72,29 +73,22 @@ export const calculateExports = (factories: Factory[]) => {
           ? factory.products.find(product => product.id === byProduct.byProductOf)
           : product
 
-        const data = {
+        const partData = factory.parts[product.id]
+        const surplus = partData.amountRemaining
+        const demands = partData.amountRequiredExports
+
+        return {
           productId: product.id,
-          surplus: productSurplus(product, factory) ?? 0,
-          demands: factory.dependencies.metrics[product.id]?.request ?? 0,
-          difference: 0,
+          surplus, // The surplus after production demands
+          demands,
+          supply: partData.amountSupplied, // For display purposes
+          // Exportable being the amount remaining for export after export and internal demands are met
           displayOrder: productParent?.displayOrder ?? 0,
         }
-        data.difference = data.surplus - data.demands
-        return data
       })
       .filter((item): item is FactoryExportItem => item !== null)
       .sort((a, b) => {
-      // If either display order is null, push it to the end
-        if (a.displayOrder === null || b.displayOrder === null) {
-          return a.displayOrder === null ? 1 : -1
-        }
-        if (a.displayOrder && b.displayOrder) {
-          return a.displayOrder - b.displayOrder
-        } else if (a.displayOrder) {
-          return 1 // Push entries without sortOrder to the end
-        } else {
-          return -1
-        }
+        return a.displayOrder < b.displayOrder ? 1 : -1
       })
 
     factoryExports.forEach(exportItem => {
