@@ -8,6 +8,7 @@
   margin-right: 8px;
   margin-bottom: 4px;
   margin-top: 4px;
+  color: white !important;
 
   &.small {
     padding: 12px 10px !important;
@@ -22,9 +23,14 @@
     margin: 0 !important;
   }
 
+  &.red {
+    color: #f44336 !important;
+    border-color: #f44336 !important;
+  }
+
   &.blue {
     color: rgb(33, 150, 243) !important;
-    border-color: rgb(0, 93, 167) !important;
+    border-color: rgb(1, 111, 204) !important;
   }
 
   &.orange {
@@ -40,6 +46,10 @@
   &.green {
     color: #4caf50 !important;
     border-color: #4caf50 !important;
+  }
+
+  &.no-border {
+    border: 0 !important;
   }
 }
 

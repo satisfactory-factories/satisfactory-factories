@@ -39,8 +39,10 @@
             class="sf-chip blue"
           >
             <game-asset :subject="ore.id" type="item" />
-            <span v-if="ore.name !== 'Water'" class="ml-2">{{ ore.name }}: {{ formatNumber(ore.amount) }}</span>
-            <span v-else class="ml-2">Water: <i class="fas fa-infinity" /></span>
+            <span class="ml-2">{{ ore.name }}:
+              <span v-if="isInfinity(ore.name)"> <i class="fas fa-infinity" /></span>
+              <span v-else> {{ formatNumber(ore.amount) }}</span>
+            </span>
           </v-chip>
           <v-divider class="my-2" />
           <div class="px-2">
@@ -92,5 +94,18 @@
   // Function to toggle visibility
   const toggleVisibility = () => {
     hidden.value = !hidden.value
+  }
+
+  // Function to toggle the infinity symbol for parts with large, unknown quantities.
+  const isInfinity = (oreName: string) => {
+    switch (oreName) {
+      case 'Leaves':
+      case 'Mycelia':
+      case 'Water':
+      case 'Wood':
+        return true
+      default:
+        return false
+    }
   }
 </script>

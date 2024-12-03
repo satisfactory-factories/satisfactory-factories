@@ -59,6 +59,8 @@ describe('Complex Plan', () => {
     it('should have fluid parts calculated correctly', () => {
       expect(oilFac.parts.LiquidOil).toStrictEqual({
         amountRequired: 960,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 960,
         amountSupplied: 960,
         amountSuppliedViaInput: 960,
         amountSuppliedViaProduction: 0,
@@ -68,31 +70,36 @@ describe('Complex Plan', () => {
       })
       expect(oilFac.parts.LiquidFuel).toStrictEqual({
         amountRequired: 0,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 0,
         amountSupplied: 40,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 40,
-        amountRemaining: -40,
+        amountRemaining: 40,
         satisfied: true,
         isRaw: false,
       })
-      // TODO: There's a bug here! #2
-      // expect(oilFac.parts.HeavyOilResidue).toStrictEqual({
-      //   amountRequired: 240,
-      //   amountSupplied: 320,
-      //   amountSuppliedViaInput: 0,
-      //   amountSuppliedViaProduction: 320,
-      //   amountRemaining: -80,
-      //   satisfied: true,
-      //   isRaw: false,
-      // })
+      expect(oilFac.parts.HeavyOilResidue).toStrictEqual({
+        amountRequired: 60,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 60,
+        amountSupplied: 320,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 320,
+        amountRemaining: 260,
+        satisfied: true,
+        isRaw: false,
+      })
     })
     it('should have solid parts calculated correctly', () => {
       expect(oilFac.parts.Plastic).toStrictEqual({
-        amountRequired: 0,
+        amountRequired: 640,
+        amountRequiredExports: 640,
+        amountRequiredProduction: 0,
         amountSupplied: 640,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 640,
-        amountRemaining: -640,
+        amountRemaining: 0,
         satisfied: true,
         isRaw: false,
       })

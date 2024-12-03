@@ -267,11 +267,23 @@ describe('auth-store', () => {
       mockFetch.mockResolvedValueOnce(mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 400,
-        json: vi.fn().mockResolvedValue({}),
+        json: vi.fn().mockResolvedValue({ message: 'User new-user has already been registered.' }),
       }))
 
       const result = await authStore.handleRegister('new-user', 'password123')
       expect(result).toBe('User new-user has already been registered.')
+    })
+
+    it('should handle any 400 errors', async () => {
+      // Mock fetch response for registration error
+      mockFetch.mockResolvedValueOnce(mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        json: vi.fn().mockResolvedValue({ message: 'This is an error from the backend' }),
+      }))
+
+      const result = await authStore.handleRegister('new-user', 'password123')
+      expect(result).toBe('This is an error from the backend')
     })
 
     it('should handle backend errors gracefully', async () => {

@@ -14,7 +14,7 @@ import { generateSlug } from "random-word-slugs";
 import {FactoryData} from "./models/FactoyDataSchema";
 import {User} from "./models/UsersSchema";
 import {Share, ShareDataSchema} from "./models/ShareSchema";
-
+import {Factory} from "./interfaces/FactoryInterface";
 
 dotenv.config();
 
@@ -123,6 +123,22 @@ app.get('/hello', function (_req: Express.Request, res: Express.Response) {
 app.post('/register', async (req: TypedRequestBody<{ username: string; password: string }>, res: Express.Response) => {
   try {
     const { username, password } = req.body;
+
+    // Ensure the username isn't stupidly long
+    if (username.length > 100) {
+      return res.status(400).json({ message: 'Username too long.' });
+    }
+
+    // Ensure the password isn't stupidly long
+    if (password.length > 100) {
+      return res.status(400).json({ message: 'Password too long.' });
+    }
+
+    // Check if username is an email address
+    if (isEmailAddress(username)) {
+      return res.status(400).json({ message: 'Please do not register with an email address. We do not wish to store PII.' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Check if the user already exists
@@ -130,7 +146,6 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists.' });
     }
-
 
     const user = new User({ username, password: hashedPassword });
     await user.save();
@@ -183,18 +198,46 @@ app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Expr
 app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
-    const userData = req.body;
+    const factoryData: Factory[] = req.body;
 
+    // Check users are not doing naughty things with the notes and task fields
+    factoryData.forEach((factory) => {
+      if (factory.name.length > 200) {
+        console.warn(`User ${username} tried to save a factory name that was too long!`);
+        factory.name = factory.name.substring(0, 200);
+      }
+
+      if (factory.notes && factory.notes.length > 1000) {
+        console.warn(`User ${username} tried to save a notes field that was too long!`);
+        factory.notes = factory.notes.substring(0, 1000);
+      }
+
+      if (factory.tasks) {
+        // Make sure it doesn't exceed a certain character limit
+        factory.tasks.forEach((task) => {
+          if (task.title.length > 200) {
+            console.warn(`User ${username} tried to save a factory task that was way too long!`);
+            task.title = task.title.substring(0, 200);
+          }
+        });
+
+        // Make sure they can't take the piss with a stupid number of tasks
+        if (factory.tasks.length > 50) {
+          console.warn(`User ${username} tried to save a factory with too many tasks!`);
+          factory.tasks = factory.tasks.slice(0, 50);
+        }
+      }
+    })
 
     await FactoryData.findOneAndUpdate(
       { user: username },
-      { data: userData, lastSaved: new Date() },
+      { data: factoryData, lastSaved: new Date() },
       { new: true, upsert: true }
     );
 
     console.log(`Data saved for ${username}`);
 
-    res.json({ message: 'Data saved successfully', userData });
+    res.json({ message: 'Data saved successfully', userData: factoryData });
   } catch (error) {
     console.error(`Data save failed: ${error}`);
     res.status(500).json({ message: 'Data save failed', error });
@@ -303,3 +346,8 @@ const generateShareWords = async (count: number): Promise<string> => {
 
     return shareId;
 };
+
+const isEmailAddress = (input: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(input);
+}

@@ -54,7 +54,7 @@
             </v-btn-group>
           </div>
           <p class="text-body-2 text-left mb-4">
-            Register or log in to save your Plan(s). Whenever you make changes it will be automatically saved. You can also sync your factories between devices!
+            Register or log in to save your Plan(s). Whenever you make changes it will be automatically saved.
           </p>
           <v-divider />
           <v-form v-if="showLogin" @submit.prevent="handleLoginForm">
@@ -69,9 +69,10 @@
               required
               type="password"
             />
-            <v-btn color="primary" type="submit">Log in</v-btn>
+            <v-btn color="primary" type="submit" variant="flat">Log in</v-btn>
           </v-form>
           <v-form v-if="showRegister" @submit.prevent="handleRegisterForm">
+            <p class="text-body-2 text-left mb-4 mt-2 text-amber">Please do not use an email address as a username. we do not wish to store any PII (Personally Identifiable Information) - since this is a hobby project data security is not a paramount priority.</p>
             <v-text-field
               v-model="username"
               label="Username"
@@ -84,7 +85,7 @@
               type="password"
             />
             <p class="text-left mb-2"><b>NOTE:</b> There is currently no password reset system implemented. If you lose your login details, you'll have to create a new account!</p>
-            <v-btn color="green" type="submit">Register</v-btn>
+            <v-btn color="green" type="submit" variant="flat">Register</v-btn>
           </v-form>
           <p v-if="errorMessage" class="text-red font-weight-bold mt-2">{{ errorMessage }}</p>
         </v-card-text>

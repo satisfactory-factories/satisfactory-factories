@@ -119,11 +119,20 @@
             :help-text="helpText"
           />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
-          <planner-factory-exports
-            :factory="factory"
-            :game-data="gameData"
-            :help-text="helpText"
-          />
+          <v-row>
+            <v-col cols="12" md="6">
+              <planner-factory-todos
+                :factory="factory"
+                :help-text="helpText"
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <planner-factory-notes
+                :factory="factory"
+                :help-text="helpText"
+              />
+            </v-col>
+          </v-row>
         </v-card-text>
         <!-- Hidden factory collapse -->
         <v-card-text v-show="factory.hidden" class="pa-0">
@@ -140,22 +149,24 @@
                 class="mr-2 pl-2 no-bottom rounded factory-link"
                 @click="navigateToFactory(input.factoryId as number)"
               >
-                <i class="fas fa-industry" />
-                <span class="ml-2">
-                  <b>{{ findFactory(input.factoryId as number).name }}:</b>
-                </span>
-                <v-chip
-                  class="sf-chip blue ml-2"
-                >
-                  <game-asset
-                    v-if="input.outputPart"
-                    height="32"
-                    :subject="input.outputPart"
-                    type="item"
-                    width="32"
-                  />
-                  <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
-                </v-chip>
+                <template v-if="input.factoryId">
+                  <i class="fas fa-industry" />
+                  <span class="ml-2">
+                    <b>{{ findFactory(input.factoryId as number).name }}:</b>
+                  </span>
+                  <v-chip
+                    class="sf-chip blue ml-2"
+                  >
+                    <game-asset
+                      v-if="input.outputPart"
+                      height="32"
+                      :subject="input.outputPart"
+                      type="item"
+                      width="32"
+                    />
+                    <span class="ml-2"><b>{{ getPartDisplayName(input.outputPart) }}:</b> {{ formatNumber(input.amount) }}/min</span>
+                  </v-chip>
+                </template>
               </div>
               <div
                 v-for="(resource, resourceKey) in factory.rawResources"
@@ -323,8 +334,8 @@
       return
     }
 
-    const difference = Math.abs(metric.difference)
-    product.amount = product.amount + difference
+    const partData = factory.parts[product.id]
+    product.amount = partData.amountRequired // Fix both exports and production at the same time
     updateFactory(factory)
   }
 
