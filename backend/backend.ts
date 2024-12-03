@@ -134,6 +134,11 @@ app.post('/register', async (req: TypedRequestBody<{ username: string; password:
       return res.status(400).json({ message: 'Password too long.' });
     }
 
+    // Check if username is an email address
+    if (isEmailAddress(username)) {
+      return res.status(400).json({ message: 'Please do not register with an email address. We do not wish to store PII.' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Check if the user already exists
@@ -341,3 +346,8 @@ const generateShareWords = async (count: number): Promise<string> => {
 
     return shareId;
 };
+
+const isEmailAddress = (input: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(input);
+}
