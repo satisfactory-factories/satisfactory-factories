@@ -15,3 +15,7 @@ export const getPartDisplayName = (part: string | number | null): string => {
     gameData.items.parts[part]?.name ||
     `UNKNOWN PART ${part}!`
 }
+
+export const confirmDialog = (message: string): boolean => {
+  return window.confirm(message)
+}
