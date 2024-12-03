@@ -72,7 +72,7 @@
             <v-btn color="primary" type="submit" variant="flat">Log in</v-btn>
           </v-form>
           <v-form v-if="showRegister" @submit.prevent="handleRegisterForm">
-            <p class="text-body-2 text-left mb-4 mt-2 text-amber">Please do not use an email address as a username, we do not wish to store any PII (Personally Identifiable Information), since this is a hobby project data security is not a paramount priority.</p>
+            <p class="text-body-2 text-left mb-4 mt-2 text-amber">Please do not use an email address as a username. we do not wish to store any PII (Personally Identifiable Information) - since this is a hobby project data security is not a paramount priority.</p>
             <v-text-field
               v-model="username"
               label="Username"
