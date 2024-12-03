@@ -32,7 +32,6 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
   const tickSync = async () => {
     const isLoggedIn = authStore.getLoggedInUser()
     if (!isLoggedIn) {
-      console.debug('syncStore: Not logged in. Skipping sync.')
       return
     }
 
@@ -94,7 +93,6 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
   }
 
   const detectedChange = () => {
-    console.log('syncStore: Detected change in data.')
     dataSavePending.value = true
   }
 

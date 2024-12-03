@@ -153,7 +153,7 @@
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
-  const validFactoriesForImports = inject('factoriesWithSurplusExports') as ComputedRef<Factory[]>
+  const validFactoriesForImports = inject('factoriesWithExports') as ComputedRef<Factory[]>
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -177,20 +177,21 @@
   }
 
   // Check if the factory is able to import requirements from other factories
-  // TODO: Change for #107!
   const possibleImports = computed(() => {
     const factories = []
 
     // Loop through each part in the requirements of the current factory prop
     for (const part in props.factory.parts) {
-      // Find any factories that have a surplus of this part
+      // Find any factories that are exporting this part
       const availableFactories = validFactoriesForImports.value.filter(
-        oFac => oFac.exports[part] && oFac.exports[part].surplus > 0
+        fac => fac.exports[part]
       )
 
-      // Add those factories to the list of possible imports if they have a surplus
       factories.push(...availableFactories)
     }
+
+    // Sort the factories by name
+    factories.sort((a, b) => a.name.localeCompare(b.name))
 
     return factories
   })
@@ -277,7 +278,7 @@
     // Only return true if there's at least one factory with a surplus of a required part
     return validFactories.some(otherFactory => {
       return Object.keys(factory.parts).some(requiredPart => {
-        return otherFactory.exports[requiredPart] && otherFactory.exports[requiredPart].surplus > 0
+        return otherFactory.exports[requiredPart]
       })
     })
   }
@@ -286,11 +287,7 @@
     // Check if there are still any valid imports remaining that are not already fully used
     return possibleImports.value.some(otherFactory => {
       return Object.keys(factory.parts).some(requiredPart => {
-        const exports = otherFactory.exports[requiredPart]
-        const totalRequested = factory.inputs
-          .filter(input => input.outputPart === requiredPart && input.factoryId === otherFactory.id)
-          .reduce((sum, input) => sum + input.amount, 0)
-        return exports && exports.surplus > totalRequested
+        return otherFactory.exports[requiredPart]
       })
     })
   }
