@@ -5,6 +5,9 @@
         "constructormk1": 4,
         "converter": 0.1,
         "foundrymk1": 16,
+        "generatorcoal": 0,
+        "generatorfuel": 0,
+        "generatornuclear": 0,
         "hadroncollider": 0.1,
         "manufacturermk1": 55,
         "nuclearpowerplant": 0,
@@ -10357,9 +10360,9 @@
                     "perMin": 10
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10373,9 +10376,9 @@
                     "perMin": 120
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10389,9 +10392,9 @@
                     "perMin": 90
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10405,9 +10408,9 @@
                     "perMin": 2.4
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10421,9 +10424,9 @@
                     "perMin": 4
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10437,9 +10440,9 @@
                     "perMin": 18
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10458,9 +10461,9 @@
                     "perMin": 45
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10479,9 +10482,9 @@
                     "perMin": 45
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10500,9 +10503,9 @@
                     "perMin": 45
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10516,9 +10519,9 @@
                     "perMin": 15000
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10532,9 +10535,9 @@
                     "perMin": 3000
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10548,9 +10551,9 @@
                     "perMin": 15000
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10564,9 +10567,9 @@
                     "perMin": 3750
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10580,9 +10583,9 @@
                     "perMin": 7.5
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10601,9 +10604,9 @@
                     "perMin": 240
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         },
@@ -10622,16 +10625,14 @@
                     "perMin": 240
                 }
             ],
-            "products": [
-                {
-                    "part": "PlutoniumWaste",
-                    "amount": 0.16666666666666666,
-                    "perMin": 10,
-                    "isByProduct": true
-                }
-            ],
+            "byproduct": {
+                "part": "PlutoniumWaste",
+                "amount": 0.16666666666666666,
+                "perMin": 10,
+                "isByProduct": true
+            },
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         },
@@ -10650,16 +10651,14 @@
                     "perMin": 240
                 }
             ],
-            "products": [
-                {
-                    "part": "NuclearWaste",
-                    "amount": 0.8333333333333334,
-                    "perMin": 50,
-                    "isByProduct": true
-                }
-            ],
+            "byproduct": {
+                "part": "NuclearWaste",
+                "amount": 0.8333333333333334,
+                "perMin": 50,
+                "isByProduct": true
+            },
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         }

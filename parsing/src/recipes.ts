@@ -1,11 +1,12 @@
 import {Building, Recipe, Ingredient, Product, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
 import {
-    blacklist, 
-    isFluid, 
-    isFicsmas, 
-    getRecipeName, 
-    getPartName, 
-    getFriendlyName
+    blacklist,
+    isFluid,
+    isFicsmas,
+    getRecipeName,
+    getPartName,
+    getFriendlyName,
+    getPowerProducerBuildingName
 } from "./common";
 import {PartDataInterface, Part} from "./interfaces/Part";
 
@@ -184,19 +185,14 @@ function getPowerGeneratingRecipes(
         .filter((entry: any) => entry.Classes)
         .flatMap((entry: any) => entry.Classes)
         .filter((recipe: any) => {
-            
             // Filter out recipes that don't have a fuel component
-            if (!recipe.mFuel)  { 
-                return false; 
-            } else {
-                return true;
-            }
+            return recipe.mFuel;
 
         })
         .forEach((recipe: any) => {
-             
+            console.log(recipe);
             const building : Building = {
-                name: recipe.mDisplayName.replace(/ /g, ''), // Use the first valid building, or empty string if none
+                name: getPowerProducerBuildingName(recipe.ClassName) ?? 'UNKNOWN',
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
             const supplementalRatio = Number(recipe.mSupplementalToPowerRatio);
@@ -246,23 +242,21 @@ function getPowerGeneratingRecipes(
                         )
                     }
                     
-                    const products: Product[] = [];
+                    let byproduct: Product | null = null;
                     if (fuelItem.byProduct) {
-                        products.push(
-                            {
-                                part: fuelItem.byProduct,
-                                amount: fuelItem.byProductAmount/60,
-                                perMin: fuelItem.byProductAmount,
-                                isByProduct: true
-                            }
-                        );
+                        byproduct = {
+                            part: fuelItem.byProduct,
+                            amount: fuelItem.byProductAmount/60,
+                            perMin: fuelItem.byProductAmount,
+                            isByProduct: true
+                        }
                     }
 
                     recipes.push({
                         id: getRecipeName(recipe.ClassName) +'_'+ fuelItem.primaryFuel,
                         displayName: recipe.mDisplayName + ' (' + primaryFuelPart.name + ')',
                         ingredients,
-                        products,
+                        byproduct,
                         building
                     });  
                 }
