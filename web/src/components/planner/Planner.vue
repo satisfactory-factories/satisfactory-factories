@@ -257,13 +257,16 @@
       ['converter', 'Converter'],
       ['foundrymk1', 'Foundry'],
       ['hadroncollider', 'Particle Accelerator'],
+      ['generatorbiomass', 'Biomass Burner'],
+      ['generatorcoal', 'Coal-Powered Generator'],
+      ['generatorfuel', 'Fuel-Powered Generator'],
+      ['generatornuclear', 'Nuclear Power Plant'],
       ['manufacturermk1', 'Manufacturer'],
       ['oilrefinery', 'Oil Refinery'],
       ['packager', 'Packager'],
       ['quantumencoder', 'Quantum Encoder'],
       ['smeltermk1', 'Smelter'],
       ['waterExtractor', 'Water Extractor'],
-      ['nuclearpowerplant', 'Nuclear Power Plant'],
     ])
 
     return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`

@@ -17,3 +17,14 @@ export interface Recipe {
   isAlternate: boolean;
   isFicsmas: boolean;
 }
+
+export interface PowerRecipe {
+  id: string;
+  displayName: string;
+  ingredients: RecipeItem[];
+  byproduct: RecipeItem | null;
+  building: {
+    name: string;
+    power: number;
+  }
+}

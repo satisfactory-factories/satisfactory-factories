@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { config } from '@/config/config'
-import { Recipe } from '@/interfaces/Recipe'
+import { PowerRecipe, Recipe } from '@/interfaces/Recipes'
 
 export const useGameDataStore = defineStore('game-data', () => {
   const gameData = ref<DataInterface | null>(JSON.parse(<string>localStorage.getItem('gameData') ?? 'null'))
@@ -42,8 +42,13 @@ export const useGameDataStore = defineStore('game-data', () => {
 
   const getGameData = (): DataInterface => {
     if (!gameData.value) {
-      alert('Game data is somehow empty! Please reload!')
-      throw new Error('Game data is empty!')
+      loadGameData()
+      alert('Could not load the game data! Please refresh!')
+    }
+
+    if (!gameData.value) {
+      alert('Could not load the game data! Please report this on Discord!')
+      throw new Error('Game data not loaded even after attempting to re-load it!')
     }
     return gameData.value
   }
@@ -67,6 +72,17 @@ export const useGameDataStore = defineStore('game-data', () => {
     })
   }
 
+  const getRecipesForPowerProducer = (building: string): PowerRecipe[] | [] => {
+    if (!gameData.value || !building) {
+      return []
+    }
+
+    return gameData.value.powerGenerationRecipes.filter(recipe => {
+      // Filter the recipe product array to return only the recipes that produce the part
+      return recipe.building.name === building
+    })
+  }
+
   const getDefaultRecipeForPart = (part: string) => {
     const recipes = getRecipesForPart(part)
     if (recipes.length === 1) {
@@ -86,12 +102,26 @@ export const useGameDataStore = defineStore('game-data', () => {
     return ''
   }
 
+  const getDefaultRecipeForPowerProducer = (building: string): PowerRecipe => {
+    const recipes = getRecipesForPowerProducer(building)
+
+    if (!recipes || recipes.length === 0) {
+      console.error(`No recipes found for power producer ${building}`)
+    }
+
+    // There is no current means to determine the default recipe, so just return the first one for now.
+
+    return recipes[0]
+  }
+
   return {
     gameData,
     getGameData,
     loadGameData,
     getRecipeById,
     getRecipesForPart,
+    getRecipesForPowerProducer,
     getDefaultRecipeForPart,
+    getDefaultRecipeForPowerProducer,
   }
 })

@@ -101,9 +101,11 @@ export interface FactoryTask {
 
 export interface FactoryPowerProducer {
   building: string;
+  amount: number; // Amount of ingredient used in the recipe
   powerAmount: number; // Amount of energy to produce in MW
-  fuelRecipe: string;
+  recipe: string;
   byproduct: { part: string, amount: number } | null; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.
+  displayOrder: number;
 }
 
 export interface Factory {

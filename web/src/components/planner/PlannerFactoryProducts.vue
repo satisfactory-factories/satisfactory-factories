@@ -16,7 +16,7 @@
     <div
       v-for="(product, productIndex) in factory.products"
       :key="productIndex"
-      class="px-4 my-2 border-md rounded sub-card"
+      class="px-4 my-2 border-md rounded sub-card product"
     >
       <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
         <div class="input-row d-flex align-center">
@@ -99,7 +99,7 @@
             icon="fas fa-arrow-up"
             size="small"
             variant="outlined"
-            @click="updateOrder('up', product)"
+            @click="updateProductOrder('up', product)"
           />
           <v-btn
             class="rounded mr-2"
@@ -108,7 +108,7 @@
             icon="fas fa-arrow-down"
             size="small"
             variant="outlined"
-            @click="updateOrder('down', product)"
+            @click="updateProductOrder('down', product)"
           />
           <v-btn
             class="rounded"
@@ -194,16 +194,6 @@
         </div>
       </v-row>
     </div>
-    <!-- END PRODUCTS -->
-    <!-- POWER PRODUCERS -->
-    <div
-      v-for="(producer, producerIndex) in factory.powerProducers"
-      :key="producerIndex"
-      class="px-4 my-2 border-md rounded sub-card"
-    >
-      Power Producer
-
-    </div>
     <div class="mt-2">
       <v-btn
         color="primary mr-2"
@@ -214,8 +204,96 @@
       >
         Add Product
       </v-btn>
+      <!-- END PRODUCTS -->
+      <!-- POWER PRODUCERS -->
+      <div
+        v-for="(producer, producerIndex) in factory.powerProducers"
+        :key="producerIndex"
+        class="powerProduct px-4 my-2 border-md rounded sub-card"
+      >
+        <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
+
+          <div class="input-row d-flex align-center">
+            <span v-show="!producer.building" class="mr-2">
+              <i class="fas fa-cube" style="width: 32px; height: 32px" />
+            </span>
+            <span v-if="producer.building" class="mr-2">
+              <game-asset
+                :key="producer.building"
+                height="32px"
+                :subject="producer.building"
+                type="item"
+                width="32px"
+              />
+            </span>
+            <v-autocomplete
+              v-model="producer.building"
+              hide-details
+              :items="autocompletePowerProducerGenerator()"
+              label="Item"
+              max-width="300px"
+              variant="outlined"
+              width="300px"
+              @update:model-value="updatePowerProducerSelection(producer, factory)"
+            />
+          </div>
+          <div class="input-row d-flex align-center">
+            <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
+            <v-autocomplete
+              v-model="producer.recipe"
+              :disabled="!producer.building"
+              hide-details
+              :items="getRecipesForPartSelector(producer.building)"
+              label="Recipe"
+              max-width="350px"
+              variant="outlined"
+              width="350px"
+              @update:model-value="updateFactory(factory)"
+            />
+          </div>
+          <div class="input-row d-flex align-center">
+            <v-text-field
+              v-model.number="producer.amount"
+              hide-details
+              label="Qty /min"
+              :max-width="smAndDown ? undefined : '110px'"
+              :min-width="smAndDown ? undefined : '100px'"
+              type="number"
+              variant="outlined"
+              @input="updateFactory(factory)"
+            />
+          </div>
+
+          <v-btn
+            class="rounded mr-2"
+            color="blue"
+            :disabled="producer.displayOrder === 0"
+            icon="fas fa-arrow-up"
+            size="small"
+            variant="outlined"
+            @click="updatePowerProducerOrder('up', producer)"
+          />
+          <v-btn
+            class="rounded mr-2"
+            color="blue"
+            :disabled="producer.displayOrder === factory.powerProducers.length - 1"
+            icon="fas fa-arrow-down"
+            size="small"
+            variant="outlined"
+            @click="updatePowerProducerOrder('down', producer)"
+          />
+          <v-btn
+            class="rounded"
+            color="red"
+            icon="fas fa-trash"
+            size="small"
+            variant="outlined"
+            @click="deletePowerProducer(producerIndex, factory)"
+          />
+        </div>
+      </div>
       <v-btn
-        color="yellow mr-2"
+        color="yellow-darken-3 mr-2"
         prepend-icon="fas fa-bolt"
         ripple
         variant="flat"
@@ -227,7 +305,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryItem, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
   import {
     addPowerProducer,
     addProductToFactory,
@@ -253,7 +331,7 @@
   const { smAndDown } = useDisplay()
   const gameDataStore = useGameDataStore()
 
-  const { getRecipesForPart, getDefaultRecipeForPart } = useGameDataStore()
+  const { getRecipesForPart, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
 
   const addEmptyProduct = (factory: Factory) => {
     addProductToFactory(factory, {
@@ -265,8 +343,8 @@
   const addEmptyPowerProducer = (factory: Factory) => {
     addPowerProducer(factory, {
       building: '',
-      powerAmount: 0,
-      fuelRecipe: '',
+      amount: 0,
+      recipe: '',
     })
   }
 
@@ -276,6 +354,16 @@
     // We need to loop through each one in order and fix their ordering with the running count
     factory.products.forEach((product, index) => {
       product.displayOrder = index
+    })
+    updateFactory(factory)
+  }
+
+  const deletePowerProducer = (index: number, factory: Factory) => {
+    factory.powerProducers.splice(index, 1)
+
+    // We need to loop through each one in order and fix their ordering with the running count
+    factory.powerProducers.forEach((producer, index) => {
+      producer.displayOrder = index
     })
     updateFactory(factory)
   }
@@ -291,6 +379,22 @@
     data.sort((a, b) => a.title.localeCompare(b.title))
 
     return data
+  }
+  const autocompletePowerProducerGenerator = () :string[] => {
+    // Loop through all the power production recipes and extrapolate a list of buildings
+
+    const buildings = new Set<string>()
+
+    gameDataStore.getGameData().powerGenerationRecipes.forEach(recipe => {
+      buildings.add(getBuildingDisplayName(recipe.building.name))
+    })
+
+    const buildingsArray: string[] = buildings.values().toArray()
+
+    // Sort
+    buildingsArray.sort((a, b) => a.localeCompare(b))
+
+    return buildingsArray
   }
 
   const autocompletePartItems = autocompletePartItemsGenerator()
@@ -313,25 +417,40 @@
     updateFactory(factory)
   }
 
-  // Enables the user to move the order of the products up or down
-  const updateOrder = (direction: 'up' | 'down', product: FactoryItem) => {
-    const index = props.factory.products.findIndex(p => p.displayOrder === product.displayOrder)
+  const updatePowerProducerSelection = (producer: FactoryPowerProducer, factory: Factory) => {
+    producer.recipe = getDefaultRecipeForPowerProducer(producer.building).id
+    producer.amount = 1
+
+    updateFactory(factory)
+  }
+
+  const updateOrder = (list: any[], direction: 'up' | 'down', item: any) => {
+    const index = list.findIndex(p => p.displayOrder === item.displayOrder)
     const newIndex = direction === 'up' ? index - 1 : index + 1
 
-    if (newIndex < 0 || newIndex >= props.factory.products.length) {
+    if (newIndex < 0 || newIndex >= list.length) {
       return
     }
 
-    const otherProduct = props.factory.products.find(p => p.displayOrder === newIndex)
-    if (!otherProduct) {
+    const otherItem = list.find(p => p.displayOrder === newIndex)
+    if (!otherItem) {
       return
     }
 
-    const tempOrder = product.displayOrder
-    product.displayOrder = otherProduct.displayOrder
-    otherProduct.displayOrder = tempOrder
+    const tempOrder = item.displayOrder
+    item.displayOrder = otherItem.displayOrder
+    otherItem.displayOrder = tempOrder
 
-    props.factory.products.sort((a, b) => a.displayOrder - b.displayOrder)
+    list.sort((a, b) => a.displayOrder - b.displayOrder)
+  }
+
+  // Enables the user to move the order of the byproduct up or down
+  const updateProductOrder = (direction: 'up' | 'down', product: FactoryItem) => {
+    updateOrder(props.factory.products, direction, product)
+  }
+
+  const updatePowerProducerOrder = (direction: 'up' | 'down', producer: FactoryPowerProducer) => {
+    updateOrder(props.factory.powerProducers, direction, producer)
   }
 
   const increaseProductQtyByBuilding = (product: FactoryItem) => {
@@ -367,5 +486,12 @@
 <style lang="scss" scoped>
   .input-row {
     max-width: 100%;
+  }
+
+  .product {
+    border-left: 5px solid #2196f3 !important
+  }
+  .powerProduct {
+    border-left: 5px solid #ff9800 !important
   }
 </style>

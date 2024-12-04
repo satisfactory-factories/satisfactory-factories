@@ -1,6 +1,6 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
-import { Recipe } from '@/interfaces/Recipe'
+import { Recipe } from '@/interfaces/Recipes'
 
 export const createNewPart = (factory: Factory, part: string) => {
   if (!factory.parts[part]) {

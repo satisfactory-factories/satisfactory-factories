@@ -29,15 +29,17 @@ export const addPowerProducer = (
   factory: Factory,
   options: {
     building?: string,
-    powerAmount?: number,
-    fuelRecipe?: string;
+    amount?: number,
+    recipe?: string;
   }
 ) => {
   factory.powerProducers.push({
     building: options.building ?? '',
-    powerAmount: options.powerAmount ?? 0,
-    fuelRecipe: options.fuelRecipe ?? '',
+    amount: options.amount ?? 0,
+    powerAmount: 0, // Gets calculated later
+    recipe: options.recipe ?? '',
     byproduct: null,
+    displayOrder: factory.powerProducers.length,
   })
 }
 
