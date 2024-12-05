@@ -26,10 +26,10 @@
           <span v-if="product.id" class="mr-2">
             <game-asset
               :key="product.id"
-              height="32px"
+              height="42px"
               :subject="product.id"
               type="item"
-              width="32px"
+              width="42px"
             />
           </span>
           <v-autocomplete
@@ -212,18 +212,17 @@
         class="powerProduct px-4 my-2 border-md rounded sub-card"
       >
         <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
-
           <div class="input-row d-flex align-center">
             <span v-show="!producer.building" class="mr-2">
-              <i class="fas fa-cube" style="width: 32px; height: 32px" />
+              <i class="fas fa-building" style="width: 42px; height: 42px" />
             </span>
             <span v-if="producer.building" class="mr-2">
               <game-asset
                 :key="producer.building"
-                height="32px"
+                height="42px"
                 :subject="producer.building"
                 type="building"
-                width="32px"
+                width="42px"
               />
             </span>
             <v-autocomplete
@@ -238,7 +237,18 @@
             />
           </div>
           <div class="input-row d-flex align-center">
-            <i class="fas fa-burn mr-2" style="width: 32px; height: 32px" />
+            <span v-if="producer.recipe" class="mr-2">
+              <game-asset
+                :key="producer.recipe"
+                height="42px"
+                :subject="getItemFromFuelRecipe(producer.recipe)"
+                type="item"
+                width="42px"
+              />
+            </span>
+            <span v-else class="mr-2">
+              <i class="fas fa-burn" style="width: 42px; height: 42px" />
+            </span>
             <v-autocomplete
               v-model="producer.recipe"
               :disabled="!producer.building"
@@ -263,33 +273,34 @@
               @input="updateFactory(factory)"
             />
           </div>
-
-          <v-btn
-            class="rounded mr-2"
-            color="blue"
-            :disabled="producer.displayOrder === 0"
-            icon="fas fa-arrow-up"
-            size="small"
-            variant="outlined"
-            @click="updatePowerProducerOrder('up', producer)"
-          />
-          <v-btn
-            class="rounded mr-2"
-            color="blue"
-            :disabled="producer.displayOrder === factory.powerProducers.length - 1"
-            icon="fas fa-arrow-down"
-            size="small"
-            variant="outlined"
-            @click="updatePowerProducerOrder('down', producer)"
-          />
-          <v-btn
-            class="rounded"
-            color="red"
-            icon="fas fa-trash"
-            size="small"
-            variant="outlined"
-            @click="deletePowerProducer(producerIndex, factory)"
-          />
+          <div class="input-row d-flex align-center">
+            <v-btn
+              class="rounded mr-2"
+              color="blue"
+              :disabled="producer.displayOrder === 0"
+              icon="fas fa-arrow-up"
+              size="small"
+              variant="outlined"
+              @click="updatePowerProducerOrder('up', producer)"
+            />
+            <v-btn
+              class="rounded mr-2"
+              color="blue"
+              :disabled="producer.displayOrder === factory.powerProducers.length - 1"
+              icon="fas fa-arrow-down"
+              size="small"
+              variant="outlined"
+              @click="updatePowerProducerOrder('down', producer)"
+            />
+            <v-btn
+              class="rounded"
+              color="red"
+              icon="fas fa-trash"
+              size="small"
+              variant="outlined"
+              @click="deletePowerProducer(producerIndex, factory)"
+            />
+          </div>
         </div>
       </div>
       <v-btn
@@ -331,7 +342,7 @@
   const { smAndDown } = useDisplay()
   const gameDataStore = useGameDataStore()
 
-  const { getRecipesForPart, getRecipesForPowerProducer, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
+  const { getPowerRecipeById, getRecipesForPart, getRecipesForPowerProducer, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
 
   const addEmptyProduct = (factory: Factory) => {
     addProductToFactory(factory, {
@@ -381,8 +392,8 @@
     return data
   }
   const autocompletePowerProducerGenerator = (): {title: string, value: string}[] => {
-    // Loop through all the power production recipes and extrapolate a list of buildings
-
+    // Loop through all the power production recipes and extrapolate a list of buildings.
+    // We're going to use a set here to ensure the list is unique.
     const buildings = new Set<string>()
 
     gameDataStore.getGameData().powerGenerationRecipes.forEach(recipe => {
@@ -400,9 +411,6 @@
         value: building,
       }
     })
-
-    console.log('data', data)
-
     return data ?? []
   }
 
@@ -429,6 +437,15 @@
         value: recipe.id,
       }
     })
+  }
+
+  const getItemFromFuelRecipe = (recipe: string) => {
+    const fuelRecipe = getPowerRecipeById(recipe)
+    if (!fuelRecipe) {
+      return ''
+    }
+
+    return fuelRecipe.ingredients[0].part
   }
 
   const updateProductSelection = (product: FactoryItem, factory: Factory) => {

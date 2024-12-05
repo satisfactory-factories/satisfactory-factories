@@ -61,6 +61,14 @@ export const useGameDataStore = defineStore('game-data', () => {
     return gameData.value.recipes.find(recipe => recipe.id === id) ?? null
   }
 
+  const getPowerRecipeById = (id: string): PowerRecipe | null => {
+    if (!gameData.value || !id) {
+      return null
+    }
+
+    return gameData.value.powerGenerationRecipes.find(recipe => recipe.id === id) ?? null
+  }
+
   const getRecipesForPart = (part: string) => {
     if (!gameData.value || !part) {
       return []
@@ -119,6 +127,7 @@ export const useGameDataStore = defineStore('game-data', () => {
     getGameData,
     loadGameData,
     getRecipeById,
+    getPowerRecipeById,
     getRecipesForPart,
     getRecipesForPowerProducer,
     getDefaultRecipeForPart,
