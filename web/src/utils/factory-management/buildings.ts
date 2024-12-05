@@ -40,7 +40,7 @@ export const calculateBuildingRequirements = (factory: Factory, gameData: DataIn
   })
 }
 
-export const calculateBuildingsAndPower = (factory: Factory) => {
+export const calculateBuildingsAndPowerRequirements = (factory: Factory) => {
   factory.totalPower = 0
   factory.buildingRequirements = {} as {[key: string]: BuildingRequirement }
 

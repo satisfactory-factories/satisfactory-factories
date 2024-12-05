@@ -1,7 +1,7 @@
 import { BuildingRequirement, Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
 import { calculateInputs } from '@/utils/factory-management/inputs'
 import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
-import { calculateBuildingRequirements, calculateBuildingsAndPower } from '@/utils/factory-management/buildings'
+import { calculateBuildingRequirements, calculateBuildingsAndPowerRequirements } from '@/utils/factory-management/buildings'
 import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
 import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
 import {
@@ -15,6 +15,7 @@ import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
 import { calculateSyncState } from '@/utils/factory-management/syncState'
+import { calculatePowerGeneration } from '@/utils/factory-management/power'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -109,7 +110,10 @@ export const calculateFactory = (
   calculateInternalProducts(factory, gameData)
 
   // We then calculate the building and power demands to make the factory.
-  calculateBuildingsAndPower(factory)
+  calculateBuildingsAndPowerRequirements(factory)
+
+  // Calculate the generation of power for the factory
+  calculatePowerGeneration(factory, gameData)
 
   // Check all other factories to see if they are affected by this factory change.
   constructDependencies(allFactories)

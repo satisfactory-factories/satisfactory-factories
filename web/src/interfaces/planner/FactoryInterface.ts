@@ -101,7 +101,11 @@ export interface FactoryTask {
 
 export interface FactoryPowerProducer {
   building: string;
-  amount: number; // Amount of ingredient used in the recipe
+  ingredients: { // Many recipes have dual ingredient requirements
+    part: string;
+    amount: number;
+  }[],
+  ingredientAmount: number; // Enables the user to specify the quantity of fuel to use.
   powerAmount: number; // Amount of energy to produce in MW
   recipe: string;
   byproduct: { part: string, amount: number } | null; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.

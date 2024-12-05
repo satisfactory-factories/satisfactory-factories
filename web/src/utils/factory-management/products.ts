@@ -25,18 +25,20 @@ export const addProductToFactory = (
   createNewPart(factory, options.id ?? '')
 }
 
-export const addPowerProducer = (
+export const addPowerProducerToFactory = (
   factory: Factory,
   options: {
     building?: string,
-    amount?: number,
+    powerAmount?: number,
+    ingredientAmount?: number,
     recipe?: string;
   }
 ) => {
   factory.powerProducers.push({
     building: options.building ?? '',
-    amount: options.amount ?? 0,
-    powerAmount: 0, // Gets calculated later
+    ingredients: [],
+    powerAmount: options.powerAmount ?? 1,
+    ingredientAmount: options.ingredientAmount ?? 1,
     recipe: options.recipe ?? '',
     byproduct: null,
     displayOrder: factory.powerProducers.length,

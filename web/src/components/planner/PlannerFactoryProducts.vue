@@ -263,9 +263,9 @@
           </div>
           <div class="input-row d-flex align-center">
             <v-text-field
-              v-model.number="producer.amount"
+              v-model.number="producer.ingredientAmount"
               hide-details
-              label="Fuel Qty /min"
+              label="Fuel Qty/min"
               :max-width="smAndDown ? undefined : '110px'"
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
@@ -273,6 +273,20 @@
               @input="updateFactory(factory)"
             />
           </div>
+          <div class="d-flex align-center mx-1"><span>OR</span></div>
+          <div class="input-row d-flex align-center">
+            <v-text-field
+              v-model.number="producer.powerAmount"
+              hide-details
+              label="MW"
+              :max-width="smAndDown ? undefined : '110px'"
+              :min-width="smAndDown ? undefined : '100px'"
+              type="number"
+              variant="outlined"
+              @input="updateFactory(factory)"
+            />
+          </div>
+
           <div class="input-row d-flex align-center">
             <v-btn
               class="rounded mr-2"
@@ -301,6 +315,17 @@
               @click="deletePowerProducer(producerIndex, factory)"
             />
           </div>
+          <div class="input-row d-flex align-center">
+            <v-chip
+              class="sf-chip green"
+              variant="tonal"
+            >
+              <i class="fas fa-solar-panel" />
+              <span class="ml-2">
+                Produces: {{ formatNumber(producer.powerAmount) }} MW
+              </span>
+            </v-chip>
+          </div>
         </div>
       </div>
       <v-btn
@@ -318,7 +343,7 @@
 <script lang="ts" setup>
   import { Factory, FactoryItem, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
   import {
-    addPowerProducer,
+    addPowerProducerToFactory,
     addProductToFactory,
     shouldShowNotInDemand,
     shouldShowTrim,
@@ -352,9 +377,9 @@
   }
 
   const addEmptyPowerProducer = (factory: Factory) => {
-    addPowerProducer(factory, {
+    addPowerProducerToFactory(factory, {
       building: '',
-      amount: 0,
+      powerAmount: 1,
       recipe: '',
     })
   }
@@ -457,7 +482,7 @@
 
   const updatePowerProducerSelection = (producer: FactoryPowerProducer, factory: Factory) => {
     producer.recipe = getDefaultRecipeForPowerProducer(producer.building).id
-    producer.amount = 1
+    producer.powerAmount = 1
 
     updateFactory(factory)
   }
