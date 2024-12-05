@@ -1,10 +1,8 @@
-import { beforeAll, describe, expect, it, test } from '@jest/globals'
+import { beforeAll, describe, expect, it } from '@jest/globals'
 
 import { processFile } from '../src/processor'
-import { ParserPart } from '../src/interfaces/ParserPart'
-import {ParserPowerRecipe, ParserRecipe} from '../src/interfaces/ParserRecipe'
+import {ParserPowerRecipe} from "../src/interfaces/ParserRecipe";
 
-// TODO: break this into smaller files, this is getting too big.
 describe('Power Parsing', () => {
     let results: any;
 
@@ -24,7 +22,6 @@ describe('Power Parsing', () => {
 
             expect(recipe.displayName).toBe('Biomass Burner (Wood)');
             expect(recipe.ingredients[0].part).toBe('Wood');
-            expect(recipe.ingredients[0].amount).toBe(0.3);
             expect(recipe.ingredients[0].perMin).toBe(18);
             expect(recipe.byproduct).toBe(null);
             expect(recipe.building.name).toBe('generatorbiomass');
@@ -36,10 +33,8 @@ describe('Power Parsing', () => {
 
             expect(recipe.displayName).toBe('Coal-Powered Generator (Coal)');
             expect(recipe.ingredients[0].part).toBe('Coal');
-            expect(recipe.ingredients[0].amount).toBe(0.25);
             expect(recipe.ingredients[0].perMin).toBe(15);
             expect(recipe.ingredients[1].part).toBe('Water');
-            expect(recipe.ingredients[1].amount).toBe(0.75);
             expect(recipe.ingredients[1].perMin).toBe(45);
             expect(recipe.byproduct).toBe(null);
             expect(recipe.building.name).toBe('generatorcoal');
@@ -51,7 +46,6 @@ describe('Power Parsing', () => {
 
             expect(recipe.displayName).toBe('Fuel-Powered Generator (Fuel)');
             expect(recipe.ingredients[0].part).toBe('LiquidFuel');
-            expect(recipe.ingredients[0].amount).toBe(1);
             expect(recipe.ingredients[0].perMin).toBe(20);
             expect(recipe.byproduct).toBe(null);
             expect(recipe.building.name).toBe('generatorfuel');
@@ -63,15 +57,27 @@ describe('Power Parsing', () => {
 
             expect(recipe.displayName).toBe('Nuclear Power Plant (Uranium Fuel Rod)');
             expect(recipe.ingredients[0].part).toBe('NuclearFuelRod');
-            expect(recipe.ingredients[0].amount).toBe(0.0033333333333333335); // a second
             expect(recipe.ingredients[0].perMin).toBe(0.2);
-                expect(recipe.ingredients[0].part).toBe('Water');
-            expect(recipe.ingredients[0].amount).toBe(4); // A second
-            expect(recipe.ingredients[0].perMin).toBe(240);
-            expect(recipe.byproduct).toBe({
+            expect(recipe.ingredients[1].part).toBe('Water');
+            expect(recipe.ingredients[1].perMin).toBe(240);
+            expect(recipe.byproduct).toStrictEqual({
                 part: 'NuclearWaste',
-                amount: 50, // Every 5 mins
-                perMin: 10, // Every min
+                perMin: 10,
+            });
+            expect(recipe.building.name).toBe('generatornuclear');
+            expect(recipe.building.power).toBe(2500);
+        })
+        it('should generate a nuclear powered generation recipe using plutonium rods with expected values', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorNuclear_PlutoniumFuelRod');
+
+            expect(recipe.displayName).toBe('Nuclear Power Plant (Plutonium Fuel Rod)');
+            expect(recipe.ingredients[0].part).toBe('PlutoniumFuelRod');
+            expect(recipe.ingredients[0].perMin).toBe(0.1);
+            expect(recipe.ingredients[1].part).toBe('Water');
+            expect(recipe.ingredients[1].perMin).toBe(240);
+            expect(recipe.byproduct).toStrictEqual({
+                part: 'PlutoniumWaste',
+                perMin: 1,
             });
             expect(recipe.building.name).toBe('generatornuclear');
             expect(recipe.building.power).toBe(2500);
@@ -82,7 +88,6 @@ describe('Power Parsing', () => {
 
             expect(recipe.displayName).toBe('Nuclear Power Plant (Ficsonium Fuel Rod)');
             expect(recipe.ingredients[0].part).toBe('FicsoniumFuelRod');
-            expect(recipe.ingredients[0].amount).toBe(0.016666666666666666);
             expect(recipe.ingredients[0].perMin).toBe(1);
             expect(recipe.byproduct).toBe(null);
             expect(recipe.building.name).toBe('generatornuclear');

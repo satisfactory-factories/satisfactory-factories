@@ -1,6 +1,5 @@
 export interface ParserIngredient {
   part: string;
-  amount: number;
   perMin: number;
 }
 
@@ -28,11 +27,16 @@ export interface ParserRecipeItem {
   isByProduct?: boolean;
 }
 
+export interface ParserPowerItem {
+  part: string;
+  perMin: number;
+}
+
 export interface ParserPowerRecipe {
   id: string;
   displayName: string;
   ingredients: ParserRecipeItem[];
-  byproduct: ParserRecipeItem | null;
+  byproduct: ParserPowerItem | null;
   building: {
     name: string;
     power: number;
@@ -44,6 +48,8 @@ export interface ParserFuel {
   supplementalResource: string;
   byProduct: string;
   byProductAmount: number;
+  byProductPerMin: number;
+  duration: number
 }
 
 export interface ParserBuilding {
