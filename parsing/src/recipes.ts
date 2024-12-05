@@ -1,22 +1,21 @@
 import {
     ParserBuilding,
     ParserRecipe,
-    ParserIngredient,
-    ParserProduct,
-    ParserPowerRecipe,
-    ParserFuel,
-    ParserPowerItem
 } from "./interfaces/ParserRecipe";
+import {
+    ParserFuel,
+    ParserPowerItem,
+    ParserPowerRecipe
+} from "./interfaces/ParserPowerRecipe";
 import {
     blacklist,
     isFluid,
     isFicsmas,
     getRecipeName,
     getPartName,
-    getFriendlyName,
     getPowerProducerBuildingName
 } from "./common";
-import {ParserItemDataInterface, ParserPart} from "./interfaces/ParserPart";
+import {ParserItemDataInterface} from "./interfaces/ParserPart";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
 function getProductionRecipes(
@@ -237,18 +236,18 @@ function getPowerGeneratingRecipes(
                     // (this is step 4 from above)
                     primaryPerMin = parseFloat((burnRateMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(5))
                 }
-                const ingredients: ParserIngredient[] = [];
+                const ingredients: ParserPowerItem[] = [];
                 ingredients.push({
                     part: fuelItem.primaryFuel,
                     perMin: primaryPerMin,
-                    mwPerItem: building.power / primaryPerMin
+                    mwPerItem: building.power / primaryPerMin,
                 })
                 if (fuelItem.supplementalResource && supplementalRatio > 0) {
                     const perMin = (3 / 50) * supplementalRatio * building.power;
                     ingredients.push({
                         part: fuelItem.supplementalResource,
                         perMin: perMin, // Calculate the ratio of the supplemental resource to the primary fuel
-                        mwPerItem: building.power / perMin
+                        supplementalRatio,
                     })
                 }
 
