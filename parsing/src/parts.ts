@@ -213,7 +213,13 @@ function getItems(data: any[]): ParserItemDataInterface {
                 // Extract stack size
                 const stackSize: number = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
                 // Extract the energy value
-                const energyValue: number = classDescriptor.mEnergyValue ?? 0;
+
+                let energyValue = classDescriptor.mEnergyValue ?? 0;
+
+                // If the part is a fluid, the energy value is multiplied by 1000, cos the game loves to store everything as 0.0001 values...
+                if (isFluid(partName)) {
+                    energyValue *= 1000;
+                }
 
                 // Check if the part is a collectable (e.g., Power Slug)
                 if (isCollectable(entry.mIngredients)) {

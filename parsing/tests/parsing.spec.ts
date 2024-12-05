@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it, test } from '@jest/globals'
 
 import { processFile } from '../src/processor'
 import { ParserPart } from '../src/interfaces/ParserPart'
-import { ParserRecipe } from '../src/interfaces/ParserRecipe'
+import {ParserPowerRecipe, ParserRecipe} from '../src/interfaces/ParserRecipe'
 
 // TODO: break this into smaller files, this is getting too big.
 describe('common', () => {
@@ -32,6 +32,16 @@ describe('common', () => {
             expect(part.isFluid).toBe(false);
             expect(part.isFicsmas).toBe(false);
             expect(part.energyGeneratedInMJ).toBe(0);
+        })
+         test('LiquidFuel part should be correct', async () => {
+            const part : ParserPart = results.items.parts["LiquidFuel"];
+
+            expect(part).toBeDefined();
+            expect(part.name).toBe('Fuel');
+            expect(part.stackSize).toBe(0);
+            expect(part.isFluid).toBe(true);
+            expect(part.isFicsmas).toBe(false);
+            expect(part.energyGeneratedInMJ).toBe(750);
         })
 
         test('recipe length should be correct', () => {
@@ -97,7 +107,6 @@ describe('common', () => {
         it('validate a recipe with a single ingredient and product (iron plates)', () => {
             const recipe : ParserRecipe = results.recipes.find((item: { id: string; }) => item.id === 'IronPlate');
 
-            expect(recipe).toBeDefined();
             expect(recipe.displayName).toBe('Iron Plate');
             expect(recipe.ingredients.length).toBe(1);
             expect(recipe.ingredients[0].part).toBe('IronIngot');
@@ -115,7 +124,6 @@ describe('common', () => {
         it('validate a recipe with multiple ingredients (modular frames)', () => {
             const recipe : ParserRecipe = results.recipes.find((item: { id: string; }) => item.id === 'ModularFrame');
 
-            expect(recipe).toBeDefined();
             expect(recipe.displayName).toBe('Modular Frame');
             expect(recipe.ingredients.length).toBe(2);
             expect(recipe.ingredients[0].part).toBe('IronPlateReinforced');
@@ -137,7 +145,6 @@ describe('common', () => {
         it('validate a recipe with multiple products (plastic)', () => {
             const recipe : ParserRecipe = results.recipes.find((item: { id: string; }) => item.id === 'Plastic');
 
-            expect(recipe).toBeDefined();
             expect(recipe.displayName).toBe('Plastic');
             expect(recipe.ingredients.length).toBe(1);
             expect(recipe.ingredients[0].part).toBe('LiquidOil');
@@ -160,7 +167,6 @@ describe('common', () => {
         it('validate a recipe with variable power (nuclear pasta)', () => {
             const recipe : ParserRecipe = results.recipes.find((item: { id: string; }) => item.id === 'SpaceElevatorPart_9');
 
-            expect(recipe).toBeDefined();
             expect(recipe.displayName).toBe('Nuclear Pasta');
             expect(recipe.ingredients.length).toBe(2);
             expect(recipe.ingredients[0].part).toBe('CopperDust');
@@ -184,7 +190,6 @@ describe('common', () => {
         it('validate a recipe with variable power with a Quantum encoder (Neural-Quantum Processor)', () => {
             const recipe : ParserRecipe = results.recipes.find((item: { id: string; }) => item.id === 'TemporalProcessor');
 
-            expect(recipe).toBeDefined();
             expect(recipe.displayName).toBe('Neural-Quantum Processor');
             expect(recipe.ingredients.length).toBe(4);
             expect(recipe.ingredients[0].part).toBe('TimeCrystal');
@@ -213,57 +218,6 @@ describe('common', () => {
             expect(recipe.building.minPower).toBe(0);
             expect(recipe.building.maxPower).toBe(2000);
             expect(recipe.isAlternate).toBe(false);
-        });
-
-
-        it('validate a biomass power generation recipe (solid biomass)', () => {
-            const recipe : ParserRecipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Biofuel');
-
-            expect(recipe).toBeDefined();
-            expect(recipe.displayName).toBe('Biomass Burner (Solid Biofuel)');
-            expect(recipe.ingredients.length).toBe(1);
-            expect(recipe.ingredients[0].part).toBe('Biofuel');
-            expect(recipe.ingredients[0].amount).toBe(0.06666666666666667);
-            expect(recipe.ingredients[0].perMin).toBe(4);
-            expect(recipe.products.length).toBe(0);
-            expect(recipe.building.name).toBe('BiomassBurner');
-            expect(recipe.building.power).toBe(30);
-        });
-
-        
-        it('validate a biomass power generation recipe (wood)', () => {
-            const recipe : ParserRecipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorBiomass_Automated_Wood');
-
-            expect(recipe).toBeDefined();
-            expect(recipe.displayName).toBe('Biomass Burner (Wood)');
-            expect(recipe.ingredients.length).toBe(1);
-            expect(recipe.ingredients[0].part).toBe('Wood');
-            expect(recipe.ingredients[0].amount).toBe(0.3);
-            expect(recipe.ingredients[0].perMin).toBe(18);
-            expect(recipe.products.length).toBe(0);
-            expect(recipe.building.name).toBe('BiomassBurner');
-            expect(recipe.building.power).toBe(30);
-        });
-
-        it('validate a nuclear power generation recipe (Uranium ParserFuel Rod)', () => {
-            const recipe : ParserRecipe = results.powerGenerationRecipes.find((item: { id: string; }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
-
-            expect(recipe).toBeDefined();
-            expect(recipe.displayName).toBe('Nuclear Power Plant (Uranium ParserFuel Rod)');
-            expect(recipe.ingredients.length).toBe(2);
-            expect(recipe.ingredients[0].part).toBe('NuclearFuelRod');
-            expect(recipe.ingredients[0].amount).toBe(0.2/60);
-            expect(recipe.ingredients[0].perMin).toBe(0.2);
-            expect(recipe.ingredients[1].part).toBe('Water');
-            expect(recipe.ingredients[1].amount).toBe(4);
-            expect(recipe.ingredients[1].perMin).toBe(240);
-            expect(recipe.products.length).toBe(1);
-            expect(recipe.products[0].part).toBe('NuclearWaste');
-            expect(recipe.products[0].amount).toBe(0.8333333333333334);
-            expect(recipe.products[0].perMin).toBe(50);
-            expect(recipe.products[0].isByProduct).toBe(true);
-            expect(recipe.building.name).toBe('NuclearPowerPlant');
-            expect(recipe.building.power).toBe(2500);
         });
     })
 })

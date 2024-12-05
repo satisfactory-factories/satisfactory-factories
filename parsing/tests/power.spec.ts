@@ -28,6 +28,17 @@ describe('Power Parsing', () => {
             expect(recipe.building.power).toBe(30);
         });
 
+      it('should generate a biomass burner liquid recipe correctly with expected values', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorBiomass_Automated_PackagedBiofuel');
+
+            expect(recipe.displayName).toBe('Biomass Burner (Packaged Liquid Biofuel)');
+            expect(recipe.ingredients[0].part).toBe('PackagedBiofuel');
+            expect(recipe.ingredients[0].perMin).toBe(2.4);
+            expect(recipe.byproduct).toBe(null);
+            expect(recipe.building.name).toBe('generatorbiomass');
+            expect(recipe.building.power).toBe(30);
+        });
+
         it('should generate a coal powered generation recipe with expected values', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorCoal_Coal');
 
@@ -47,6 +58,16 @@ describe('Power Parsing', () => {
             expect(recipe.displayName).toBe('Fuel-Powered Generator (Fuel)');
             expect(recipe.ingredients[0].part).toBe('LiquidFuel');
             expect(recipe.ingredients[0].perMin).toBe(20);
+            expect(recipe.byproduct).toBe(null);
+            expect(recipe.building.name).toBe('generatorfuel');
+            expect(recipe.building.power).toBe(250);
+        })
+        it('should generate a fuel powered generation recipe using turbofuel with expected values', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_LiquidTurboFuel');
+
+            expect(recipe.displayName).toBe('Fuel-Powered Generator (Turbofuel)');
+            expect(recipe.ingredients[0].part).toBe('LiquidTurboFuel');
+            expect(recipe.ingredients[0].perMin).toBe(7.5);
             expect(recipe.byproduct).toBe(null);
             expect(recipe.building.name).toBe('generatorfuel');
             expect(recipe.building.power).toBe(250);

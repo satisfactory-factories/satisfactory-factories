@@ -1,5 +1,6 @@
 export interface ParserIngredient {
   part: string;
+  amount?: string;
   perMin: number;
 }
 
