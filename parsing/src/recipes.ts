@@ -240,15 +240,16 @@ function getPowerGeneratingRecipes(
                 const ingredients: ParserIngredient[] = [];
                 ingredients.push({
                     part: fuelItem.primaryFuel,
-                    perMin: primaryPerMin
+                    perMin: primaryPerMin,
+                    mwPerItem: building.power / primaryPerMin
                 })
                 if (fuelItem.supplementalResource && supplementalRatio > 0) {
-                    ingredients.push(
-                        {
-                            part: fuelItem.supplementalResource,
-                            perMin: (3 / 50) * supplementalRatio * building.power // Calculate the ratio of the supplemental resource to the primary fuel
-                        }
-                    )
+                    const perMin = (3 / 50) * supplementalRatio * building.power;
+                    ingredients.push({
+                        part: fuelItem.supplementalResource,
+                        perMin: perMin, // Calculate the ratio of the supplemental resource to the primary fuel
+                        mwPerItem: building.power / perMin
+                    })
                 }
 
                 let byproduct: ParserPowerItem | null = null;

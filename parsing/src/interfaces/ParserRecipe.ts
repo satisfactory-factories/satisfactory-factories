@@ -2,6 +2,7 @@ export interface ParserIngredient {
   part: string;
   amount?: string;
   perMin: number;
+  mwPerItem?: number;
 }
 
 export interface ParserProduct {

@@ -10355,7 +10355,8 @@
             "ingredients": [
                 {
                     "part": "GenericBiomass",
-                    "perMin": 10
+                    "perMin": 10,
+                    "mwPerItem": 3
                 }
             ],
             "byproduct": null,
@@ -10370,7 +10371,8 @@
             "ingredients": [
                 {
                     "part": "Leaves",
-                    "perMin": 120
+                    "perMin": 120,
+                    "mwPerItem": 0.25
                 }
             ],
             "byproduct": null,
@@ -10385,7 +10387,8 @@
             "ingredients": [
                 {
                     "part": "Mycelia",
-                    "perMin": 90
+                    "perMin": 90,
+                    "mwPerItem": 0.3333333333333333
                 }
             ],
             "byproduct": null,
@@ -10400,7 +10403,8 @@
             "ingredients": [
                 {
                     "part": "PackagedBiofuel",
-                    "perMin": 2.4
+                    "perMin": 2.4,
+                    "mwPerItem": 12.5
                 }
             ],
             "byproduct": null,
@@ -10415,7 +10419,8 @@
             "ingredients": [
                 {
                     "part": "Biofuel",
-                    "perMin": 4
+                    "perMin": 4,
+                    "mwPerItem": 7.5
                 }
             ],
             "byproduct": null,
@@ -10430,7 +10435,8 @@
             "ingredients": [
                 {
                     "part": "Wood",
-                    "perMin": 18
+                    "perMin": 18,
+                    "mwPerItem": 1.6666666666666667
                 }
             ],
             "byproduct": null,
@@ -10445,11 +10451,13 @@
             "ingredients": [
                 {
                     "part": "Coal",
-                    "perMin": 15
+                    "perMin": 15,
+                    "mwPerItem": 5
                 },
                 {
                     "part": "Water",
-                    "perMin": 45
+                    "perMin": 45,
+                    "mwPerItem": 1.6666666666666667
                 }
             ],
             "byproduct": null,
@@ -10464,11 +10472,13 @@
             "ingredients": [
                 {
                     "part": "CompactedCoal",
-                    "perMin": 7.14286
+                    "perMin": 7.14286,
+                    "mwPerItem": 10.499995800001681
                 },
                 {
                     "part": "Water",
-                    "perMin": 45
+                    "perMin": 45,
+                    "mwPerItem": 1.6666666666666667
                 }
             ],
             "byproduct": null,
@@ -10483,11 +10493,13 @@
             "ingredients": [
                 {
                     "part": "PetroleumCoke",
-                    "perMin": 25
+                    "perMin": 25,
+                    "mwPerItem": 3
                 },
                 {
                     "part": "Water",
-                    "perMin": 45
+                    "perMin": 45,
+                    "mwPerItem": 1.6666666666666667
                 }
             ],
             "byproduct": null,
@@ -10502,7 +10514,8 @@
             "ingredients": [
                 {
                     "part": "LiquidFuel",
-                    "perMin": 20
+                    "perMin": 20,
+                    "mwPerItem": 12.5
                 }
             ],
             "byproduct": null,
@@ -10517,7 +10530,8 @@
             "ingredients": [
                 {
                     "part": "IonizedFuel",
-                    "perMin": 3
+                    "perMin": 3,
+                    "mwPerItem": 83.33333333333333
                 }
             ],
             "byproduct": null,
@@ -10532,7 +10546,8 @@
             "ingredients": [
                 {
                     "part": "LiquidBiofuel",
-                    "perMin": 20
+                    "perMin": 20,
+                    "mwPerItem": 12.5
                 }
             ],
             "byproduct": null,
@@ -10547,7 +10562,8 @@
             "ingredients": [
                 {
                     "part": "RocketFuel",
-                    "perMin": 4.16667
+                    "perMin": 4.16667,
+                    "mwPerItem": 59.999952000038405
                 }
             ],
             "byproduct": null,
@@ -10562,7 +10578,8 @@
             "ingredients": [
                 {
                     "part": "LiquidTurboFuel",
-                    "perMin": 7.5
+                    "perMin": 7.5,
+                    "mwPerItem": 33.333333333333336
                 }
             ],
             "byproduct": null,
@@ -10577,11 +10594,13 @@
             "ingredients": [
                 {
                     "part": "FicsoniumFuelRod",
-                    "perMin": 1
+                    "perMin": 1,
+                    "mwPerItem": 2500
                 },
                 {
                     "part": "Water",
-                    "perMin": 240
+                    "perMin": 240,
+                    "mwPerItem": 10.416666666666666
                 }
             ],
             "byproduct": null,
@@ -10596,11 +10615,13 @@
             "ingredients": [
                 {
                     "part": "PlutoniumFuelRod",
-                    "perMin": 0.1
+                    "perMin": 0.1,
+                    "mwPerItem": 25000
                 },
                 {
                     "part": "Water",
-                    "perMin": 240
+                    "perMin": 240,
+                    "mwPerItem": 10.416666666666666
                 }
             ],
             "byproduct": {
@@ -10618,11 +10639,13 @@
             "ingredients": [
                 {
                     "part": "NuclearFuelRod",
-                    "perMin": 0.2
+                    "perMin": 0.2,
+                    "mwPerItem": 12500
                 },
                 {
                     "part": "Water",
-                    "perMin": 240
+                    "perMin": 240,
+                    "mwPerItem": 10.416666666666666
                 }
             ],
             "byproduct": {
