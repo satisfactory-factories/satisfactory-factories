@@ -1,4 +1,4 @@
-import {Building, Recipe, Ingredient, Product, PowerGenerationRecipe, Fuel} from "./interfaces/Recipe";
+import {ParserBuilding, ParserRecipe, ParserIngredient, ParserProduct, ParserPowerRecipe, ParserFuel} from "./interfaces/ParserRecipe";
 import {
     blacklist,
     isFluid,
@@ -8,14 +8,14 @@ import {
     getFriendlyName,
     getPowerProducerBuildingName
 } from "./common";
-import {PartDataInterface, Part} from "./interfaces/Part";
+import {ParserItemDataInterface, ParserPart} from "./interfaces/ParserPart";
 
 // If you can read this, you are a wizard. ChatGPT made this, it works, so I won't question it!
 function getProductionRecipes(
     data: any[],
     producingBuildings: { [key: string]: number }
-): Recipe[] {
-    const recipes: Recipe[] = [];
+): ParserRecipe[] {
+    const recipes: ParserRecipe[] = [];
 
     data
         .filter((entry: any) => entry.Classes)
@@ -130,7 +130,7 @@ function getProductionRecipes(
             }
 
             // Create building object with the selected building and calculated power
-            const building : Building = {
+            const building : ParserBuilding = {
                 name: selectedBuilding || '', // Use the first valid building, or empty string if none
                 power: powerPerBuilding || 0, // Use calculated power or 0
             };
@@ -176,8 +176,8 @@ function getProductionRecipes(
 
 function getPowerGeneratingRecipes(
     data: any[],
-    parts: PartDataInterface
-): PowerGenerationRecipe[] {
+    parts: ParserItemDataInterface
+): ParserPowerRecipe[] {
 
     const recipes: any[] = [];
 
@@ -191,7 +191,7 @@ function getPowerGeneratingRecipes(
         })
         .forEach((recipe: any) => {
             console.log(recipe);
-            const building : Building = {
+            const building : ParserBuilding = {
                 name: getPowerProducerBuildingName(recipe.ClassName) ?? 'UNKNOWN',
                 power: Math.round(recipe.mPowerProduction), // generated power - can be rounded to the nearest whole number (all energy numbers are whole numbers) 
             };   
@@ -202,9 +202,9 @@ function getPowerGeneratingRecipes(
             // 4. Now divide this number by the part energy to calculate how many pieces per min
             const powerMJ: number = (recipe.mPowerProduction / 60) / (1/3600);
 
-            const fuels: Fuel[] = Array.isArray(recipe.mFuel) ? recipe.mFuel as Fuel[] : [];       
+            const fuels: ParserFuel[] = Array.isArray(recipe.mFuel) ? recipe.mFuel as ParserFuel[] : [];
             fuels.forEach((fuel: any) => {
-                const fuelItem: Fuel = {
+                const fuelItem: ParserFuel = {
                     primaryFuel: getPartName(fuel.mFuelClass),
                     supplementalResource: fuel.mSupplementalResourceClass ? getPartName(fuel.mSupplementalResourceClass) : "",
                     byProduct: fuel.mByproduct ? getPartName(fuel.mByproduct) : "",
@@ -224,7 +224,7 @@ function getPowerGeneratingRecipes(
                 if (primaryPerMin > 0) {                        
                     primaryAmount = primaryPerMin / 60;
 
-                    const ingredients: Ingredient[] = [];
+                    const ingredients: ParserIngredient[] = [];
                     ingredients.push(
                         { 
                             part: fuelItem.primaryFuel,
@@ -242,7 +242,7 @@ function getPowerGeneratingRecipes(
                         )
                     }
                     
-                    let byproduct: Product | null = null;
+                    let byproduct: ParserProduct | null = null;
                     if (fuelItem.byProduct) {
                         byproduct = {
                             part: fuelItem.byProduct,

@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as iconv from 'iconv-lite';
 
-import {Recipe, PowerGenerationRecipe} from "./interfaces/Recipe";
-import {Part, PartDataInterface} from "./interfaces/Part";
+import {ParserRecipe, ParserPowerRecipe} from "./interfaces/ParserRecipe";
+import {ParserPart, ParserItemDataInterface} from "./interfaces/ParserPart";
 import {getItems, fixItemNames, fixTurbofuel} from './parts';
 import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
 import {getProducingBuildings, getPowerConsumptionForBuildings} from './buildings';
@@ -43,7 +43,7 @@ function cleanInput(input: string): string {
     return cleaned;
 }
 
-function removeRubbishItems(items: PartDataInterface, recipes: Recipe[]): void {
+function removeRubbishItems(items: ParserItemDataInterface, recipes: ParserRecipe[]): void {
     // Create a Set to store all product keys from recipes
     const recipeProducts = new Set();
 
@@ -71,9 +71,9 @@ async function processFile(
     inputFile: string, 
     outputFile: string) : Promise<{ buildings: { 
                                         [key: string]: number }; 
-                                        items: PartDataInterface; 
-                                        recipes: Recipe[],
-                                        powerGenerationRecipes: PowerGenerationRecipe[]; 
+                                        items: ParserItemDataInterface;
+                                        recipes: ParserRecipe[],
+                                        powerGenerationRecipes: ParserPowerRecipe[];
                                     } | undefined> {
     try {
         const fileContent = await readFileAsUtf8(inputFile);
@@ -99,7 +99,7 @@ async function processFile(
         const powerGenerationRecipes = getPowerGeneratingRecipes(data, items);
 
         // Since we've done some manipulation of the items data, re-sort it
-        const sortedItems: { [key: string]: Part } = {};
+        const sortedItems: { [key: string]: ParserPart } = {};
         Object.keys(items.parts).sort().forEach(key => {
             sortedItems[key] = items.parts[key];
         });
