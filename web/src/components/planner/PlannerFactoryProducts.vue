@@ -233,7 +233,7 @@
               max-width="300px"
               variant="outlined"
               width="300px"
-              @update:model-value="updatePowerProducerSelection(producer, factory)"
+              @update:model-value="updatePowerProducerSelection(producer)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -244,6 +244,7 @@
                 :subject="getItemFromFuelRecipe(producer.recipe)"
                 type="item"
                 width="42px"
+                @update:model-value="updatePowerProducerSelection(producer)"
               />
             </span>
             <span v-else class="mr-2">
@@ -258,7 +259,7 @@
               max-width="350px"
               variant="outlined"
               width="350px"
-              @update:model-value="updateFactory(factory)"
+              @update:model-value="updatePowerProducerSelection(producer)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -270,10 +271,10 @@
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
-              @input="updateFactory(factory)"
+              @input="updatePowerProducerFigures('ingredient', producer, factory)"
             />
           </div>
-          <div class="d-flex align-center mx-1"><span>OR</span></div>
+          <div class="d-flex align-center mx-1 font-weight-bold"><span>OR</span></div>
           <div class="input-row d-flex align-center">
             <v-text-field
               v-model.number="producer.powerAmount"
@@ -283,7 +284,7 @@
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
-              @input="updateFactory(factory)"
+              @input="updatePowerProducerFigures('power', producer, factory)"
             />
           </div>
 
@@ -327,6 +328,10 @@
             </v-chip>
           </div>
         </div>
+        <pre>
+{{ producer }}
+        </pre>
+
       </div>
       <v-btn
         color="yellow-darken-3 mr-2"
@@ -367,7 +372,13 @@
   const { smAndDown } = useDisplay()
   const gameDataStore = useGameDataStore()
 
-  const { getPowerRecipeById, getRecipesForPart, getRecipesForPowerProducer, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
+  const {
+    getPowerRecipeById,
+    getRecipesForPart,
+    getRecipesForPowerProducer,
+    getDefaultRecipeForPart,
+    getDefaultRecipeForPowerProducer,
+  } = useGameDataStore()
 
   const addEmptyProduct = (factory: Factory) => {
     addProductToFactory(factory, {
@@ -480,10 +491,34 @@
     updateFactory(factory)
   }
 
-  const updatePowerProducerSelection = (producer: FactoryPowerProducer, factory: Factory) => {
-    producer.recipe = getDefaultRecipeForPowerProducer(producer.building).id
-    producer.powerAmount = 1
+  const updatePowerProducerSelection = (producer: FactoryPowerProducer) => {
+    console.log(producer)
+    let recipe
+    if (!producer.recipe) {
+      recipe = getDefaultRecipeForPowerProducer(producer.building)
+    } else {
+      recipe = getPowerRecipeById(producer.recipe)
+    }
 
+    if (!recipe) {
+      console.error('No recipe found for power producer!', producer)
+      alert('Corrupt power producer detected! Please delete it and try again!')
+      return
+    }
+
+    producer.recipe = recipe.id
+    producer.powerAmount = 0
+    producer.ingredientAmount = 0
+    producer.ingredients = recipe.ingredients
+
+    // Patch the ingredients to be zeroed
+    producer.ingredients.forEach(ingredient => {
+      ingredient.perMin = 0
+    })
+  }
+
+  const updatePowerProducerFigures = (type: 'ingredient' | 'power', producer: FactoryPowerProducer, factory: Factory) => {
+    producer.updated = type
     updateFactory(factory)
   }
 

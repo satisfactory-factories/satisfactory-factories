@@ -82,6 +82,7 @@ export const useGameDataStore = defineStore('game-data', () => {
 
   const getRecipesForPowerProducer = (building: string): PowerRecipe[] | [] => {
     if (!gameData.value || !building) {
+      console.error('getRecipesForPowerProducer: No game data or building provided!')
       return []
     }
 

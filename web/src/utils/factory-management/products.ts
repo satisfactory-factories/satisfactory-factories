@@ -39,6 +39,7 @@ export const addPowerProducerToFactory = (
     ingredients: [],
     powerAmount: options.powerAmount ?? 1,
     ingredientAmount: options.ingredientAmount ?? 1,
+    powerProduced: 0, // Calculated later
     recipe: options.recipe ?? '',
     byproduct: null,
     displayOrder: factory.powerProducers.length,

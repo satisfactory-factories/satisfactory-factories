@@ -3,7 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
-import { calculatePowerGeneration, calculatePowerIngredients } from '@/utils/factory-management/power'
+import { calculatePowerGeneration } from '@/utils/factory-management/power'
 
 let factory: Factory
 

@@ -18,11 +18,20 @@ export interface Recipe {
   isFicsmas: boolean;
 }
 
+// ===== POWER RECIPES =====
+export interface PowerItem {
+  part: string;
+  perMin: number;
+  amount?: number;
+  mwPerItem?: number;
+  supplementalRatio?: number;
+}
+
 export interface PowerRecipe {
   id: string;
   displayName: string;
-  ingredients: RecipeItem[];
-  byproduct: RecipeItem | null;
+  ingredients: PowerItem[];
+  byproduct: PowerItem | null;
   building: {
     name: string;
     power: number;

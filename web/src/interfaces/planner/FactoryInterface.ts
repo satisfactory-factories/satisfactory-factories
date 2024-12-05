@@ -1,4 +1,6 @@
 // noinspection DuplicatedCode - Duplicated by the backend
+import { PowerItem } from '@/interfaces/Recipes'
+
 export interface PartMetrics {
   amountRequired: number; // Total amount required by all products on the line
   amountRequiredProduction: number; // Total amount required by production
@@ -101,15 +103,15 @@ export interface FactoryTask {
 
 export interface FactoryPowerProducer {
   building: string;
-  ingredients: { // Many recipes have dual ingredient requirements
-    part: string;
-    amount: number;
-  }[],
+  ingredients: PowerItem[],
   ingredientAmount: number; // Enables the user to specify the quantity of fuel to use.
-  powerAmount: number; // Amount of energy to produce in MW
-  recipe: string;
   byproduct: { part: string, amount: number } | null; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.
+  powerAmount: number; // Amount of energy user is requesting to be generated.
+  powerProduced: number; // Amount of energy actually produced calculated from requested ingredientAmount and powerAmount.
+  recipe: string;
+  buildingCount: number;
   displayOrder: number;
+  updated: string | null; // Denotes what was just updated so we can recalculate the power generation based off ingredientAmount or powerAmount.
 }
 
 export interface Factory {
