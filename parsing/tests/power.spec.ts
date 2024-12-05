@@ -7,13 +7,10 @@ describe('Power Parsing', () => {
     let results: any;
 
     beforeAll(async () => {
-        //arrange
         const inputFile = '../parsing/game-docs.json';
         const outputFile = '../parsing/gameData.json';
 
-        //act
         results = await processFile(inputFile, outputFile);
-
     })
 
     describe('Power generation recipes', () => {
@@ -52,7 +49,18 @@ describe('Power Parsing', () => {
             expect(recipe.building.power).toBe(75)
         })
 
-        it('should generate a fuel powered generation recipe with expected values', () => {
+        // ==== FUEL GENERATOR
+        it('should generate the liquid biofuel fuel generator recipe correctly', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_LiquidBiofuel');
+
+            expect(recipe.displayName).toBe('Fuel-Powered Generator (Liquid Biofuel)');
+            expect(recipe.ingredients[0].part).toBe('LiquidBiofuel');
+            expect(recipe.ingredients[0].perMin).toBe(20);
+            expect(recipe.byproduct).toBe(null);
+            expect(recipe.building.name).toBe('generatorfuel');
+            expect(recipe.building.power).toBe(250);
+        })
+        it('should generate the liquid fuel fuel generator recipe correctly', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_LiquidFuel');
 
             expect(recipe.displayName).toBe('Fuel-Powered Generator (Fuel)');
@@ -62,17 +70,7 @@ describe('Power Parsing', () => {
             expect(recipe.building.name).toBe('generatorfuel');
             expect(recipe.building.power).toBe(250);
         })
-        it('should generate a fuel powered generation recipe using Rocket Fuel with expected values', () => {
-            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_RocketFuel');
-
-            expect(recipe.displayName).toBe('Fuel-Powered Generator (Rocket Fuel)');
-            expect(recipe.ingredients[0].part).toBe('RocketFuel');
-            expect(recipe.ingredients[0].perMin).toBe(4.16667);
-            expect(recipe.byproduct).toBe(null);
-            expect(recipe.building.name).toBe('generatorfuel');
-            expect(recipe.building.power).toBe(250);
-        })
-      it('should generate a fuel powered generation recipe using turbofuel with expected values', () => {
+        it('should generate the liquid turbofuel fuel generator recipe correctly', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_LiquidTurboFuel');
 
             expect(recipe.displayName).toBe('Fuel-Powered Generator (Turbofuel)');
@@ -82,9 +80,30 @@ describe('Power Parsing', () => {
             expect(recipe.building.name).toBe('generatorfuel');
             expect(recipe.building.power).toBe(250);
         })
+        it('should generate the rocketfuel fuel generator recipe correctly', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_RocketFuel');
 
+            expect(recipe.displayName).toBe('Fuel-Powered Generator (Rocket Fuel)');
+            expect(recipe.ingredients[0].part).toBe('RocketFuel');
+            expect(recipe.ingredients[0].perMin).toBe(4.16667);
+            expect(recipe.byproduct).toBe(null);
+            expect(recipe.building.name).toBe('generatorfuel');
+            expect(recipe.building.power).toBe(250);
+        })
+        it('should generate the ionized fuel generator recipe correctly', () => {
+            const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorFuel_IonizedFuel');
 
-        it('should generate a nuclear powered generation recipe using uranium rods with expected values', () => {
+            expect(recipe.displayName).toBe('Fuel-Powered Generator (Ionized Fuel)');
+            expect(recipe.ingredients[0].part).toBe('IonizedFuel');
+            expect(recipe.ingredients[0].perMin).toBe(3);
+            expect(recipe.byproduct).toBe(null);
+            expect(recipe.building.name).toBe('generatorfuel');
+            expect(recipe.building.power).toBe(250);
+        })
+        // =====================
+
+        // ==== NUCLEAR GENERATOR
+        it('should generate the nuclear fuel rod recipe correctly', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorNuclear_NuclearFuelRod');
 
             expect(recipe.displayName).toBe('Nuclear Power Plant (Uranium Fuel Rod)');
@@ -99,7 +118,7 @@ describe('Power Parsing', () => {
             expect(recipe.building.name).toBe('generatornuclear');
             expect(recipe.building.power).toBe(2500);
         })
-        it('should generate a nuclear powered generation recipe using plutonium rods with expected values', () => {
+        it('should generate the plutonium fuel rod recipe correctly', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorNuclear_PlutoniumFuelRod');
 
             expect(recipe.displayName).toBe('Nuclear Power Plant (Plutonium Fuel Rod)');
@@ -115,7 +134,7 @@ describe('Power Parsing', () => {
             expect(recipe.building.power).toBe(2500);
         })
 
-        it('should generate a nuclear powered generation recipe using ficsonium rods with expected values', () => {
+        it('should generate the ficsonium fuel rod recipe correctly', () => {
             const recipe : ParserPowerRecipe = results.powerGenerationRecipes.find((item: { id: string }) => item.id === 'GeneratorNuclear_FicsoniumFuelRod');
 
             expect(recipe.displayName).toBe('Nuclear Power Plant (Ficsonium Fuel Rod)');
