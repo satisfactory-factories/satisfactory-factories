@@ -59,9 +59,6 @@ function getPowerConsumptionForBuildings(data: any[], producingBuildings: string
             }
         });
 
-        //Manually add nuclear power plant
-        buildingsPowerMap["nuclearpowerplant"] = 0;
-
     // Finally sort the map by key
     const sortedMap: { [key: string]: number } = {};
     Object.keys(buildingsPowerMap).sort().forEach(key => {
