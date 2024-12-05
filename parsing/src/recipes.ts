@@ -235,7 +235,7 @@ function getPowerGeneratingRecipes(
                 if (primaryFuelPart.energyGeneratedInMJ > 0) {
                     // The rounding here is important to remove floating point errors that appear with some types 
                     // (this is step 4 from above)
-                    primaryPerMin = parseFloat((burnRateMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(4))
+                    primaryPerMin = parseFloat((burnRateMJ / primaryFuelPart.energyGeneratedInMJ).toFixed(5))
                 }
                 const ingredients: ParserIngredient[] = [];
                 ingredients.push({

@@ -10464,7 +10464,7 @@
             "ingredients": [
                 {
                     "part": "CompactedCoal",
-                    "perMin": 7.1429
+                    "perMin": 7.14286
                 },
                 {
                     "part": "Water",
@@ -10547,7 +10547,7 @@
             "ingredients": [
                 {
                     "part": "RocketFuel",
-                    "perMin": 4.1667
+                    "perMin": 4.16667
                 }
             ],
             "byproduct": null,
