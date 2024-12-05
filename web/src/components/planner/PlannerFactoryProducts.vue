@@ -222,7 +222,7 @@
                 :key="producer.building"
                 height="32px"
                 :subject="producer.building"
-                type="item"
+                type="building"
                 width="32px"
               />
             </span>
@@ -230,7 +230,7 @@
               v-model="producer.building"
               hide-details
               :items="autocompletePowerProducerGenerator()"
-              label="Item"
+              label="Generator"
               max-width="300px"
               variant="outlined"
               width="300px"
@@ -238,13 +238,13 @@
             />
           </div>
           <div class="input-row d-flex align-center">
-            <i class="fas fa-hat-chef mr-2" style="width: 32px; height: 32px" />
+            <i class="fas fa-burn mr-2" style="width: 32px; height: 32px" />
             <v-autocomplete
               v-model="producer.recipe"
               :disabled="!producer.building"
               hide-details
-              :items="getRecipesForPartSelector(producer.building)"
-              label="Recipe"
+              :items="getRecipesForPowerProducerSelector(producer.building)"
+              label="Fuel"
               max-width="350px"
               variant="outlined"
               width="350px"
@@ -255,7 +255,7 @@
             <v-text-field
               v-model.number="producer.amount"
               hide-details
-              label="Qty /min"
+              label="Fuel Qty /min"
               :max-width="smAndDown ? undefined : '110px'"
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
@@ -331,7 +331,7 @@
   const { smAndDown } = useDisplay()
   const gameDataStore = useGameDataStore()
 
-  const { getRecipesForPart, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
+  const { getRecipesForPart, getRecipesForPowerProducer, getDefaultRecipeForPart, getDefaultRecipeForPowerProducer } = useGameDataStore()
 
   const addEmptyProduct = (factory: Factory) => {
     addProductToFactory(factory, {
@@ -380,13 +380,13 @@
 
     return data
   }
-  const autocompletePowerProducerGenerator = () :string[] => {
+  const autocompletePowerProducerGenerator = (): {title: string, value: string}[] => {
     // Loop through all the power production recipes and extrapolate a list of buildings
 
     const buildings = new Set<string>()
 
     gameDataStore.getGameData().powerGenerationRecipes.forEach(recipe => {
-      buildings.add(getBuildingDisplayName(recipe.building.name))
+      buildings.add(recipe.building.name)
     })
 
     const buildingsArray: string[] = buildings.values().toArray()
@@ -394,7 +394,16 @@
     // Sort
     buildingsArray.sort((a, b) => a.localeCompare(b))
 
-    return buildingsArray
+    const data = buildingsArray.map(building => {
+      return {
+        title: getBuildingDisplayName(building),
+        value: building,
+      }
+    })
+
+    console.log('data', data)
+
+    return data ?? []
   }
 
   const autocompletePartItems = autocompletePartItemsGenerator()
@@ -405,6 +414,18 @@
     return getRecipesForPart(part).map(recipe => {
       return {
         title: recipe.displayName.replace('Alternate', 'Alt'),
+        value: recipe.id,
+      }
+    })
+  }
+
+  const getRecipesForPowerProducerSelector = (part: string) => {
+    return getRecipesForPowerProducer(part).map(recipe => {
+      // Each recipe has a bit of a weird displayName where it repeats the building name and the item it's using.
+      // We want to shorten this to just the item name.
+      // E.g. "Nuclear Power Plant (Ficsonium Fuel Rod) -> Ficsonium Fuel Rod"
+      return {
+        title: recipe.displayName.split('(')[1].split(')')[0],
         value: recipe.id,
       }
     })
