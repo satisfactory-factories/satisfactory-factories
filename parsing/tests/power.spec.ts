@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from '@jest/globals'
 
 import { processFile } from '../src/processor'
-import {ParserPowerRecipe} from "../src/interfaces/ParserRecipe";
+import {ParserPowerRecipe} from "../src/interfaces/ParserPowerRecipe";
 
 describe('Power Parsing', () => {
     let results: any;

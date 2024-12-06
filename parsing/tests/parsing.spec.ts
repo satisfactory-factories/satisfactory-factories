@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it, test } from '@jest/globals'
 
 import { processFile } from '../src/processor'
 import { ParserPart } from '../src/interfaces/ParserPart'
-import {ParserPowerRecipe, ParserRecipe} from '../src/interfaces/ParserRecipe'
+import { ParserRecipe } from '../src/interfaces/ParserRecipe'
 
 // TODO: break this into smaller files, this is getting too big.
 describe('common', () => {
