@@ -29,6 +29,7 @@ export const addPowerProducerToFactory = (
   factory: Factory,
   options: {
     building?: string,
+    buildingAmount?: number,
     powerAmount?: number,
     ingredientAmount?: number,
     recipe?: string;
@@ -36,13 +37,16 @@ export const addPowerProducerToFactory = (
 ) => {
   factory.powerProducers.push({
     building: options.building ?? '',
-    ingredients: [],
-    powerAmount: options.powerAmount ?? 1,
-    ingredientAmount: options.ingredientAmount ?? 1,
+    buildingAmount: options.buildingAmount ?? 0,
+    buildingCount: 0, // Calculated later
+    ingredients: [], // Calculated later
+    ingredientAmount: options.ingredientAmount ?? 0,
+    powerAmount: options.powerAmount ?? 0,
     powerProduced: 0, // Calculated later
     recipe: options.recipe ?? '',
     byproduct: null,
     displayOrder: factory.powerProducers.length,
+    updated: null,
   })
 }
 

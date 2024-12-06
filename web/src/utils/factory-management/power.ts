@@ -2,6 +2,7 @@ import { Factory, FactoryPowerProducer } from '@/interfaces/planner/FactoryInter
 import { DataInterface } from '@/interfaces/DataInterface'
 import { createNewPart, getPowerRecipeById } from '@/utils/factory-management/common'
 import { PowerRecipe } from '@/interfaces/Recipes'
+import { formatNumber } from '@/utils/numberFormatter'
 
 // Depending on which value is updated, we need to recalculate the power generation.
 export const calculatePowerGeneration = (
@@ -9,7 +10,6 @@ export const calculatePowerGeneration = (
   gameData: DataInterface
 ) => {
   factory.powerProducers.forEach(producer => {
-    console.log(producer.powerAmount, producer.updated)
     const recipe = getPowerRecipeById(producer.recipe, gameData)
 
     if (!recipe) {
@@ -29,11 +29,22 @@ export const calculatePowerGeneration = (
       // Now we need to calculate the amount of items produced per minute
       producer.ingredientAmount = producer.powerProduced / (recipe.ingredients[0].mwPerItem ?? 0)
       producer.ingredients[0].perMin = producer.ingredientAmount
-    } else {
+    } else if (producer.updated === 'ingredient') {
       producer.ingredients[0].perMin = producer.ingredientAmount // Replace the ingredient directly
 
       // Now we've handled the updated values, we can calculate the power generation again
       producer.powerProduced = calculatePowerAmount(producer, recipe)
+      producer.powerAmount = Number(formatNumber(producer.powerProduced))
+    } else if (producer.updated === 'building') {
+      producer.buildingCount = producer.buildingAmount // Replace the building directly
+
+      // Now we need to set the ingredients in a ratio equivalent of the amount of buildings
+      producer.ingredients[0].perMin = producer.buildingCount * recipe.ingredients[0].perMin
+      producer.ingredientAmount = producer.ingredients[0].perMin
+
+      // Now we need to increase the power so the supplemental fuel is calculated correctly
+      producer.powerProduced = calculatePowerAmount(producer, recipe)
+      producer.powerAmount = producer.powerProduced
     }
 
     // For supplemental fuels, we need to know the power produced in order to calculate them
@@ -41,8 +52,11 @@ export const calculatePowerGeneration = (
       producer.ingredients[1].perMin = producer.powerProduced * (recipe.ingredients[1].supplementalRatio ?? 0)
     }
 
-    // Now calculate the amount of buildings the user needs to build
-    producer.buildingCount = producer.powerProduced / recipe.building.power
+    if (producer.updated !== 'building') {
+      // Now calculate the amount of buildings the user needs to build
+      producer.buildingCount = producer.powerProduced / recipe.building.power
+      producer.buildingAmount = producer.buildingCount
+    }
 
     // Now add the ingredients to the parts array
     producer.ingredients.forEach(ingredient => {

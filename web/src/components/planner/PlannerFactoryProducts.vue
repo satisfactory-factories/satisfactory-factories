@@ -233,7 +233,7 @@
               max-width="300px"
               variant="outlined"
               width="300px"
-              @update:model-value="updatePowerProducerSelection(producer)"
+              @update:model-value="updatePowerProducerSelection(producer, factory)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -244,7 +244,6 @@
                 :subject="getItemFromFuelRecipe(producer.recipe)"
                 type="item"
                 width="42px"
-                @update:model-value="updatePowerProducerSelection(producer)"
               />
             </span>
             <span v-else class="mr-2">
@@ -259,12 +258,13 @@
               max-width="350px"
               variant="outlined"
               width="350px"
-              @update:model-value="updatePowerProducerSelection(producer)"
+              @update:model-value="updatePowerProducerSelection(producer, factory)"
             />
           </div>
           <div class="input-row d-flex align-center">
             <v-text-field
               v-model.number="producer.ingredientAmount"
+              :disabled="!producer.recipe"
               hide-details
               label="Fuel Qty/min"
               :max-width="smAndDown ? undefined : '110px'"
@@ -278,6 +278,7 @@
           <div class="input-row d-flex align-center">
             <v-text-field
               v-model.number="producer.powerAmount"
+              :disabled="!producer.recipe"
               hide-details
               label="MW"
               :max-width="smAndDown ? undefined : '110px'"
@@ -287,7 +288,6 @@
               @update:model-value="updatePowerProducerFigures('power', producer, factory)"
             />
           </div>
-
           <div class="input-row d-flex align-center">
             <v-btn
               class="rounded mr-2"
@@ -328,10 +328,43 @@
             </v-chip>
           </div>
         </div>
-        <pre>
-{{ producer }}
-        </pre>
-
+        <v-row class="my-2 px-2 text-body-1 d-flex align-center">
+          <p class="mr-2">Requires:</p>
+          <v-chip
+            v-if="producer.ingredients[1]?.perMin > 0"
+            class="sf-chip blue"
+            variant="tonal"
+          >
+            <game-asset :subject="producer.ingredients[1].part" type="item" />
+            <span class="ml-2">
+              <b>{{ getPartDisplayName(producer.ingredients[1].part.toString()) }}</b>: {{ formatNumber(producer.ingredients[1].perMin) }}/min
+            </span>
+          </v-chip>
+          <div v-if="producer.recipe" class="ml-0 text-body-1 d-inline">
+            <span>
+              <v-chip
+                class="sf-chip orange"
+                variant="tonal"
+              >
+                <game-asset :subject="producer.building" type="building" />
+                <span class="ml-2">
+                  <b>{{ getBuildingDisplayName(producer.building) }}</b>:
+                </span>
+                <v-text-field
+                  v-model.number="producer.buildingAmount"
+                  class="inline-inputs"
+                  flat
+                  hide-details
+                  hide-spin-buttons
+                  min="0"
+                  type="number"
+                  width="60px"
+                  @input="updatePowerProducerFigures('building', producer, factory)"
+                />
+              </v-chip>
+            </span>
+          </div>
+        </v-row>
       </div>
       <v-btn
         color="yellow-darken-3 mr-2"
@@ -390,7 +423,7 @@
   const addEmptyPowerProducer = (factory: Factory) => {
     addPowerProducerToFactory(factory, {
       building: '',
-      powerAmount: 1,
+      powerAmount: 0,
       recipe: '',
     })
   }
@@ -491,14 +524,8 @@
     updateFactory(factory)
   }
 
-  const updatePowerProducerSelection = (producer: FactoryPowerProducer) => {
-    console.log(producer)
-    let recipe
-    if (!producer.recipe) {
-      recipe = getDefaultRecipeForPowerProducer(producer.building)
-    } else {
-      recipe = getPowerRecipeById(producer.recipe)
-    }
+  const updatePowerProducerSelection = (producer: FactoryPowerProducer, factory: Factory) => {
+    const recipe = getDefaultRecipeForPowerProducer(producer.building)
 
     if (!recipe) {
       console.error('No recipe found for power producer!', producer)
@@ -515,9 +542,11 @@
     producer.ingredients.forEach(ingredient => {
       ingredient.perMin = 0
     })
+
+    updateFactory(factory)
   }
 
-  const updatePowerProducerFigures = (type: 'ingredient' | 'power', producer: FactoryPowerProducer, factory: Factory) => {
+  const updatePowerProducerFigures = (type: 'ingredient' | 'power' | 'building', producer: FactoryPowerProducer, factory: Factory) => {
     producer.updated = type
     updateFactory(factory)
   }

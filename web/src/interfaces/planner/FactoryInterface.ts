@@ -104,6 +104,7 @@ export interface FactoryTask {
 
 export interface FactoryPowerProducer {
   building: string;
+  buildingAmount: number;
   ingredients: PowerItem[],
   ingredientAmount: number; // Enables the user to specify the quantity of fuel to use.
   byproduct: { part: string, amount: number } | null; // E.g. uranium waste, which is added as a product back into the factory.parts to be dealt with via export or re-use.
