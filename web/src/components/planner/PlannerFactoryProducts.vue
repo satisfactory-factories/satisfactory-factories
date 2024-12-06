@@ -233,7 +233,7 @@
               max-width="250px"
               variant="outlined"
               width="250px"
-              @update:model-value="updatePowerProducerSelection(producer, factory)"
+              @update:model-value="updatePowerProducerSelection('building', producer, factory)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -258,7 +258,7 @@
               max-width="235px"
               variant="outlined"
               width="235px"
-              @update:model-value="updatePowerProducerSelection(producer, factory)"
+              @update:model-value="updatePowerProducerSelection('recipe', producer, factory)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -527,19 +527,24 @@
     updateFactory(factory)
   }
 
-  const updatePowerProducerSelection = (producer: FactoryPowerProducer, factory: Factory) => {
-    const recipe = getDefaultRecipeForPowerProducer(producer.building)
+  const updatePowerProducerSelection = (source: 'building' | 'recipe', producer: FactoryPowerProducer, factory: Factory) => {
+    const defaultRecipe = getDefaultRecipeForPowerProducer(producer.building)
 
-    if (!recipe) {
+    if (!defaultRecipe) {
       console.error('No recipe found for power producer!', producer)
       alert('Corrupt power producer detected! Please delete it and try again!')
       return
     }
 
-    producer.recipe = recipe.id
+    if (source === 'recipe') {
+      producer.powerAmount = 0
+      producer.ingredientAmount = 0
+    } else {
+      producer.recipe = defaultRecipe.id
+    }
+
     producer.powerAmount = 0
     producer.ingredientAmount = 0
-    producer.ingredients = recipe.ingredients
 
     // Patch the ingredients to be zeroed
     producer.ingredients.forEach(ingredient => {
