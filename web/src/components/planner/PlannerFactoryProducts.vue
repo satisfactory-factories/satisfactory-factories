@@ -271,7 +271,7 @@
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
-              @input="updatePowerProducerFigures('ingredient', producer, factory)"
+              @update:model-value="updatePowerProducerFigures('ingredient', producer, factory)"
             />
           </div>
           <div class="d-flex align-center mx-1 font-weight-bold"><span>OR</span></div>
@@ -284,7 +284,7 @@
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
-              @input="updatePowerProducerFigures('power', producer, factory)"
+              @update:model-value="updatePowerProducerFigures('power', producer, factory)"
             />
           </div>
 
