@@ -368,6 +368,7 @@
             </span>
           </div>
         </v-row>
+        <pre>{{ producer }}</pre>
       </div>
       <v-btn
         color="yellow-darken-3 mr-2"
@@ -528,21 +529,23 @@
   }
 
   const updatePowerProducerSelection = (source: 'building' | 'recipe', producer: FactoryPowerProducer, factory: Factory) => {
-    const defaultRecipe = getDefaultRecipeForPowerProducer(producer.building)
+    let recipe = getDefaultRecipeForPowerProducer(producer.building)
 
-    if (!defaultRecipe) {
+    if (!recipe) {
       console.error('No recipe found for power producer!', producer)
       alert('Corrupt power producer detected! Please delete it and try again!')
       return
     }
 
+    // Replace the recipe with the one newly selected
     if (source === 'recipe') {
+      recipe = getPowerRecipeById(producer.recipe)
       producer.powerAmount = 0
       producer.ingredientAmount = 0
-    } else {
-      producer.recipe = defaultRecipe.id
     }
 
+    producer.recipe = recipe.id
+    producer.ingredients = recipe.ingredients
     producer.powerAmount = 0
     producer.ingredientAmount = 0
 
