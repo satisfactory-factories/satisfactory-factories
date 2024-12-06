@@ -268,6 +268,7 @@
               hide-details
               label="Fuel Qty/min"
               :max-width="smAndDown ? undefined : '110px'"
+              min="0"
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
@@ -282,6 +283,7 @@
               hide-details
               label="MW"
               :max-width="smAndDown ? undefined : '110px'"
+              min="0"
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
@@ -395,6 +397,7 @@
   import { formatNumber } from '@/utils/numberFormatter'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { useDisplay } from 'vuetify'
+  import { PowerRecipe } from '@/interfaces/Recipes'
 
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -529,19 +532,17 @@
   }
 
   const updatePowerProducerSelection = (source: 'building' | 'recipe', producer: FactoryPowerProducer, factory: Factory) => {
-    let recipe = getDefaultRecipeForPowerProducer(producer.building)
-
-    if (!recipe) {
-      console.error('No recipe found for power producer!', producer)
-      alert('Corrupt power producer detected! Please delete it and try again!')
-      return
-    }
+    let recipe: PowerRecipe | null = getDefaultRecipeForPowerProducer(producer.building)
 
     // Replace the recipe with the one newly selected
     if (source === 'recipe') {
       recipe = getPowerRecipeById(producer.recipe)
-      producer.powerAmount = 0
-      producer.ingredientAmount = 0
+    }
+
+    if (!recipe) {
+      console.error('No recipe found for power producer!', producer)
+      alert('Unable to find recipe for power generator! Please report this to Discord!')
+      return
     }
 
     producer.recipe = recipe.id
@@ -559,6 +560,14 @@
 
   const updatePowerProducerFigures = (type: 'ingredient' | 'power' | 'building', producer: FactoryPowerProducer, factory: Factory) => {
     producer.updated = type
+
+    // If user has tried to enter zeros for any inputs, zero it
+    if (producer.ingredientAmount === 0) {
+      producer.ingredientAmount = 0
+    }
+    if (producer.powerAmount === 0) {
+      producer.powerAmount = 0
+    }
     updateFactory(factory)
   }
 
