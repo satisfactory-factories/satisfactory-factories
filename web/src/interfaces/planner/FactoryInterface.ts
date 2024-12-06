@@ -5,6 +5,7 @@ export interface PartMetrics {
   amountRequired: number; // Total amount required by all products on the line
   amountRequiredProduction: number; // Total amount required by production
   amountRequiredExports: number; // Total amount required by all exports
+  amountRequiredPower: number;
   amountSupplied: number; // Total amount of surplus used for display purposes
   amountSuppliedViaInput: number; // This is the amount supplied by the inputs
   amountSuppliedViaProduction: number; // This is the amount supplied by internal products

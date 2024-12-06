@@ -8,6 +8,7 @@ export const createNewPart = (factory: Factory, part: string) => {
       amountRequired: 0,
       amountRequiredExports: 0,
       amountRequiredProduction: 0,
+      amountRequiredPower: 0,
       amountSupplied: 0,
       amountSuppliedViaInput: 0,
       amountSuppliedViaProduction: 0,
@@ -20,7 +21,6 @@ export const createNewPart = (factory: Factory, part: string) => {
 
 // You may think that this is duplication with the gameDataStore. It kind of is, however, trying to mock the store in tests is a gigantic pain in the arse.
 // Therefore, usage of gameDataStore within the ./factory-management files is to be used sparingly, and proxies created here.
-
 export const getRecipe = (partId: any, gameData: DataInterface): Recipe | undefined => {
   const recipe = gameData.recipes.find(r => r.id === partId)
 

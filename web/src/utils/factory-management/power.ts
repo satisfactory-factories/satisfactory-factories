@@ -1,6 +1,6 @@
 import { Factory, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
-import { getPowerRecipeById } from '@/utils/factory-management/common'
+import { createNewPart, getPowerRecipeById } from '@/utils/factory-management/common'
 import { PowerRecipe } from '@/interfaces/Recipes'
 
 // Depending on which value is updated, we need to recalculate the power generation.
@@ -44,6 +44,13 @@ export const calculatePowerGeneration = (
 
     // Now calculate the amount of buildings the user needs to build
     producer.buildingCount = producer.powerProduced / recipe.building.power
+
+    // Now add the ingredients to the parts array
+    producer.ingredients.forEach(ingredient => {
+      createNewPart(factory, ingredient.part)
+
+      factory.parts[ingredient.part].amountRequiredPower += ingredient.perMin
+    })
   })
 }
 
