@@ -106,11 +106,11 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
-  // Calculate the amount of buildings and power required to make the factory and any power generation.
-  calculateFactoryBuildingsAndPower(factory, gameData)
-
   // Calculate the generation of power for the factory
   calculatePowerGeneration(factory, gameData)
+
+  // Calculate the amount of buildings and power required to make the factory and any power generation.
+  calculateFactoryBuildingsAndPower(factory, gameData)
 
   // Check all other factories to see if they are affected by this factory change.
   constructDependencies(allFactories)
