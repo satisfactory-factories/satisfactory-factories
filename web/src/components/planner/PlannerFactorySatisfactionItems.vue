@@ -91,7 +91,7 @@
               </div>
               <div class="text-orange d-flex justify-space-between align-center">
                 <span>Internal Consumption</span>
-                <span class="align-self-end text-right">-{{ formatNumber(part.amountRequiredProduction ) }}/min</span>
+                <span class="align-self-end text-right">-{{ formatNumber((part.amountRequiredProduction + part.amountRequiredPower)) }}/min</span>
               </div>
               <div class="text-orange d-flex justify-space-between align-center">
                 <span>Exports</span>
