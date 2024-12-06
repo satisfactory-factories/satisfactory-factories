@@ -318,7 +318,7 @@
           </div>
           <div class="input-row d-flex align-center">
             <v-chip
-              class="sf-chip green"
+              class="sf-chip small green"
               variant="tonal"
             >
               <i class="fas fa-solar-panel" />
