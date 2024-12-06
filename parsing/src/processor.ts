@@ -3,7 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as iconv from 'iconv-lite';
 
-import {ParserRecipe, ParserPowerRecipe} from "./interfaces/ParserRecipe";
+import {ParserRecipe} from "./interfaces/ParserRecipe";
+import {ParserPowerRecipe} from "./interfaces/ParserPowerRecipe";
 import {ParserPart, ParserItemDataInterface} from "./interfaces/ParserPart";
 import {getItems, fixItemNames, fixTurbofuel} from './parts';
 import {getProductionRecipes, getPowerGeneratingRecipes} from './recipes';
