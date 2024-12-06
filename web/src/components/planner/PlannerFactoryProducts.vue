@@ -370,7 +370,6 @@
             </span>
           </div>
         </v-row>
-        <pre>{{ producer }}</pre>
       </div>
       <v-btn
         color="yellow-darken-3 mr-2"
