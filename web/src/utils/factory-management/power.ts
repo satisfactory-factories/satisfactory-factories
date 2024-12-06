@@ -17,10 +17,10 @@ export const calculatePowerGeneration = (
       return
     }
 
+    // If for some reason the ingredients is missing
     if (!producer.ingredients[0]) {
-      console.error(`No ingredients found for producer: ${producer.recipe}`)
-      alert('No ingredients found for producer! Please delete it and add it again!')
-      return
+      console.error(`Could not find ingredients for producer: ${producer.recipe}`)
+      producer.ingredients = recipe.ingredients
     }
 
     if (producer.updated === 'power') {

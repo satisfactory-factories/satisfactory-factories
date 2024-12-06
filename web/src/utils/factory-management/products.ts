@@ -25,6 +25,7 @@ export const addProductToFactory = (
   createNewPart(factory, options.id ?? '')
 }
 
+// For internal testing use
 export const addPowerProducerToFactory = (
   factory: Factory,
   options: {
@@ -32,8 +33,9 @@ export const addPowerProducerToFactory = (
     buildingAmount?: number,
     powerAmount?: number,
     ingredientAmount?: number,
-    recipe?: string;
-  }
+    recipe: string;
+    updated: string // Supply one of 'power', 'ingredient', 'building', needed so the power generation can be recalculated.
+  },
 ) => {
   factory.powerProducers.push({
     building: options.building ?? '',
@@ -43,10 +45,10 @@ export const addPowerProducerToFactory = (
     ingredientAmount: options.ingredientAmount ?? 0,
     powerAmount: options.powerAmount ?? 0,
     powerProduced: 0, // Calculated later
-    recipe: options.recipe ?? '',
+    recipe: options.recipe,
     byproduct: null,
     displayOrder: factory.powerProducers.length,
-    updated: null,
+    updated: options.updated,
   })
 }
 

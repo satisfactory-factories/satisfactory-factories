@@ -386,7 +386,6 @@
 <script lang="ts" setup>
   import { Factory, FactoryItem, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
   import {
-    addPowerProducerToFactory,
     addProductToFactory,
     shouldShowNotInDemand,
     shouldShowTrim,
@@ -427,10 +426,18 @@
   }
 
   const addEmptyPowerProducer = (factory: Factory) => {
-    addPowerProducerToFactory(factory, {
+    factory.powerProducers.push({
       building: '',
+      buildingAmount: 0,
+      buildingCount: 0,
+      ingredientAmount: 0,
+      ingredients: [],
       powerAmount: 0,
+      powerProduced: 0,
       recipe: '',
+      byproduct: null,
+      displayOrder: factory.powerProducers.length,
+      updated: 'power',
     })
   }
 

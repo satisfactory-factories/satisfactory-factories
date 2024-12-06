@@ -1,5 +1,5 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { addProductToFactory } from '@/utils/factory-management/products'
+import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
 import { findFacByName, newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
@@ -109,9 +109,20 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
     })
   }
 
+  const addPowerToFactories = () => {
+    const oilFac = findFacByName('Oil Processing', factories)
+    addPowerProducerToFactory(oilFac, {
+      building: 'generatorfuel',
+      powerAmount: 500,
+      recipe: 'GeneratorFuel_LiquidFuel',
+      updated: 'power',
+    })
+  }
+
   // Apply setup steps
   addProductsToFactories()
   addImportsToFactories()
+  addPowerToFactories()
 
   // Return an object with a method to access the configured factories
   return {
