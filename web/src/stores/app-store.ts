@@ -1,6 +1,6 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
@@ -105,6 +105,9 @@ export const useAppStore = defineStore('app', () => {
       // Patch for #180
       if (factory.powerProducers === undefined) {
         factory.powerProducers = []
+      }
+      if (factory.power === undefined) {
+        factory.power = {} as FactoryPower
       }
     })
 

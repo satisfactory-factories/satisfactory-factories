@@ -143,7 +143,7 @@
         </v-chip>
       </v-row>
       <v-row
-        v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements.amount > 0 || product.buildingRequirements.totalPower > 0"
+        v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements.amount > 0"
         class="my-2 px-2 text-body-1 d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
@@ -187,7 +187,7 @@
             >
               <i class="fas fa-bolt" />
               <span class="ml-2">
-                {{ formatNumber(product.buildingRequirements.totalPower) }} MW
+                {{ formatNumber(product.buildingRequirements.powerConsumed ?? 0) }} MW
               </span>
             </v-chip>
           </span>
@@ -230,9 +230,9 @@
               hide-details
               :items="autocompletePowerProducerGenerator()"
               label="Generator"
-              max-width="300px"
+              max-width="250px"
               variant="outlined"
-              width="300px"
+              width="250px"
               @update:model-value="updatePowerProducerSelection(producer, factory)"
             />
           </div>
@@ -255,9 +255,9 @@
               hide-details
               :items="getRecipesForPowerProducerSelector(producer.building)"
               label="Fuel"
-              max-width="350px"
+              max-width="235px"
               variant="outlined"
-              width="350px"
+              width="235px"
               @update:model-value="updatePowerProducerSelection(producer, factory)"
             />
           </div>
@@ -328,7 +328,10 @@
             </v-chip>
           </div>
         </div>
-        <v-row class="my-2 px-2 text-body-1 d-flex align-center">
+        <v-row
+          v-if="producer.recipe"
+          class="my-2 px-2 text-body-1 d-flex align-center"
+        >
           <p class="mr-2">Requires:</p>
           <v-chip
             v-if="producer.ingredients[1]?.perMin > 0"

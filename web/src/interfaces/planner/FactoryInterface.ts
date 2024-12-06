@@ -17,8 +17,8 @@ export interface PartMetrics {
 export interface BuildingRequirement {
   name: string;
   amount: number;
-  powerPerBuilding: number;
-  totalPower: number;
+  powerConsumed?: number;
+  powerProduced?: number;
 }
 
 export interface ByProductItem {
@@ -116,6 +116,12 @@ export interface FactoryPowerProducer {
   updated: string | null; // Denotes what was just updated so we can recalculate the power generation based off ingredientAmount or powerAmount.
 }
 
+export interface FactoryPower {
+  consumed: number;
+  produced: number;
+  difference: number;
+}
+
 export interface Factory {
   id: number;
   name: string;
@@ -127,11 +133,11 @@ export interface Factory {
   parts: { [key: string]: PartMetrics };
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
-  totalPower: number;
   exports: { [key: string]: FactoryExportItem };
   exportCalculator: { [key: string]: ExportCalculatorSettings };
   dependencies: FactoryDependency;
   rawResources: { [key: string]: WorldRawResource };
+  power: FactoryPower;
   usingRawResourcesOnly: boolean;
   hidden: boolean; // Whether to hide the card or not
   hasProblem: boolean

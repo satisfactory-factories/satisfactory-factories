@@ -1,7 +1,7 @@
-import { BuildingRequirement, Factory, FactoryDependency } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, Factory, FactoryDependency, FactoryPower } from '@/interfaces/planner/FactoryInterface'
 import { calculateInputs } from '@/utils/factory-management/inputs'
 import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
-import { calculateBuildingRequirements, calculateBuildingsAndPowerRequirements } from '@/utils/factory-management/buildings'
+import { calculateFactoryBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
 import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
 import {
@@ -56,7 +56,6 @@ export const newFactory = (name = 'A new factory'): Factory => {
     inputs: [],
     parts: {},
     buildingRequirements: {} as { [p: string]: BuildingRequirement },
-    totalPower: 0,
     dependencies: {
       requests: {},
       metrics: {},
@@ -64,6 +63,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     exportCalculator: {},
     rawResources: {},
     exports: {},
+    power: {} as FactoryPower,
     requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
     usingRawResourcesOnly: false,
     hidden: false,
@@ -97,9 +97,6 @@ export const calculateFactory = (
   // Calculate if there have been any changes the player needs to enact.
   calculateSyncState(factory)
 
-  // Calculate building requirements for each product based on the selected recipe and product amount.
-  calculateBuildingRequirements(factory, gameData)
-
   // Calculate if we have products satisfied by raw resources.
   calculateRawSupply(factory, gameData)
 
@@ -109,8 +106,8 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
-  // We then calculate the building and power demands to make the factory.
-  calculateBuildingsAndPowerRequirements(factory)
+  // Calculate the amount of buildings and power required to make the factory and any power generation.
+  calculateFactoryBuildingsAndPower(factory, gameData)
 
   // Calculate the generation of power for the factory
   calculatePowerGeneration(factory, gameData)
