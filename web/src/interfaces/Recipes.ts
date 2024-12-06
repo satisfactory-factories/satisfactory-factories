@@ -10,6 +10,7 @@ export interface Recipe {
   displayName: string;
   ingredients: RecipeItem[];
   products: RecipeItem[];
+  byproduct?: RecipeItem[];
   building: {
     name: string;
     power: number;

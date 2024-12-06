@@ -137,7 +137,7 @@ describe('Complex Plan', () => {
 
     it('should have the correct amount of power calculated', () => {
       // Should be 33 buildings * 30 power per building = 990
-      expect(oilFac.totalPower).toBe(990)
+      expect(oilFac.power.consumed).toBe(990)
     })
 
     it('should have the correct number of buildings calculated along with their power', () => {

@@ -44,8 +44,9 @@ export const calculateProductBuildings = (factory: Factory, gameData: DataInterf
       }
 
       const facBuilding = factory.buildingRequirements[buildingData.name]
+      const powerConsumed = (facBuilding.powerConsumed ?? 0) + (product.buildingRequirements.powerConsumed ?? 0)
       facBuilding.amount += Math.ceil(buildingCount)
-      facBuilding.powerConsumed = (facBuilding.powerConsumed ?? 0) + (product.buildingRequirements.powerConsumed ?? 0)
+      facBuilding.powerConsumed = Number(powerConsumed.toFixed(3)) // Fucky wuky floating point numbers
     } else {
       product.buildingRequirements = {} as BuildingRequirement
     }
@@ -74,15 +75,17 @@ export const calculatePowerProducerBuildings = (factory: Factory, gameData: Data
     const wholeBuildingCount = Math.floor(producer.buildingCount)
     const fractionalBuildingCount = producer.buildingCount - wholeBuildingCount
 
+    const powerProduced = ((recipe.building.power ?? 0) * wholeBuildingCount) + (recipe.building.power * Math.pow(fractionalBuildingCount, 1.321928)) // Power usage = initial power usage x (clock speed / 100)1.321928
+
     facBuilding.amount = facBuilding.amount + Math.ceil(producer.buildingCount) // Total buildings regardless of clocks
-    facBuilding.powerProduced = ((recipe.building.power ?? 0) * wholeBuildingCount) + (recipe.building.power * Math.pow(fractionalBuildingCount, 1.321928)) // Power usage = initial power usage x (clock speed / 100)1.321928
+    facBuilding.powerProduced = Number(powerProduced.toFixed(3)) // Fucky wuky floating point numbers
   })
 }
 
 // Sums up all of the building data to create an aggregate value of power and building requirements
 export const calculateFactoryBuildingsAndPower = (factory: Factory, gameData: DataInterface) => {
   factory.buildingRequirements = {}
-  // First tot up all of the building and power requirements for products and power generators
+  // First tot up all building and power requirements for products and power generators
   calculateProductBuildings(factory, gameData)
   calculatePowerProducerBuildings(factory, gameData)
 
@@ -92,7 +95,7 @@ export const calculateFactoryBuildingsAndPower = (factory: Factory, gameData: Da
     difference: 0,
   }
 
-  // Sum up the total power
+  // Then sum up the total power
   Object.keys(factory.buildingRequirements).forEach(key => {
     const building = factory.buildingRequirements[key]
     factory.power.consumed += building.powerConsumed ?? 0
