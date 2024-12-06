@@ -26,18 +26,15 @@ export const calculatePowerGeneration = (
       producer.powerProduced = producer.powerAmount // Simply replace it
     } else {
       producer.ingredients[0].perMin = producer.ingredientAmount // Replace the ingredient directly
-      // For supplemental, we have to use the ratio to figure out how much of the ingredient we need
-      if (producer.ingredients[1]) {
-        if (!recipe.ingredients[1].supplementalRatio) {
-          console.error(`Supplemental ratio not found for recipe: ${recipe.id}`)
-          return
-        }
-        producer.ingredients[1].perMin = producer.ingredientAmount * recipe.ingredients[1].supplementalRatio
-      }
     }
 
     // Now we've handled the updated values, we can calculate the power generation again
     producer.powerProduced = calculatePowerAmount(producer, recipe)
+
+    // For supplemental fuels, we need to know the power produced in order to calculate them
+    if (producer.ingredients[1]) {
+      producer.ingredients[1].perMin = producer.powerProduced * (recipe.ingredients[1].supplementalRatio ?? 0)
+    }
 
     // Make sure that the user's input is updated with the new power amount
     producer.powerAmount = producer.powerProduced
