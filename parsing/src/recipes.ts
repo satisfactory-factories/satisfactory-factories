@@ -244,10 +244,11 @@ function getPowerGeneratingRecipes(
                 })
                 if (fuelItem.supplementalResource && supplementalRatio > 0) {
                     const perMin = (3 / 50) * supplementalRatio * building.power;
+                    const supplementalFuelRatio = (3 / 50) * supplementalRatio;
                     ingredients.push({
                         part: fuelItem.supplementalResource,
                         perMin: perMin, // Calculate the ratio of the supplemental resource to the primary fuel
-                        supplementalRatio,
+                        supplementalRatio: supplementalFuelRatio,
                     })
                 }
 

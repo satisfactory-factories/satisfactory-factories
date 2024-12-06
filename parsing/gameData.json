@@ -10457,7 +10457,7 @@
                 {
                     "part": "Water",
                     "perMin": 45,
-                    "supplementalRatio": 10
+                    "supplementalRatio": 0.6
                 }
             ],
             "byproduct": null,
@@ -10478,7 +10478,7 @@
                 {
                     "part": "Water",
                     "perMin": 45,
-                    "supplementalRatio": 10
+                    "supplementalRatio": 0.6
                 }
             ],
             "byproduct": null,
@@ -10499,7 +10499,7 @@
                 {
                     "part": "Water",
                     "perMin": 45,
-                    "supplementalRatio": 10
+                    "supplementalRatio": 0.6
                 }
             ],
             "byproduct": null,
@@ -10600,7 +10600,7 @@
                 {
                     "part": "Water",
                     "perMin": 240,
-                    "supplementalRatio": 1.6
+                    "supplementalRatio": 0.096
                 }
             ],
             "byproduct": null,
@@ -10621,7 +10621,7 @@
                 {
                     "part": "Water",
                     "perMin": 240,
-                    "supplementalRatio": 1.6
+                    "supplementalRatio": 0.096
                 }
             ],
             "byproduct": {
@@ -10645,7 +10645,7 @@
                 {
                     "part": "Water",
                     "perMin": 240,
-                    "supplementalRatio": 1.6
+                    "supplementalRatio": 0.096
                 }
             ],
             "byproduct": {
