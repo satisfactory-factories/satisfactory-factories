@@ -288,11 +288,14 @@
     producer.updated = type
 
     // If user has tried to enter zeros for any inputs, zero it
-    if (producer.ingredientAmount === 0) {
+    if (producer.ingredientAmount < 0) {
       producer.ingredientAmount = 0
     }
-    if (producer.powerAmount === 0) {
+    if (producer.powerAmount < 0) {
       producer.powerAmount = 0
+    }
+    if (producer.buildingAmount < 0) {
+      producer.buildingAmount = 0
     }
     updateFactory(factory)
   }
