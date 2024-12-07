@@ -123,46 +123,62 @@
         </v-chip>
       </div>
     </div>
-    <v-row
+    <div
       v-if="producer.recipe"
-      class="my-2 px-2 text-body-1 d-flex align-center"
+      class="text-body-1 my-1"
     >
-      <p class="mr-2">Requires:</p>
-      <v-chip
-        v-if="producer.ingredients[1]?.perMin > 0"
-        class="sf-chip blue"
-        variant="tonal"
+      <div
+        v-if="producer.byproduct"
+        class="d-flex align-center"
       >
-        <game-asset :subject="producer.ingredients[1].part" type="item" />
-        <span class="ml-2">
-          <b>{{ getPartDisplayName(producer.ingredients[1].part.toString()) }}</b>: {{ formatNumber(producer.ingredients[1].perMin) }}/min
-        </span>
-      </v-chip>
-      <div v-if="producer.recipe" class="ml-0 text-body-1 d-inline">
-        <span>
-          <v-chip
-            class="sf-chip orange"
-            variant="tonal"
-          >
-            <game-asset :subject="producer.building" type="building" />
-            <span class="ml-2">
-              <b>{{ getBuildingDisplayName(producer.building) }}</b>:
-            </span>
-            <v-text-field
-              v-model.number="producer.buildingAmount"
-              class="inline-inputs"
-              flat
-              hide-details
-              hide-spin-buttons
-              min="0"
-              type="number"
-              width="60px"
-              @input="updatePowerProducerFigures('building', producer, factory)"
-            />
-          </v-chip>
-        </span>
+        <p class="mr-2">Byproduct:</p>
+        <v-chip class="sf-chip">
+          <game-asset :subject="producer.byproduct.part" type="item" />
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(producer.byproduct.part) }}</b>: {{ formatNumber(producer.byproduct.amount) }}/min
+          </span>
+        </v-chip>
       </div>
-    </v-row>
+      <div class="d-flex align-center">
+        <p class="mr-2">Requires:</p>
+        <v-chip
+          v-if="producer.ingredients[1]?.perMin > 0"
+          class="sf-chip blue"
+          variant="tonal"
+        >
+          <game-asset :subject="producer.ingredients[1].part" type="item" />
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(producer.ingredients[1].part.toString()) }}</b>: {{ formatNumber(producer.ingredients[1].perMin) }}/min
+          </span>
+        </v-chip>
+        <div
+          class="d-flex align-center"
+        >
+          <span>
+            <v-chip
+              class="sf-chip orange"
+              variant="tonal"
+            >
+              <game-asset :subject="producer.building" type="building" />
+              <span class="ml-2">
+                <b>{{ getBuildingDisplayName(producer.building) }}</b>:
+              </span>
+              <v-text-field
+                v-model.number="producer.buildingAmount"
+                class="inline-inputs"
+                flat
+                hide-details
+                hide-spin-buttons
+                min="0"
+                type="number"
+                width="60px"
+                @input="updatePowerProducerFigures('building', producer, factory)"
+              />
+            </v-chip>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

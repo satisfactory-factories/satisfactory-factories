@@ -58,14 +58,26 @@ export const calculatePowerGeneration = (
       producer.buildingAmount = producer.buildingCount
     }
 
-    console.log(producer)
-
     // Now add the ingredients to the parts array
     producer.ingredients.forEach(ingredient => {
       createNewPart(factory, ingredient.part)
-
       factory.parts[ingredient.part].amountRequiredPower += ingredient.perMin
     })
+
+    // Now add the byproducts
+    if (recipe.byproduct) {
+      createNewPart(factory, recipe.byproduct.part)
+
+      const byProductRatio = recipe.byproduct.perMin / recipe.ingredients[0].perMin
+      const amount = byProductRatio * producer.ingredientAmount
+
+      factory.parts[recipe.byproduct.part].amountSuppliedViaProduction += amount
+
+      producer.byproduct = {
+        part: recipe.byproduct.part,
+        amount,
+      }
+    }
   })
 }
 
