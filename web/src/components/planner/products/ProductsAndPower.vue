@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-h6 text-md-h5 mb-4">
       <i class="fas fa-conveyor-belt-alt" />
-      <span class="ml-3">Products</span>
+      <span class="ml-3">Products &amp; Power Generators</span>
     </h1>
     <p v-show="helpText" class="text-body-2 mb-4">
       <i class="fas fa-info-circle" /> Products that are created within the factory. Products are first
