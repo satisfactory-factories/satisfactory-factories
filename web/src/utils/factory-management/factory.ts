@@ -106,8 +106,6 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
-  console.log('gameData before injection', gameData.powerGenerationRecipes)
-
   // Calculate the generation of power for the factory
   calculatePowerProducers(factory, gameData)
 
