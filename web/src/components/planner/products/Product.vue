@@ -104,11 +104,11 @@
           variant="outlined"
           @click="deleteProduct(productIndex, factory)"
         />
-        <v-chip v-if="factory.internalProducts[product.id]" class="ml-2" color="sf-chip small green">
+        <v-chip v-if="factory.internalProducts[product.id]" class="ml-2 sf-chip small green">
           Internal
         </v-chip>
-        <v-chip v-if="shouldShowNotInDemand(product, factory)" class=" ml-2 sf-chip small red">
-          Not in demand!
+        <v-chip v-if="shouldShowNotInDemand(product, factory)" class="ml-2 sf-chip small red">
+          No demand!
         </v-chip>
       </div>
     </div>

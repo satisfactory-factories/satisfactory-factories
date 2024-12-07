@@ -6,11 +6,11 @@
     </h1>
     <p v-show="helpText" class="text-body-2 mb-4">
       <i class="fas fa-info-circle" /> Products that are created within the factory. Products are first
-      used to fulfil recipes internally, and any surplus is then shown in Exports for export or
-      sinking.<br>
+      used to fulfil recipes internally, and any surplus is then available for Export.<br>
       e.g. if you add 200 Iron Rods and also 100 Screws, you'd have 100 surplus Rods remaining used as an
       Export (and the Screws as a end product).<br>
-      An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.
+      An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.<br>
+      An <v-chip color="red">No demand</v-chip> product means the product is not used internally nor exported. It is suggested you delete this.
     </p>
     <product :factory="factory" :help-text="helpText" />
     <v-btn
