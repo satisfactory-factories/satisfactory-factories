@@ -258,18 +258,21 @@
   }
 
   const updatePowerProducerSelection = (source: 'building' | 'recipe', producer: FactoryPowerProducer, factory: Factory) => {
-    let recipe: PowerRecipe | null = getDefaultRecipeForPowerProducer(producer.building)
+    // Hmmm tastes like chicken!
+    let originalRecipe: PowerRecipe | null = JSON.parse(JSON.stringify(getDefaultRecipeForPowerProducer(producer.building)))
 
     // Replace the recipe with the one newly selected
     if (source === 'recipe') {
-      recipe = getPowerRecipeById(producer.recipe)
+      originalRecipe = JSON.parse(JSON.stringify(getPowerRecipeById(producer.recipe))) // Shallow copy
     }
 
-    if (!recipe) {
+    if (!originalRecipe) {
       console.error('No recipe found for power producer!', producer)
       alert('Unable to find recipe for power generator! Please report this to Discord!')
       return
     }
+
+    const recipe = structuredClone(toRaw(originalRecipe)) // We need to perform a clone here otherwise we end up manipulating the game data version, which is REALLY bad.
 
     producer.recipe = recipe.id
     producer.ingredients = recipe.ingredients

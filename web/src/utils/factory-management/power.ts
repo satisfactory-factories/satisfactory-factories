@@ -5,22 +5,23 @@ import { PowerRecipe } from '@/interfaces/Recipes'
 import { formatNumber } from '@/utils/numberFormatter'
 
 // Depending on which value is updated, we need to recalculate the power generation.
-export const calculatePowerGeneration = (
+export const calculatePowerProducers = (
   factory: Factory,
   gameData: DataInterface
 ) => {
   factory.powerProducers.forEach(producer => {
-    const recipe = getPowerRecipeById(producer.recipe, gameData)
-
-    if (!recipe) {
+    const originalRecipe = getPowerRecipeById(producer.recipe, gameData) // Shallow copy the recipe data every time
+    if (!originalRecipe) {
       console.error(`Could not find recipe with id: ${producer.recipe}`)
       return
     }
 
-    // If for some reason the ingredients is missing
+    const recipe = structuredClone(toRaw(originalRecipe))
+
+    // If for some reason the ingredients is missing, replace them with the recipe ingredients as a basis
     if (!producer.ingredients[0]) {
       console.error(`Could not find ingredients for producer: ${producer.recipe}`)
-      producer.ingredients = recipe.ingredients
+      producer.ingredients = JSON.parse(JSON.stringify(recipe.ingredients)) // Shallow copy, shit was going SUPER weird until we did this!
     }
 
     if (producer.updated === 'power') {

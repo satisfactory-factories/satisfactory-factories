@@ -3,7 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
-import { calculatePowerGeneration } from '@/utils/factory-management/power'
+import { calculatePowerProducers } from '@/utils/factory-management/power'
 
 let factory: Factory
 
@@ -22,7 +22,7 @@ describe('power', () => {
 
   describe('calculatePowerIngredients', () => {
     it('should calculate the amount of ingredients needed to produce the power for a producer', () => {
-      calculatePowerGeneration(factory, gameData)
+      calculatePowerProducers(factory, gameData)
 
       expect(factory.powerProducers[0].ingredients[0]).toStrictEqual({
         mwPerItem: 12.5,

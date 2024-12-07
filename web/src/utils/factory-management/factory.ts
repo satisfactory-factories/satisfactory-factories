@@ -15,7 +15,7 @@ import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
 import { calculateSyncState } from '@/utils/factory-management/syncState'
-import { calculatePowerGeneration } from '@/utils/factory-management/power'
+import { calculatePowerProducers } from '@/utils/factory-management/power'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -106,8 +106,10 @@ export const calculateFactory = (
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
 
+  console.log('gameData before injection', gameData.powerGenerationRecipes)
+
   // Calculate the generation of power for the factory
-  calculatePowerGeneration(factory, gameData)
+  calculatePowerProducers(factory, gameData)
 
   // Calculate the amount of buildings and power required to make the factory and any power generation.
   calculateFactoryBuildingsAndPower(factory, gameData)
