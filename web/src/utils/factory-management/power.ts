@@ -29,13 +29,17 @@ export const calculatePowerGeneration = (
       // Now we need to calculate the amount of items produced per minute
       producer.ingredientAmount = producer.powerProduced / (recipe.ingredients[0].mwPerItem ?? 0)
       producer.ingredients[0].perMin = producer.ingredientAmount
-    } else if (producer.updated === 'ingredient') {
+    }
+
+    if (producer.updated === 'ingredient') {
       producer.ingredients[0].perMin = producer.ingredientAmount // Replace the ingredient directly
 
       // Now we've handled the updated values, we can calculate the power generation again
       producer.powerProduced = calculatePowerAmount(producer, recipe)
       producer.powerAmount = Number(formatNumber(producer.powerProduced))
-    } else if (producer.updated === 'building') {
+    }
+
+    if (producer.updated === 'building') {
       producer.buildingCount = producer.buildingAmount // Replace the building directly
 
       // Now we need to set the ingredients in a ratio equivalent of the amount of buildings
@@ -44,7 +48,7 @@ export const calculatePowerGeneration = (
 
       // Now we need to increase the power so the supplemental fuel is calculated correctly
       producer.powerProduced = calculatePowerAmount(producer, recipe)
-      producer.powerAmount = producer.powerProduced
+      producer.powerAmount = Number(formatNumber(producer.powerProduced))
     }
 
     // For supplemental fuels, we need to know the power produced in order to calculate them
@@ -55,7 +59,7 @@ export const calculatePowerGeneration = (
     if (producer.updated !== 'building') {
       // Now calculate the amount of buildings the user needs to build
       producer.buildingCount = producer.powerProduced / recipe.building.power
-      producer.buildingAmount = producer.buildingCount
+      producer.buildingAmount = Number(formatNumber(producer.buildingCount))
     }
 
     // Now add the ingredients to the parts array
@@ -69,7 +73,10 @@ export const calculatePowerGeneration = (
       createNewPart(factory, recipe.byproduct.part)
 
       const byProductRatio = recipe.byproduct.perMin / recipe.ingredients[0].perMin
-      const amount = byProductRatio * producer.ingredientAmount
+      let amount = byProductRatio * producer.ingredients[0].perMin
+      if (isNaN(amount)) {
+        amount = 0
+      }
 
       factory.parts[recipe.byproduct.part].amountSuppliedViaProduction += amount
 

@@ -135,7 +135,7 @@
         <v-chip class="sf-chip">
           <game-asset :subject="producer.byproduct.part" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(producer.byproduct.part) }}</b>: {{ formatNumber(producer.byproduct.amount) }}/min
+            <b>{{ getPartDisplayName(producer.byproduct.part) }}</b>: {{ formatNumber(producer.byproduct.amount ?? 0) }}/min
           </span>
         </v-chip>
       </div>
