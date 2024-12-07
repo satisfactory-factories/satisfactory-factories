@@ -12,16 +12,23 @@ describe('power', () => {
     // Initialize the factory
     factory = newFactory('My fuel plant')
     addProductToFactory(factory, { id: 'ParserFuel', amount: 480, recipe: 'ParserFuel' })
-    addPowerProducerToFactory(factory, { building: 'FuelGenerator', powerAmount: 480, recipe: 'GeneratorFuel_LiquidFuel' })
+    addPowerProducerToFactory(factory, {
+      building: 'FuelGenerator',
+      powerAmount: 480,
+      recipe: 'GeneratorFuel_LiquidFuel',
+      updated: 'power',
+    })
   })
 
   describe('calculatePowerIngredients', () => {
     it('should calculate the amount of ingredients needed to produce the power for a producer', () => {
       calculatePowerGeneration(factory, gameData)
 
-      expect(factory.powerProducers[0].ingredients).toEqual([
-        { part: 'ParserFuel', amount: 480 },
-      ])
+      expect(factory.powerProducers[0].ingredients[0]).toStrictEqual({
+        mwPerItem: 12.5,
+        part: 'LiquidFuel',
+        perMin: 38.4,
+      })
     })
   })
 })
