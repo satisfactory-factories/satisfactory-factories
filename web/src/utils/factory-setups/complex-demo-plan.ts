@@ -43,14 +43,33 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       recipe: 'GeneratorFuel_LiquidFuel',
       updated: 'power',
     })
+    oilFac.notes = 'This factory is producing fuel which is burned off internally, also demonstrating how power generators work.\n\nIt also purposefully has a surplus of Heavy Oil Residue which unless handled would cause a blockage in the system.'
+    oilFac.syncState = {
+      Plastic: {
+        amount: 640,
+        recipe: 'Plastic',
+      },
+      LiquidFuel: {
+        amount: 40,
+        recipe: 'ResidualFuel',
+      },
+    }
+    oilFac.inSync = true
     // =================
 
     // === COPPER INGOTS FAC ===
     addProductToFactory(copperIngotsFac, {
       id: 'CopperIngot',
-      amount: 640,
+      amount: 320,
       recipe: 'IngotCopper',
     })
+    copperIngotsFac.syncState = {
+      CopperIngot: {
+        amount: 320,
+        recipe: 'IngotCopper',
+      },
+    }
+    copperIngotsFac.inSync = true
     // =================
 
     // === COPPER BASICS FAC ===
@@ -74,6 +93,7 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       outputPart: 'CopperIngot',
       amount: 320, // Deliberate shortage, should be 520.
     })
+    copperBasicsFac.notes = 'This factory is deliberately short on Copper Ingots to highlight the shortage functionality. It is also over producing cables by 40 to show trimming.'
     // =================
 
     // === CIRCUIT BOARDS FAC ===
@@ -115,6 +135,7 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       outputPart: 'CircuitBoard',
       amount: 80,
     })
+    computersFac.notes = 'This factory is the end product of the chain / plan. While not yet supported, it will eventually show that the computers will be sunk or for space elevator parts used in the construction of Project Assembly.'
     // =================
 
     // === URANIUM FAC ===
@@ -149,6 +170,7 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       recipe: 'GeneratorNuclear_NuclearFuelRod',
       updated: 'power',
     })
+    uraniumFac.notes = 'This factory is producing nuclear fuel rods and using them via a nuclear power station. This demonstrates how power generators also can generate waste products which need to be handled.'
   }
 
   // Apply setup steps
