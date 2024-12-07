@@ -151,9 +151,7 @@
             <b>{{ getPartDisplayName(producer.ingredients[1].part.toString()) }}</b>: {{ formatNumber(producer.ingredients[1].perMin) }}/min
           </span>
         </v-chip>
-        <div
-          class="d-flex align-center"
-        >
+        <div class="d-flex align-center">
           <span>
             <v-chip
               class="sf-chip orange"
