@@ -12,7 +12,7 @@
       Export (and the Screws as a end product).<br>
       An <v-chip color="green">Internal</v-chip> product is one that is used to produce other products. The surplus of which can also be used as an export.
     </p>
-    <planner-factory-product :factory="factory" :help-text="helpText" />
+    <product :factory="factory" :help-text="helpText" />
     <v-btn
       color="primary mr-2"
       prepend-icon="fas fa-cube"
@@ -22,7 +22,7 @@
     >
       Add Product
     </v-btn>
-    <planner-factory-power-producer :factory="factory" :help-text="helpText" />
+    <power-producer :factory="factory" :help-text="helpText" />
     <v-btn
       color="yellow-darken-3 mr-2"
       prepend-icon="fas fa-bolt"
@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-  import PlannerFactoryPowerProducer from '@/components/planner/products/PlannerFactoryPowerProducer.vue'
   import { addProductToFactory } from '@/utils/factory-management/products'
 
   defineProps<{
