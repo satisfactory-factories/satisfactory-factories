@@ -2,9 +2,9 @@
   <div
     v-for="(product, productIndex) in factory.products"
     :key="productIndex"
-    class="px-4 my-2 border-md rounded sub-card product"
+    class="product px-4 my-2 border-md rounded sub-card"
   >
-    <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
+    <div class="selectors mt-3 mb-2 d-flex flex-column flex-md-row ga-3">
       <div class="input-row d-flex align-center">
         <span v-show="!product.id" class="mr-2">
           <i class="fas fa-cube" style="width: 32px; height: 32px" />
@@ -112,9 +112,9 @@
         </v-chip>
       </div>
     </div>
-    <v-row
+    <div
       v-if="product.byProducts && product.byProducts.length > 0"
-      class="my-2 mb-n1 px-2 text-body-1 d-flex align-center"
+      class="mb-2 text-body-1 d-flex align-center"
     >
       <p class="mr-2">Byproduct:</p>
       <v-chip
@@ -127,10 +127,10 @@
           <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
         </span>
       </v-chip>
-    </v-row>
-    <v-row
+    </div>
+    <div
       v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements.amount > 0"
-      class="my-2 px-2 text-body-1 d-flex align-center"
+      class="mb-2 text-body-1 d-flex align-center"
     >
       <p class="mr-2">Requires:</p>
       <v-chip
@@ -178,7 +178,7 @@
           </v-chip>
         </span>
       </div>
-    </v-row>
+    </div>
   </div>
 </template>
 

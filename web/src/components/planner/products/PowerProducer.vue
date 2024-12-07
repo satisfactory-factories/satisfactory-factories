@@ -4,7 +4,7 @@
     :key="producerIndex"
     class="powerProducer px-4 my-2 border-md rounded sub-card"
   >
-    <div class="selectors mt-3 d-flex flex-column flex-md-row ga-3">
+    <div class="selectors mt-3 mb-2 d-flex flex-column flex-md-row ga-3">
       <div class="input-row d-flex align-center">
         <span v-show="!producer.building" class="mr-2">
           <i class="fas fa-building" style="width: 42px; height: 42px" />
@@ -125,7 +125,7 @@
     </div>
     <div
       v-if="producer.recipe"
-      class="text-body-1 my-1"
+      class="text-body-1 mb-2"
     >
       <div
         v-if="producer.byproduct"
