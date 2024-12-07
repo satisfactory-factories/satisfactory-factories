@@ -1,24 +1,32 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
-import { findFacByName, newFactory } from '@/utils/factory-management/factory'
+import { newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
+
+let oilFac: Factory
+let copperIngotsFac: Factory
+let copperBasicsFac: Factory
+let circuitBoardsFac: Factory
+let computersFac: Factory
+let uraniumFac: Factory
 
 // This is a more complex setup with multiple factories with dependencies going in a straight chain from Computers to Ingots and Oil Processing.
 // This setup is used to test the more complex factory management functions.
 // Copper Basics has a deliberate shortage of Copper Ingots to highlight that functionality to new users.
 export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
   // Initialize factories
-  const factories = [
-    newFactory('Oil Processing'), // Factory with a byproduct
-    newFactory('Copper Ingots'),
-    newFactory('Copper Basics'),
-    newFactory('Circuit Boards'),
-    newFactory('Computers (end product)'),
-  ]
+  oilFac = newFactory('Oil Processing')
+  copperIngotsFac = newFactory('Copper Ingots')
+  copperBasicsFac = newFactory('Copper Basics')
+  circuitBoardsFac = newFactory('Circuit Boards')
+  computersFac = newFactory('Computers (end product)')
+  uraniumFac = newFactory('☢️ Uranium Power')
+
+  const factories = [oilFac, copperIngotsFac, copperBasicsFac, circuitBoardsFac, computersFac, uraniumFac]
 
   // Private methods to configure the factories
-  const addProductsToFactories = () => {
-    const oilFac = findFacByName('Oil Processing', factories)
+  const setupFactories = () => {
+    // === OIL FAC ===
     addProductToFactory(oilFac, {
       id: 'Plastic',
       amount: 640,
@@ -29,15 +37,23 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       amount: 40,
       recipe: 'ResidualFuel',
     })
+    addPowerProducerToFactory(oilFac, {
+      building: 'generatorfuel',
+      powerAmount: 500,
+      recipe: 'GeneratorFuel_LiquidFuel',
+      updated: 'power',
+    })
+    // =================
 
-    const copperIngotsFac = findFacByName('Copper Ingots', factories)
+    // === COPPER INGOTS FAC ===
     addProductToFactory(copperIngotsFac, {
       id: 'CopperIngot',
       amount: 640,
       recipe: 'IngotCopper',
     })
+    // =================
 
-    const copperBasicsFac = findFacByName('Copper Basics', factories)
+    // === COPPER BASICS FAC ===
     addProductToFactory(copperBasicsFac, {
       id: 'Wire',
       amount: 400,
@@ -53,47 +69,39 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       amount: 160,
       recipe: 'CopperSheet',
     })
-
-    const circuitBoardsFac = findFacByName('Circuit Boards', factories)
-    addProductToFactory(circuitBoardsFac, {
-      id: 'CircuitBoard',
-      amount: 80,
-      recipe: 'CircuitBoard',
-    })
-
-    const computersFac = findFacByName('Computers (end product)', factories)
-    addProductToFactory(computersFac, {
-      id: 'Computer',
-      amount: 20,
-      recipe: 'Computer',
-    })
-  }
-
-  const addImportsToFactories = () => {
-    const copperIngotsFac = findFacByName('Copper Ingots', factories)
-    const copperBasicsFac = findFacByName('Copper Basics', factories)
     addInputToFactory(copperBasicsFac, {
       factoryId: copperIngotsFac.id,
       outputPart: 'CopperIngot',
       amount: 320, // Deliberate shortage, should be 520.
     })
+    // =================
 
-    const circuitBoardsFac = findFacByName('Circuit Boards', factories)
-    const oilProcessingFac = findFacByName('Oil Processing', factories)
+    // === CIRCUIT BOARDS FAC ===
+    addProductToFactory(circuitBoardsFac, {
+      id: 'CircuitBoard',
+      amount: 80,
+      recipe: 'CircuitBoard',
+    })
     addInputToFactory(circuitBoardsFac, {
       factoryId: copperBasicsFac.id,
       outputPart: 'CopperSheet',
       amount: 160,
     })
     addInputToFactory(circuitBoardsFac, {
-      factoryId: oilProcessingFac.id,
+      factoryId: oilFac.id,
       outputPart: 'Plastic',
       amount: 320,
     })
+    // =================
 
-    const computersFac = findFacByName('Computers (end product)', factories)
+    // === COMPUTERS FAC ===
+    addProductToFactory(computersFac, {
+      id: 'Computer',
+      amount: 20,
+      recipe: 'Computer',
+    })
     addInputToFactory(computersFac, {
-      factoryId: oilProcessingFac.id,
+      factoryId: oilFac.id,
       outputPart: 'Plastic',
       amount: 320,
     })
@@ -107,22 +115,44 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       outputPart: 'CircuitBoard',
       amount: 80,
     })
-  }
+    // =================
 
-  const addPowerToFactories = () => {
-    const oilFac = findFacByName('Oil Processing', factories)
-    addPowerProducerToFactory(oilFac, {
-      building: 'generatorfuel',
-      powerAmount: 500,
-      recipe: 'GeneratorFuel_LiquidFuel',
+    // === URANIUM FAC ===
+    addProductToFactory(uraniumFac, {
+      id: 'Cement',
+      amount: 60,
+      recipe: 'Concrete',
+    })
+    addProductToFactory(uraniumFac, {
+      id: 'SulfuricAcid',
+      amount: 120,
+      recipe: 'SulfuricAcid',
+    })
+    addProductToFactory(uraniumFac, {
+      id: 'ElectromagneticControlRod',
+      amount: 10,
+      recipe: 'ElectromagneticControlRod',
+    })
+    addProductToFactory(uraniumFac, {
+      id: 'NuclearFuelRod',
+      amount: 2,
+      recipe: 'NuclearFuelRod',
+    })
+    addProductToFactory(uraniumFac, {
+      id: 'UraniumCell',
+      amount: 100,
+      recipe: 'UraniumCell',
+    })
+    addPowerProducerToFactory(uraniumFac, {
+      building: 'generatornuclear',
+      powerAmount: 25000,
+      recipe: 'GeneratorNuclear_NuclearFuelRod',
       updated: 'power',
     })
   }
 
   // Apply setup steps
-  addProductsToFactories()
-  addImportsToFactories()
-  addPowerToFactories()
+  setupFactories()
 
   // Return an object with a method to access the configured factories
   return {
