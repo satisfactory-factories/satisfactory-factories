@@ -21,7 +21,7 @@ export const calculatePowerProducers = (
     // If for some reason the ingredients is missing, replace them with the recipe ingredients as a basis
     if (!producer.ingredients[0]) {
       console.error(`Could not find ingredients for producer: ${producer.recipe}`)
-      producer.ingredients = JSON.parse(JSON.stringify(recipe.ingredients)) // Shallow copy, shit was going SUPER weird until we did this!
+      producer.ingredients = recipe.ingredients
     }
 
     if (producer.updated === 'power') {

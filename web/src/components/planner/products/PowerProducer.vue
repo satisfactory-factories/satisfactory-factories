@@ -278,6 +278,7 @@
     producer.ingredients = recipe.ingredients
     producer.powerAmount = 0
     producer.ingredientAmount = 0
+    producer.byproduct = null
 
     // Patch the ingredients to be zeroed
     producer.ingredients.forEach(ingredient => {
