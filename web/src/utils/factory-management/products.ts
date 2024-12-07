@@ -9,6 +9,7 @@ export const addProductToFactory = (
     id?: string,
     amount?: number,
     recipe?: string,
+    requirements?: { [key: string]: { amount: number } },
   }
 ) => {
   factory.products.push({
@@ -16,7 +17,7 @@ export const addProductToFactory = (
     amount: options.amount ?? 1,
     recipe: options.recipe ?? '',
     displayOrder: factory.products.length,
-    requirements: {},
+    requirements: options.requirements ?? {},
     buildingRequirements: {} as BuildingRequirement,
     byProducts: [],
   })
@@ -64,12 +65,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
     }
     const recipePart = recipe.products[0].part
 
-    if (product.amount === 0 || !product.amount) {
-      // If the product amount is 0, we don't need to calculate anything, because the user might be entering a new number.
-      // I tried forcing this to be 1, but it causes a lot of frustration for the user, so it's better to just simply do nothing.
-      return
-    }
-
     if (product.amount < 0) {
       // If the product amount is negative, this causes issues with calculations, so force it to 0.
       product.amount = 0
@@ -109,10 +104,9 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
           }
         }
 
-        factory.rawResources[ingredient.part].amount += ingredientRequired
-
         // Mark the part as raw which will eventually be marked as fully satisfied.
         factory.parts[ingredient.part].isRaw = true
+        factory.rawResources[ingredient.part].amount += ingredientRequired
       }
 
       // Set the amount that the individual products need for display purposes.

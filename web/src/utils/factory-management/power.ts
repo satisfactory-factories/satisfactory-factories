@@ -66,6 +66,21 @@ export const calculatePowerGeneration = (
     producer.ingredients.forEach(ingredient => {
       createNewPart(factory, ingredient.part)
       factory.parts[ingredient.part].amountRequiredPower += ingredient.perMin
+
+      // If the part is a raw resource also add it to the rawResources array
+      if (gameData.items.rawResources[ingredient.part]) {
+        // Mark the part as raw which will eventually be marked as fully satisfied.
+        factory.parts[ingredient.part].isRaw = true
+
+        if (!factory.rawResources[ingredient.part]) {
+          factory.rawResources[ingredient.part] = {
+            id: ingredient.part,
+            name: gameData.items.rawResources[ingredient.part].name,
+            amount: 0,
+          }
+        }
+        factory.rawResources[ingredient.part].amount += ingredient.perMin
+      }
     })
 
     // Now add the byproducts
