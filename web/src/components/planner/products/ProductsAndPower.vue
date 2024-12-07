@@ -14,7 +14,7 @@
     </p>
     <product :factory="factory" :help-text="helpText" />
     <v-btn
-      color="primary mr-2"
+      color="primary mr-2 mt-n1"
       prepend-icon="fas fa-cube"
       ripple
       variant="flat"
@@ -24,7 +24,7 @@
     </v-btn>
     <power-producer :factory="factory" :help-text="helpText" />
     <v-btn
-      color="yellow-darken-3 mr-2"
+      color="yellow-darken-3 mr-2 mt-n1"
       prepend-icon="fas fa-bolt"
       ripple
       variant="flat"

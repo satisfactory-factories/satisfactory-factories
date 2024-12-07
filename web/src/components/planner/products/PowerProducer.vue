@@ -142,7 +142,7 @@
       <div class="d-flex align-center">
         <p class="mr-2">Requires:</p>
         <v-chip
-          v-if="producer.ingredients[1]?.perMin > 0"
+          v-if="producer.ingredients[1]"
           class="sf-chip blue"
           variant="tonal"
         >
@@ -151,30 +151,28 @@
             <b>{{ getPartDisplayName(producer.ingredients[1].part.toString()) }}</b>: {{ formatNumber(producer.ingredients[1].perMin) }}/min
           </span>
         </v-chip>
-        <div class="d-flex align-center">
-          <span>
-            <v-chip
-              class="sf-chip orange"
-              variant="tonal"
-            >
-              <game-asset :subject="producer.building" type="building" />
-              <span class="ml-2">
-                <b>{{ getBuildingDisplayName(producer.building) }}</b>:
-              </span>
-              <v-text-field
-                v-model.number="producer.buildingAmount"
-                class="inline-inputs"
-                flat
-                hide-details
-                hide-spin-buttons
-                min="0"
-                type="number"
-                width="60px"
-                @input="updatePowerProducerFigures('building', producer, factory)"
-              />
-            </v-chip>
-          </span>
-        </div>
+        <span>
+          <v-chip
+            class="sf-chip orange"
+            variant="tonal"
+          >
+            <game-asset :subject="producer.building" type="building" />
+            <span class="ml-2">
+              <b>{{ getBuildingDisplayName(producer.building) }}</b>:
+            </span>
+            <v-text-field
+              v-model.number="producer.buildingAmount"
+              class="inline-inputs"
+              flat
+              hide-details
+              hide-spin-buttons
+              min="0"
+              type="number"
+              width="60px"
+              @input="updatePowerProducerFigures('building', producer, factory)"
+            />
+          </v-chip>
+        </span>
       </div>
     </div>
   </div>

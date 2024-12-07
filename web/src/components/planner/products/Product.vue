@@ -113,38 +113,41 @@
       </div>
     </div>
     <div
-      v-if="product.byProducts && product.byProducts.length > 0"
-      class="mb-2 text-body-1 d-flex align-center"
+      v-if="product.recipe"
+      class="text-body-1 mb-2"
     >
-      <p class="mr-2">Byproduct:</p>
-      <v-chip
-        v-for="byProduct in product.byProducts"
-        :key="byProduct.id"
-        class="sf-chip"
+      <div
+        v-if="product.byProducts && product.byProducts.length > 0"
+        class="d-flex align-center"
       >
-        <game-asset :subject="byProduct.id" type="item" />
-        <span class="ml-2">
-          <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
-        </span>
-      </v-chip>
-    </div>
-    <div
-      v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements.amount > 0"
-      class="mb-2 text-body-1 d-flex align-center"
-    >
-      <p class="mr-2">Requires:</p>
-      <v-chip
-        v-for="(requirement, part) in product.requirements"
-        :key="`ingredients-${part}`"
-        class="sf-chip blue"
-        variant="tonal"
+        <p class="mr-2">Byproduct:</p>
+        <v-chip
+          v-for="byProduct in product.byProducts"
+          :key="byProduct.id"
+          class="sf-chip"
+        >
+          <game-asset :subject="byProduct.id" type="item" />
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
+          </span>
+        </v-chip>
+      </div>
+      <div
+        v-if="Object.keys(product.requirements).length > 0"
+        class="d-flex align-center"
       >
-        <game-asset :subject="part.toString()" type="item" />
-        <span class="ml-2">
-          <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
-        </span>
-      </v-chip>
-      <div v-if="product.buildingRequirements.name" class="ml-0 text-body-1 d-inline">
+        <p class="mr-2">Requires:</p>
+        <v-chip
+          v-for="(requirement, part) in product.requirements"
+          :key="`ingredients-${part}`"
+          class="sf-chip blue"
+          variant="tonal"
+        >
+          <game-asset :subject="part.toString()" type="item" />
+          <span class="ml-2">
+            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
+          </span>
+        </v-chip>
         <span>
           <v-chip
             class="sf-chip orange"
