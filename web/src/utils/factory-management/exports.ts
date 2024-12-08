@@ -5,6 +5,7 @@ import {
   FactoryExportItem,
   FactoryItem,
 } from '@/interfaces/planner/FactoryInterface'
+import { createNewPart } from '@/utils/factory-management/common'
 
 export const getRequestsForFactoryByProduct = (
   factory: Factory,
@@ -63,7 +64,8 @@ export const calculateExports = (factories: Factory[]) => {
       .map(product => {
         // This always should be present at this calculation stage.
         if (!factory.parts[product.id]) {
-          throw new Error(`Part data for ${product.id} not found in factory ${factory.name}!`)
+          console.error(`Part data for ${product.id} not found in factory ${factory.name}!`)
+          createNewPart(factory, product.id)
         }
 
         const byProduct = factory.byProducts.find(byProduct => byProduct.id === product.id)
