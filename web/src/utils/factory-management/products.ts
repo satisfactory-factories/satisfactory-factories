@@ -22,33 +22,6 @@ export const addProductToFactory = (
   })
 }
 
-// For internal testing use
-export const addPowerProducerToFactory = (
-  factory: Factory,
-  options: {
-    building?: string,
-    buildingAmount?: number,
-    powerAmount?: number,
-    ingredientAmount?: number,
-    recipe: string;
-    updated: string // Supply one of 'power', 'ingredient', 'building', needed so the power generation can be recalculated.
-  },
-) => {
-  factory.powerProducers.push({
-    building: options.building ?? '',
-    buildingAmount: options.buildingAmount ?? 0,
-    buildingCount: 0, // Calculated later
-    ingredients: [], // Calculated later
-    ingredientAmount: options.ingredientAmount ?? 0,
-    powerAmount: options.powerAmount ?? 0,
-    powerProduced: 0, // Calculated later
-    recipe: options.recipe,
-    byproduct: null,
-    displayOrder: factory.powerProducers.length,
-    updated: options.updated,
-  })
-}
-
 // Loops through all products and figures out what they produce and what they require, then adds it to the factory.parts object.
 export const calculateProducts = (factory: Factory, gameData: DataInterface) => {
   factory.products.forEach(product => {

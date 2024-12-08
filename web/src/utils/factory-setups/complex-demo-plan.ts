@@ -1,5 +1,6 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
+import { addProductToFactory } from '@/utils/factory-management/products'
+import { addPowerProducerToFactory } from '@/utils/factory-management/power'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 

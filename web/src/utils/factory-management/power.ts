@@ -4,6 +4,33 @@ import { getPowerRecipeById } from '@/utils/factory-management/common'
 import { PowerRecipe } from '@/interfaces/Recipes'
 import { formatNumber } from '@/utils/numberFormatter'
 
+// For internal testing use
+export const addPowerProducerToFactory = (
+  factory: Factory,
+  options: {
+    building?: string,
+    buildingAmount?: number,
+    powerAmount?: number,
+    ingredientAmount?: number,
+    recipe: string;
+    updated: string // Supply one of 'power', 'ingredient', 'building', needed so the power generation can be recalculated.
+  },
+) => {
+  factory.powerProducers.push({
+    building: options.building ?? '',
+    buildingAmount: options.buildingAmount ?? 0,
+    buildingCount: 0, // Calculated later
+    ingredients: [], // Calculated later
+    ingredientAmount: options.ingredientAmount ?? 0,
+    powerAmount: options.powerAmount ?? 0,
+    powerProduced: 0, // Calculated later
+    recipe: options.recipe,
+    byproduct: null,
+    displayOrder: factory.powerProducers.length,
+    updated: options.updated,
+  })
+}
+
 // Depending on which value is updated, we need to recalculate the power generation.
 export const calculatePowerProducers = (
   factory: Factory,

@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
-import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
+import { addProductToFactory } from '@/utils/factory-management/products'
+import { addPowerProducerToFactory } from '@/utils/factory-management/power'
 import { gameData } from '@/utils/gameData'
 
 let factory: Factory
