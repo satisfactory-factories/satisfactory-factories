@@ -18,9 +18,8 @@ export const calculatePowerProducers = (
 
     const recipe = structuredClone(toRaw(originalRecipe))
 
-    // If for some reason the ingredients is missing, replace them with the recipe ingredients as a basis
+    // Upon initialization or re-selection, the ingredients array is empty, so we need to set it to the recipe ingredients.
     if (!producer.ingredients[0]) {
-      console.error(`Could not find ingredients for producer: ${producer.recipe}`)
       producer.ingredients = recipe.ingredients
     }
 
