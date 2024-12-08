@@ -16,9 +16,9 @@
             <div class="d-flex align-center">
               <!-- tasks chip -->
               <div v-if="countIncompleteTasks(factory)" class="mr-2">
-                <v-chip class="sf-chip small yellow no-margin" @click="navigateToFactory(factory.id, `${factory.id}-todos`)">
+                <v-chip class="sf-chip small yellow no-margin" @click="navigateToFactory(factory.id, `${factory.id}-tasks`)">
                   <i class="fas fa-tasks" />
-                  <span class="ml-2">{{ countIncompleteTasks(factory) }} todos</span>
+                  <span class="ml-2">{{ countIncompleteTasks(factory) }} tasks</span>
                 </v-chip>
               </div>
               <!-- notes chip -->
@@ -138,8 +138,8 @@
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <v-row>
             <v-col cols="12" md="6">
-              <planner-factory-todos
-                :id="`${factory.id}-todos`"
+              <planner-factory-tasks
+                :id="`${factory.id}-tasks`"
                 :factory="factory"
                 :help-text="helpText"
               />

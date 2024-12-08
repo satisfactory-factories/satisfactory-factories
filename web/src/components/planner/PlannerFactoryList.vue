@@ -20,7 +20,7 @@
                   class="text-body-1 align-content-center text-center py-0 px-1 bg-orange-darken-2"
                   cols="auto"
                   v-bind="props"
-                  @click="navigateToFactory(element.id, `${element.id}-todos`)"
+                  @click="navigateToFactory(element.id, `${element.id}-tasks`)"
                   @click.stop
                 >
                   <i class="d-inline fas fa-tasks mr-1" />
