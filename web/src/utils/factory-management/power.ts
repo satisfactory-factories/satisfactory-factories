@@ -1,6 +1,6 @@
 import { Factory, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
-import { createNewPart, getPowerRecipeById } from '@/utils/factory-management/common'
+import { getPowerRecipeById } from '@/utils/factory-management/common'
 import { PowerRecipe } from '@/interfaces/Recipes'
 import { formatNumber } from '@/utils/numberFormatter'
 
@@ -62,38 +62,13 @@ export const calculatePowerProducers = (
       producer.buildingAmount = Number(formatNumber(producer.buildingCount))
     }
 
-    // Now add the ingredients to the parts array
-    producer.ingredients.forEach(ingredient => {
-      createNewPart(factory, ingredient.part)
-      factory.parts[ingredient.part].amountRequiredPower += ingredient.perMin
-
-      // If the part is a raw resource also add it to the rawResources array
-      if (gameData.items.rawResources[ingredient.part]) {
-        // Mark the part as raw which will eventually be marked as fully satisfied.
-        factory.parts[ingredient.part].isRaw = true
-
-        if (!factory.rawResources[ingredient.part]) {
-          factory.rawResources[ingredient.part] = {
-            id: ingredient.part,
-            name: gameData.items.rawResources[ingredient.part].name,
-            amount: 0,
-          }
-        }
-        factory.rawResources[ingredient.part].amount += ingredient.perMin
-      }
-    })
-
     // Now add the byproducts
     if (recipe.byproduct) {
-      createNewPart(factory, recipe.byproduct.part)
-
       const byProductRatio = recipe.byproduct.perMin / recipe.ingredients[0].perMin
       let amount = byProductRatio * producer.ingredients[0].perMin
       if (isNaN(amount)) {
         amount = 0
       }
-
-      factory.parts[recipe.byproduct.part].amountSuppliedViaProduction += amount
 
       producer.byproduct = {
         part: recipe.byproduct.part,

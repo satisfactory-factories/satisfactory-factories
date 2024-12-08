@@ -1,7 +1,6 @@
 import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
-import { createNewPart, getRecipe } from '@/utils/factory-management/common'
-import { calculatePartMetrics } from '@/utils/factory-management/satisfaction'
+import { getRecipe } from '@/utils/factory-management/common'
 
 export const addProductToFactory = (
   factory: Factory,
@@ -21,9 +20,6 @@ export const addProductToFactory = (
     buildingRequirements: {} as BuildingRequirement,
     byProducts: [],
   })
-
-  // Also add the part record to the factory
-  createNewPart(factory, options.id ?? '')
 }
 
 // For internal testing use
@@ -63,7 +59,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       console.warn(`calculateProductRequirements: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
       return
     }
-    const recipePart = recipe.products[0].part
 
     if (product.amount < 0) {
       // If the product amount is negative, this causes issues with calculations, so force it to 0.
@@ -71,17 +66,10 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       return // Nothing else to do
     }
 
-    // Get the recipe of the product, as the product ID can no longer be used when there's multiple recipes involved for the same part.
-
-    // Add the output of the product to the parts array
-    createNewPart(factory, recipePart)
-    factory.parts[recipePart].amountSuppliedViaProduction += product.amount
-    calculatePartMetrics(factory, recipePart)
-
     // Calculate the ingredients needed to make this product.
     recipe.ingredients.forEach(ingredient => {
       if (isNaN(ingredient.amount)) {
-        console.warn(`Invalid ingredient amount for ingredient "${ingredient.part}". Skipping.`)
+        console.error(`Invalid ingredient amount for ingredient "${ingredient.part}". Skipping.`)
         return
       }
 
@@ -91,24 +79,6 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       ingredientRequired = Math.round(ingredientRequired * 1000) / 1000
 
       // Handle the ingredients
-      createNewPart(factory, ingredient.part)
-      factory.parts[ingredient.part].amountRequired += ingredientRequired
-
-      // Raw resource handling
-      if (gameData.items.rawResources[ingredient.part]) {
-        if (!factory.rawResources[ingredient.part]) {
-          factory.rawResources[ingredient.part] = {
-            id: ingredient.part,
-            name: gameData.items.rawResources[ingredient.part].name,
-            amount: 0,
-          }
-        }
-
-        // Mark the part as raw which will eventually be marked as fully satisfied.
-        factory.parts[ingredient.part].isRaw = true
-        factory.rawResources[ingredient.part].amount += ingredientRequired
-      }
-
       // Set the amount that the individual products need for display purposes.
       if (!product.requirements[ingredient.part]) {
         product.requirements[ingredient.part] = {
@@ -117,11 +87,11 @@ export const calculateProducts = (factory: Factory, gameData: DataInterface) => 
       }
 
       product.requirements[ingredient.part].amount += ingredientRequired
-
-      // Finally calculate the part metrics now we have the details for the ingredient.
-      calculatePartMetrics(factory, ingredient.part)
     })
   })
+
+  // Now calculate byproducts
+  calculateByProducts(factory, gameData)
 }
 
 export const calculateByProducts = (factory: Factory, gameData: DataInterface): void => {
@@ -172,11 +142,6 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface): 
       } else {
         byProductExists.amount += byProductAmount
       }
-
-      // Now also add the part that the Byproduct creates to the parts list
-      createNewPart(factory, byProduct.part)
-      factory.parts[byProduct.part].amountSuppliedViaProduction += byProductAmount
-      calculatePartMetrics(factory, byProduct.part)
     })
   })
 }

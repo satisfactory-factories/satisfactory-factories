@@ -1,16 +1,12 @@
 import { BuildingRequirement, Factory, FactoryDependency, FactoryPower } from '@/interfaces/planner/FactoryInterface'
-import { calculateInputs } from '@/utils/factory-management/inputs'
-import { calculateByProducts, calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
+import { calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
 import { calculateFactoryBuildingsAndPower } from '@/utils/factory-management/buildings'
-import { calculateRawSupply, calculateUsingRawResourcesOnly } from '@/utils/factory-management/supply'
-import { calculateFactorySatisfaction } from '@/utils/factory-management/satisfaction'
+import { calculateParts } from '@/utils/factory-management/parts'
 import {
   calculateDependencyMetrics,
   constructDependencies,
   scanForInvalidInputs,
 } from '@/utils/factory-management/dependencies'
-import { calculateExports } from '@/utils/factory-management/exports'
-import { configureExportCalculator } from '@/utils/factory-management/exportCalculator'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
@@ -62,7 +58,6 @@ export const newFactory = (name = 'A new factory'): Factory => {
     } as FactoryDependency,
     exportCalculator: {},
     rawResources: {},
-    exports: {},
     power: {} as FactoryPower,
     requirementsSatisfied: true, // Until we do the first calculation nothing is wrong
     usingRawResourcesOnly: false,
@@ -85,23 +80,11 @@ export const calculateFactory = (
   factory.rawResources = {}
   factory.parts = {}
 
-  // Calculate what is inputted into the factory to be used by products.
-  calculateInputs(factory)
-
   // Calculate what is produced and required by the products.
   calculateProducts(factory, gameData)
 
-  // And calculate Byproducts
-  calculateByProducts(factory, gameData)
-
   // Calculate if there have been any changes the player needs to enact.
   calculateSyncState(factory)
-
-  // Calculate if we have products satisfied by raw resources.
-  calculateRawSupply(factory, gameData)
-
-  // Add a flag to denote if we're only using raw resources to make products.
-  calculateUsingRawResourcesOnly(factory, gameData)
 
   // Calculate if we have any internal products that can be used to satisfy requirements.
   calculateInternalProducts(factory, gameData)
@@ -124,13 +107,10 @@ export const calculateFactory = (
   })
 
   // Then we calculate the satisfaction of the factory. This requires Dependencies to be calculated first.
-  calculateFactorySatisfaction(factory)
-
-  // Now we know the demands set upon the factory, now properly calculate the export display data
-  calculateExports(allFactories)
+  calculateParts(factory, gameData)
 
   // Export Calculator stuff
-  configureExportCalculator(allFactories)
+  // configureExportCalculator(allFactories)
 
   // Finally, go through all factories and check if they have any problems.
   calculateHasProblem(allFactories)

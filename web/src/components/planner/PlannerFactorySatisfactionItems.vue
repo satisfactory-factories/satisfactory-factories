@@ -83,19 +83,33 @@
             <div v-if="satisfactionBreakdowns">
               <div class="text-green d-flex justify-space-between align-center">
                 <span>Production</span>
-                <span class="align-self-end text-right">+{{ formatNumber(part.amountSuppliedViaProduction) }}/min</span>
+                <span class="align-self-end text-right">
+                  +{{ formatNumber(part.amountSuppliedViaProduction) }}/min
+                </span>
               </div>
               <div class="text-green d-flex justify-space-between align-center">
-                <span>Imports</span>
-                <span class="align-self-end text-right">+{{ formatNumber(part.amountSuppliedViaInput ) }}/min</span>
+                <span>Supply from Imports</span>
+                <span class="align-self-end text-right">
+                  +{{ formatNumber(part.amountSuppliedViaInput ) }}/min
+                </span>
+              </div>
+              <div class="text-green d-flex justify-space-between align-center">
+                <span>Supply from Raw</span>
+                <span class="align-self-end text-right">
+                  +{{ formatNumber(part.amountSuppliedViaRaw ) }}/min
+                </span>
               </div>
               <div class="text-orange d-flex justify-space-between align-center">
                 <span>Internal Consumption</span>
-                <span class="align-self-end text-right">-{{ formatNumber((part.amountRequiredProduction + part.amountRequiredPower)) }}/min</span>
+                <span class="align-self-end text-right">
+                  -{{ formatNumber((part.amountRequiredProduction + part.amountRequiredPower)) }}/min
+                </span>
               </div>
               <div class="text-orange d-flex justify-space-between align-center">
                 <span>Exports</span>
-                <span class="align-self-end text-right">-{{ formatNumber(part.amountRequiredExports ) }}/min</span>
+                <span class="align-self-end text-right">
+                  -{{ formatNumber(part.amountRequiredExports ) }}/min
+                </span>
               </div>
               <v-divider class="my-2" color="#ccc" />
             </div>
@@ -123,7 +137,9 @@
                   @click="changeCalculatorSelection(factory, request.requestingFactoryId, partId.toString())"
                 >
                   <i class="fas fa-industry" />
-                  <span class="ml-2"><b>{{ findFactory(request.requestingFactoryId).name }}</b>: {{ formatNumber(request.amount) }}/min</span>
+                  <span class="ml-2">
+                    <b>{{ findFactory(request.requestingFactoryId).name }}</b>: {{ formatNumber(request.amount) }}/min
+                  </span>
                 </v-chip>
               </div>
               <!--              <div class="text-center mt-2">-->

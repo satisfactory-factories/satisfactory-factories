@@ -1,9 +1,8 @@
-import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import { addPowerProducerToFactory, addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
-import { calculatePowerProducers } from '@/utils/factory-management/power'
 
 let factory: Factory
 
@@ -18,7 +17,7 @@ describe('power', () => {
       recipe: 'GeneratorFuel_LiquidFuel',
       updated: 'power',
     })
-    calculatePowerProducers(factory, gameData)
+    calculateFactories([factory], gameData)
   })
 
   describe('calculatePowerProducers', () => {
@@ -44,7 +43,6 @@ describe('power', () => {
     })
 
     it('should add the ingredient parts to the factory.parts array', () => {
-      calculateFactories([factory], gameData)
       expect(factory.parts.LiquidFuel).toEqual({
         amountRequired: 38.4,
         amountRequiredProduction: 0,
@@ -53,9 +51,11 @@ describe('power', () => {
         amountSupplied: 480,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 480,
+        amountSuppliedViaRaw: 0,
         amountRemaining: 441.6,
         isRaw: false,
         satisfied: true,
+        exportable: true, // Because it's produced in the factory in question
       })
     })
 
@@ -91,7 +91,7 @@ describe('power', () => {
         })
       })
 
-      it('should add the primary fuel to the factory.parts array', () => {
+      it('should add the primary fuel to the factory.parts array and be exportable', () => {
         expect(factory.parts.NuclearFuelRod).toEqual({
           amountRequired: 0.2,
           amountRequiredProduction: 0,
@@ -100,13 +100,15 @@ describe('power', () => {
           amountSupplied: 0,
           amountSuppliedViaInput: 0,
           amountSuppliedViaProduction: 0,
+          amountSuppliedViaRaw: 0,
           amountRemaining: -0.2,
           isRaw: false,
           satisfied: false,
+          exportable: false,
         })
       })
 
-      it('should add the byproduct to the factory.parts array', () => {
+      it('should add the byproduct to the factory.parts array and be exportable', () => {
         calculateFactories([factory], gameData)
         expect(factory.parts.NuclearWaste).toEqual({
           amountRequired: 0,
@@ -115,10 +117,12 @@ describe('power', () => {
           amountRequiredPower: 0,
           amountSupplied: 10,
           amountSuppliedViaInput: 0,
+          amountSuppliedViaRaw: 0,
           amountSuppliedViaProduction: 10,
           amountRemaining: 10,
           isRaw: false,
           satisfied: true,
+          exportable: true,
         })
       })
 
@@ -127,28 +131,20 @@ describe('power', () => {
         expect(factory.powerProducers[0].buildingCount).toBe(1)
       })
 
-      it('should add the supplemental fuel to the factory.parts array and it be raw', () => {
+      it('should add the supplemental fuel to the factory.parts array and it be raw and not exportable', () => {
         expect(factory.parts.Water).toEqual({
           amountRequired: 240,
           amountRequiredProduction: 0,
           amountRequiredExports: 0,
           amountRequiredPower: 240,
           amountSupplied: 240,
-          amountSuppliedViaInput: 240,
+          amountSuppliedViaInput: 0,
+          amountSuppliedViaRaw: 240,
           amountSuppliedViaProduction: 0,
           amountRemaining: 0,
           isRaw: true,
           satisfied: true,
-        })
-      })
-
-      it('should create an exportable product for the waste', () => {
-        expect(factory.exports.NuclearWaste).toEqual({
-          productId: 'NuclearWaste',
-          surplus: 10,
-          demands: 0,
-          supply: 10,
-          displayOrder: 0,
+          exportable: false,
         })
       })
     })

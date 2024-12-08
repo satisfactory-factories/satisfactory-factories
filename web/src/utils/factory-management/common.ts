@@ -11,10 +11,12 @@ export const createNewPart = (factory: Factory, part: string) => {
       amountRequiredPower: 0,
       amountSupplied: 0,
       amountSuppliedViaInput: 0,
+      amountSuppliedViaRaw: 0,
       amountSuppliedViaProduction: 0,
       amountRemaining: 0,
       satisfied: true,
       isRaw: false,
+      exportable: false,
     }
   }
 }

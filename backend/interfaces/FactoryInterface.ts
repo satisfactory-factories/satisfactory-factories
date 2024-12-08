@@ -110,7 +110,6 @@ export interface Factory {
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
   totalPower: number;
-  exports: { [key: string]: FactoryExportItem };
   exportCalculator: { [key: string]: ExportCalculatorSettings };
   dependencies: FactoryDependency;
   rawResources: { [key: string]: WorldRawResource };

@@ -67,11 +67,6 @@ export const useAppStore = defineStore('app', () => {
     let needsCalculation = false
 
     factories.value.forEach(factory => {
-      // Patch for old data pre #116
-      if (!factory.exports) {
-        factory.exports = {}
-      }
-
       // Patch for #222
       if (factory.inSync === undefined) {
         factory.inSync = null
@@ -80,16 +75,30 @@ export const useAppStore = defineStore('app', () => {
         factory.syncState = {}
       }
 
-      // Patch for #244
+      // Patch for #244 and #180
       // Detect if the factory.parts[part].amountRequiredExports is missing and calculate it.
       Object.keys(factory.parts).forEach(part => {
+        // For #244
         if (factory.parts[part].amountRequiredExports === undefined) {
           factory.parts[part].amountRequiredExports = 0
           needsCalculation = true
         }
-        // Same for amountRequiredProduction
         if (factory.parts[part].amountRequiredProduction === undefined) {
           factory.parts[part].amountRequiredProduction = 0
+          needsCalculation = true
+        }
+
+        // For #180
+        if (factory.parts[part].amountRequiredPower === undefined) {
+          factory.parts[part].amountRequiredPower = 0
+          needsCalculation = true
+        }
+        if (factory.parts[part].amountSuppliedViaRaw === undefined) {
+          factory.parts[part].amountSuppliedViaRaw = 0
+          needsCalculation = true
+        }
+        if (factory.parts[part].exportable === undefined) {
+          factory.parts[part].exportable = true
           needsCalculation = true
         }
       })
@@ -129,9 +138,10 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    factories.value = newFactories
     // Trigger calculations
-    calculateFactories(factories.value, gameData)
+    calculateFactories(newFactories, gameData)
+
+    factories.value = newFactories
     // Will also call the watcher.
   }
 
