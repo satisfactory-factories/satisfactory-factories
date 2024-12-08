@@ -16,8 +16,8 @@
         <v-table>
           <thead>
             <tr>
-              <th class="text-body-1 font-weight-bold text-center">Name</th>
-              <th class="text-body-1 font-weight-bold">Description</th>
+              <th class="text-body-1 font-weight-bold text-center" scope="row">Name</th>
+              <th class="text-body-1 font-weight-bold" scope="row">Description</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +45,7 @@
   import { createSimple } from '@/utils/factory-setups/simple-plan'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { calculateFactories } from '@/utils/factory-management/factory'
 
   const appStore = useAppStore()
 
@@ -71,6 +72,7 @@
 
   const loadTemplate = (template: Template) => {
     appStore.setFactories(template.data)
+    // Run the calculations
     dialog.value = false
   }
 </script>
