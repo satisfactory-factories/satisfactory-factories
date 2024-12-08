@@ -146,7 +146,7 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
     })
     addProductToFactory(uraniumFac, {
       id: 'SulfuricAcid',
-      amount: 120,
+      amount: 160,
       recipe: 'SulfuricAcid',
     })
     addProductToFactory(uraniumFac, {

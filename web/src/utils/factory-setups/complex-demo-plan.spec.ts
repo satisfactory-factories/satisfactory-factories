@@ -11,6 +11,7 @@ let copperIngotsFac: Factory
 let copperBasicsFac: Factory
 let circuitBoardsFac: Factory
 let computersFac: Factory
+let uraniumFac: Factory
 
 // This test file in effect tests most of the functionality we expect from the data.
 describe('Complex Plan', () => {
@@ -22,6 +23,7 @@ describe('Complex Plan', () => {
     copperBasicsFac = findFacByName('Copper Basics', factories)
     circuitBoardsFac = findFacByName('Circuit Boards', factories)
     computersFac = findFacByName('Computers (end product)', factories)
+    uraniumFac = findFacByName('☢️ Uranium Power', factories)
   })
 
   it('should have factories', () => {
@@ -177,86 +179,139 @@ describe('Complex Plan', () => {
     })
   })
 
-  it('should have Copper Ingots factory configured correctly', () => {
-    expect(copperIngotsFac.products.length).toBe(1)
-    expect(copperIngotsFac.products[0].id).toBe('CopperIngot')
-    expect(copperIngotsFac.products[0].amount).toBe(640)
+  describe('Copper Ingots', () => {
+    it('should have Copper Ingots factory configured correctly', () => {
+      expect(copperIngotsFac.products.length).toBe(1)
+      expect(copperIngotsFac.products[0].id).toBe('CopperIngot')
+      expect(copperIngotsFac.products[0].amount).toBe(640)
 
-    // Inputs
-    expect(copperIngotsFac.inputs).toHaveLength(0) // Raw resources inputs
-    expect(copperIngotsFac.rawResources.OreCopper).toStrictEqual({
-      id: 'OreCopper',
-      name: 'Copper Ore',
-      amount: 640,
-    })
+      // Inputs
+      expect(copperIngotsFac.inputs).toHaveLength(0) // Raw resources inputs
+      expect(copperIngotsFac.rawResources.OreCopper).toStrictEqual({
+        id: 'OreCopper',
+        name: 'Copper Ore',
+        amount: 640,
+      })
 
-    // Dependencies
-    expect(copperIngotsFac.dependencies.metrics.CopperIngot).toStrictEqual({
-      part: 'CopperIngot',
-      supply: 640,
-      request: 320,
-      difference: 320,
-      isRequestSatisfied: true,
-    })
-  })
-  it('should have Copper Basics factory configured correctly', () => {
-    expect(copperBasicsFac.products.length).toBe(3)
-    expect(copperBasicsFac.products[0].id).toBe('Wire')
-    expect(copperBasicsFac.products[0].amount).toBe(400)
-    expect(copperBasicsFac.products[1].id).toBe('Cable')
-    expect(copperBasicsFac.products[1].amount).toBe(200)
-    expect(copperBasicsFac.products[2].id).toBe('CopperSheet')
-    expect(copperBasicsFac.products[2].amount).toBe(160)
-
-    // Inputs
-    expect(copperBasicsFac.inputs.length).toBe(1)
-    expect(copperBasicsFac.inputs[0].factoryId).toBe(copperIngotsFac.id)
-    expect(copperBasicsFac.inputs[0].outputPart).toBe('CopperIngot')
-    expect(copperBasicsFac.inputs[0].amount).toBe(320) // Deliberate shortage
-
-    // Dependencies
-    expect(copperBasicsFac.dependencies.metrics.Cable).toStrictEqual({
-      part: 'Cable',
-      request: 160,
-      supply: 200,
-      difference: 40,
-      isRequestSatisfied: true,
+      // Dependencies
+      expect(copperIngotsFac.dependencies.metrics.CopperIngot).toStrictEqual({
+        part: 'CopperIngot',
+        supply: 640,
+        request: 320,
+        difference: 320,
+        isRequestSatisfied: true,
+      })
     })
   })
-  it('should have Circuit Boards factory configured correctly', () => {
-    expect(circuitBoardsFac.products.length).toBe(1)
-    expect(circuitBoardsFac.products[0].id).toBe('CircuitBoard')
-    expect(circuitBoardsFac.products[0].amount).toBe(80)
 
-    expect(circuitBoardsFac.inputs.length).toBe(2)
-    expect(circuitBoardsFac.inputs[0].outputPart).toBe('CopperSheet')
-    expect(circuitBoardsFac.inputs[0].amount).toBe(160)
-    expect(circuitBoardsFac.inputs[1].outputPart).toBe('Plastic')
-    expect(circuitBoardsFac.inputs[1].amount).toBe(320)
+  describe('Copper Basics', () => {
+    it('should have Copper Basics factory configured correctly', () => {
+      expect(copperBasicsFac.products.length).toBe(3)
+      expect(copperBasicsFac.products[0].id).toBe('Wire')
+      expect(copperBasicsFac.products[0].amount).toBe(400)
+      expect(copperBasicsFac.products[1].id).toBe('Cable')
+      expect(copperBasicsFac.products[1].amount).toBe(200)
+      expect(copperBasicsFac.products[2].id).toBe('CopperSheet')
+      expect(copperBasicsFac.products[2].amount).toBe(160)
 
-    // Dependencies
-    expect(circuitBoardsFac.dependencies.metrics.CircuitBoard).toStrictEqual({
-      part: 'CircuitBoard',
-      request: 80,
-      supply: 80,
-      difference: 0,
-      isRequestSatisfied: true,
+      // Inputs
+      expect(copperBasicsFac.inputs.length).toBe(1)
+      expect(copperBasicsFac.inputs[0].factoryId).toBe(copperIngotsFac.id)
+      expect(copperBasicsFac.inputs[0].outputPart).toBe('CopperIngot')
+      expect(copperBasicsFac.inputs[0].amount).toBe(320) // Deliberate shortage
+
+      // Dependencies
+      expect(copperBasicsFac.dependencies.metrics.Cable).toStrictEqual({
+        part: 'Cable',
+        request: 160,
+        supply: 200,
+        difference: 40,
+        isRequestSatisfied: true,
+      })
     })
   })
-  it('should have Computers factory configured correctly', () => {
-    expect(computersFac.products.length).toBe(1)
-    expect(computersFac.products[0].id).toBe('Computer')
-    expect(computersFac.products[0].amount).toBe(20)
 
-    expect(computersFac.inputs.length).toBe(3)
-    expect(computersFac.inputs[0].outputPart).toBe('Plastic')
-    expect(computersFac.inputs[0].amount).toBe(320)
-    expect(computersFac.inputs[1].outputPart).toBe('Cable')
-    expect(computersFac.inputs[1].amount).toBe(160)
-    expect(computersFac.inputs[2].outputPart).toBe('CircuitBoard')
-    expect(computersFac.inputs[2].amount).toBe(80)
+  describe('Circuit Boards', () => {
+    it('should have Circuit Boards factory configured correctly', () => {
+      expect(circuitBoardsFac.products.length).toBe(1)
+      expect(circuitBoardsFac.products[0].id).toBe('CircuitBoard')
+      expect(circuitBoardsFac.products[0].amount).toBe(80)
 
-    // Dependencies
-    expect(computersFac.dependencies.metrics).toStrictEqual({}) // No dependants
+      expect(circuitBoardsFac.inputs.length).toBe(2)
+      expect(circuitBoardsFac.inputs[0].outputPart).toBe('CopperSheet')
+      expect(circuitBoardsFac.inputs[0].amount).toBe(160)
+      expect(circuitBoardsFac.inputs[1].outputPart).toBe('Plastic')
+      expect(circuitBoardsFac.inputs[1].amount).toBe(320)
+
+      // Dependencies
+      expect(circuitBoardsFac.dependencies.metrics.CircuitBoard).toStrictEqual({
+        part: 'CircuitBoard',
+        request: 80,
+        supply: 80,
+        difference: 0,
+        isRequestSatisfied: true,
+      })
+    })
+  })
+
+  describe('Computers', () => {
+    it('should have Computers factory configured correctly', () => {
+      expect(computersFac.products.length).toBe(1)
+      expect(computersFac.products[0].id).toBe('Computer')
+      expect(computersFac.products[0].amount).toBe(20)
+
+      expect(computersFac.inputs.length).toBe(3)
+      expect(computersFac.inputs[0].outputPart).toBe('Plastic')
+      expect(computersFac.inputs[0].amount).toBe(320)
+      expect(computersFac.inputs[1].outputPart).toBe('Cable')
+      expect(computersFac.inputs[1].amount).toBe(160)
+      expect(computersFac.inputs[2].outputPart).toBe('CircuitBoard')
+      expect(computersFac.inputs[2].amount).toBe(80)
+
+      // Dependencies
+      expect(computersFac.dependencies.metrics).toStrictEqual({}) // No dependants
+    })
+  })
+
+  describe('Uranium Power', () => {
+    it('should have Uranium Power factory configured correctly', () => {
+      expect(uraniumFac.products.length).toBe(5)
+      expect(uraniumFac.products[0].id).toBe('Cement')
+      expect(uraniumFac.products[0].amount).toBe(60)
+      expect(uraniumFac.products[1].id).toBe('SulfuricAcid')
+      expect(uraniumFac.products[1].amount).toBe(120)
+      expect(uraniumFac.products[2].id).toBe('ElectromagneticControlRod')
+      expect(uraniumFac.products[2].amount).toBe(10)
+      expect(uraniumFac.products[3].id).toBe('NuclearFuelRod')
+      expect(uraniumFac.products[3].amount).toBe(2)
+      expect(uraniumFac.products[4].id).toBe('UraniumCell')
+      expect(uraniumFac.products[4].amount).toBe(100)
+
+      expect(uraniumFac.powerProducers.length).toBe(1)
+      expect(uraniumFac.powerProducers[0]).toStrictEqual({
+        building: 'generatornuclear',
+        buildingCount: 10,
+        buildingAmount: 10,
+        powerProduced: 25000,
+        powerAmount: 25000,
+        ingredientAmount: 2,
+        recipe: 'GeneratorNuclear_NuclearFuelRod',
+        displayOrder: 0,
+        byproduct: {
+          part: 'NuclearWaste',
+          amount: 100,
+        },
+        updated: 'power',
+        ingredients: [{
+          part: 'NuclearFuelRod',
+          perMin: 2,
+          mwPerItem: 12500,
+        }, {
+          part: 'Water',
+          perMin: 2400,
+          supplementalRatio: 0.096,
+        }],
+      })
+    })
   })
 })
