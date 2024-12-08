@@ -15,8 +15,10 @@
         </p>
         <v-table>
           <thead>
-            <th class="text-body-1 font-weight-bold">Name</th>
-            <th class="text-body-1 font-weight-bold">Description</th>
+            <tr>
+              <th class="text-body-1 font-weight-bold text-center">Name</th>
+              <th class="text-body-1 font-weight-bold">Description</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="template in templates" :key="template.name">
