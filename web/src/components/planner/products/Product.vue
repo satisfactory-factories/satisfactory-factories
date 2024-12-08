@@ -148,38 +148,36 @@
             <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
           </span>
         </v-chip>
-        <span>
-          <v-chip
-            class="sf-chip orange"
-            variant="tonal"
-          >
-            <game-asset :subject="product.buildingRequirements.name" type="building" />
-            <span class="ml-2">
-              <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>:
-            </span>
-            <v-text-field
-              v-model.number="product.buildingRequirements.amount"
-              class="inline-inputs"
-              flat
-              hide-details
-              hide-spin-buttons
-              min="0"
-              :product="product.id"
-              type="number"
-              width="60px"
-              @input="increaseProductQtyByBuilding(product)"
-            />
-          </v-chip>
-          <v-chip
-            class="sf-chip yellow"
-            variant="tonal"
-          >
-            <i class="fas fa-bolt" />
-            <span class="ml-2">
-              {{ formatNumber(product.buildingRequirements.powerConsumed ?? 0) }} MW
-            </span>
-          </v-chip>
-        </span>
+        <v-chip
+          class="sf-chip orange"
+          variant="tonal"
+        >
+          <game-asset :subject="product.buildingRequirements.name" type="building" />
+          <span class="ml-2">
+            <b>{{ getBuildingDisplayName(product.buildingRequirements.name) }}</b>:
+          </span>
+          <v-text-field
+            v-model.number="product.buildingRequirements.amount"
+            class="inline-inputs"
+            flat
+            hide-details
+            hide-spin-buttons
+            min="0"
+            :product="product.id"
+            type="number"
+            width="60px"
+            @input="increaseProductQtyByBuilding(product)"
+          />
+        </v-chip>
+        <v-chip
+          class="sf-chip yellow"
+          variant="tonal"
+        >
+          <i class="fas fa-bolt" />
+          <span class="ml-2">
+            {{ formatNumber(product.buildingRequirements.powerConsumed ?? 0) }} MW
+          </span>
+        </v-chip>
       </div>
     </div>
   </div>
