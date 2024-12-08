@@ -14,7 +14,7 @@ let computersFac: Factory
 let uraniumFac: Factory
 
 // This test file in effect tests most of the functionality we expect from the data.
-describe('Complex Plan', () => {
+describe('Complex Demo Plan', () => {
   beforeEach(() => {
     factories = complexDemoPlan().getFactories()
     calculateFactories(factories, gameData)
@@ -30,7 +30,7 @@ describe('Complex Plan', () => {
     expect(factories.length).toBeGreaterThan(0)
   })
   it('should have the expected number of factories', () => {
-    expect(factories.length).toBe(5)
+    expect(factories.length).toBe(6)
   })
   describe('Oil Processing', () => {
     it('should have Oil Processing factory configured correctly', () => {
@@ -39,7 +39,7 @@ describe('Complex Plan', () => {
       expect(oilFac.products[0].amount).toBe(640)
       expect(oilFac.products[1].id).toBe('LiquidFuel')
       expect(oilFac.products[1].amount).toBe(40)
-      expect(oilFac.powerProducers[0]).toStrictEqual({
+      expect(oilFac.powerProducers[0]).toEqual({
         building: 'generatorfuel',
         buildingCount: 2,
         buildingAmount: 2,
@@ -76,19 +76,21 @@ describe('Complex Plan', () => {
       })
     })
     it('should have fluid parts calculated correctly', () => {
-      expect(oilFac.parts.LiquidOil).toStrictEqual({
+      expect(oilFac.parts.LiquidOil).toEqual({
         amountRequired: 960,
         amountRequiredExports: 0,
         amountRequiredProduction: 960,
         amountRequiredPower: 0,
         amountSupplied: 960,
-        amountSuppliedViaInput: 960,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaRaw: 960,
         amountSuppliedViaProduction: 0,
         amountRemaining: 0,
         satisfied: true,
         isRaw: true,
+        exportable: false,
       })
-      expect(oilFac.parts.LiquidFuel).toStrictEqual({
+      expect(oilFac.parts.LiquidFuel).toEqual({
         amountRequired: 40,
         amountRequiredExports: 0,
         amountRequiredProduction: 0,
@@ -96,11 +98,13 @@ describe('Complex Plan', () => {
         amountSupplied: 40,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 40,
+        amountSuppliedViaRaw: 0,
         amountRemaining: 0,
         satisfied: true,
         isRaw: false,
+        exportable: true,
       })
-      expect(oilFac.parts.HeavyOilResidue).toStrictEqual({
+      expect(oilFac.parts.HeavyOilResidue).toEqual({
         amountRequired: 60,
         amountRequiredExports: 0,
         amountRequiredProduction: 60,
@@ -108,13 +112,15 @@ describe('Complex Plan', () => {
         amountSupplied: 320,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 320,
+        amountSuppliedViaRaw: 0,
         amountRemaining: 260,
         satisfied: true,
         isRaw: false,
+        exportable: true,
       })
     })
     it('should have solid parts calculated correctly', () => {
-      expect(oilFac.parts.Plastic).toStrictEqual({
+      expect(oilFac.parts.Plastic).toEqual({
         amountRequired: 640,
         amountRequiredExports: 640,
         amountRequiredProduction: 0,
@@ -122,9 +128,11 @@ describe('Complex Plan', () => {
         amountSupplied: 640,
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 640,
+        amountSuppliedViaRaw: 0,
         amountRemaining: 0,
         satisfied: true,
         isRaw: false,
+        exportable: true,
       })
     })
     it('should have satisfaction calculated correctly', () => {
@@ -183,22 +191,22 @@ describe('Complex Plan', () => {
     it('should have Copper Ingots factory configured correctly', () => {
       expect(copperIngotsFac.products.length).toBe(1)
       expect(copperIngotsFac.products[0].id).toBe('CopperIngot')
-      expect(copperIngotsFac.products[0].amount).toBe(640)
+      expect(copperIngotsFac.products[0].amount).toBe(320)
 
       // Inputs
       expect(copperIngotsFac.inputs).toHaveLength(0) // Raw resources inputs
       expect(copperIngotsFac.rawResources.OreCopper).toStrictEqual({
         id: 'OreCopper',
         name: 'Copper Ore',
-        amount: 640,
+        amount: 320,
       })
 
       // Dependencies
       expect(copperIngotsFac.dependencies.metrics.CopperIngot).toStrictEqual({
         part: 'CopperIngot',
-        supply: 640,
+        supply: 320,
         request: 320,
-        difference: 320,
+        difference: 0,
         isRequestSatisfied: true,
       })
     })
@@ -279,7 +287,7 @@ describe('Complex Plan', () => {
       expect(uraniumFac.products[0].id).toBe('Cement')
       expect(uraniumFac.products[0].amount).toBe(60)
       expect(uraniumFac.products[1].id).toBe('SulfuricAcid')
-      expect(uraniumFac.products[1].amount).toBe(120)
+      expect(uraniumFac.products[1].amount).toBe(160)
       expect(uraniumFac.products[2].id).toBe('ElectromagneticControlRod')
       expect(uraniumFac.products[2].amount).toBe(10)
       expect(uraniumFac.products[3].id).toBe('NuclearFuelRod')
@@ -288,7 +296,7 @@ describe('Complex Plan', () => {
       expect(uraniumFac.products[4].amount).toBe(100)
 
       expect(uraniumFac.powerProducers.length).toBe(1)
-      expect(uraniumFac.powerProducers[0]).toStrictEqual({
+      expect(uraniumFac.powerProducers[0]).toEqual({
         building: 'generatornuclear',
         buildingCount: 10,
         buildingAmount: 10,
