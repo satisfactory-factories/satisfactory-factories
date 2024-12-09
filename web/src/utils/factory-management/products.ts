@@ -119,32 +119,6 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface): 
   })
 }
 
-// Loop through each product, and check if the parts produced by a recipe match a product requirement. If so, we mark that as an internal product and recalculate the remainder.
-export const calculateInternalProducts = (factory: Factory, gameData: DataInterface) => {
-  factory.internalProducts = {}
-
-  factory.products.forEach(product => {
-    const recipe = getRecipe(product.recipe, gameData)
-    if (!recipe) {
-      console.warn(`calculateFactoryInternalSupply: Recipe with ID ${product.recipe} not found. It could be the user has not yet selected one.`)
-      return
-    }
-
-    // Calculate the ingredients needed to make this product.
-    recipe.ingredients.forEach(ingredient => {
-      // If the part is a requirement, mark it as an internal product.
-      const foundProduct = factory.products.find(p => p.id === ingredient.part)
-
-      if (foundProduct) {
-        factory.internalProducts[ingredient.part] = {
-          id: foundProduct.id,
-          amount: foundProduct.amount,
-        }
-      }
-    })
-  })
-}
-
 export const shouldShowTrim = (product: FactoryItem, factory: Factory) => {
   // Calculate whether the product should be trimmed or not by checking:
   // 1. Part requirements of the item are more than internal demand

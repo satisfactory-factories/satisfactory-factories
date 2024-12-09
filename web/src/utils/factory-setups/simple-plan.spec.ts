@@ -29,9 +29,6 @@ describe('Simple factory plan', () => {
   it('should have no byproducts', () => {
     expect(factory.products[0].byProducts).toHaveLength(0)
   })
-  it('should have no internal products', () => {
-    expect(factory.internalProducts).toStrictEqual({})
-  })
   it('should have no inputs', () => {
     expect(factory.inputs).toHaveLength(0)
   })

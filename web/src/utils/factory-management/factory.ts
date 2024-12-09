@@ -1,5 +1,5 @@
 import { BuildingRequirement, Factory, FactoryDependency, FactoryPower } from '@/interfaces/planner/FactoryInterface'
-import { calculateInternalProducts, calculateProducts } from '@/utils/factory-management/products'
+import { calculateProducts } from '@/utils/factory-management/products'
 import { calculateFactoryBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateParts } from '@/utils/factory-management/parts'
 import {
@@ -47,7 +47,6 @@ export const newFactory = (name = 'A new factory'): Factory => {
     name,
     products: [],
     byProducts: [],
-    internalProducts: {},
     powerProducers: [],
     inputs: [],
     previousInputs: [],
@@ -87,9 +86,6 @@ export const calculateFactory = (
 
   // Calculate if there have been any changes the player needs to enact.
   calculateSyncState(factory)
-
-  // Calculate if we have any internal products that can be used to satisfy requirements.
-  calculateInternalProducts(factory, gameData)
 
   // Calculate the generation of power for the factory
   calculatePowerProducers(factory, gameData)

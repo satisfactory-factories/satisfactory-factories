@@ -105,7 +105,6 @@ export interface Factory {
   inputs: FactoryInput[];
   products: FactoryItem[];
   byProducts: ByProductItem[];
-  internalProducts: { [key: string]: FactoryInternalProduct };
   parts: { [key: string]: PartMetrics };
   buildingRequirements: { [key: string]: BuildingRequirement };
   requirementsSatisfied: boolean;
