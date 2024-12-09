@@ -111,15 +111,9 @@ export const calculateImportCandidates = (factory: Factory, possibleImports: Fac
     uniqueCandidateFactories.add(Number(facId))
   })
 
-  // Finally, return the factories as a unique lis
+  // Finally, return the factories as a unique list
   return Array.from(uniqueCandidateFactories).map(facId => {
-    const foundFac = findFac(facId, possibleImports)
-
-    if (!foundFac) {
-      throw new Error(`calculateImportCandidates: Could not find factory with ID ${facId}!`)
-    }
-
-    return foundFac
+    return findFac(facId, possibleImports)
   })
 }
 
@@ -135,14 +129,9 @@ export const importFactorySelections = (
 
   // Inject the already selected factory otherwise it'll break the selector.
   if (factory.inputs[inputIndex]?.factoryId) {
-    const foundFac = findFac(factory.inputs[inputIndex].factoryId, allFactories)
-
-    if (!foundFac) {
-      throw new Error(
-        `importFactorySelections: Could not find factory with ID ${factory.inputs[inputIndex].factoryId}!`
-      )
-    }
-    remainingFactories.set(factory.inputs[inputIndex].factoryId, foundFac)
+    remainingFactories.set(
+      factory.inputs[inputIndex].factoryId, findFac(factory.inputs[inputIndex].factoryId, allFactories)
+    )
   }
 
   // Convert Map values to an array and map them to the required format

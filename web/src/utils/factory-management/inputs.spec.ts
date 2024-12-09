@@ -1,9 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
+import * as factoryUtils from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import {
-  addInputToFactory,
+  addInputToFactory, calculateAbleToImport,
   calculateImportCandidates,
   calculatePossibleImports, importFactorySelections,
   importPartSelections,
@@ -150,6 +151,11 @@ describe('inputs', () => {
         calculateFactories(factories, gameData)
         screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
       })
+      it('should return an empty array if there are no possible imports', () => {
+        const result = calculateImportCandidates(ironIngotFac, [])
+        expect(result).toEqual([])
+      })
+
       it('should not select the same factory after it has been selected', () => {
         // We should only see iron rods 1 because 2 is already selected
         const result = calculateImportCandidates(screwsFac, screwsPossibleImports)
@@ -263,6 +269,60 @@ describe('inputs', () => {
           title: ironRodsFac.name,
           value: ironRodsFac.id,
         })
+      })
+      it('should throw error if factory cannot be found', () => {
+        // Set up an input for screws fac to point to iron Rods fac.
+        addInputToFactory(screwsFac, {
+          factoryId: ironRodsFac.id,
+          outputPart: 'IronRod',
+          amount: 500,
+        })
+
+        const findFacSpy = vi.spyOn(factoryUtils, 'findFac').mockImplementation(() => {
+          throw new Error('Could not find factory')
+        })
+
+        expect(() =>
+          importFactorySelections(
+            0, // This simulates the user opening or viewing the input selection for the first input
+            [ironRodsFac],
+            screwsFac,
+            [ironRodsFac, screwsFac]
+          )
+        ).toThrowError()
+
+        // Clean up the spy
+        findFacSpy.mockRestore()
+      })
+    })
+    describe('calculateAbleToImport', () => {
+      let factory: Factory
+      beforeEach(() => {
+        factory = newFactory('foo')
+        addProductToFactory(factory, {
+          id: 'IronIngot',
+          amount: 1000,
+          recipe: 'IngotIron',
+        })
+        factory.usingRawResourcesOnly = false
+      })
+      it('should return noProducts if the factory has no products', () => {
+        factory.products = []
+        const result = calculateAbleToImport(factory, [])
+        expect(result).toBe('noProducts')
+      })
+      it('should return rawOnly if the factory is only using raw resources', () => {
+        factory.usingRawResourcesOnly = true
+        const result = calculateAbleToImport(factory, [])
+        expect(result).toBe('rawOnly')
+      })
+      it('should return noImportFacs if there are no import candidates', () => {
+        const result = calculateAbleToImport(factory, [])
+        expect(result).toBe('noImportFacs')
+      })
+      it('should return true if there are import candidates', () => {
+        const result = calculateAbleToImport(factory, [ironIngotFac])
+        expect(result).toBe(true)
       })
     })
   })
