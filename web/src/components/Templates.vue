@@ -70,7 +70,7 @@
   ]
 
   const loadTemplate = (template: Template) => {
-    appStore.setFactories(template.data, false)
+    appStore.setFactories(template.data, true)
     dialog.value = false
   }
 </script>

@@ -115,22 +115,32 @@ export const calculateFactory = (
   return factory
 }
 
-export const calculateFactories = (factories: Factory[], gameData: DataInterface, dependencyChecks = true) => {
-  if (dependencyChecks) {
+export const calculateFactories = (factories: Factory[], gameData: DataInterface, loadMode = false): void => {
+  // If we're loading via template, we need to run calculations FIRST then dependencies then calculations again.
+  // The reason why we have to do this is we generate the factories out of products and inputs configurations, which then need to be calculated first before we can calculate the dependencies.
+  // Otherwise, the part data that the invalidInputs check depends upon won't be present, and it will nuke all the import links.
+  if (loadMode) {
+    console.log('factory-management: calculateFactories: Preloading calculations')
+    factories.forEach(factory => {
+      calculateFactory(factory, factories, gameData)
+    })
+    calculateDependencies(factories)
+    scanForInvalidInputs(factories)
+    factories.forEach(factory => {
+      calculateFactory(factory, factories, gameData)
+    })
+  } else {
+    console.log('factory-management: calculateFactories')
+
     // Construct the dependencies between factories.
     calculateDependencies(factories)
 
     // Check if we have any invalid inputs.
     scanForInvalidInputs(factories)
-  } else {
-    console.log('Skipping dependency checks.')
+    factories.forEach(factory => {
+      calculateFactory(factory, factories, gameData)
+    })
   }
-
-  factories.forEach(factory => {
-    calculateFactory(factory, factories, gameData)
-  })
-
-  return factories
 }
 
 export const countActiveTasks = (factory: Factory) => {
