@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, provide, reactive, ref, watch } from 'vue'
+  import { provide, reactive, ref, watch } from 'vue'
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
   import {
@@ -87,7 +87,6 @@
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { useDisplay } from 'vuetify'
   import { useGameDataStore } from '@/stores/game-data-store'
-  import { getExportableFactories } from '@/utils/factory-management/exports'
 
   const { mdAndDown } = useDisplay()
   const { getGameData } = useGameDataStore()
