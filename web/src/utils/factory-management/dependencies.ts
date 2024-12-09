@@ -34,6 +34,7 @@ export const addDependency = (
 
 // Scans for invalid dependency requests and removes the request and the input from the erroneous factory.
 export const scanForInvalidInputs = (factories: Factory[]): void => {
+  console.log('dependencies: Scanning for invalid inputs')
   factories.forEach(factory => {
     // If there's no requests, nothing to do.
     if (!factory.dependencies?.requests || Object.keys(factory.dependencies.requests).length === 0) {
@@ -53,11 +54,11 @@ export const scanForInvalidInputs = (factories: Factory[]): void => {
 
       requests.forEach(request => {
       // Check if the requested part exists within the factory
-        const foundPart = factory.products.find(prod => prod.id === request.part)
+        const foundPart = factory.parts[request.part]
 
         // If the product does not exist, remove the dependency and the input.
         if (!foundPart) {
-          console.warn(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
+          console.error(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
 
           // Filter out the dependency request(s) for the part from the erroneous factory.
           factory.dependencies.requests[requestedFactoryId] = factory.dependencies.requests[requestedFactoryId].filter(req => req.part !== request.part)
@@ -101,7 +102,7 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
-  console.log('calculateDependencies', factories)
+  console.log('dependencies: Calculating Dependencies', factories)
   factories.forEach(factory => {
     factory.dependencies.requests = {}
 
