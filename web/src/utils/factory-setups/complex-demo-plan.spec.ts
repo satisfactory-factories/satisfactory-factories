@@ -12,18 +12,20 @@ let copperBasicsFac: Factory
 let circuitBoardsFac: Factory
 let computersFac: Factory
 let uraniumFac: Factory
+let plutoniumFac: Factory
 
 // This test file in effect tests most of the functionality we expect from the data.
 describe('Complex Demo Plan', () => {
   beforeEach(() => {
     factories = complexDemoPlan().getFactories()
-    calculateFactories(factories, gameData)
+    calculateFactories(factories, gameData, true)
     oilFac = findFacByName('Oil Processing', factories)
     copperIngotsFac = findFacByName('Copper Ingots', factories)
     copperBasicsFac = findFacByName('Copper Basics', factories)
     circuitBoardsFac = findFacByName('Circuit Boards', factories)
     computersFac = findFacByName('Computers (end product)', factories)
     uraniumFac = findFacByName('☢️ Uranium Power', factories)
+    plutoniumFac = findFacByName('☢️ Plutonium Processing', factories)
   })
 
   it('should have factories', () => {
@@ -320,6 +322,309 @@ describe('Complex Demo Plan', () => {
           supplementalRatio: 0.096,
         }],
       })
+    })
+
+    it('should have part data calculated correctly', () => {
+      expect(Object.keys(uraniumFac.parts)).toHaveLength(13)
+      expect(uraniumFac.parts.Cement).toEqual({
+        amountRequired: 60,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 60,
+        amountRequiredPower: 0,
+        amountSupplied: 60,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 60,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(uraniumFac.parts.Stone).toEqual({
+        amountRequired: 180,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 180,
+        amountRequiredPower: 0,
+        amountSupplied: 180,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 180,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: true,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.SulfuricAcid).toEqual({
+        amountRequired: 160,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 160,
+        amountRequiredPower: 0,
+        amountSupplied: 200,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 200,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 40,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(uraniumFac.parts.Sulfur).toEqual({
+        amountRequired: 160,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 160,
+        amountRequiredPower: 0,
+        amountSupplied: 160,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 160,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: true,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.Water).toEqual({
+        amountRequired: 2560,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 160,
+        amountRequiredPower: 2400,
+        amountSupplied: 2560,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 2560,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: true,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.ElectromagneticControlRod).toEqual({
+        amountRequired: 10,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 10,
+        amountRequiredPower: 0,
+        amountSupplied: 10,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 10,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(uraniumFac.parts.Stator).toEqual({
+        amountRequired: 15,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 15,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: -15,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.CircuitBoardHighSpeed).toEqual({
+        amountRequired: 10,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 10,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: -10,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.NuclearFuelRod).toEqual({
+        amountRequired: 2,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 0,
+        amountRequiredPower: 2,
+        amountSupplied: 2,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 2,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(uraniumFac.parts.UraniumCell).toEqual({
+        amountRequired: 100,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 100,
+        amountRequiredPower: 0,
+        amountSupplied: 100,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 100,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(uraniumFac.parts.SteelPlateReinforced).toEqual({
+        amountRequired: 6,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 6,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: -6,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.OreUranium).toEqual({
+        amountRequired: 200,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 200,
+        amountRequiredPower: 0,
+        amountSupplied: 200,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 200,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: true,
+        exportable: false,
+      })
+      expect(uraniumFac.parts.NuclearWaste).toEqual({
+        amountRequired: 100,
+        amountRequiredExports: 100,
+        amountRequiredProduction: 0,
+        amountRequiredPower: 0,
+        amountSupplied: 100,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 100,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+    })
+
+    it('should have dependency metrics calculated correctly', () => {
+      expect(uraniumFac.dependencies.metrics.NuclearWaste).toEqual({
+        part: 'NuclearWaste',
+        request: 100,
+        supply: 100,
+        difference: 0,
+        isRequestSatisfied: true,
+      })
+    })
+  })
+
+  describe('Plutonium Processing', () => {
+    it('should have Plutonium Processing factory configured correctly', () => {
+      expect(plutoniumFac.products.length).toBe(1)
+      expect(plutoniumFac.products[0].id).toBe('NonFissibleUranium')
+      expect(plutoniumFac.products[0].amount).toBe(33.333)
+      expect(plutoniumFac.inputs.length).toBe(1)
+      expect(plutoniumFac.inputs[0].outputPart).toBe('NuclearWaste')
+      expect(plutoniumFac.inputs[0].amount).toBe(25)
+    })
+
+    it('should have correct part metrics', () => {
+      expect(plutoniumFac.parts.NonFissibleUranium).toEqual({
+        amountRequired: 0,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 0,
+        amountRequiredPower: 0,
+        amountSupplied: 33.333,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 33.333,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 33.333,
+        satisfied: true,
+        isRaw: false,
+        exportable: true,
+      })
+      expect(plutoniumFac.parts.NuclearWaste).toEqual({
+        amountRequired: 25,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 25,
+        amountRequiredPower: 0,
+        amountSupplied: 100,
+        amountSuppliedViaInput: 100,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 75,
+        satisfied: true,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(plutoniumFac.parts.Silica).toEqual({
+        amountRequired: 16.667,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 16.667,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 0,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(plutoniumFac.parts.NitricAcid).toEqual({
+        amountRequired: 10,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 10,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaRaw: 0,
+        amountSuppliedViaProduction: 0,
+        amountRemaining: -10,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(plutoniumFac.parts.SulfuricAcid).toEqual({
+        amountRequired: 10,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 10,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaRaw: 0,
+        amountSuppliedViaProduction: 0,
+        amountRemaining: -10,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+      expect(plutoniumFac.parts.Water).toEqual({
+        amountRequired: 0,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 0,
+        amountRequiredPower: 0,
+        amountSupplied: 9.999899999999998, // This really aught to be rounded
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaRaw: 0,
+        amountSuppliedViaProduction: 9.999899999999998,
+        amountRemaining: 9.999899999999998,
+        satisfied: true,
+        isRaw: true,
+        exportable: true,
+      })
+    })
+    it('should show trim on nuclear waste input', () => {
+
+    })
+    it('should not show trim on non-fissile uranium product', () => {
+
+    })
+    it('should still show Import for the Sulfuric Acid from Uranium Power', () => {
+
     })
   })
 })
