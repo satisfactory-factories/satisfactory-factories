@@ -4,7 +4,7 @@ import { calculateFactories, calculateFactory, newFactory } from '@/utils/factor
 import {
   addProductToFactory,
   calculateByProducts,
-  calculateProducts,
+  calculateProducts, shouldShowInternal,
   shouldShowNotInDemand,
   trimProduct,
 } from '@/utils/factory-management/products'
@@ -318,6 +318,35 @@ describe('products', () => {
       })
       mockFactory.parts = {}
       expect(trimProduct(mockFactory.products[0], mockFactory)).toBe(undefined)
+    })
+  })
+
+  describe('shouldShowInternal', () => {
+    it('should show the internal chip when the product is used internally', () => {
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+      addProductToFactory(mockFactory, {
+        id: 'IronPlate',
+        amount: 100,
+        recipe: 'IronPlate',
+      })
+      calculateFactories([mockFactory], gameData)
+
+      expect(shouldShowInternal(mockFactory.products[0], mockFactory)).toBe(true)
+    })
+
+    it('should not show internal chip when product is not used internally', () => {
+      addProductToFactory(mockFactory, {
+        id: 'IronIngot',
+        amount: 100,
+        recipe: 'IngotIron',
+      })
+      calculateFactories([mockFactory], gameData)
+
+      expect(shouldShowInternal(mockFactory.products[0], mockFactory)).toBe(false)
     })
   })
 

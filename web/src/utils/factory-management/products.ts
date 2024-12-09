@@ -186,6 +186,13 @@ export const trimProduct = (product: FactoryItem, factory: Factory) => {
   product.amount = partData.amountRequired
 }
 
+export const shouldShowInternal = (product: FactoryItem, factory: Factory) => {
+  if (!factory.parts[product.id]) {
+    return false
+  }
+  return factory.parts[product.id].amountRequiredProduction > 0 || factory.parts[product.id].amountRequiredPower > 0
+}
+
 export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) => {
   // Calculate whether the product is in demand at all
   if (!product.id) {

@@ -104,7 +104,7 @@
           variant="outlined"
           @click="deleteProduct(productIndex, factory)"
         />
-        <v-chip v-if="factory.internalProducts[product.id]" class="ml-2 sf-chip small green">
+        <v-chip v-if="shouldShowInternal(product, factory)" class="ml-2 sf-chip small green">
           Internal
         </v-chip>
         <v-chip v-if="shouldShowNotInDemand(product, factory)" class="ml-2 sf-chip small red">
@@ -185,6 +185,7 @@
 
 <script setup lang="ts">
   import {
+    shouldShowInternal,
     shouldShowNotInDemand,
     shouldShowTrim,
     trimProduct,
