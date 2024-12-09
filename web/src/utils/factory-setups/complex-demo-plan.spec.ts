@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
-import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
+import { getRequestsForFactoryByPart } from '@/utils/factory-management/exports'
 import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
 
 let factories: Factory[]
@@ -147,7 +147,7 @@ describe('Complex Demo Plan', () => {
       expect(oilFac.dependencies.metrics.Plastic.request).toBe(640) // Comes from 2 requests
     })
     it('should have the correct dependencies and metrics', () => {
-      const requests = getRequestsForFactoryByProduct(oilFac, 'Plastic')
+      const requests = getRequestsForFactoryByPart(oilFac, 'Plastic')
       const expectedFactoryIds = [computersFac.id, circuitBoardsFac.id]
       let found = 0
       let productAmount = 0
