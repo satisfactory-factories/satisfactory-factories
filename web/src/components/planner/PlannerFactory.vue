@@ -15,10 +15,10 @@
             <!-- chips bar -->
             <div class="d-flex align-center">
               <!-- tasks chip -->
-              <div v-if="countIncompleteTasks(factory)" class="mr-2">
+              <div v-if="countActiveTasks(factory)" class="mr-2">
                 <v-chip class="sf-chip small yellow no-margin" @click="navigateToFactory(factory.id, `${factory.id}-tasks`)">
                   <i class="fas fa-tasks" />
-                  <span class="ml-2">{{ countIncompleteTasks(factory) }} tasks</span>
+                  <span class="ml-2">Tasks: {{ countActiveTasks(factory) }}</span>
                 </v-chip>
               </div>
               <!-- notes chip -->
@@ -286,7 +286,7 @@
   import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
-  import { countIncompleteTasks } from '@/utils/factory-management/factory'
+  import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
 

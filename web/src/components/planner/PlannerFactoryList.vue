@@ -8,7 +8,7 @@
           @click="navigateToFactory(element.id)"
         >
           <v-row class="d-flex flex-nowrap ma-0">
-            <v-spacer class="text-body-1 align-content-center pa-2">
+            <v-spacer class="d-flex align-center text-body-1 pa-2">
               <i class="fas fa-bars text-grey-darken-1 mr-2" />
               <i class="fas fa-industry mr-2" />
               <span>{{ truncateFactoryName(element.name) }}</span>
@@ -16,25 +16,25 @@
             <v-tooltip right>
               <template #activator="{ props }">
                 <v-col
-                  v-if="countIncompleteTasks(element as Factory)"
-                  class="text-body-1 align-content-center text-center py-0 px-1 bg-orange-darken-2"
+                  v-if="countActiveTasks(element as Factory)"
+                  class="context-icon align-content-center text-center py-0 px-1"
                   cols="auto"
                   v-bind="props"
                   @click="navigateToFactory(element.id, `${element.id}-tasks`)"
                   @click.stop
                 >
                   <i class="d-inline fas fa-tasks mr-1" />
-                  <span>{{ countIncompleteTasks(element as Factory) }}</span>
+                  <span>{{ countActiveTasks(element as Factory) }}</span>
                 </v-col>
               </template>
-              <span>{{ countIncompleteTasks(element as Factory) }} tasks</span>
+              <span>Tasks: {{ countActiveTasks(element as Factory) }}</span>
             </v-tooltip>
             <v-tooltip right>
               <template #activator="{ props }">
                 <v-col
                   v-if="element.notes"
-                  class="text-body-1 align-content-center text-center py-0 px-1 bg-orange-darken-2"
-                  cols="1"
+                  class="context-icon align-content-center text-center py-0 px-1"
+                  cols="auto"
                   v-bind="props"
                   @click="navigateToFactory(element.id, `${element.id}-notes`)"
                   @click.stop
@@ -47,7 +47,7 @@
             <v-tooltip right>
               <template #activator="{ props }">
                 <v-col
-                  class="pa-0 align-content-center text-center"
+                  class="pa-0 ml-2 align-content-center text-center"
                   :class="syncStateClass(element)"
                   cols="1"
                   v-bind="props"
@@ -94,7 +94,7 @@
 <script setup lang="ts">
   import { defineEmits, defineProps, inject, ref, watch } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-  import { countIncompleteTasks } from '@/utils/factory-management/factory'
+  import { countActiveTasks } from '@/utils/factory-management/factory'
   import draggable from 'vuedraggable'
 
   const navigateToFactory = inject('navigateToFactory') as (id: number, subsection?: string) => void
@@ -149,6 +149,14 @@
     .header {
       border-bottom: 0 !important;
     }
+  }
+}
+
+.context-icon {
+  color: #757575;
+  transition: color 0.3s;
+  &:hover {
+    color: white;
   }
 }
 </style>
