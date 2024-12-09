@@ -3,8 +3,9 @@ import { calculateProducts } from '@/utils/factory-management/products'
 import { calculateFactoryBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateParts } from '@/utils/factory-management/parts'
 import {
-  calculateDependencyMetrics, calculateDependencyMetricsSupply,
-  constructDependencies,
+  calculateDependencies,
+  calculateDependencyMetrics,
+  calculateDependencyMetricsSupply,
   scanForInvalidInputs,
 } from '@/utils/factory-management/dependencies'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
@@ -41,7 +42,7 @@ export const findFacByName = (name: string, factories: Factory[]): Factory => {
   return factory
 }
 
-export const newFactory = (name = 'A new factory'): Factory => {
+export const newFactory = (name = 'A new factory', order?: number): Factory => {
   return {
     id: Math.floor(Math.random() * 10000),
     name,
@@ -65,7 +66,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     hasProblem: false,
     inSync: null,
     syncState: {},
-    displayOrder: -1, // this will get set by the planner
+    displayOrder: order ?? -1, // this will get set by the planner
     tasks: [],
     notes: '',
   }
@@ -93,12 +94,6 @@ export const calculateFactory = (
   // Calculate the amount of buildings and power required to make the factory and any power generation.
   calculateFactoryBuildingsAndPower(factory, gameData)
 
-  // Check all other factories to see if they are affected by this factory change.
-  constructDependencies(allFactories)
-
-  // Check if we have any invalid inputs.
-  scanForInvalidInputs(factory, allFactories)
-
   // Calculate the dependency metrics for the factory.
   calculateDependencyMetrics(factory)
 
@@ -121,6 +116,12 @@ export const calculateFactory = (
 }
 
 export const calculateFactories = (factories: Factory[], gameData: DataInterface) => {
+  // Construct the dependencies between factories.
+  calculateDependencies(factories)
+
+  // Check if we have any invalid inputs.
+  scanForInvalidInputs(factories)
+
   factories.forEach(factory => {
     calculateFactory(factory, factories, gameData)
   })

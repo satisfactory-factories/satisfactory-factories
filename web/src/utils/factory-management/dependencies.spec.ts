@@ -3,7 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addDependency,
-  constructDependencies,
+  calculateDependencies,
   removeFactoryDependants,
 } from '@/utils/factory-management/dependencies'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
@@ -78,7 +78,7 @@ describe('dependencies', () => {
       }
 
       addInputToFactory(mockDependantFactory, input)
-      constructDependencies(factories)
+      calculateDependencies(factories)
       expect(mockFactory.dependencies.requests[mockDependantFactory.id].length).toBe(1)
       expect(mockFactory.dependencies.requests[mockDependantFactory.id][0].part).toBe('IronIngot')
     })
@@ -92,7 +92,7 @@ describe('dependencies', () => {
       }
       mockDependantFactory.inputs.push(input)
 
-      constructDependencies(factories)
+      calculateDependencies(factories)
       // TODO: console.error should be called
       expect(factories.find).toBeCalledTimes(0)
     })
@@ -106,7 +106,7 @@ describe('dependencies', () => {
 
       addInputToFactory(mockFactory, input)
       expect(() => {
-        constructDependencies(factories)
+        calculateDependencies(factories)
       }).toThrow()
     })
 
@@ -121,7 +121,7 @@ describe('dependencies', () => {
       // It should have force added the input.
       expect(mockDependantFactory.inputs.length).toBe(1)
 
-      constructDependencies(factories)
+      calculateDependencies(factories)
       // TODO: console.error should be called
 
       // The invalid input should be removed.
