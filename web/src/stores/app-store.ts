@@ -130,7 +130,7 @@ export const useAppStore = defineStore('app', () => {
     return factories.value
   }
 
-  const setFactories = (newFactories: Factory[]) => {
+  const setFactories = (newFactories: Factory[], dependencyChecks = true) => {
     console.log('Setting factories', newFactories)
     const gameData = gameDataStore.getGameData()
     if (!gameData) {
@@ -139,7 +139,7 @@ export const useAppStore = defineStore('app', () => {
     }
 
     // Trigger calculations
-    calculateFactories(newFactories, gameData)
+    calculateFactories(newFactories, gameData, dependencyChecks)
 
     // For each factory, set the previous inputs to the current inputs.
     newFactories.forEach(factory => {

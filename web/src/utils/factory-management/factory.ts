@@ -115,12 +115,16 @@ export const calculateFactory = (
   return factory
 }
 
-export const calculateFactories = (factories: Factory[], gameData: DataInterface) => {
-  // Construct the dependencies between factories.
-  calculateDependencies(factories)
+export const calculateFactories = (factories: Factory[], gameData: DataInterface, dependencyChecks = true) => {
+  if (dependencyChecks) {
+    // Construct the dependencies between factories.
+    calculateDependencies(factories)
 
-  // Check if we have any invalid inputs.
-  scanForInvalidInputs(factories)
+    // Check if we have any invalid inputs.
+    scanForInvalidInputs(factories)
+  } else {
+    console.log('Skipping dependency checks.')
+  }
 
   factories.forEach(factory => {
     calculateFactory(factory, factories, gameData)

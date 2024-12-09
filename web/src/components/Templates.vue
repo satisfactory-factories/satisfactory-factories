@@ -70,8 +70,7 @@
   ]
 
   const loadTemplate = (template: Template) => {
-    appStore.setFactories(template.data)
-    // Run the calculations
+    appStore.setFactories(template.data, false)
     dialog.value = false
   }
 </script>

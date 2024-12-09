@@ -10,6 +10,7 @@ let copperBasicsFac: Factory
 let circuitBoardsFac: Factory
 let computersFac: Factory
 let uraniumFac: Factory
+let plutoniumFac: Factory
 
 // This is a more complex setup with multiple factories with dependencies going in a straight chain from Computers to Ingots and Oil Processing.
 // This setup is used to test the more complex factory management functions.
@@ -22,8 +23,9 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
   circuitBoardsFac = newFactory('Circuit Boards')
   computersFac = newFactory('Computers (end product)')
   uraniumFac = newFactory('☢️ Uranium Power')
+  plutoniumFac = newFactory('☢️ Plutonium Processing')
 
-  const factories = [oilFac, copperIngotsFac, copperBasicsFac, circuitBoardsFac, computersFac, uraniumFac]
+  const factories = [oilFac, copperIngotsFac, copperBasicsFac, circuitBoardsFac, computersFac, uraniumFac, plutoniumFac]
 
   // Private methods to configure the factories
   const setupFactories = () => {
@@ -172,6 +174,24 @@ export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
       updated: 'power',
     })
     uraniumFac.notes = 'This factory is producing nuclear fuel rods and using them via a nuclear power station. This demonstrates how power generators also can generate waste products which need to be handled.'
+    uraniumFac.tasks.push(
+      { title: 'Add Stators factory to supply this one', completed: false },
+      { title: 'Make a place for the waste to go', completed: false },
+      { title: 'Get a hazmat suit', completed: true }
+    )
+    // =================
+
+    // === PLUTONIUM FAC ===
+    addProductToFactory(plutoniumFac, {
+      id: 'NonFissibleUranium',
+      amount: 33.333,
+      recipe: 'NonFissileUranium',
+    })
+    addInputToFactory(plutoniumFac, {
+      factoryId: uraniumFac.id,
+      outputPart: 'NuclearWaste',
+      amount: 100,
+    })
   }
 
   // Apply setup steps
