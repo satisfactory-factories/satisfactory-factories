@@ -28,7 +28,7 @@
         <v-card-text v-show="!hidden" class="text-body-1">
           <p v-show="helpText" class="mb-4">
             <i class="fas fa-info-circle" /> Showing an overview of each factory
-            with the name, machines and their production.
+            with the name, buildings and their production.
           </p>
 
           <v-table
@@ -39,7 +39,7 @@
             <thead>
               <tr>
                 <th class="text-left table-column">Factory Name</th>
-                <th class="text-left table-column">Machines</th>
+                <th class="text-left table-column">Buildings</th>
                 <th class="text-left table-column">Producing</th>
                 <th class="text-left table-column">Importing</th>
                 <th class="text-left table-column">Exporting</th>
@@ -51,6 +51,7 @@
                 :key="factory.id"
                 class="header"
                 :class="factoryClass(factory)"
+                @click="navigateToFactory(factory.id as number)"
               >
                 <td class="header">{{ factory.name }}</td>
                 <td class="header">
@@ -60,7 +61,7 @@
                     :key="buildingIndex"
                     style="display: inline"
                   >
-                    <v-chip class="sf-chip orange" variant="tonal">
+                    <v-chip class="sf-chip small no-margin orange" variant="tonal">
                       <game-asset
                         :subject="buildingData.name"
                         type="building"
@@ -79,7 +80,7 @@
                       .slice()
                       .sort((a, b) => getPartDisplayName(a.id).localeCompare(getPartDisplayName(b.id)))"
                     :key="`${factory.id}-${part.id}`"
-                    class="sf-chip"
+                    class="sf-chip small m-2"
                   >
                     <span class="mr-2">
                       <game-asset
@@ -115,7 +116,7 @@
                       totals
                     ) in calculateTotalDependencies(factory.inputs)"
                     :key="`${factory.id}-${totals.outputPart}`"
-                    class="sf-chip ml-2"
+                    class="sf-chip small m-2"
                   >
                     <game-asset
                       v-if="totals.outputPart"
@@ -138,7 +139,7 @@
                       factory.dependencies.requests
                     )"
                     :key="totals.part"
-                    class="sf-chip ml-2"
+                    class="sf-chip small m-2"
                   >
                     <game-asset
                       v-if="totals.part"
@@ -175,6 +176,7 @@
     hasMetricsForPart,
   } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
+  const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
   const props = defineProps<{
     factories: Factory[];
     helpText: boolean;

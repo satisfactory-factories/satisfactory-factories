@@ -43,10 +43,10 @@
       <!-- Main Content Area -->
       <v-col class="border-s-lg pa-3 main-content">
         <notice />
-        <planner-statistics
+        <!-- <planner-statistics
           :help-text="helpText"
           :world-raw-resources="worldRawResources"
-        />
+        /> -->
         <statistics v-if="factories.length !== 0" :factories="factories" :help-text="helpText" />
         <Summary v-if="factories.length !== 0" :factories="factories" :help-text="helpText" />
         <planner-factory
