@@ -137,6 +137,9 @@ export const constructDependencies = (factories: Factory[]): void => {
 
 // Create data helper classes to visualize the dependencies in the UI nicely.
 export const calculateDependencyMetrics = (factory: Factory) => {
+  // Reset the metrics for the factory
+  factory.dependencies.metrics = {}
+
   Object.keys(factory.dependencies.requests).forEach(reqFac => {
     const requests = factory.dependencies.requests[reqFac]
     requests.forEach(request => {
@@ -147,15 +150,22 @@ export const calculateDependencyMetrics = (factory: Factory) => {
         metrics[part] = {
           part,
           request: 0,
-          supply: factory.parts[part]?.amountSupplied ?? 0,
-          isRequestSatisfied: false,
-          difference: 0,
+          supply: 0, // At this stage it cannot be calculated
+          isRequestSatisfied: false, // Calculated later
+          difference: 0, // Calculated later
         }
       }
 
       metrics[part].request += request.amount
-      metrics[part].difference = metrics[part].supply - metrics[part].request
-      metrics[part].isRequestSatisfied = metrics[part].difference >= 0
     })
+  })
+}
+
+export const calculateDependencyMetricsSupply = (factory: Factory) => {
+  Object.keys(factory.dependencies.metrics).forEach(part => {
+    const metrics = factory.dependencies.metrics[part]
+    metrics.supply = factory.parts[part].amountSupplied
+    metrics.difference = metrics.supply - metrics.request
+    metrics.isRequestSatisfied = metrics.difference >= 0
   })
 }

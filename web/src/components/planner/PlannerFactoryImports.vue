@@ -46,7 +46,7 @@
               max-width="300px"
               variant="outlined"
               width="300px"
-              @update:model-value="(newValue) => handleFactoryChange(newValue, factory, inputIndex)"
+              @update:model-value="handleInputFactoryChange(factory)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -339,7 +339,7 @@
       }))
   }
 
-  const handleFactoryChange = (newValue: number, factory: Factory, inputIndex: number) => {
+  const handleInputFactoryChange = (factory: Factory) => {
     // Initiate a factory update for all factories involved
     updateFactory(factory) // This factory
 
@@ -352,7 +352,7 @@
       return JSON.stringify(input) !== JSON.stringify(newInputs[index])
     })
 
-    console.log('handleFactoryChange: Difference:', diff)
+    console.log('handleInputFactoryChange: Difference:', diff)
     // For the difference, tell the factories to update
     diff.forEach(input => {
       if (input.factoryId) {

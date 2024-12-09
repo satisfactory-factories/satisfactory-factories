@@ -3,7 +3,7 @@ import { calculateInternalProducts, calculateProducts } from '@/utils/factory-ma
 import { calculateFactoryBuildingsAndPower } from '@/utils/factory-management/buildings'
 import { calculateParts } from '@/utils/factory-management/parts'
 import {
-  calculateDependencyMetrics,
+  calculateDependencyMetrics, calculateDependencyMetricsSupply,
   constructDependencies,
   scanForInvalidInputs,
 } from '@/utils/factory-management/dependencies'
@@ -104,12 +104,13 @@ export const calculateFactory = (
   scanForInvalidInputs(factory, allFactories)
 
   // Calculate the dependency metrics for the factory.
-  allFactories.forEach(factory => {
-    calculateDependencyMetrics(factory)
-  })
+  calculateDependencyMetrics(factory)
 
   // Then we calculate the satisfaction of the factory. This requires Dependencies to be calculated first.
   calculateParts(factory, gameData)
+
+  // After now knowing what our supply is, we need to recalculate the dependency metrics.
+  calculateDependencyMetricsSupply(factory)
 
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
