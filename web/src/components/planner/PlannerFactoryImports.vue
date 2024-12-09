@@ -71,7 +71,7 @@
               max-width="350px"
               variant="outlined"
               width="350px"
-              @input="updateFactory(factory)"
+              @update:model-value="updateFactories(factory, input)"
             />
           </div>
           <div class="input-row d-flex align-center">
