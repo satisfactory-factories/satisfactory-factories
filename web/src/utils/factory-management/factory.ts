@@ -42,9 +42,9 @@ export const findFacByName = (name: string, factories: Factory[]): Factory => {
   return factory
 }
 
-export const newFactory = (name = 'A new factory', order?: number): Factory => {
+export const newFactory = (name = 'A new factory', order?: number, id?: number): Factory => {
   return {
-    id: Math.floor(Math.random() * 10000),
+    id: id ?? Math.floor(Math.random() * 10000),
     name,
     products: [],
     byProducts: [],

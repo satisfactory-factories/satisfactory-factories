@@ -4,16 +4,13 @@ import {
 } from '@/interfaces/planner/FactoryInterface'
 
 export const getRequestsForFactory = (factory: Factory): FactoryDependencyRequest[] => {
-  // Return an object containing the requests of all factories requesting a particular part
-  // We need to get all requests set upon by other factories and check their part names
-  // If the part name matches the one we're looking for, we add it to the list.
+  // Return an object containing the requests of all factories, regardless of part.
   const factoryRequests = factory.dependencies.requests
 
   if (!factoryRequests || Object.keys(factoryRequests).length === 0) {
     return []
   }
 
-  // Return all requests
   return Object.entries(factoryRequests)
     .map(([, requests]) => {
       return requests
@@ -21,25 +18,13 @@ export const getRequestsForFactory = (factory: Factory): FactoryDependencyReques
     .flat()
 }
 
-export const getRequestsForFactoryByProduct = (
+export const getRequestsForFactoryByPart = (
   factory: Factory,
   part: string
 ): FactoryDependencyRequest[] => {
-  // Return an object containing the requests of all factories requesting a particular part
-  // We need to get all requests set upon by other factories and check their part names
-  // If the part name matches the one we're looking for, we add it to the list.
-  const factoryRequests = factory.dependencies.requests
-
-  if (!factoryRequests || Object.keys(factoryRequests).length === 0) {
-    return []
-  }
-
-  // Return all requests for a particular part
-  return Object.entries(factoryRequests)
-    .map(([, requests]) => {
-      return requests.filter(request => request.part === part)
-    })
-    .flat()
+  const requests = getRequestsForFactory(factory)
+  // Filter by the part
+  return requests.filter(request => request.part === part)
 }
 
 export const getExportableFactories = (factories: Factory[]): Factory[] => {
