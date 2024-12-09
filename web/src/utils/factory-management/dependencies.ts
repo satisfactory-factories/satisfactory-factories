@@ -101,6 +101,7 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
+  console.log('calculateDependencies', factories)
   factories.forEach(factory => {
     factory.dependencies.requests = {}
 

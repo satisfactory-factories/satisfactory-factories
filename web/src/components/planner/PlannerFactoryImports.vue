@@ -89,7 +89,7 @@
           </div>
           <div class="input-row d-flex align-center">
             <v-btn
-              v-show="requirementSatisfied(factory, input.outputPart) && inputOverflow(factory, input.outputPart)"
+              v-show="requirementSatisfied(factory, input.outputPart) && showInputOverflow(factory, input.outputPart)"
               class="rounded mr-2"
               color="yellow"
               prepend-icon="fas fa-arrow-down"
@@ -155,6 +155,10 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
+  import { calculateDependencies, scanForInvalidInputs } from '@/utils/factory-management/dependencies'
+  import { useAppStore } from '@/stores/app-store'
+
+  const { getFactories } = useAppStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
@@ -181,6 +185,8 @@
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
+    calculateDependencies(getFactories())
+    scanForInvalidInputs(getFactories())
     updateFactory(factory)
 
     // Also update the other factory affected
@@ -340,6 +346,8 @@
   }
 
   const handleInputFactoryChange = (factory: Factory) => {
+    syncDependencyTree()
+
     // Initiate a factory update for all factories involved
     updateFactory(factory) // This factory
 
@@ -352,7 +360,6 @@
       return JSON.stringify(input) !== JSON.stringify(newInputs[index])
     })
 
-    console.log('handleInputFactoryChange: Difference:', diff)
     // For the difference, tell the factories to update
     diff.forEach(input => {
       if (input.factoryId) {
@@ -379,9 +386,9 @@
     return requirement.amountRemaining >= 0
   }
 
-  const inputOverflow = (factory: Factory, part: string | null): boolean => {
+  const showInputOverflow = (factory: Factory, part: string | null): boolean => {
     if (!part) {
-      console.error('inputOverflow: No part provided for input overflow check.')
+      console.error('showInputOverflow: No part provided for input overflow check.')
       return false
     }
     const requirement = factory.parts[part]
@@ -397,10 +404,16 @@
     const part: PartMetrics = factory.parts[input.outputPart]
     input.amount = part.amountRequired
 
+    syncDependencyTree()
     updateFactory(factory)
+    // Also update the factory that was selected
+    if (input.factoryId) {
+      updateFactory(findFactory(input.factoryId))
+    }
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
+    syncDependencyTree()
     // Update this factory
     updateFactory(factory)
 
@@ -408,6 +421,12 @@
       // Update the other factory
       updateFactory(findFactory(input.factoryId))
     }
+  }
+
+  const syncDependencyTree = () => {
+    console.log('syncing dependency tree')
+    calculateDependencies(getFactories())
+    scanForInvalidInputs(getFactories())
   }
 
 </script>
