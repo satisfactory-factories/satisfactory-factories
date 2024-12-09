@@ -1,5 +1,5 @@
 // noinspection DuplicatedCode
-// Duplicated by backend
+// Duplicated by web
 export interface RecipeItem {
   part: string;
   amount: number;

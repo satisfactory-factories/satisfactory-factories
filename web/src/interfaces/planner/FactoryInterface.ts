@@ -1,4 +1,5 @@
-// noinspection DuplicatedCode - Duplicated by the backend
+// noinspection DuplicatedCode
+// Duplicated by backend
 import { PowerItem } from '@/interfaces/Recipes'
 
 export interface PartMetrics {
