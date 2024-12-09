@@ -37,8 +37,9 @@
         >
           <div class="input-row d-flex align-center">
             <i class="fas fa-industry mr-2" style="width: 32px; height: 32px;" />
+            <!-- This is being watched for changes to update the old factory -->
             <v-autocomplete
-              v-model="input.factoryId"
+              v-model.number="input.factoryId"
               hide-details
               :items="importFactorySelections(inputIndex)"
               label="Factory"
@@ -83,7 +84,7 @@
               :min-width="smAndDown ? undefined : '100px'"
               type="number"
               variant="outlined"
-              @input="updateFactory(factory)"
+              @input="updateFactories(factory, input)"
             />
           </div>
           <div class="input-row d-flex align-center">
@@ -176,8 +177,16 @@
   }
 
   const deleteInput = (inputIndex: number, factory: Factory) => {
+    // Take a copy of the current input data without copying via reference
+    const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
+
     factory.inputs.splice(inputIndex, 1)
     updateFactory(factory)
+
+    // Also update the other factory affected
+    if (input.factoryId) {
+      updateFactory(findFactory(input.factoryId))
+    }
   }
 
   // Check if another factory has exports that can be used as imports for the current factory
@@ -190,10 +199,6 @@
     const partsWithRequirements = Object.keys(props.factory.parts).filter(part => {
       return props.factory.parts[part].amountRequired > 0
     })
-
-    if (props.factory.name === 'Computers (end product)') {
-      console.log('Computers (end product) has parts with requirements:', partsWithRequirements)
-    }
 
     // Loop through each part in the requirements of the current factory prop
     partsWithRequirements.forEach(requiredPart => {
@@ -259,10 +264,6 @@
     }
 
     const importCandidates = possibleImportsAfterSelections.value
-
-    if (factory.name === 'Computers (end product)') {
-      console.log('Computers (end product) import candidates:', importCandidates)
-    }
 
     if (importCandidates.size === 0) {
       return 'noImportFacs'
@@ -339,11 +340,28 @@
   }
 
   const handleFactoryChange = (newValue: number, factory: Factory, inputIndex: number) => {
-    // Update the factoryId for the specific input
-    factory.inputs[inputIndex].factoryId = newValue
+    // Initiate a factory update for all factories involved
+    updateFactory(factory) // This factory
 
-    // Trigger recalculations or any side effects needed
-    updateFactory(factory)
+    // Grab a difference between the current input state and the old one
+    const oldInputs = factory.previousInputs
+    const newInputs = factory.inputs
+
+    // Find the difference
+    const diff = oldInputs.filter((input, index) => {
+      return JSON.stringify(input) !== JSON.stringify(newInputs[index])
+    })
+
+    console.log('handleFactoryChange: Difference:', diff)
+    // For the difference, tell the factories to update
+    diff.forEach(input => {
+      if (input.factoryId) {
+        updateFactory(findFactory(input.factoryId))
+      }
+    })
+
+    // Update the state
+    factory.previousInputs = JSON.parse(JSON.stringify(factory.inputs))
   }
 
   const requirementSatisfied = (factory: Factory, part: string | null): boolean => {
@@ -380,6 +398,16 @@
     input.amount = part.amountRequired
 
     updateFactory(factory)
+  }
+
+  const updateFactories = (factory: Factory, input: FactoryInput) => {
+    // Update this factory
+    updateFactory(factory)
+
+    if (input.factoryId) {
+      // Update the other factory
+      updateFactory(findFactory(input.factoryId))
+    }
   }
 
 </script>

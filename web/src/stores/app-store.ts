@@ -39,9 +39,6 @@ export const useAppStore = defineStore('app', () => {
   )
   const gameDataStore = useGameDataStore()
 
-  console.log(localStorage.getItem('showSatisfactionBreakdowns'))
-  console.log(Boolean(localStorage.getItem('showSatisfactionBreakdowns')))
-
   // Watch the factories array for changes
   watch(factoryTabs.value, () => {
     localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
@@ -120,6 +117,9 @@ export const useAppStore = defineStore('app', () => {
         factory.power = {} as FactoryPower
         needsCalculation = true
       }
+      if (factory.previousInputs === undefined) {
+        factory.previousInputs = []
+      }
     })
 
     if (needsCalculation) {
@@ -140,6 +140,11 @@ export const useAppStore = defineStore('app', () => {
 
     // Trigger calculations
     calculateFactories(newFactories, gameData)
+
+    // For each factory, set the previous inputs to the current inputs.
+    newFactories.forEach(factory => {
+      factory.previousInputs = factory.inputs
+    })
 
     factories.value = newFactories
     // Will also call the watcher.

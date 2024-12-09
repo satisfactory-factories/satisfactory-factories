@@ -50,6 +50,7 @@ export const newFactory = (name = 'A new factory'): Factory => {
     internalProducts: {},
     powerProducers: [],
     inputs: [],
+    previousInputs: [],
     parts: {},
     buildingRequirements: {} as { [p: string]: BuildingRequirement },
     dependencies: {
@@ -77,6 +78,7 @@ export const calculateFactory = (
   allFactories: Factory[],
   gameData: DataInterface
 ) => {
+  console.log('Calculating factory:', factory.name)
   factory.rawResources = {}
   factory.parts = {}
 

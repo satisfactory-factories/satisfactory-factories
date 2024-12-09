@@ -251,7 +251,7 @@
 
   const isRequestSelected = (factory: Factory, factoryId: number, part: string) => {
     if (!factory.exportCalculator[part]) {
-      console.error(`Could not find export calculator settings for part ${part}`)
+      // console.error(`Could not find export calculator settings for part ${part}`)
       return false
     }
     return factory.exportCalculator[part]?.selected === factoryId.toString()

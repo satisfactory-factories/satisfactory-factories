@@ -120,6 +120,7 @@ export interface Factory {
   id: number;
   name: string;
   inputs: FactoryInput[];
+  previousInputs: FactoryInput[] // Since we can't use the previous state in the store, we need to store it here then update it.
   products: FactoryItem[];
   byProducts: ByProductItem[];
   internalProducts: { [key: string]: FactoryInternalProduct };
