@@ -107,7 +107,7 @@
         <v-chip v-if="shouldShowInternal(product, factory)" class="ml-2 sf-chip small green">
           Internal
         </v-chip>
-        <v-chip v-if="shouldShowNotInDemand(product, factory)" class="ml-2 sf-chip small red">
+        <v-chip v-if="shouldShowNotInDemand(product, factory)" class="ml-2 sf-chip small orange">
           No demand!
         </v-chip>
       </div>
