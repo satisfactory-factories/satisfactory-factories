@@ -110,10 +110,6 @@
     navigateToFactory(factory.id)
   }
 
-  const factoriesWithExports = computed(() => {
-    return getExportableFactories(getFactories())
-  })
-
   // This function calculates the world resources available after each group has consumed Raw Resources.
   // This is done here globally as it loops all factories. It is not appropriate to be done on group updates.
   const updateWorldRawResources = (gameData: DataInterface): void => {
@@ -348,7 +344,6 @@
   // Initialize during setup
   initializeFactories()
 
-  provide('factoriesWithExports', factoriesWithExports)
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)

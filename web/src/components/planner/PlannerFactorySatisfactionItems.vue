@@ -123,13 +123,13 @@
             </div>
           </td>
           <td :class="satisfactionShading(part)">
-            <p v-if="getRequestsForFactoryByProduct(factory, partId.toString()).length === 0" class="text-center">
+            <p v-if="getRequestsForFactoryByPart(factory, partId.toString()).length === 0" class="text-center">
               -
             </p>
             <div v-else>
               <div>
                 <v-chip
-                  v-for="(request) in getRequestsForFactoryByProduct(factory, partId.toString())"
+                  v-for="(request) in getRequestsForFactoryByPart(factory, partId.toString())"
                   :key="`${partId}-${request.requestingFactoryId}`"
                   class="sf-chip small"
                   :color="isRequestSelected(factory, request.requestingFactoryId, partId.toString()) ? 'primary' : ''"
@@ -156,7 +156,7 @@
           </td>
         </tr>
         <tr
-          v-if="getRequestsForFactoryByProduct(factory, partId.toString()).length > 0"
+          v-if="getRequestsForFactoryByPart(factory, partId.toString()).length > 0"
         >
           <td class="calculator-row" colspan="5" style="height: auto">
             <div class="calculator" :class="{ open: openedCalculator === partId }">
@@ -181,7 +181,7 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { addProductToFactory } from '@/utils/factory-management/products'
   import { useGameDataStore } from '@/stores/game-data-store'
-  import { getRequestsForFactoryByProduct } from '@/utils/factory-management/exports'
+  import { getRequestsForFactoryByPart } from '@/utils/factory-management/exports'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useAppStore } from '@/stores/app-store'
 

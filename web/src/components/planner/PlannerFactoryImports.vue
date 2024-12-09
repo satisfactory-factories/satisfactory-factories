@@ -41,7 +41,7 @@
             <v-autocomplete
               v-model.number="input.factoryId"
               hide-details
-              :items="importFactorySelections(inputIndex)"
+              :items="getImportFactorySelections(inputIndex)"
               label="Factory"
               max-width="300px"
               variant="outlined"
@@ -66,7 +66,7 @@
               v-model="input.outputPart"
               :disabled="!input.factoryId"
               hide-details
-              :items="importPartSelections(input.factoryId, inputIndex)"
+              :items="getImportPartSelections(inputIndex)"
               label="Item"
               max-width="350px"
               variant="outlined"
@@ -140,8 +140,9 @@
           @click="addEmptyInput(factory)"
         >Add Import
         </v-btn>
+        <span v-if="ableToImport(factory) === 'noProducts'" class="ml-2">(This factory does not yet have any products.)</span>
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
-        <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports able to supply this factory.)</span>
+        <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports available to supply this factory.)</span>
       </div>
     </div>
     <p v-else class="text-body-1">Awaiting product selection.</p>
@@ -154,20 +155,22 @@
   import {
     addInputToFactory,
     calculateAbleToImport,
-    calculateImportsAfterSelections,
+    calculateImportCandidates,
     calculatePossibleImports,
+    importFactorySelections,
+    importPartSelections,
   } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
   import { calculateDependencies, scanForInvalidInputs } from '@/utils/factory-management/dependencies'
   import { useAppStore } from '@/stores/app-store'
+  import { getExportableFactories } from '@/utils/factory-management/exports'
 
   const { getFactories } = useAppStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
-  const factoriesWithExports = inject('factoriesWithExports') as ComputedRef<Factory[]>
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -200,85 +203,54 @@
     }
   }
 
+  const factoriesWithExports = computed(() => {
+    return getExportableFactories(getFactories())
+  })
+
   // Check if another factory has exports that can be used as imports for the current factory
   const possibleImports = computed(() => {
     return calculatePossibleImports(props.factory, factoriesWithExports.value)
   })
 
-  const possibleImportsAfterSelections = computed(() => {
-    return calculateImportsAfterSelections(props.factory, possibleImports.value)
+  const importCandidates = computed((): Factory[] => {
+    return calculateImportCandidates(props.factory, possibleImports.value)
   })
 
-  const ableToImport = (factory: Factory): string | boolean => {
-    return calculateAbleToImport(factory, possibleImportsAfterSelections.value)
+  const getImportFactorySelections = (inputIndex: number) => {
+    return importFactorySelections(
+      inputIndex,
+      importCandidates.value,
+      props.factory,
+      getFactories(),
+    )
   }
 
-  const importFactorySelections = (inputIndex: number): {title: string, value: string | number}[] => {
-    // Calculate the currently selected imports and don't show the factory on the list if all parts are already imported
-    // We need to also ensure that if the input already has a factory selected, it is still shown in the list otherwise it'll delete itself.
-    // In the end, we only want to show: 1. Factories that have exportable parts that are NOT selected, and parts that match the current selection
-
-    // Clone the possible candidates map
-    const remainingFactories = new Map(possibleImportsAfterSelections.value)
-
-    // We also need to drop in the currently selected input's factory if it has one
-    if (props.factory.inputs[inputIndex].factoryId) {
-      remainingFactories.set(props.factory.inputs[inputIndex].factoryId, findFactory(props.factory.inputs[inputIndex].factoryId))
+  const getImportPartSelections = (inputIndex: number): { title: string, value: string}[] => {
+    // Get selected factory from input
+    const input = props.factory.inputs[inputIndex]
+    if (!input.factoryId) {
+      return [] // They're still choosing one, and the selector is disabled.
     }
+    const parts = importPartSelections(
+      findFactory(input.factoryId),
+      props.factory,
+      inputIndex
+    )
 
-    // Map to the required format for the dropdown
-    return Array.from(remainingFactories.values().map(factory => ({
-      title: factory.name,
-      value: factory.id,
-    })))
+    // Since we don't want to include the gameDataStore in the inputs.ts file, we need to hydrate the part names now
+    return parts.map(part => {
+      return {
+        title: getPartDisplayName(part),
+        value: part,
+      }
+    })
+  }
+
+  const ableToImport = (factory: Factory): string | boolean => {
+    return calculateAbleToImport(factory, importCandidates.value)
   }
 
   // Gets the products of another factory for dependencies
-  const importPartSelections = (inputFactoryId: number | null, inputIndex: number) => {
-    if (!inputFactoryId || inputFactoryId === 0) {
-      // User may still be selecting a factory
-      return []
-    }
-
-    // Get the factory by ID
-    const inputFactory = findFactory(inputFactoryId)
-    if (!inputFactory || !inputFactory.id) {
-      console.error('Tried to get outputs for a factory that does not exist:', inputFactoryId)
-      return []
-    }
-
-    const selectedParts = new Set<string>()
-
-    // Go through the factory inputs and add them to the set
-    props.factory.inputs.forEach((input, index) => {
-      // We want to exclude selection of an item IF we still have a demand for it
-      if (!input.outputPart) {
-        return // It's not got a part selected so who cares
-      }
-      const isStillInDemand = props.factory.parts[input.outputPart].amountRemaining > 0
-
-      if (isStillInDemand && index !== inputIndex && input.outputPart) {
-        selectedParts.add(input.outputPart)
-      }
-    })
-
-    const exportableParts = Object.keys(inputFactory.parts)
-      .filter(part => inputFactory.parts[part].exportable)
-
-    // We need to filter by both exportable parts AND if the part is in the parts we need for the factory
-    const exportablePartsWithRequirements = exportableParts
-      .filter(part => props.factory.parts[part] && props.factory.parts[part].amountRequired > 0)
-
-    // Now go through the available imports and filter out any that are already selected
-    const availableParts = exportablePartsWithRequirements
-      .filter(part => !selectedParts.has(part))
-
-    return Object.values(availableParts)
-      .map(part => ({
-        title: getPartDisplayName(part), // For display purposes
-        value: part, // Value is the ID
-      }))
-  }
 
   const handleInputFactoryChange = (factory: Factory) => {
     syncDependencyTree()
