@@ -151,7 +151,12 @@
 <script setup lang="ts">
   import { defineProps } from 'vue'
   import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
-  import { addInputToFactory } from '@/utils/factory-management/inputs'
+  import {
+    addInputToFactory,
+    calculateAbleToImport,
+    calculateImportsAfterSelections,
+    calculatePossibleImports,
+  } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
@@ -197,85 +202,15 @@
 
   // Check if another factory has exports that can be used as imports for the current factory
   const possibleImports = computed(() => {
-    const factoriesWithRequiredParts = new Map<number, Factory>()
-
-    // Get all parts in the factory that have requirements. Do this by checking each item in the parts object for `amountRequired > 0`
-    // This denotes parts that should be candidates for import, even if they have an internal production.
-    // The list should be simply a list of part names
-    const partsWithRequirements = Object.keys(props.factory.parts).filter(part => {
-      return props.factory.parts[part].amountRequired > 0
-    })
-
-    // Loop through each part in the requirements of the current factory prop
-    partsWithRequirements.forEach(requiredPart => {
-      // Find any factories that are exporting this part
-      const validFactories = factoriesWithExports.value.filter(importFac => {
-        // Loop through all the factory's parts and see if they have any export candidates
-        return Object.keys(importFac.parts).some(part => {
-          const partData = importFac.parts[part]
-          return part === requiredPart && partData.exportable
-        })
-      })
-
-      validFactories.forEach(fac => factoriesWithRequiredParts.set(fac.id, fac))
-    })
-
-    // Remove the input's factory to prevent referencing itself
-    if (factoriesWithRequiredParts.get(props.factory.id)) {
-      factoriesWithRequiredParts.delete(props.factory.id)
-    }
-
-    const factoriesArray = Array.from(factoriesWithRequiredParts.values())
-
-    // Sort the factories by name
-    factoriesArray.sort((a, b) => a.name.localeCompare(b.name))
-
-    return factoriesArray
+    return calculatePossibleImports(props.factory, factoriesWithExports.value)
   })
 
   const possibleImportsAfterSelections = computed(() => {
-    // Collate all the currently selected factories and their selected parts
-    const selectedPartsByFactory = new Map<number, Set<string>>()
-    props.factory.inputs.forEach(input => {
-      if (input.factoryId && input.outputPart) {
-        if (!selectedPartsByFactory.has(input.factoryId)) {
-          selectedPartsByFactory.set(input.factoryId, new Set<string>())
-        }
-        const partSet = selectedPartsByFactory.get(input.factoryId)
-        // Keep TS happy...
-        if (!partSet) {
-          throw new Error('Unable to setup set, this should not be possible!')
-        }
-        partSet.add(input.outputPart)
-      }
-    })
-    // Collate all the possible parts that can be imported, that the factory needs
-    const remainingFactories = new Map<number, Factory>()
-    possibleImports.value.forEach(fac => {
-      // If the factory is already selected, skip it
-      if (selectedPartsByFactory.has(fac.id)) {
-        return
-      }
-
-      // If the factory is not already selected, add it to the list
-      remainingFactories.set(fac.id, fac)
-    })
-
-    return remainingFactories
+    return calculateImportsAfterSelections(props.factory, possibleImports.value)
   })
 
   const ableToImport = (factory: Factory): string | boolean => {
-    if (factory.usingRawResourcesOnly) {
-      return 'rawOnly'
-    }
-
-    const importCandidates = possibleImportsAfterSelections.value
-
-    if (importCandidates.size === 0) {
-      return 'noImportFacs'
-    }
-
-    return true
+    return calculateAbleToImport(factory, possibleImportsAfterSelections.value)
   }
 
   const importFactorySelections = (inputIndex: number): {title: string, value: string | number}[] => {
