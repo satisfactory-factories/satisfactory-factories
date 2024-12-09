@@ -258,8 +258,8 @@ describe('dependencies', () => {
 
       calculateFactories([factory1, factory2], gameData)
 
-      expect(factory1.exports.IronIngot).not.toBeDefined()
-      expect(factory1.exports.CopperIngot).toBeDefined()
+      expect(factory1.parts.IronIngot).toBe(undefined) // This ensures that we haven't got it as an import any more
+      expect(factory1.parts.CopperIngot.exportable).toBe(true)
       expect(factory1.products.length).toBe(1)
       expect(factory2.inputs.length).toBe(1) // NOT 2
       expect(factory2.inputs[0].outputPart).toBe('CopperIngot')

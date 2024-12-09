@@ -45,7 +45,6 @@
   import { createSimple } from '@/utils/factory-setups/simple-plan'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-  import { calculateFactories } from '@/utils/factory-management/factory'
 
   const appStore = useAppStore()
 
