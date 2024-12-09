@@ -16,8 +16,16 @@ export const calculateParts = (factory: Factory, gameData: DataInterface) => {
   // Now check if all requirements are satisfied and flag so if it is.
   factory.requirementsSatisfied = Object.keys(factory.parts).every(part => factory.parts[part].satisfied)
 
-  // If we're only using raw resources flag it as such
-  factory.usingRawResourcesOnly = Object.keys(factory.parts).every(part => factory.parts[part].isRaw)
+  // If we're only using raw resources flag it as such.
+  // This needs to check if all parts used for production are raw resources, not just the parts themselves are raw.
+  factory.usingRawResourcesOnly = true
+  for (const part in factory.parts) {
+    const partData = factory.parts[part]
+    if (!partData.isRaw && partData.amountRequiredProduction > 0) {
+      factory.usingRawResourcesOnly = false
+      break
+    }
+  }
 }
 
 // This is where the meat of the soup is!
