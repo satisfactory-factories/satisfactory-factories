@@ -47,9 +47,8 @@
   import { createSimple } from '@/utils/factory-setups/simple-plan'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
-  import { createScenario273 } from '@/utils/factory-setups/273-import-issues'
 
-  const { isDebugMode, setFactories } = useAppStore()
+  const { setFactories } = useAppStore()
 
   const dialog = ref(false)
 
@@ -72,12 +71,6 @@
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
       show: true,
-    },
-    {
-      name: '273',
-      description: 'Foo',
-      data: createScenario273().getFactories(),
-      show: isDebugMode,
     },
   ]
 
