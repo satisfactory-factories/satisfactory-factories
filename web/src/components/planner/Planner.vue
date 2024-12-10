@@ -362,7 +362,7 @@
     if (getFactories().length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
         console.log('Replacing factories with Demo')
-        setFactories(complexDemoPlan().getFactories())
+        setFactories(complexDemoPlan().getFactories(), true)
       }
     } else {
       console.log('Adding demo factories')
