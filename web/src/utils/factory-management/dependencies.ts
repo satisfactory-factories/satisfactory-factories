@@ -8,10 +8,11 @@ export const addDependency = (
   input: FactoryInput
 ) => {
   if (!input.outputPart) {
-    console.error(`addDependency: Factory ${factory.name} (${factory.id}) is attempting to add a dependency with no output part!`)
+    const errorMsg = `Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`
+    console.error(errorMsg)
     // Delete the invalid input
     factory.inputs = factory.inputs.filter(i => i !== input)
-    alert(`Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`)
+    alert(errorMsg)
     return
   }
 
