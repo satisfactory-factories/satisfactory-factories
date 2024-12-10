@@ -105,9 +105,11 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
+  console.log('dependencies: Calculating Dependencies')
+
   // Blow away the dependencies for all factories to ensure we're not orphaning any and leaving any invalid dependencies behind.
   // Rather than trying to figure out what's changed, just recalculate everything.
-  // It's not that computentionally expensive to do this, thankfully.
+  // It's computationally inexpensive to do this, thankfully.
   factories.forEach(factory => {
     factory.dependencies = {
       requests: {},
@@ -115,7 +117,6 @@ export const calculateDependencies = (factories: Factory[]): void => {
     }
   })
 
-  console.log('dependencies: Calculating Dependencies')
   factories.forEach(factory => {
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
