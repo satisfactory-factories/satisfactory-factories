@@ -133,7 +133,7 @@
         </v-chip>
       </div>
       <div
-        v-if="Object.keys(product.requirements).length > 0"
+        v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements"
         class="d-flex align-center"
       >
         <p class="mr-2">Requires:</p>
