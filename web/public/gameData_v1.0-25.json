@@ -103,7 +103,7 @@
             },
             "CandyCane": {
                 "name": "Candy Cane",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -320,21 +320,21 @@
             },
             "Fireworks_Projectile_01": {
                 "name": "Sweet Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "Fireworks_Projectile_02": {
                 "name": "Fancy Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "Fireworks_Projectile_03": {
                 "name": "Sparkly Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -922,7 +922,7 @@
             },
             "SnowballProjectile": {
                 "name": "Snowball",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1132,28 +1132,28 @@
             },
             "XmasBall1": {
                 "name": "Red FICSMAS Ornament",
-                "stackSize": 500,
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall2": {
                 "name": "Blue FICSMAS Ornament",
-                "stackSize": 500,
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall3": {
                 "name": "Copper FICSMAS Ornament",
-                "stackSize": 200,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall4": {
                 "name": "Iron FICSMAS Ornament",
-                "stackSize": 200,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1167,7 +1167,7 @@
             },
             "XmasBow": {
                 "name": "FICSMAS Bow",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1187,8 +1187,8 @@
                 "energyGeneratedInMJ": 0
             },
             "XmasWreath": {
-                "name": "FICSMAS Decoration",
-                "stackSize": 100,
+                "name": "FICSMAS Wreath",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1202,13 +1202,13 @@
                 "name": "Iron Ore",
                 "limit": 92100
             },
-            "Coal": {
-                "name": "Coal",
-                "limit": 42300
-            },
             "Water": {
                 "name": "Water",
                 "limit": 9007199254740991
+            },
+            "Coal": {
+                "name": "Coal",
+                "limit": 42300
             },
             "NitrogenGas": {
                 "name": "Nitrogen Gas",
@@ -1265,31 +1265,6 @@
         }
     },
     "recipes": [
-        {
-            "id": "Snow",
-            "displayName": "Actual Snow",
-            "ingredients": [
-                {
-                    "part": "Gift",
-                    "amount": 5,
-                    "perMin": 25
-                }
-            ],
-            "products": [
-                {
-                    "part": "Snow",
-                    "amount": 2,
-                    "perMin": 10,
-                    "isByProduct": false
-                }
-            ],
-            "building": {
-                "name": "constructormk1",
-                "power": 4
-            },
-            "isAlternate": false,
-            "isFicsmas": true
-        },
         {
             "id": "SpaceElevatorPart_5",
             "displayName": "Adaptive Control Unit",
@@ -6582,6 +6557,31 @@
             "isFicsmas": false
         },
         {
+            "id": "Snow",
+            "displayName": "FICSMAS Actual Snow",
+            "ingredients": [
+                {
+                    "part": "Gift",
+                    "amount": 5,
+                    "perMin": 25
+                }
+            ],
+            "products": [
+                {
+                    "part": "Snow",
+                    "amount": 2,
+                    "perMin": 10,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
             "id": "XmasBow",
             "displayName": "FICSMAS Bow",
             "ingredients": [
@@ -6602,36 +6602,6 @@
             "building": {
                 "name": "constructormk1",
                 "power": 4
-            },
-            "isAlternate": false,
-            "isFicsmas": true
-        },
-        {
-            "id": "XmasWreath",
-            "displayName": "FICSMAS Decoration",
-            "ingredients": [
-                {
-                    "part": "XmasBranch",
-                    "amount": 15,
-                    "perMin": 15
-                },
-                {
-                    "part": "XmasBallCluster",
-                    "amount": 6,
-                    "perMin": 6
-                }
-            ],
-            "products": [
-                {
-                    "part": "XmasWreath",
-                    "amount": 2,
-                    "perMin": 2,
-                    "isByProduct": false
-                }
-            ],
-            "building": {
-                "name": "assemblermk1",
-                "power": 15
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6711,6 +6681,36 @@
                     "part": "XmasStar",
                     "amount": 1,
                     "perMin": 1,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
+            "id": "XmasWreath",
+            "displayName": "FICSMAS Wreath",
+            "ingredients": [
+                {
+                    "part": "XmasBranch",
+                    "amount": 15,
+                    "perMin": 15
+                },
+                {
+                    "part": "XmasBallCluster",
+                    "amount": 6,
+                    "perMin": 6
+                }
+            ],
+            "products": [
+                {
+                    "part": "XmasWreath",
+                    "amount": 2,
+                    "perMin": 2,
                     "isByProduct": false
                 }
             ],
