@@ -8,10 +8,11 @@ export const addDependency = (
   input: FactoryInput
 ) => {
   if (!input.outputPart) {
-    console.error(`addDependency: Factory ${factory.name} is attempting to add a dependency with no output part!`)
+    const errorMsg = `Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`
+    console.error(errorMsg)
     // Delete the invalid input
     factory.inputs = factory.inputs.filter(i => i !== input)
-    alert(`Factory ${factory.name} is attempting to add a dependency with no output part. The invalid input has been deleted.`)
+    alert(errorMsg)
     return
   }
 
@@ -22,15 +23,10 @@ export const addDependency = (
   const requests = provider.dependencies.requests[factory.id]
 
   // If the factory already has a request for the same factory and part, there's an issue.
-  if (requests.length > 0) {
-    const existingRequest = requests.find(req => req.part === input.outputPart)
-    if (existingRequest) {
-      console.error(`addDependency: Factory ${provider.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
-      // Delete the invalid input
-      factory.inputs = factory.inputs.filter(i => i !== input)
-      alert(`Factory ${provider.name} already has a request for part ${input.outputPart} from ${factory.name}. The invalid input has been deleted.`)
-      return
-    }
+  const existingRequest = requests.find(req => req.part === input.outputPart)
+  if (existingRequest) {
+    // Do nothing, the request already exists. This will happen a lot as we're often running calculateFactory twice in certain scenarios.
+    return
   }
 
   requests.push({
@@ -111,9 +107,18 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
   console.log('dependencies: Calculating Dependencies')
-  factories.forEach(factory => {
-    factory.dependencies.requests = {}
 
+  // Blow away the dependencies for all factories to ensure we're not orphaning any and leaving any invalid dependencies behind.
+  // Rather than trying to figure out what's changed, just recalculate everything.
+  // It's computationally inexpensive to do this, thankfully.
+  factories.forEach(factory => {
+    factory.dependencies = {
+      requests: {},
+      metrics: {},
+    }
+  })
+
+  factories.forEach(factory => {
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
       if (input.factoryId === 0 || !input.outputPart) {

@@ -21,17 +21,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="template in templates" :key="template.name">
-              <td class="text-center">
-                <v-btn
-                  class="mr-2"
-                  color="green"
-                  @click="loadTemplate(template)"
-                >
-                  {{ template.name }}
-                </v-btn></td>
-              <td>{{ template.description }}</td>
-            </tr>
+            <template v-for="template in templates" :key="template.name">
+              <tr v-if="template.show">
+                <td class="text-center">
+                  <v-btn
+                    class="mr-2"
+                    color="green"
+                    @click="loadTemplate(template)"
+                  >
+                    {{ template.name }}
+                  </v-btn></td>
+                <td>{{ template.description }}</td>
+              </tr>
+            </template>
           </tbody>
         </v-table>
       </v-card-text>
@@ -46,7 +48,7 @@
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
 
-  const appStore = useAppStore()
+  const { setFactories } = useAppStore()
 
   const dialog = ref(false)
 
@@ -54,6 +56,7 @@
     name: string
     description: string
     data: Factory[]
+    show: boolean
   }
 
   const templates = [
@@ -61,16 +64,18 @@
       name: 'Demo',
       description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
+      show: true,
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
+      show: true,
     },
   ]
 
   const loadTemplate = (template: Template) => {
-    appStore.setFactories(template.data, true)
+    setFactories(template.data, true)
     dialog.value = false
   }
 </script>

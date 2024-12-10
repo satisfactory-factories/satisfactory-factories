@@ -112,10 +112,10 @@ describe('parts', () => {
       // And on the mock factory that produces the compacted coal
       expect(otherMockFactory.parts.CompactedCoal.amountSupplied).toBe(50)
       expect(otherMockFactory.parts.CompactedCoal.amountSuppliedViaProduction).toBe(50)
-      expect(otherMockFactory.parts.CompactedCoal.amountRequired).toBe(0) // It's a product with no demand
-      expect(otherMockFactory.parts.CompactedCoal.amountRequiredExports).toBe(0)
+      expect(otherMockFactory.parts.CompactedCoal.amountRequired).toBe(50) // It's a product with no demand
+      expect(otherMockFactory.parts.CompactedCoal.amountRequiredExports).toBe(50)
       expect(otherMockFactory.parts.CompactedCoal.amountRequiredProduction).toBe(0)
-      expect(otherMockFactory.parts.CompactedCoal.amountRemaining).toBe(50)
+      expect(otherMockFactory.parts.CompactedCoal.amountRemaining).toBe(0)
       expect(otherMockFactory.parts.CompactedCoal.satisfied).toBe(true)
       expect(otherMockFactory.parts.CompactedCoal.exportable).toBe(true)
     })

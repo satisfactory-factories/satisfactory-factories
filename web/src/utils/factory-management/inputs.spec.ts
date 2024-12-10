@@ -148,6 +148,7 @@ describe('inputs', () => {
           amount: 500,
         })
         factories.push(ironRodsFac2)
+        calculateFactories(factories, gameData, true)
         calculateFactories(factories, gameData)
         screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
       })
@@ -178,6 +179,7 @@ describe('inputs', () => {
             recipe: 'ModularFrame',
           })
 
+          calculateFactories(factories, gameData, true)
           calculateFactories(factories, gameData)
           ironRodsPossibleImports = calculatePossibleImports(ironRodsFac, getExportableFactories(factories))
           screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
