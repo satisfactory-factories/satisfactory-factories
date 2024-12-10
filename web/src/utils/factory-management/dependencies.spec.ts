@@ -38,19 +38,17 @@ describe('dependencies', () => {
       expect(mockDependantFactory.dependencies.requests[mockFactory.id][0].part).toBe('IronIngot')
     })
 
-    it('should throw an error if output part is not supplied', () => {
+    it('should return undefined if output part is not supplied', () => {
       const input = {
         factoryId: mockFactory.id,
         outputPart: '',
         amount: 900,
       }
 
-      expect(() => {
-        addDependency(mockFactory, mockDependantFactory, input)
-      }).toThrow()
+      expect(addDependency(mockFactory, mockDependantFactory, input)).toBe(undefined)
     })
 
-    it('should deny adding a dependency if one already exists', () => {
+    it('should return undefined if adding a dependency if one already exists', () => {
       const input = {
         factoryId: mockFactory.id,
         outputPart: 'IronIngot',
@@ -62,10 +60,8 @@ describe('dependencies', () => {
         amount: 900,
       }
 
-      expect(() => {
-        addDependency(mockFactory, mockDependantFactory, input)
-        addDependency(mockFactory, mockDependantFactory, input2)
-      }).toThrow()
+      expect(addDependency(mockFactory, mockDependantFactory, input)).toBe(undefined)
+      expect(addDependency(mockFactory, mockDependantFactory, input2)).toBe(undefined)
     })
   })
 
