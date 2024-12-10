@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { calculateFactories, calculateFactory, newFactory } from '@/utils/factory-management/factory'
+import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addProductToFactory,
-  calculateByProducts,
-  calculateProducts, shouldShowInternal,
+  shouldShowInternal,
   shouldShowNotInDemand,
   trimProduct,
 } from '@/utils/factory-management/products'
@@ -27,12 +26,12 @@ describe('products', () => {
 
   beforeEach(() => {
     mockFactory = newFactory('Iron Ingots')
+    addProductToFactory(mockFactory, mockIngotIron)
+    calculateFactories([mockFactory], gameData)
   })
 
   describe('addProductToFactory', () => {
     it('should add a product to a factory', () => {
-      addProductToFactory(mockFactory, mockIngotIron)
-
       expect(mockFactory.products.length).toBe(1)
       expect(mockFactory.products[0].id).toBe('IronIngot')
     })
@@ -42,14 +41,12 @@ describe('products', () => {
         amount: 123,
         recipe: 'Alternate_IngotIron',
       }
-      addProductToFactory(mockFactory, mockIngotIron)
       addProductToFactory(mockFactory, mockProductAlt)
 
       expect(mockFactory.products.length).toBe(2)
       expect(mockFactory.products[1].id).toBe('IronIngot')
     })
     it('should add a part to the factory', () => {
-      addProductToFactory(mockFactory, mockIngotIron)
       expect(mockFactory.parts.IronIngot).toBeDefined()
     })
     it('should add proper display orders', () => {
@@ -107,7 +104,7 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProduct)
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(98)
       expect(mockFactory.parts.HighSpeedWire.amountRequired).toBe(420) // Nice
@@ -121,7 +118,7 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProduct)
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       expect(mockFactory.parts.CircuitBoard.amountSupplied).toBe(100)
       expect(Number(mockFactory.parts.HighSpeedWire.amountRequired.toFixed(3))).toBe(428.571)
@@ -151,7 +148,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProductIronPlate)
       addProductToFactory(mockFactory, mockProductIronRod)
 
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       // Expect the ingredient requirements to be correct
       // Iron Plate ratio is 3:2 so 150 iron ingots are required
@@ -184,7 +181,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct1)
       addProductToFactory(mockFactory, mockProduct2)
 
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       // This should result in 200 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(200)
@@ -207,7 +204,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct1)
       addProductToFactory(mockFactory, mockProduct2)
 
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       // This should result in 300 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(300)
@@ -236,7 +233,7 @@ describe('products', () => {
       addProductToFactory(mockFactory, mockProduct2)
       addProductToFactory(mockFactory, mockProduct3)
 
-      calculateProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       // This should result in 150 iron plates being made.
       expect(mockFactory.parts.IronPlate.amountSupplied).toBe(150)
@@ -258,12 +255,12 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProductWithoutByProducts)
-      calculateProducts(mockFactory, gameData)
-      calculateByProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       expect(mockFactory.products[0].byProducts).toHaveLength(0)
     })
     it('should calculate byproducts', () => {
+      mockFactory.products = []
       const mockProductWithByProducts = {
         id: 'LiquidFuel',
         amount: 100,
@@ -271,8 +268,7 @@ describe('products', () => {
       }
 
       addProductToFactory(mockFactory, mockProductWithByProducts)
-      calculateProducts(mockFactory, gameData)
-      calculateByProducts(mockFactory, gameData)
+      calculateFactories([mockFactory], gameData)
 
       expect(mockFactory.products[0].id).toBe('LiquidFuel')
       expect(mockFactory.products[0].byProducts).toHaveLength(1)
@@ -303,7 +299,7 @@ describe('products', () => {
       const product = mockFactory.products[0]
 
       trimProduct(product, mockFactory)
-      calculateFactory(mockFactory, [mockFactory], gameData)
+      calculateFactories([mockFactory], gameData)
 
       // Expect the Iron Ingot to be trimmed to the correct amount
       expect(mockFactory.parts.IronIngot.amountSupplied).toBe(150)
@@ -317,6 +313,8 @@ describe('products', () => {
         recipe: 'IngotIron',
       })
       mockFactory.parts = {}
+      calculateFactories([mockFactory], gameData)
+
       expect(trimProduct(mockFactory.products[0], mockFactory)).toBe(undefined)
     })
   })

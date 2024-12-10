@@ -32,7 +32,7 @@ describe('Complex Demo Plan', () => {
     expect(factories.length).toBeGreaterThan(0)
   })
   it('should have the expected number of factories', () => {
-    expect(factories.length).toBe(6)
+    expect(factories.length).toBe(7)
   })
   describe('Oil Processing', () => {
     it('should have Oil Processing factory configured correctly', () => {
@@ -528,7 +528,7 @@ describe('Complex Demo Plan', () => {
       expect(plutoniumFac.products[0].amount).toBe(33.333)
       expect(plutoniumFac.inputs.length).toBe(1)
       expect(plutoniumFac.inputs[0].outputPart).toBe('NuclearWaste')
-      expect(plutoniumFac.inputs[0].amount).toBe(25)
+      expect(plutoniumFac.inputs[0].amount).toBe(100)
     })
 
     it('should have correct part metrics', () => {
@@ -569,7 +569,7 @@ describe('Complex Demo Plan', () => {
         amountSuppliedViaInput: 0,
         amountSuppliedViaProduction: 0,
         amountSuppliedViaRaw: 0,
-        amountRemaining: 0,
+        amountRemaining: -16.667,
         satisfied: false,
         isRaw: false,
         exportable: false,

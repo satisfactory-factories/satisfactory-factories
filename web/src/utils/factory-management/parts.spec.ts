@@ -59,7 +59,8 @@ describe('parts', () => {
 
       // Expect that all parts involved with creating Alumina have been added, including water.
       expect(mockFactory.parts.Water.amountRequired).toBe(150)
-      expect(mockFactory.parts.Water.amountSuppliedViaInput).toBe(150)
+      expect(mockFactory.parts.Water.amountSupplied).toBe(150)
+      expect(mockFactory.parts.Water.amountSuppliedViaRaw).toBe(150)
       expect(mockFactory.parts.Water.amountRemaining).toBe(0)
     })
 
@@ -99,6 +100,7 @@ describe('parts', () => {
         amount: 50,
       })
 
+      calculateFactories([mockFactory, otherMockFactory], gameData, true) // Part metrics need to be calculated before dependencies
       calculateFactories([mockFactory, otherMockFactory], gameData)
 
       expect(mockFactory.parts.CompactedCoal.amountSupplied).toBe(50)
@@ -110,10 +112,12 @@ describe('parts', () => {
       // And on the mock factory that produces the compacted coal
       expect(otherMockFactory.parts.CompactedCoal.amountSupplied).toBe(50)
       expect(otherMockFactory.parts.CompactedCoal.amountSuppliedViaProduction).toBe(50)
-      expect(otherMockFactory.parts.CompactedCoal.amountRequired).toBe(50)
-      expect(otherMockFactory.parts.CompactedCoal.amountRequiredExports).toBe(50)
-      expect(otherMockFactory.parts.CompactedCoal.amountRemaining).toBe(0)
+      expect(otherMockFactory.parts.CompactedCoal.amountRequired).toBe(0) // It's a product with no demand
+      expect(otherMockFactory.parts.CompactedCoal.amountRequiredExports).toBe(0)
+      expect(otherMockFactory.parts.CompactedCoal.amountRequiredProduction).toBe(0)
+      expect(otherMockFactory.parts.CompactedCoal.amountRemaining).toBe(50)
       expect(otherMockFactory.parts.CompactedCoal.satisfied).toBe(true)
+      expect(otherMockFactory.parts.CompactedCoal.exportable).toBe(true)
     })
   })
 })
