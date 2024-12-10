@@ -8,7 +8,11 @@ export const addDependency = (
   input: FactoryInput
 ) => {
   if (!input.outputPart) {
-    throw new Error(`addDependency: Factory ${factory.id} is attempting to add a dependency with no output part!`)
+    console.error(`addDependency: Factory ${factory.name} is attempting to add a dependency with no output part!`)
+    // Delete the invalid input
+    factory.inputs = factory.inputs.filter(i => i !== input)
+    alert(`Factory ${factory.name} is attempting to add a dependency with no output part. The invalid input has been deleted.`)
+    return
   }
 
   if (!provider.dependencies.requests[factory.id]) {
@@ -21,7 +25,11 @@ export const addDependency = (
   if (requests.length > 0) {
     const existingRequest = requests.find(req => req.part === input.outputPart)
     if (existingRequest) {
-      throw new Error(`addDependency: Factory ${provider.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
+      console.error(`addDependency: Factory ${provider.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
+      // Delete the invalid input
+      factory.inputs = factory.inputs.filter(i => i !== input)
+      alert(`Factory ${provider.name} already has a request for part ${input.outputPart} from ${factory.name}. The invalid input has been deleted.`)
+      return
     }
   }
 
