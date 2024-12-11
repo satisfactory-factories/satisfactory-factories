@@ -36,7 +36,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             });
-            if (milestones.data.find(m => m.title === 'High Priority')) {
+            const milestone = milestones.data.find(m => m.title === 'High Priority');
+            if (milestone) {
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
