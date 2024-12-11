@@ -284,7 +284,6 @@
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
   import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
-  import { DataInterface } from '@/interfaces/DataInterface'
   import { getPartDisplayName } from '@/utils/helpers'
   import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -301,7 +300,6 @@
 
   defineProps<{
     factory: Factory
-    gameData: DataInterface
     helpText: boolean
     totalFactories: number;
   }>()
