@@ -10,8 +10,6 @@ export const calculateTotalBuildingsByType = (factories: Factory[]) => {
     {
       name: string;
       totalAmount: number;
-      powerPerBuilding: number;
-      totalPower: number;
     }
   > = {} // Explicitly define the type
 
@@ -23,14 +21,11 @@ export const calculateTotalBuildingsByType = (factories: Factory[]) => {
           buildings[key] = {
             name: requirement.name,
             totalAmount: 0,
-            powerPerBuilding: requirement.powerPerBuilding,
-            totalPower: 0,
           }
         }
 
         // Accumulate the total amount and total power
         buildings[key].totalAmount += requirement.amount
-        buildings[key].totalPower += requirement.totalPower
       }
     )
   })
@@ -41,7 +36,7 @@ export const calculateTotalBuildingsByType = (factories: Factory[]) => {
 }
 
 export const calculateTotalRawResources = (factories: Factory[]) => {
-  const rawResources: Record<string, { id: string; totalAmount: number }> = {}
+  const rawResources: Record<string, { id: string; totalAmount: number; }> = {}
 
   factories.forEach(factory => {
     Object.values(factory.rawResources).forEach(resource => {
@@ -52,11 +47,18 @@ export const calculateTotalRawResources = (factories: Factory[]) => {
           totalAmount: 0,
         }
       }
-
       // Accumulate the resource amount
       rawResources[resource.id].totalAmount += resource.amount
     })
   })
+  // // Calculate percentage consumed
+  // worldResources.forEach(worldResource => {
+  //   if (rawResources[worldResource.id]) {
+  //     const totalAmount = rawResources[worldResource.id].totalAmount
+  //     rawResources[worldResource.id].percentageConsumed =
+  //       totalAmount > 0 ? Math.min((totalAmount / worldResource.amount) * 100, 100) : 0
+  //   }
+  // })
 
   // Convert the object to an array and sort it alphabetically by display name
   return Object.values(rawResources).sort((a, b) =>
@@ -122,4 +124,42 @@ export const calculateProducedItemsDifference = (factories: Factory[]) => {
   return Object.values(differences).sort((a, b) =>
     a.name.localeCompare(b.name)
   )
+}
+
+export const calculateTotalPower = (factories: Factory[]) => {
+  const buildings: Record<
+string,
+{
+  powerConsumed: number;
+  powerProduced: number;
+}
+> = {} // Explicitly define the type
+
+  factories.forEach(factory => {
+    Object.entries(factory.buildingRequirements).forEach(
+      ([key, requirement]) => {
+        if (!buildings[key]) {
+          // Initialize the building entry
+          buildings[key] = {
+            powerConsumed: requirement.powerConsumed || 0,
+            powerProduced: requirement.powerProduced || 0,
+          }
+        } else {
+          // Accumulate power values if the building already exists
+          buildings[key].powerConsumed += requirement.powerConsumed || 0
+          buildings[key].powerProduced += requirement.powerProduced || 0
+        }
+      }
+    )
+  })
+  // Calculate total power consumed and produced
+  let totalPowerConsumed = 0
+  let totalPowerProduced = 0
+
+  Object.values(buildings).forEach(building => {
+    totalPowerConsumed += building.powerConsumed
+    totalPowerProduced += building.powerProduced
+  })
+
+  return { totalPowerConsumed, totalPowerProduced }
 }

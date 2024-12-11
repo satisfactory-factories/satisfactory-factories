@@ -47,8 +47,8 @@
           :help-text="helpText"
           :world-raw-resources="worldRawResources"
         /> -->
-        <statistics v-if="factories.length !== 0" :factories="factories" :help-text="helpText" />
-        <Summary v-if="factories.length !== 0" :factories="factories" :help-text="helpText" />
+        <statistics v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
+        <Summary v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
         <planner-factory
           v-for="(factory) in getFactories()"
           :key="factory.id"

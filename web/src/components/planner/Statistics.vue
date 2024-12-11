@@ -30,7 +30,7 @@
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <statistics-buildings :factories="factories" :help-text="helpText" />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
-          <statistics-power :help-text="helpText" />
+          <statistics-power :factories="factories" :help-text="helpText" />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <statistics-items-difference :factories="factories" :help-text="helpText" />
           <v-col class="text-center pb-0">
