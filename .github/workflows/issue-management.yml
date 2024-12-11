@@ -36,8 +36,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             });
-            const milestone = milestones.data.find(m => m.title === 'High Priority');
-            if (milestone) {
+            if (milestones.data.find(m => m.title === 'High Priority')) {
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -45,12 +44,14 @@ jobs:
                 milestone: milestone.number
               });
             }
-            await github.rest.issues.removeLabel({
-              issue_number: issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: 'Needs Triage'
-            });
+            if (labels.data.some(l => l.name === 'Needs Triage')) {
+              await github.rest.issues.removeLabel({
+                issue_number: issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'Needs Triage'
+              });
+            }
           }
 
     - name: P1 Label removed, remove "High Priority" milestone
@@ -65,8 +66,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             });
-            const milestone = milestones.data.find(m => m.title === 'High Priority');
-            if (milestone) {
+            if (milestones.data.find(m => m.title === 'High Priority')) {
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -74,12 +74,14 @@ jobs:
                 milestone: null
               });
             }
-            await github.rest.issues.removeLabel({
-              issue_number: issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: 'Needs Triage'
-            });
+            if (labels.data.some(l => l.name === 'Needs Triage')) {
+              await github.rest.issues.removeLabel({
+                issue_number: issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'Needs Triage'
+              });
+            }
           }
 
     - name: P2 or P3 Label added, Remove Needs Triage label
@@ -88,10 +90,12 @@ jobs:
       with:
         script: |
           const issue = context.issue;
-          await github.rest.issues.removeLabel({
-            issue_number: issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            name: 'Needs Triage'
-          });
+          if (labels.data.some(l => l.name === 'Needs Triage')) {
+            await github.rest.issues.removeLabel({
+              issue_number: issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Needs Triage'
+            });
+          }
 
