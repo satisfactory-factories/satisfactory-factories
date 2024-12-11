@@ -403,7 +403,7 @@
   .sticky-sidebar {
     width: 375px;
     max-width: 375px;
-    max-height: 87vh; // For some reason this is not relative to the container
+    max-height: calc(100vh - 64px - 50px); // For some reason this is not relative to the planner container
     overflow-y: auto; /* Make it scrollable */
 
     @media screen and (max-width: 1500px) {
