@@ -33,28 +33,39 @@
 
           <v-table
             ref="tableRef"
+            class="rounded border-md sub-card"
             fixed-header
             :height="tableHeight"
           >
             <thead>
               <tr>
-                <th class="text-left table-column">Factory Name</th>
-                <th class="text-left table-column">Buildings</th>
-                <th class="text-left table-column">Producing</th>
-                <th class="text-left table-column">Importing</th>
-                <th class="text-left table-column">Exporting</th>
+                <th class="text-left text-h6 table-column border-e-md" scope="row">
+                  <i class="fas fa-industry" /><span class="ml-2">Factory Name</span>
+                </th>
+                <th class="text-left text-h6 table-column border-e-md" scope="row">
+                  <i class="fas fa-building" /><span class="ml-2">Buildings</span>
+                </th>
+                <th class="text-left text-h6 table-column border-e-md" scope="row">
+                  <i class="fas fa-box" /><span class="ml-2">Items</span>
+                </th>
+                <th class="text-left text-h6 table-column border-e-md" scope="row">
+                  <i class="fas fa-arrow-to-right" /><span class="ml-2">Imports</span>
+                </th>
+                <th class="text-left text-h6 table-column border-e-md" scope="row">
+                  <i class="fas fa-truck-container" /><span class="ml-2">Exports</span>
+                </th>
               </tr>
             </thead>
             <tbody ref="contentRef">
               <tr
                 v-for="factory in factories"
                 :key="factory.id"
-                class="header"
+                class="header p-5 hover"
                 :class="factoryClass(factory)"
                 @click="navigateToFactory(factory.id as number)"
               >
-                <td class="header">{{ factory.name }}</td>
-                <td class="header">
+                <td class="header border-e-md">{{ factory.name }}</td>
+                <td class="header border-e-md">
                   <span
                     v-for="([, buildingData], buildingIndex) in Object.entries(factory.buildingRequirements)
                       .sort(([, a], [, b]) => getBuildingDisplayName(a.name).localeCompare(getBuildingDisplayName(b.name)))"
@@ -74,7 +85,7 @@
                     </v-chip>
                   </span>
                 </td>
-                <td class="header">
+                <td class="header border-e-md">
                   <v-chip
                     v-for="part in factory.products
                       .slice()
@@ -110,7 +121,7 @@
                     }}/min)</span>
                   </v-chip>
                 </td>
-                <td class="header">
+                <td class="header border-e-md">
                   <v-chip
                     v-for="(
                       totals
@@ -131,7 +142,7 @@
                     </span>
                   </v-chip>
                 </td>
-                <td class="header">
+                <td class="header border-e-md">
                   <v-chip
                     v-for="(
                       totals
@@ -167,14 +178,13 @@
   import { nextTick, ref, watch } from 'vue'
   import {
     Factory,
-    FactoryDependencyRequest,
-    FactoryInput,
   } from '@/interfaces/planner/FactoryInterface'
   import {
     differenceClass,
     getPartDisplayName,
     hasMetricsForPart,
   } from '@/utils/helpers'
+  import { calculateTotalDependencies, calculateTotalDependencyRequests } from '@/utils/summary'
   import { formatNumber } from '@/utils/numberFormatter'
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
   const props = defineProps<{
@@ -191,7 +201,7 @@
   const contentRef = ref<HTMLElement | null>(null)
   const headerHeight = 56 // Max height in px
   const maxHeight = 750 // Max height in px
-  const tableHeight = ref('auto')
+  const tableHeight = ref('tableRef')
 
   // Initialize the 'hidden' ref based on the value in localStorage
   const hidden = ref<boolean>(localStorage.getItem('summaryHidden') === 'true')
@@ -232,48 +242,6 @@
     }
   }
 
-  // This function finds out which items are being imported into the factory and their quantity
-  const calculateTotalDependencies = (inputs: FactoryInput[]) => {
-    const totals: Record<string, number> = {}
-
-    inputs.forEach(input => {
-      const { outputPart, amount } = input
-      if (outputPart) {
-        if (!totals[outputPart]) {
-          totals[outputPart] = 0
-        }
-        totals[outputPart] += amount
-      }
-    })
-
-    return Object.entries(totals)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, value]) => ({ outputPart: key, totalAmount: value }))
-  }
-
-  // This function finds out which items are being exported from the factory and their quantity
-  const calculateTotalDependencyRequests = (
-    requests: Record<string, FactoryDependencyRequest[]>
-  ) => {
-    const totals: Record<string, number> = {}
-
-    Object.values(requests).forEach(dependencyRequests => {
-      dependencyRequests.forEach(request => {
-        const { part, amount } = request
-
-        if (part) {
-          if (!totals[part]) {
-            totals[part] = 0
-          }
-          totals[part] += amount
-        }
-      })
-    })
-
-    return Object.entries(totals)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, value]) => ({ part: key, totalAmount: value }))
-  }
   </script>
 
 <style lang="scss" scoped>

@@ -66,6 +66,44 @@ export const calculateTotalRawResources = (factories: Factory[]) => {
   )
 }
 
+export const calculateTotalParts = (factories: Factory[]) => {
+  const parts: Record<
+    string,
+    {
+      id: string;
+      amountRequired: number;
+      amountSupplied: number;
+      amountRemaining: number;
+      satisfied: boolean;
+      isRaw: boolean;
+    }
+  > = {}
+
+  factories.forEach(factory => {
+    Object.entries(factory.parts).forEach(([partId, partData]) => {
+      if (!parts[partId]) {
+        parts[partId] = {
+          id: partId,
+          amountRequired: 0,
+          amountSupplied: 0,
+          amountRemaining: 0,
+          satisfied: true,
+          isRaw: partData.isRaw,
+        }
+      }
+
+      // Aggregate metrics
+      parts[partId].amountRequired += partData.amountRequired
+      parts[partId].amountSupplied += partData.amountSuppliedViaProduction
+      parts[partId].amountRemaining += partData.amountRemaining
+      parts[partId].satisfied &&= partData.satisfied // Combine satisfaction status
+    })
+  })
+
+  // Convert to array and return sorted by part name
+  return Object.values(parts).sort((a, b) => getPartDisplayName(a.id).localeCompare(getPartDisplayName(b.id)))
+}
+
 export const calculateTotalProducedItems = (factories: Factory[]) => {
   const products: Record<
       string,

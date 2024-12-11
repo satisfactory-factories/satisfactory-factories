@@ -31,7 +31,6 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { formatNumber } from '@/utils/numberFormatter'
   import { calculateTotalProducedItems } from '@/utils/statistics'
-
   const props = defineProps<{
     factories: Factory[];
     helpText: boolean;
@@ -39,5 +38,4 @@
 
   // This function calculates total number of products produced
   const allFactoryProducts = computed(() => calculateTotalProducedItems(props.factories))
-
   </script>
