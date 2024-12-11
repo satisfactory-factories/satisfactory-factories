@@ -26,3 +26,7 @@ export const differenceClass = (difference: number) => {
     'text-red': difference < 0,
   }
 }
+
+export const confirmDialog = (message: string): boolean => {
+  return window.confirm(message)
+}

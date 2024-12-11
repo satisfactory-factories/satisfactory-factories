@@ -9,9 +9,9 @@
 
       <tab-navigation v-if="showTabNavigation" />
     </template>
-
     <v-main>
       <router-view />
+      <toast />
     </v-main>
   </v-app>
 </template>

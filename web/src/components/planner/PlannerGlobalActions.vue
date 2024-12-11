@@ -49,28 +49,24 @@
       </v-btn>
       <templates />
 
-      <div v-if="isDebugMode">
-        <v-btn
-          v-if="isDebugMode"
-          class="ma-1 mb-0"
-          color="secondary"
-          prepend-icon="fas fa-bug"
-          variant="tonal"
-          @click="copyPlanToClipboard"
-        >
-          Copy plan
-        </v-btn>
-        <v-btn
-          v-if="isDebugMode"
-          class="ma-1"
-          color="secondary"
-          prepend-icon="fas fa-bug"
-          variant="tonal"
-          @click="pastePlanFromClipboard"
-        >
-          Paste plan
-        </v-btn>
-      </div>
+      <v-btn
+        class="ma-1 mb-0"
+        color="secondary"
+        prepend-icon="fas fa-copy"
+        variant="tonal"
+        @click="copyPlanToClipboard"
+      >
+        Copy plan
+      </v-btn>
+      <v-btn
+        class="ma-1"
+        color="secondary"
+        prepend-icon="fas fa-clipboard"
+        variant="tonal"
+        @click="confirmDialog('This will replace your plan. Are you sure? For large plans the page may hang for several seconds.') && pastePlanFromClipboard()"
+      >
+        Paste plan
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -78,8 +74,10 @@
 <script setup lang="ts">
   import { defineEmits, defineProps } from 'vue'
   import { useAppStore } from '@/stores/app-store'
+  import eventBus from '@/utils/eventBus'
+  import { confirmDialog } from '@/utils/helpers'
 
-  const { isDebugMode, getFactories, setFactories } = useAppStore()
+  const { getFactories, setFactories } = useAppStore()
 
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
@@ -98,6 +96,7 @@
   const copyPlanToClipboard = () => {
     const plan = JSON.stringify(getFactories())
     navigator.clipboard.writeText(plan)
+    eventBus.emit('toast', { message: 'Plan copied to clipboard! You can save it to a file if you like, or paste it.' })
   }
 
   const pastePlanFromClipboard = () => {

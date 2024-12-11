@@ -8,7 +8,12 @@ export const addDependency = (
   input: FactoryInput
 ) => {
   if (!input.outputPart) {
-    throw new Error(`addDependency: Factory ${factory.id} is attempting to add a dependency with no output part!`)
+    const errorMsg = `Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`
+    console.error(errorMsg)
+    // Delete the invalid input
+    factory.inputs = factory.inputs.filter(i => i !== input)
+    alert(errorMsg)
+    return
   }
 
   if (!provider.dependencies.requests[factory.id]) {
@@ -18,11 +23,10 @@ export const addDependency = (
   const requests = provider.dependencies.requests[factory.id]
 
   // If the factory already has a request for the same factory and part, there's an issue.
-  if (requests.length > 0) {
-    const existingRequest = requests.find(req => req.part === input.outputPart)
-    if (existingRequest) {
-      throw new Error(`addDependency: Factory ${provider.id} already has a request for part ${input.outputPart} from ${factory.id}.`)
-    }
+  const existingRequest = requests.find(req => req.part === input.outputPart)
+  if (existingRequest) {
+    // Do nothing, the request already exists. This will happen a lot as we're often running calculateFactory twice in certain scenarios.
+    return
   }
 
   requests.push({
@@ -33,46 +37,49 @@ export const addDependency = (
 }
 
 // Scans for invalid dependency requests and removes the request and the input from the erroneous factory.
-export const scanForInvalidInputs = (factory: Factory, factories: Factory[]): void => {
-  // If there's no requests, nothing to do.
-  if (!factory.dependencies?.requests) {
-    return
-  }
-
-  // Scan all requests for the factory
-  Object.keys(factory.dependencies?.requests).forEach(requestedFactoryId => {
-    const requests: FactoryDependencyRequest[] = factory.dependencies.requests[requestedFactoryId]
-
-    const dependantFactory = findFac(requestedFactoryId, factories)
-    // If the factory doesn't exist, somehow this data corrupted, clean it up now.
-    if (!dependantFactory) {
-      console.error(`Requested factory ${requestedFactoryId} not found!`)
-      delete factory.dependencies.requests[requestedFactoryId]
+export const scanForInvalidInputs = (factories: Factory[]): void => {
+  console.log('dependencies: Scanning for invalid inputs')
+  factories.forEach(factory => {
+    // If there's no requests, nothing to do.
+    if (!factory.dependencies?.requests || Object.keys(factory.dependencies.requests).length === 0) {
+      return
     }
 
-    requests.forEach(request => {
-      // Check if the product exists within the factory
-      const product = factory.products.find(prod => prod.id === request.part)
+    // Scan all requests for the factory
+    Object.keys(factory.dependencies.requests).forEach(requestedFactoryId => {
+      const requests: FactoryDependencyRequest[] = factory.dependencies.requests[requestedFactoryId]
 
-      // If the product does not exist, remove the dependency and the input.
-      if (!product) {
-        console.warn(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
-
-        // Filter out the dependency request(s) for the part from the erroneous factory.
-        factory.dependencies.requests[requestedFactoryId] = factory.dependencies.requests[requestedFactoryId].filter(req => req.part !== request.part)
-
-        // If all requests from the factory have been removed, also delete the key.
-        if (factory.dependencies.requests[requestedFactoryId].length === 0) {
-          delete factory.dependencies.requests[requestedFactoryId]
-        }
-
-        // Delete the input from the factory that caused the issue.
-        dependantFactory.inputs.forEach((input, index) => {
-          if (input.factoryId === factory.id && input.outputPart === request.part) {
-            dependantFactory.inputs.splice(index, 1)
-          }
-        })
+      const dependantFactory = findFac(requestedFactoryId, factories)
+      // If the factory doesn't exist, somehow this data corrupted, clean it up now.
+      if (!dependantFactory) {
+        console.error(`Requested factory ${requestedFactoryId} not found!`)
+        delete factory.dependencies.requests[requestedFactoryId]
       }
+
+      requests.forEach(request => {
+      // Check if the requested part exists within the factory
+        const foundPart = factory.parts[request.part]
+
+        // If the product does not exist, remove the dependency and the input.
+        if (!foundPart) {
+          console.error(`Factory ${factory.name} (${factory.id}) does not have the product ${request.part} requested by ${dependantFactory.name} (${dependantFactory.id}). Removing dependency and input.`)
+
+          // Filter out the dependency request(s) for the part from the erroneous factory.
+          factory.dependencies.requests[requestedFactoryId] = factory.dependencies.requests[requestedFactoryId].filter(req => req.part !== request.part)
+
+          // If all requests from the factory have been removed, also delete the key.
+          if (factory.dependencies.requests[requestedFactoryId].length === 0) {
+            delete factory.dependencies.requests[requestedFactoryId]
+          }
+
+          // Delete the input from the factory that caused the issue.
+          dependantFactory.inputs.forEach((input, index) => {
+            if (input.factoryId === factory.id && input.outputPart === request.part) {
+              dependantFactory.inputs.splice(index, 1)
+            }
+          })
+        }
+      })
     })
   })
 }
@@ -98,8 +105,12 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 }
 
 // Loop through all factories, checking their inputs and building a dependency tree.
-export const constructDependencies = (factories: Factory[]): void => {
-  // First, remove the current dependencies for each factory to ensure we're not orphaning.
+export const calculateDependencies = (factories: Factory[]): void => {
+  console.log('dependencies: Calculating Dependencies')
+
+  // Blow away the dependencies for all factories to ensure we're not orphaning any and leaving any invalid dependencies behind.
+  // Rather than trying to figure out what's changed, just recalculate everything.
+  // It's computationally inexpensive to do this, thankfully.
   factories.forEach(factory => {
     factory.dependencies = {
       requests: {},
@@ -107,7 +118,6 @@ export const constructDependencies = (factories: Factory[]): void => {
     }
   })
 
-  // Second, rebuild the dependencies.
   factories.forEach(factory => {
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
@@ -137,6 +147,9 @@ export const constructDependencies = (factories: Factory[]): void => {
 
 // Create data helper classes to visualize the dependencies in the UI nicely.
 export const calculateDependencyMetrics = (factory: Factory) => {
+  // Reset the metrics for the factory
+  factory.dependencies.metrics = {}
+
   Object.keys(factory.dependencies.requests).forEach(reqFac => {
     const requests = factory.dependencies.requests[reqFac]
     requests.forEach(request => {
@@ -147,15 +160,22 @@ export const calculateDependencyMetrics = (factory: Factory) => {
         metrics[part] = {
           part,
           request: 0,
-          supply: factory.parts[part]?.amountSupplied ?? 0,
-          isRequestSatisfied: false,
-          difference: 0,
+          supply: 0, // At this stage it cannot be calculated
+          isRequestSatisfied: false, // Calculated later
+          difference: 0, // Calculated later
         }
       }
 
       metrics[part].request += request.amount
-      metrics[part].difference = metrics[part].supply - metrics[part].request
-      metrics[part].isRequestSatisfied = metrics[part].difference >= 0
     })
+  })
+}
+
+export const calculateDependencyMetricsSupply = (factory: Factory) => {
+  Object.keys(factory.dependencies.metrics).forEach(part => {
+    const metrics = factory.dependencies.metrics[part]
+    metrics.supply = factory.parts[part].amountSupplied
+    metrics.difference = metrics.supply - metrics.request
+    metrics.isRequestSatisfied = metrics.difference >= 0
   })
 }
