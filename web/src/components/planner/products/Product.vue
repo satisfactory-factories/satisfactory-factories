@@ -57,17 +57,10 @@
       </div>
       <div class="input-row d-flex align-center">
         <v-btn
-          v-if="!factory.parts[product.id]?.satisfied"
+          v-if="!factory.parts[product.id]?.satisfied || factory.dependencies.metrics[product.id]?.difference < 0"
           class="rounded mr-2"
           color="green"
           @click="fixProduction(factory, product.id)"
-        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
-        </v-btn>
-        <v-btn
-          v-if="factory.dependencies.metrics[product.id]?.difference < 0"
-          class="rounded mr-2"
-          color="green"
-          @click="fixExport(factory, product.id)"
         ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
         </v-btn>
         <v-btn
