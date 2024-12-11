@@ -61,7 +61,7 @@
           class="rounded mr-2"
           color="green"
           @click="fixProduction(factory, product.id)"
-        ><i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+        ><i class="fas fa-wrench" /><span class="ml-1">Fix</span>
         </v-btn>
         <v-btn
           v-show="shouldShowTrim(product, factory)"
