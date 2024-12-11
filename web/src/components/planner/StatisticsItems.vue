@@ -7,6 +7,7 @@
     <i class="fas fa-info-circle" /> Shows all the items produced by all
     your factories.
   </p>
+
   <div v-if="allFactoryProducts.length > 0">
     <v-chip
       v-for="(product) in allFactoryProducts"
@@ -17,7 +18,7 @@
         <game-asset :subject="product.id" type="item" />
       </span>
       <span>
-        <b>{{ product.name }}</b>: {{ formatNumber(product.totalAmount) }}/min
+        <b>{{ getPartDisplayName(product.id) }}</b>: {{ formatNumber(product.amountSupplied) }}/min
       </span>
     </v-chip>
   </div>
@@ -30,12 +31,16 @@
     Factory,
   } from '@/interfaces/planner/FactoryInterface'
   import { formatNumber } from '@/utils/numberFormatter'
-  import { calculateTotalProducedItems } from '@/utils/statistics'
+  import { calculateTotalParts } from '@/utils/statistics'
+  import {
+    getPartDisplayName,
+  } from '@/utils/helpers'
   const props = defineProps<{
     factories: Factory[];
     helpText: boolean;
   }>()
 
   // This function calculates total number of products produced
-  const allFactoryProducts = computed(() => calculateTotalProducedItems(props.factories))
+  const allFactoryProducts = computed(() => calculateTotalParts(props.factories).filter(product => product.amountSupplied > 0 && !product.isRaw
+  ))
   </script>

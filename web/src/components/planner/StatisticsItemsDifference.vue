@@ -15,13 +15,13 @@
       :key="product.id"
       class="sf-chip"
       :class="{
-        'green': product.totalDifference > 0,
-        'red': product.totalDifference < 0,
+        'green': product.amountRemaining > 0,
+        'red': product.amountRemaining < 0,
       }"
     >
       <game-asset :subject="product.id" type="item" />
       <span class="ml-2">
-        <b>{{ product.name }}</b>: {{ formatNumber(product.totalDifference) }}/min
+        <b>{{ getPartDisplayName(product.id) }}</b>: {{ formatNumber(product.amountRemaining) }}/min
       </span>
     </v-chip>
   </div>
@@ -33,8 +33,11 @@
   import {
     Factory,
   } from '@/interfaces/planner/FactoryInterface'
+  import {
+    getPartDisplayName,
+  } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
-  import { calculateProducedItemsDifference } from '@/utils/statistics'
+  import { calculateTotalParts } from '@/utils/statistics'
 
   const props = defineProps<{
     factories: Factory[];
@@ -42,6 +45,6 @@
   }>()
 
   // This function calculates total number of products produced and gets the difference between demand and supply (to see if we have a surplus of products or not)
-  const factoryProductDifferences = computed(() => calculateProducedItemsDifference(props.factories))
+  const factoryProductDifferences = computed(() => calculateTotalParts(props.factories).filter(product => product.amountRemaining !== 0))
 
   </script>
