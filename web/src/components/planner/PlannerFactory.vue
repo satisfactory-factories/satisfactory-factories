@@ -120,7 +120,7 @@
             />
           </v-col>
         </v-row>
-        <v-card-text v-show="!factory.hidden">
+        <v-card-text v-if="!factory.hidden">
           <ProductsAndPower
             :factory="factory"
             :help-text="helpText"
