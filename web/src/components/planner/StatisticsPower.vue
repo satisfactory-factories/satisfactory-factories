@@ -10,13 +10,17 @@
       class="sf-chip yellow"
       variant="tonal"
     >
-      <i class="fas fa-bolt mr-2" />{{ powerConsumed.value }} {{ powerConsumed.unit }} consumed
+      <i class="fas fa-bolt" />
+      <i class="fas fa-minus" />
+      <span class="ml-2">{{ powerConsumed.value }} {{ powerConsumed.unit }} consumed</span>
     </v-chip>
     <v-chip
-      class="sf-chip"
+      class="sf-chip yellow"
       variant="tonal"
     >
-      <i class="fas fa-solar-panel mr-2" />{{ powerProduced.value }} {{ powerProduced.unit }} generated
+      <i class="fas fa-bolt" />
+      <i class="fas fa-plus" />
+      <span class="ml-2">{{ powerProduced.value }} {{ powerProduced.unit }} generated</span>
     </v-chip>
     <v-chip
       class="sf-chip"

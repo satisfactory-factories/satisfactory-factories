@@ -113,12 +113,13 @@
       </div>
       <div class="input-row d-flex align-center">
         <v-chip
-          class="sf-chip small green"
+          class="sf-chip yellow"
           variant="tonal"
         >
-          <i class="fas fa-solar-panel" />
+          <i class="fas fa-bolt" />
+          <i class="fas fa-plus" />
           <span class="ml-2">
-            Produces: {{ formatNumber(producer.powerAmount) }} MW
+            Produces: {{ formatPower(producer.powerAmount).value }} {{ formatPower(producer.powerAmount).unit }}
           </span>
         </v-chip>
       </div>
@@ -178,7 +179,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { formatNumber } from '@/utils/numberFormatter'
+  import { formatNumber, formatPower } from '@/utils/numberFormatter'
   import { getPartDisplayName } from '@/utils/helpers'
   import { useDisplay } from 'vuetify'
   import { useGameDataStore } from '@/stores/game-data-store'
