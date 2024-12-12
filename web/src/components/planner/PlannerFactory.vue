@@ -284,7 +284,7 @@
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
   import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
-  import { getPartDisplayName } from '@/utils/helpers'
+  import { differenceClass, getPartDisplayName, hasMetricsForPart } from '@/utils/helpers'
   import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'

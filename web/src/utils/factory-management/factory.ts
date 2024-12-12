@@ -93,6 +93,9 @@ export const calculateFactory = (
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
 
+  // Finally, we check if any factories has any problems.
+  calculateHasProblem(allFactories)
+
   // Emit an event that the data has been updated so it can be synced
   eventBus.emit('factoryUpdated')
 
