@@ -10,13 +10,13 @@
       class="sf-chip yellow"
       variant="tonal"
     >
-      <i class="fas fa-bolt mr-2" />{{ formatNumber(totalPower.totalPowerConsumed) }} MW consumed
+      <i class="fas fa-bolt mr-2" />{{ powerConsumed.value }} {{ powerConsumed.unit }} consumed
     </v-chip>
     <v-chip
       class="sf-chip"
       variant="tonal"
     >
-      <i class="fas fa-solar-panel mr-2" />{{ formatNumber(totalPower.totalPowerProduced) }} MW generated
+      <i class="fas fa-solar-panel mr-2" />{{ powerProduced.value }} {{ powerProduced.unit }} generated
     </v-chip>
     <v-chip
       class="sf-chip"
@@ -26,8 +26,7 @@
       }"
       variant="tonal"
     >
-      <i class="fas fa-plug mr-2" />
-      {{ formatNumber(totalPower.totalPowerDifference) }} MW difference
+      <i class="fas fa-plug mr-2" />{{ powerDifference.value }} {{ powerDifference.unit }} difference
     </v-chip>
   </div>
 </template>
@@ -37,7 +36,7 @@
     Factory,
   } from '@/interfaces/planner/FactoryInterface'
   import { calculateTotalPower } from '@/utils/statistics'
-  import { formatNumber } from '@/utils/numberFormatter'
+  import { formatPower } from '@/utils/numberFormatter'
 
   const props = defineProps<{
     factories: Factory[];
@@ -45,4 +44,22 @@
   }>()
 
   const totalPower = computed(() => calculateTotalPower(props.factories))
+  const powerConsumed = computed(() => {
+    return {
+      value: formatPower(totalPower.value.totalPowerConsumed).value,
+      unit: formatPower(totalPower.value.totalPowerConsumed).unit,
+    }
+  })
+  const powerProduced = computed(() => {
+    return {
+      value: formatPower(totalPower.value.totalPowerProduced).value,
+      unit: formatPower(totalPower.value.totalPowerProduced).unit,
+    }
+  })
+  const powerDifference = computed(() => {
+    return {
+      value: formatPower(totalPower.value.totalPowerDifference).value,
+      unit: formatPower(totalPower.value.totalPowerDifference).unit,
+    }
+  })
 </script>
