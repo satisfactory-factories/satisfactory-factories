@@ -193,11 +193,14 @@ string,
   // Calculate total power consumed and produced
   let totalPowerConsumed = 0
   let totalPowerProduced = 0
+  let totalPowerDifference = 0
 
   Object.values(buildings).forEach(building => {
     totalPowerConsumed += building.powerConsumed
     totalPowerProduced += building.powerProduced
   })
 
-  return { totalPowerConsumed, totalPowerProduced }
+  totalPowerDifference = totalPowerProduced - totalPowerConsumed
+
+  return { totalPowerConsumed, totalPowerProduced, totalPowerDifference }
 }

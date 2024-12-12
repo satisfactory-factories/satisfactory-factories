@@ -13,15 +13,26 @@
       <i class="fas fa-bolt mr-2" />{{ formatNumber(totalPower.totalPowerConsumed) }} MW consumed
     </v-chip>
     <v-chip
-      class="sf-chip green"
+      class="sf-chip pink"
       variant="tonal"
     >
       <i class="fas fa-solar-panel mr-2" />{{ formatNumber(totalPower.totalPowerProduced) }} MW generated
     </v-chip>
+    <v-chip
+      class="sf-chip"
+      :class="{
+        'green': totalPower.totalPowerDifference > 0,
+        'red': totalPower.totalPowerDifference < 0,
+      }"
+      variant="tonal"
+    >
+      <i class="fas fa-plug mr-2" />
+      {{ formatNumber(totalPower.totalPowerDifference) }} MW difference
+    </v-chip>
   </div>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
   import {
     Factory,
   } from '@/interfaces/planner/FactoryInterface'
@@ -34,5 +45,4 @@
   }>()
 
   const totalPower = computed(() => calculateTotalPower(props.factories))
-
-  </script>
+</script>

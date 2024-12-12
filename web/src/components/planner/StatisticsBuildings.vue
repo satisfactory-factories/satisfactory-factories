@@ -20,7 +20,7 @@
   <p v-else class="text-body-1">Awaiting Building Construction</p>
 </template>
 
-    <script setup lang="ts">
+<script setup lang="ts">
   import { computed } from 'vue'
   import {
     Factory,
@@ -38,4 +38,4 @@
   ) => string
 
   const totalBuildingsByType = computed(() => calculateTotalBuildingsByType(props.factories))
-    </script>
+</script>

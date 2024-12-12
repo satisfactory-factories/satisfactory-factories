@@ -21,7 +21,7 @@
   <p v-else class="text-body-1">Awaiting Resource Consumption</p>
 </template>
 
-    <script setup lang="ts">
+<script setup lang="ts">
   import { computed } from 'vue'
   import {
     Factory,
@@ -40,4 +40,4 @@
   // This function calculates total number of raw resources required for all the factories combined
   const allFactoryRawResources = computed(() => calculateTotalRawResources(props.factories))
 
-    </script>
+</script>

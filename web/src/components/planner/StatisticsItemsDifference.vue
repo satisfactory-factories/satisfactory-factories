@@ -28,7 +28,7 @@
   <p v-else class="text-body-1">No Product Surplus or Deficit</p>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
   import { computed } from 'vue'
   import {
     Factory,
@@ -47,4 +47,4 @@
   // This function calculates total number of products produced and gets the difference between demand and supply (to see if we have a surplus of products or not)
   const factoryProductDifferences = computed(() => calculateTotalParts(props.factories).filter(product => product.amountRemaining !== 0))
 
-  </script>
+</script>

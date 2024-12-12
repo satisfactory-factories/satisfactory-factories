@@ -174,7 +174,7 @@
   </v-row>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
   import { nextTick, ref, watch } from 'vue'
   import {
     Factory,
@@ -242,7 +242,7 @@
     }
   }
 
-  </script>
+</script>
 
 <style lang="scss" scoped>
   .table-column{

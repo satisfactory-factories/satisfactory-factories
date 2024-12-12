@@ -63,7 +63,7 @@
   </v-row>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
   import { ref, watch } from 'vue'
   import {
     Factory,
@@ -103,4 +103,4 @@
     hiddenProducts.value = !hiddenProducts.value
   }
 
-  </script>
+</script>

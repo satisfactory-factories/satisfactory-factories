@@ -25,7 +25,7 @@
   <p v-else class="text-body-1">Awaiting Production</p>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
   import { computed } from 'vue'
   import {
     Factory,
@@ -43,4 +43,4 @@
   // This function calculates total number of products produced
   const allFactoryProducts = computed(() => calculateTotalParts(props.factories).filter(product => product.amountSupplied > 0 && !product.isRaw
   ))
-  </script>
+</script>
