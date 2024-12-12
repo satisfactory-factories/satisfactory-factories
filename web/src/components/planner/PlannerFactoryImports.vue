@@ -170,7 +170,7 @@
   const { getFactories } = useAppStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const updateFactory = inject('updateFactory') as (factory: Factory, mode?: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -321,13 +321,12 @@
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
     console.time('imports: updateFactories')
-    syncDependencyTree()
     // Update this factory
-    updateFactory(factory)
+    updateFactory(factory, 'inputs')
 
     if (input.factoryId) {
       // Update the other factory
-      updateFactory(findFactory(input.factoryId))
+      updateFactory(findFactory(input.factoryId), 'inputs')
     }
 
     console.timeEnd('imports: updateFactories')

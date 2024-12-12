@@ -5,7 +5,7 @@ import { calculateParts } from '@/utils/factory-management/parts'
 import {
   calculateDependencies,
   calculateDependencyMetrics,
-  calculateDependencyMetricsSupply,
+  calculateDependencyMetricsSupply, calculateFactoryDependencies,
   scanForInvalidInputs,
 } from '@/utils/factory-management/dependencies'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
@@ -13,7 +13,6 @@ import { DataInterface } from '@/interfaces/DataInterface'
 import eventBus from '@/utils/eventBus'
 import { calculateSyncState } from '@/utils/factory-management/syncState'
 import { calculatePowerProducers } from '@/utils/factory-management/power'
-import { markRaw } from 'vue'
 
 export const findFac = (factoryId: string | number, factories: Factory[]): Factory => {
   // This should always be supplied, if not there's a major bug.
@@ -77,13 +76,36 @@ export const newFactory = (name = 'A new factory', order?: number, id?: number):
 export const calculateFactory = (
   factory: Factory,
   allFactories: Factory[],
-  gameData: DataInterface
+  gameData: DataInterface,
+  mode: string = 'full'
 ) => {
-  console.log('Calculating factory:', factory.name)
+  console.log('Calculating factory:', factory.name, mode)
   console.time(`calculateFactory: ${factory.name}`)
 
+  if (mode === 'full') {
+    calculateFullMode(factory, allFactories, gameData)
+  }
+
+  if (mode === 'inputs') {
+    calculateInputMode(factory, allFactories, gameData)
+  }
+
+  // Export Calculator stuff
+  // configureExportCalculator(allFactories)
+
+  // Emit an event that the data has been updated so it can be synced
+  eventBus.emit('factoryUpdated')
+
+  console.timeEnd(`calculateFactory: ${factory.name}`)
+
+  return factory
+}
+
+const calculateFullMode = (factory: Factory, allFactories: Factory[], gameData: DataInterface) => {
   factory.rawResources = {}
   factory.parts = {}
+
+  calculateFactoryDependencies(factory, allFactories)
 
   // Calculate what is produced and required by the products.
   calculateProducts(factory, gameData)
@@ -105,58 +127,46 @@ export const calculateFactory = (
 
   // After now knowing what our supply is, we need to recalculate the dependency metrics.
   calculateDependencyMetricsSupply(factory)
-
-  // Export Calculator stuff
-  // configureExportCalculator(allFactories)
-
-  // Finally, go through all factories and check if they have any problems.
-  calculateHasProblem(allFactories)
-
-  // Emit an event that the data has been updated so it can be synced
-  eventBus.emit('factoryUpdated')
-
-  console.timeEnd(`calculateFactory: ${factory.name}`)
-
-  return factory
 }
 
-export const calculateFactories = async (factories: Factory[], gameData: DataInterface, loadMode = false): Promise<void> => {
-  // Take a clone of the current data object, so we can do the math upon it then replace it so Vue isn't doing so much reactivity stuff.
-  const clonedFactories: Factory[] = markRaw(JSON.parse(JSON.stringify(factories)))
+const calculateInputMode = (factory: Factory, allFactories: Factory[], gameData: DataInterface) => {
+  calculateFactoryDependencies(factory, allFactories)
+  calculateDependencyMetrics(factory)
+  calculateParts(factory, gameData)
+  calculateDependencyMetricsSupply(factory)
+}
 
+export const calculateFactories = (factories: Factory[], gameData: DataInterface, loadMode = false): void => {
   // If we're loading via template, we need to run calculations FIRST then dependencies then calculations again.
   // The reason why we have to do this is we generate the factories out of products and inputs configurations, which then need to be calculated first before we can calculate the dependencies.
   // Otherwise, the part data that the invalidInputs check depends upon won't be present, and it will nuke all the import links.
   if (loadMode) {
     console.log('factory-management: calculateFactories: Preloading calculations')
-    clonedFactories.forEach(factory => {
-      calculateFactory(factory, clonedFactories, gameData)
+    factories.forEach(factory => {
+      calculateFactory(factory, factories, gameData)
     })
-    calculateDependencies(clonedFactories)
-    scanForInvalidInputs(clonedFactories)
-    clonedFactories.forEach(factory => {
-      calculateFactory(factory, clonedFactories, gameData)
+    calculateDependencies(factories)
+    scanForInvalidInputs(factories)
+    factories.forEach(factory => {
+      calculateFactory(factory, factories, gameData)
     })
   } else {
     console.log('factory-management: calculateFactories')
 
     // Construct the dependencies between factories.
     console.time('calculateDependencies')
-    calculateDependencies(clonedFactories)
+    calculateDependencies(factories)
     console.timeEnd('calculateDependencies')
 
     // Check if we have any invalid inputs.
-    scanForInvalidInputs(clonedFactories)
+    scanForInvalidInputs(factories)
     console.time('calculateFactory')
-    clonedFactories.forEach(factory => calculateFactory(factory, clonedFactories, gameData))
+    factories.forEach(factory => calculateFactory(factory, factories, gameData))
     console.timeEnd('calculateFactory')
   }
 
-  // Replace the factories with the new calculated factories.
-  factories.splice(0, factories.length, ...clonedFactories)
-
-  // Wait for Vue to finish all updates.
-  await nextTick()
+  // Finally, go through all factories and check if they have any problems.
+  calculateHasProblem(factories)
 }
 
 export const countActiveTasks = (factory: Factory) => {

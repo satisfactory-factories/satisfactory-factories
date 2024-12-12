@@ -179,8 +179,8 @@
   }
 
   // Proxy method so we don't have to pass the gameData and getFactories() around to every single subcomponent
-  const updateFactory = (factory: Factory) => {
-    calculateFactory(factory, getFactories(), gameData)
+  const updateFactory = (factory: Factory, mode = 'full') => {
+    calculateFactory(factory, getFactories(), gameData, mode)
   }
 
   const copyFactory = (originalFactory: Factory) => {

@@ -7,7 +7,6 @@ export const addDependency = (
   provider: Factory, // The factory that provides the dependency
   input: FactoryInput
 ) => {
-  console.time(`addDependency ${factory.name} -> ${provider.name}`)
   if (!input.outputPart) {
     const errorMsg = `Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`
     console.error(errorMsg)
@@ -35,7 +34,6 @@ export const addDependency = (
     part: input.outputPart,
     amount: input.amount,
   })
-  console.timeEnd(`addDependency ${factory.name} -> ${provider.name}`)
 }
 
 // Scans for invalid dependency requests and removes the request and the input from the erroneous factory.
@@ -109,7 +107,6 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
   console.time('calculateDependencies')
-  console.log('dependencies: Calculating Dependencies')
 
   // Blow away the dependencies for all factories to ensure we're not orphaning any and leaving any invalid dependencies behind.
   // Rather than trying to figure out what's changed, just recalculate everything.
@@ -122,34 +119,47 @@ export const calculateDependencies = (factories: Factory[]): void => {
   })
 
   factories.forEach(factory => {
-    console.time('dependencies: factory ' + factory.name)
-    factory.inputs.forEach(input => {
-      // Handle the case where the user is mid-way selecting an input.
-      if (input.factoryId === 0 || !input.outputPart) {
-        console.warn(`Factory ${factory.id} has an incomplete input. User may still be selecting it.`)
-        return
-      }
-
-      // Stop if the factory input is somehow the same as the factory itself.
-      if (input.factoryId === factory.id) {
-        throw new Error(`Factory ${factory.id} is trying to add a dependency to itself!`)
-      }
-
-      const provider = factories.find(fac => fac.id === input.factoryId)
-      if (!provider) {
-        console.error(`Factory with ID ${input.factoryId} not found.`)
-
-        // Remove it from the inputs if this is the case as it's invalid.
-        factory.inputs = factory.inputs.filter(i => i !== input)
-        return
-      }
-
-      addDependency(factory, provider, input)
-    })
-    console.timeEnd('dependencies: factory ' + factory.name)
+    calculateFactoryDependencies(factory, factories)
   })
 
   console.timeEnd('calculateDependencies')
+}
+
+// This function checks a factory's inputs and generates the dependency data.
+// It also checks if the provider factory has the part that the dependant factory is requesting, and if it exists.
+export const calculateFactoryDependencies = (factory: Factory, factories: Factory[]): void => {
+  console.time('dependencies: factory ' + factory.name)
+  factory.inputs.forEach(input => {
+    // Handle the case where the user is mid-way selecting an input.
+    if (input.factoryId === 0 || !input.outputPart) {
+      console.warn(`Factory ${factory.id} has an incomplete input. User may still be selecting it.`)
+      return
+    }
+
+    // Stop if the factory input is somehow the same as the factory itself.
+    if (input.factoryId === factory.id) {
+      throw new Error(`Factory ${factory.id} is trying to add a dependency to itself!`)
+    }
+
+    const provider = factories.find(fac => fac.id === input.factoryId)
+    if (!provider) {
+      console.error(`Factory with ID ${input.factoryId} not found.`)
+
+      // Remove it from the inputs if this is the case as it's invalid.
+      factory.inputs = factory.inputs.filter(i => i !== input)
+      return
+    }
+
+    // Check if the provider factory has the part that the dependant factory is requesting.
+    if (!provider.parts[input.outputPart]) {
+      console.error(`Factory ${provider.name} (${provider.id}) does not have the part ${input.outputPart} requested by ${factory.name} (${factory.id}). Removing dependency.`)
+      factory.inputs = factory.inputs.filter(i => i !== input)
+      return
+    }
+
+    addDependency(factory, provider, input)
+  })
+  console.timeEnd('dependencies: factory ' + factory.name)
 }
 
 // Create data helper classes to visualize the dependencies in the UI nicely.
