@@ -175,7 +175,7 @@
         >
           <i class="fas fa-bolt" />
           <i class="fas fa-minus" />
-          <span class="ml-2">{{ powerConsumed.value }} {{ powerConsumed.unit }}</span>
+          <span class="ml-2">{{ formatPower(product.buildingRequirements.powerConsumed ?? 0).value }} {{ formatPower(product.buildingRequirements.powerConsumed ?? 0).unit }}</span>
         </v-chip>
       </div>
     </div>
@@ -214,8 +214,6 @@
     factory: Factory;
     helpText: boolean;
   }>()
-
-  const powerConsumed = computed(() => formatPower(props.factory.power.consumed ?? 0))
 
   const deleteProduct = (outputIndex: number, factory: Factory) => {
     factory.products.splice(outputIndex, 1)
