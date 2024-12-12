@@ -174,9 +174,8 @@
           variant="tonal"
         >
           <i class="fas fa-bolt" />
-          <span class="ml-2">
-            {{ formatNumber(product.buildingRequirements.powerConsumed ?? 0) }} MW
-          </span>
+          <i class="fas fa-minus" />
+          <span class="ml-2">{{ formatPower(product.buildingRequirements.powerConsumed ?? 0).value }} {{ formatPower(product.buildingRequirements.powerConsumed ?? 0).unit }}</span>
         </v-chip>
       </div>
     </div>
@@ -191,7 +190,7 @@
     trimProduct,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
-  import { formatNumber } from '@/utils/numberFormatter'
+  import { formatNumber, formatPower } from '@/utils/numberFormatter'
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { useDisplay } from 'vuetify'

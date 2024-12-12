@@ -318,17 +318,6 @@
     return confirm(message)
   }
 
-  const differenceClass = (difference: number) => {
-    return {
-      'text-green': difference > 0,
-      'text-red': difference < 0,
-    }
-  }
-
-  const hasMetricsForPart = (factory: Factory, part: string) => {
-    return factory.dependencies.metrics && factory.dependencies.metrics[part]
-  }
-
   const hasExports = (factory: Factory) => {
     if (!factory.dependencies?.requests) return false
     return Object.keys(factory.dependencies.requests).length > 0
