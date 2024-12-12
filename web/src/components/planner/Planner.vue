@@ -1,6 +1,8 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
+  <planner-too-many-factories-open :count="openFactories" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
+
     <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="getFactories()"
@@ -100,6 +102,8 @@
   watch(helpText, newValue => {
     localStorage.setItem('helpText', JSON.stringify(newValue))
   })
+
+  const openFactories = computed(() => getFactories().filter(factory => !factory.hidden).length)
 
   const createFactory = () => {
     const factory = newFactory()
