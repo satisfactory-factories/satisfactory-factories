@@ -7,6 +7,7 @@ export const addDependency = (
   provider: Factory, // The factory that provides the dependency
   input: FactoryInput
 ) => {
+  console.time(`addDependency ${factory.name} -> ${provider.name}`)
   if (!input.outputPart) {
     const errorMsg = `Factory ${factory.name} is attempting to add a dependency to factory ${provider.name} with no output part. The invalid input has been deleted.`
     console.error(errorMsg)
@@ -34,6 +35,7 @@ export const addDependency = (
     part: input.outputPart,
     amount: input.amount,
   })
+  console.timeEnd(`addDependency ${factory.name} -> ${provider.name}`)
 }
 
 // Scans for invalid dependency requests and removes the request and the input from the erroneous factory.
@@ -106,6 +108,7 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[]): void => {
+  console.time('calculateDependencies')
   console.log('dependencies: Calculating Dependencies')
 
   // Blow away the dependencies for all factories to ensure we're not orphaning any and leaving any invalid dependencies behind.
@@ -119,6 +122,7 @@ export const calculateDependencies = (factories: Factory[]): void => {
   })
 
   factories.forEach(factory => {
+    console.time('dependencies: factory ' + factory.name)
     factory.inputs.forEach(input => {
       // Handle the case where the user is mid-way selecting an input.
       if (input.factoryId === 0 || !input.outputPart) {
@@ -142,7 +146,10 @@ export const calculateDependencies = (factories: Factory[]): void => {
 
       addDependency(factory, provider, input)
     })
+    console.timeEnd('dependencies: factory ' + factory.name)
   })
+
+  console.timeEnd('calculateDependencies')
 }
 
 // Create data helper classes to visualize the dependencies in the UI nicely.

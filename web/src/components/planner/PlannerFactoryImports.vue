@@ -320,6 +320,7 @@
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
+    console.time('imports: updateFactories')
     syncDependencyTree()
     // Update this factory
     updateFactory(factory)
@@ -328,12 +329,16 @@
       // Update the other factory
       updateFactory(findFactory(input.factoryId))
     }
+
+    console.timeEnd('imports: updateFactories')
   }
 
   const syncDependencyTree = () => {
     console.log('syncing dependency tree')
+    console.time('syncDependencyTree')
     calculateDependencies(getFactories())
     scanForInvalidInputs(getFactories())
+    console.timeEnd('syncDependencyTree')
   }
 
 </script>
