@@ -13,7 +13,7 @@
       <i class="fas fa-bolt mr-2" />{{ formatNumber(totalPower.totalPowerConsumed) }} MW consumed
     </v-chip>
     <v-chip
-      class="sf-chip pink"
+      class="sf-chip"
       variant="tonal"
     >
       <i class="fas fa-solar-panel mr-2" />{{ formatNumber(totalPower.totalPowerProduced) }} MW generated
