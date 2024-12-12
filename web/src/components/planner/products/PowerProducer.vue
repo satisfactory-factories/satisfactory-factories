@@ -118,9 +118,7 @@
         >
           <i class="fas fa-bolt" />
           <i class="fas fa-plus" />
-          <span class="ml-2">
-            Produces: {{ formatPower(producer.powerAmount).value }} {{ formatPower(producer.powerAmount).unit }}
-          </span>
+          <span class="ml-2">{{ formatPower(producer.powerAmount).value }} {{ formatPower(producer.powerAmount).unit }}</span>
         </v-chip>
       </div>
     </div>
