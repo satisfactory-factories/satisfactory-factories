@@ -11,6 +11,7 @@ import { routes } from 'vue-router/auto-routes'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { useAppStore } from '@/stores/app-store'
 import { useSyncStore } from '@/stores/sync-store'
+import SimpleGraph from '@/pages/simplegraph.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

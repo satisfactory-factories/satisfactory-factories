@@ -1,24 +1,14 @@
 <template>
-  <div>
-    <v-btn @click="toggleViewMode">
-      {{ viewMode === 'detailed' ? 'Switch to Simple View' : 'Switch to Detailed View' }}
-    </v-btn>
-    <graph :game-data="data" :view-mode="viewMode" />
-  </div>
+  <GraphSimple :game-data="data" />
 </template>
 
 <script setup lang="ts">
-  import Graph from '@/components/graph/Graph.vue'
+  import GraphSimple from '@/components/graph/GraphSimple.vue'
   import { ref } from 'vue'
   import { DataInterface } from '@/interfaces/DataInterface'
   import { useGameDataStore } from '@/stores/game-data-store'
 
   const data = ref<DataInterface | null>({} as DataInterface)
-  const viewMode = ref('detailed')
-
-  const toggleViewMode = () => {
-    viewMode.value = viewMode.value === 'detailed' ? 'simple' : 'detailed'
-  }
 
   // The route guard ensures that the game data is always loaded by the time it gets here.
   const gameDataStore = useGameDataStore()
