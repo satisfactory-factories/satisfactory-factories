@@ -1198,68 +1198,100 @@
             "CrystalShard": "Power Shard"
         },
         "rawResources": {
-            "OreIron": {
-                "name": "Iron Ore",
-                "limit": 92100
-            },
-            "Water": {
-                "name": "Water",
-                "limit": 9007199254740991
-            },
             "Coal": {
                 "name": "Coal",
                 "limit": 42300
             },
-            "NitrogenGas": {
-                "name": "Nitrogen Gas",
-                "limit": 12000
+            "Crystal": {
+                "name": "Blue Power Slug",
+                "limit": 596
             },
-            "Sulfur": {
-                "name": "Sulfur",
-                "limit": 10800
+            "Crystal_mk2": {
+                "name": "Yellow Power Slug",
+                "limit": 389
             },
-            "SAM": {
-                "name": "SAM",
-                "limit": 10200
+            "Crystal_mk3": {
+                "name": "Purple Power Slug",
+                "limit": 257
             },
-            "OreBauxite": {
-                "name": "Bauxite",
-                "limit": 12300
+            "Gift": {
+                "name": "Gift",
+                "limit": 100000000
             },
-            "OreGold": {
-                "name": "Caterium Ore",
-                "limit": 15000
+            "HatcherParts": {
+                "name": "Hatcher Parts",
+                "limit": 100000000
             },
-            "OreCopper": {
-                "name": "Copper Ore",
-                "limit": 36900
-            },
-            "RawQuartz": {
-                "name": "Raw Quartz",
-                "limit": 13500
-            },
-            "Stone": {
-                "name": "Limestone",
-                "limit": 69900
-            },
-            "OreUranium": {
-                "name": "Uranium",
-                "limit": 2100
-            },
-            "LiquidOil": {
-                "name": "Crude Oil",
-                "limit": 12600
+            "HogParts": {
+                "name": "How Parts",
+                "limit": 100000000
             },
             "Leaves": {
                 "name": "Leaves",
                 "limit": 100000000
             },
-            "Wood": {
-                "name": "Wood",
-                "limit": 100000000
+            "LiquidOil": {
+                "name": "Crude Oil",
+                "limit": 12600
             },
             "Mycelia": {
                 "name": "Mycelia",
+                "limit": 100000000
+            },
+            "NitrogenGas": {
+                "name": "Nitrogen Gas",
+                "limit": 12000
+            },
+            "OreBauxite": {
+                "name": "Bauxite",
+                "limit": 12300
+            },
+            "OreCopper": {
+                "name": "Copper Ore",
+                "limit": 36900
+            },
+            "OreGold": {
+                "name": "Caterium Ore",
+                "limit": 15000
+            },
+            "OreIron": {
+                "name": "Iron Ore",
+                "limit": 92100
+            },
+            "OreUranium": {
+                "name": "Uranium",
+                "limit": 2100
+            },
+            "RawQuartz": {
+                "name": "Raw Quartz",
+                "limit": 13500
+            },
+            "SAM": {
+                "name": "SAM",
+                "limit": 10200
+            },
+            "SpitterParts": {
+                "name": "Spitter Parts",
+                "limit": 100000000
+            },
+            "StingerParts": {
+                "name": "Stinger Parts",
+                "limit": 100000000
+            },
+            "Stone": {
+                "name": "Limestone",
+                "limit": 69900
+            },
+            "Sulfur": {
+                "name": "Sulfur",
+                "limit": 10800
+            },
+            "Water": {
+                "name": "Water",
+                "limit": 9007199254740991
+            },
+            "Wood": {
+                "name": "Wood",
                 "limit": 100000000
             }
         }

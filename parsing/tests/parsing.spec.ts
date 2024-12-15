@@ -22,6 +22,16 @@ describe('common', () => {
         test('parts should be of expected length', async () => {
             expect(Object.keys(results.items.parts).length).toBe(168);
         })
+        test('raw resources should be of expected length', async () => {
+            // debugging code to print out all raw resources for verification
+            // let rawString = '';
+            // Object.keys(results.items.rawResources).forEach((key: string) => {
+            //     const rawResource = results.items.rawResources[key];
+            //     rawString +=`Key: ${key}, Name: ${rawResource.name}, Limit: ${rawResource.limit} \n`;
+            // });
+            // console.log(rawString)
+            expect(Object.keys(results.items.rawResources).length).toBe(23);
+        })
 
         test('iron plate part should be correct', async () => {
             const part : ParserPart = results.items.parts["IronPlate"];
