@@ -1223,7 +1223,7 @@
                 "limit": 100000000
             },
             "HogParts": {
-                "name": "How Parts",
+                "name": "Hog Parts",
                 "limit": 100000000
             },
             "Leaves": {
