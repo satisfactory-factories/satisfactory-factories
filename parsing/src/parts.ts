@@ -337,7 +337,7 @@ function getRawResources(data: any[]): { [key: string]: ParserRawResource } {
         limit: 100000000  
     };
     rawResources["HogParts"] = {
-        name: "How Parts",
+        name: "Hog Parts",
         limit: 100000000  
     };
     rawResources["SpitterParts"] = {
