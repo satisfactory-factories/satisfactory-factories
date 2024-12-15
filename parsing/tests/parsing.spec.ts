@@ -23,14 +23,20 @@ describe('common', () => {
             expect(Object.keys(results.items.parts).length).toBe(168);
         })
         test('raw resources should be of expected length', async () => {
-            // debugging code to print out all raw resources for verification
-            // let rawString = '';
-            // Object.keys(results.items.rawResources).forEach((key: string) => {
-            //     const rawResource = results.items.rawResources[key];
-            //     rawString +=`Key: ${key}, Name: ${rawResource.name}, Limit: ${rawResource.limit} \n`;
-            // });
-            // console.log(rawString)
-            expect(Object.keys(results.items.rawResources).length).toBe(23);
+            //debugging code to print out all raw resources for verification
+            let rawString = '';
+            Object.keys(results.items.rawResources).forEach((key: string) => {
+                const rawResource = results.items.rawResources[key];
+                rawString +=`Key: ${key}, Name: ${rawResource.name}, Limit: ${rawResource.limit} \n`;
+            });
+            console.log(rawString)
+            expect(Object.keys(results.items.rawResources).length).toBe(24);
+            expect(results.items.rawResources["Coal"].name).toBe('Coal');
+            expect(results.items.rawResources["Coal"].limit).toBe(42300);
+            expect(results.items.rawResources["Crystal"].name).toBe('Blue Power Slug');
+            expect(results.items.rawResources["Crystal"].limit).toBe(596);
+            expect(results.items.rawResources["Wood"].name).toBe('Wood');
+            expect(results.items.rawResources["Wood"].limit).toBe(100000000);
         })
 
         test('iron plate part should be correct', async () => {
