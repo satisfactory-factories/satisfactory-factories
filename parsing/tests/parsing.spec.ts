@@ -24,12 +24,12 @@ describe('common', () => {
         })
         test('raw resources should be of expected length', async () => {
             //debugging code to print out all raw resources for verification
-            let rawString = '';
-            Object.keys(results.items.rawResources).forEach((key: string) => {
-                const rawResource = results.items.rawResources[key];
-                rawString +=`Key: ${key}, Name: ${rawResource.name}, Limit: ${rawResource.limit} \n`;
-            });
-            console.log(rawString)
+            // let rawString = '';
+            // Object.keys(results.items.rawResources).forEach((key: string) => {
+            //     const rawResource = results.items.rawResources[key];
+            //     rawString +=`Key: ${key}, Name: ${rawResource.name}, Limit: ${rawResource.limit} \n`;
+            // });
+            // console.log(rawString)
             expect(Object.keys(results.items.rawResources).length).toBe(24);
             expect(results.items.rawResources["Coal"].name).toBe('Coal');
             expect(results.items.rawResources["Coal"].limit).toBe(42300);
