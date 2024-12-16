@@ -13,8 +13,8 @@ export function formatPower (value: number): { value: string, unit: string } {
   let formattedValue = formatNumber(value)
   let unit = 'MW'
 
-  // If the unit is above 1100, turn it into gigawatts.
-  if (value >= 1000) {
+  // If the unit is above 1000, or less than -1000, convert the unit into gigawatts.
+  if (value >= 1000 || value <= -1000) {
     formattedValue = formatNumber(value / 1000)
     unit = 'GW'
   }
