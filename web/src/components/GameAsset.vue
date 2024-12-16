@@ -71,6 +71,13 @@
     }
   }
 
+  const subjectRewrite = (subject: string): string => {
+    if (subject === 'rocket-fuel') {
+      return 'rocket-fuel-2'
+    }
+    return subject
+  }
+
   const getImageUrl = (
     name: string,
     type: 'building' | 'item',
@@ -91,11 +98,4 @@
   )
   const imgSize = widthPx > 64 || heightPx > 64 ? 'big' : 'small'
   const imgUrl = getIcon(props.subject, props.type, imgSize)
-
-  const subjectRewrite = (subject: string): string => {
-    if (subject === 'rocket-fuel') {
-      return 'rocket-fuel-2'
-    }
-    return subject
-  }
 </script>
