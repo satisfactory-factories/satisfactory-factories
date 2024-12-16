@@ -25,7 +25,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-card-text v-show="!hidden" class="text-body-1">
+        <v-card-text v-if="!hidden" class="text-body-1">
           <statistics-resources :factories="factories" :help-text="helpText" />
           <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
           <statistics-buildings :factories="factories" :help-text="helpText" />
@@ -53,7 +53,7 @@
           </v-col>
 
           <!-- Produced Items Area -->
-          <div v-show="!hiddenProducts" max-height="500px">
+          <div v-if="!hiddenProducts" max-height="500px">
             <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
             <statistics-items :factories="factories" :help-text="helpText" />
           </div>
