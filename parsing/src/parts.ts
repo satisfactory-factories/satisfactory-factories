@@ -11,7 +11,6 @@ import {
 
 function getItems(data: any[]): ParserItemDataInterface {
     const parts: { [key: string]: ParserPart } = {};
-    const collectables: { [key: string]: string } = {};
     const rawResources = getRawResources(data);
 
     // Scan all recipes (not parts), looking for parts that are used in recipes. 
@@ -221,34 +220,24 @@ function getItems(data: any[]): ParserItemDataInterface {
                     energyValue *= 1000;
                 }
 
-                // Check if the part is a collectable (e.g., Power Slug)
-                if (isCollectable(entry.mIngredients)) {
-                    collectables[partName] = friendlyName;
-                } else {
-                    //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
-                    parts[partName] = {
-                        name: friendlyName,
-                        stackSize,
-                        isFluid: isFluid(partName),
-                        isFicsmas: isFicsmas(entry.mDisplayName),
-                        energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
-                    };
-                }
+                //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
+                parts[partName] = {
+                    name: friendlyName,
+                    stackSize,
+                    isFluid: isFluid(partName),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
+                };
+
             });
         });
 
-    // Sort the parts and collectables by key
+    // Sort the parts by key
     return {
         parts: Object.keys(parts)
             .sort()
             .reduce((sortedObj: { [key: string]: ParserPart }, key: string) => {
                 sortedObj[key] = parts[key];
-                return sortedObj;
-            }, {}),
-        collectables: Object.keys(collectables)
-            .sort()
-            .reduce((sortedObj: { [key: string]: string }, key: string) => {
-                sortedObj[key] = collectables[key];
                 return sortedObj;
             }, {}),
         rawResources
