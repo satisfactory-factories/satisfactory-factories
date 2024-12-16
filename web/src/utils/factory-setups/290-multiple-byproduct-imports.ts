@@ -4,12 +4,10 @@ import { addProductToFactory } from '@/utils/factory-management/products'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
 export const create290Scenario = (): { getFactories: () => Factory[] } => {
-  // Local variables to ensure a fresh instance on every call
-  const ironIngotFac = newFactory('Iron Ingots', 0)
-  const ironIngotFac2 = newFactory('Iron Ingots', 1)
-  const ironPlateFac = newFactory('Iron Plates', 2)
+  const ironIngotFac = newFactory('Iron Ingots', 0, 1)
+  const ironIngotFac2 = newFactory('Iron Ingots 2', 1, 2)
+  const ironPlateFac = newFactory('Iron Plates', 2, 3)
 
-  // Store factories in an array
   const factories = [ironIngotFac, ironIngotFac2, ironPlateFac]
 
   // Add products and imports
@@ -40,8 +38,8 @@ export const create290Scenario = (): { getFactories: () => Factory[] } => {
     })
     addInputToFactory(ironPlateFac, {
       factoryId: ironIngotFac2.id,
-      outputPart: 'IronIngot',
-      amount: 100,
+      outputPart: null, // Purposefully not set a part here, as this contains the bug
+      amount: 0,
     })
   }
 

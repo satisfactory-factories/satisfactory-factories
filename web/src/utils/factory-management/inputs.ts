@@ -148,19 +148,19 @@ export const importPartSelections = (
   inputIndex: number,
 ): string[] => {
   const availableInputParts = new Set<string>()
-  const selectedParts = new Set<string>()
+  const selectedFactoryParts = new Set<string>()
   const partsWithRequirements = getPartsWithRequirements(factory)
 
   // Construct the selectedParts map from the inputs of the factory
   factory.inputs.forEach((input, index) => {
     if (index === inputIndex) return // Don't include the current input
     if (!input.outputPart) return // If there's no output part, skip
-    selectedParts.add(`${input.outputPart}`)
+    selectedFactoryParts.add(`${input.factoryId}-${input.outputPart}`)
   })
 
   // Go through the input factory's parts and see if they're available to be selected
   Object.keys(inputFactory.parts).forEach(part => {
-    if (partsWithRequirements.includes(part) && !selectedParts.has(part)) {
+    if (partsWithRequirements.includes(part) && !selectedFactoryParts.has(part)) {
       availableInputParts.add(part)
     }
   })
