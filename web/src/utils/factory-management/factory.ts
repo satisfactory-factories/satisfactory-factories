@@ -80,7 +80,6 @@ export const calculateFactory = (
   loadMode = false,
 ) => {
   console.log('Calculating factory:', factory.name)
-  console.time(`calculateFactory: ${factory.name}`)
 
   factory.rawResources = {}
   factory.parts = {}
@@ -114,8 +113,6 @@ export const calculateFactory = (
 
   // Emit an event that the data has been updated so it can be synced
   eventBus.emit('factoryUpdated')
-
-  console.timeEnd(`calculateFactory: ${factory.name}`)
 
   return factory
 }

@@ -319,7 +319,6 @@
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
-    console.time('imports: updateFactories')
     // Update this factory
     updateFactory(factory, 'inputs')
 
@@ -327,15 +326,11 @@
       // Update the other factory
       updateFactory(findFactory(input.factoryId), 'inputs')
     }
-
-    console.timeEnd('imports: updateFactories')
   }
 
   const syncDependencyTree = () => {
-    console.log('syncing dependency tree')
-    console.time('syncDependencyTree')
+    console.log('Syncing dependency tree')
     calculateDependencies(getFactories(), getGameData())
-    console.timeEnd('syncDependencyTree')
   }
 
 </script>

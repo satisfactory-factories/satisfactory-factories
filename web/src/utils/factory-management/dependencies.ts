@@ -136,15 +136,11 @@ export const removeFactoryDependants = (factory: Factory, factories: Factory[]) 
 
 // Loop through all factories, checking their inputs and building a dependency tree.
 export const calculateDependencies = (factories: Factory[], gameData: DataInterface, loadMode = false): void => {
-  console.time('calculateDependencies')
-
   flushInvalidRequests(factories)
 
   factories.forEach(factory => {
     calculateFactoryDependencies(factory, factories, gameData, loadMode)
   })
-
-  console.timeEnd('calculateDependencies')
 }
 
 // This function checks a factory's inputs and generates the dependency data.
