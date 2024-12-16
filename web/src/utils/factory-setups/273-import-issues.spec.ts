@@ -23,7 +23,6 @@ describe('273 import issue', () => {
       amount: 1,
       recipe: 'IronPlateReinforced',
     })
-
     addProductToFactory(fac2, {
       id: 'IronPlate',
       amount: 1,
@@ -34,13 +33,14 @@ describe('273 import issue', () => {
       amount: 1,
       recipe: 'Screw',
     })
+
     addInputToFactory(fac1, {
       factoryId: fac2.id,
       outputPart: 'IronPlate',
       amount: 6,
     })
+
     calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
-    calculateFactories(factories, gameData)
   })
 
   it('should have added an import to factory 1', () => {

@@ -163,9 +163,10 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
-  import { calculateDependencies, scanForInvalidInputs } from '@/utils/factory-management/dependencies'
+  import { calculateDependencies } from '@/utils/factory-management/dependencies'
   import { useAppStore } from '@/stores/app-store'
   import { getExportableFactories } from '@/utils/factory-management/exports'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const { getFactories } = useAppStore()
 
@@ -179,6 +180,7 @@
   }>()
 
   const { smAndDown } = useDisplay()
+  const { getGameData } = useGameDataStore()
 
   const addEmptyInput = (factory: Factory) => {
     addInputToFactory(factory, {
@@ -193,8 +195,7 @@
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
+    syncDependencyTree()
     updateFactory(factory)
 
     // Also update the other factory affected
@@ -249,8 +250,6 @@
   const ableToImport = (factory: Factory): string | boolean => {
     return calculateAbleToImport(factory, importCandidates.value)
   }
-
-  // Gets the products of another factory for dependencies
 
   const handleInputFactoryChange = (factory: Factory) => {
     syncDependencyTree()
@@ -335,8 +334,7 @@
   const syncDependencyTree = () => {
     console.log('syncing dependency tree')
     console.time('syncDependencyTree')
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
+    calculateDependencies(getFactories(), getGameData())
     console.timeEnd('syncDependencyTree')
   }
 
