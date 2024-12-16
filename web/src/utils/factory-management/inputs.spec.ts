@@ -325,7 +325,7 @@ describe('inputs', () => {
         expect(partResult).toHaveLength(1)
         expect(partResult2).toHaveLength(1)
         expect(partResult[0]).toBe('IronIngot')
-        expect(partResult2[0]).toBe('IronIngot')
+        expect(partResult2[0]).toBe('IronIngot') // #290 bug was here where this was empty as it was already "selected".
         expect(partResult[1]).toBeUndefined()
       })
     })
