@@ -3,6 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import * as factoryUtils from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
+import { addPowerProducerToFactory } from '@/utils/factory-management/power'
 import {
   addInputToFactory, calculateAbleToImport,
   calculateImportCandidates,
@@ -298,32 +299,53 @@ describe('inputs', () => {
       })
     })
     describe('calculateAbleToImport', () => {
-      let factory: Factory
+      let ingotFactory: Factory
+      let fuelFactory: Factory
+      let fuelGenFactory: Factory
       beforeEach(() => {
-        factory = newFactory('foo')
-        addProductToFactory(factory, {
+        ingotFactory = newFactory('foo')
+        addProductToFactory(ingotFactory, {
           id: 'IronIngot',
           amount: 1000,
           recipe: 'IngotIron',
         })
-        factory.usingRawResourcesOnly = false
+        ingotFactory.usingRawResourcesOnly = false
+
+        fuelFactory = newFactory('Fuel Factory')
+        fuelGenFactory = newFactory('Fuel Gens')
+        addProductToFactory(fuelFactory, {
+            id: 'LiquidFuel',
+            amount: 1000,
+            recipe: 'LiquidFuel',
+        })
+        addPowerProducerToFactory(fuelGenFactory, {
+            building: 'generatorfuel',
+            ingredientAmount: 100,
+            recipe: 'GeneratorFuel_LiquidFuel',
+            updated: "ingredient"
+        })
       })
       it('should return noProducts if the factory has no products', () => {
-        factory.products = []
-        const result = calculateAbleToImport(factory, [])
+        ingotFactory.products = []
+        const result = calculateAbleToImport(ingotFactory, [])
         expect(result).toBe('noProducts')
       })
+      it('should return true if the factory has no products, but has a power generator', () => {
+        fuelGenFactory.products = []
+        const result = calculateAbleToImport(fuelGenFactory, [])
+        expect(result).toBe(true)
+      })
       it('should return rawOnly if the factory is only using raw resources', () => {
-        factory.usingRawResourcesOnly = true
-        const result = calculateAbleToImport(factory, [])
+        ingotFactory.usingRawResourcesOnly = true
+        const result = calculateAbleToImport(ingotFactory, [])
         expect(result).toBe('rawOnly')
       })
       it('should return noImportFacs if there are no import candidates', () => {
-        const result = calculateAbleToImport(factory, [])
+        const result = calculateAbleToImport(ingotFactory, [])
         expect(result).toBe('noImportFacs')
       })
       it('should return true if there are import candidates', () => {
-        const result = calculateAbleToImport(factory, [ironIngotFac])
+        const result = calculateAbleToImport(ingotFactory, [ironIngotFac])
         expect(result).toBe(true)
       })
     })

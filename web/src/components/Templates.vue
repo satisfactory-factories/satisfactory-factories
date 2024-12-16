@@ -26,7 +26,8 @@
                 <td class="text-center">
                   <v-btn
                     class="mr-2"
-                    color="green"
+                    :color="template.isDebug ? 'secondary' : 'green'"
+                    :prepend-icon="template.isDebug ? 'fas fa-bug' : 'fas fa-file'"
                     @click="loadTemplate(template)"
                   >
                     {{ template.name }}
@@ -45,10 +46,11 @@
 <script lang="ts" setup>
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { createSimple } from '@/utils/factory-setups/simple-plan'
+  import { create268Scenraio } from '@/utils/factory-setups/268-power-gen-only-import'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
 
-  const { setFactories } = useAppStore()
+  const { setFactories, isDebugMode } = useAppStore()
 
   const dialog = ref(false)
 
@@ -57,6 +59,7 @@
     description: string
     data: Factory[]
     show: boolean
+    isDebug: boolean
   }
 
   const templates = [
@@ -65,12 +68,21 @@
       description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
       show: true,
+      isDebug: false
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
       show: true,
+      isDebug: false
+    },
+    {
+      name: 'PowerOnlyImport',
+      description: '2 factory setup where on factory is producing the produce (fuel) and another is consuming (by import) the product for power generation. Related to issue #268',
+      data: create268Scenraio().getFactories(),
+      show: isDebugMode,
+      isDebug: true
     },
   ]
 

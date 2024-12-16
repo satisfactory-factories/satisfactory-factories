@@ -171,6 +171,12 @@ export const importPartSelections = (
 
 export const calculateAbleToImport = (factory: Factory, importCandidates: Factory[]): string | boolean => {
   if (factory.products.length === 0) {
+
+    // If we have no products, but we have a powerProducer (that can consume Imports)
+    if (factory.powerProducers.length > 0) {
+        return true
+    }
+
     return 'noProducts'
   }
 
