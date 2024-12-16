@@ -151,7 +151,7 @@ export const importPartSelections = (
   const selectedFactoryParts = new Set<string>()
   const partsWithRequirements = getPartsWithRequirements(factory)
 
-  // Construct the selectedParts map from the inputs of the factory
+  // Construct the selectedFactoryParts map from the inputs of the factory
   factory.inputs.forEach((input, index) => {
     if (index === inputIndex) return // Don't include the current input
     if (!input.outputPart) return // If there's no output part, skip
