@@ -8,7 +8,6 @@ export interface ParserPart {
 
 export interface ParserItemDataInterface {
     parts: { [key: string]: ParserPart };
-    collectables: { [key: string]: string };
     rawResources: { [key: string]: ParserRawResource };
 }
 
