@@ -317,23 +317,64 @@ function getRawResources(data: any[]): { [key: string]: ParserRawResource } {
             }
         });
 
-    // Manually add "Leaves" and "Wood" to the rawResources list
+    // Manually add Leaves, Wood, Mycelia to the rawResources list
     rawResources["Leaves"] = {
         name: "Leaves",
         limit: limits["Leaves"] || 100000000  
     };
-
     rawResources["Wood"] = {
         name: "Wood",
         limit: limits["Wood"] || 100000000  
     };
-
     rawResources["Mycelia"] = {
         name: "Mycelia",
         limit: limits["Mycelia"] || 100000000  
     };
 
-    return rawResources;
+    //Manually add alien parts to the rawResources list
+    rawResources["HatcherParts"] = {
+        name: "Hatcher Parts",
+        limit: 100000000  
+    };
+    rawResources["HogParts"] = {
+        name: "Hog Parts",
+        limit: 100000000  
+    };
+    rawResources["SpitterParts"] = {
+        name: "Spitter Parts",
+        limit: 100000000  
+    };
+    rawResources["StingerParts"] = {
+        name: "Stinger Parts",
+        limit: 100000000  
+    };
+
+    //Manually add slugs. Numbers from Satisfactory Calculator map
+    rawResources["Crystal"] = {
+        name: "Blue Power Slug",
+        limit: 596  
+    };
+    rawResources["Crystal_mk2"] = {
+        name: "Yellow Power Slug",
+        limit: 389  
+    };
+    rawResources["Crystal_mk3"] = {
+        name: "Purple Power Slug",
+        limit: 257  
+    };
+    
+    //Ficmas items
+    rawResources["Gift"] = {
+        name: "Gift",
+        limit: 100000000  
+    };
+
+    // Order the rawResources by key
+    const orderedRawResources: { [key: string]: ParserRawResource } = {};
+    Object.keys(rawResources).sort().forEach(key => {
+        orderedRawResources[key] = rawResources[key];
+    });
+    return orderedRawResources;
 }
 
 function fixItemNames(items: ParserItemDataInterface): void {
