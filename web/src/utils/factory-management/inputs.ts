@@ -158,9 +158,11 @@ export const importPartSelections = (
     selectedFactoryParts.add(`${input.factoryId}-${input.outputPart}`)
   })
 
-  // Go through the input factory's parts and see if they're available to be selected
+  // Go through the input factory's parts and see if they're available to be selected.
+  // Using Sets like this ensures uniqueness and prevents duplicate inputs.
   Object.keys(inputFactory.parts).forEach(part => {
-    if (partsWithRequirements.includes(part) && !selectedFactoryParts.has(part)) {
+    const selectedPartKey = `${inputFactory.id}-${part}`
+    if (partsWithRequirements.includes(part) && !selectedFactoryParts.has(selectedPartKey)) {
       availableInputParts.add(part)
     }
   })
