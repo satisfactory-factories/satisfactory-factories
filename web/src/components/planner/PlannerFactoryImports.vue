@@ -195,7 +195,10 @@
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
+    // Checks for now invalid inputs
     syncDependencyTree()
+
+    // Update the factory as our parts will have been changed
     updateFactory(factory)
 
     // Also update the other factory affected
@@ -252,6 +255,7 @@
   }
 
   const handleInputFactoryChange = (factory: Factory) => {
+    // Checks for now invalid inputs
     syncDependencyTree()
 
     // Initiate a factory update for all factories involved
@@ -319,12 +323,15 @@
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
+    // Checks for either invalid inputs and produces the updated dependency metrics
+    syncDependencyTree()
+
     // Update this factory
-    updateFactory(factory, 'inputs')
+    updateFactory(factory)
 
     if (input.factoryId) {
       // Update the other factory
-      updateFactory(findFactory(input.factoryId), 'inputs')
+      updateFactory(findFactory(input.factoryId))
     }
   }
 

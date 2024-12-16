@@ -4,7 +4,7 @@ import { calculateParts } from '@/utils/factory-management/parts'
 import { DataInterface } from '@/interfaces/DataInterface'
 
 // Adds dependencies between two factories.
-export const addDependency = (
+export const updateDependency = (
   factory: Factory, // The factory that has the input
   provider: Factory, // The factory that provides the dependency
   input: FactoryInput
@@ -18,17 +18,23 @@ export const addDependency = (
     return
   }
 
+  // If array doesn't exist make it now.
   if (!provider.dependencies.requests[factory.id]) {
     provider.dependencies.requests[factory.id] = []
   }
 
   const requests = provider.dependencies.requests[factory.id]
 
-  // If the factory already has a request for the same factory and part, there's an issue.
+  // Handle existing requests if they've been updated.
   const existingRequest = requests.find(req => req.part === input.outputPart)
   if (existingRequest) {
-    // Do nothing, the request already exists. This will happen a lot as we're often running calculateFactory twice in certain scenarios.
-    return
+    // Wrap it like this so we don't induce reactivity for no change.
+    if (existingRequest.amount !== input.amount) {
+      // Ensure that the request amounts are exactly the same.
+      existingRequest.amount = input.amount
+    }
+
+    return // Nothing more to do
   }
 
   requests.push({
@@ -181,7 +187,7 @@ export const calculateFactoryDependencies = (
       return
     }
 
-    addDependency(factory, provider, input)
+    updateDependency(factory, provider, input)
     providersToRecalculate.add(provider.id)
   })
 

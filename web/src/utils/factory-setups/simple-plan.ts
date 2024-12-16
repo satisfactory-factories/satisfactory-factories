@@ -5,8 +5,8 @@ import { addInputToFactory } from '@/utils/factory-management/inputs'
 
 export const createSimple = (): { getFactories: () => Factory[] } => {
   // Local variables to ensure a fresh instance on every call
-  const ironIngotFac = newFactory('Iron Ingots', 0)
-  const ironPlateFac = newFactory('Iron Plates', 1)
+  const ironIngotFac = newFactory('Iron Ingots', 0, 1)
+  const ironPlateFac = newFactory('Iron Plates', 1, 2)
 
   // Store factories in an array
   const factories = [ironIngotFac, ironPlateFac]
