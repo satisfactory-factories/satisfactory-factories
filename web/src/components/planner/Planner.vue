@@ -1,6 +1,6 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
-  <planner-too-many-factories-open :count="openFactories" @hide-all="showHideAll('hide')" />
+  <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
 
     <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
@@ -101,8 +101,6 @@
     localStorage.setItem('helpText', JSON.stringify(newValue))
   })
 
-  const openFactories = computed(() => getFactories().filter(factory => !factory.hidden).length)
-
   const createFactory = () => {
     const factory = newFactory()
     factory.displayOrder = getFactories().length
@@ -181,8 +179,8 @@
   }
 
   // Proxy method so we don't have to pass the gameData and getFactories() around to every single subcomponent
-  const updateFactory = (factory: Factory, mode = 'full') => {
-    calculateFactory(factory, getFactories(), gameData, mode)
+  const updateFactory = (factory: Factory) => {
+    calculateFactory(factory, getFactories(), gameData)
   }
 
   const copyFactory = (originalFactory: Factory) => {
