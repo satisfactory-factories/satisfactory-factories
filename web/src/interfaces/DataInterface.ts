@@ -16,7 +16,6 @@ export interface DataInterface {
   buildings: { [key: string]: string };
   items: {
     parts: { [key: string]: Part };
-    collectables: { [key: string]: string };
     rawResources: { [key: string]: RawResource };
   }
   recipes: Recipe[];

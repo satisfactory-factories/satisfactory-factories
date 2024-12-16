@@ -1194,9 +1194,6 @@
                 "energyGeneratedInMJ": 0
             }
         },
-        "collectables": {
-            "CrystalShard": "Power Shard"
-        },
         "rawResources": {
             "Coal": {
                 "name": "Coal",
