@@ -221,7 +221,7 @@
       buildings.add(recipe.building.name)
     })
 
-    const buildingsArray: string[] = buildings.values().toArray()
+    const buildingsArray: string[] = [...buildings.values()]
 
     // Sort
     buildingsArray.sort((a, b) => a.localeCompare(b))
