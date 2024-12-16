@@ -244,16 +244,6 @@ function getItems(data: any[]): ParserItemDataInterface {
     };
 }
 
-// Helper function to determine if an ingredient is a collectable (e.g., Power Slug)
-function isCollectable(ingredients: string): boolean {
-    const collectableDescriptors = [
-        "Desc_Crystal.Desc_Crystal_C",        // Blue Power Slug
-        "Desc_Crystal_mk2.Desc_Crystal_mk2_C", // Yellow Power Slug
-        "Desc_Crystal_mk3.Desc_Crystal_mk3_C"  // Purple Power Slug
-    ];
-    return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
-}
-
 function stackSizeConvert(stackSize: string): number {
     // Convert e.g. SS_HUGE to 500
     switch (stackSize) {
