@@ -17,13 +17,13 @@ let plutoniumFac: Factory
 // Copper Basics has a deliberate shortage of Copper Ingots to highlight that functionality to new users.
 export const complexDemoPlan = (): { getFactories: () => Factory[] } => {
   // Initialize factories
-  oilFac = newFactory('Oil Processing')
-  copperIngotsFac = newFactory('Copper Ingots')
-  copperBasicsFac = newFactory('Copper Basics')
-  circuitBoardsFac = newFactory('Circuit Boards')
-  computersFac = newFactory('Computers (end product)')
-  uraniumFac = newFactory('☢️ Uranium Power')
-  plutoniumFac = newFactory('☢️ Plutonium Processing')
+  oilFac = newFactory('Oil Processing', 1, 1)
+  copperIngotsFac = newFactory('Copper Ingots', 2, 2)
+  copperBasicsFac = newFactory('Copper Basics', 3, 3)
+  circuitBoardsFac = newFactory('Circuit Boards', 4, 4)
+  computersFac = newFactory('Computers (end product)', 5, 5)
+  uraniumFac = newFactory('☢️ Uranium Power', 6, 6)
+  plutoniumFac = newFactory('☢️ Plutonium Processing', 7, 7)
 
   const factories = [oilFac, copperIngotsFac, copperBasicsFac, circuitBoardsFac, computersFac, uraniumFac, plutoniumFac]
 

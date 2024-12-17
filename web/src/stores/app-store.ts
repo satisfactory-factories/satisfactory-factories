@@ -6,6 +6,7 @@ import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 
 export const useAppStore = defineStore('app', () => {
+  const inited = ref(false)
   const factoryTabs = ref<FactoryTab[]>(JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[])
 
   if (factoryTabs.value.length === 0) {
@@ -28,6 +29,7 @@ export const useAppStore = defineStore('app', () => {
     },
     set (value) {
       currentFactoryTab.value.factories = value
+      initFactories()
     },
   })
 
@@ -60,7 +62,8 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
-  const getFactories = () => {
+  const initFactories = () => {
+    console.log('Initializing factories')
     let needsCalculation = false
 
     factories.value.forEach(factory => {
@@ -127,6 +130,8 @@ export const useAppStore = defineStore('app', () => {
       calculateFactories(factories.value, gameDataStore.getGameData())
     }
 
+    inited.value = true
+
     return factories.value
   }
 
@@ -155,7 +160,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeFactory = (id: number) => {
-    const index = getFactories().findIndex(factory => factory.id === id)
+    const index = initFactories().findIndex(factory => factory.id === id)
     if (index !== -1) {
       factories.value.splice(index, 1)
     }
@@ -214,6 +219,9 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
+  // Upon load, force the getFactories() to be ran to ensure migrations are applied
+  initFactories()
+
   return {
     currentFactoryTab,
     currentFactoryTabIndex,
@@ -225,7 +233,7 @@ export const useAppStore = defineStore('app', () => {
     getLastEdit,
     setLastSave,
     setLastEdit,
-    getFactories,
+    getFactories: () => inited.value ? factories.value : initFactories(),
     setFactories,
     addFactory,
     removeFactory,

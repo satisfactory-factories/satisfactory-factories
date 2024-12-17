@@ -66,7 +66,7 @@
   const templates = [
     {
       name: 'Demo',
-      description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
+      description: 'Contains 7 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
       show: true,
       isDebug: false,
@@ -95,6 +95,7 @@
   ]
 
   const loadTemplate = (template: Template) => {
+    console.log('Loading template', template)
     setFactories(template.data, true)
     dialog.value = false
   }

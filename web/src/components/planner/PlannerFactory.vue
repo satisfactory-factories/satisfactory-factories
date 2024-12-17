@@ -120,7 +120,7 @@
             />
           </v-col>
         </v-row>
-        <v-card-text v-show="!factory.hidden">
+        <v-card-text v-if="!factory.hidden">
           <ProductsAndPower
             :factory="factory"
             :help-text="helpText"
@@ -284,9 +284,8 @@
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
   import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
-  import { DataInterface } from '@/interfaces/DataInterface'
-  import { countActiveTasks } from '@/utils/factory-management/factory'
   import { differenceClass, getPartDisplayName, hasMetricsForPart } from '@/utils/helpers'
+  import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
   import ProductsAndPower from '@/components/planner/products/ProductsAndPower.vue'
@@ -301,7 +300,6 @@
 
   defineProps<{
     factory: Factory
-    gameData: DataInterface
     helpText: boolean
     totalFactories: number;
   }>()

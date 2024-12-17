@@ -162,14 +162,15 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
-  import { calculateDependencies, scanForInvalidInputs } from '@/utils/factory-management/dependencies'
+  import { calculateDependencies } from '@/utils/factory-management/dependencies'
   import { useAppStore } from '@/stores/app-store'
   import { getExportableFactories } from '@/utils/factory-management/exports'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const { getFactories } = useAppStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const updateFactory = inject('updateFactory') as (factory: Factory, mode?: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -178,6 +179,7 @@
   }>()
 
   const { smAndDown } = useDisplay()
+  const { getGameData } = useGameDataStore()
 
   const addEmptyInput = (factory: Factory) => {
     addInputToFactory(factory, {
@@ -192,8 +194,10 @@
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
+    // Checks for now invalid inputs
+    syncDependencyTree()
+
+    // Update the factory as our parts will have been changed
     updateFactory(factory)
 
     // Also update the other factory affected
@@ -249,9 +253,8 @@
     return calculateAbleToImport(factory, importCandidates.value)
   }
 
-  // Gets the products of another factory for dependencies
-
   const handleInputFactoryChange = (factory: Factory) => {
+    // Checks for now invalid inputs
     syncDependencyTree()
 
     // Initiate a factory update for all factories involved
@@ -319,7 +322,9 @@
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
+    // Checks for either invalid inputs and produces the updated dependency metrics
     syncDependencyTree()
+
     // Update this factory
     updateFactory(factory)
 
@@ -330,9 +335,8 @@
   }
 
   const syncDependencyTree = () => {
-    console.log('syncing dependency tree')
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
+    console.log('Syncing dependency tree')
+    calculateDependencies(getFactories(), getGameData())
   }
 
 </script>

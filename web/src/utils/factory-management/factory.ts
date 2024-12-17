@@ -6,7 +6,7 @@ import {
   calculateDependencies,
   calculateDependencyMetrics,
   calculateDependencyMetricsSupply,
-  scanForInvalidInputs,
+  calculateFactoryDependencies,
 } from '@/utils/factory-management/dependencies'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
@@ -76,9 +76,11 @@ export const newFactory = (name = 'A new factory', order?: number, id?: number):
 export const calculateFactory = (
   factory: Factory,
   allFactories: Factory[],
-  gameData: DataInterface
+  gameData: DataInterface,
+  loadMode = false,
 ) => {
   console.log('Calculating factory:', factory.name)
+
   factory.rawResources = {}
   factory.parts = {}
 
@@ -94,6 +96,9 @@ export const calculateFactory = (
   // Calculate the amount of buildings and power required to make the factory and any power generation.
   calculateFactoryBuildingsAndPower(factory, gameData)
 
+  // Calculate the dependencies for just this factory.
+  calculateFactoryDependencies(factory, allFactories, gameData, loadMode)
+
   // Calculate the dependency metrics for the factory.
   calculateDependencyMetrics(factory)
 
@@ -105,9 +110,6 @@ export const calculateFactory = (
 
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
-
-  // Finally, go through all factories and check if they have any problems.
-  calculateHasProblem(allFactories)
 
   // Emit an event that the data has been updated so it can be synced
   eventBus.emit('factoryUpdated')
@@ -121,26 +123,20 @@ export const calculateFactories = (factories: Factory[], gameData: DataInterface
   // Otherwise, the part data that the invalidInputs check depends upon won't be present, and it will nuke all the import links.
   if (loadMode) {
     console.log('factory-management: calculateFactories: Preloading calculations')
+    // We need to do this twice to ensure all the parts are calculated, before we then check for invalid dependencies
     factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
-    })
-    calculateDependencies(factories)
-    scanForInvalidInputs(factories)
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
-    })
-  } else {
-    console.log('factory-management: calculateFactories')
-
-    // Construct the dependencies between factories.
-    calculateDependencies(factories)
-
-    // Check if we have any invalid inputs.
-    scanForInvalidInputs(factories)
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
+      calculateFactory(factory, factories, gameData, true) // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
     })
   }
+
+  // Construct the dependencies between factories.
+  calculateDependencies(factories, gameData)
+
+  // Do the calculations again after the dependencies have been calculated (if loaded)
+  factories.forEach(factory => calculateFactory(factory, factories, gameData))
+
+  // Finally, go through all factories and check if they have any problems.
+  calculateHasProblem(factories)
 }
 
 export const countActiveTasks = (factory: Factory) => {
