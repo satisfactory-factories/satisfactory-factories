@@ -1,8 +1,7 @@
 <template>
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
-  <div class="planner-container">
-
+  <div v-if="loadingCompleted" class="planner-container">
     <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="getFactories()"
@@ -86,6 +85,7 @@
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { useDisplay } from 'vuetify'
   import { useGameDataStore } from '@/stores/game-data-store'
+  import eventBus from '@/utils/eventBus'
 
   const { mdAndDown } = useDisplay()
   const { getGameData } = useGameDataStore()
@@ -95,6 +95,14 @@
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const helpText = ref(localStorage.getItem('helpText') === 'true')
+
+  const loadingCompleted = ref(false)
+
+  // Watch for the event that's emitted when appStore has loaded the data
+  eventBus.on('loadingCompleted', () => {
+    console.log('Planner: Got loadingCompleted event')
+    loadingCompleted.value = true
+  })
 
   // ==== WATCHES
   watch(helpText, newValue => {
@@ -333,14 +341,25 @@
   const initializeFactories = () => {
     Object.assign(worldRawResources, generateRawResources(gameData))
     updateWorldRawResources(gameData)
+
+    // Set that we're loaded so the components can start doing their thing
+    loadingCompleted.value = true
+
+    // The planner loads now as Vue has kicked off a ton of reactivity based on the v-if in the template.
+
+    // Now the DOM will lag to shit while everything loads, once it is complete this will execute
+    eventBus.emit('hideLoading')
   }
 
   const isItemRawResource = (item: string): boolean => {
     return !!gameData.items.rawResources[item]
   }
 
-  // Initialize during setup
-  initializeFactories()
+  // When everything is loaded and ready to go, then we are ready to start loading things.
+  eventBus.on('loadingCompleted', () => {
+    console.log('Planner: Received loadingCompleted event, initializing factories...')
+    initializeFactories()
+  })
 
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
@@ -356,18 +375,32 @@
   // If they have, don't show it again.
   const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
 
+  let factoriesToLoad: Factory[] = []
+  let waitingForLoader = false
+
   const setupDemo = () => {
     closeIntro()
+    factoriesToLoad = complexDemoPlan().getFactories()
     if (getFactories().length > 0) {
       if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
-        console.log('Replacing factories with Demo')
-        setFactories(complexDemoPlan().getFactories(), true)
+        eventBus.emit('showLoading', factoriesToLoad.length)
+      } else {
+        return // User cancelled
       }
     } else {
-      console.log('Adding demo factories')
-      setFactories(complexDemoPlan().getFactories())
+      eventBus.emit('showLoading', factoriesToLoad.length)
     }
+    console.log('Planner: setupDemo waiting for loader')
+    waitingForLoader = true
   }
+
+  // Watch for the loader event and if we have some factories to load, load them.
+  eventBus.on('loadingReady', () => {
+    if (waitingForLoader) {
+      setFactories(factoriesToLoad)
+      waitingForLoader = false
+    }
+  })
 
   const closeIntro = () => {
     console.log('closing intro')

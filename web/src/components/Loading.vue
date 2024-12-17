@@ -4,17 +4,18 @@
     :model-value="showLoad"
     opacity="0.7"
     persistent
+    @after-enter="afterEnter"
   >
     <v-card class="pa-4 text-center sub-card" elevation="1" width="500">
-      <div class="mb-2 text-h6">Loading Plan...</div>
+      <div v-if="max > 0" class="mb-2 text-h6">Loading Plan...</div>
+      <div v-else class="mb-2 text-h6">Loading Planner...</div>
       <v-progress-linear
         class="my-2"
         color="primary"
         height="8"
         indeterminate
-        :max="max"
       />
-      <div class="text-subtitle1">Loading {{ max }} factories...</div>
+      <div v-if="max > 0" class="text-subtitle1">Loading {{ max }} factories...</div>
     </v-card>
   </v-overlay>
 </template>
@@ -23,23 +24,31 @@
   import { onMounted, onUnmounted, ref } from 'vue'
   import eventBus from '@/utils/eventBus'
 
-  const showLoad = ref(false) // Controls the overlay visibility
+  // We want to show the loader by default cos there's weird chicken and egg scenarios, and the hideLoading event is eventually emitted.
+  const showLoad = ref(true)
+
   const max = ref(0) // Total factories to load
 
   function handleShowLoading (count: number) {
-    console.log('Showing loader')
+    console.log('Loader: Showing with factories to load:', count)
     showLoad.value = true
     max.value = count
   }
 
   function handleHideLoading () {
-    console.log('Hiding loader')
+    console.log('Loader: Hiding')
     showLoad.value = false
+  }
+
+  const afterEnter = () => {
+    console.log('Loader: Now visible, emitting loadingReady')
+    eventBus.emit('loadingReady')
   }
 
   onMounted(() => {
     eventBus.on('showLoading', handleShowLoading)
     eventBus.on('hideLoading', handleHideLoading)
+    console.log('Loader: Ready')
   })
 
   onUnmounted(() => {

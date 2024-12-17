@@ -1,5 +1,5 @@
 <template>
-  <splash />
   <loading />
+  <splash />
   <planner />
 </template>

@@ -30,8 +30,7 @@ export const useAppStore = defineStore('app', () => {
     },
     set (value) {
       currentFactoryTab.value.factories = value
-      inited.value = false
-      initFactories()
+      initFactories(true)
     },
   })
 
@@ -68,12 +67,14 @@ export const useAppStore = defineStore('app', () => {
     setTimeout(() => {
       setFactories(newFactories, loadMode)
     }, 250)
+
+    return []
   }
 
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
-  const initFactories = () => {
-    console.log('Initializing factories')
+  const initFactories = (loadMode = false): void => {
+    console.log('appStore: initFactories - load mode:', loadMode)
     let needsCalculation = false
 
     factories.value.forEach(factory => {
@@ -135,21 +136,20 @@ export const useAppStore = defineStore('app', () => {
       }
     })
 
-    needsCalculation = true
-
     if (needsCalculation) {
-      console.log('Forcing calculation of factories due to data migration')
+      console.log('appStore: Forcing calculation of factories due to data migration')
       calculateFactories(factories.value, gameDataStore.getGameData())
       eventBus.emit('hideLoading')
     }
 
     inited.value = true
 
-    return factories.value
+    // Event loadingCompleted event so planner can then pull the data
+    eventBus.emit('loadingCompleted')
   }
 
   const setFactories = (newFactories: Factory[], loadMode = false) => {
-    console.log('Setting factories', newFactories)
+    console.log('Setting factories', newFactories, 'load mode:', loadMode)
     const gameData = gameDataStore.getGameData()
     if (!gameData) {
       console.error('Unable to load game data!')
@@ -159,18 +159,17 @@ export const useAppStore = defineStore('app', () => {
     // Run getFactories to determine if calculations are required
     initFactories()
 
-    // We're making an assumption here that setFactories does NOT need to run calculations, as they should have already been run. However, if loadMode is passed, we need to run them.
-    if (loadMode) {
-      calculateFactories(newFactories, gameData, loadMode)
-    }
+    calculateFactories(newFactories, gameData, loadMode)
 
     // For each factory, set the previous inputs to the current inputs.
     newFactories.forEach(factory => {
       factory.previousInputs = factory.inputs
     })
 
-    factories.value = newFactories
     // Will also call the watcher.
+    factories.value = newFactories
+
+    eventBus.emit('loadingCompleted')
   }
 
   const addFactory = (factory: Factory) => {
@@ -178,7 +177,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeFactory = (id: number) => {
-    const index = initFactories().findIndex(factory => factory.id === id)
+    const index = factories.value.findIndex(factory => factory.id === id)
     if (index !== -1) {
       factories.value.splice(index, 1)
     }
@@ -237,8 +236,13 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
-  // Upon load, force the getFactories() to be ran to ensure migrations are applied
-  initFactories()
+  // When the loader is ready, we will receive an event saying to initiate the load.
+  eventBus.on('loadingReady', () => {
+    console.log('appStore: Got loading ready event, requesting data load')
+    if (!inited.value) {
+      initFactories(true)
+    }
+  })
 
   return {
     currentFactoryTab,
@@ -251,7 +255,7 @@ export const useAppStore = defineStore('app', () => {
     getLastEdit,
     setLastSave,
     setLastEdit,
-    getFactories: () => inited.value ? factories.value : initFactories(),
+    getFactories: () => factories.value,
     setFactories,
     setFactoriesWithLoader,
     addFactory,
