@@ -1,7 +1,6 @@
 // Check for invalid factory data e.g. inputs without factories etc
 import { findFac } from '@/utils/factory-management/factory'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { getPartDisplayName } from '@/utils/helpers'
 
 export const validateFactories = (factories: Factory[]) => {
   let hasErrors = false
