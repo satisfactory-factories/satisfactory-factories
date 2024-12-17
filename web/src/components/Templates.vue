@@ -46,6 +46,7 @@
 <script lang="ts" setup>
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { createSimple } from '@/utils/factory-setups/simple-plan'
+  import { create268Scenraio } from '@/utils/factory-setups/268-power-gen-only-import'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
@@ -78,11 +79,18 @@
       isDebug: false,
     },
     {
+      name: 'PowerOnlyImport',
+      description: '2 factory setup where on factory is producing the produce (fuel) and another is consuming (by import) the product for power generation. Related to issue #268',
+      data: create268Scenraio().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
       name: 'Multi-input',
       description: '3 factory setup where one factory is importing the same product from two different factories. Related to issue #290. The Imports on Iron Plates should render correctly with the correct part name, and NOT be called "IronPlate", rather "Iron Plate".',
       data: create290Scenario().getFactories(),
-      isDebug: true,
       show: isDebugMode,
+      isDebug: true,
     },
   ]
 
