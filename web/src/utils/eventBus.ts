@@ -7,6 +7,8 @@ type Events = {
   dataSynced: undefined;
   dataOutOfSync: undefined;
   toast: { message: string; type?: 'success' | 'error' };
+  showLoading: number;
+  hideLoading: undefined;
 };
 
 const eventBus = mitt<Events>()

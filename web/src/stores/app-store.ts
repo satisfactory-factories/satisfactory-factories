@@ -4,6 +4,7 @@ import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryI
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
+import eventBus from '@/utils/eventBus'
 
 export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
@@ -29,6 +30,7 @@ export const useAppStore = defineStore('app', () => {
     },
     set (value) {
       currentFactoryTab.value.factories = value
+      inited.value = false
       initFactories()
     },
   })
@@ -58,6 +60,14 @@ export const useAppStore = defineStore('app', () => {
   const setLastSave = () => {
     lastSave.value = new Date()
     localStorage.setItem('lastSave', lastSave.value.toISOString())
+  }
+
+  const setFactoriesWithLoader = (newFactories: Factory[], loadMode = false) => {
+    eventBus.emit('showLoading', newFactories.length)
+    // Wait for the loader to show
+    setTimeout(() => {
+      setFactories(newFactories, loadMode)
+    }, 250)
   }
 
   // ==== FACTORY MANAGEMENT
@@ -125,9 +135,12 @@ export const useAppStore = defineStore('app', () => {
       }
     })
 
+    needsCalculation = true
+
     if (needsCalculation) {
       console.log('Forcing calculation of factories due to data migration')
       calculateFactories(factories.value, gameDataStore.getGameData())
+      eventBus.emit('hideLoading')
     }
 
     inited.value = true
@@ -143,8 +156,13 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    // Trigger calculations
-    calculateFactories(newFactories, gameData, loadMode)
+    // Run getFactories to determine if calculations are required
+    initFactories()
+
+    // We're making an assumption here that setFactories does NOT need to run calculations, as they should have already been run. However, if loadMode is passed, we need to run them.
+    if (loadMode) {
+      calculateFactories(newFactories, gameData, loadMode)
+    }
 
     // For each factory, set the previous inputs to the current inputs.
     newFactories.forEach(factory => {
@@ -235,6 +253,7 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit,
     getFactories: () => inited.value ? factories.value : initFactories(),
     setFactories,
+    setFactoriesWithLoader,
     addFactory,
     removeFactory,
     clearFactories,
