@@ -140,7 +140,6 @@
           @click="addEmptyInput(factory)"
         >Add Import
         </v-btn>
-        <span v-if="ableToImport(factory) === 'noProductsOrProducers'" class="ml-2">(This factory does not yet have any products/power generators.)</span>
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
         <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports available to supply this factory.)</span>
       </div>
