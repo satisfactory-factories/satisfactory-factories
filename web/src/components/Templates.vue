@@ -68,21 +68,21 @@
       description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
       show: true,
-      isDebug: false
+      isDebug: false,
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
       show: true,
-      isDebug: false
+      isDebug: false,
     },
     {
       name: 'PowerOnlyImport',
       description: '2 factory setup where on factory is producing the produce (fuel) and another is consuming (by import) the product for power generation. Related to issue #268',
       data: create268Scenraio().getFactories(),
       show: isDebugMode,
-      isDebug: true
+      isDebug: true,
     },
   ]
 

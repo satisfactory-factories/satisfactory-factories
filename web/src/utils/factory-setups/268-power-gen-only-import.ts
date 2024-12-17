@@ -23,10 +23,10 @@ export const create268Scenraio = (): { getFactories: () => Factory[] } => {
 
   const addPowerProducersToFactories = () => {
     addPowerProducerToFactory(fuelGensFac, {
-        building: 'generatorfuel',
-        ingredientAmount: 100,
-        recipe: 'GeneratorFuel_LiquidFuel',
-        updated: "ingredient"
+      building: 'generatorfuel',
+      ingredientAmount: 100,
+      recipe: 'GeneratorFuel_LiquidFuel',
+      updated: 'ingredient',
     })
   }
 

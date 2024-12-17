@@ -314,15 +314,15 @@ describe('inputs', () => {
         fuelFactory = newFactory('Fuel Factory')
         fuelGenFactory = newFactory('Fuel Gens')
         addProductToFactory(fuelFactory, {
-            id: 'LiquidFuel',
-            amount: 1000,
-            recipe: 'LiquidFuel',
+          id: 'LiquidFuel',
+          amount: 1000,
+          recipe: 'LiquidFuel',
         })
         addPowerProducerToFactory(fuelGenFactory, {
-            building: 'generatorfuel',
-            ingredientAmount: 100,
-            recipe: 'GeneratorFuel_LiquidFuel',
-            updated: "ingredient"
+          building: 'generatorfuel',
+          ingredientAmount: 100,
+          recipe: 'GeneratorFuel_LiquidFuel',
+          updated: 'ingredient',
         })
       })
       it('should return noProducts if the factory has no products', () => {

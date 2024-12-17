@@ -6,14 +6,12 @@ import { create268Scenraio } from '@/utils/factory-setups/268-power-gen-only-imp
 
 let factories: Factory[]
 let fuelFac: Factory
-let fuelGensFac: Factory
 
 describe('268 Scenario Plan', () => {
   beforeAll(() => {
     const templateInstance = create268Scenraio()
     factories = templateInstance.getFactories()
     fuelFac = findFacByName('Fuel Factory', factories)
-    fuelGensFac = findFacByName('Fuel Gens', factories)
     calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
     calculateFactories(factories, gameData)
   })
