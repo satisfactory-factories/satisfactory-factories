@@ -303,7 +303,7 @@ describe('inputs', () => {
       let fuelFactory: Factory
       let fuelGenFactory: Factory
       beforeEach(() => {
-        ingotFactory = newFactory('foo')
+        ingotFactory = newFactory('Iron Ingots', 0, 1)
         addProductToFactory(ingotFactory, {
           id: 'IronIngot',
           amount: 1000,
@@ -311,8 +311,8 @@ describe('inputs', () => {
         })
         ingotFactory.usingRawResourcesOnly = false
 
-        fuelFactory = newFactory('Fuel Factory')
-        fuelGenFactory = newFactory('Fuel Gens')
+        fuelFactory = newFactory('Fuel Factory', 1, 2)
+        fuelGenFactory = newFactory('Fuel Gens', 2, 3)
         addProductToFactory(fuelFactory, {
           id: 'LiquidFuel',
           amount: 1000,
@@ -325,15 +325,11 @@ describe('inputs', () => {
           updated: 'ingredient',
         })
       })
-      it('should return noProducts if the factory has no products', () => {
+      it('should return noProductsOrProducers if the factory has no products AND no power producers', () => {
         ingotFactory.products = []
+        ingotFactory.powerProducers = []
         const result = calculateAbleToImport(ingotFactory, [])
-        expect(result).toBe('noProducts')
-      })
-      it('should return true if the factory has no products, but has a power generator', () => {
-        fuelGenFactory.products = []
-        const result = calculateAbleToImport(fuelGenFactory, [])
-        expect(result).toBe(true)
+        expect(result).toBe('noProductsOrProducers')
       })
       it('should return rawOnly if the factory is only using raw resources', () => {
         ingotFactory.usingRawResourcesOnly = true
@@ -346,6 +342,10 @@ describe('inputs', () => {
       })
       it('should return true if there are import candidates', () => {
         const result = calculateAbleToImport(ingotFactory, [ironIngotFac])
+        expect(result).toBe(true)
+      })
+      it('should return true if there are only power producers', () => {
+        const result = calculateAbleToImport(fuelGenFactory, [fuelFactory])
         expect(result).toBe(true)
       })
     })
