@@ -4,6 +4,7 @@ import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryI
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
+import { validateFactories } from '@/utils/factory-management/validation'
 
 export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
@@ -63,8 +64,10 @@ export const useAppStore = defineStore('app', () => {
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
   const initFactories = () => {
-    console.log('Initializing factories')
+    console.log('Initializing factories', factories.value)
     let needsCalculation = false
+
+    validateFactories(factories.value) // Ensure the data is clean
 
     factories.value.forEach(factory => {
       // Patch for #222
@@ -136,12 +139,15 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const setFactories = (newFactories: Factory[], loadMode = false) => {
-    console.log('Setting factories', newFactories)
+    console.log('Setting factories', newFactories, 'loadMode:', loadMode)
+
     const gameData = gameDataStore.getGameData()
     if (!gameData) {
       console.error('Unable to load game data!')
       return
     }
+
+    validateFactories(newFactories) // Ensure the data is clean
 
     // Trigger calculations
     calculateFactories(newFactories, gameData, loadMode)

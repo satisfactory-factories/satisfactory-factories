@@ -365,7 +365,7 @@
       }
     } else {
       console.log('Adding demo factories')
-      setFactories(complexDemoPlan().getFactories())
+      setFactories(complexDemoPlan().getFactories(), true)
     }
   }
 
