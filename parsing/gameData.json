@@ -5,9 +5,11 @@
         "constructormk1": 4,
         "converter": 0.1,
         "foundrymk1": 16,
+        "generatorcoal": 0,
+        "generatorfuel": 0,
+        "generatornuclear": 0,
         "hadroncollider": 0.1,
         "manufacturermk1": 55,
-        "nuclearpowerplant": 0,
         "oilrefinery": 30,
         "packager": 10,
         "quantumencoder": 0.1,
@@ -102,7 +104,7 @@
             },
             "CandyCane": {
                 "name": "Candy Cane",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -319,21 +321,21 @@
             },
             "Fireworks_Projectile_01": {
                 "name": "Sweet Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "Fireworks_Projectile_02": {
                 "name": "Fancy Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "Fireworks_Projectile_03": {
                 "name": "Sparkly Fireworks",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -413,7 +415,7 @@
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 0
+                "energyGeneratedInMJ": 400
             },
             "HighSpeedConnector": {
                 "name": "High-Speed Connector",
@@ -441,7 +443,7 @@
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 5
+                "energyGeneratedInMJ": 5000
             },
             "IronIngot": {
                 "name": "Iron Ingot",
@@ -490,14 +492,14 @@
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 1
+                "energyGeneratedInMJ": 750
             },
             "LiquidFuel": {
                 "name": "Fuel",
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 1
+                "energyGeneratedInMJ": 750
             },
             "LiquidOil": {
                 "name": "Liquid Oil",
@@ -861,7 +863,7 @@
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 4
+                "energyGeneratedInMJ": 3600
             },
             "Rotor": {
                 "name": "Rotor",
@@ -921,7 +923,7 @@
             },
             "SnowballProjectile": {
                 "name": "Snowball",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1131,28 +1133,28 @@
             },
             "XmasBall1": {
                 "name": "Red FICSMAS Ornament",
-                "stackSize": 500,
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall2": {
                 "name": "Blue FICSMAS Ornament",
-                "stackSize": 500,
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall3": {
                 "name": "Copper FICSMAS Ornament",
-                "stackSize": 200,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             },
             "XmasBall4": {
                 "name": "Iron FICSMAS Ornament",
-                "stackSize": 200,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1166,7 +1168,7 @@
             },
             "XmasBow": {
                 "name": "FICSMAS Bow",
-                "stackSize": 500,
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
@@ -1186,109 +1188,113 @@
                 "energyGeneratedInMJ": 0
             },
             "XmasWreath": {
-                "name": "FICSMAS Decoration",
-                "stackSize": 100,
+                "name": "FICSMAS Wreath",
+                "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
             }
         },
-        "collectables": {
-            "CrystalShard": "Power Shard"
-        },
         "rawResources": {
-            "OreIron": {
-                "name": "Iron Ore",
-                "limit": 92100
-            },
             "Coal": {
                 "name": "Coal",
                 "limit": 42300
             },
-            "Water": {
-                "name": "Water",
-                "limit": 9007199254740991
+            "Crystal": {
+                "name": "Blue Power Slug",
+                "limit": 596
             },
-            "NitrogenGas": {
-                "name": "Nitrogen Gas",
-                "limit": 12000
+            "Crystal_mk2": {
+                "name": "Yellow Power Slug",
+                "limit": 389
             },
-            "Sulfur": {
-                "name": "Sulfur",
-                "limit": 10800
+            "Crystal_mk3": {
+                "name": "Purple Power Slug",
+                "limit": 257
             },
-            "SAM": {
-                "name": "SAM",
-                "limit": 10200
+            "Gift": {
+                "name": "Gift",
+                "limit": 100000000
             },
-            "OreBauxite": {
-                "name": "Bauxite",
-                "limit": 12300
+            "HatcherParts": {
+                "name": "Hatcher Parts",
+                "limit": 100000000
             },
-            "OreGold": {
-                "name": "Caterium Ore",
-                "limit": 15000
-            },
-            "OreCopper": {
-                "name": "Copper Ore",
-                "limit": 36900
-            },
-            "RawQuartz": {
-                "name": "Raw Quartz",
-                "limit": 13500
-            },
-            "Stone": {
-                "name": "Limestone",
-                "limit": 69900
-            },
-            "OreUranium": {
-                "name": "Uranium",
-                "limit": 2100
-            },
-            "LiquidOil": {
-                "name": "Crude Oil",
-                "limit": 12600
+            "HogParts": {
+                "name": "Hog Parts",
+                "limit": 100000000
             },
             "Leaves": {
                 "name": "Leaves",
                 "limit": 100000000
             },
-            "Wood": {
-                "name": "Wood",
-                "limit": 100000000
+            "LiquidOil": {
+                "name": "Crude Oil",
+                "limit": 12600
             },
             "Mycelia": {
                 "name": "Mycelia",
+                "limit": 100000000
+            },
+            "NitrogenGas": {
+                "name": "Nitrogen Gas",
+                "limit": 12000
+            },
+            "OreBauxite": {
+                "name": "Bauxite",
+                "limit": 12300
+            },
+            "OreCopper": {
+                "name": "Copper Ore",
+                "limit": 36900
+            },
+            "OreGold": {
+                "name": "Caterium Ore",
+                "limit": 15000
+            },
+            "OreIron": {
+                "name": "Iron Ore",
+                "limit": 92100
+            },
+            "OreUranium": {
+                "name": "Uranium",
+                "limit": 2100
+            },
+            "RawQuartz": {
+                "name": "Raw Quartz",
+                "limit": 13500
+            },
+            "SAM": {
+                "name": "SAM",
+                "limit": 10200
+            },
+            "SpitterParts": {
+                "name": "Spitter Parts",
+                "limit": 100000000
+            },
+            "StingerParts": {
+                "name": "Stinger Parts",
+                "limit": 100000000
+            },
+            "Stone": {
+                "name": "Limestone",
+                "limit": 69900
+            },
+            "Sulfur": {
+                "name": "Sulfur",
+                "limit": 10800
+            },
+            "Water": {
+                "name": "Water",
+                "limit": 9007199254740991
+            },
+            "Wood": {
+                "name": "Wood",
                 "limit": 100000000
             }
         }
     },
     "recipes": [
-        {
-            "id": "Snow",
-            "displayName": "Actual Snow",
-            "ingredients": [
-                {
-                    "part": "Gift",
-                    "amount": 5,
-                    "perMin": 25
-                }
-            ],
-            "products": [
-                {
-                    "part": "Snow",
-                    "amount": 2,
-                    "perMin": 10,
-                    "isByProduct": false
-                }
-            ],
-            "building": {
-                "name": "constructormk1",
-                "power": 4
-            },
-            "isAlternate": false,
-            "isFicsmas": true
-        },
         {
             "id": "SpaceElevatorPart_5",
             "displayName": "Adaptive Control Unit",
@@ -6581,6 +6587,31 @@
             "isFicsmas": false
         },
         {
+            "id": "Snow",
+            "displayName": "FICSMAS Actual Snow",
+            "ingredients": [
+                {
+                    "part": "Gift",
+                    "amount": 5,
+                    "perMin": 25
+                }
+            ],
+            "products": [
+                {
+                    "part": "Snow",
+                    "amount": 2,
+                    "perMin": 10,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "constructormk1",
+                "power": 4
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
             "id": "XmasBow",
             "displayName": "FICSMAS Bow",
             "ingredients": [
@@ -6601,36 +6632,6 @@
             "building": {
                 "name": "constructormk1",
                 "power": 4
-            },
-            "isAlternate": false,
-            "isFicsmas": true
-        },
-        {
-            "id": "XmasWreath",
-            "displayName": "FICSMAS Decoration",
-            "ingredients": [
-                {
-                    "part": "XmasBranch",
-                    "amount": 15,
-                    "perMin": 15
-                },
-                {
-                    "part": "XmasBallCluster",
-                    "amount": 6,
-                    "perMin": 6
-                }
-            ],
-            "products": [
-                {
-                    "part": "XmasWreath",
-                    "amount": 2,
-                    "perMin": 2,
-                    "isByProduct": false
-                }
-            ],
-            "building": {
-                "name": "assemblermk1",
-                "power": 15
             },
             "isAlternate": false,
             "isFicsmas": true
@@ -6710,6 +6711,36 @@
                     "part": "XmasStar",
                     "amount": 1,
                     "perMin": 1,
+                    "isByProduct": false
+                }
+            ],
+            "building": {
+                "name": "assemblermk1",
+                "power": 15
+            },
+            "isAlternate": false,
+            "isFicsmas": true
+        },
+        {
+            "id": "XmasWreath",
+            "displayName": "FICSMAS Wreath",
+            "ingredients": [
+                {
+                    "part": "XmasBranch",
+                    "amount": 15,
+                    "perMin": 15
+                },
+                {
+                    "part": "XmasBallCluster",
+                    "amount": 6,
+                    "perMin": 6
+                }
+            ],
+            "products": [
+                {
+                    "part": "XmasWreath",
+                    "amount": 2,
+                    "perMin": 2,
                     "isByProduct": false
                 }
             ],
@@ -10354,13 +10385,13 @@
             "ingredients": [
                 {
                     "part": "GenericBiomass",
-                    "amount": 0.16666666666666666,
-                    "perMin": 10
+                    "perMin": 10,
+                    "mwPerItem": 3
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10370,13 +10401,13 @@
             "ingredients": [
                 {
                     "part": "Leaves",
-                    "amount": 2,
-                    "perMin": 120
+                    "perMin": 120,
+                    "mwPerItem": 0.25
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10386,13 +10417,13 @@
             "ingredients": [
                 {
                     "part": "Mycelia",
-                    "amount": 1.5,
-                    "perMin": 90
+                    "perMin": 90,
+                    "mwPerItem": 0.3333333333333333
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10402,13 +10433,13 @@
             "ingredients": [
                 {
                     "part": "PackagedBiofuel",
-                    "amount": 0.04,
-                    "perMin": 2.4
+                    "perMin": 2.4,
+                    "mwPerItem": 12.5
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10418,13 +10449,13 @@
             "ingredients": [
                 {
                     "part": "Biofuel",
-                    "amount": 0.06666666666666667,
-                    "perMin": 4
+                    "perMin": 4,
+                    "mwPerItem": 7.5
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10434,13 +10465,13 @@
             "ingredients": [
                 {
                     "part": "Wood",
-                    "amount": 0.3,
-                    "perMin": 18
+                    "perMin": 18,
+                    "mwPerItem": 1.6666666666666667
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "BiomassBurner",
+                "name": "generatorbiomass",
                 "power": 30
             }
         },
@@ -10450,18 +10481,18 @@
             "ingredients": [
                 {
                     "part": "Coal",
-                    "amount": 0.25,
-                    "perMin": 15
+                    "perMin": 15,
+                    "mwPerItem": 5
                 },
                 {
                     "part": "Water",
-                    "amount": 0.75,
-                    "perMin": 45
+                    "perMin": 45,
+                    "supplementalRatio": 0.6
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10471,18 +10502,18 @@
             "ingredients": [
                 {
                     "part": "CompactedCoal",
-                    "amount": 0.11904833333333334,
-                    "perMin": 7.1429
+                    "perMin": 7.14286,
+                    "mwPerItem": 10.499995800001681
                 },
                 {
                     "part": "Water",
-                    "amount": 0.75,
-                    "perMin": 45
+                    "perMin": 45,
+                    "supplementalRatio": 0.6
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10492,18 +10523,18 @@
             "ingredients": [
                 {
                     "part": "PetroleumCoke",
-                    "amount": 0.4166666666666667,
-                    "perMin": 25
+                    "perMin": 25,
+                    "mwPerItem": 3
                 },
                 {
                     "part": "Water",
-                    "amount": 0.75,
-                    "perMin": 45
+                    "perMin": 45,
+                    "supplementalRatio": 0.6
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Coal-PoweredGenerator",
+                "name": "generatorcoal",
                 "power": 75
             }
         },
@@ -10513,13 +10544,13 @@
             "ingredients": [
                 {
                     "part": "LiquidFuel",
-                    "amount": 250,
-                    "perMin": 15000
+                    "perMin": 20,
+                    "mwPerItem": 12.5
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10529,13 +10560,13 @@
             "ingredients": [
                 {
                     "part": "IonizedFuel",
-                    "amount": 50,
-                    "perMin": 3000
+                    "perMin": 3,
+                    "mwPerItem": 83.33333333333333
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10545,13 +10576,13 @@
             "ingredients": [
                 {
                     "part": "LiquidBiofuel",
-                    "amount": 250,
-                    "perMin": 15000
+                    "perMin": 20,
+                    "mwPerItem": 12.5
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10561,13 +10592,13 @@
             "ingredients": [
                 {
                     "part": "RocketFuel",
-                    "amount": 62.5,
-                    "perMin": 3750
+                    "perMin": 4.16667,
+                    "mwPerItem": 59.999952000038405
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10577,13 +10608,13 @@
             "ingredients": [
                 {
                     "part": "LiquidTurboFuel",
-                    "amount": 0.125,
-                    "perMin": 7.5
+                    "perMin": 7.5,
+                    "mwPerItem": 33.333333333333336
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "Fuel-PoweredGenerator",
+                "name": "generatorfuel",
                 "power": 250
             }
         },
@@ -10593,18 +10624,18 @@
             "ingredients": [
                 {
                     "part": "FicsoniumFuelRod",
-                    "amount": 0.016666666666666666,
-                    "perMin": 1
+                    "perMin": 1,
+                    "mwPerItem": 2500
                 },
                 {
                     "part": "Water",
-                    "amount": 4,
-                    "perMin": 240
+                    "perMin": 240,
+                    "supplementalRatio": 0.096
                 }
             ],
-            "products": [],
+            "byproduct": null,
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         },
@@ -10614,25 +10645,21 @@
             "ingredients": [
                 {
                     "part": "PlutoniumFuelRod",
-                    "amount": 0.0016666666666666668,
-                    "perMin": 0.1
+                    "perMin": 0.1,
+                    "mwPerItem": 25000
                 },
                 {
                     "part": "Water",
-                    "amount": 4,
-                    "perMin": 240
+                    "perMin": 240,
+                    "supplementalRatio": 0.096
                 }
             ],
-            "products": [
-                {
-                    "part": "PlutoniumWaste",
-                    "amount": 0.16666666666666666,
-                    "perMin": 10,
-                    "isByProduct": true
-                }
-            ],
+            "byproduct": {
+                "part": "PlutoniumWaste",
+                "perMin": 1
+            },
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         },
@@ -10642,25 +10669,21 @@
             "ingredients": [
                 {
                     "part": "NuclearFuelRod",
-                    "amount": 0.0033333333333333335,
-                    "perMin": 0.2
+                    "perMin": 0.2,
+                    "mwPerItem": 12500
                 },
                 {
                     "part": "Water",
-                    "amount": 4,
-                    "perMin": 240
+                    "perMin": 240,
+                    "supplementalRatio": 0.096
                 }
             ],
-            "products": [
-                {
-                    "part": "NuclearWaste",
-                    "amount": 0.8333333333333334,
-                    "perMin": 50,
-                    "isByProduct": true
-                }
-            ],
+            "byproduct": {
+                "part": "NuclearWaste",
+                "perMin": 10
+            },
             "building": {
-                "name": "NuclearPowerPlant",
+                "name": "generatornuclear",
                 "power": 2500
             }
         }

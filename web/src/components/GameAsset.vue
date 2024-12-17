@@ -71,13 +71,21 @@
     }
   }
 
+  const subjectRewrite = (subject: string): string => {
+    if (subject === 'rocket-fuel') {
+      return 'rocket-fuel-2'
+    }
+    return subject
+  }
+
   const getImageUrl = (
     name: string,
     type: 'building' | 'item',
     size: 'small' | 'big' = 'big'
   ): string => {
+    const nameRewrite = subjectRewrite(name)
     const pxSize = size === 'small' ? 64 : 256
-    return `/assets/game/images/${type}/${name}_${pxSize}.png`
+    return `/assets/game/images/${type}/${nameRewrite}_${pxSize}.png`
   }
 
   const widthPx = parseInt(

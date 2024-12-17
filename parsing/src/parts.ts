@@ -1,5 +1,5 @@
-import {Recipe} from "./interfaces/Recipe";
-import {Part, PartDataInterface, RawResource} from "./interfaces/Part";
+import { ParserRecipe } from "./interfaces/ParserRecipe";
+import { ParserPart, ParserItemDataInterface, ParserRawResource } from "./interfaces/ParserPart";
 import {
   blacklist,
   whitelist,
@@ -9,9 +9,8 @@ import {
   getFriendlyName
 } from "./common";
 
-function getItems(data: any[]): PartDataInterface {
-    const parts: { [key: string]: Part } = {};
-    const collectables: { [key: string]: string } = {};
+function getItems(data: any[]): ParserItemDataInterface {
+    const parts: { [key: string]: ParserPart } = {};
     const rawResources = getRawResources(data);
 
     // Scan all recipes (not parts), looking for parts that are used in recipes. 
@@ -213,50 +212,36 @@ function getItems(data: any[]): PartDataInterface {
                 // Extract stack size
                 const stackSize: number = stackSizeConvert(classDescriptor?.mStackSize || "SS_UNKNOWN")
                 // Extract the energy value
-                const energyValue: number = classDescriptor.mEnergyValue ?? 0;
 
-                // Check if the part is a collectable (e.g., Power Slug)
-                if (isCollectable(entry.mIngredients)) {
-                    collectables[partName] = friendlyName;
-                } else {
-                    //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
-                    parts[partName] = {
-                        name: friendlyName,
-                        stackSize,
-                        isFluid: isFluid(partName),
-                        isFicsmas: isFicsmas(entry.mDisplayName),
-                        energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
-                    };
+                let energyValue = classDescriptor.mEnergyValue ?? 0;
+
+                // If the part is a fluid, the energy value is multiplied by 1000, cos the game loves to store everything as 0.0001 values...
+                if (isFluid(partName)) {
+                    energyValue *= 1000;
                 }
+
+                //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
+                parts[partName] = {
+                    name: friendlyName,
+                    stackSize,
+                    isFluid: isFluid(partName),
+                    isFicsmas: isFicsmas(entry.mDisplayName),
+                    energyGeneratedInMJ: Math.round(energyValue), // Round to the nearest whole number (all energy numbers are whole numbers) 
+                };
+
             });
         });
 
-    // Sort the parts and collectables by key
+    // Sort the parts by key
     return {
         parts: Object.keys(parts)
             .sort()
-            .reduce((sortedObj: { [key: string]: Part }, key: string) => {
+            .reduce((sortedObj: { [key: string]: ParserPart }, key: string) => {
                 sortedObj[key] = parts[key];
-                return sortedObj;
-            }, {}),
-        collectables: Object.keys(collectables)
-            .sort()
-            .reduce((sortedObj: { [key: string]: string }, key: string) => {
-                sortedObj[key] = collectables[key];
                 return sortedObj;
             }, {}),
         rawResources
     };
-}
-
-// Helper function to determine if an ingredient is a collectable (e.g., Power Slug)
-function isCollectable(ingredients: string): boolean {
-    const collectableDescriptors = [
-        "Desc_Crystal.Desc_Crystal_C",        // Blue Power Slug
-        "Desc_Crystal_mk2.Desc_Crystal_mk2_C", // Yellow Power Slug
-        "Desc_Crystal_mk3.Desc_Crystal_mk3_C"  // Purple Power Slug
-    ];
-    return collectableDescriptors.some(descriptor => ingredients.includes(descriptor));
 }
 
 function stackSizeConvert(stackSize: string): number {
@@ -276,8 +261,8 @@ function stackSizeConvert(stackSize: string): number {
 }
 
 // Function to extract raw resources from the game data
-function getRawResources(data: any[]): { [key: string]: RawResource } {
-    const rawResources: { [key: string]: RawResource } = {};
+function getRawResources(data: any[]): { [key: string]: ParserRawResource } {
+    const rawResources: { [key: string]: ParserRawResource } = {};
     const limits: { [key: string]: number } = {
         "Coal": 42300,
         "LiquidOil": 12600,
@@ -311,26 +296,67 @@ function getRawResources(data: any[]): { [key: string]: RawResource } {
             }
         });
 
-    // Manually add "Leaves" and "Wood" to the rawResources list
+    // Manually add Leaves, Wood, Mycelia to the rawResources list
     rawResources["Leaves"] = {
         name: "Leaves",
         limit: limits["Leaves"] || 100000000  
     };
-
     rawResources["Wood"] = {
         name: "Wood",
         limit: limits["Wood"] || 100000000  
     };
-
     rawResources["Mycelia"] = {
         name: "Mycelia",
         limit: limits["Mycelia"] || 100000000  
     };
 
-    return rawResources;
+    //Manually add alien parts to the rawResources list
+    rawResources["HatcherParts"] = {
+        name: "Hatcher Parts",
+        limit: 100000000  
+    };
+    rawResources["HogParts"] = {
+        name: "Hog Parts",
+        limit: 100000000  
+    };
+    rawResources["SpitterParts"] = {
+        name: "Spitter Parts",
+        limit: 100000000  
+    };
+    rawResources["StingerParts"] = {
+        name: "Stinger Parts",
+        limit: 100000000  
+    };
+
+    //Manually add slugs. Numbers from Satisfactory Calculator map
+    rawResources["Crystal"] = {
+        name: "Blue Power Slug",
+        limit: 596  
+    };
+    rawResources["Crystal_mk2"] = {
+        name: "Yellow Power Slug",
+        limit: 389  
+    };
+    rawResources["Crystal_mk3"] = {
+        name: "Purple Power Slug",
+        limit: 257  
+    };
+    
+    //Ficmas items
+    rawResources["Gift"] = {
+        name: "Gift",
+        limit: 100000000  
+    };
+
+    // Order the rawResources by key
+    const orderedRawResources: { [key: string]: ParserRawResource } = {};
+    Object.keys(rawResources).sort().forEach(key => {
+        orderedRawResources[key] = rawResources[key];
+    });
+    return orderedRawResources;
 }
 
-function fixItemNames(items: PartDataInterface): void {
+function fixItemNames(items: ParserItemDataInterface): void {
     // Go through the item names and do some manual fixes, e.g. renaming "Residual Plastic" to "Plastic"
     const fixItems: Record<string, string> = {
         "AlienProtein": "Alien Protein",
@@ -352,7 +378,7 @@ function fixItemNames(items: PartDataInterface): void {
     }
 }
 
-function fixTurbofuel(items: PartDataInterface, recipes: Recipe[]): void {
+function fixTurbofuel(items: ParserItemDataInterface, recipes: ParserRecipe[]): void {
     // Rename the current "Turbofuel" which is actually "Packaged Turbofuel"
     items.parts["PackagedTurboFuel"] = items.parts["TurboFuel"];
 

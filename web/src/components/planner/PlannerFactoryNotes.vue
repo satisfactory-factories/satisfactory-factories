@@ -1,6 +1,9 @@
 <template>
   <v-card class="factory-card sub-card">
-    <v-card-title>Notes</v-card-title>
+    <v-card-title>
+      <i class="fas fa-sticky-note" />
+      <span class="ml-3">Notes</span>
+    </v-card-title>
     <v-card-text>
       <v-textarea
         v-model="factory.notes"
@@ -39,7 +42,7 @@
 
   const charLimit = 1000
 
-  watch(() => props.factory.notes, newValue => {
+  watch(() => props.factory.notes, () => {
     eventBus.emit('factoryUpdated') // Tell sync there's something changed
   })
 </script>

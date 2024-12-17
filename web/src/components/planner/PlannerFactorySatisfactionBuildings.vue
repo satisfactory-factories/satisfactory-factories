@@ -22,8 +22,19 @@
         variant="tonal"
       >
         <i class="fas fa-bolt" />
+        <i class="fas fa-minus" />
         <span class="ml-2">
-          {{ formatNumber(factory.totalPower) }} MW
+          Consumes: {{ formatPower(factory.power.consumed).value }} {{ formatPower(factory.power.consumed).unit }}
+        </span>
+      </v-chip>
+      <v-chip
+        class="sf-chip yellow"
+        variant="tonal"
+      >
+        <i class="fas fa-bolt" />
+        <i class="fas fa-plus" />
+        <span class="ml-2">
+          Produces: {{ formatPower(factory.power.produced).value }} {{ formatPower(factory.power.produced).unit }}
         </span>
       </v-chip>
       <div
@@ -49,7 +60,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
-  import { formatNumber } from '@/utils/numberFormatter'
+  import { formatNumber, formatPower } from '@/utils/numberFormatter'
   import { inject } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { useGameDataStore } from '@/stores/game-data-store'

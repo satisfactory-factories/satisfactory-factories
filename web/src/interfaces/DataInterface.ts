@@ -1,4 +1,4 @@
-import { Recipe } from './Recipe'
+import { PowerRecipe, Recipe } from './Recipes'
 
 export interface Part {
   name: string;
@@ -16,8 +16,8 @@ export interface DataInterface {
   buildings: { [key: string]: number };
   items: {
     parts: { [key: string]: Part };
-    collectables: { [key: string]: string };
     rawResources: { [key: string]: RawResource };
   }
   recipes: Recipe[];
+  powerGenerationRecipes: PowerRecipe[];
 }

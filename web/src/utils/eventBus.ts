@@ -6,6 +6,7 @@ type Events = {
   sessionExpired: undefined;
   dataSynced: undefined;
   dataOutOfSync: undefined;
+  toast: { message: string; type?: 'success' | 'error' };
 };
 
 const eventBus = mitt<Events>()

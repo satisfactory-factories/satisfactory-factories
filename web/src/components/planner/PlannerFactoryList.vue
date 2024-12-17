@@ -7,16 +7,47 @@
           style="box-shadow: none !important;"
           @click="navigateToFactory(element.id)"
         >
-          <v-row class="d-flex ma-0">
-            <v-col class="text-body-1 align-content-center pa-2" cols="11">
+          <v-row class="d-flex flex-nowrap ma-0">
+            <v-spacer class="d-flex align-center text-body-1 pa-2">
               <i class="fas fa-bars text-grey-darken-1 mr-2" />
               <i class="fas fa-industry mr-2" />
               <span>{{ truncateFactoryName(element.name) }}</span>
-            </v-col>
+            </v-spacer>
             <v-tooltip right>
               <template #activator="{ props }">
                 <v-col
-                  class="pa-0 align-content-center text-center"
+                  v-if="countActiveTasks(element as Factory)"
+                  class="context-icon align-content-center text-center py-0 px-1"
+                  cols="auto"
+                  v-bind="props"
+                  @click="navigateToFactory(element.id, `${element.id}-tasks`)"
+                  @click.stop
+                >
+                  <i class="d-inline fas fa-tasks mr-1" />
+                  <span>{{ countActiveTasks(element as Factory) }}</span>
+                </v-col>
+              </template>
+              <span>Tasks: {{ countActiveTasks(element as Factory) }}</span>
+            </v-tooltip>
+            <v-tooltip right>
+              <template #activator="{ props }">
+                <v-col
+                  v-if="element.notes"
+                  class="context-icon align-content-center text-center py-0 px-1"
+                  cols="auto"
+                  v-bind="props"
+                  @click="navigateToFactory(element.id, `${element.id}-notes`)"
+                  @click.stop
+                >
+                  <i class="d-inline fas fa-sticky-note" />
+                </v-col>
+              </template>
+              <span>See notes</span>
+            </v-tooltip>
+            <v-tooltip right>
+              <template #activator="{ props }">
+                <v-col
+                  class="pa-0 ml-2 align-content-center text-center"
                   :class="syncStateClass(element)"
                   cols="1"
                   v-bind="props"
@@ -63,9 +94,10 @@
 <script setup lang="ts">
   import { defineEmits, defineProps, inject, ref, watch } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { countActiveTasks } from '@/utils/factory-management/factory'
   import draggable from 'vuedraggable'
 
-  const navigateToFactory = inject('navigateToFactory') as (id: number) => void
+  const navigateToFactory = inject('navigateToFactory') as (id: number, subsection?: string) => void
 
   // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
@@ -117,6 +149,14 @@
     .header {
       border-bottom: 0 !important;
     }
+  }
+}
+
+.context-icon {
+  color: #757575;
+  transition: color 0.3s;
+  &:hover {
+    color: white;
   }
 }
 </style>
