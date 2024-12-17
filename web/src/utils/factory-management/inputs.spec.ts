@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
+import { calculateFactories, findFacByName, newFactory } from '@/utils/factory-management/factory'
 import * as factoryUtils from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { addPowerProducerToFactory } from '@/utils/factory-management/power'
@@ -12,6 +12,7 @@ import {
 } from '@/utils/factory-management/inputs'
 import { getExportableFactories } from '@/utils/factory-management/exports'
 import { gameData } from '@/utils/gameData'
+import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -296,6 +297,37 @@ describe('inputs', () => {
 
         // Clean up the spy
         findFacSpy.mockRestore()
+      })
+      it('should be able to import the same product from multiple factories', () => {
+        // Import the scenario, which has two factories producing Iron Ingots, with an iron plate demanding one of each
+        const factories = create290Scenario().getFactories()
+        const ironIngotFac = findFacByName('Iron Ingots', factories)
+        const ironIngotFac2 = findFacByName('Iron Ingots 2', factories)
+        const ironPlatesFac = findFacByName('Iron Plates', factories)
+
+        // Calculate factories
+        calculateFactories(factories, gameData, true)
+
+        const importCandidates = calculatePossibleImports(factories[2], getExportableFactories(factories))
+
+        // Now check that we should be able to see the second iron rods fac in the list
+        const factoryResult = importFactorySelections(
+          1, // This simulates the user opening or viewing the input selection for the first input
+          importCandidates,
+          screwsFac,
+          factories
+        )
+        expect(factoryResult).toHaveLength(2)
+        expect(factoryResult[1].title).toBe('Iron Ingots 2')
+
+        // Now also check that the part for BOTH factories is showing up
+        const partResult = importPartSelections(ironIngotFac, ironPlatesFac, 0)
+        const partResult2 = importPartSelections(ironIngotFac2, ironPlatesFac, 1)
+        expect(partResult).toHaveLength(1)
+        expect(partResult2).toHaveLength(1)
+        expect(partResult[0]).toBe('IronIngot')
+        expect(partResult2[0]).toBe('IronIngot') // #290 bug was here where this was empty as it was already "selected".
+        expect(partResult[1]).toBeUndefined()
       })
     })
     describe('calculateAbleToImport', () => {
