@@ -26,7 +26,8 @@
                 <td class="text-center">
                   <v-btn
                     class="mr-2"
-                    color="green"
+                    :color="template.isDebug ? 'secondary' : 'green'"
+                    :prepend-icon="template.isDebug ? 'fas fa-bug' : 'fas fa-file'"
                     @click="loadTemplate(template)"
                   >
                     {{ template.name }}
@@ -47,8 +48,9 @@
   import { createSimple } from '@/utils/factory-setups/simple-plan'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
 
-  const { setFactories } = useAppStore()
+  const { setFactories, isDebugMode } = useAppStore()
 
   const dialog = ref(false)
 
@@ -57,6 +59,7 @@
     description: string
     data: Factory[]
     show: boolean
+    isDebug: boolean
   }
 
   const templates = [
@@ -65,12 +68,21 @@
       description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
       show: true,
+      isDebug: false,
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
       show: true,
+      isDebug: false,
+    },
+    {
+      name: 'Multi-input',
+      description: '3 factory setup where one factory is importing the same product from two different factories. Related to issue #290. The Imports on Iron Plates should render correctly with the correct part name, and NOT be called "IronPlate", rather "Iron Plate".',
+      data: create290Scenario().getFactories(),
+      isDebug: true,
+      show: isDebugMode,
     },
   ]
 
