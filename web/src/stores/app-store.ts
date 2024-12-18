@@ -23,7 +23,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const currentFactoryTabIndex = ref(0)
-  const currentFactoryTab = computed(() => factoryTabs.value[currentFactoryTabIndex.value])
+  const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
 
   const factories = computed({
     get () {
@@ -42,6 +42,15 @@ export const useAppStore = defineStore('app', () => {
     (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
   )
   const gameDataStore = useGameDataStore()
+
+  // Watch the tab index, if it changes we need to throw up a loading
+  watch(currentFactoryTabIndex, () => {
+    eventBus.emit('showLoading', factoryTabs.value[currentFactoryTabIndex.value].factories.length)
+    setTimeout(() => {
+      currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
+      initFactories()
+    }, 250)
+  })
 
   // Watch the factories array for changes
   watch(factoryTabs.value, () => {
