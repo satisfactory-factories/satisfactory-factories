@@ -203,8 +203,10 @@
   const maxHeight = 750 // Max height in px
   const tableHeight = ref('tableRef')
 
+  const summaryHidden = localStorage.getItem('summaryHidden') ?? 'false'
+
   // Initialize the 'hidden' ref based on the value in localStorage
-  const hidden = ref<boolean>(localStorage.getItem('summaryHidden') === 'true')
+  const hidden = ref<boolean>(Boolean(summaryHidden))
 
   watch(hidden, newValue => {
     localStorage.setItem('summaryHidden', newValue.toString())
