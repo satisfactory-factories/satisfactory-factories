@@ -3,10 +3,12 @@ import { ref } from 'vue'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { config } from '@/config/config'
 import { PowerRecipe, Recipe } from '@/interfaces/Recipes'
+import { loadLocalGameData } from './local-game-data-loader'
 
 export const useGameDataStore = defineStore('game-data', () => {
-  const gameData = ref<DataInterface | null>(JSON.parse(<string>localStorage.getItem('gameData') ?? 'null'))
-  const localDataVersion = ref<string | null>(localStorage.getItem('localDataVersion') ?? null)
+  const localData = loadLocalGameData()
+  const gameData = ref<DataInterface | null>(localData.gameData)
+  const localDataVersion = ref<string | null>(localData.version)
 
   const dataVersion: string = config.dataVersion ?? ''
 
