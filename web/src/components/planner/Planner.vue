@@ -2,7 +2,6 @@
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
-
     <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="getFactories()"
