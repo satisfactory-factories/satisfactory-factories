@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, calculateFactory, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
@@ -10,7 +10,7 @@ let ingotFac: Factory
 let ironPlateFac: Factory
 
 describe('Simple factory plan', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     const templateInstance = createSimple()
     factories = templateInstance.getFactories()
     ingotFac = findFacByName('Iron Ingots', factories)
