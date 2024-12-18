@@ -379,25 +379,23 @@
   let waitingForLoader = false
 
   const setupDemo = () => {
-    closeIntro()
-    factoriesToLoad = complexDemoPlan().getFactories()
     if (getFactories().length > 0) {
-      if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
-        eventBus.emit('showLoading', factoriesToLoad.length)
-      } else {
+      if (!confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
         return // User cancelled
       }
-    } else {
-      eventBus.emit('showLoading', factoriesToLoad.length)
     }
-    console.log('Planner: setupDemo waiting for loader')
+    closeIntro()
+    eventBus.emit('showLoading', factoriesToLoad.length)
+    factoriesToLoad = complexDemoPlan().getFactories()
+
     waitingForLoader = true
+    console.log('Planner: setupDemo waiting for loader')
   }
 
   // Watch for the loader event and if we have some factories to load, load them.
   eventBus.on('loadingReady', () => {
     if (waitingForLoader) {
-      setFactories(factoriesToLoad)
+      setFactories(factoriesToLoad, true)
       waitingForLoader = false
     }
   })
