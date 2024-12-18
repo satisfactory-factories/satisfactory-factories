@@ -213,6 +213,7 @@ describe('Simple factory plan', () => {
 
       // Simulate what the PlannerFactoryImports component calls here, which is telling it to calculate both factories.
       // This is slightly naughty as it's an implementation of sorts, but it's the best we have in the absence of vue component tests.
+      calculateDependencies(factories, gameData)
       calculateFactory(ironPlateFac, factories, gameData)
       calculateFactory(ingotFac, factories, gameData)
 

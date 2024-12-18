@@ -164,8 +164,11 @@
   import { useDisplay } from 'vuetify'
   import { useAppStore } from '@/stores/app-store'
   import { getExportableFactories } from '@/utils/factory-management/exports'
+  import { calculateDependencies } from '@/utils/factory-management/dependencies'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const { getFactories } = useAppStore()
+  const { getGameData } = useGameDataStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
   const updateFactory = inject('updateFactory') as (factory: Factory, mode?: string) => void
@@ -187,6 +190,8 @@
   }
 
   const deleteInput = (inputIndex: number, factory: Factory) => {
+    // Need to recalculate dependencies as we've now removed an input
+    calculateDependencies(getFactories(), getGameData())
     // Take a copy of the current input data without copying via reference
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
