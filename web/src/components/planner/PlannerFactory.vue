@@ -4,7 +4,7 @@
       <v-card :id="factory.id" :class="factoryClass(factory)">
         <v-row class="header">
           <v-col class="flex-grow-1" cols="auto" md="8">
-            <div class="text-h6 text-md-h5">
+            <div class="text-h4 text-md-h5">
               <i class="fas fa-industry" />
               <input
                 v-model="factory.name"
@@ -13,7 +13,7 @@
               >
             </div>
             <!-- chips bar -->
-            <div class="d-flex align-center">
+            <div class="d-flex align-center mt-1">
               <!-- tasks chip -->
               <div v-if="countActiveTasks(factory)" class="mr-2">
                 <v-chip class="sf-chip small yellow no-margin" @click="navigateToFactory(factory.id, `${factory.id}-tasks`)">

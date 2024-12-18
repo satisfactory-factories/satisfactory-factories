@@ -1,8 +1,12 @@
 <template>
   <v-dialog v-model="showDialog" max-width="1000" scrollable>
     <v-card class="my-2">
-      <v-card-title class="text-center pb-0"><h2 class="text-h4">Welcome to Satisfactory Factories!</h2></v-card-title>
-      <v-card-subtitle class="text-center">Bringing sanity to the production chain!</v-card-subtitle>
+      <v-card-title class="text-center pb-0">
+        <h1 class="text-h1">Welcome to Satisfactory Factories!</h1>
+      </v-card-title>
+      <v-card-subtitle class="text-center">
+        <h6 class="text-h6">Bringing sanity to the production chain!</h6>
+      </v-card-subtitle>
       <v-card-text class="text-body-1 text-left">
         <v-responsive :aspect-ratio="16 / 9" class="pb-4">
           <iframe
