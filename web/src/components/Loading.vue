@@ -7,15 +7,16 @@
     @after-enter="afterEnter"
   >
     <v-card class="pa-4 text-center sub-card" width="500">
-      <div v-if="max > 0" class="mb-2 text-h6">Loading Plan...</div>
-      <div v-else class="mb-2 text-h6">Loading Planner...</div>
+      <div v-if="max > 0" class="mb-2 text-h5">Loading Plan...</div>
+      <div v-else class="mb-2 text-h5">Loading Planner...</div>
       <v-progress-linear
         class="my-2"
         color="primary"
         height="8"
         indeterminate
       />
-      <div v-if="max > 0" class="text-subtitle1">Loading {{ max }} factories...</div>
+      <div v-if="max > 0" class="text-h6">Loading {{ max }} factories...</div>
+      <div v-if="max > 10" class="text-body-1">This is a fairly large plan and make take some time to load!</div>
     </v-card>
   </v-overlay>
 </template>
