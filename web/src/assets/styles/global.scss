@@ -168,3 +168,39 @@
 .v-overlay__scrim {
   background-color: rgba(119, 119, 119, 0.7) !important;
 }
+
+// Dial back some of the vuetify text sizes cos they're massive
+.text-h1 {
+  font-size: 2.4rem !important;
+  line-height: 3rem !important;
+}
+
+.text-h2 {
+  font-size: 2.2rem !important;
+  line-height: 3.4rem !important;
+}
+
+.text-h3 {
+  font-size: 2.0rem !important;
+  line-height: 3.2rem !important;
+}
+
+.text-h4 {
+  font-size: 1.75rem !important;
+  line-height: 3rem !important;
+}
+
+.text-h5 {
+  font-size: 1.5rem !important;
+  line-height: 2.8rem !important;
+}
+
+.text-h6 {
+  font-size: 1.25rem !important;
+  line-height: 2.4rem !important;
+}
+
+// Standardize the font weights as they're all over the place
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-weight: 400 !important;
+}

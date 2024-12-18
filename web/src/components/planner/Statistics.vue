@@ -53,7 +53,7 @@
           </v-col>
 
           <!-- Produced Items Area -->
-          <div v-if="!hiddenProducts" max-height="500px">
+          <div v-if="!hiddenProducts">
             <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
             <statistics-items :factories="factories" :help-text="helpText" />
           </div>
@@ -74,29 +74,26 @@
     helpText: boolean;
   }>()
 
-  // Initialize the 'hidden' ref based on the value in localStorage
-  const hidden = ref<boolean>(
-    localStorage.getItem('statisticsHidden') === 'true'
-  )
+  // Default to not showing the stats on first ever load
+  const statisticsHidden = localStorage.getItem('statisticsHidden') ?? 'false'
+  const statisticsProductsHidden = localStorage.getItem('statisticsProductsHidden') ?? 'false'
+
+  // Initialize the 'hidden' refs based on the value in localStorage
+  const hidden = ref<boolean>(Boolean(statisticsHidden))
+  const hiddenProducts = ref<boolean>(Boolean(statisticsProductsHidden))
 
   // Watch the 'hidden' ref and update localStorage whenever it changes
   watch(hidden, newValue => {
     localStorage.setItem('statisticsHidden', newValue.toString())
+  })
+  watch(hiddenProducts, newValue => {
+    localStorage.setItem('statisticsProductsHidden', newValue.toString())
   })
 
   // Function to toggle visibility
   const toggleVisibility = () => {
     hidden.value = !hidden.value
   }
-  // Initialize the 'hidden' ref based on the value in localStorage
-  const hiddenProducts = ref<boolean>(
-    localStorage.getItem('statisticsProductsHidden') === 'true'
-  )
-
-  // Watch the 'hidden' ref and update localStorage whenever it changes
-  watch(hiddenProducts, newValue => {
-    localStorage.setItem('statisticsProductsHidden', newValue.toString())
-  })
 
   // Function to toggle visibility
   const toggleProductsVisibility = () => {

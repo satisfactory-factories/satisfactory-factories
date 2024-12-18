@@ -45,7 +45,7 @@
       <v-col class="border-s-lg pa-3 main-content">
         <notice />
         <statistics v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
-        <Summary v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
+        <statistics-factory-summary v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
         <planner-factory
           v-for="(factory) in getFactories()"
           :key="factory.id"

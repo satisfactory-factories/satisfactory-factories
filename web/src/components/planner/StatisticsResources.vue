@@ -1,6 +1,6 @@
 <template>
   <!-- Raw Resources Area -->
-  <h1 class="text-h5 mb-4">
+  <h1 class="text-h5">
     <i class="fas fa-globe" />
     <span class="ml-3">Raw Resources</span>
   </h1>

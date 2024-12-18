@@ -5,12 +5,12 @@
     @click="dialog = true"
   >Templates</v-btn>
   <v-dialog v-model="dialog" max-width="800">
-    <v-card>
-      <v-card-title class="headline">
-        Load a template plan
+    <v-card class="pa-2">
+      <v-card-title>
+        <h4 class="text-h4">Load a template plan</h4>
       </v-card-title>
-      <v-card-text>
-        <p class="mb-4">
+      <v-card-text class="pa-4 pt-0">
+        <p>
           Clicking on a button below will load a template plan into the planner. <span class="text-red font-weight-bold">This will overwrite any existing plan WITHOUT warning.</span> You may wish to save your plan first by creating a share link.
         </p>
         <v-table>
@@ -80,7 +80,7 @@
     },
     {
       name: 'PowerOnlyImport',
-      description: '2 factory setup where on factory is producing the produce (fuel) and another is consuming (by import) the product for power generation. Related to issue #268',
+      description: '2 factory setup where on factory is producing the a fuel and another is consuming the fuel (via import) for power generation. Related to issue #268',
       data: create268Scenraio().getFactories(),
       show: isDebugMode,
       isDebug: true,

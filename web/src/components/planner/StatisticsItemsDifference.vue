@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-h5 mb-4">
+  <h1 class="text-h5">
     <i class="fas fa-warehouse" />
     <span class="ml-3">Product Surplus & Deficit</span>
   </h1>
