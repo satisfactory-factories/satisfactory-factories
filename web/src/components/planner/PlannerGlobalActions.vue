@@ -104,9 +104,11 @@
       try {
         const parsedPlan = JSON.parse(plan)
         emit('clear-all')
-        setFactories(parsedPlan)
-      } catch (e) {
-        alert('Invalid plan')
+        setFactories(parsedPlan, true)
+      } catch (err) {
+        if (err instanceof Error) {
+          alert(`Invalid plan. Error: ${err.message}`)
+        }
       }
     })
   }
