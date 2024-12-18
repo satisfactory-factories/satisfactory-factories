@@ -53,7 +53,7 @@
           </v-col>
 
           <!-- Produced Items Area -->
-          <div v-if="!hiddenProducts" max-height="500px">
+          <div v-if="!hiddenProducts">
             <v-divider class="my-4 mx-n4" color="white" thickness="5px" />
             <statistics-items :factories="factories" :help-text="helpText" />
           </div>
