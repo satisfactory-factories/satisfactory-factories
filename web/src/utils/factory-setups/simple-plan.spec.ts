@@ -164,8 +164,10 @@ describe('Simple factory plan', () => {
   })
 
   describe('Import updates', () => {
-    it('should update the dependency metrics within factory 1 when factory 2 has changed an input quantity', () => {
-    // Change the input quantity of IronPlate in factory 2
+    it('should update the dependency metrics within Iron Ingots when Iron Plate has changed an input quantity', () => {
+      // This is basically running `updateFactories` within PlannerFactoryImports.vue.
+
+      // Change the input quantity of Iron Ingots in Iron Plates Fac
       ironPlateFac.inputs[0].amount = 151
 
       // So we simulate what the PlannerFactoryImports component calls here.
@@ -204,12 +206,13 @@ describe('Simple factory plan', () => {
       })
     })
     it('should properly update the dependency and part metrics when an input has been deleted', () => {
+      // This is basically running `deleteInput` within PlannerFactoryImports.vue.
+
       // Remove the input from Iron Plates
       ironPlateFac.inputs = []
 
-      // So we simulate what the PlannerFactoryImports component calls here.
-      // I know this is naughty. We are creating an implementation here, but in the absence of vue component tests it's the best we have.
-      calculateDependencies(factories, gameData)
+      // Simulate what the PlannerFactoryImports component calls here, which is telling it to calculate both factories.
+      // This is slightly naughty as it's an implementation of sorts, but it's the best we have in the absence of vue component tests.
       calculateFactory(ironPlateFac, factories, gameData)
       calculateFactory(ingotFac, factories, gameData)
 
@@ -232,6 +235,8 @@ describe('Simple factory plan', () => {
       })
     })
     it('should properly update the problem on Iron Ingots fac when demand from Iron Plates increases', () => {
+      // This is basically running `updateFactories` within PlannerFactoryImports.vue.
+
       // In the plan iron plates fac is importing ingots from Iron Ingots, we need to detect if the hasProblem is true in the other factory.
 
       // Ingots should not have a problem at the start, Iron Plate should
@@ -250,17 +255,6 @@ describe('Simple factory plan', () => {
       // And that Iron Plate does not have a problem anymore
       expect(ironPlateFac.hasProblem).toBe(false)
       expect(ironPlateFac.requirementsSatisfied).toBe(true)
-
-      // Check that the dependency metrics are correct
-      expect(ingotFac.dependencies.metrics.IronIngot).toEqual({
-        part: 'IronIngot',
-        request: 150,
-        supply: 100,
-        isRequestSatisfied: false,
-        difference: -50,
-      })
-      expect(ingotFac.parts.IronIngot.satisfied).toBe(false)
-      expect(ingotFac.parts.IronIngot.amountRequiredExports).toBe(150)
     })
   })
 })

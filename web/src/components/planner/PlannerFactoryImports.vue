@@ -150,7 +150,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryInput } from '@/interfaces/planner/FactoryInterface'
   import {
     addInputToFactory,
     calculateAbleToImport,
@@ -162,10 +162,8 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
-  import { calculateDependencies } from '@/utils/factory-management/dependencies'
   import { useAppStore } from '@/stores/app-store'
   import { getExportableFactories } from '@/utils/factory-management/exports'
-  import { useGameDataStore } from '@/stores/game-data-store'
 
   const { getFactories } = useAppStore()
 
@@ -179,7 +177,6 @@
   }>()
 
   const { smAndDown } = useDisplay()
-  const { getGameData } = useGameDataStore()
 
   const addEmptyInput = (factory: Factory) => {
     addInputToFactory(factory, {
@@ -194,8 +191,6 @@
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
-    // Checks for now invalid inputs
-    syncDependencyTree()
 
     // Update the factory as our parts will have been changed
     updateFactory(factory)
@@ -254,9 +249,6 @@
   }
 
   const handleInputFactoryChange = (factory: Factory) => {
-    // Checks for now invalid inputs
-    syncDependencyTree()
-
     // Initiate a factory update for all factories involved
     updateFactory(factory) // This factory
 
@@ -310,21 +302,12 @@
       console.error('updateInputToSatisfy: No output part selected for input:', input)
       return
     }
-    const part: PartMetrics = factory.parts[input.outputPart]
-    input.amount = part.amountRequired
+    input.amount = factory.parts[input.outputPart].amountRequired
 
-    syncDependencyTree()
-    updateFactory(factory)
-    // Also update the factory that was selected
-    if (input.factoryId) {
-      updateFactory(findFactory(input.factoryId))
-    }
+    updateFactories(factory, input)
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
-    // Checks for either invalid inputs and produces the updated dependency metrics
-    syncDependencyTree()
-
     // Update this factory
     updateFactory(factory)
 
@@ -332,11 +315,6 @@
       // Update the other factory
       updateFactory(findFactory(input.factoryId))
     }
-  }
-
-  const syncDependencyTree = () => {
-    console.log('Syncing dependency tree')
-    calculateDependencies(getFactories(), getGameData())
   }
 
 </script>
