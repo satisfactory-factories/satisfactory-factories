@@ -111,6 +111,9 @@ export const calculateFactory = (
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
 
+  // Check if the factory has any problems
+  calculateHasProblem(factory)
+
   // Emit an event that the data has been updated so it can be synced
   eventBus.emit('factoryUpdated')
 
@@ -134,9 +137,6 @@ export const calculateFactories = (factories: Factory[], gameData: DataInterface
 
   // Do the calculations again after the dependencies have been calculated (if loaded)
   factories.forEach(factory => calculateFactory(factory, factories, gameData))
-
-  // Finally, go through all factories and check if they have any problems.
-  calculateHasProblem(factories)
 }
 
 export const countActiveTasks = (factory: Factory) => {
