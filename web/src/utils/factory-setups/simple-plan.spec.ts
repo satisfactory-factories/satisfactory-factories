@@ -231,5 +231,36 @@ describe('Simple factory plan', () => {
         exportable: false,
       })
     })
+    it('should properly update the problem on Iron Ingots fac when demand from Iron Plates increases', () => {
+      // In the plan iron plates fac is importing ingots from Iron Ingots, we need to detect if the hasProblem is true in the other factory.
+
+      // Ingots should not have a problem at the start, Iron Plate should
+      expect(ingotFac.hasProblem).toBe(false)
+      expect(ironPlateFac.hasProblem).toBe(true)
+
+      // Increase the demand upon IngotFac
+      ironPlateFac.inputs[0].amount = 150 // Satisfies Iron Plate
+
+      // Calculate the Iron Plate factory, as that's what is called from the UI upon changing input values
+      calculateFactory(ironPlateFac, factories, gameData)
+
+      // Check that the Iron Ingot factory now has a problem
+      expect(ingotFac.hasProblem).toBe(true)
+      expect(ingotFac.requirementsSatisfied).toBe(false)
+      // And that Iron Plate does not have a problem anymore
+      expect(ironPlateFac.hasProblem).toBe(false)
+      expect(ironPlateFac.requirementsSatisfied).toBe(true)
+
+      // Check that the dependency metrics are correct
+      expect(ingotFac.dependencies.metrics.IronIngot).toEqual({
+        part: 'IronIngot',
+        request: 150,
+        supply: 100,
+        isRequestSatisfied: false,
+        difference: -50,
+      })
+      expect(ingotFac.parts.IronIngot.satisfied).toBe(false)
+      expect(ingotFac.parts.IronIngot.amountRequiredExports).toBe(150)
+    })
   })
 })
