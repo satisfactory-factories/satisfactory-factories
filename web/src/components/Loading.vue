@@ -2,11 +2,11 @@
   <v-overlay
     class="d-flex justify-center align-center"
     :model-value="showLoad"
-    opacity="0.7"
+    opacity="1"
     persistent
     @after-enter="afterEnter"
   >
-    <v-card class="pa-4 text-center sub-card" elevation="1" width="500">
+    <v-card class="pa-4 text-center sub-card" width="500">
       <div v-if="max > 0" class="mb-2 text-h6">Loading Plan...</div>
       <div v-else class="mb-2 text-h6">Loading Planner...</div>
       <v-progress-linear
@@ -57,9 +57,11 @@
   })
 </script>
 
-<style scoped>
-.v-card {
-  background-color: white;
-  border-radius: 8px;
+<style lang="scss" scoped>
+.sub-card {
+  border-radius: 16px;
+  box-shadow: #0094e6 0 0 10px 0;
 }
+
+// Overlay styling in global.scss cos it's not a child of this component.
 </style>
