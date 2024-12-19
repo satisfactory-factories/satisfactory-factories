@@ -258,7 +258,7 @@
   }
 
   const getSatisfactionLabel = (total: number) => {
-    return total >= 0 ? 'remaining' : 'shortage'
+    return total >= 0 ? 'surplus' : 'shortage'
   }
 
   // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
