@@ -118,7 +118,7 @@
                 class="sf-chip small"
                 :class="part.satisfied ? 'green' : 'red'"
               >
-                <b>{{ formatNumber(part.amountRemaining) }}/min {{ getSatisfactoryLabel(part.amountRemaining) }}</b>
+                <b>{{ formatNumber(part.amountRemaining) }}/min {{ getSatisfactionLabel(part.amountRemaining) }}</b>
               </v-chip>
             </div>
           </td>
@@ -257,7 +257,7 @@
     return factory.exportCalculator[part]?.selected === factoryId.toString()
   }
 
-  const getSatisfactoryLabel = (total: number) => {
+  const getSatisfactionLabel = (total: number) => {
     return total >= 0 ? 'remaining' : 'shortage'
   }
 
