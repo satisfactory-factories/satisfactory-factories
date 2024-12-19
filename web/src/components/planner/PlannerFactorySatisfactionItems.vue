@@ -118,7 +118,7 @@
                 class="sf-chip small"
                 :class="part.satisfied ? 'green' : 'red'"
               >
-                <b>{{ formatNumber(part.amountRemaining) }}/min</b>
+                <b>{{ formatNumber(part.amountRemaining) }}/min remaining</b>
               </v-chip>
             </div>
           </td>
