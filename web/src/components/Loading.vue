@@ -18,7 +18,6 @@
       />
       <div v-if="!isCalculating && !firstLoad" class="mt-2 text-body-1">{{ loaded }} out of {{ toLoad }} loaded...</div>
       <div v-if="isCalculating" class="mt-2 text-body-1">{{ calculatingMessage }}</div>
-      <div v-if="toLoad > 10" class="text-body-1">This is a fairly large plan and make take some time to load!</div>
     </v-card>
   </v-overlay>
 </template>
@@ -50,7 +49,7 @@
     'Constructing additional pylons...',
     'We\'ll miss you Snutt!',
     'Sing us your blood song...',
-    '',
+    'Don\'t forget to donate if you\'re enjoying the tool! :)',
   ]
   let calculatingMessage = ''
 

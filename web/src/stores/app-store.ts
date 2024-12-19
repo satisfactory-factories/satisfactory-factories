@@ -108,11 +108,14 @@ export const useAppStore = defineStore('app', () => {
 
         // Calculate factories after loading is completed
         requestAnimationFrame(() => {
-        // Add a small delay to allow the UI to update before loading the next factory, plus it looks nicer
+        // Add a small delay to allow the loader to update before calculating the factories
           setTimeout(() => {
             const gameData = gameDataStore.getGameData()
             calculateFactories(currentFactoryTab.value.factories, gameData, loadMode)
             eventBus.emit('loadingCompleted')
+
+            // Ensure that the data written to local storage is up to date
+            localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
           }, 150)
         })
         return
