@@ -118,7 +118,7 @@
                 class="sf-chip small"
                 :class="part.satisfied ? 'green' : 'red'"
               >
-                <b>{{ formatNumber(part.amountRemaining) }}/min</b>
+                <b>{{ formatNumber(part.amountRemaining) }}/min {{ getSatisfactionLabel(part.amountRemaining) }}</b>
               </v-chip>
             </div>
           </td>
@@ -255,6 +255,10 @@
       return false
     }
     return factory.exportCalculator[part]?.selected === factoryId.toString()
+  }
+
+  const getSatisfactionLabel = (total: number) => {
+    return total >= 0 ? 'surplus' : 'shortage'
   }
 
   // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
