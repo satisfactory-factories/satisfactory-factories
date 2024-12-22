@@ -11,13 +11,14 @@
       <div v-else class="mb-2 text-h5">Loading Planner...</div>
       <v-progress-linear
         class="my-2"
-        color="primary"
+        :color="!isCalculating ? 'primary' : 'green'"
         height="8"
         :max="toLoad + 1"
         :model-value="loaded"
       />
       <div v-if="!isCalculating && !firstLoad" class="mt-2 text-body-1">{{ loaded }} out of {{ toLoad }} loaded...</div>
-      <div v-if="isCalculating" class="mt-2 text-body-1">{{ calculatingMessage }}</div>
+      <div v-if="isCalculating && !firstLoad" class="mt-2 text-body-1">Rendering...</div>
+      <div class="mt-2 text-body-2 text-grey">{{ calculatingMessage }}</div>
     </v-card>
   </v-overlay>
 </template>
