@@ -50,7 +50,9 @@ export const useAppStore = defineStore('app', () => {
     requestAnimationFrame(() => {
       setTimeout(() => {
         currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
+        inited.value = false
         initFactories()
+        startLoad(factoryTabs.value[currentFactoryTabIndex.value].factories, true)
       }, 250)
     })
   })
@@ -116,7 +118,7 @@ export const useAppStore = defineStore('app', () => {
 
             // Ensure that the data written to local storage is up to date
             localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
-          }, 150)
+          }, 100)
         })
         return
       }
