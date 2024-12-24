@@ -234,12 +234,7 @@ function getItems(data: any[]): ParserItemDataInterface {
 
     // Sort the parts by key
     return {
-        parts: Object.keys(parts)
-            .sort()
-            .reduce((sortedObj: { [key: string]: ParserPart }, key: string) => {
-                sortedObj[key] = parts[key];
-                return sortedObj;
-            }, {}),
+        parts: parts,
         rawResources
     };
 }
