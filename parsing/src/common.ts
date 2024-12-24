@@ -74,7 +74,6 @@ function getPowerProducerBuildingName(className: string): string | null {
         // If contains _automated, remove it
         return buildingName.replace('_automated', '');
     }
-
     return null
 }
 

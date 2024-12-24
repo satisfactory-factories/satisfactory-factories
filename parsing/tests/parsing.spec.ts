@@ -66,7 +66,7 @@ describe('common', () => {
 
 
         test('buildings should generate correct data', () => {
-            expect(Object.keys(results.buildings).length).toBe(14);
+            expect(Object.keys(results.buildings).length).toBe(15);
             expect(results.buildings).toStrictEqual({
                 assemblermk1: 15,
                 blender: 75,
@@ -75,6 +75,7 @@ describe('common', () => {
                 foundrymk1: 16,
                 hadroncollider: 0.1,  // This has variable power consumption and is calculated in the recipe
                 // The generators don't consume any power, they produce it.
+                generatorbiomass: 0,
                 generatorcoal: 0,
                 generatorfuel: 0,
                 generatornuclear: 0,
