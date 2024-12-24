@@ -400,7 +400,7 @@
                 "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 250
+                "energyGeneratedInMJ": 0
             },
             "HazmatFilter": {
                 "name": "Iodine-Infused Filter",
@@ -435,7 +435,7 @@
                 "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 250
+                "energyGeneratedInMJ": 0
             },
             "IonizedFuel": {
                 "name": "Ionized Fuel",
@@ -505,7 +505,7 @@
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 0
+                "energyGeneratedInMJ": 320
             },
             "LiquidTurboFuel": {
                 "name": "Turbofuel",
@@ -1023,7 +1023,7 @@
                 "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 250
+                "energyGeneratedInMJ": 0
             },
             "Stator": {
                 "name": "Stator",
@@ -1065,7 +1065,7 @@
                 "stackSize": 50,
                 "isFluid": false,
                 "isFicsmas": false,
-                "energyGeneratedInMJ": 250
+                "energyGeneratedInMJ": 0
             },
             "Stone": {
                 "name": "Limestone",
