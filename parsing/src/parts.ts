@@ -68,7 +68,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
-                    energyGeneratedInMJ: 250
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_SpitterParts_C") {
                 parts["SpitterParts"] = {
@@ -76,7 +76,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
-                    energyGeneratedInMJ: 250
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_StingerParts_C") {
                 parts["StingerParts"] = {
@@ -84,7 +84,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
-                    energyGeneratedInMJ: 250
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_HatcherParts_C") {
                 parts["HatcherParts"] = {
@@ -92,7 +92,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     stackSize: 50, //SS_SMALL
                     isFluid: false,
                     isFicsmas: false,
-                    energyGeneratedInMJ: 250
+                    energyGeneratedInMJ: 0
                 };
             } else if (entry.ClassName === "Desc_DissolvedSilica_C") {
                 // This is a special intermediate alt product
@@ -110,7 +110,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     stackSize: 0, //SS_FLUID
                     isFluid: true,
                     isFicsmas: false,
-                    energyGeneratedInMJ: 0
+                    energyGeneratedInMJ: 320
                 }; 
             } else if (entry.ClassName === "Desc_Gift_C") {
                 // this is a ficsmas collectable

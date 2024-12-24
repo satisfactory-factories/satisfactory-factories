@@ -369,7 +369,7 @@
             },
             "Gift": {
                 "name": "FICSMAS Gift",
-                "stackSize": 500,
+                "stackSize": 200,
                 "isFluid": false,
                 "isFicsmas": true,
                 "energyGeneratedInMJ": 0
