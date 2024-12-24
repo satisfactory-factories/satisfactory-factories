@@ -229,7 +229,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                     energyValue *= 1000;
                 }
 
-                // console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
+                //console.log(`Adding part: ${partName} (${friendlyName}) with energy value: ${energyValue}`);
                 parts[partName] = {
                     name: friendlyName,
                     stackSize,
