@@ -101,7 +101,7 @@ async function processFile(
 
         // Since we've done some manipulation of the items data, re-sort it
         const sortedItems: { [key: string]: ParserPart } = {};
-        Object.keys(items.parts).sort().forEach(key => {
+        Object.keys(items.parts).sort((a, b) => a.localeCompare(b)).forEach(key => {
             sortedItems[key] = items.parts[key];
         });
         items.parts = sortedItems;
@@ -116,7 +116,7 @@ async function processFile(
 
         // Write the output to the file
         await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
-        console.log(`Processed parts, buildings, and recipes have been written to ${outputFile}.`);
+        console.log(`Processed {items.parts.Count} parts, {buildings.Count} buildings, and {recipes.Count} recipes have been written to ${outputFile}.`);
 
         return finalData;
     } catch (error) {

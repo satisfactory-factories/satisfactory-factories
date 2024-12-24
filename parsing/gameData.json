@@ -213,20 +213,6 @@
                 "isFicsmas": false,
                 "energyGeneratedInMJ": 0
             },
-            "CrystalOscillator": {
-                "name": "Crystal Oscillator",
-                "stackSize": 100,
-                "isFluid": false,
-                "isFicsmas": false,
-                "energyGeneratedInMJ": 0
-            },
-            "CrystalShard": {
-                "name": "Power Shard",
-                "stackSize": 100,
-                "isFluid": false,
-                "isFicsmas": false,
-                "energyGeneratedInMJ": 0
-            },
             "Crystal_mk2": {
                 "name": "Yellow Power Slug",
                 "stackSize": 50,
@@ -237,6 +223,20 @@
             "Crystal_mk3": {
                 "name": "Purple Power Slug",
                 "stackSize": 50,
+                "isFluid": false,
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 0
+            },
+            "CrystalOscillator": {
+                "name": "Crystal Oscillator",
+                "stackSize": 100,
+                "isFluid": false,
+                "isFicsmas": false,
+                "energyGeneratedInMJ": 0
+            },
+            "CrystalShard": {
+                "name": "Power Shard",
+                "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false,
                 "energyGeneratedInMJ": 0
