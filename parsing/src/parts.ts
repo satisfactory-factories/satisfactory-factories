@@ -116,7 +116,7 @@ function getItems(data: any[]): ParserItemDataInterface {
                 // this is a ficsmas collectable
                 parts["Gift"] = {
                     name: "FICSMAS Gift",
-                    stackSize: 500, //SS_HUGE
+                    stackSize: 200, //SS_BIG
                     isFluid: false,
                     isFicsmas: true,
                     energyGeneratedInMJ: 0
