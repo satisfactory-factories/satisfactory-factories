@@ -113,9 +113,13 @@ describe('common', () => {
             const missingParts = partsList.filter(part => !parts.has(part));
             const extraParts = Array.from(parts).filter(part => !partsList.includes(part));
 
-            console.log('Missing parts:');
-            console.log(missingParts);
-            console.log('Extra parts:', extraParts);
+            if (missingParts && missingParts.length > 0) {
+                console.log('Missing parts:');
+                console.log(missingParts);
+            }
+            if (extraParts && extraParts.length > 0) {
+                console.log('Extra parts:', extraParts);
+            }
             expect(missingParts.length).toBe(0);
             expect(extraParts.length).toBe(0);
             expect(Object.keys(results.items.parts).length).toBe(parts.size);

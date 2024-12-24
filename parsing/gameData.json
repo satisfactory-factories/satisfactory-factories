@@ -663,7 +663,7 @@
                 "energyGeneratedInMJ": 0
             },
             "OreUranium": {
-                "name": "Uranium Ore",
+                "name": "Uranium",
                 "stackSize": 100,
                 "isFluid": false,
                 "isFicsmas": false,
