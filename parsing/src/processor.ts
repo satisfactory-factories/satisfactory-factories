@@ -116,7 +116,7 @@ async function processFile(
 
         // Write the output to the file
         await fs.writeJson(path.resolve(outputFile), finalData, {spaces: 4});
-        console.log(`Processed {items.parts.Count} parts, {buildings.Count} buildings, and {recipes.Count} recipes have been written to ${outputFile}.`);
+        console.log(`Processed ${Object.keys(items.parts).length} parts, ${Object.keys(buildings).length} buildings, and ${Object.keys(recipes).length} recipes have been written to ${outputFile}.`);
 
         return finalData;
     } catch (error) {
