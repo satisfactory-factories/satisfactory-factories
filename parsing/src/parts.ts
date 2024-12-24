@@ -344,7 +344,7 @@ function getRawResources(data: any[]): { [key: string]: ParserRawResource } {
     
     //Ficmas items
     rawResources["Gift"] = {
-        name: "Gift",
+        name: "FICSMAS Gift",
         limit: 100000000  
     };
 
