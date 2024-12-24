@@ -368,7 +368,7 @@
                 "energyGeneratedInMJ": 180
             },
             "Gift": {
-                "name": "Gift",
+                "name": "FICSMAS Gift",
                 "stackSize": 500,
                 "isFluid": false,
                 "isFicsmas": true,
@@ -501,7 +501,7 @@
                 "energyGeneratedInMJ": 750
             },
             "LiquidOil": {
-                "name": "Liquid Oil",
+                "name": "Crude Oil",
                 "stackSize": 0,
                 "isFluid": true,
                 "isFicsmas": false,
@@ -1216,11 +1216,11 @@
                 "limit": 100000000
             },
             "HatcherParts": {
-                "name": "Hatcher Parts",
+                "name": "Hatcher Remains",
                 "limit": 100000000
             },
             "HogParts": {
-                "name": "Hog Parts",
+                "name": "Hog Remains",
                 "limit": 100000000
             },
             "Leaves": {
@@ -1268,11 +1268,11 @@
                 "limit": 10200
             },
             "SpitterParts": {
-                "name": "Spitter Parts",
+                "name": "Spitter Remains",
                 "limit": 100000000
             },
             "StingerParts": {
-                "name": "Stinger Parts",
+                "name": "Stinger Remains",
                 "limit": 100000000
             },
             "Stone": {

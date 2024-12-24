@@ -106,7 +106,7 @@ function getItems(data: any[]): ParserItemDataInterface {
             } else if (entry.ClassName === "Desc_LiquidOil_C") {
                 // This is a special liquid raw material
                 parts["LiquidOil"] = {
-                    name: "Liquid Oil",
+                    name: "Crude Oil",
                     stackSize: 0, //SS_FLUID
                     isFluid: true,
                     isFicsmas: false,
@@ -115,7 +115,7 @@ function getItems(data: any[]): ParserItemDataInterface {
             } else if (entry.ClassName === "Desc_Gift_C") {
                 // this is a ficsmas collectable
                 parts["Gift"] = {
-                    name: "Gift",
+                    name: "FICSMAS Gift",
                     stackSize: 500, //SS_HUGE
                     isFluid: false,
                     isFicsmas: true,
@@ -312,19 +312,19 @@ function getRawResources(data: any[]): { [key: string]: ParserRawResource } {
 
     //Manually add alien parts to the rawResources list
     rawResources["HatcherParts"] = {
-        name: "Hatcher Parts",
+        name: "Hatcher Remains",
         limit: 100000000  
     };
     rawResources["HogParts"] = {
-        name: "Hog Parts",
+        name: "Hog Remains",
         limit: 100000000  
     };
     rawResources["SpitterParts"] = {
-        name: "Spitter Parts",
+        name: "Spitter Remains",
         limit: 100000000  
     };
     rawResources["StingerParts"] = {
-        name: "Stinger Parts",
+        name: "Stinger Remains",
         limit: 100000000  
     };
 
