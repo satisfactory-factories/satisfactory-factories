@@ -4,7 +4,7 @@
       <i class="fa fa-bars" />
     </v-btn>
     <template v-else>
-      <img alt="Site logo" src="/SF.png" style="max-width: 48px;">
+      <img alt="Site logo" src="/assets/img/SF.png" style="max-width: 48px;">
       <h1 class="ml-3 font-weight-bold text-h6">Satisfactory Factories</h1>
       <span class="ml-2">
         <v-chip class="sf-chip blue small">v0.3 ALPHA</v-chip>

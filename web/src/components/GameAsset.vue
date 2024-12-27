@@ -77,7 +77,7 @@
     size: 'small' | 'big' = 'big'
   ): string => {
     const pxSize = size === 'small' ? 64 : 256
-    return `/assets/game/images/${type}/${name}_${pxSize}.png`
+    return `/assets/game/${type}/${name}_${pxSize}.png`
   }
 
   const widthPx = parseInt(

@@ -6,7 +6,7 @@
   ],
   "headers": [
     {
-      "source": "/assets/game/images/(.*)",
+      "source": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "source": "/js/fa/(.*)",
+      "source": "/assets/js/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
