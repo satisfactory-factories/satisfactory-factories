@@ -42,6 +42,9 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
+      <v-col v-if="!loadingCompleted" class="border-s-lg pa-3 main-content">
+        <planner-factory-placeholder-list />
+      </v-col>
       <v-col v-if="loadingCompleted" class="border-s-lg pa-3 main-content">
         <notice />
         <statistics v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />

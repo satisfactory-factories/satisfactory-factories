@@ -76,7 +76,7 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('lastSave', lastSave.value.toISOString())
   }
 
-  const startLoad = async (newFactories?: Factory[], loadMode = false) => {
+  const startLoad = async (newFactories?: Factory[], loadMode = false, renderLoad = false) => {
     eventBus.off('nextLoad') // Ensure nextLoad is unloaded before starting a new load
 
     const factoriesToLoad = newFactories ?? currentFactoryTab.value.factories
@@ -328,7 +328,7 @@ export const useAppStore = defineStore('app', () => {
   // When the loader is ready, we will receive an event saying to initiate the load.
   eventBus.on('readyForFirstLoad', () => {
     console.log('appStore: Received readyForFirstLoad event')
-    startLoad()
+    startLoad(undefined, true)
   })
 
   return {
