@@ -163,7 +163,11 @@ export const importPartSelections = (
   Object.keys(inputFactory.parts).forEach(part => {
     const selectedPartKey = `${inputFactory.id}-${part}`
     if (partsWithRequirements.includes(part) && !selectedFactoryParts.has(selectedPartKey)) {
-      availableInputParts.add(part)
+      // We need to also check if the part is exportable
+      const partData = inputFactory.parts[part]
+      if (partData.exportable) {
+        availableInputParts.add(part)
+      }
     }
   })
 
