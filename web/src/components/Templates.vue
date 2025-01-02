@@ -50,6 +50,7 @@
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
+  import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 
   const { startLoad, isDebugMode } = useAppStore()
 
@@ -86,9 +87,16 @@
       isDebug: true,
     },
     {
-      name: 'Multi-input',
+      name: '#290 Multiple product imports',
       description: '3 factory setup where one factory is importing the same product from two different factories. Related to issue #290. The Imports on Iron Plates should render correctly with the correct part name, and NOT be called "IronPlate", rather "Iron Plate".',
       data: create290Scenario().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: '#315 Import exportable parts',
+      description: '#315 - For testing import candidate code. Aluminium factory in this example should not be able to import Copper Ingots from Copper Parts',
+      data: create315Scenario().getFactories(),
       show: isDebugMode,
       isDebug: true,
     },
