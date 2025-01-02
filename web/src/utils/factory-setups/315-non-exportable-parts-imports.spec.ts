@@ -6,6 +6,7 @@ import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-par
 
 let factories: Factory[]
 let copperIngots: Factory
+let copperParts: Factory
 let aluminiumPartsFac: Factory
 
 describe('315 Scenario Plan', () => {
@@ -13,6 +14,7 @@ describe('315 Scenario Plan', () => {
     const templateInstance = create315Scenario()
     factories = templateInstance.getFactories()
     copperIngots = findFacByName('Copper Ingots Fac', factories)
+    copperParts = findFacByName('Copper Parts Fac', factories)
     aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
     calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
     calculateFactories(factories, gameData)
@@ -28,13 +30,18 @@ describe('315 Scenario Plan', () => {
       expect(aluminiumPartsFac.products[1].amount).toBe(50)
       expect(aluminiumPartsFac.products[1].recipe).toBe('AluminumSheet')
     })
-    // It should not have two
-    it('should have a single input', () => {
-      expect(aluminiumPartsFac.inputs.length).toBe(1)
+    // It should not have three imports (one in the scenario is purposefully invalid on a non-exportable part)
+    it('should contain the correct inputs', () => {
+      expect(aluminiumPartsFac.inputs.length).toBe(2)
       expect(aluminiumPartsFac.inputs[0]).toEqual({
         factoryId: copperIngots.id,
         outputPart: 'CopperIngot',
         amount: 20,
+      })
+      expect(aluminiumPartsFac.inputs[1]).toEqual({
+        factoryId: copperParts.id,
+        outputPart: 'CopperSheet',
+        amount: 30,
       })
     })
   })
