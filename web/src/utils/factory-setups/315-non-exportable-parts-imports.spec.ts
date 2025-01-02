@@ -6,7 +6,6 @@ import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-par
 
 let factories: Factory[]
 let copperIngots: Factory
-let copperPartsFac: Factory
 let aluminiumPartsFac: Factory
 
 describe('315 Scenario Plan', () => {
@@ -14,7 +13,6 @@ describe('315 Scenario Plan', () => {
     const templateInstance = create315Scenario()
     factories = templateInstance.getFactories()
     copperIngots = findFacByName('Copper Ingots Fac', factories)
-    copperPartsFac = findFacByName('Copper Parts Fac', factories)
     aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
     calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
     calculateFactories(factories, gameData)
