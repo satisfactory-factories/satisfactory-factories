@@ -88,7 +88,8 @@ export const calculateImportCandidates = (factory: Factory, possibleImports: Fac
   const importCandidates = new Set<string>()
   possibleImports.forEach(importFac => {
     Object.keys(importFac.parts).forEach(part => {
-      if (partsWithRequirements.includes(part)) {
+      const partData = importFac.parts[part]
+      if (partsWithRequirements.includes(part) && partData.exportable) {
         importCandidates.add(`${importFac.id}-${part}`)
       }
     })
@@ -162,12 +163,14 @@ export const importPartSelections = (
   // Using Sets like this ensures uniqueness and prevents duplicate inputs.
   Object.keys(inputFactory.parts).forEach(part => {
     const selectedPartKey = `${inputFactory.id}-${part}`
-    if (partsWithRequirements.includes(part) && !selectedFactoryParts.has(selectedPartKey)) {
-      // We need to also check if the part is exportable
-      const partData = inputFactory.parts[part]
-      if (partData.exportable) {
-        availableInputParts.add(part)
-      }
+    const partData = inputFactory.parts[part]
+
+    if (
+      partsWithRequirements.includes(part) &&
+      !selectedFactoryParts.has(selectedPartKey) &&
+      partData.exportable
+    ) {
+      availableInputParts.add(part)
     }
   })
 

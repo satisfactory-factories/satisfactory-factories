@@ -169,6 +169,17 @@ describe('inputs', () => {
         expect(result[1]).toBeUndefined()
       })
 
+      it('should return empty if all possible import parts have been exhausted', () => {
+        const factories = create315Scenario().getFactories()
+        calculateFactories(factories, gameData, true)
+
+        const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
+
+        const result = calculateImportCandidates(aluminiumPartsFac, calculatePossibleImports(aluminiumPartsFac, getExportableFactories(factories)))
+
+        expect(result).toHaveLength(0)
+      })
+
       describe('Multiple import candidates', () => {
         beforeEach(() => {
           // Add RIPs to iron rods fac 2. Screws already has iron rods fac 2 selected for Iron Rods, so this factory should show up again in the list.

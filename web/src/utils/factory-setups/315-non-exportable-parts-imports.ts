@@ -5,9 +5,9 @@ import { addInputToFactory } from '@/utils/factory-management/inputs'
 
 export const create315Scenario = (): { getFactories: () => Factory[] } => {
   // Local variables to ensure a fresh instance on every call
-  const copperIngotsFac = newFactory('Copper Ingots Fac', 0)
-  const copperPartsFac = newFactory('Copper Parts Fac', 1)
-  const aluminiumPartsFac = newFactory('Aluminium Parts Fac', 2)
+  const copperIngotsFac = newFactory('Copper Ingots Fac', 0, 1)
+  const copperPartsFac = newFactory('Copper Parts Fac', 1, 2)
+  const aluminiumPartsFac = newFactory('Aluminium Parts Fac', 2, 3)
 
   // Store factories in an array
   const factories = [copperIngotsFac, copperPartsFac, aluminiumPartsFac]
@@ -47,6 +47,11 @@ export const create315Scenario = (): { getFactories: () => Factory[] } => {
       factoryId: copperIngotsFac.id,
       outputPart: 'CopperIngot',
       amount: 20,
+    })
+    addInputToFactory(aluminiumPartsFac, {
+      factoryId: copperPartsFac.id,
+      outputPart: 'CopperSheet',
+      amount: 30,
     })
 
     // INVALID INPUT and should be removed by code
