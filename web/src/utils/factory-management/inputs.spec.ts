@@ -13,6 +13,7 @@ import {
 import { getExportableFactories } from '@/utils/factory-management/exports'
 import { gameData } from '@/utils/gameData'
 import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
+import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -167,6 +168,18 @@ describe('inputs', () => {
         expect(result[0].name).toBe(ironRodsFac.name)
         expect(result[1]).toBeUndefined()
       })
+
+      it('should return empty if all possible import parts have been exhausted', () => {
+        const factories = create315Scenario().getFactories()
+        calculateFactories(factories, gameData, true)
+
+        const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
+
+        const result = calculateImportCandidates(aluminiumPartsFac, calculatePossibleImports(aluminiumPartsFac, getExportableFactories(factories)))
+
+        expect(result).toHaveLength(0)
+      })
+
       describe('Multiple import candidates', () => {
         beforeEach(() => {
           // Add RIPs to iron rods fac 2. Screws already has iron rods fac 2 selected for Iron Rods, so this factory should show up again in the list.
@@ -327,6 +340,19 @@ describe('inputs', () => {
         expect(partResult2).toHaveLength(1)
         expect(partResult[0]).toBe('IronIngot')
         expect(partResult2[0]).toBe('IronIngot') // #290 bug was here where this was empty as it was already "selected".
+        expect(partResult[1]).toBeUndefined()
+      })
+      it('should not show parts that are not exportable', () => {
+        const factories = create315Scenario().getFactories()
+        const copperParts = findFacByName('Copper Parts Fac', factories)
+        const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
+
+        // Calculate factories
+        calculateFactories(factories, gameData, true)
+
+        // Now check that we should NOT be able to select copper ingots from the copperPartsFac within aluminiumPartsFac.
+        const partResult = importPartSelections(copperParts, aluminiumPartsFac, 1)
+        expect(partResult[0]).toStrictEqual('CopperSheet')
         expect(partResult[1]).toBeUndefined()
       })
     })
