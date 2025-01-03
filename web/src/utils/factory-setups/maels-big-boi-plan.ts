@@ -1,18 +1,34 @@
 export const createMaelsBigBoiPlan = () => {
-  return [{
+  return bigBoiPlan
+}
+
+const bigBoiPlan = [
+  {
     id: 8464,
     name: 'Concrete MegaFac',
-    products: [{
-      id: 'Cement',
-      amount: 3840,
-      recipe: 'Alternate_WetConcrete',
-      displayOrder: 0,
-      requirements: { Stone: { amount: 5760 }, Water: { amount: 4800 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 48, powerConsumed: 1440 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'Cement',
+        amount: 3840,
+        recipe: 'Alternate_WetConcrete',
+        displayOrder: 0,
+        requirements: {
+          Stone: {
+            amount: 5760,
+          },
+          Water: {
+            amount: 4800,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 48,
+          powerConsumed: 1440,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {},
     inputs: [],
     parts: {
       Cement: {
@@ -58,56 +74,166 @@ export const createMaelsBigBoiPlan = () => {
         exportable: false,
       },
     },
-    buildingRequirements: { oilrefinery: { name: 'oilrefinery', amount: 48, powerConsumed: 1440 } },
+    buildingRequirements: {
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 48,
+        powerConsumed: 1440,
+      },
+    },
     requirementsSatisfied: true,
-    totalPower: 476.9361383679586,
     dependencies: {
       requests: {
-        2929: [{ requestingFactoryId: 2929, part: 'Cement', amount: 240 }],
-        2959: [{ requestingFactoryId: 2959, part: 'Cement', amount: 864 }],
-        4555: [{ requestingFactoryId: 4555, part: 'Cement', amount: 240 }],
-        6471: [{ requestingFactoryId: 6471, part: 'Cement', amount: 2000 }],
-        9960: [{ requestingFactoryId: 9960, part: 'Cement', amount: 200 }],
+        2929: [
+          {
+            requestingFactoryId: 2929,
+            part: 'Cement',
+            amount: 240,
+          },
+        ],
+        2959: [
+          {
+            requestingFactoryId: 2959,
+            part: 'Cement',
+            amount: 864,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'Cement',
+            amount: 240,
+          },
+        ],
+        6471: [
+          {
+            requestingFactoryId: 6471,
+            part: 'Cement',
+            amount: 2000,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'Cement',
+            amount: 200,
+          },
+        ],
       },
-      metrics: { Cement: { part: 'Cement', request: 3544, supply: 3840, isRequestSatisfied: true, difference: 296 } },
+      metrics: {
+        Cement: {
+          part: 'Cement',
+          request: 3544,
+          supply: 3840,
+          isRequestSatisfied: true,
+          difference: 296,
+        },
+      },
     },
-    exportCalculator: { Cement: { selected: null, factorySettings: {} } },
+    exportCalculator: {
+      Cement: {
+        selected: null,
+        factorySettings: {},
+      },
+    },
     rawResources: {
-      Stone: { id: 'Stone', name: 'Limestone', amount: 5760 },
-      Water: { id: 'Water', name: 'Water', amount: 4800 },
+      Stone: {
+        id: 'Stone',
+        name: 'Limestone',
+        amount: 5760,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 4800,
+      },
     },
     usingRawResourcesOnly: true,
-    surplus: { Cement: { amount: 360 } },
+    surplus: {
+      Cement: {
+        amount: 360,
+      },
+    },
     hidden: true,
     hasProblem: false,
     displayOrder: 0,
-    exports: { Cement: { productId: 'Cement', surplus: 0, demands: 1790, supply: 1790, displayOrder: 0 } },
+    exports: {
+      Cement: {
+        productId: 'Cement',
+        surplus: 0,
+        demands: 1790,
+        supply: 1790,
+        displayOrder: 0,
+      },
+    },
     inSync: true,
-    syncState: { Cement: { amount: 3840, recipe: 'Alternate_WetConcrete' } },
-    tasks: [{ title: 'Choose location', completed: true }, { title: 'Place Foundations', completed: true }, {
-      title: 'Build',
-      completed: true,
-    }, { title: 'Dismantle old fac', completed: true }, {
-      title: 'Redirect old trains',
-      completed: true,
-    }, { title: 'Add power breaker switch', completed: false }],
+    syncState: {
+      Cement: {
+        amount: 3840,
+        recipe: 'Alternate_WetConcrete',
+      },
+    },
+    tasks: [
+      {
+        title: 'Choose location',
+        completed: true,
+      },
+      {
+        title: 'Place Foundations',
+        completed: true,
+      },
+      {
+        title: 'Build',
+        completed: true,
+      },
+      {
+        title: 'Dismantle old fac',
+        completed: true,
+      },
+      {
+        title: 'Redirect old trains',
+        completed: true,
+      },
+      {
+        title: 'Add power breaker switch',
+        completed: false,
+      },
+    ],
     notes: '6000 limestone currently fed\n36.666667x water extractors required',
     powerProducers: [],
-    power: { consumed: 1440, produced: 0, difference: -1440 },
+    power: {
+      consumed: 1440,
+      produced: 0,
+      difference: -1440,
+    },
     previousInputs: [],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 8489,
     name: 'Iron Ingots MegaFac',
-    products: [{
-      id: 'IronIngot',
-      amount: 4680,
-      recipe: 'Alternate_PureIronIngot',
-      displayOrder: 0,
-      requirements: { OreIron: { amount: 2520 }, Water: { amount: 1440 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 72, powerConsumed: 2160 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'IronIngot',
+        amount: 4680,
+        recipe: 'Alternate_PureIronIngot',
+        displayOrder: 0,
+        requirements: {
+          OreIron: {
+            amount: 2520,
+          },
+          Water: {
+            amount: 1440,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 72,
+          powerConsumed: 2160,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
     powerProducers: [],
     inputs: [],
@@ -156,52 +282,135 @@ export const createMaelsBigBoiPlan = () => {
         exportable: false,
       },
     },
-    buildingRequirements: { oilrefinery: { name: 'oilrefinery', amount: 72, powerConsumed: 2160 } },
+    buildingRequirements: {
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 72,
+        powerConsumed: 2160,
+      },
+    },
     dependencies: {
       requests: {
-        422: [{ requestingFactoryId: 422, part: 'IronIngot', amount: 1440 }],
-        2657: [{ requestingFactoryId: 2657, part: 'IronIngot', amount: 1070 }],
-        6471: [{ requestingFactoryId: 6471, part: 'IronIngot', amount: 2160 }],
+        422: [
+          {
+            requestingFactoryId: 422,
+            part: 'IronIngot',
+            amount: 1440,
+          },
+        ],
+        2657: [
+          {
+            requestingFactoryId: 2657,
+            part: 'IronIngot',
+            amount: 1070,
+          },
+        ],
+        6471: [
+          {
+            requestingFactoryId: 6471,
+            part: 'IronIngot',
+            amount: 2160,
+          },
+        ],
       },
-      metrics: { IronIngot: { part: 'IronIngot', request: 4670, supply: 4680, isRequestSatisfied: true, difference: 10 } },
+      metrics: {
+        IronIngot: {
+          part: 'IronIngot',
+          request: 4670,
+          supply: 4680,
+          isRequestSatisfied: true,
+          difference: 10,
+        },
+      },
     },
     exportCalculator: {},
     rawResources: {
-      OreIron: { id: 'OreIron', name: 'Iron Ore', amount: 2520 },
-      Water: { id: 'Water', name: 'Water', amount: 1440 },
+      OreIron: {
+        id: 'OreIron',
+        name: 'Iron Ore',
+        amount: 2520,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 1440,
+      },
     },
-    power: { consumed: 2160, produced: 0, difference: -2160 },
+    power: {
+      consumed: 2160,
+      produced: 0,
+      difference: -2160,
+    },
     requirementsSatisfied: true,
     usingRawResourcesOnly: true,
     hidden: true,
     hasProblem: false,
     inSync: true,
-    syncState: { IronIngot: { amount: 4680, recipe: 'Alternate_PureIronIngot' } },
+    syncState: {
+      IronIngot: {
+        amount: 4680,
+        recipe: 'Alternate_PureIronIngot',
+      },
+    },
     displayOrder: 1,
-    tasks: [{ title: 'Build', completed: true }, {
-      title: 'Reconfigure trains',
-      completed: false,
-    }, {
-      title: 'Delete old factory',
-      completed: false,
-    }, { title: 'Upgrade to mrk 3 miners when available (short 120/min)', completed: false }, {
-      title: 'Upgrade belts',
-      completed: true,
-    }, { title: 'Upgrade output belts', completed: true }, { title: 'Check power breaker', completed: false }],
+    tasks: [
+      {
+        title: 'Build',
+        completed: true,
+      },
+      {
+        title: 'Reconfigure trains',
+        completed: false,
+      },
+      {
+        title: 'Delete old factory',
+        completed: false,
+      },
+      {
+        title: 'Upgrade to mrk 3 miners when available (short 120/min)',
+        completed: false,
+      },
+      {
+        title: 'Upgrade belts',
+        completed: true,
+      },
+      {
+        title: 'Upgrade output belts',
+        completed: true,
+      },
+      {
+        title: 'Check power breaker',
+        completed: false,
+      },
+    ],
     notes: 'Requires 12 water extractors\n3k Iron ore available nearby, using 2520 (4 belts @630)\nAll eastern nodes used, western pure left untapped for future expansion\n4x pipes 360, 3 extractors per pipe\n\n4 refinery groups (18 each, 72/4)\nOre: 2520 / 4 = 630 iron ore each group\nWater: 360\n\nOutputs need to be 8 belts (which fits nicely into a station) of 9 refs each (585 per belt) due to mk5 limits (would need 1170/m) \n\nStation supply capacity of 6240 (not calculated for delays)',
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 7869,
     name: 'Copper Ingots MegaFac',
-    products: [{
-      id: 'CopperIngot',
-      amount: 6300,
-      recipe: 'Alternate_PureCopperIngot',
-      displayOrder: 0,
-      requirements: { OreCopper: { amount: 2520 }, Water: { amount: 1680 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 168, powerConsumed: 5040 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'CopperIngot',
+        amount: 6300,
+        recipe: 'Alternate_PureCopperIngot',
+        displayOrder: 0,
+        requirements: {
+          OreCopper: {
+            amount: 2520,
+          },
+          Water: {
+            amount: 1680,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 168,
+          powerConsumed: 5040,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
     powerProducers: [],
     inputs: [],
@@ -250,11 +459,29 @@ export const createMaelsBigBoiPlan = () => {
         exportable: false,
       },
     },
-    buildingRequirements: { oilrefinery: { name: 'oilrefinery', amount: 168, powerConsumed: 5040 } },
+    buildingRequirements: {
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 168,
+        powerConsumed: 5040,
+      },
+    },
     dependencies: {
       requests: {
-        3685: [{ requestingFactoryId: 3685, part: 'CopperIngot', amount: 240 }],
-        7110: [{ requestingFactoryId: 7110, part: 'CopperIngot', amount: 5000 }],
+        3685: [
+          {
+            requestingFactoryId: 3685,
+            part: 'CopperIngot',
+            amount: 240,
+          },
+        ],
+        7110: [
+          {
+            requestingFactoryId: 7110,
+            part: 'CopperIngot',
+            amount: 5000,
+          },
+        ],
       },
       metrics: {
         CopperIngot: {
@@ -268,57 +495,130 @@ export const createMaelsBigBoiPlan = () => {
     },
     exportCalculator: {},
     rawResources: {
-      OreCopper: { id: 'OreCopper', name: 'Copper Ore', amount: 2520 },
-      Water: { id: 'Water', name: 'Water', amount: 1680 },
+      OreCopper: {
+        id: 'OreCopper',
+        name: 'Copper Ore',
+        amount: 2520,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 1680,
+      },
     },
-    power: { consumed: 5040, produced: 0, difference: -5040 },
+    power: {
+      consumed: 5040,
+      produced: 0,
+      difference: -5040,
+    },
     requirementsSatisfied: true,
     usingRawResourcesOnly: true,
     hidden: false,
     hasProblem: false,
     inSync: true,
-    syncState: { CopperIngot: { amount: 6300, recipe: 'Alternate_PureCopperIngot' } },
+    syncState: {
+      CopperIngot: {
+        amount: 6300,
+        recipe: 'Alternate_PureCopperIngot',
+      },
+    },
     displayOrder: 2,
-    tasks: [{ title: 'Establish foundations', completed: true }, {
-      title: 'Build Water',
-      completed: true,
-    }, { title: 'Copper Mines', completed: true }, { title: 'Power', completed: true }, {
-      title: 'Belts',
-      completed: true,
-    }, { title: 'Sinks', completed: true }, {
-      title: 'Outputs to station',
-      completed: true,
-    }, { title: 'Add waiting line for output station', completed: true }, {
-      title: 'Water',
-      completed: true,
-    }, { title: 'Reconfigure Trains (copper megafac)', completed: false }, {
-      title: 'Mine group 2',
-      completed: true,
-    }, { title: 'Add power breaker', completed: false }],
+    tasks: [
+      {
+        title: 'Establish foundations',
+        completed: true,
+      },
+      {
+        title: 'Build Water',
+        completed: true,
+      },
+      {
+        title: 'Copper Mines',
+        completed: true,
+      },
+      {
+        title: 'Power',
+        completed: true,
+      },
+      {
+        title: 'Belts',
+        completed: true,
+      },
+      {
+        title: 'Sinks',
+        completed: true,
+      },
+      {
+        title: 'Outputs to station',
+        completed: true,
+      },
+      {
+        title: 'Add waiting line for output station',
+        completed: true,
+      },
+      {
+        title: 'Water',
+        completed: true,
+      },
+      {
+        title: 'Reconfigure Trains (copper megafac)',
+        completed: false,
+      },
+      {
+        title: 'Mine group 2',
+        completed: true,
+      },
+      {
+        title: 'Add power breaker',
+        completed: false,
+      },
+    ],
     notes: 'Miners: \n  - Group 1: 2100/min\n  - Group 2: 900/min\n  - Total: 3300/min\nRefs: 8 groups of 21= 168\nWater: 18 (20) water extractors (1800/min)\n  - 4 pipes with 4.5x (5) extractors each split into 2',
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 2533,
     name: 'Caterium Processing',
-    products: [{
-      id: 'GoldIngot',
-      amount: 1500,
-      recipe: 'Alternate_PureCateriumIngot',
-      displayOrder: 0,
-      requirements: { OreGold: { amount: 3000 }, Water: { amount: 3000 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 125, powerConsumed: 3750 },
-      byProducts: [],
-    }, {
-      id: 'HighSpeedWire',
-      amount: 3840,
-      recipe: 'Quickwire',
-      displayOrder: 1,
-      requirements: { GoldIngot: { amount: 768 } },
-      buildingRequirements: { name: 'constructormk1', amount: 64, powerConsumed: 256 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'GoldIngot',
+        amount: 1500,
+        recipe: 'Alternate_PureCateriumIngot',
+        displayOrder: 0,
+        requirements: {
+          OreGold: {
+            amount: 3000,
+          },
+          Water: {
+            amount: 3000,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 125,
+          powerConsumed: 3750,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'HighSpeedWire',
+        amount: 3840,
+        recipe: 'Quickwire',
+        displayOrder: 1,
+        requirements: {
+          GoldIngot: {
+            amount: 768,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 64,
+          powerConsumed: 256,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { GoldIngot: { id: 'GoldIngot', amount: 1200 } },
     inputs: [],
     parts: {
       GoldIngot: {
@@ -379,15 +679,34 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      oilrefinery: { name: 'oilrefinery', amount: 125, powerConsumed: 3750 },
-      constructormk1: { name: 'constructormk1', amount: 64, powerConsumed: 256 },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 125,
+        powerConsumed: 3750,
+      },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 64,
+        powerConsumed: 256,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 704,
     dependencies: {
       requests: {
-        5706: [{ requestingFactoryId: 5706, part: 'HighSpeedWire', amount: 3228 }],
-        7110: [{ requestingFactoryId: 7110, part: 'GoldIngot', amount: 180 }],
+        5706: [
+          {
+            requestingFactoryId: 5706,
+            part: 'HighSpeedWire',
+            amount: 3228,
+          },
+        ],
+        7110: [
+          {
+            requestingFactoryId: 7110,
+            part: 'GoldIngot',
+            amount: 180,
+          },
+        ],
       },
       metrics: {
         HighSpeedWire: {
@@ -397,85 +716,216 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 612,
         },
-        GoldIngot: { part: 'GoldIngot', request: 180, supply: 1500, isRequestSatisfied: true, difference: 1320 },
+        GoldIngot: {
+          part: 'GoldIngot',
+          request: 180,
+          supply: 1500,
+          isRequestSatisfied: true,
+          difference: 1320,
+        },
       },
     },
     exportCalculator: {
-      GoldIngot: { selected: null, factorySettings: {} },
-      HighSpeedWire: { selected: null, factorySettings: {} },
+      GoldIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      HighSpeedWire: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      OreGold: { id: 'OreGold', name: 'Caterium Ore', amount: 3000 },
-      Water: { id: 'Water', name: 'Water', amount: 3000 },
+      OreGold: {
+        id: 'OreGold',
+        name: 'Caterium Ore',
+        amount: 3000,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 3000,
+      },
     },
     usingRawResourcesOnly: false,
-    surplus: { GoldIngot: { amount: 66 }, HighSpeedWire: { amount: 1920 } },
+    surplus: {
+      GoldIngot: {
+        amount: 66,
+      },
+      HighSpeedWire: {
+        amount: 1920,
+      },
+    },
     hidden: true,
     hasProblem: false,
     displayOrder: 3,
     exports: {
-      HighSpeedWire: { productId: 'HighSpeedWire', surplus: 132, demands: 5628, supply: 5760, displayOrder: 1 },
-      GoldIngot: { productId: 'GoldIngot', surplus: 48, demands: 0, supply: 1200, displayOrder: 0 },
+      HighSpeedWire: {
+        productId: 'HighSpeedWire',
+        surplus: 132,
+        demands: 5628,
+        supply: 5760,
+        displayOrder: 1,
+      },
+      GoldIngot: {
+        productId: 'GoldIngot',
+        surplus: 48,
+        demands: 0,
+        supply: 1200,
+        displayOrder: 0,
+      },
     },
     inSync: false,
-    syncState: { GoldIngot: { amount: 450, recipe: 'IngotCaterium' }, HighSpeedWire: { amount: 1922, recipe: 'Quickwire' } },
-    tasks: [{ title: 'Pick location', completed: false }],
+    syncState: {
+      GoldIngot: {
+        amount: 450,
+        recipe: 'IngotCaterium',
+      },
+      HighSpeedWire: {
+        amount: 1922,
+        recipe: 'Quickwire',
+      },
+    },
+    tasks: [
+      {
+        title: 'Pick location',
+        completed: false,
+      },
+    ],
     notes: '6x constructor arrays',
     powerProducers: [],
-    power: { consumed: 4006, produced: 0, difference: -4006 },
+    power: {
+      consumed: 4006,
+      produced: 0,
+      difference: -4006,
+    },
     previousInputs: [],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 7110,
     name: 'Copper MegaFac',
-    products: [{
-      id: 'CopperSheet',
-      amount: 1687.5,
-      recipe: 'Alternate_SteamedCopperSheet',
-      displayOrder: 0,
-      requirements: { CopperIngot: { amount: 1687.5 }, Water: { amount: 1687.5 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 75, powerConsumed: 2250 },
-      byProducts: [],
-    }, {
-      id: 'Wire',
-      amount: 5400,
-      recipe: 'Alternate_FusedWire',
-      displayOrder: 1,
-      requirements: { CopperIngot: { amount: 720 }, GoldIngot: { amount: 180 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 60, powerConsumed: 900 },
-      byProducts: [],
-    }, {
-      id: 'CopperDust',
-      amount: 400,
-      recipe: 'CopperDust',
-      displayOrder: 2,
-      requirements: { CopperIngot: { amount: 2400 } },
-      buildingRequirements: { name: 'constructormk1', amount: 8, powerConsumed: 32 },
-      byProducts: [],
-    }, {
-      id: 'Cable',
-      amount: 2160,
-      recipe: 'Alternate_CoatedCable',
-      displayOrder: 3,
-      requirements: { Wire: { amount: 1200 }, HeavyOilResidue: { amount: 480 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 32, powerConsumed: 960 },
-      byProducts: [],
-    }, {
-      id: 'HeavyOilResidue',
-      amount: 480,
-      recipe: 'Alternate_HeavyOilResidue',
-      displayOrder: 4,
-      requirements: { LiquidOil: { amount: 360 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 12, powerConsumed: 360 },
-      byProducts: [{ id: 'PolymerResin', byProductOf: 'HeavyOilResidue', amount: 240 }],
-    }],
-    byProducts: [{ id: 'PolymerResin', amount: 240, byProductOf: 'HeavyOilResidue' }],
-    internalProducts: { CopperIngot: { id: 'CopperIngot', amount: 9600 }, Wire: { id: 'Wire', amount: 9233 } },
-    inputs: [{ factoryId: 7869, outputPart: 'CopperIngot', amount: 5000 }, {
-      factoryId: 2533,
-      outputPart: 'GoldIngot',
-      amount: 180,
-    }],
+    products: [
+      {
+        id: 'CopperSheet',
+        amount: 1687.5,
+        recipe: 'Alternate_SteamedCopperSheet',
+        displayOrder: 0,
+        requirements: {
+          CopperIngot: {
+            amount: 1687.5,
+          },
+          Water: {
+            amount: 1687.5,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 75,
+          powerConsumed: 2250,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Wire',
+        amount: 5400,
+        recipe: 'Alternate_FusedWire',
+        displayOrder: 1,
+        requirements: {
+          CopperIngot: {
+            amount: 720,
+          },
+          GoldIngot: {
+            amount: 180,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 60,
+          powerConsumed: 900,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'CopperDust',
+        amount: 400,
+        recipe: 'CopperDust',
+        displayOrder: 2,
+        requirements: {
+          CopperIngot: {
+            amount: 2400,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 8,
+          powerConsumed: 32,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Cable',
+        amount: 2160,
+        recipe: 'Alternate_CoatedCable',
+        displayOrder: 3,
+        requirements: {
+          Wire: {
+            amount: 1200,
+          },
+          HeavyOilResidue: {
+            amount: 480,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 32,
+          powerConsumed: 960,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'HeavyOilResidue',
+        amount: 480,
+        recipe: 'Alternate_HeavyOilResidue',
+        displayOrder: 4,
+        requirements: {
+          LiquidOil: {
+            amount: 360,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 12,
+          powerConsumed: 360,
+        },
+        byProducts: [
+          {
+            id: 'PolymerResin',
+            byProductOf: 'HeavyOilResidue',
+            amount: 240,
+          },
+        ],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'PolymerResin',
+        amount: 240,
+        byProductOf: 'HeavyOilResidue',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 7869,
+        outputPart: 'CopperIngot',
+        amount: 5000,
+      },
+      {
+        factoryId: 2533,
+        outputPart: 'GoldIngot',
+        amount: 180,
+      },
+    ],
     parts: {
       CopperSheet: {
         amountRequired: 1530,
@@ -619,126 +1069,370 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      oilrefinery: { name: 'oilrefinery', amount: 119, powerConsumed: 3570 },
-      assemblermk1: { name: 'assemblermk1', amount: 60, powerConsumed: 900 },
-      constructormk1: { name: 'constructormk1', amount: 8, powerConsumed: 32 },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 119,
+        powerConsumed: 3570,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 60,
+        powerConsumed: 900,
+      },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 8,
+        powerConsumed: 32,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 3713.3115233698068,
     dependencies: {
       requests: {
-        422: [{ requestingFactoryId: 422, part: 'Wire', amount: 1350 }],
-        3685: [{ requestingFactoryId: 3685, part: 'CopperSheet', amount: 270 }],
-        3911: [{ requestingFactoryId: 3911, part: 'CopperDust', amount: 400 }],
-        4042: [{ requestingFactoryId: 4042, part: 'Wire', amount: 100 }],
-        4295: [{ requestingFactoryId: 4295, part: 'Cable', amount: 900 }],
-        4341: [{ requestingFactoryId: 4341, part: 'CopperSheet', amount: 30 }],
-        5445: [{ requestingFactoryId: 5445, part: 'Cable', amount: 336 }],
-        5706: [{ requestingFactoryId: 5706, part: 'CopperSheet', amount: 1230 }, {
-          requestingFactoryId: 5706,
-          part: 'Cable',
-          amount: 735,
-        }],
-        6620: [{ requestingFactoryId: 6620, part: 'Wire', amount: 2220 }],
+        422: [
+          {
+            requestingFactoryId: 422,
+            part: 'Wire',
+            amount: 1350,
+          },
+        ],
+        3685: [
+          {
+            requestingFactoryId: 3685,
+            part: 'CopperSheet',
+            amount: 270,
+          },
+        ],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'CopperDust',
+            amount: 400,
+          },
+        ],
+        4042: [
+          {
+            requestingFactoryId: 4042,
+            part: 'Wire',
+            amount: 100,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'Cable',
+            amount: 900,
+          },
+        ],
+        4341: [
+          {
+            requestingFactoryId: 4341,
+            part: 'CopperSheet',
+            amount: 30,
+          },
+        ],
+        5445: [
+          {
+            requestingFactoryId: 5445,
+            part: 'Cable',
+            amount: 336,
+          },
+        ],
+        5706: [
+          {
+            requestingFactoryId: 5706,
+            part: 'CopperSheet',
+            amount: 1230,
+          },
+          {
+            requestingFactoryId: 5706,
+            part: 'Cable',
+            amount: 735,
+          },
+        ],
+        6620: [
+          {
+            requestingFactoryId: 6620,
+            part: 'Wire',
+            amount: 2220,
+          },
+        ],
       },
       metrics: {
-        Wire: { part: 'Wire', request: 3670, supply: 5400, isRequestSatisfied: true, difference: 1730 },
-        CopperSheet: { part: 'CopperSheet', request: 1530, supply: 1687.5, isRequestSatisfied: true, difference: 157.5 },
-        CopperDust: { part: 'CopperDust', request: 400, supply: 400, isRequestSatisfied: true, difference: 0 },
-        Cable: { part: 'Cable', request: 1971, supply: 2160, isRequestSatisfied: true, difference: 189 },
+        Wire: {
+          part: 'Wire',
+          request: 3670,
+          supply: 5400,
+          isRequestSatisfied: true,
+          difference: 1730,
+        },
+        CopperSheet: {
+          part: 'CopperSheet',
+          request: 1530,
+          supply: 1687.5,
+          isRequestSatisfied: true,
+          difference: 157.5,
+        },
+        CopperDust: {
+          part: 'CopperDust',
+          request: 400,
+          supply: 400,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
+        Cable: {
+          part: 'Cable',
+          request: 1971,
+          supply: 2160,
+          isRequestSatisfied: true,
+          difference: 189,
+        },
       },
     },
     exportCalculator: {
-      CopperSheet: { selected: null, factorySettings: {} },
-      CopperIngot: { selected: '3685', factorySettings: {} },
-      Wire: { selected: null, factorySettings: {} },
-      Cable: { selected: null, factorySettings: {} },
+      CopperSheet: {
+        selected: null,
+        factorySettings: {},
+      },
+      CopperIngot: {
+        selected: '3685',
+        factorySettings: {},
+      },
+      Wire: {
+        selected: null,
+        factorySettings: {},
+      },
+      Cable: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      Water: { id: 'Water', name: 'Water', amount: 1687.5 },
-      LiquidOil: { id: 'LiquidOil', name: 'Crude Oil', amount: 360 },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 1687.5,
+      },
+      LiquidOil: {
+        id: 'LiquidOil',
+        name: 'Crude Oil',
+        amount: 360,
+      },
     },
     usingRawResourcesOnly: false,
-    surplus: { CopperIngot: { amount: 2000 }, CopperSheet: { amount: 320 }, Wire: { amount: 1440 }, Cable: { amount: 960 } },
+    surplus: {
+      CopperIngot: {
+        amount: 2000,
+      },
+      CopperSheet: {
+        amount: 320,
+      },
+      Wire: {
+        amount: 1440,
+      },
+      Cable: {
+        amount: 960,
+      },
+    },
     hidden: false,
     hasProblem: false,
     displayOrder: 4,
     exports: {
-      Cable: { productId: 'Cable', surplus: 0, demands: 2091, supply: 2091, displayOrder: 3 },
-      Wire: { productId: 'Wire', surplus: 0, demands: 5051, supply: 9233, displayOrder: 2 },
-      CopperSheet: { productId: 'CopperSheet', surplus: 0, demands: 2310, supply: 2310, displayOrder: 1 },
-      CopperIngot: { productId: 'CopperIngot', surplus: 123.5, demands: 240, supply: 9600, displayOrder: 0 },
+      Cable: {
+        productId: 'Cable',
+        surplus: 0,
+        demands: 2091,
+        supply: 2091,
+        displayOrder: 3,
+      },
+      Wire: {
+        productId: 'Wire',
+        surplus: 0,
+        demands: 5051,
+        supply: 9233,
+        displayOrder: 2,
+      },
+      CopperSheet: {
+        productId: 'CopperSheet',
+        surplus: 0,
+        demands: 2310,
+        supply: 2310,
+        displayOrder: 1,
+      },
+      CopperIngot: {
+        productId: 'CopperIngot',
+        surplus: 123.5,
+        demands: 240,
+        supply: 9600,
+        displayOrder: 0,
+      },
     },
     inSync: false,
     syncState: {
-      CopperIngot: { amount: 4320, recipe: 'IngotCopper' },
-      CopperSheet: { amount: 320, recipe: 'CopperSheet' },
-      Wire: { amount: 3360, recipe: 'Wire' },
-      Cable: { amount: 960, recipe: 'Cable' },
+      CopperIngot: {
+        amount: 4320,
+        recipe: 'IngotCopper',
+      },
+      CopperSheet: {
+        amount: 320,
+        recipe: 'CopperSheet',
+      },
+      Wire: {
+        amount: 3360,
+        recipe: 'Wire',
+      },
+      Cable: {
+        amount: 960,
+        recipe: 'Cable',
+      },
     },
-    tasks: [{ title: 'Choose location', completed: true }, {
-      title: 'Lay foundations for new location',
-      completed: true,
-    }, { title: 'Water Extractors', completed: true }, { title: 'HOR Creation / Import', completed: false }],
+    tasks: [
+      {
+        title: 'Choose location',
+        completed: true,
+      },
+      {
+        title: 'Lay foundations for new location',
+        completed: true,
+      },
+      {
+        title: 'Water Extractors',
+        completed: true,
+      },
+      {
+        title: 'HOR Creation / Import',
+        completed: false,
+      },
+    ],
     notes: 'Mk5 belts from Copper Ingot MegaFac?\n\nNeeds 6 stations',
     powerProducers: [],
-    power: { consumed: 4502, produced: 0, difference: -4502 },
-    previousInputs: [{ factoryId: 7869, outputPart: 'CopperIngot', amount: 5000 }, {
-      factoryId: 2533,
-      outputPart: 'GoldIngot',
-      amount: 180,
-    }],
+    power: {
+      consumed: 4502,
+      produced: 0,
+      difference: -4502,
+    },
+    previousInputs: [
+      {
+        factoryId: 7869,
+        outputPart: 'CopperIngot',
+        amount: 5000,
+      },
+      {
+        factoryId: 2533,
+        outputPart: 'GoldIngot',
+        amount: 180,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 1023,
     name: 'Oil MegaFac',
-    products: [{
-      id: 'Plastic',
-      amount: 2920,
-      recipe: 'Plastic',
-      displayOrder: 0,
-      requirements: { LiquidOil: { amount: 4380 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 146, powerConsumed: 4380 },
-      byProducts: [{ id: 'HeavyOilResidue', byProductOf: 'Plastic', amount: 1460 }],
-    }, {
-      id: 'LiquidFuel',
-      amount: 960,
-      recipe: 'ResidualFuel',
-      displayOrder: 1,
-      requirements: { HeavyOilResidue: { amount: 1440 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 24, powerConsumed: 720 },
-      byProducts: [],
-    }, {
-      id: 'Rubber',
-      amount: 240,
-      recipe: 'Alternate_RecycledRubber',
-      displayOrder: 2,
-      requirements: { Plastic: { amount: 120 }, LiquidFuel: { amount: 120 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 4, powerConsumed: 120 },
-      byProducts: [],
-    }, {
-      id: 'FluidCanister',
-      amount: 40,
-      recipe: 'FluidCanister',
-      displayOrder: 3,
-      requirements: { Plastic: { amount: 20 } },
-      buildingRequirements: { name: 'constructormk1', amount: 0.6666666666666666, powerConsumed: 2.3403457659698588 },
-      byProducts: [],
-    }, {
-      id: 'Fuel',
-      amount: 40,
-      recipe: 'Fuel',
-      displayOrder: 4,
-      requirements: { LiquidFuel: { amount: 40 }, FluidCanister: { amount: 40 } },
-      buildingRequirements: { name: 'packager', amount: 1, powerConsumed: 10 },
-      byProducts: [],
-    }],
-    byProducts: [{ id: 'HeavyOilResidue', amount: 1460, byProductOf: 'Plastic' }],
-    internalProducts: {
-      LiquidFuel: { id: 'LiquidFuel', amount: 480 },
-      FluidCanister: { id: 'FluidCanister', amount: 60 },
-      Plastic: { id: 'Plastic', amount: 3400 },
-    },
+    products: [
+      {
+        id: 'Plastic',
+        amount: 2920,
+        recipe: 'Plastic',
+        displayOrder: 0,
+        requirements: {
+          LiquidOil: {
+            amount: 4380,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 146,
+          powerConsumed: 4380,
+        },
+        byProducts: [
+          {
+            id: 'HeavyOilResidue',
+            byProductOf: 'Plastic',
+            amount: 1460,
+          },
+        ],
+      },
+      {
+        id: 'LiquidFuel',
+        amount: 960,
+        recipe: 'ResidualFuel',
+        displayOrder: 1,
+        requirements: {
+          HeavyOilResidue: {
+            amount: 1440,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 24,
+          powerConsumed: 720,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Rubber',
+        amount: 240,
+        recipe: 'Alternate_RecycledRubber',
+        displayOrder: 2,
+        requirements: {
+          Plastic: {
+            amount: 120,
+          },
+          LiquidFuel: {
+            amount: 120,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 4,
+          powerConsumed: 120,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'FluidCanister',
+        amount: 40,
+        recipe: 'FluidCanister',
+        displayOrder: 3,
+        requirements: {
+          Plastic: {
+            amount: 20,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 0.6666666666666666,
+          powerConsumed: 2.3403457659698588,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Fuel',
+        amount: 40,
+        recipe: 'Fuel',
+        displayOrder: 4,
+        requirements: {
+          LiquidFuel: {
+            amount: 40,
+          },
+          FluidCanister: {
+            amount: 40,
+          },
+        },
+        buildingRequirements: {
+          name: 'packager',
+          amount: 1,
+          powerConsumed: 10,
+        },
+        byProducts: [],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'HeavyOilResidue',
+        amount: 1460,
+        byProductOf: 'Plastic',
+      },
+    ],
     inputs: [],
     parts: {
       Plastic: {
@@ -841,22 +1535,67 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      oilrefinery: { name: 'oilrefinery', amount: 174, powerConsumed: 5220 },
-      constructormk1: { name: 'constructormk1', amount: 1, powerConsumed: 2.34 },
-      packager: { name: 'packager', amount: 1, powerConsumed: 10 },
-      generatorfuel: { name: 'generatorfuel', amount: 40, powerProduced: 10000 },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 174,
+        powerConsumed: 5220,
+      },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 1,
+        powerConsumed: 2.34,
+      },
+      packager: {
+        name: 'packager',
+        amount: 1,
+        powerConsumed: 10,
+      },
+      generatorfuel: {
+        name: 'generatorfuel',
+        amount: 40,
+        powerProduced: 10000,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 5834,
     dependencies: {
       requests: {
-        4295: [{ requestingFactoryId: 4295, part: 'Rubber', amount: 75 }],
-        5233: [{ requestingFactoryId: 5233, part: 'HeavyOilResidue', amount: 10 }],
-        5623: [{ requestingFactoryId: 5623, part: 'Rubber', amount: 76 }],
-        5706: [{ requestingFactoryId: 5706, part: 'Plastic', amount: 2758 }],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'Rubber',
+            amount: 75,
+          },
+        ],
+        5233: [
+          {
+            requestingFactoryId: 5233,
+            part: 'HeavyOilResidue',
+            amount: 10,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'Rubber',
+            amount: 76,
+          },
+        ],
+        5706: [
+          {
+            requestingFactoryId: 5706,
+            part: 'Plastic',
+            amount: 2758,
+          },
+        ],
       },
       metrics: {
-        Rubber: { part: 'Rubber', request: 151, supply: 240, isRequestSatisfied: true, difference: 89 },
+        Rubber: {
+          part: 'Rubber',
+          request: 151,
+          supply: 240,
+          isRequestSatisfied: true,
+          difference: 89,
+        },
         HeavyOilResidue: {
           part: 'HeavyOilResidue',
           request: 10,
@@ -864,96 +1603,250 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 1450,
         },
-        Plastic: { part: 'Plastic', request: 2758, supply: 2920, isRequestSatisfied: true, difference: 162 },
+        Plastic: {
+          part: 'Plastic',
+          request: 2758,
+          supply: 2920,
+          isRequestSatisfied: true,
+          difference: 162,
+        },
       },
     },
     exportCalculator: {
-      Plastic: { selected: null, factorySettings: {} },
-      HeavyOilResidue: { selected: null, factorySettings: {} },
-      Rubber: { selected: null, factorySettings: {} },
-      LiquidFuel: { selected: null, factorySettings: {} },
-      PolymerResin: { selected: null, factorySettings: {} },
-      Gunpowder: { selected: null, factorySettings: {} },
+      Plastic: {
+        selected: null,
+        factorySettings: {},
+      },
+      HeavyOilResidue: {
+        selected: null,
+        factorySettings: {},
+      },
+      Rubber: {
+        selected: null,
+        factorySettings: {},
+      },
+      LiquidFuel: {
+        selected: null,
+        factorySettings: {},
+      },
+      PolymerResin: {
+        selected: null,
+        factorySettings: {},
+      },
+      Gunpowder: {
+        selected: null,
+        factorySettings: {},
+      },
       GunpowderMK2: {
         selected: '5706',
-        factorySettings: { 4295: { trainTime: 123 }, 5623: { trainTime: 123 }, 5706: { trainTime: 123 } },
+        factorySettings: {
+          4295: {
+            trainTime: 123,
+          },
+          5623: {
+            trainTime: 123,
+          },
+          5706: {
+            trainTime: 123,
+          },
+        },
       },
       CartridgeStandard: {
         selected: '5706',
-        factorySettings: { 4295: { trainTime: 123 }, 5623: { trainTime: 123 }, 5706: { trainTime: 123 } },
+        factorySettings: {
+          4295: {
+            trainTime: 123,
+          },
+          5623: {
+            trainTime: 123,
+          },
+          5706: {
+            trainTime: 123,
+          },
+        },
       },
-      Fuel: { selected: null, factorySettings: {} },
-      FluidCanister: { selected: null, factorySettings: {} },
+      Fuel: {
+        selected: null,
+        factorySettings: {},
+      },
+      FluidCanister: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { LiquidOil: { id: 'LiquidOil', name: 'Crude Oil', amount: 4380 } },
+    rawResources: {
+      LiquidOil: {
+        id: 'LiquidOil',
+        name: 'Crude Oil',
+        amount: 4380,
+      },
+    },
     usingRawResourcesOnly: false,
     surplus: {},
     hidden: true,
     hasProblem: false,
     displayOrder: 5,
     exports: {
-      FluidCanister: { productId: 'FluidCanister', surplus: 20, demands: 0, supply: 60, displayOrder: 4 },
-      Fuel: { productId: 'Fuel', surplus: 40, demands: 0, supply: 40, displayOrder: 3 },
-      LiquidFuel: { productId: 'LiquidFuel', surplus: 440, demands: 0, supply: 480, displayOrder: 2 },
-      Rubber: { productId: 'Rubber', surplus: 89, demands: 151, supply: 240, displayOrder: 1 },
-      Plastic: { productId: 'Plastic', surplus: 12, demands: 3358, supply: 3400, displayOrder: 0 },
-      HeavyOilResidue: { productId: 'HeavyOilResidue', surplus: 1220, demands: 0, supply: 1940, displayOrder: 0 },
+      FluidCanister: {
+        productId: 'FluidCanister',
+        surplus: 20,
+        demands: 0,
+        supply: 60,
+        displayOrder: 4,
+      },
+      Fuel: {
+        productId: 'Fuel',
+        surplus: 40,
+        demands: 0,
+        supply: 40,
+        displayOrder: 3,
+      },
+      LiquidFuel: {
+        productId: 'LiquidFuel',
+        surplus: 440,
+        demands: 0,
+        supply: 480,
+        displayOrder: 2,
+      },
+      Rubber: {
+        productId: 'Rubber',
+        surplus: 89,
+        demands: 151,
+        supply: 240,
+        displayOrder: 1,
+      },
+      Plastic: {
+        productId: 'Plastic',
+        surplus: 12,
+        demands: 3358,
+        supply: 3400,
+        displayOrder: 0,
+      },
+      HeavyOilResidue: {
+        productId: 'HeavyOilResidue',
+        surplus: 1220,
+        demands: 0,
+        supply: 1940,
+        displayOrder: 0,
+      },
     },
     inSync: false,
     syncState: {
-      Plastic: { amount: 840, recipe: 'Plastic' },
-      Rubber: { amount: 240, recipe: 'Rubber' },
-      LiquidFuel: { amount: 480, recipe: 'ResidualFuel' },
-      GunpowderMK2: { amount: 60, recipe: 'GunpowderMK2' },
-      CartridgeStandard: { amount: 300, recipe: 'Cartridge' },
-      Fuel: { amount: 40, recipe: 'Fuel' },
-      FluidCanister: { amount: 40, recipe: 'FluidCanister' },
+      Plastic: {
+        amount: 840,
+        recipe: 'Plastic',
+      },
+      Rubber: {
+        amount: 240,
+        recipe: 'Rubber',
+      },
+      LiquidFuel: {
+        amount: 480,
+        recipe: 'ResidualFuel',
+      },
+      GunpowderMK2: {
+        amount: 60,
+        recipe: 'GunpowderMK2',
+      },
+      CartridgeStandard: {
+        amount: 300,
+        recipe: 'Cartridge',
+      },
+      Fuel: {
+        amount: 40,
+        recipe: 'Fuel',
+      },
+      FluidCanister: {
+        amount: 40,
+        recipe: 'FluidCanister',
+      },
     },
     tasks: [],
     notes: '',
-    powerProducers: [{
-      building: 'generatorfuel',
-      buildingAmount: 40,
-      buildingCount: 40,
-      ingredientAmount: 800,
-      ingredients: [{ part: 'LiquidFuel', perMin: 800, mwPerItem: 12.5 }],
-      powerAmount: 10000,
-      powerProduced: 10000,
-      recipe: 'GeneratorFuel_LiquidFuel',
-      byproduct: null,
-      displayOrder: 0,
-      updated: 'ingredient',
-    }],
-    power: { consumed: 5232.34, produced: 10000, difference: 4767.66 },
+    powerProducers: [
+      {
+        building: 'generatorfuel',
+        buildingAmount: 40,
+        buildingCount: 40,
+        ingredientAmount: 800,
+        ingredients: [
+          {
+            part: 'LiquidFuel',
+            perMin: 800,
+            mwPerItem: 12.5,
+          },
+        ],
+        powerAmount: 10000,
+        powerProduced: 10000,
+        recipe: 'GeneratorFuel_LiquidFuel',
+        byproduct: null,
+        displayOrder: 0,
+        updated: 'ingredient',
+      },
+    ],
+    power: {
+      consumed: 5232.34,
+      produced: 10000,
+      difference: 4767.66,
+    },
     previousInputs: [],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 422,
     name: 'Iron Plates',
-    products: [{
-      id: 'IronPlate',
-      amount: 960,
-      recipe: 'IronPlate',
-      displayOrder: 0,
-      requirements: { IronIngot: { amount: 1440 } },
-      buildingRequirements: { name: 'constructormk1', amount: 48, powerConsumed: 192 },
-      byProducts: [],
-    }, {
-      id: 'IronPlateReinforced',
-      amount: 202.5,
-      recipe: 'Alternate_ReinforcedIronPlate_2',
-      displayOrder: 1,
-      requirements: { IronPlate: { amount: 675 }, Wire: { amount: 1350 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 36, powerConsumed: 540 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'IronPlate',
+        amount: 960,
+        recipe: 'IronPlate',
+        displayOrder: 0,
+        requirements: {
+          IronIngot: {
+            amount: 1440,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 48,
+          powerConsumed: 192,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'IronPlateReinforced',
+        amount: 202.5,
+        recipe: 'Alternate_ReinforcedIronPlate_2',
+        displayOrder: 1,
+        requirements: {
+          IronPlate: {
+            amount: 675,
+          },
+          Wire: {
+            amount: 1350,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 36,
+          powerConsumed: 540,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { IronIngot: { id: 'IronIngot', amount: 1440 } },
-    inputs: [{ factoryId: 8489, outputPart: 'IronIngot', amount: 1440 }, {
-      factoryId: 7110,
-      outputPart: 'Wire',
-      amount: 1350,
-    }],
+    inputs: [
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 1440,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 1350,
+      },
+    ],
     parts: {
       IronPlate: {
         amountRequired: 835,
@@ -1013,21 +1906,64 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      constructormk1: { name: 'constructormk1', amount: 48, powerConsumed: 192 },
-      assemblermk1: { name: 'assemblermk1', amount: 36, powerConsumed: 540 },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 48,
+        powerConsumed: 192,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 36,
+        powerConsumed: 540,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 384,
     dependencies: {
       requests: {
-        3816: [{ requestingFactoryId: 3816, part: 'IronPlate', amount: 60 }],
-        4295: [{ requestingFactoryId: 4295, part: 'IronPlateReinforced', amount: 10 }],
-        5445: [{ requestingFactoryId: 5445, part: 'IronPlateReinforced', amount: 60 }],
-        5750: [{ requestingFactoryId: 5750, part: 'IronPlateReinforced', amount: 126 }],
-        9960: [{ requestingFactoryId: 9960, part: 'IronPlate', amount: 100 }],
+        3816: [
+          {
+            requestingFactoryId: 3816,
+            part: 'IronPlate',
+            amount: 60,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'IronPlateReinforced',
+            amount: 10,
+          },
+        ],
+        5445: [
+          {
+            requestingFactoryId: 5445,
+            part: 'IronPlateReinforced',
+            amount: 60,
+          },
+        ],
+        5750: [
+          {
+            requestingFactoryId: 5750,
+            part: 'IronPlateReinforced',
+            amount: 126,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'IronPlate',
+            amount: 100,
+          },
+        ],
       },
       metrics: {
-        IronPlate: { part: 'IronPlate', request: 160, supply: 960, isRequestSatisfied: true, difference: 800 },
+        IronPlate: {
+          part: 'IronPlate',
+          request: 160,
+          supply: 960,
+          isRequestSatisfied: true,
+          difference: 800,
+        },
         IronPlateReinforced: {
           part: 'IronPlateReinforced',
           request: 196,
@@ -1038,8 +1974,14 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     exportCalculator: {
-      IronPlate: { selected: null, factorySettings: {} },
-      IronIngot: { selected: null, factorySettings: {} },
+      IronPlate: {
+        selected: null,
+        factorySettings: {},
+      },
+      IronIngot: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     usingRawResourcesOnly: false,
@@ -1048,44 +1990,107 @@ export const createMaelsBigBoiPlan = () => {
     hasProblem: false,
     displayOrder: 6,
     exports: {
-      IronPlate: { productId: 'IronPlate', surplus: 12.5, demands: 947.5, supply: 960, displayOrder: 1 },
-      IronIngot: { productId: 'IronIngot', surplus: 0, demands: 0, supply: 1440, displayOrder: 0 },
+      IronPlate: {
+        productId: 'IronPlate',
+        surplus: 12.5,
+        demands: 947.5,
+        supply: 960,
+        displayOrder: 1,
+      },
+      IronIngot: {
+        productId: 'IronIngot',
+        surplus: 0,
+        demands: 0,
+        supply: 1440,
+        displayOrder: 0,
+      },
     },
     inSync: false,
-    syncState: { IronIngot: { amount: 480, recipe: 'IngotIron' }, IronPlate: { amount: 320, recipe: 'IronPlate' } },
+    syncState: {
+      IronIngot: {
+        amount: 480,
+        recipe: 'IngotIron',
+      },
+      IronPlate: {
+        amount: 320,
+        recipe: 'IronPlate',
+      },
+    },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 732, produced: 0, difference: -732 },
-    previousInputs: [{ factoryId: 8489, outputPart: 'IronIngot', amount: 1440 }, {
-      factoryId: 7110,
-      outputPart: 'Wire',
-      amount: 1350,
-    }],
+    power: {
+      consumed: 732,
+      produced: 0,
+      difference: -732,
+    },
+    previousInputs: [
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 1440,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 1350,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 5233,
     name: 'Black Powder',
-    products: [{
-      id: 'Gunpowder',
-      amount: 60,
-      recipe: 'Gunpowder',
-      displayOrder: 0,
-      requirements: { Coal: { amount: 30 }, Sulfur: { amount: 30 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 2, powerConsumed: 30 },
-      byProducts: [],
-    }, {
-      id: 'GunpowderMK2',
-      amount: 20,
-      recipe: 'GunpowderMK2',
-      displayOrder: 1,
-      requirements: { Gunpowder: { amount: 20 }, HeavyOilResidue: { amount: 10 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 1, powerConsumed: 30 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'Gunpowder',
+        amount: 60,
+        recipe: 'Gunpowder',
+        displayOrder: 0,
+        requirements: {
+          Coal: {
+            amount: 30,
+          },
+          Sulfur: {
+            amount: 30,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 2,
+          powerConsumed: 30,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'GunpowderMK2',
+        amount: 20,
+        recipe: 'GunpowderMK2',
+        displayOrder: 1,
+        requirements: {
+          Gunpowder: {
+            amount: 20,
+          },
+          HeavyOilResidue: {
+            amount: 10,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 1,
+          powerConsumed: 30,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { Gunpowder: { id: 'Gunpowder', amount: 60 } },
-    inputs: [{ factoryId: 1023, outputPart: 'HeavyOilResidue', amount: 10 }],
+    inputs: [
+      {
+        factoryId: 1023,
+        outputPart: 'HeavyOilResidue',
+        amount: 10,
+      },
+    ],
     parts: {
       Gunpowder: {
         amountRequired: 40,
@@ -1159,31 +2164,86 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 2, powerConsumed: 30 },
-      oilrefinery: { name: 'oilrefinery', amount: 1, powerConsumed: 30 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 2,
+        powerConsumed: 30,
+      },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 1,
+        powerConsumed: 30,
+      },
     },
-    totalPower: 60,
     dependencies: {
       requests: {
-        4341: [{
-          requestingFactoryId: 4341,
-          part: 'Gunpowder',
-          amount: 20,
-        }, { requestingFactoryId: 4341, part: 'GunpowderMK2', amount: 20 }],
+        4341: [
+          {
+            requestingFactoryId: 4341,
+            part: 'Gunpowder',
+            amount: 20,
+          },
+          {
+            requestingFactoryId: 4341,
+            part: 'GunpowderMK2',
+            amount: 20,
+          },
+        ],
       },
       metrics: {
-        Gunpowder: { part: 'Gunpowder', request: 20, supply: 60, isRequestSatisfied: true, difference: 40 },
-        GunpowderMK2: { part: 'GunpowderMK2', request: 20, supply: 20, isRequestSatisfied: true, difference: 0 },
+        Gunpowder: {
+          part: 'Gunpowder',
+          request: 20,
+          supply: 60,
+          isRequestSatisfied: true,
+          difference: 40,
+        },
+        GunpowderMK2: {
+          part: 'GunpowderMK2',
+          request: 20,
+          supply: 20,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
       },
     },
     exportCalculator: {
-      Gunpowder: { selected: null, factorySettings: {} },
-      GunpowderMK2: { selected: null, factorySettings: {} },
+      Gunpowder: {
+        selected: null,
+        factorySettings: {},
+      },
+      GunpowderMK2: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { Coal: { id: 'Coal', name: 'Coal', amount: 30 }, Sulfur: { id: 'Sulfur', name: 'Sulfur', amount: 30 } },
+    rawResources: {
+      Coal: {
+        id: 'Coal',
+        name: 'Coal',
+        amount: 30,
+      },
+      Sulfur: {
+        id: 'Sulfur',
+        name: 'Sulfur',
+        amount: 30,
+      },
+    },
     exports: {
-      GunpowderMK2: { productId: 'GunpowderMK2', surplus: 0, demands: 20, supply: 20, displayOrder: 1 },
-      Gunpowder: { productId: 'Gunpowder', surplus: 20, demands: 20, supply: 60, displayOrder: 0 },
+      GunpowderMK2: {
+        productId: 'GunpowderMK2',
+        surplus: 0,
+        demands: 20,
+        supply: 20,
+        displayOrder: 1,
+      },
+      Gunpowder: {
+        productId: 'Gunpowder',
+        surplus: 20,
+        demands: 20,
+        supply: 60,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -1191,48 +2251,107 @@ export const createMaelsBigBoiPlan = () => {
     hasProblem: false,
     displayOrder: 7,
     inSync: false,
-    syncState: { Gunpowder: { amount: 60, recipe: 'Gunpowder' } },
+    syncState: {
+      Gunpowder: {
+        amount: 60,
+        recipe: 'Gunpowder',
+      },
+    },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 60, produced: 0, difference: -60 },
-    previousInputs: [{ factoryId: 1023, outputPart: 'HeavyOilResidue', amount: 10 }],
+    power: {
+      consumed: 60,
+      produced: 0,
+      difference: -60,
+    },
+    previousInputs: [
+      {
+        factoryId: 1023,
+        outputPart: 'HeavyOilResidue',
+        amount: 10,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 5445,
     name: 'Quartz Processing',
-    products: [{
-      id: 'QuartzCrystal',
-      amount: 720,
-      recipe: 'QuartzCrystal',
-      displayOrder: 0,
-      requirements: { RawQuartz: { amount: 1200 } },
-      buildingRequirements: { name: 'constructormk1', amount: 32, powerConsumed: 128 },
-      byProducts: [],
-    }, {
-      id: 'Silica',
-      amount: 3780,
-      recipe: 'Alternate_Silica',
-      displayOrder: 1,
-      requirements: { RawQuartz: { amount: 1620 }, Stone: { amount: 2700 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 72, powerConsumed: 1080 },
-      byProducts: [],
-    }, {
-      id: 'CrystalOscillator',
-      amount: 24,
-      recipe: 'CrystalOscillator',
-      displayOrder: 2,
-      requirements: { QuartzCrystal: { amount: 432 }, Cable: { amount: 336 }, IronPlateReinforced: { amount: 60 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 24, powerConsumed: 1320 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'QuartzCrystal',
+        amount: 720,
+        recipe: 'QuartzCrystal',
+        displayOrder: 0,
+        requirements: {
+          RawQuartz: {
+            amount: 1200,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 32,
+          powerConsumed: 128,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Silica',
+        amount: 3780,
+        recipe: 'Alternate_Silica',
+        displayOrder: 1,
+        requirements: {
+          RawQuartz: {
+            amount: 1620,
+          },
+          Stone: {
+            amount: 2700,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 72,
+          powerConsumed: 1080,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'CrystalOscillator',
+        amount: 24,
+        recipe: 'CrystalOscillator',
+        displayOrder: 2,
+        requirements: {
+          QuartzCrystal: {
+            amount: 432,
+          },
+          Cable: {
+            amount: 336,
+          },
+          IronPlateReinforced: {
+            amount: 60,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 24,
+          powerConsumed: 1320,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { QuartzCrystal: { id: 'QuartzCrystal', amount: 720 } },
-    inputs: [{ factoryId: 7110, outputPart: 'Cable', amount: 336 }, {
-      factoryId: 422,
-      outputPart: 'IronPlateReinforced',
-      amount: 60,
-    }],
+    inputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 336,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 60,
+      },
+    ],
     parts: {
       QuartzCrystal: {
         amountRequired: 576,
@@ -1334,24 +2453,66 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      constructormk1: { name: 'constructormk1', amount: 32, powerConsumed: 128 },
-      assemblermk1: { name: 'assemblermk1', amount: 72, powerConsumed: 1080 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 24, powerConsumed: 1320 },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 32,
+        powerConsumed: 128,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 72,
+        powerConsumed: 1080,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 24,
+        powerConsumed: 1320,
+      },
     },
-    totalPower: 1768,
     dependencies: {
       requests: {
-        3685: [{ requestingFactoryId: 3685, part: 'Silica', amount: 3300 }],
-        4555: [{ requestingFactoryId: 4555, part: 'Silica', amount: 200 }],
-        5623: [{ requestingFactoryId: 5623, part: 'CrystalOscillator', amount: 4 }],
-        9960: [{ requestingFactoryId: 9960, part: 'CrystalOscillator', amount: 20 }, {
-          requestingFactoryId: 9960,
-          part: 'QuartzCrystal',
-          amount: 144,
-        }],
+        3685: [
+          {
+            requestingFactoryId: 3685,
+            part: 'Silica',
+            amount: 3300,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'Silica',
+            amount: 200,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'CrystalOscillator',
+            amount: 4,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'CrystalOscillator',
+            amount: 20,
+          },
+          {
+            requestingFactoryId: 9960,
+            part: 'QuartzCrystal',
+            amount: 144,
+          },
+        ],
       },
       metrics: {
-        Silica: { part: 'Silica', request: 3500, supply: 3780, isRequestSatisfied: true, difference: 280 },
+        Silica: {
+          part: 'Silica',
+          request: 3500,
+          supply: 3780,
+          isRequestSatisfied: true,
+          difference: 280,
+        },
         CrystalOscillator: {
           part: 'CrystalOscillator',
           request: 24,
@@ -1359,22 +2520,63 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 0,
         },
-        QuartzCrystal: { part: 'QuartzCrystal', request: 144, supply: 720, isRequestSatisfied: true, difference: 576 },
+        QuartzCrystal: {
+          part: 'QuartzCrystal',
+          request: 144,
+          supply: 720,
+          isRequestSatisfied: true,
+          difference: 576,
+        },
       },
     },
     exportCalculator: {
-      Silica: { selected: null, factorySettings: {} },
-      CrystalOscillator: { selected: null, factorySettings: {} },
-      QuartzCrystal: { selected: null, factorySettings: {} },
+      Silica: {
+        selected: null,
+        factorySettings: {},
+      },
+      CrystalOscillator: {
+        selected: null,
+        factorySettings: {},
+      },
+      QuartzCrystal: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      RawQuartz: { id: 'RawQuartz', name: 'Raw Quartz', amount: 2820 },
-      Stone: { id: 'Stone', name: 'Limestone', amount: 2700 },
+      RawQuartz: {
+        id: 'RawQuartz',
+        name: 'Raw Quartz',
+        amount: 2820,
+      },
+      Stone: {
+        id: 'Stone',
+        name: 'Limestone',
+        amount: 2700,
+      },
     },
     exports: {
-      CrystalOscillator: { productId: 'CrystalOscillator', surplus: 0, demands: 24, supply: 24, displayOrder: 2 },
-      Silica: { productId: 'Silica', surplus: 100, demands: 2900, supply: 3000, displayOrder: 1 },
-      QuartzCrystal: { productId: 'QuartzCrystal', surplus: 144, demands: 144, supply: 720, displayOrder: 0 },
+      CrystalOscillator: {
+        productId: 'CrystalOscillator',
+        surplus: 0,
+        demands: 24,
+        supply: 24,
+        displayOrder: 2,
+      },
+      Silica: {
+        productId: 'Silica',
+        surplus: 100,
+        demands: 2900,
+        supply: 3000,
+        displayOrder: 1,
+      },
+      QuartzCrystal: {
+        productId: 'QuartzCrystal',
+        surplus: 144,
+        demands: 144,
+        supply: 720,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -1386,36 +2588,72 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 2528, produced: 0, difference: -2528 },
-    previousInputs: [{ factoryId: 7110, outputPart: 'Cable', amount: 336 }, {
-      factoryId: 422,
-      outputPart: 'IronPlateReinforced',
-      amount: 60,
-    }],
+    power: {
+      consumed: 2528,
+      produced: 0,
+      difference: -2528,
+    },
+    previousInputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 336,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 60,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 2657,
     name: 'Rods & Screws MegaFac',
-    products: [{
-      id: 'IronRod',
-      amount: 570,
-      recipe: 'IronRod',
-      displayOrder: 0,
-      requirements: { IronIngot: { amount: 570 } },
-      buildingRequirements: { name: 'constructormk1', amount: 38, powerConsumed: 152 },
-      byProducts: [],
-    }, {
-      id: 'IronScrew',
-      amount: 2000,
-      recipe: 'Alternate_Screw',
-      displayOrder: 1,
-      requirements: { IronIngot: { amount: 500 } },
-      buildingRequirements: { name: 'constructormk1', amount: 40, powerConsumed: 160 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'IronRod',
+        amount: 570,
+        recipe: 'IronRod',
+        displayOrder: 0,
+        requirements: {
+          IronIngot: {
+            amount: 570,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 38,
+          powerConsumed: 152,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'IronScrew',
+        amount: 2000,
+        recipe: 'Alternate_Screw',
+        displayOrder: 1,
+        requirements: {
+          IronIngot: {
+            amount: 500,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 40,
+          powerConsumed: 160,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { IronIngot: { id: 'IronIngot', amount: 1920 } },
-    inputs: [{ factoryId: 8489, outputPart: 'IronIngot', amount: 1070 }],
+    inputs: [
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 1070,
+      },
+    ],
     parts: {
       IronRod: {
         amountRequired: 504,
@@ -1460,26 +2698,59 @@ export const createMaelsBigBoiPlan = () => {
         exportable: true,
       },
     },
-    buildingRequirements: { constructormk1: { name: 'constructormk1', amount: 78, powerConsumed: 312 } },
+    buildingRequirements: {
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 78,
+        powerConsumed: 312,
+      },
+    },
     requirementsSatisfied: true,
-    totalPower: 768,
     dependencies: {
       requests: {
-        5750: [{
-          requestingFactoryId: 5750,
-          part: 'IronRod',
-          amount: 504,
-        }, { requestingFactoryId: 5750, part: 'IronScrew', amount: 1680 }],
+        5750: [
+          {
+            requestingFactoryId: 5750,
+            part: 'IronRod',
+            amount: 504,
+          },
+          {
+            requestingFactoryId: 5750,
+            part: 'IronScrew',
+            amount: 1680,
+          },
+        ],
       },
       metrics: {
-        IronRod: { part: 'IronRod', request: 504, supply: 570, isRequestSatisfied: true, difference: 66 },
-        IronScrew: { part: 'IronScrew', request: 1680, supply: 2000, isRequestSatisfied: true, difference: 320 },
+        IronRod: {
+          part: 'IronRod',
+          request: 504,
+          supply: 570,
+          isRequestSatisfied: true,
+          difference: 66,
+        },
+        IronScrew: {
+          part: 'IronScrew',
+          request: 1680,
+          supply: 2000,
+          isRequestSatisfied: true,
+          difference: 320,
+        },
       },
     },
     exportCalculator: {
-      IronIngot: { selected: null, factorySettings: {} },
-      IronRod: { selected: null, factorySettings: {} },
-      IronScrew: { selected: null, factorySettings: {} },
+      IronIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      IronRod: {
+        selected: null,
+        factorySettings: {},
+      },
+      IronScrew: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     usingRawResourcesOnly: false,
@@ -1488,53 +2759,134 @@ export const createMaelsBigBoiPlan = () => {
     hasProblem: false,
     displayOrder: 9,
     exports: {
-      IronScrew: { productId: 'IronScrew', surplus: 1640, demands: 1560, supply: 3200, displayOrder: 2 },
-      IronRod: { productId: 'IronRod', surplus: 456, demands: 504, supply: 960, displayOrder: 1 },
-      IronIngot: { productId: 'IronIngot', surplus: 160, demands: 0, supply: 1920, displayOrder: 0 },
+      IronScrew: {
+        productId: 'IronScrew',
+        surplus: 1640,
+        demands: 1560,
+        supply: 3200,
+        displayOrder: 2,
+      },
+      IronRod: {
+        productId: 'IronRod',
+        surplus: 456,
+        demands: 504,
+        supply: 960,
+        displayOrder: 1,
+      },
+      IronIngot: {
+        productId: 'IronIngot',
+        surplus: 160,
+        demands: 0,
+        supply: 1920,
+        displayOrder: 0,
+      },
     },
     inSync: true,
-    syncState: { IronRod: { amount: 570, recipe: 'IronRod' }, IronScrew: { amount: 2000, recipe: 'Alternate_Screw' } },
+    syncState: {
+      IronRod: {
+        amount: 570,
+        recipe: 'IronRod',
+      },
+      IronScrew: {
+        amount: 2000,
+        recipe: 'Alternate_Screw',
+      },
+    },
     tasks: [],
     notes: 'Bandwidth issues with screws, requires mk6 to be fully efficient on the output side near sinks. \nScrews have 20 machines power "tower". 2x towers.\nCurrently caps at 1560 due to mk5 bandwidth limits.\nDesign modified: 40 screws per "tower". Top layer severed, 2nd top layer half severed from iron inputs.\n',
     powerProducers: [],
-    power: { consumed: 312, produced: 0, difference: -312 },
-    previousInputs: [{ factoryId: 8489, outputPart: 'IronIngot', amount: 1070 }],
+    power: {
+      consumed: 312,
+      produced: 0,
+      difference: -312,
+    },
+    previousInputs: [
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 1070,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 6471,
     name: 'Steel MegaFac',
-    products: [{
-      id: 'SteelIngot',
-      amount: 3240,
-      recipe: 'Alternate_IngotSteel_1',
-      displayOrder: 0,
-      requirements: { IronIngot: { amount: 2160 }, Coal: { amount: 2160 } },
-      buildingRequirements: { name: 'foundrymk1', amount: 54, powerConsumed: 864 },
-      byProducts: [],
-    }, {
-      id: 'SteelPipe',
-      amount: 1200,
-      recipe: 'Alternate_SteelPipe_Molded',
-      displayOrder: 1,
-      requirements: { SteelIngot: { amount: 1200 }, Cement: { amount: 720 } },
-      buildingRequirements: { name: 'foundrymk1', amount: 24, powerConsumed: 384 },
-      byProducts: [],
-    }, {
-      id: 'SteelPlate',
-      amount: 720,
-      recipe: 'Alternate_SteelBeam_Molded',
-      displayOrder: 2,
-      requirements: { SteelIngot: { amount: 1920 }, Cement: { amount: 1280 } },
-      buildingRequirements: { name: 'foundrymk1', amount: 16, powerConsumed: 256 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'SteelIngot',
+        amount: 3240,
+        recipe: 'Alternate_IngotSteel_1',
+        displayOrder: 0,
+        requirements: {
+          IronIngot: {
+            amount: 2160,
+          },
+          Coal: {
+            amount: 2160,
+          },
+        },
+        buildingRequirements: {
+          name: 'foundrymk1',
+          amount: 54,
+          powerConsumed: 864,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SteelPipe',
+        amount: 1200,
+        recipe: 'Alternate_SteelPipe_Molded',
+        displayOrder: 1,
+        requirements: {
+          SteelIngot: {
+            amount: 1200,
+          },
+          Cement: {
+            amount: 720,
+          },
+        },
+        buildingRequirements: {
+          name: 'foundrymk1',
+          amount: 24,
+          powerConsumed: 384,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SteelPlate',
+        amount: 720,
+        recipe: 'Alternate_SteelBeam_Molded',
+        displayOrder: 2,
+        requirements: {
+          SteelIngot: {
+            amount: 1920,
+          },
+          Cement: {
+            amount: 1280,
+          },
+        },
+        buildingRequirements: {
+          name: 'foundrymk1',
+          amount: 16,
+          powerConsumed: 256,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { SteelIngot: { id: 'SteelIngot', amount: 5400 } },
-    inputs: [{ factoryId: 8464, outputPart: 'Cement', amount: 2000 }, {
-      factoryId: 8489,
-      outputPart: 'IronIngot',
-      amount: 2160,
-    }],
+    inputs: [
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 2000,
+      },
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 2160,
+      },
+    ],
     parts: {
       SteelIngot: {
         amountRequired: 3120,
@@ -1621,91 +2973,247 @@ export const createMaelsBigBoiPlan = () => {
         exportable: true,
       },
     },
-    buildingRequirements: { foundrymk1: { name: 'foundrymk1', amount: 94, powerConsumed: 1504 } },
+    buildingRequirements: {
+      foundrymk1: {
+        name: 'foundrymk1',
+        amount: 94,
+        powerConsumed: 1504,
+      },
+    },
     requirementsSatisfied: true,
-    totalPower: 2416,
     dependencies: {
       requests: {
-        2959: [{ requestingFactoryId: 2959, part: 'SteelPlate', amount: 432 }],
-        4042: [{ requestingFactoryId: 4042, part: 'SteelPipe', amount: 60 }],
-        4295: [{ requestingFactoryId: 4295, part: 'SteelPlate', amount: 90 }],
-        4341: [{ requestingFactoryId: 4341, part: 'SteelPipe', amount: 20 }],
-        4555: [{ requestingFactoryId: 4555, part: 'SteelPlate', amount: 36 }],
-        5750: [{ requestingFactoryId: 5750, part: 'SteelPipe', amount: 280 }],
-        6620: [{ requestingFactoryId: 6620, part: 'SteelPipe', amount: 810 }],
+        2959: [
+          {
+            requestingFactoryId: 2959,
+            part: 'SteelPlate',
+            amount: 432,
+          },
+        ],
+        4042: [
+          {
+            requestingFactoryId: 4042,
+            part: 'SteelPipe',
+            amount: 60,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'SteelPlate',
+            amount: 90,
+          },
+        ],
+        4341: [
+          {
+            requestingFactoryId: 4341,
+            part: 'SteelPipe',
+            amount: 20,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'SteelPlate',
+            amount: 36,
+          },
+        ],
+        5750: [
+          {
+            requestingFactoryId: 5750,
+            part: 'SteelPipe',
+            amount: 280,
+          },
+        ],
+        6620: [
+          {
+            requestingFactoryId: 6620,
+            part: 'SteelPipe',
+            amount: 810,
+          },
+        ],
       },
       metrics: {
-        SteelPlate: { part: 'SteelPlate', request: 558, supply: 720, isRequestSatisfied: true, difference: 162 },
-        SteelPipe: { part: 'SteelPipe', request: 1170, supply: 1200, isRequestSatisfied: true, difference: 30 },
+        SteelPlate: {
+          part: 'SteelPlate',
+          request: 558,
+          supply: 720,
+          isRequestSatisfied: true,
+          difference: 162,
+        },
+        SteelPipe: {
+          part: 'SteelPipe',
+          request: 1170,
+          supply: 1200,
+          isRequestSatisfied: true,
+          difference: 30,
+        },
       },
     },
     exportCalculator: {
-      SteelIngot: { selected: null, factorySettings: {} },
-      SteelPipe: { selected: null, factorySettings: {} },
-      SteelPlate: { selected: null, factorySettings: {} },
+      SteelIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      SteelPipe: {
+        selected: null,
+        factorySettings: {},
+      },
+      SteelPlate: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { Coal: { id: 'Coal', name: 'Coal', amount: 2160 } },
+    rawResources: {
+      Coal: {
+        id: 'Coal',
+        name: 'Coal',
+        amount: 2160,
+      },
+    },
     usingRawResourcesOnly: false,
     surplus: {},
     hidden: true,
     hasProblem: false,
     displayOrder: 10,
     exports: {
-      SteelPlate: { productId: 'SteelPlate', surplus: 9, demands: 531, supply: 540, displayOrder: 2 },
-      SteelPipe: { productId: 'SteelPipe', surplus: 154, demands: 1606, supply: 1760, displayOrder: 1 },
-      SteelIngot: { productId: 'SteelIngot', surplus: 600, demands: 0, supply: 5400, displayOrder: 0 },
+      SteelPlate: {
+        productId: 'SteelPlate',
+        surplus: 9,
+        demands: 531,
+        supply: 540,
+        displayOrder: 2,
+      },
+      SteelPipe: {
+        productId: 'SteelPipe',
+        surplus: 154,
+        demands: 1606,
+        supply: 1760,
+        displayOrder: 1,
+      },
+      SteelIngot: {
+        productId: 'SteelIngot',
+        surplus: 600,
+        demands: 0,
+        supply: 5400,
+        displayOrder: 0,
+      },
     },
     inSync: false,
     syncState: {
-      SteelIngot: { amount: 2160, recipe: 'IngotSteel' },
-      SteelPipe: { amount: 640, recipe: 'SteelPipe' },
-      SteelPlate: { amount: 240, recipe: 'SteelBeam' },
+      SteelIngot: {
+        amount: 2160,
+        recipe: 'IngotSteel',
+      },
+      SteelPipe: {
+        amount: 640,
+        recipe: 'SteelPipe',
+      },
+      SteelPlate: {
+        amount: 240,
+        recipe: 'SteelBeam',
+      },
     },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 1504, produced: 0, difference: -1504 },
-    previousInputs: [{ factoryId: 8464, outputPart: 'Cement', amount: 2000 }, {
-      factoryId: 8489,
-      outputPart: 'IronIngot',
-      amount: 2160,
-    }],
+    power: {
+      consumed: 1504,
+      produced: 0,
+      difference: -1504,
+    },
+    previousInputs: [
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 2000,
+      },
+      {
+        factoryId: 8489,
+        outputPart: 'IronIngot',
+        amount: 2160,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 6620,
     name: 'Motors MegaFac',
-    products: [{
-      id: 'Stator',
-      amount: 210,
-      recipe: 'Stator',
-      displayOrder: 0,
-      requirements: { SteelPipe: { amount: 630 }, Wire: { amount: 1680 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 42, powerConsumed: 630 },
-      byProducts: [],
-    }, {
-      id: 'Rotor',
-      amount: 90,
-      recipe: 'Alternate_Rotor',
-      displayOrder: 1,
-      requirements: { SteelPipe: { amount: 180 }, Wire: { amount: 540 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 18, powerConsumed: 270 },
-      byProducts: [],
-    }, {
-      id: 'Motor',
-      amount: 30,
-      recipe: 'Motor',
-      displayOrder: 2,
-      requirements: { Rotor: { amount: 60 }, Stator: { amount: 60 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 6, powerConsumed: 90 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'Stator',
+        amount: 210,
+        recipe: 'Stator',
+        displayOrder: 0,
+        requirements: {
+          SteelPipe: {
+            amount: 630,
+          },
+          Wire: {
+            amount: 1680,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 42,
+          powerConsumed: 630,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Rotor',
+        amount: 90,
+        recipe: 'Alternate_Rotor',
+        displayOrder: 1,
+        requirements: {
+          SteelPipe: {
+            amount: 180,
+          },
+          Wire: {
+            amount: 540,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 18,
+          powerConsumed: 270,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Motor',
+        amount: 30,
+        recipe: 'Motor',
+        displayOrder: 2,
+        requirements: {
+          Rotor: {
+            amount: 60,
+          },
+          Stator: {
+            amount: 60,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 6,
+          powerConsumed: 90,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { Rotor: { id: 'Rotor', amount: 90 }, Stator: { id: 'Stator', amount: 342 } },
-    inputs: [{ factoryId: 6471, outputPart: 'SteelPipe', amount: 810 }, {
-      factoryId: 7110,
-      outputPart: 'Wire',
-      amount: 2220,
-    }],
+    inputs: [
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 810,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 2220,
+      },
+    ],
     parts: {
       Stator: {
         amountRequired: 201,
@@ -1778,34 +3286,108 @@ export const createMaelsBigBoiPlan = () => {
         exportable: true,
       },
     },
-    buildingRequirements: { assemblermk1: { name: 'assemblermk1', amount: 66, powerConsumed: 990 } },
-    totalPower: 1384.467280465501,
+    buildingRequirements: {
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 66,
+        powerConsumed: 990,
+      },
+    },
     dependencies: {
       requests: {
-        2929: [{ requestingFactoryId: 2929, part: 'Stator', amount: 96 }],
-        4295: [{ requestingFactoryId: 4295, part: 'Motor', amount: 10 }, {
-          requestingFactoryId: 4295,
-          part: 'Rotor',
-          amount: 10,
-        }, { requestingFactoryId: 4295, part: 'Stator', amount: 45 }],
-        5623: [{ requestingFactoryId: 5623, part: 'Motor', amount: 8 }],
+        2929: [
+          {
+            requestingFactoryId: 2929,
+            part: 'Stator',
+            amount: 96,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'Motor',
+            amount: 10,
+          },
+          {
+            requestingFactoryId: 4295,
+            part: 'Rotor',
+            amount: 10,
+          },
+          {
+            requestingFactoryId: 4295,
+            part: 'Stator',
+            amount: 45,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'Motor',
+            amount: 8,
+          },
+        ],
       },
       metrics: {
-        Stator: { part: 'Stator', request: 141, supply: 210, isRequestSatisfied: true, difference: 69 },
-        Motor: { part: 'Motor', request: 18, supply: 30, isRequestSatisfied: true, difference: 12 },
-        Rotor: { part: 'Rotor', request: 10, supply: 90, isRequestSatisfied: true, difference: 80 },
+        Stator: {
+          part: 'Stator',
+          request: 141,
+          supply: 210,
+          isRequestSatisfied: true,
+          difference: 69,
+        },
+        Motor: {
+          part: 'Motor',
+          request: 18,
+          supply: 30,
+          isRequestSatisfied: true,
+          difference: 12,
+        },
+        Rotor: {
+          part: 'Rotor',
+          request: 10,
+          supply: 90,
+          isRequestSatisfied: true,
+          difference: 80,
+        },
       },
     },
     exportCalculator: {
-      Stator: { selected: null, factorySettings: {} },
-      Rotor: { selected: null, factorySettings: {} },
-      Motor: { selected: null, factorySettings: {} },
+      Stator: {
+        selected: null,
+        factorySettings: {},
+      },
+      Rotor: {
+        selected: null,
+        factorySettings: {},
+      },
+      Motor: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     exports: {
-      Motor: { productId: 'Motor', surplus: 12, demands: 18, supply: 30, displayOrder: 2 },
-      Rotor: { productId: 'Rotor', surplus: 6, demands: 24, supply: 90, displayOrder: 1 },
-      Stator: { productId: 'Stator', surplus: 0, demands: 282, supply: 342, displayOrder: 0 },
+      Motor: {
+        productId: 'Motor',
+        surplus: 12,
+        demands: 18,
+        supply: 30,
+        displayOrder: 2,
+      },
+      Rotor: {
+        productId: 'Rotor',
+        surplus: 6,
+        demands: 24,
+        supply: 90,
+        displayOrder: 1,
+      },
+      Stator: {
+        productId: 'Stator',
+        surplus: 0,
+        demands: 282,
+        supply: 342,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -1814,39 +3396,79 @@ export const createMaelsBigBoiPlan = () => {
     displayOrder: 11,
     inSync: false,
     syncState: {
-      Stator: { amount: 90, recipe: 'Stator' },
-      Rotor: { amount: 90, recipe: 'Alternate_Rotor' },
-      Motor: { amount: 30, recipe: 'Motor' },
+      Stator: {
+        amount: 90,
+        recipe: 'Stator',
+      },
+      Rotor: {
+        amount: 90,
+        recipe: 'Alternate_Rotor',
+      },
+      Motor: {
+        amount: 30,
+        recipe: 'Motor',
+      },
     },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 990, produced: 0, difference: -990 },
-    previousInputs: [{ factoryId: 6471, outputPart: 'SteelPipe', amount: 810 }, {
-      factoryId: 7110,
-      outputPart: 'Wire',
-      amount: 2220,
-    }],
+    power: {
+      consumed: 990,
+      produced: 0,
+      difference: -990,
+    },
+    previousInputs: [
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 810,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 2220,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 2959,
     name: 'E.I.Bs',
-    products: [{
-      id: 'SteelPlateReinforced',
-      amount: 144,
-      recipe: 'EncasedIndustrialBeam',
-      displayOrder: 0,
-      requirements: { SteelPlate: { amount: 432 }, Cement: { amount: 864 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 24, powerConsumed: 360 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'SteelPlateReinforced',
+        amount: 144,
+        recipe: 'EncasedIndustrialBeam',
+        displayOrder: 0,
+        requirements: {
+          SteelPlate: {
+            amount: 432,
+          },
+          Cement: {
+            amount: 864,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 24,
+          powerConsumed: 360,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {},
-    inputs: [{ factoryId: 6471, outputPart: 'SteelPlate', amount: 432 }, {
-      factoryId: 8464,
-      outputPart: 'Cement',
-      amount: 864,
-    }],
+    inputs: [
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 432,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 864,
+      },
+    ],
     parts: {
       SteelPlateReinforced: {
         amountRequired: 94,
@@ -1891,13 +3513,30 @@ export const createMaelsBigBoiPlan = () => {
         exportable: false,
       },
     },
-    buildingRequirements: { assemblermk1: { name: 'assemblermk1', amount: 24, powerConsumed: 360 } },
+    buildingRequirements: {
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 24,
+        powerConsumed: 360,
+      },
+    },
     requirementsSatisfied: true,
-    totalPower: 311.7874361380101,
     dependencies: {
       requests: {
-        2929: [{ requestingFactoryId: 2929, part: 'SteelPlateReinforced', amount: 24 }],
-        5750: [{ requestingFactoryId: 5750, part: 'SteelPlateReinforced', amount: 70 }],
+        2929: [
+          {
+            requestingFactoryId: 2929,
+            part: 'SteelPlateReinforced',
+            amount: 24,
+          },
+        ],
+        5750: [
+          {
+            requestingFactoryId: 5750,
+            part: 'SteelPlateReinforced',
+            amount: 70,
+          },
+        ],
       },
       metrics: {
         SteelPlateReinforced: {
@@ -1909,7 +3548,12 @@ export const createMaelsBigBoiPlan = () => {
         },
       },
     },
-    exportCalculator: { SteelPlateReinforced: { selected: null, factorySettings: {} } },
+    exportCalculator: {
+      SteelPlateReinforced: {
+        selected: null,
+        factorySettings: {},
+      },
+    },
     rawResources: {},
     usingRawResourcesOnly: false,
     surplus: {},
@@ -1926,68 +3570,141 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     inSync: false,
-    syncState: { SteelPlateReinforced: { amount: 72, recipe: 'EncasedIndustrialBeam' } },
+    syncState: {
+      SteelPlateReinforced: {
+        amount: 72,
+        recipe: 'EncasedIndustrialBeam',
+      },
+    },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 360, produced: 0, difference: -360 },
-    previousInputs: [{ factoryId: 6471, outputPart: 'SteelPlate', amount: 432 }, {
-      factoryId: 8464,
-      outputPart: 'Cement',
-      amount: 864,
-    }],
+    power: {
+      consumed: 360,
+      produced: 0,
+      difference: -360,
+    },
+    previousInputs: [
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 432,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 864,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 5750,
     name: 'Frames MegaFac',
-    products: [{
-      id: 'ModularFrame',
-      amount: 84,
-      recipe: 'ModularFrame',
-      displayOrder: 0,
-      requirements: { IronPlateReinforced: { amount: 126 }, IronRod: { amount: 504 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 42, powerConsumed: 630 },
-      byProducts: [],
-    }, {
-      id: 'ModularFrameHeavy',
-      amount: 14,
-      recipe: 'ModularFrameHeavy',
-      displayOrder: 1,
-      requirements: {
-        ModularFrame: { amount: 70 },
-        SteelPipe: { amount: 280 },
-        SteelPlateReinforced: { amount: 70 },
-        IronScrew: { amount: 1680 },
+    products: [
+      {
+        id: 'ModularFrame',
+        amount: 84,
+        recipe: 'ModularFrame',
+        displayOrder: 0,
+        requirements: {
+          IronPlateReinforced: {
+            amount: 126,
+          },
+          IronRod: {
+            amount: 504,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 42,
+          powerConsumed: 630,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 7, powerConsumed: 385 },
-      byProducts: [],
-    }, {
-      id: 'ModularFrameFused',
-      amount: 4.5,
-      recipe: 'FusedModularFrame',
-      displayOrder: 2,
-      requirements: { ModularFrameHeavy: { amount: 4.5 }, AluminumCasing: { amount: 225 }, NitrogenGas: { amount: 112.5 } },
-      buildingRequirements: { name: 'blender', amount: 3, powerConsumed: 225 },
-      byProducts: [],
-    }],
+      {
+        id: 'ModularFrameHeavy',
+        amount: 14,
+        recipe: 'ModularFrameHeavy',
+        displayOrder: 1,
+        requirements: {
+          ModularFrame: {
+            amount: 70,
+          },
+          SteelPipe: {
+            amount: 280,
+          },
+          SteelPlateReinforced: {
+            amount: 70,
+          },
+          IronScrew: {
+            amount: 1680,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 7,
+          powerConsumed: 385,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'ModularFrameFused',
+        amount: 4.5,
+        recipe: 'FusedModularFrame',
+        displayOrder: 2,
+        requirements: {
+          ModularFrameHeavy: {
+            amount: 4.5,
+          },
+          AluminumCasing: {
+            amount: 225,
+          },
+          NitrogenGas: {
+            amount: 112.5,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 3,
+          powerConsumed: 225,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {
-      ModularFrame: { id: 'ModularFrame', amount: 84 },
-      ModularFrameHeavy: { id: 'ModularFrameHeavy', amount: 13 },
-    },
-    inputs: [{ factoryId: 2657, outputPart: 'IronRod', amount: 504 }, {
-      factoryId: 2657,
-      outputPart: 'IronScrew',
-      amount: 1680,
-    }, { factoryId: 6471, outputPart: 'SteelPipe', amount: 280 }, {
-      factoryId: 2959,
-      outputPart: 'SteelPlateReinforced',
-      amount: 70,
-    }, { factoryId: 3685, outputPart: 'AluminumCasing', amount: 225 }, {
-      factoryId: 422,
-      outputPart: 'IronPlateReinforced',
-      amount: 126,
-    }],
+    inputs: [
+      {
+        factoryId: 2657,
+        outputPart: 'IronRod',
+        amount: 504,
+      },
+      {
+        factoryId: 2657,
+        outputPart: 'IronScrew',
+        amount: 1680,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 280,
+      },
+      {
+        factoryId: 2959,
+        outputPart: 'SteelPlateReinforced',
+        amount: 70,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 225,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 126,
+      },
+    ],
     parts: {
       ModularFrame: {
         amountRequired: 77.5,
@@ -2131,21 +3848,51 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 42, powerConsumed: 630 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 7, powerConsumed: 385 },
-      blender: { name: 'blender', amount: 3, powerConsumed: 225 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 42,
+        powerConsumed: 630,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 7,
+        powerConsumed: 385,
+      },
+      blender: {
+        name: 'blender',
+        amount: 3,
+        powerConsumed: 225,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 1175.881484558895,
     dependencies: {
       requests: {
-        3911: [{ requestingFactoryId: 3911, part: 'ModularFrameFused', amount: 2 }],
-        4295: [{ requestingFactoryId: 4295, part: 'ModularFrameHeavy', amount: 9 }, {
-          requestingFactoryId: 4295,
-          part: 'ModularFrame',
-          amount: 7.5,
-        }],
-        5623: [{ requestingFactoryId: 5623, part: 'ModularFrameFused', amount: 2 }],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'ModularFrameFused',
+            amount: 2,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'ModularFrameHeavy',
+            amount: 9,
+          },
+          {
+            requestingFactoryId: 4295,
+            part: 'ModularFrame',
+            amount: 7.5,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'ModularFrameFused',
+            amount: 2,
+          },
+        ],
       },
       metrics: {
         ModularFrameFused: {
@@ -2155,115 +3902,268 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 0.5,
         },
-        ModularFrameHeavy: { part: 'ModularFrameHeavy', request: 9, supply: 14, isRequestSatisfied: true, difference: 5 },
-        ModularFrame: { part: 'ModularFrame', request: 7.5, supply: 84, isRequestSatisfied: true, difference: 76.5 },
+        ModularFrameHeavy: {
+          part: 'ModularFrameHeavy',
+          request: 9,
+          supply: 14,
+          isRequestSatisfied: true,
+          difference: 5,
+        },
+        ModularFrame: {
+          part: 'ModularFrame',
+          request: 7.5,
+          supply: 84,
+          isRequestSatisfied: true,
+          difference: 76.5,
+        },
       },
     },
     exportCalculator: {
-      SpaceElevatorPart_4: { selected: null, factorySettings: {} },
-      ModularFrame: { selected: null, factorySettings: {} },
-      ModularFrameHeavy: { selected: null, factorySettings: {} },
-      ModularFrameFused: { selected: null, factorySettings: {} },
+      SpaceElevatorPart_4: {
+        selected: null,
+        factorySettings: {},
+      },
+      ModularFrame: {
+        selected: null,
+        factorySettings: {},
+      },
+      ModularFrameHeavy: {
+        selected: null,
+        factorySettings: {},
+      },
+      ModularFrameFused: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { NitrogenGas: { id: 'NitrogenGas', name: 'Nitrogen Gas', amount: 112.5 } },
+    rawResources: {
+      NitrogenGas: {
+        id: 'NitrogenGas',
+        name: 'Nitrogen Gas',
+        amount: 112.5,
+      },
+    },
     usingRawResourcesOnly: false,
     surplus: {},
     hidden: true,
     hasProblem: false,
     displayOrder: 13,
     exports: {
-      ModularFrameFused: { productId: 'ModularFrameFused', surplus: 0, demands: 4, supply: 4, displayOrder: 2 },
-      ModularFrameHeavy: { productId: 'ModularFrameHeavy', surplus: 0, demands: 9, supply: 13, displayOrder: 1 },
-      ModularFrame: { productId: 'ModularFrame', surplus: 9, demands: 10, supply: 84, displayOrder: 0 },
+      ModularFrameFused: {
+        productId: 'ModularFrameFused',
+        surplus: 0,
+        demands: 4,
+        supply: 4,
+        displayOrder: 2,
+      },
+      ModularFrameHeavy: {
+        productId: 'ModularFrameHeavy',
+        surplus: 0,
+        demands: 9,
+        supply: 13,
+        displayOrder: 1,
+      },
+      ModularFrame: {
+        productId: 'ModularFrame',
+        surplus: 9,
+        demands: 10,
+        supply: 84,
+        displayOrder: 0,
+      },
     },
     inSync: false,
     syncState: {
-      ModularFrame: { amount: 48, recipe: 'ModularFrame' },
-      ModularFrameHeavy: { amount: 8, recipe: 'ModularFrameHeavy' },
+      ModularFrame: {
+        amount: 48,
+        recipe: 'ModularFrame',
+      },
+      ModularFrameHeavy: {
+        amount: 8,
+        recipe: 'ModularFrameHeavy',
+      },
     },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 1240, produced: 0, difference: -1240 },
-    previousInputs: [{ factoryId: 2657, outputPart: 'IronRod', amount: 504 }, {
-      factoryId: 2657,
-      outputPart: 'IronScrew',
-      amount: 1680,
-    }, { factoryId: 6471, outputPart: 'SteelPipe', amount: 280 }, {
-      factoryId: 2959,
-      outputPart: 'SteelPlateReinforced',
-      amount: 70,
-    }, { factoryId: 3685, outputPart: 'AluminumCasing', amount: 225 }, {
-      factoryId: 422,
-      outputPart: 'IronPlateReinforced',
-      amount: 126,
-    }],
+    power: {
+      consumed: 1240,
+      produced: 0,
+      difference: -1240,
+    },
+    previousInputs: [
+      {
+        factoryId: 2657,
+        outputPart: 'IronRod',
+        amount: 504,
+      },
+      {
+        factoryId: 2657,
+        outputPart: 'IronScrew',
+        amount: 1680,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 280,
+      },
+      {
+        factoryId: 2959,
+        outputPart: 'SteelPlateReinforced',
+        amount: 70,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 225,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 126,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 5706,
     name: 'Electronics',
-    products: [{
-      id: 'CircuitBoard',
-      amount: 390,
-      recipe: 'CircuitBoard',
-      displayOrder: 0,
-      requirements: { CopperSheet: { amount: 780 }, Plastic: { amount: 1560 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 52, powerConsumed: 780 },
-      byProducts: [],
-    }, {
-      id: 'CircuitBoardHighSpeed',
-      amount: 90,
-      recipe: 'AILimiter',
-      displayOrder: 1,
-      requirements: { CopperSheet: { amount: 450 }, HighSpeedWire: { amount: 1800 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 18, powerConsumed: 270 },
-      byProducts: [],
-    }, {
-      id: 'HighSpeedConnector',
-      amount: 25.5,
-      recipe: 'HighSpeedConnector',
-      displayOrder: 2,
-      requirements: { HighSpeedWire: { amount: 1428 }, Cable: { amount: 255 }, CircuitBoard: { amount: 25.5 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 6.8, powerConsumed: 370.95006824043503 },
-      byProducts: [],
-    }, {
-      id: 'Computer',
-      amount: 60,
-      recipe: 'Computer',
-      displayOrder: 3,
-      requirements: { CircuitBoard: { amount: 240 }, Cable: { amount: 480 }, Plastic: { amount: 960 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 24, powerConsumed: 1320 },
-      byProducts: [],
-    }, {
-      id: 'ComputerSuper',
-      amount: 8.5,
-      recipe: 'ComputerSuper',
-      displayOrder: 4,
-      requirements: {
-        Computer: { amount: 34 },
-        CircuitBoardHighSpeed: { amount: 17 },
-        HighSpeedConnector: { amount: 25.5 },
-        Plastic: { amount: 238 },
+    products: [
+      {
+        id: 'CircuitBoard',
+        amount: 390,
+        recipe: 'CircuitBoard',
+        displayOrder: 0,
+        requirements: {
+          CopperSheet: {
+            amount: 780,
+          },
+          Plastic: {
+            amount: 1560,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 52,
+          powerConsumed: 780,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 4.533333333333333, powerConsumed: 243.95932970566975 },
-      byProducts: [],
-    }],
+      {
+        id: 'CircuitBoardHighSpeed',
+        amount: 90,
+        recipe: 'AILimiter',
+        displayOrder: 1,
+        requirements: {
+          CopperSheet: {
+            amount: 450,
+          },
+          HighSpeedWire: {
+            amount: 1800,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 18,
+          powerConsumed: 270,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'HighSpeedConnector',
+        amount: 25.5,
+        recipe: 'HighSpeedConnector',
+        displayOrder: 2,
+        requirements: {
+          HighSpeedWire: {
+            amount: 1428,
+          },
+          Cable: {
+            amount: 255,
+          },
+          CircuitBoard: {
+            amount: 25.5,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 6.8,
+          powerConsumed: 370.95006824043503,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'Computer',
+        amount: 60,
+        recipe: 'Computer',
+        displayOrder: 3,
+        requirements: {
+          CircuitBoard: {
+            amount: 240,
+          },
+          Cable: {
+            amount: 480,
+          },
+          Plastic: {
+            amount: 960,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 24,
+          powerConsumed: 1320,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'ComputerSuper',
+        amount: 8.5,
+        recipe: 'ComputerSuper',
+        displayOrder: 4,
+        requirements: {
+          Computer: {
+            amount: 34,
+          },
+          CircuitBoardHighSpeed: {
+            amount: 17,
+          },
+          HighSpeedConnector: {
+            amount: 25.5,
+          },
+          Plastic: {
+            amount: 238,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 4.533333333333333,
+          powerConsumed: 243.95932970566975,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {
-      CircuitBoard: { id: 'CircuitBoard', amount: 480 },
-      Computer: { id: 'Computer', amount: 75 },
-      CircuitBoardHighSpeed: { id: 'CircuitBoardHighSpeed', amount: 210 },
-      HighSpeedConnector: { id: 'HighSpeedConnector', amount: 25.5 },
-    },
-    inputs: [{ factoryId: 7110, outputPart: 'CopperSheet', amount: 1230 }, {
-      factoryId: 7110,
-      outputPart: 'Cable',
-      amount: 735,
-    }, { factoryId: 1023, outputPart: 'Plastic', amount: 2758 }, {
-      factoryId: 2533,
-      outputPart: 'HighSpeedWire',
-      amount: 3228,
-    }],
+    inputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 1230,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 735,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Plastic',
+        amount: 2758,
+      },
+      {
+        factoryId: 2533,
+        outputPart: 'HighSpeedWire',
+        amount: 3228,
+      },
+    ],
     parts: {
       CircuitBoard: {
         amountRequired: 310.5,
@@ -2393,22 +4293,60 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 70, powerConsumed: 1050 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 36, powerConsumed: 1934.909 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 70,
+        powerConsumed: 1050,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 36,
+        powerConsumed: 1934.909,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 3854.909397946105,
     dependencies: {
       requests: {
-        2929: [{ requestingFactoryId: 2929, part: 'CircuitBoardHighSpeed', amount: 64 }],
-        3911: [{ requestingFactoryId: 3911, part: 'ComputerSuper', amount: 4.5 }],
-        4295: [{ requestingFactoryId: 4295, part: 'Computer', amount: 18 }, {
-          requestingFactoryId: 4295,
-          part: 'CircuitBoard',
-          amount: 45,
-        }],
-        5623: [{ requestingFactoryId: 5623, part: 'Computer', amount: 8 }],
-        9960: [{ requestingFactoryId: 9960, part: 'ComputerSuper', amount: 4 }],
+        2929: [
+          {
+            requestingFactoryId: 2929,
+            part: 'CircuitBoardHighSpeed',
+            amount: 64,
+          },
+        ],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'ComputerSuper',
+            amount: 4.5,
+          },
+        ],
+        4295: [
+          {
+            requestingFactoryId: 4295,
+            part: 'Computer',
+            amount: 18,
+          },
+          {
+            requestingFactoryId: 4295,
+            part: 'CircuitBoard',
+            amount: 45,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'Computer',
+            amount: 8,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'ComputerSuper',
+            amount: 4,
+          },
+        ],
       },
       metrics: {
         CircuitBoardHighSpeed: {
@@ -2418,36 +4356,111 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 26,
         },
-        ComputerSuper: { part: 'ComputerSuper', request: 8.5, supply: 8.5, isRequestSatisfied: true, difference: 0 },
-        Computer: { part: 'Computer', request: 26, supply: 60, isRequestSatisfied: true, difference: 34 },
-        CircuitBoard: { part: 'CircuitBoard', request: 45, supply: 390, isRequestSatisfied: true, difference: 345 },
+        ComputerSuper: {
+          part: 'ComputerSuper',
+          request: 8.5,
+          supply: 8.5,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
+        Computer: {
+          part: 'Computer',
+          request: 26,
+          supply: 60,
+          isRequestSatisfied: true,
+          difference: 34,
+        },
+        CircuitBoard: {
+          part: 'CircuitBoard',
+          request: 45,
+          supply: 390,
+          isRequestSatisfied: true,
+          difference: 345,
+        },
       },
     },
     exportCalculator: {
-      Computer: { selected: null, factorySettings: {} },
-      CircuitBoard: { selected: null, factorySettings: {} },
-      ComputerSuper: { selected: null, factorySettings: {} },
+      Computer: {
+        selected: null,
+        factorySettings: {},
+      },
+      CircuitBoard: {
+        selected: null,
+        factorySettings: {},
+      },
+      ComputerSuper: {
+        selected: null,
+        factorySettings: {},
+      },
       SpaceElevatorPart_12: {
         selected: '3911',
-        factorySettings: { 3911: { trainTime: 123 }, 4295: { trainTime: 123 }, 5623: { trainTime: 123 } },
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          4295: {
+            trainTime: 123,
+          },
+          5623: {
+            trainTime: 123,
+          },
+        },
       },
       DarkEnergy: {
         selected: '3911',
-        factorySettings: { 3911: { trainTime: 123 }, 4295: { trainTime: 123 }, 5623: { trainTime: 123 } },
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          4295: {
+            trainTime: 123,
+          },
+          5623: {
+            trainTime: 123,
+          },
+        },
       },
-      CircuitBoardHighSpeed: { selected: null, factorySettings: {} },
-      HighSpeedConnector: { selected: null, factorySettings: {} },
+      CircuitBoardHighSpeed: {
+        selected: null,
+        factorySettings: {},
+      },
+      HighSpeedConnector: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     usingRawResourcesOnly: false,
-    surplus: { Computer: { amount: 20 } },
+    surplus: {
+      Computer: {
+        amount: 20,
+      },
+    },
     hidden: true,
     hasProblem: false,
     displayOrder: 14,
     exports: {
-      ComputerSuper: { productId: 'ComputerSuper', surplus: 0, demands: 8.5, supply: 8.5, displayOrder: 4 },
-      Computer: { productId: 'Computer', surplus: 15, demands: 26, supply: 75, displayOrder: 3 },
-      HighSpeedConnector: { productId: 'HighSpeedConnector', surplus: 0, demands: 0, supply: 25.5, displayOrder: 2 },
+      ComputerSuper: {
+        productId: 'ComputerSuper',
+        surplus: 0,
+        demands: 8.5,
+        supply: 8.5,
+        displayOrder: 4,
+      },
+      Computer: {
+        productId: 'Computer',
+        surplus: 15,
+        demands: 26,
+        supply: 75,
+        displayOrder: 3,
+      },
+      HighSpeedConnector: {
+        productId: 'HighSpeedConnector',
+        surplus: 0,
+        demands: 0,
+        supply: 25.5,
+        displayOrder: 2,
+      },
       CircuitBoardHighSpeed: {
         productId: 'CircuitBoardHighSpeed',
         surplus: 35,
@@ -2455,99 +4468,229 @@ export const createMaelsBigBoiPlan = () => {
         supply: 210,
         displayOrder: 1,
       },
-      CircuitBoard: { productId: 'CircuitBoard', surplus: 109.5, demands: 45, supply: 480, displayOrder: 0 },
+      CircuitBoard: {
+        productId: 'CircuitBoard',
+        surplus: 109.5,
+        demands: 45,
+        supply: 480,
+        displayOrder: 0,
+      },
     },
     inSync: false,
-    syncState: { CircuitBoard: { amount: 90, recipe: 'CircuitBoard' }, Computer: { amount: 15, recipe: 'Computer' } },
+    syncState: {
+      CircuitBoard: {
+        amount: 90,
+        recipe: 'CircuitBoard',
+      },
+      Computer: {
+        amount: 15,
+        recipe: 'Computer',
+      },
+    },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 2984.909, produced: 0, difference: -2984.909 },
-    previousInputs: [{ factoryId: 7110, outputPart: 'CopperSheet', amount: 1230 }, {
-      factoryId: 7110,
-      outputPart: 'Cable',
-      amount: 735,
-    }, { factoryId: 1023, outputPart: 'Plastic', amount: 2758 }, {
-      factoryId: 2533,
-      outputPart: 'HighSpeedWire',
-      amount: 3228,
-    }],
+    power: {
+      consumed: 2984.909,
+      produced: 0,
+      difference: -2984.909,
+    },
+    previousInputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 1230,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 735,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Plastic',
+        amount: 2758,
+      },
+      {
+        factoryId: 2533,
+        outputPart: 'HighSpeedWire',
+        amount: 3228,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 4295,
     name: 'Phase 3',
-    products: [{
-      id: 'SpaceElevatorPart_1',
-      amount: 10,
-      recipe: 'SpaceElevatorPart_1',
-      displayOrder: 0,
-      requirements: { IronPlateReinforced: { amount: 10 }, Rotor: { amount: 10 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 5, powerConsumed: 75 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_3',
-      amount: 45,
-      recipe: 'SpaceElevatorPart_3',
-      displayOrder: 1,
-      requirements: { Stator: { amount: 45 }, Cable: { amount: 900 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 18, powerConsumed: 270 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_4',
-      amount: 5,
-      recipe: 'SpaceElevatorPart_4',
-      displayOrder: 2,
-      requirements: { Motor: { amount: 10 }, Rubber: { amount: 75 }, SpaceElevatorPart_1: { amount: 10 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 5, powerConsumed: 275 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_5',
-      amount: 9,
-      recipe: 'SpaceElevatorPart_5',
-      displayOrder: 3,
-      requirements: {
-        SpaceElevatorPart_3: { amount: 45 },
-        CircuitBoard: { amount: 45 },
-        ModularFrameHeavy: { amount: 9 },
-        Computer: { amount: 18 },
+    products: [
+      {
+        id: 'SpaceElevatorPart_1',
+        amount: 10,
+        recipe: 'SpaceElevatorPart_1',
+        displayOrder: 0,
+        requirements: {
+          IronPlateReinforced: {
+            amount: 10,
+          },
+          Rotor: {
+            amount: 10,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 5,
+          powerConsumed: 75,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 9, powerConsumed: 495 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_2',
-      amount: 15,
-      recipe: 'SpaceElevatorPart_2',
-      displayOrder: 4,
-      requirements: { ModularFrame: { amount: 7.5 }, SteelPlate: { amount: 90 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 3, powerConsumed: 45 },
-      byProducts: [],
-    }],
+      {
+        id: 'SpaceElevatorPart_3',
+        amount: 45,
+        recipe: 'SpaceElevatorPart_3',
+        displayOrder: 1,
+        requirements: {
+          Stator: {
+            amount: 45,
+          },
+          Cable: {
+            amount: 900,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 18,
+          powerConsumed: 270,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SpaceElevatorPart_4',
+        amount: 5,
+        recipe: 'SpaceElevatorPart_4',
+        displayOrder: 2,
+        requirements: {
+          Motor: {
+            amount: 10,
+          },
+          Rubber: {
+            amount: 75,
+          },
+          SpaceElevatorPart_1: {
+            amount: 10,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 5,
+          powerConsumed: 275,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SpaceElevatorPart_5',
+        amount: 9,
+        recipe: 'SpaceElevatorPart_5',
+        displayOrder: 3,
+        requirements: {
+          SpaceElevatorPart_3: {
+            amount: 45,
+          },
+          CircuitBoard: {
+            amount: 45,
+          },
+          ModularFrameHeavy: {
+            amount: 9,
+          },
+          Computer: {
+            amount: 18,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 9,
+          powerConsumed: 495,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SpaceElevatorPart_2',
+        amount: 15,
+        recipe: 'SpaceElevatorPart_2',
+        displayOrder: 4,
+        requirements: {
+          ModularFrame: {
+            amount: 7.5,
+          },
+          SteelPlate: {
+            amount: 90,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 3,
+          powerConsumed: 45,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {
-      SpaceElevatorPart_1: { id: 'SpaceElevatorPart_1', amount: 24 },
-      SpaceElevatorPart_3: { id: 'SpaceElevatorPart_3', amount: 45 },
-    },
-    inputs: [{ factoryId: 6620, outputPart: 'Motor', amount: 10 }, {
-      factoryId: 6620,
-      outputPart: 'Rotor',
-      amount: 10,
-    }, { factoryId: 6620, outputPart: 'Stator', amount: 45 }, {
-      factoryId: 7110,
-      outputPart: 'Cable',
-      amount: 900,
-    }, { factoryId: 1023, outputPart: 'Rubber', amount: 75 }, {
-      factoryId: 5706,
-      outputPart: 'Computer',
-      amount: 18,
-    }, { factoryId: 5706, outputPart: 'CircuitBoard', amount: 45 }, {
-      factoryId: 5750,
-      outputPart: 'ModularFrameHeavy',
-      amount: 9,
-    }, { factoryId: 5750, outputPart: 'ModularFrame', amount: 7.5 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPlate',
-      amount: 90,
-    }, { factoryId: 422, outputPart: 'IronPlateReinforced', amount: 10 }],
+    inputs: [
+      {
+        factoryId: 6620,
+        outputPart: 'Motor',
+        amount: 10,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Rotor',
+        amount: 10,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Stator',
+        amount: 45,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 900,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Rubber',
+        amount: 75,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'Computer',
+        amount: 18,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'CircuitBoard',
+        amount: 45,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameHeavy',
+        amount: 9,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrame',
+        amount: 7.5,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 90,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 10,
+      },
+    ],
     parts: {
       SpaceElevatorPart_1: {
         amountRequired: 10,
@@ -2775,22 +4918,37 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 26, powerConsumed: 390 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 14, powerConsumed: 770 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 26,
+        powerConsumed: 390,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 14,
+        powerConsumed: 770,
+      },
     },
     requirementsSatisfied: true,
-    totalPower: 1280,
     dependencies: {
       requests: {
-        3911: [{
-          requestingFactoryId: 3911,
-          part: 'SpaceElevatorPart_4',
-          amount: 5,
-        }, { requestingFactoryId: 3911, part: 'SpaceElevatorPart_5', amount: 9 }, {
-          requestingFactoryId: 3911,
-          part: 'SpaceElevatorPart_2',
-          amount: 15,
-        }],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'SpaceElevatorPart_4',
+            amount: 5,
+          },
+          {
+            requestingFactoryId: 3911,
+            part: 'SpaceElevatorPart_5',
+            amount: 9,
+          },
+          {
+            requestingFactoryId: 3911,
+            part: 'SpaceElevatorPart_2',
+            amount: 15,
+          },
+        ],
       },
       metrics: {
         SpaceElevatorPart_4: {
@@ -2817,15 +4975,40 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     exportCalculator: {
-      SpaceElevatorPart_4: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_5: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_1: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_2: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_3: { selected: null, factorySettings: {} },
+      SpaceElevatorPart_4: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_5: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_1: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_2: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_3: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     usingRawResourcesOnly: false,
-    surplus: { SpaceElevatorPart_1: { amount: 4 }, SpaceElevatorPart_4: { amount: 10 }, SpaceElevatorPart_5: { amount: 6 } },
+    surplus: {
+      SpaceElevatorPart_1: {
+        amount: 4,
+      },
+      SpaceElevatorPart_4: {
+        amount: 10,
+      },
+      SpaceElevatorPart_5: {
+        amount: 6,
+      },
+    },
     hidden: true,
     hasProblem: false,
     displayOrder: 15,
@@ -2837,79 +5020,196 @@ export const createMaelsBigBoiPlan = () => {
         supply: 20,
         displayOrder: 4,
       },
-      SpaceElevatorPart_5: { productId: 'SpaceElevatorPart_5', surplus: 0, demands: 9, supply: 9, displayOrder: 3 },
-      SpaceElevatorPart_4: { productId: 'SpaceElevatorPart_4', surplus: 0, demands: 5, supply: 5, displayOrder: 2 },
-      SpaceElevatorPart_3: { productId: 'SpaceElevatorPart_3', surplus: 0, demands: 0, supply: 45, displayOrder: 1 },
-      SpaceElevatorPart_1: { productId: 'SpaceElevatorPart_1', surplus: 14, demands: 0, supply: 24, displayOrder: 0 },
+      SpaceElevatorPart_5: {
+        productId: 'SpaceElevatorPart_5',
+        surplus: 0,
+        demands: 9,
+        supply: 9,
+        displayOrder: 3,
+      },
+      SpaceElevatorPart_4: {
+        productId: 'SpaceElevatorPart_4',
+        surplus: 0,
+        demands: 5,
+        supply: 5,
+        displayOrder: 2,
+      },
+      SpaceElevatorPart_3: {
+        productId: 'SpaceElevatorPart_3',
+        surplus: 0,
+        demands: 0,
+        supply: 45,
+        displayOrder: 1,
+      },
+      SpaceElevatorPart_1: {
+        productId: 'SpaceElevatorPart_1',
+        surplus: 14,
+        demands: 0,
+        supply: 24,
+        displayOrder: 0,
+      },
     },
     inSync: false,
     syncState: {
-      SpaceElevatorPart_1: { amount: 24, recipe: 'SpaceElevatorPart_1' },
-      SpaceElevatorPart_3: { amount: 30, recipe: 'SpaceElevatorPart_3' },
-      SpaceElevatorPart_4: { amount: 10, recipe: 'SpaceElevatorPart_4' },
-      SpaceElevatorPart_5: { amount: 6, recipe: 'SpaceElevatorPart_5' },
+      SpaceElevatorPart_1: {
+        amount: 24,
+        recipe: 'SpaceElevatorPart_1',
+      },
+      SpaceElevatorPart_3: {
+        amount: 30,
+        recipe: 'SpaceElevatorPart_3',
+      },
+      SpaceElevatorPart_4: {
+        amount: 10,
+        recipe: 'SpaceElevatorPart_4',
+      },
+      SpaceElevatorPart_5: {
+        amount: 6,
+        recipe: 'SpaceElevatorPart_5',
+      },
     },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 1160, produced: 0, difference: -1160 },
-    previousInputs: [{ factoryId: 6620, outputPart: 'Motor', amount: 10 }, {
-      factoryId: 6620,
-      outputPart: 'Rotor',
-      amount: 10,
-    }, { factoryId: 6620, outputPart: 'Stator', amount: 45 }, {
-      factoryId: 7110,
-      outputPart: 'Cable',
-      amount: 900,
-    }, { factoryId: 1023, outputPart: 'Rubber', amount: 75 }, {
-      factoryId: 5706,
-      outputPart: 'Computer',
-      amount: 18,
-    }, { factoryId: 5706, outputPart: 'CircuitBoard', amount: 45 }, {
-      factoryId: 5750,
-      outputPart: 'ModularFrameHeavy',
-      amount: 9,
-    }, { factoryId: 5750, outputPart: 'ModularFrame', amount: 7.5 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPlate',
-      amount: 90,
-    }, { factoryId: 422, outputPart: 'IronPlateReinforced', amount: 10 }],
+    power: {
+      consumed: 1160,
+      produced: 0,
+      difference: -1160,
+    },
+    previousInputs: [
+      {
+        factoryId: 6620,
+        outputPart: 'Motor',
+        amount: 10,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Rotor',
+        amount: 10,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Stator',
+        amount: 45,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'Cable',
+        amount: 900,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Rubber',
+        amount: 75,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'Computer',
+        amount: 18,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'CircuitBoard',
+        amount: 45,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameHeavy',
+        amount: 9,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrame',
+        amount: 7.5,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 90,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlateReinforced',
+        amount: 10,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 4042,
     name: 'SAM Processing',
-    products: [{
-      id: 'SAMIngot',
-      amount: 1080,
-      recipe: 'IngotSAM',
-      displayOrder: 0,
-      requirements: { SAM: { amount: 4320 } },
-      buildingRequirements: { name: 'constructormk1', amount: 36, powerConsumed: 144 },
-      byProducts: [],
-    }, {
-      id: 'SAMFluctuator',
-      amount: 20,
-      recipe: 'SAMFluctuator',
-      displayOrder: 1,
-      requirements: { SAMIngot: { amount: 120 }, Wire: { amount: 100 }, SteelPipe: { amount: 60 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
-      byProducts: [],
-    }, {
-      id: 'DarkEnergy',
-      amount: 1350,
-      recipe: 'DarkEnergy',
-      displayOrder: 2,
-      requirements: { SAMIngot: { amount: 675 } },
-      buildingRequirements: { name: 'converter', amount: 13.5, powerConsumed: 2680.000005261673 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'SAMIngot',
+        amount: 1080,
+        recipe: 'IngotSAM',
+        displayOrder: 0,
+        requirements: {
+          SAM: {
+            amount: 4320,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 36,
+          powerConsumed: 144,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SAMFluctuator',
+        amount: 20,
+        recipe: 'SAMFluctuator',
+        displayOrder: 1,
+        requirements: {
+          SAMIngot: {
+            amount: 120,
+          },
+          Wire: {
+            amount: 100,
+          },
+          SteelPipe: {
+            amount: 60,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 2,
+          powerConsumed: 110,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'DarkEnergy',
+        amount: 1350,
+        recipe: 'DarkEnergy',
+        displayOrder: 2,
+        requirements: {
+          SAMIngot: {
+            amount: 675,
+          },
+        },
+        buildingRequirements: {
+          name: 'converter',
+          amount: 13.5,
+          powerConsumed: 2680.000005261673,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { SAMIngot: { id: 'SAMIngot', amount: 1440 } },
-    inputs: [{ factoryId: 7110, outputPart: 'Wire', amount: 100 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPipe',
-      amount: 60,
-    }],
+    inputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 100,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 60,
+      },
+    ],
     parts: {
       SAMIngot: {
         amountRequired: 1035,
@@ -2997,37 +5297,122 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      constructormk1: { name: 'constructormk1', amount: 36, powerConsumed: 144 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
-      converter: { name: 'converter', amount: 14, powerConsumed: 2680 },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 36,
+        powerConsumed: 144,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 2,
+        powerConsumed: 110,
+      },
+      converter: {
+        name: 'converter',
+        amount: 14,
+        powerConsumed: 2680,
+      },
     },
-    totalPower: 3212,
     dependencies: {
       requests: {
-        440: [{ requestingFactoryId: 440, part: 'SAMIngot', amount: 240 }],
-        9960: [{ requestingFactoryId: 9960, part: 'DarkEnergy', amount: 1350 }, {
-          requestingFactoryId: 9960,
-          part: 'SAMFluctuator',
-          amount: 20,
-        }],
+        440: [
+          {
+            requestingFactoryId: 440,
+            part: 'SAMIngot',
+            amount: 240,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'DarkEnergy',
+            amount: 1350,
+          },
+          {
+            requestingFactoryId: 9960,
+            part: 'SAMFluctuator',
+            amount: 20,
+          },
+        ],
       },
       metrics: {
-        SAMIngot: { part: 'SAMIngot', request: 240, supply: 1080, isRequestSatisfied: true, difference: 840 },
-        DarkEnergy: { part: 'DarkEnergy', request: 1350, supply: 1350, isRequestSatisfied: true, difference: 0 },
-        SAMFluctuator: { part: 'SAMFluctuator', request: 20, supply: 20, isRequestSatisfied: true, difference: 0 },
+        SAMIngot: {
+          part: 'SAMIngot',
+          request: 240,
+          supply: 1080,
+          isRequestSatisfied: true,
+          difference: 840,
+        },
+        DarkEnergy: {
+          part: 'DarkEnergy',
+          request: 1350,
+          supply: 1350,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
+        SAMFluctuator: {
+          part: 'SAMFluctuator',
+          request: 20,
+          supply: 20,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
       },
     },
     exportCalculator: {
-      SAMIngot: { selected: null, factorySettings: {} },
-      SAMFluctuator: { selected: null, factorySettings: {} },
-      DarkEnergy: { selected: null, factorySettings: {} },
-      AlienPowerFuel: { selected: '440', factorySettings: { 440: { trainTime: 123 }, 9960: { trainTime: 123 } } },
+      SAMIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      SAMFluctuator: {
+        selected: null,
+        factorySettings: {},
+      },
+      DarkEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
+      AlienPowerFuel: {
+        selected: '440',
+        factorySettings: {
+          440: {
+            trainTime: 123,
+          },
+          9960: {
+            trainTime: 123,
+          },
+        },
+      },
     },
-    rawResources: { SAM: { id: 'SAM', name: 'SAM', amount: 4320 } },
+    rawResources: {
+      SAM: {
+        id: 'SAM',
+        name: 'SAM',
+        amount: 4320,
+      },
+    },
     exports: {
-      DarkEnergy: { productId: 'DarkEnergy', surplus: 180, demands: 1220, supply: 1400, displayOrder: 2 },
-      SAMFluctuator: { productId: 'SAMFluctuator', surplus: 20, demands: 20, supply: 40, displayOrder: 1 },
-      SAMIngot: { productId: 'SAMIngot', surplus: 100, demands: 400, supply: 1440, displayOrder: 0 },
+      DarkEnergy: {
+        productId: 'DarkEnergy',
+        surplus: 180,
+        demands: 1220,
+        supply: 1400,
+        displayOrder: 2,
+      },
+      SAMFluctuator: {
+        productId: 'SAMFluctuator',
+        surplus: 20,
+        demands: 20,
+        supply: 40,
+        displayOrder: 1,
+      },
+      SAMIngot: {
+        productId: 'SAMIngot',
+        surplus: 100,
+        demands: 400,
+        supply: 1440,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -3035,81 +5420,190 @@ export const createMaelsBigBoiPlan = () => {
     hasProblem: false,
     displayOrder: 16,
     inSync: false,
-    syncState: { SAMIngot: { amount: 240, recipe: 'IngotSAM' }, SAMFluctuator: { amount: 40, recipe: 'SAMFluctuator' } },
+    syncState: {
+      SAMIngot: {
+        amount: 240,
+        recipe: 'IngotSAM',
+      },
+      SAMFluctuator: {
+        amount: 40,
+        recipe: 'SAMFluctuator',
+      },
+    },
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 2934, produced: 0, difference: -2934 },
-    previousInputs: [{ factoryId: 7110, outputPart: 'Wire', amount: 100 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPipe',
-      amount: 60,
-    }],
+    power: {
+      consumed: 2934,
+      produced: 0,
+      difference: -2934,
+    },
+    previousInputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'Wire',
+        amount: 100,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 60,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 3685,
     name: 'Aluminium Processing',
-    products: [{
-      id: 'AluminaSolution',
-      amount: 2640,
-      recipe: 'Alternate_SloppyAlumina',
-      displayOrder: 0,
-      requirements: { OreBauxite: { amount: 2200 }, Water: { amount: 2200 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 11, powerConsumed: 330 },
-      byProducts: [],
-    }, {
-      id: 'AluminumScrap',
-      amount: 3960,
-      recipe: 'AluminumScrap',
-      displayOrder: 1,
-      requirements: { AluminaSolution: { amount: 2640 }, Coal: { amount: 1320 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 11, powerConsumed: 330 },
-      byProducts: [{ id: 'Water', byProductOf: 'AluminumScrap', amount: 1320 }],
-    }, {
-      id: 'AluminumIngot',
-      amount: 2640,
-      recipe: 'IngotAluminum',
-      displayOrder: 2,
-      requirements: { AluminumScrap: { amount: 3960 }, Silica: { amount: 3300 } },
-      buildingRequirements: { name: 'foundrymk1', amount: 44, powerConsumed: 704 },
-      byProducts: [],
-    }, {
-      id: 'AluminumPlate',
-      amount: 720,
-      recipe: 'AluminumSheet',
-      displayOrder: 3,
-      requirements: { AluminumIngot: { amount: 720 }, CopperIngot: { amount: 240 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 24, powerConsumed: 360 },
-      byProducts: [],
-    }, {
-      id: 'AluminumCasing',
-      amount: 960,
-      recipe: 'AluminumCasing',
-      displayOrder: 4,
-      requirements: { AluminumIngot: { amount: 1440 } },
-      buildingRequirements: { name: 'constructormk1', amount: 16, powerConsumed: 64 },
-      byProducts: [],
-    }, {
-      id: 'AluminumPlateReinforced',
-      amount: 90,
-      recipe: 'HeatSink',
-      displayOrder: 5,
-      requirements: { AluminumPlate: { amount: 450 }, CopperSheet: { amount: 270 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 12, powerConsumed: 180 },
-      byProducts: [],
-    }],
-    byProducts: [{ id: 'Water', amount: 1320, byProductOf: 'AluminumScrap' }],
-    internalProducts: {
-      AluminaSolution: { id: 'AluminaSolution', amount: 2400 },
-      AluminumScrap: { id: 'AluminumScrap', amount: 3600 },
-      AluminumIngot: { id: 'AluminumIngot', amount: 2160 },
-      AluminumPlate: { id: 'AluminumPlate', amount: 720 },
-    },
-    inputs: [{ factoryId: 5445, outputPart: 'Silica', amount: 3300 }, {
-      factoryId: 7110,
-      outputPart: 'CopperSheet',
-      amount: 270,
-    }, { factoryId: 7869, outputPart: 'CopperIngot', amount: 240 }],
+    products: [
+      {
+        id: 'AluminaSolution',
+        amount: 2640,
+        recipe: 'Alternate_SloppyAlumina',
+        displayOrder: 0,
+        requirements: {
+          OreBauxite: {
+            amount: 2200,
+          },
+          Water: {
+            amount: 2200,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 11,
+          powerConsumed: 330,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'AluminumScrap',
+        amount: 3960,
+        recipe: 'AluminumScrap',
+        displayOrder: 1,
+        requirements: {
+          AluminaSolution: {
+            amount: 2640,
+          },
+          Coal: {
+            amount: 1320,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 11,
+          powerConsumed: 330,
+        },
+        byProducts: [
+          {
+            id: 'Water',
+            byProductOf: 'AluminumScrap',
+            amount: 1320,
+          },
+        ],
+      },
+      {
+        id: 'AluminumIngot',
+        amount: 2640,
+        recipe: 'IngotAluminum',
+        displayOrder: 2,
+        requirements: {
+          AluminumScrap: {
+            amount: 3960,
+          },
+          Silica: {
+            amount: 3300,
+          },
+        },
+        buildingRequirements: {
+          name: 'foundrymk1',
+          amount: 44,
+          powerConsumed: 704,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'AluminumPlate',
+        amount: 720,
+        recipe: 'AluminumSheet',
+        displayOrder: 3,
+        requirements: {
+          AluminumIngot: {
+            amount: 720,
+          },
+          CopperIngot: {
+            amount: 240,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 24,
+          powerConsumed: 360,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'AluminumCasing',
+        amount: 960,
+        recipe: 'AluminumCasing',
+        displayOrder: 4,
+        requirements: {
+          AluminumIngot: {
+            amount: 1440,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 16,
+          powerConsumed: 64,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'AluminumPlateReinforced',
+        amount: 90,
+        recipe: 'HeatSink',
+        displayOrder: 5,
+        requirements: {
+          AluminumPlate: {
+            amount: 450,
+          },
+          CopperSheet: {
+            amount: 270,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 12,
+          powerConsumed: 180,
+        },
+        byProducts: [],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'Water',
+        amount: 1320,
+        byProductOf: 'AluminumScrap',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 5445,
+        outputPart: 'Silica',
+        amount: 3300,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 270,
+      },
+      {
+        factoryId: 7869,
+        outputPart: 'CopperIngot',
+        amount: 240,
+      },
+    ],
     parts: {
       AluminaSolution: {
         amountRequired: 2640,
@@ -3281,24 +5775,76 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      oilrefinery: { name: 'oilrefinery', amount: 22, powerConsumed: 660 },
-      foundrymk1: { name: 'foundrymk1', amount: 44, powerConsumed: 704 },
-      assemblermk1: { name: 'assemblermk1', amount: 36, powerConsumed: 540 },
-      constructormk1: { name: 'constructormk1', amount: 16, powerConsumed: 64 },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 22,
+        powerConsumed: 660,
+      },
+      foundrymk1: {
+        name: 'foundrymk1',
+        amount: 44,
+        powerConsumed: 704,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 36,
+        powerConsumed: 540,
+      },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 16,
+        powerConsumed: 64,
+      },
     },
-    totalPower: 1780,
     dependencies: {
       requests: {
-        440: [{ requestingFactoryId: 440, part: 'AluminumIngot', amount: 480 }],
-        4341: [{ requestingFactoryId: 4341, part: 'AluminumCasing', amount: 15 }],
-        4555: [{ requestingFactoryId: 4555, part: 'AluminumPlateReinforced', amount: 20 }],
-        5623: [{ requestingFactoryId: 5623, part: 'AluminumCasing', amount: 128 }, {
-          requestingFactoryId: 5623,
-          part: 'AluminumPlateReinforced',
-          amount: 28,
-        }],
-        5750: [{ requestingFactoryId: 5750, part: 'AluminumCasing', amount: 225 }],
-        9960: [{ requestingFactoryId: 9960, part: 'AluminumPlate', amount: 180 }],
+        440: [
+          {
+            requestingFactoryId: 440,
+            part: 'AluminumIngot',
+            amount: 480,
+          },
+        ],
+        4341: [
+          {
+            requestingFactoryId: 4341,
+            part: 'AluminumCasing',
+            amount: 15,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'AluminumPlateReinforced',
+            amount: 20,
+          },
+        ],
+        5623: [
+          {
+            requestingFactoryId: 5623,
+            part: 'AluminumCasing',
+            amount: 128,
+          },
+          {
+            requestingFactoryId: 5623,
+            part: 'AluminumPlateReinforced',
+            amount: 28,
+          },
+        ],
+        5750: [
+          {
+            requestingFactoryId: 5750,
+            part: 'AluminumCasing',
+            amount: 225,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'AluminumPlate',
+            amount: 180,
+          },
+        ],
       },
       metrics: {
         AluminumIngot: {
@@ -3308,7 +5854,13 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 2160,
         },
-        AluminumCasing: { part: 'AluminumCasing', request: 368, supply: 960, isRequestSatisfied: true, difference: 592 },
+        AluminumCasing: {
+          part: 'AluminumCasing',
+          request: 368,
+          supply: 960,
+          isRequestSatisfied: true,
+          difference: 592,
+        },
         AluminumPlateReinforced: {
           part: 'AluminumPlateReinforced',
           request: 48,
@@ -3316,22 +5868,61 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 42,
         },
-        AluminumPlate: { part: 'AluminumPlate', request: 180, supply: 720, isRequestSatisfied: true, difference: 540 },
+        AluminumPlate: {
+          part: 'AluminumPlate',
+          request: 180,
+          supply: 720,
+          isRequestSatisfied: true,
+          difference: 540,
+        },
       },
     },
     exportCalculator: {
-      AluminumPlate: { selected: null, factorySettings: {} },
-      Water: { selected: null, factorySettings: {} },
-      AluminumCasing: { selected: null, factorySettings: {} },
-      AluminumPlateReinforced: { selected: null, factorySettings: {} },
-      AluminumScrap: { selected: null, factorySettings: {} },
-      AluminumIngot: { selected: null, factorySettings: {} },
-      AluminaSolution: { selected: null, factorySettings: {} },
+      AluminumPlate: {
+        selected: null,
+        factorySettings: {},
+      },
+      Water: {
+        selected: null,
+        factorySettings: {},
+      },
+      AluminumCasing: {
+        selected: null,
+        factorySettings: {},
+      },
+      AluminumPlateReinforced: {
+        selected: null,
+        factorySettings: {},
+      },
+      AluminumScrap: {
+        selected: null,
+        factorySettings: {},
+      },
+      AluminumIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      AluminaSolution: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      OreBauxite: { id: 'OreBauxite', name: 'Bauxite', amount: 2200 },
-      Water: { id: 'Water', name: 'Water', amount: 2200 },
-      Coal: { id: 'Coal', name: 'Coal', amount: 1320 },
+      OreBauxite: {
+        id: 'OreBauxite',
+        name: 'Bauxite',
+        amount: 2200,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 2200,
+      },
+      Coal: {
+        id: 'Coal',
+        name: 'Coal',
+        amount: 1320,
+      },
     },
     exports: {
       AluminumPlateReinforced: {
@@ -3341,12 +5932,48 @@ export const createMaelsBigBoiPlan = () => {
         supply: 90,
         displayOrder: 5,
       },
-      AluminumCasing: { productId: 'AluminumCasing', surplus: 617, demands: 343, supply: 960, displayOrder: 4 },
-      AluminumPlate: { productId: 'AluminumPlate', surplus: 90, demands: 180, supply: 720, displayOrder: 3 },
-      AluminumIngot: { productId: 'AluminumIngot', surplus: 0, demands: 0, supply: 2160, displayOrder: 2 },
-      AluminumScrap: { productId: 'AluminumScrap', surplus: 360, demands: 0, supply: 3600, displayOrder: 1 },
-      Water: { productId: 'Water', surplus: 0, demands: 0, supply: 2000, displayOrder: 1 },
-      AluminaSolution: { productId: 'AluminaSolution', surplus: 0, demands: 0, supply: 2400, displayOrder: 0 },
+      AluminumCasing: {
+        productId: 'AluminumCasing',
+        surplus: 617,
+        demands: 343,
+        supply: 960,
+        displayOrder: 4,
+      },
+      AluminumPlate: {
+        productId: 'AluminumPlate',
+        surplus: 90,
+        demands: 180,
+        supply: 720,
+        displayOrder: 3,
+      },
+      AluminumIngot: {
+        productId: 'AluminumIngot',
+        surplus: 0,
+        demands: 0,
+        supply: 2160,
+        displayOrder: 2,
+      },
+      AluminumScrap: {
+        productId: 'AluminumScrap',
+        surplus: 360,
+        demands: 0,
+        supply: 3600,
+        displayOrder: 1,
+      },
+      Water: {
+        productId: 'Water',
+        surplus: 0,
+        demands: 0,
+        supply: 2000,
+        displayOrder: 1,
+      },
+      AluminaSolution: {
+        productId: 'AluminaSolution',
+        surplus: 0,
+        demands: 0,
+        supply: 2400,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -3358,56 +5985,131 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: 'Major issues with byproducts here',
     powerProducers: [],
-    power: { consumed: 1968, produced: 0, difference: -1968 },
-    previousInputs: [{ factoryId: 5445, outputPart: 'Silica', amount: 3300 }, {
-      factoryId: 7110,
-      outputPart: 'CopperSheet',
-      amount: 270,
-    }, { factoryId: 7869, outputPart: 'CopperIngot', amount: 240 }],
+    power: {
+      consumed: 1968,
+      produced: 0,
+      difference: -1968,
+    },
+    previousInputs: [
+      {
+        factoryId: 5445,
+        outputPart: 'Silica',
+        amount: 3300,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 270,
+      },
+      {
+        factoryId: 7869,
+        outputPart: 'CopperIngot',
+        amount: 240,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 4341,
     name: 'Military',
-    products: [{
-      id: 'CartridgeStandard',
-      amount: 150,
-      recipe: 'Cartridge',
-      displayOrder: 0,
-      requirements: { CopperSheet: { amount: 30 }, GunpowderMK2: { amount: 20 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 2, powerConsumed: 30 },
-      byProducts: [],
-    }, {
-      id: 'CartridgeChaos',
-      amount: 250,
-      recipe: 'CartridgeChaos',
-      displayOrder: 1,
-      requirements: { CartridgeStandard: { amount: 125 }, AluminumCasing: { amount: 15 }, LiquidTurboFuel: { amount: 15 } },
-      buildingRequirements: { name: 'blender', amount: 1, powerConsumed: 75 },
-      byProducts: [],
-    }, {
-      id: 'NobeliskExplosive',
-      amount: 10,
-      recipe: 'Nobelisk',
-      displayOrder: 2,
-      requirements: { Gunpowder: { amount: 20 }, SteelPipe: { amount: 20 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 1, powerConsumed: 15 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'CartridgeStandard',
+        amount: 150,
+        recipe: 'Cartridge',
+        displayOrder: 0,
+        requirements: {
+          CopperSheet: {
+            amount: 30,
+          },
+          GunpowderMK2: {
+            amount: 20,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 2,
+          powerConsumed: 30,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'CartridgeChaos',
+        amount: 250,
+        recipe: 'CartridgeChaos',
+        displayOrder: 1,
+        requirements: {
+          CartridgeStandard: {
+            amount: 125,
+          },
+          AluminumCasing: {
+            amount: 15,
+          },
+          LiquidTurboFuel: {
+            amount: 15,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 1,
+          powerConsumed: 75,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'NobeliskExplosive',
+        amount: 10,
+        recipe: 'Nobelisk',
+        displayOrder: 2,
+        requirements: {
+          Gunpowder: {
+            amount: 20,
+          },
+          SteelPipe: {
+            amount: 20,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 1,
+          powerConsumed: 15,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { CartridgeStandard: { id: 'CartridgeStandard', amount: 150 } },
-    inputs: [{ factoryId: 7110, outputPart: 'CopperSheet', amount: 30 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumCasing',
-      amount: 15,
-    }, { factoryId: 5233, outputPart: 'Gunpowder', amount: 20 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPipe',
-      amount: 20,
-    }, { factoryId: 5233, outputPart: 'GunpowderMK2', amount: 20 }, {
-      factoryId: 184,
-      outputPart: 'LiquidTurboFuel',
-      amount: 15,
-    }],
+    inputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 30,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 15,
+      },
+      {
+        factoryId: 5233,
+        outputPart: 'Gunpowder',
+        amount: 20,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 20,
+      },
+      {
+        factoryId: 5233,
+        outputPart: 'GunpowderMK2',
+        amount: 20,
+      },
+      {
+        factoryId: 184,
+        outputPart: 'LiquidTurboFuel',
+        amount: 15,
+      },
+    ],
     parts: {
       CartridgeStandard: {
         amountRequired: 125,
@@ -3537,21 +6239,58 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 3, powerConsumed: 45 },
-      blender: { name: 'blender', amount: 1, powerConsumed: 75 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 3,
+        powerConsumed: 45,
+      },
+      blender: {
+        name: 'blender',
+        amount: 1,
+        powerConsumed: 75,
+      },
     },
-    totalPower: 120,
-    dependencies: { requests: {}, metrics: {} },
+    dependencies: {
+      requests: {},
+      metrics: {},
+    },
     exportCalculator: {
-      CartridgeStandard: { selected: null, factorySettings: {} },
-      CartridgeChaos: { selected: null, factorySettings: {} },
-      NobeliskExplosive: { selected: null, factorySettings: {} },
+      CartridgeStandard: {
+        selected: null,
+        factorySettings: {},
+      },
+      CartridgeChaos: {
+        selected: null,
+        factorySettings: {},
+      },
+      NobeliskExplosive: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     exports: {
-      NobeliskExplosive: { productId: 'NobeliskExplosive', surplus: 10, demands: 0, supply: 10, displayOrder: 2 },
-      CartridgeChaos: { productId: 'CartridgeChaos', surplus: 250, demands: 0, supply: 250, displayOrder: 1 },
-      CartridgeStandard: { productId: 'CartridgeStandard', surplus: 25, demands: 0, supply: 150, displayOrder: 0 },
+      NobeliskExplosive: {
+        productId: 'NobeliskExplosive',
+        surplus: 10,
+        demands: 0,
+        supply: 10,
+        displayOrder: 2,
+      },
+      CartridgeChaos: {
+        productId: 'CartridgeChaos',
+        surplus: 250,
+        demands: 0,
+        supply: 250,
+        displayOrder: 1,
+      },
+      CartridgeStandard: {
+        productId: 'CartridgeStandard',
+        surplus: 25,
+        demands: 0,
+        supply: 150,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -3563,44 +6302,101 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 120, produced: 0, difference: -120 },
-    previousInputs: [{ factoryId: 7110, outputPart: 'CopperSheet', amount: 30 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumCasing',
-      amount: 15,
-    }, { factoryId: 5233, outputPart: 'Gunpowder', amount: 20 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPipe',
-      amount: 20,
-    }, { factoryId: 5233, outputPart: 'GunpowderMK2', amount: 20 }, {
-      factoryId: 184,
-      outputPart: 'LiquidTurboFuel',
-      amount: 15,
-    }],
+    power: {
+      consumed: 120,
+      produced: 0,
+      difference: -120,
+    },
+    previousInputs: [
+      {
+        factoryId: 7110,
+        outputPart: 'CopperSheet',
+        amount: 30,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 15,
+      },
+      {
+        factoryId: 5233,
+        outputPart: 'Gunpowder',
+        amount: 20,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPipe',
+        amount: 20,
+      },
+      {
+        factoryId: 5233,
+        outputPart: 'GunpowderMK2',
+        amount: 20,
+      },
+      {
+        factoryId: 184,
+        outputPart: 'LiquidTurboFuel',
+        amount: 15,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 3816,
     name: 'Acids',
-    products: [{
-      id: 'NitricAcid',
-      amount: 180,
-      recipe: 'NitricAcid',
-      displayOrder: 0,
-      requirements: { NitrogenGas: { amount: 720 }, Water: { amount: 180 }, IronPlate: { amount: 60 } },
-      buildingRequirements: { name: 'blender', amount: 6, powerConsumed: 450 },
-      byProducts: [],
-    }, {
-      id: 'SulfuricAcid',
-      amount: 600,
-      recipe: 'SulfuricAcid',
-      displayOrder: 1,
-      requirements: { Sulfur: { amount: 600 }, Water: { amount: 600 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 12, powerConsumed: 360 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'NitricAcid',
+        amount: 180,
+        recipe: 'NitricAcid',
+        displayOrder: 0,
+        requirements: {
+          NitrogenGas: {
+            amount: 720,
+          },
+          Water: {
+            amount: 180,
+          },
+          IronPlate: {
+            amount: 60,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 6,
+          powerConsumed: 450,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SulfuricAcid',
+        amount: 600,
+        recipe: 'SulfuricAcid',
+        displayOrder: 1,
+        requirements: {
+          Sulfur: {
+            amount: 600,
+          },
+          Water: {
+            amount: 600,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 12,
+          powerConsumed: 360,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {},
-    inputs: [{ factoryId: 422, outputPart: 'IronPlate', amount: 60 }],
+    inputs: [
+      {
+        factoryId: 422,
+        outputPart: 'IronPlate',
+        amount: 60,
+      },
+    ],
     parts: {
       NitricAcid: {
         amountRequired: 170,
@@ -3688,37 +6484,105 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      blender: { name: 'blender', amount: 6, powerConsumed: 450 },
-      oilrefinery: { name: 'oilrefinery', amount: 12, powerConsumed: 360 },
+      blender: {
+        name: 'blender',
+        amount: 6,
+        powerConsumed: 450,
+      },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 12,
+        powerConsumed: 360,
+      },
     },
-    totalPower: 1350,
     dependencies: {
       requests: {
-        184: [{ requestingFactoryId: 184, part: 'NitricAcid', amount: 50 }],
-        2929: [{ requestingFactoryId: 2929, part: 'SulfuricAcid', amount: 480 }],
-        4555: [{ requestingFactoryId: 4555, part: 'NitricAcid', amount: 120 }, {
-          requestingFactoryId: 4555,
-          part: 'SulfuricAcid',
-          amount: 120,
-        }],
+        184: [
+          {
+            requestingFactoryId: 184,
+            part: 'NitricAcid',
+            amount: 50,
+          },
+        ],
+        2929: [
+          {
+            requestingFactoryId: 2929,
+            part: 'SulfuricAcid',
+            amount: 480,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'NitricAcid',
+            amount: 120,
+          },
+          {
+            requestingFactoryId: 4555,
+            part: 'SulfuricAcid',
+            amount: 120,
+          },
+        ],
       },
       metrics: {
-        NitricAcid: { part: 'NitricAcid', request: 170, supply: 180, isRequestSatisfied: true, difference: 10 },
-        SulfuricAcid: { part: 'SulfuricAcid', request: 600, supply: 600, isRequestSatisfied: true, difference: 0 },
+        NitricAcid: {
+          part: 'NitricAcid',
+          request: 170,
+          supply: 180,
+          isRequestSatisfied: true,
+          difference: 10,
+        },
+        SulfuricAcid: {
+          part: 'SulfuricAcid',
+          request: 600,
+          supply: 600,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
       },
     },
     exportCalculator: {
-      NitricAcid: { selected: null, factorySettings: {} },
-      SulfuricAcid: { selected: null, factorySettings: {} },
+      NitricAcid: {
+        selected: null,
+        factorySettings: {},
+      },
+      SulfuricAcid: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      NitrogenGas: { id: 'NitrogenGas', name: 'Nitrogen Gas', amount: 720 },
-      Water: { id: 'Water', name: 'Water', amount: 780 },
-      Sulfur: { id: 'Sulfur', name: 'Sulfur', amount: 600 },
+      NitrogenGas: {
+        id: 'NitrogenGas',
+        name: 'Nitrogen Gas',
+        amount: 720,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 780,
+      },
+      Sulfur: {
+        id: 'Sulfur',
+        name: 'Sulfur',
+        amount: 600,
+      },
     },
     exports: {
-      SulfuricAcid: { productId: 'SulfuricAcid', surplus: 180, demands: 1320, supply: 1500, displayOrder: 1 },
-      NitricAcid: { productId: 'NitricAcid', surplus: 60, demands: 120, supply: 180, displayOrder: 0 },
+      SulfuricAcid: {
+        productId: 'SulfuricAcid',
+        surplus: 180,
+        demands: 1320,
+        supply: 1500,
+        displayOrder: 1,
+      },
+      NitricAcid: {
+        productId: 'NitricAcid',
+        surplus: 60,
+        demands: 120,
+        supply: 180,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -3730,52 +6594,133 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 810, produced: 0, difference: -810 },
-    previousInputs: [{ factoryId: 422, outputPart: 'IronPlate', amount: 60 }],
+    power: {
+      consumed: 810,
+      produced: 0,
+      difference: -810,
+    },
+    previousInputs: [
+      {
+        factoryId: 422,
+        outputPart: 'IronPlate',
+        amount: 60,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 184,
     name: 'Rocket Fuel Power',
-    products: [{
-      id: 'CompactedCoal',
-      amount: 250,
-      recipe: 'Alternate_EnrichedCoal',
-      displayOrder: 0,
-      requirements: { Coal: { amount: 250 }, Sulfur: { amount: 250 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 10, powerConsumed: 150 },
-      byProducts: [],
-    }, {
-      id: 'LiquidFuel',
-      amount: 378,
-      recipe: 'LiquidFuel',
-      displayOrder: 1,
-      requirements: { LiquidOil: { amount: 567 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 9.45, powerConsumed: 280.439823746746 },
-      byProducts: [{ id: 'PolymerResin', byProductOf: 'LiquidFuel', amount: 283.5 }],
-    }, {
-      id: 'LiquidTurboFuel',
-      amount: 315,
-      recipe: 'Alternate_Turbofuel',
-      displayOrder: 2,
-      requirements: { LiquidFuel: { amount: 378 }, CompactedCoal: { amount: 252 } },
-      buildingRequirements: { name: 'oilrefinery', amount: 16.8, powerConsumed: 502.33640085841915 },
-      byProducts: [],
-    }, {
-      id: 'RocketFuel',
-      amount: 500,
-      recipe: 'RocketFuel',
-      displayOrder: 3,
-      requirements: { LiquidTurboFuel: { amount: 300 }, NitricAcid: { amount: 50 } },
-      buildingRequirements: { name: 'blender', amount: 5, powerConsumed: 375 },
-      byProducts: [{ id: 'CompactedCoal', byProductOf: 'RocketFuel', amount: 50 }],
-    }],
-    byProducts: [{ id: 'PolymerResin', amount: 283.5, byProductOf: 'LiquidFuel' }, {
-      id: 'CompactedCoal',
-      amount: 50,
-      byProductOf: 'RocketFuel',
-    }],
-    internalProducts: { LiquidFuel: { id: 'LiquidFuel', amount: 45 }, CompactedCoal: { id: 'CompactedCoal', amount: 30 } },
-    inputs: [{ factoryId: 3816, outputPart: 'NitricAcid', amount: 50 }],
+    products: [
+      {
+        id: 'CompactedCoal',
+        amount: 250,
+        recipe: 'Alternate_EnrichedCoal',
+        displayOrder: 0,
+        requirements: {
+          Coal: {
+            amount: 250,
+          },
+          Sulfur: {
+            amount: 250,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 10,
+          powerConsumed: 150,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'LiquidFuel',
+        amount: 378,
+        recipe: 'LiquidFuel',
+        displayOrder: 1,
+        requirements: {
+          LiquidOil: {
+            amount: 567,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 9.45,
+          powerConsumed: 280.439823746746,
+        },
+        byProducts: [
+          {
+            id: 'PolymerResin',
+            byProductOf: 'LiquidFuel',
+            amount: 283.5,
+          },
+        ],
+      },
+      {
+        id: 'LiquidTurboFuel',
+        amount: 315,
+        recipe: 'Alternate_Turbofuel',
+        displayOrder: 2,
+        requirements: {
+          LiquidFuel: {
+            amount: 378,
+          },
+          CompactedCoal: {
+            amount: 252,
+          },
+        },
+        buildingRequirements: {
+          name: 'oilrefinery',
+          amount: 16.8,
+          powerConsumed: 502.33640085841915,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'RocketFuel',
+        amount: 500,
+        recipe: 'RocketFuel',
+        displayOrder: 3,
+        requirements: {
+          LiquidTurboFuel: {
+            amount: 300,
+          },
+          NitricAcid: {
+            amount: 50,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 5,
+          powerConsumed: 375,
+        },
+        byProducts: [
+          {
+            id: 'CompactedCoal',
+            byProductOf: 'RocketFuel',
+            amount: 50,
+          },
+        ],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'PolymerResin',
+        amount: 283.5,
+        byProductOf: 'LiquidFuel',
+      },
+      {
+        id: 'CompactedCoal',
+        amount: 50,
+        byProductOf: 'RocketFuel',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 3816,
+        outputPart: 'NitricAcid',
+        amount: 50,
+      },
+    ],
     parts: {
       CompactedCoal: {
         amountRequired: 252,
@@ -3905,14 +6850,37 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 10, powerConsumed: 150 },
-      oilrefinery: { name: 'oilrefinery', amount: 27, powerConsumed: 782.776 },
-      blender: { name: 'blender', amount: 5, powerConsumed: 375 },
-      generatorfuel: { name: 'generatorfuel', amount: 120, powerProduced: 29999.968 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 10,
+        powerConsumed: 150,
+      },
+      oilrefinery: {
+        name: 'oilrefinery',
+        amount: 27,
+        powerConsumed: 782.776,
+      },
+      blender: {
+        name: 'blender',
+        amount: 5,
+        powerConsumed: 375,
+      },
+      generatorfuel: {
+        name: 'generatorfuel',
+        amount: 120,
+        powerProduced: 29999.968,
+      },
     },
-    totalPower: 108.70691268256766,
     dependencies: {
-      requests: { 4341: [{ requestingFactoryId: 4341, part: 'LiquidTurboFuel', amount: 15 }] },
+      requests: {
+        4341: [
+          {
+            requestingFactoryId: 4341,
+            part: 'LiquidTurboFuel',
+            amount: 15,
+          },
+        ],
+      },
       metrics: {
         LiquidTurboFuel: {
           part: 'LiquidTurboFuel',
@@ -3924,15 +6892,39 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     exportCalculator: {
-      LiquidTurboFuel: { selected: null, factorySettings: {} },
-      PolymerResin: { selected: null, factorySettings: {} },
-      LiquidFuel: { selected: null, factorySettings: {} },
-      CompactedCoal: { selected: null, factorySettings: {} },
+      LiquidTurboFuel: {
+        selected: null,
+        factorySettings: {},
+      },
+      PolymerResin: {
+        selected: null,
+        factorySettings: {},
+      },
+      LiquidFuel: {
+        selected: null,
+        factorySettings: {},
+      },
+      CompactedCoal: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      Coal: { id: 'Coal', name: 'Coal', amount: 250 },
-      Sulfur: { id: 'Sulfur', name: 'Sulfur', amount: 250 },
-      LiquidOil: { id: 'LiquidOil', name: 'Crude Oil', amount: 567 },
+      Coal: {
+        id: 'Coal',
+        name: 'Coal',
+        amount: 250,
+      },
+      Sulfur: {
+        id: 'Sulfur',
+        name: 'Sulfur',
+        amount: 250,
+      },
+      LiquidOil: {
+        id: 'LiquidOil',
+        name: 'Crude Oil',
+        amount: 567,
+      },
     },
     exports: {
       LiquidTurboFuel: {
@@ -3942,9 +6934,27 @@ export const createMaelsBigBoiPlan = () => {
         supply: 37.5,
         displayOrder: 2,
       },
-      LiquidFuel: { productId: 'LiquidFuel', surplus: 0, demands: 0, supply: 45, displayOrder: 1 },
-      PolymerResin: { productId: 'PolymerResin', surplus: 33.75, demands: 0, supply: 33.75, displayOrder: 1 },
-      CompactedCoal: { productId: 'CompactedCoal', surplus: 0, demands: 0, supply: 30, displayOrder: 0 },
+      LiquidFuel: {
+        productId: 'LiquidFuel',
+        surplus: 0,
+        demands: 0,
+        supply: 45,
+        displayOrder: 1,
+      },
+      PolymerResin: {
+        productId: 'PolymerResin',
+        surplus: 33.75,
+        demands: 0,
+        supply: 33.75,
+        displayOrder: 1,
+      },
+      CompactedCoal: {
+        productId: 'CompactedCoal',
+        surplus: 0,
+        demands: 0,
+        supply: 30,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -3955,86 +6965,179 @@ export const createMaelsBigBoiPlan = () => {
     displayOrder: 20,
     tasks: [],
     notes: '',
-    powerProducers: [{
-      building: 'generatorfuel',
-      buildingAmount: 120,
-      buildingCount: 119.99990400007681,
-      ingredientAmount: 500,
-      ingredients: [{ part: 'RocketFuel', perMin: 500, mwPerItem: 59.999952000038405 }],
-      powerAmount: 29999.976,
-      powerProduced: 29999.976000019204,
-      recipe: 'GeneratorFuel_RocketFuel',
-      byproduct: null,
-      displayOrder: 0,
-      updated: 'ingredient',
-    }],
-    power: { consumed: 1307.7759999999998, produced: 29999.968, difference: 28692.192000000003 },
-    previousInputs: [{ factoryId: 3816, outputPart: 'NitricAcid', amount: 50 }],
+    powerProducers: [
+      {
+        building: 'generatorfuel',
+        buildingAmount: 120,
+        buildingCount: 119.99990400007681,
+        ingredientAmount: 500,
+        ingredients: [
+          {
+            part: 'RocketFuel',
+            perMin: 500,
+            mwPerItem: 59.999952000038405,
+          },
+        ],
+        powerAmount: 29999.976,
+        powerProduced: 29999.976000019204,
+        recipe: 'GeneratorFuel_RocketFuel',
+        byproduct: null,
+        displayOrder: 0,
+        updated: 'ingredient',
+      },
+    ],
+    power: {
+      consumed: 1307.7759999999998,
+      produced: 29999.968,
+      difference: 28692.192000000003,
+    },
+    previousInputs: [
+      {
+        factoryId: 3816,
+        outputPart: 'NitricAcid',
+        amount: 50,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 5623,
     name: 'Phase 4 Intermediates',
-    products: [{
-      id: 'PressureConversionCube',
-      amount: 2,
-      recipe: 'PressureConversionCube',
-      displayOrder: 0,
-      requirements: { ModularFrameFused: { amount: 2 }, ModularFrameLightweight: { amount: 4 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 2, powerConsumed: 30 },
-      byProducts: [],
-    }, {
-      id: 'ModularFrameLightweight',
-      amount: 8,
-      recipe: 'RadioControlUnit',
-      displayOrder: 1,
-      requirements: { AluminumCasing: { amount: 128 }, CrystalOscillator: { amount: 4 }, Computer: { amount: 8 } },
-      buildingRequirements: { name: 'manufacturermk1', amount: 3.2, powerConsumed: 171.5520117803331 },
-      byProducts: [],
-    }, {
-      id: 'CoolingSystem',
-      amount: 14,
-      recipe: 'CoolingSystem',
-      displayOrder: 2,
-      requirements: {
-        AluminumPlateReinforced: { amount: 28 },
-        Rubber: { amount: 28 },
-        Water: { amount: 70 },
-        NitrogenGas: { amount: 350 },
+    products: [
+      {
+        id: 'PressureConversionCube',
+        amount: 2,
+        recipe: 'PressureConversionCube',
+        displayOrder: 0,
+        requirements: {
+          ModularFrameFused: {
+            amount: 2,
+          },
+          ModularFrameLightweight: {
+            amount: 4,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 2,
+          powerConsumed: 30,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'blender', amount: 2.3333333333333335, powerConsumed: 167.55259439922398 },
-      byProducts: [],
-    }, {
-      id: 'MotorLightweight',
-      amount: 2,
-      recipe: 'MotorTurbo',
-      displayOrder: 3,
-      requirements: {
-        CoolingSystem: { amount: 8 },
-        ModularFrameLightweight: { amount: 4 },
-        Motor: { amount: 8 },
-        Rubber: { amount: 48 },
+      {
+        id: 'ModularFrameLightweight',
+        amount: 8,
+        recipe: 'RadioControlUnit',
+        displayOrder: 1,
+        requirements: {
+          AluminumCasing: {
+            amount: 128,
+          },
+          CrystalOscillator: {
+            amount: 4,
+          },
+          Computer: {
+            amount: 8,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 3.2,
+          powerConsumed: 171.5520117803331,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 1.0666666666666667, powerConsumed: 56.53339740372165 },
-      byProducts: [],
-    }],
+      {
+        id: 'CoolingSystem',
+        amount: 14,
+        recipe: 'CoolingSystem',
+        displayOrder: 2,
+        requirements: {
+          AluminumPlateReinforced: {
+            amount: 28,
+          },
+          Rubber: {
+            amount: 28,
+          },
+          Water: {
+            amount: 70,
+          },
+          NitrogenGas: {
+            amount: 350,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 2.3333333333333335,
+          powerConsumed: 167.55259439922398,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'MotorLightweight',
+        amount: 2,
+        recipe: 'MotorTurbo',
+        displayOrder: 3,
+        requirements: {
+          CoolingSystem: {
+            amount: 8,
+          },
+          ModularFrameLightweight: {
+            amount: 4,
+          },
+          Motor: {
+            amount: 8,
+          },
+          Rubber: {
+            amount: 48,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 1.0666666666666667,
+          powerConsumed: 56.53339740372165,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {
-      ModularFrameLightweight: { id: 'ModularFrameLightweight', amount: 8 },
-      CoolingSystem: { id: 'CoolingSystem', amount: 14 },
-    },
-    inputs: [{ factoryId: 5706, outputPart: 'Computer', amount: 8 }, {
-      factoryId: 5750,
-      outputPart: 'ModularFrameFused',
-      amount: 2,
-    }, { factoryId: 3685, outputPart: 'AluminumCasing', amount: 128 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlateReinforced',
-      amount: 28,
-    }, { factoryId: 1023, outputPart: 'Rubber', amount: 76 }, {
-      factoryId: 6620,
-      outputPart: 'Motor',
-      amount: 8,
-    }, { factoryId: 5445, outputPart: 'CrystalOscillator', amount: 4 }],
+    inputs: [
+      {
+        factoryId: 5706,
+        outputPart: 'Computer',
+        amount: 8,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameFused',
+        amount: 2,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 128,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlateReinforced',
+        amount: 28,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Rubber',
+        amount: 76,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Motor',
+        amount: 8,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'CrystalOscillator',
+        amount: 4,
+      },
+    ],
     parts: {
       PressureConversionCube: {
         amountRequired: 2,
@@ -4220,22 +7323,41 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 2, powerConsumed: 30 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 6, powerConsumed: 228.085 },
-      blender: { name: 'blender', amount: 3, powerConsumed: 167.553 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 2,
+        powerConsumed: 30,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 6,
+        powerConsumed: 228.085,
+      },
+      blender: {
+        name: 'blender',
+        amount: 3,
+        powerConsumed: 167.553,
+      },
     },
-    totalPower: 425.63800358327876,
     dependencies: {
       requests: {
-        3911: [{
-          requestingFactoryId: 3911,
-          part: 'PressureConversionCube',
-          amount: 2,
-        }, { requestingFactoryId: 3911, part: 'CoolingSystem', amount: 6 }, {
-          requestingFactoryId: 3911,
-          part: 'MotorLightweight',
-          amount: 2,
-        }],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'PressureConversionCube',
+            amount: 2,
+          },
+          {
+            requestingFactoryId: 3911,
+            part: 'CoolingSystem',
+            amount: 6,
+          },
+          {
+            requestingFactoryId: 3911,
+            part: 'MotorLightweight',
+            amount: 2,
+          },
+        ],
       },
       metrics: {
         PressureConversionCube: {
@@ -4245,24 +7367,75 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 0,
         },
-        CoolingSystem: { part: 'CoolingSystem', request: 6, supply: 14, isRequestSatisfied: true, difference: 8 },
-        MotorLightweight: { part: 'MotorLightweight', request: 2, supply: 2, isRequestSatisfied: true, difference: 0 },
+        CoolingSystem: {
+          part: 'CoolingSystem',
+          request: 6,
+          supply: 14,
+          isRequestSatisfied: true,
+          difference: 8,
+        },
+        MotorLightweight: {
+          part: 'MotorLightweight',
+          request: 2,
+          supply: 2,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
       },
     },
     exportCalculator: {
-      PressureConversionCube: { selected: null, factorySettings: {} },
-      ComputerSuper: { selected: '3911', factorySettings: { 3911: { trainTime: 123 } } },
-      ModularFrameLightweight: { selected: null, factorySettings: {} },
-      CoolingSystem: { selected: null, factorySettings: {} },
-      MotorLightweight: { selected: null, factorySettings: {} },
+      PressureConversionCube: {
+        selected: null,
+        factorySettings: {},
+      },
+      ComputerSuper: {
+        selected: '3911',
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+        },
+      },
+      ModularFrameLightweight: {
+        selected: null,
+        factorySettings: {},
+      },
+      CoolingSystem: {
+        selected: null,
+        factorySettings: {},
+      },
+      MotorLightweight: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      Water: { id: 'Water', name: 'Water', amount: 70 },
-      NitrogenGas: { id: 'NitrogenGas', name: 'Nitrogen Gas', amount: 350 },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 70,
+      },
+      NitrogenGas: {
+        id: 'NitrogenGas',
+        name: 'Nitrogen Gas',
+        amount: 350,
+      },
     },
     exports: {
-      MotorLightweight: { productId: 'MotorLightweight', surplus: 0, demands: 2, supply: 2, displayOrder: 3 },
-      CoolingSystem: { productId: 'CoolingSystem', surplus: 0, demands: 6, supply: 14, displayOrder: 2 },
+      MotorLightweight: {
+        productId: 'MotorLightweight',
+        surplus: 0,
+        demands: 2,
+        supply: 2,
+        displayOrder: 3,
+      },
+      CoolingSystem: {
+        productId: 'CoolingSystem',
+        surplus: 0,
+        demands: 6,
+        supply: 14,
+        displayOrder: 2,
+      },
       ModularFrameLightweight: {
         productId: 'ModularFrameLightweight',
         surplus: 0,
@@ -4270,7 +7443,13 @@ export const createMaelsBigBoiPlan = () => {
         supply: 8,
         displayOrder: 1,
       },
-      PressureConversionCube: { productId: 'PressureConversionCube', surplus: 0, demands: 2, supply: 2, displayOrder: 0 },
+      PressureConversionCube: {
+        productId: 'PressureConversionCube',
+        surplus: 0,
+        demands: 2,
+        supply: 2,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -4282,85 +7461,194 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 425.63800000000003, produced: 0, difference: -425.63800000000003 },
-    previousInputs: [{ factoryId: 5706, outputPart: 'Computer', amount: 8 }, {
-      factoryId: 5750,
-      outputPart: 'ModularFrameFused',
-      amount: 2,
-    }, { factoryId: 3685, outputPart: 'AluminumCasing', amount: 128 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlateReinforced',
-      amount: 28,
-    }, { factoryId: 1023, outputPart: 'Rubber', amount: 76 }, {
-      factoryId: 6620,
-      outputPart: 'Motor',
-      amount: 8,
-    }, { factoryId: 5445, outputPart: 'CrystalOscillator', amount: 4 }],
+    power: {
+      consumed: 425.63800000000003,
+      produced: 0,
+      difference: -425.63800000000003,
+    },
+    previousInputs: [
+      {
+        factoryId: 5706,
+        outputPart: 'Computer',
+        amount: 8,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameFused',
+        amount: 2,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumCasing',
+        amount: 128,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlateReinforced',
+        amount: 28,
+      },
+      {
+        factoryId: 1023,
+        outputPart: 'Rubber',
+        amount: 76,
+      },
+      {
+        factoryId: 6620,
+        outputPart: 'Motor',
+        amount: 8,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'CrystalOscillator',
+        amount: 4,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 3911,
     name: 'Phase 4',
-    products: [{
-      id: 'SpaceElevatorPart_9',
-      amount: 2,
-      recipe: 'SpaceElevatorPart_9',
-      displayOrder: 0,
-      requirements: { CopperDust: { amount: 400 }, PressureConversionCube: { amount: 2 } },
-      buildingRequirements: { name: 'hadroncollider', amount: 4, powerConsumed: 3000 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_7',
-      amount: 4.5,
-      recipe: 'SpaceElevatorPart_7',
-      displayOrder: 1,
-      requirements: { SpaceElevatorPart_5: { amount: 9 }, ComputerSuper: { amount: 4.5 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 6, powerConsumed: 90 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_6',
-      amount: 6,
-      recipe: 'SpaceElevatorPart_6',
-      displayOrder: 2,
-      requirements: { SpaceElevatorPart_2: { amount: 15 }, ElectromagneticControlRod: { amount: 6 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 6, powerConsumed: 90 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_8',
-      amount: 2,
-      recipe: 'SpaceElevatorPart_8',
-      displayOrder: 3,
-      requirements: {
-        SpaceElevatorPart_4: { amount: 5 },
-        MotorLightweight: { amount: 2 },
-        CoolingSystem: { amount: 6 },
-        ModularFrameFused: { amount: 2 },
+    products: [
+      {
+        id: 'SpaceElevatorPart_9',
+        amount: 2,
+        recipe: 'SpaceElevatorPart_9',
+        displayOrder: 0,
+        requirements: {
+          CopperDust: {
+            amount: 400,
+          },
+          PressureConversionCube: {
+            amount: 2,
+          },
+        },
+        buildingRequirements: {
+          name: 'hadroncollider',
+          amount: 4,
+          powerConsumed: 3000,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
-      byProducts: [],
-    }],
+      {
+        id: 'SpaceElevatorPart_7',
+        amount: 4.5,
+        recipe: 'SpaceElevatorPart_7',
+        displayOrder: 1,
+        requirements: {
+          SpaceElevatorPart_5: {
+            amount: 9,
+          },
+          ComputerSuper: {
+            amount: 4.5,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 6,
+          powerConsumed: 90,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SpaceElevatorPart_6',
+        amount: 6,
+        recipe: 'SpaceElevatorPart_6',
+        displayOrder: 2,
+        requirements: {
+          SpaceElevatorPart_2: {
+            amount: 15,
+          },
+          ElectromagneticControlRod: {
+            amount: 6,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 6,
+          powerConsumed: 90,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'SpaceElevatorPart_8',
+        amount: 2,
+        recipe: 'SpaceElevatorPart_8',
+        displayOrder: 3,
+        requirements: {
+          SpaceElevatorPart_4: {
+            amount: 5,
+          },
+          MotorLightweight: {
+            amount: 2,
+          },
+          CoolingSystem: {
+            amount: 6,
+          },
+          ModularFrameFused: {
+            amount: 2,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 2,
+          powerConsumed: 110,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: {},
-    inputs: [{ factoryId: 4295, outputPart: 'SpaceElevatorPart_4', amount: 5 }, {
-      factoryId: 4295,
-      outputPart: 'SpaceElevatorPart_5',
-      amount: 9,
-    }, { factoryId: 5623, outputPart: 'PressureConversionCube', amount: 2 }, {
-      factoryId: 5706,
-      outputPart: 'ComputerSuper',
-      amount: 4.5,
-    }, { factoryId: 5750, outputPart: 'ModularFrameFused', amount: 2 }, {
-      factoryId: 5623,
-      outputPart: 'CoolingSystem',
-      amount: 6,
-    }, { factoryId: 5623, outputPart: 'MotorLightweight', amount: 2 }, {
-      factoryId: 4295,
-      outputPart: 'SpaceElevatorPart_2',
-      amount: 15,
-    }, { factoryId: 2929, outputPart: 'ElectromagneticControlRod', amount: 6 }, {
-      factoryId: 7110,
-      outputPart: 'CopperDust',
-      amount: 400,
-    }],
+    inputs: [
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_4',
+        amount: 5,
+      },
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_5',
+        amount: 9,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'PressureConversionCube',
+        amount: 2,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'ComputerSuper',
+        amount: 4.5,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameFused',
+        amount: 2,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'CoolingSystem',
+        amount: 6,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'MotorLightweight',
+        amount: 2,
+      },
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_2',
+        amount: 15,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'ElectromagneticControlRod',
+        amount: 6,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'CopperDust',
+        amount: 400,
+      },
+    ],
     parts: {
       SpaceElevatorPart_9: {
         amountRequired: 1,
@@ -4560,23 +7848,48 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      hadroncollider: { name: 'hadroncollider', amount: 4, powerConsumed: 3000 },
-      assemblermk1: { name: 'assemblermk1', amount: 12, powerConsumed: 180 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
+      hadroncollider: {
+        name: 'hadroncollider',
+        amount: 4,
+        powerConsumed: 3000,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 12,
+        powerConsumed: 180,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 2,
+        powerConsumed: 110,
+      },
     },
-    totalPower: 3290,
     dependencies: {
       requests: {
-        1404: [{
-          requestingFactoryId: 1404,
-          part: 'SpaceElevatorPart_7',
-          amount: 2.5,
-        }, { requestingFactoryId: 1404, part: 'SpaceElevatorPart_6', amount: 4 }, {
-          requestingFactoryId: 1404,
-          part: 'SpaceElevatorPart_8',
-          amount: 2,
-        }],
-        9960: [{ requestingFactoryId: 9960, part: 'SpaceElevatorPart_9', amount: 1 }],
+        1404: [
+          {
+            requestingFactoryId: 1404,
+            part: 'SpaceElevatorPart_7',
+            amount: 2.5,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'SpaceElevatorPart_6',
+            amount: 4,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'SpaceElevatorPart_8',
+            amount: 2,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'SpaceElevatorPart_9',
+            amount: 1,
+          },
+        ],
       },
       metrics: {
         SpaceElevatorPart_7: {
@@ -4610,13 +7923,34 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     exportCalculator: {
-      SpaceElevatorPart_9: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_7: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_12: { selected: null, factorySettings: {} },
-      DarkEnergy: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_6: { selected: null, factorySettings: {} },
-      MotorLightweight: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_8: { selected: null, factorySettings: {} },
+      SpaceElevatorPart_9: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_7: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_12: {
+        selected: null,
+        factorySettings: {},
+      },
+      DarkEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_6: {
+        selected: null,
+        factorySettings: {},
+      },
+      MotorLightweight: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_8: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     exports: {
@@ -4627,9 +7961,27 @@ export const createMaelsBigBoiPlan = () => {
         supply: 2,
         displayOrder: 3,
       },
-      SpaceElevatorPart_6: { productId: 'SpaceElevatorPart_6', surplus: 2, demands: 4, supply: 6, displayOrder: 2 },
-      SpaceElevatorPart_7: { productId: 'SpaceElevatorPart_7', surplus: 2, demands: 2.5, supply: 4.5, displayOrder: 1 },
-      SpaceElevatorPart_9: { productId: 'SpaceElevatorPart_9', surplus: 1, demands: 1, supply: 2, displayOrder: 0 },
+      SpaceElevatorPart_6: {
+        productId: 'SpaceElevatorPart_6',
+        surplus: 2,
+        demands: 4,
+        supply: 6,
+        displayOrder: 2,
+      },
+      SpaceElevatorPart_7: {
+        productId: 'SpaceElevatorPart_7',
+        surplus: 2,
+        demands: 2.5,
+        supply: 4.5,
+        displayOrder: 1,
+      },
+      SpaceElevatorPart_9: {
+        productId: 'SpaceElevatorPart_9',
+        surplus: 1,
+        demands: 1,
+        supply: 2,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -4641,75 +7993,176 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 3290, produced: 0, difference: -3290 },
-    previousInputs: [{ factoryId: 4295, outputPart: 'SpaceElevatorPart_4', amount: 5 }, {
-      factoryId: 4295,
-      outputPart: 'SpaceElevatorPart_5',
-      amount: 9,
-    }, { factoryId: 5623, outputPart: 'PressureConversionCube', amount: 2 }, {
-      factoryId: 5706,
-      outputPart: 'ComputerSuper',
-      amount: 4.5,
-    }, { factoryId: 5750, outputPart: 'ModularFrameFused', amount: 2 }, {
-      factoryId: 5623,
-      outputPart: 'CoolingSystem',
-      amount: 6,
-    }, { factoryId: 5623, outputPart: 'MotorLightweight', amount: 2 }, {
-      factoryId: 4295,
-      outputPart: 'SpaceElevatorPart_2',
-      amount: 15,
-    }, { factoryId: 2929, outputPart: 'ElectromagneticControlRod', amount: 6 }, {
-      factoryId: 7110,
-      outputPart: 'CopperDust',
-      amount: 400,
-    }],
+    power: {
+      consumed: 3290,
+      produced: 0,
+      difference: -3290,
+    },
+    previousInputs: [
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_4',
+        amount: 5,
+      },
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_5',
+        amount: 9,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'PressureConversionCube',
+        amount: 2,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'ComputerSuper',
+        amount: 4.5,
+      },
+      {
+        factoryId: 5750,
+        outputPart: 'ModularFrameFused',
+        amount: 2,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'CoolingSystem',
+        amount: 6,
+      },
+      {
+        factoryId: 5623,
+        outputPart: 'MotorLightweight',
+        amount: 2,
+      },
+      {
+        factoryId: 4295,
+        outputPart: 'SpaceElevatorPart_2',
+        amount: 15,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'ElectromagneticControlRod',
+        amount: 6,
+      },
+      {
+        factoryId: 7110,
+        outputPart: 'CopperDust',
+        amount: 400,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 2929,
     name: 'Uranium Power',
-    products: [{
-      id: 'ElectromagneticControlRod',
-      amount: 64,
-      recipe: 'ElectromagneticControlRod',
-      displayOrder: 0,
-      requirements: { Stator: { amount: 96 }, CircuitBoardHighSpeed: { amount: 64 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 16, powerConsumed: 240 },
-      byProducts: [],
-    }, {
-      id: 'UraniumCell',
-      amount: 400,
-      recipe: 'UraniumCell',
-      displayOrder: 1,
-      requirements: { OreUranium: { amount: 800 }, Cement: { amount: 240 }, SulfuricAcid: { amount: 640 } },
-      buildingRequirements: { name: 'blender', amount: 16, powerConsumed: 1200 },
-      byProducts: [{ id: 'SulfuricAcid', byProductOf: 'UraniumCell', amount: 160 }],
-    }, {
-      id: 'NuclearFuelRod',
-      amount: 8,
-      recipe: 'NuclearFuelRod',
-      displayOrder: 2,
-      requirements: {
-        UraniumCell: { amount: 400 },
-        SteelPlateReinforced: { amount: 24 },
-        ElectromagneticControlRod: { amount: 40 },
+    products: [
+      {
+        id: 'ElectromagneticControlRod',
+        amount: 64,
+        recipe: 'ElectromagneticControlRod',
+        displayOrder: 0,
+        requirements: {
+          Stator: {
+            amount: 96,
+          },
+          CircuitBoardHighSpeed: {
+            amount: 64,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 16,
+          powerConsumed: 240,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 20, powerConsumed: 1100 },
-      byProducts: [],
-    }],
-    byProducts: [{ id: 'SulfuricAcid', amount: 160, byProductOf: 'UraniumCell' }],
-    internalProducts: {
-      UraniumCell: { id: 'UraniumCell', amount: 1000 },
-      ElectromagneticControlRod: { id: 'ElectromagneticControlRod', amount: 118 },
-    },
-    inputs: [{ factoryId: 6620, outputPart: 'Stator', amount: 96 }, {
-      factoryId: 5706,
-      outputPart: 'CircuitBoardHighSpeed',
-      amount: 64,
-    }, { factoryId: 8464, outputPart: 'Cement', amount: 240 }, {
-      factoryId: 2959,
-      outputPart: 'SteelPlateReinforced',
-      amount: 24,
-    }, { factoryId: 3816, outputPart: 'SulfuricAcid', amount: 480 }],
+      {
+        id: 'UraniumCell',
+        amount: 400,
+        recipe: 'UraniumCell',
+        displayOrder: 1,
+        requirements: {
+          OreUranium: {
+            amount: 800,
+          },
+          Cement: {
+            amount: 240,
+          },
+          SulfuricAcid: {
+            amount: 640,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 16,
+          powerConsumed: 1200,
+        },
+        byProducts: [
+          {
+            id: 'SulfuricAcid',
+            byProductOf: 'UraniumCell',
+            amount: 160,
+          },
+        ],
+      },
+      {
+        id: 'NuclearFuelRod',
+        amount: 8,
+        recipe: 'NuclearFuelRod',
+        displayOrder: 2,
+        requirements: {
+          UraniumCell: {
+            amount: 400,
+          },
+          SteelPlateReinforced: {
+            amount: 24,
+          },
+          ElectromagneticControlRod: {
+            amount: 40,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 20,
+          powerConsumed: 1100,
+        },
+        byProducts: [],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'SulfuricAcid',
+        amount: 160,
+        byProductOf: 'UraniumCell',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 6620,
+        outputPart: 'Stator',
+        amount: 96,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'CircuitBoardHighSpeed',
+        amount: 64,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 240,
+      },
+      {
+        factoryId: 2959,
+        outputPart: 'SteelPlateReinforced',
+        amount: 24,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'SulfuricAcid',
+        amount: 480,
+      },
+    ],
     parts: {
       ElectromagneticControlRod: {
         amountRequired: 58,
@@ -4867,20 +8320,48 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      assemblermk1: { name: 'assemblermk1', amount: 16, powerConsumed: 240 },
-      blender: { name: 'blender', amount: 16, powerConsumed: 1200 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 20, powerConsumed: 1100 },
-      generatornuclear: { name: 'generatornuclear', amount: 40, powerProduced: 100000 },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 16,
+        powerConsumed: 240,
+      },
+      blender: {
+        name: 'blender',
+        amount: 16,
+        powerConsumed: 1200,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 20,
+        powerConsumed: 1100,
+      },
+      generatornuclear: {
+        name: 'generatornuclear',
+        amount: 40,
+        powerProduced: 100000,
+      },
     },
-    totalPower: 6191.000000394625,
     dependencies: {
       requests: {
-        3911: [{ requestingFactoryId: 3911, part: 'ElectromagneticControlRod', amount: 6 }],
-        4555: [{ requestingFactoryId: 4555, part: 'ElectromagneticControlRod', amount: 12 }, {
-          requestingFactoryId: 4555,
-          part: 'NuclearWaste',
-          amount: 400,
-        }],
+        3911: [
+          {
+            requestingFactoryId: 3911,
+            part: 'ElectromagneticControlRod',
+            amount: 6,
+          },
+        ],
+        4555: [
+          {
+            requestingFactoryId: 4555,
+            part: 'ElectromagneticControlRod',
+            amount: 12,
+          },
+          {
+            requestingFactoryId: 4555,
+            part: 'NuclearWaste',
+            amount: 400,
+          },
+        ],
       },
       metrics: {
         ElectromagneticControlRod: {
@@ -4890,34 +8371,128 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 46,
         },
-        NuclearWaste: { part: 'NuclearWaste', request: 400, supply: 400, isRequestSatisfied: true, difference: 0 },
+        NuclearWaste: {
+          part: 'NuclearWaste',
+          request: 400,
+          supply: 400,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
       },
     },
     exportCalculator: {
-      ElectromagneticControlRod: { selected: null, factorySettings: {} },
-      UraniumCell: { selected: null, factorySettings: {} },
-      NuclearFuelRod: { selected: null, factorySettings: {} },
+      ElectromagneticControlRod: {
+        selected: null,
+        factorySettings: {},
+      },
+      UraniumCell: {
+        selected: null,
+        factorySettings: {},
+      },
+      NuclearFuelRod: {
+        selected: null,
+        factorySettings: {},
+      },
       PlutoniumFuelRod: {
         selected: '3911',
-        factorySettings: { 3911: { trainTime: 123 }, 4555: { trainTime: 123 }, 9333: { trainTime: 123 } },
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          4555: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
       },
       Water: {
         selected: '3911',
-        factorySettings: { 3911: { trainTime: 123 }, 4555: { trainTime: 123 }, 9333: { trainTime: 123 } },
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          4555: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
       },
-      PlutoniumCell: { selected: '3911', factorySettings: { 3911: { trainTime: 123 }, 9333: { trainTime: 123 } } },
-      PlutoniumPellet: { selected: '3911', factorySettings: { 3911: { trainTime: 123 }, 9333: { trainTime: 123 } } },
-      NonFissibleUranium: { selected: '3911', factorySettings: { 3911: { trainTime: 123 }, 9333: { trainTime: 123 } } },
-      SulfuricAcid: { selected: null, factorySettings: {} },
+      PlutoniumCell: {
+        selected: '3911',
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
+      },
+      PlutoniumPellet: {
+        selected: '3911',
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
+      },
+      NonFissibleUranium: {
+        selected: '3911',
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
+      },
+      SulfuricAcid: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {
-      OreUranium: { id: 'OreUranium', name: 'Uranium', amount: 800 },
-      Water: { id: 'Water', name: 'Water', amount: 9600 },
+      OreUranium: {
+        id: 'OreUranium',
+        name: 'Uranium',
+        amount: 800,
+      },
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 9600,
+      },
     },
     exports: {
-      NuclearFuelRod: { productId: 'NuclearFuelRod', surplus: 20, demands: 0, supply: 20, displayOrder: 2 },
-      UraniumCell: { productId: 'UraniumCell', surplus: 0, demands: 0, supply: 1000, displayOrder: 1 },
-      SulfuricAcid: { productId: 'SulfuricAcid', surplus: 0, demands: 0, supply: 1600, displayOrder: 1 },
+      NuclearFuelRod: {
+        productId: 'NuclearFuelRod',
+        surplus: 20,
+        demands: 0,
+        supply: 20,
+        displayOrder: 2,
+      },
+      UraniumCell: {
+        productId: 'UraniumCell',
+        surplus: 0,
+        demands: 0,
+        supply: 1000,
+        displayOrder: 1,
+      },
+      SulfuricAcid: {
+        productId: 'SulfuricAcid',
+        surplus: 0,
+        demands: 0,
+        supply: 1600,
+        displayOrder: 1,
+      },
       ElectromagneticControlRod: {
         productId: 'ElectromagneticControlRod',
         surplus: 0,
@@ -4935,103 +8510,221 @@ export const createMaelsBigBoiPlan = () => {
     displayOrder: 23,
     tasks: [],
     notes: '',
-    powerProducers: [{
-      building: 'generatornuclear',
-      buildingAmount: 40,
-      buildingCount: 40,
-      ingredientAmount: 8,
-      ingredients: [{ part: 'NuclearFuelRod', perMin: 8, mwPerItem: 12500 }, {
-        part: 'Water',
-        perMin: 9600,
-        supplementalRatio: 0.096,
-      }],
-      powerAmount: 100000,
-      powerProduced: 100000,
-      recipe: 'GeneratorNuclear_NuclearFuelRod',
-      byproduct: { part: 'NuclearWaste', amount: 400 },
-      displayOrder: 0,
-      updated: 'ingredient',
-    }],
-    power: { consumed: 2540, produced: 100000, difference: 97460 },
-    previousInputs: [{ factoryId: 6620, outputPart: 'Stator', amount: 96 }, {
-      factoryId: 5706,
-      outputPart: 'CircuitBoardHighSpeed',
-      amount: 64,
-    }, { factoryId: 8464, outputPart: 'Cement', amount: 240 }, {
-      factoryId: 2959,
-      outputPart: 'SteelPlateReinforced',
-      amount: 24,
-    }, { factoryId: 3816, outputPart: 'SulfuricAcid', amount: 480 }],
+    powerProducers: [
+      {
+        building: 'generatornuclear',
+        buildingAmount: 40,
+        buildingCount: 40,
+        ingredientAmount: 8,
+        ingredients: [
+          {
+            part: 'NuclearFuelRod',
+            perMin: 8,
+            mwPerItem: 12500,
+          },
+          {
+            part: 'Water',
+            perMin: 9600,
+            supplementalRatio: 0.096,
+          },
+        ],
+        powerAmount: 100000,
+        powerProduced: 100000,
+        recipe: 'GeneratorNuclear_NuclearFuelRod',
+        byproduct: {
+          part: 'NuclearWaste',
+          amount: 400,
+        },
+        displayOrder: 0,
+        updated: 'ingredient',
+      },
+    ],
+    power: {
+      consumed: 2540,
+      produced: 100000,
+      difference: 97460,
+    },
+    previousInputs: [
+      {
+        factoryId: 6620,
+        outputPart: 'Stator',
+        amount: 96,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'CircuitBoardHighSpeed',
+        amount: 64,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 240,
+      },
+      {
+        factoryId: 2959,
+        outputPart: 'SteelPlateReinforced',
+        amount: 24,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'SulfuricAcid',
+        amount: 480,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 4555,
     name: 'Plutonium Power',
-    products: [{
-      id: 'NonFissibleUranium',
-      amount: 400,
-      recipe: 'NonFissileUranium',
-      displayOrder: 0,
-      requirements: {
-        NuclearWaste: { amount: 300 },
-        Silica: { amount: 200 },
-        NitricAcid: { amount: 120 },
-        SulfuricAcid: { amount: 120 },
+    products: [
+      {
+        id: 'NonFissibleUranium',
+        amount: 400,
+        recipe: 'NonFissileUranium',
+        displayOrder: 0,
+        requirements: {
+          NuclearWaste: {
+            amount: 300,
+          },
+          Silica: {
+            amount: 200,
+          },
+          NitricAcid: {
+            amount: 120,
+          },
+          SulfuricAcid: {
+            amount: 120,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 8,
+          powerConsumed: 600,
+        },
+        byProducts: [
+          {
+            id: 'Water',
+            byProductOf: 'NonFissibleUranium',
+            amount: 120,
+          },
+        ],
       },
-      buildingRequirements: { name: 'blender', amount: 8, powerConsumed: 600 },
-      byProducts: [{ id: 'Water', byProductOf: 'NonFissibleUranium', amount: 120 }],
-    }, {
-      id: 'PlutoniumPellet',
-      amount: 120,
-      recipe: 'Plutonium',
-      displayOrder: 1,
-      requirements: { NonFissibleUranium: { amount: 400 }, NuclearWaste: { amount: 100 } },
-      buildingRequirements: { name: 'hadroncollider', amount: 4, powerConsumed: 1500 },
-      byProducts: [],
-    }, {
-      id: 'PlutoniumCell',
-      amount: 60,
-      recipe: 'PlutoniumCell',
-      displayOrder: 2,
-      requirements: { PlutoniumPellet: { amount: 120 }, Cement: { amount: 240 } },
-      buildingRequirements: { name: 'assemblermk1', amount: 12, powerConsumed: 180 },
-      byProducts: [],
-    }, {
-      id: 'PlutoniumFuelRod',
-      amount: 2,
-      recipe: 'PlutoniumFuelRod',
-      displayOrder: 3,
-      requirements: {
-        PlutoniumCell: { amount: 60 },
-        SteelPlate: { amount: 36 },
-        ElectromagneticControlRod: { amount: 12 },
-        AluminumPlateReinforced: { amount: 20 },
+      {
+        id: 'PlutoniumPellet',
+        amount: 120,
+        recipe: 'Plutonium',
+        displayOrder: 1,
+        requirements: {
+          NonFissibleUranium: {
+            amount: 400,
+          },
+          NuclearWaste: {
+            amount: 100,
+          },
+        },
+        buildingRequirements: {
+          name: 'hadroncollider',
+          amount: 4,
+          powerConsumed: 1500,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 8, powerConsumed: 440 },
-      byProducts: [],
-    }],
-    byProducts: [{ id: 'Water', amount: 120, byProductOf: 'NonFissibleUranium' }],
-    internalProducts: {
-      NonFissibleUranium: { id: 'NonFissibleUranium', amount: 400 },
-      PlutoniumPellet: { id: 'PlutoniumPellet', amount: 120 },
-      PlutoniumCell: { id: 'PlutoniumCell', amount: 60 },
-    },
-    inputs: [{ factoryId: 5445, outputPart: 'Silica', amount: 200 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPlate',
-      amount: 36,
-    }, { factoryId: 8464, outputPart: 'Cement', amount: 240 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlateReinforced',
-      amount: 20,
-    }, { factoryId: 2929, outputPart: 'ElectromagneticControlRod', amount: 12 }, {
-      factoryId: 3816,
-      outputPart: 'NitricAcid',
-      amount: 120,
-    }, { factoryId: 3816, outputPart: 'SulfuricAcid', amount: 120 }, {
-      factoryId: 2929,
-      outputPart: 'NuclearWaste',
-      amount: 400,
-    }],
+      {
+        id: 'PlutoniumCell',
+        amount: 60,
+        recipe: 'PlutoniumCell',
+        displayOrder: 2,
+        requirements: {
+          PlutoniumPellet: {
+            amount: 120,
+          },
+          Cement: {
+            amount: 240,
+          },
+        },
+        buildingRequirements: {
+          name: 'assemblermk1',
+          amount: 12,
+          powerConsumed: 180,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'PlutoniumFuelRod',
+        amount: 2,
+        recipe: 'PlutoniumFuelRod',
+        displayOrder: 3,
+        requirements: {
+          PlutoniumCell: {
+            amount: 60,
+          },
+          SteelPlate: {
+            amount: 36,
+          },
+          ElectromagneticControlRod: {
+            amount: 12,
+          },
+          AluminumPlateReinforced: {
+            amount: 20,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 8,
+          powerConsumed: 440,
+        },
+        byProducts: [],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'Water',
+        amount: 120,
+        byProductOf: 'NonFissibleUranium',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 5445,
+        outputPart: 'Silica',
+        amount: 200,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 36,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 240,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlateReinforced',
+        amount: 20,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'ElectromagneticControlRod',
+        amount: 12,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'NitricAcid',
+        amount: 120,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'SulfuricAcid',
+        amount: 120,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'NuclearWaste',
+        amount: 400,
+      },
+    ],
     parts: {
       NonFissibleUranium: {
         amountRequired: 400,
@@ -5231,34 +8924,131 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      blender: { name: 'blender', amount: 8, powerConsumed: 600 },
-      hadroncollider: { name: 'hadroncollider', amount: 4, powerConsumed: 1500 },
-      assemblermk1: { name: 'assemblermk1', amount: 12, powerConsumed: 180 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 8, powerConsumed: 440 },
-      generatornuclear: { name: 'generatornuclear', amount: 20, powerProduced: 50000 },
+      blender: {
+        name: 'blender',
+        amount: 8,
+        powerConsumed: 600,
+      },
+      hadroncollider: {
+        name: 'hadroncollider',
+        amount: 4,
+        powerConsumed: 1500,
+      },
+      assemblermk1: {
+        name: 'assemblermk1',
+        amount: 12,
+        powerConsumed: 180,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 8,
+        powerConsumed: 440,
+      },
+      generatornuclear: {
+        name: 'generatornuclear',
+        amount: 20,
+        powerProduced: 50000,
+      },
     },
-    totalPower: 2720,
-    dependencies: { requests: {}, metrics: {} },
+    dependencies: {
+      requests: {},
+      metrics: {},
+    },
     exportCalculator: {
       ElectromagneticControlRod: {
         selected: null,
-        factorySettings: { 3911: { trainTime: 123 }, 9333: { trainTime: 123 } },
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
       },
-      UraniumCell: { selected: null, factorySettings: { 3911: { trainTime: 123 } } },
-      NuclearFuelRod: { selected: null, factorySettings: { 3911: { trainTime: 123 }, 9333: { trainTime: 123 } } },
-      PlutoniumFuelRod: { selected: null, factorySettings: {} },
-      Water: { selected: null, factorySettings: {} },
-      PlutoniumCell: { selected: null, factorySettings: {} },
-      PlutoniumPellet: { selected: null, factorySettings: {} },
-      NonFissibleUranium: { selected: null, factorySettings: {} },
+      UraniumCell: {
+        selected: null,
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+        },
+      },
+      NuclearFuelRod: {
+        selected: null,
+        factorySettings: {
+          3911: {
+            trainTime: 123,
+          },
+          9333: {
+            trainTime: 123,
+          },
+        },
+      },
+      PlutoniumFuelRod: {
+        selected: null,
+        factorySettings: {},
+      },
+      Water: {
+        selected: null,
+        factorySettings: {},
+      },
+      PlutoniumCell: {
+        selected: null,
+        factorySettings: {},
+      },
+      PlutoniumPellet: {
+        selected: null,
+        factorySettings: {},
+      },
+      NonFissibleUranium: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { Water: { id: 'Water', name: 'Water', amount: 4800 } },
+    rawResources: {
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 4800,
+      },
+    },
     exports: {
-      PlutoniumFuelRod: { productId: 'PlutoniumFuelRod', surplus: 2, demands: 0, supply: 2, displayOrder: 3 },
-      PlutoniumCell: { productId: 'PlutoniumCell', surplus: 0, demands: 0, supply: 60, displayOrder: 2 },
-      PlutoniumPellet: { productId: 'PlutoniumPellet', surplus: 0, demands: 0, supply: 120, displayOrder: 1 },
-      NonFissibleUranium: { productId: 'NonFissibleUranium', surplus: 0, demands: 0, supply: 400, displayOrder: 0 },
-      Water: { productId: 'Water', surplus: 120, demands: 0, supply: 120, displayOrder: 0 },
+      PlutoniumFuelRod: {
+        productId: 'PlutoniumFuelRod',
+        surplus: 2,
+        demands: 0,
+        supply: 2,
+        displayOrder: 3,
+      },
+      PlutoniumCell: {
+        productId: 'PlutoniumCell',
+        surplus: 0,
+        demands: 0,
+        supply: 60,
+        displayOrder: 2,
+      },
+      PlutoniumPellet: {
+        productId: 'PlutoniumPellet',
+        surplus: 0,
+        demands: 0,
+        supply: 120,
+        displayOrder: 1,
+      },
+      NonFissibleUranium: {
+        productId: 'NonFissibleUranium',
+        surplus: 0,
+        demands: 0,
+        supply: 400,
+        displayOrder: 0,
+      },
+      Water: {
+        productId: 'Water',
+        surplus: 120,
+        demands: 0,
+        supply: 120,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -5269,64 +9059,124 @@ export const createMaelsBigBoiPlan = () => {
     displayOrder: 24,
     tasks: [],
     notes: '',
-    powerProducers: [{
-      building: 'generatornuclear',
-      buildingAmount: 20,
-      buildingCount: 20,
-      ingredientAmount: 2,
-      ingredients: [{ part: 'PlutoniumFuelRod', perMin: 2, mwPerItem: 25000 }, {
-        part: 'Water',
-        perMin: 4800,
-        supplementalRatio: 0.096,
-      }],
-      powerAmount: 50000,
-      powerProduced: 50000,
-      recipe: 'GeneratorNuclear_PlutoniumFuelRod',
-      byproduct: { part: 'PlutoniumWaste', amount: 20 },
-      displayOrder: 0,
-      updated: 'ingredient',
-    }],
-    power: { consumed: 2720, produced: 50000, difference: 47280 },
-    previousInputs: [{ factoryId: 5445, outputPart: 'Silica', amount: 200 }, {
-      factoryId: 6471,
-      outputPart: 'SteelPlate',
-      amount: 36,
-    }, { factoryId: 8464, outputPart: 'Cement', amount: 240 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlateReinforced',
-      amount: 20,
-    }, { factoryId: 2929, outputPart: 'ElectromagneticControlRod', amount: 12 }, {
-      factoryId: 3816,
-      outputPart: 'NitricAcid',
-      amount: 120,
-    }, { factoryId: 3816, outputPart: 'SulfuricAcid', amount: 120 }, {
-      factoryId: 2929,
-      outputPart: 'NuclearWaste',
-      amount: 400,
-    }],
+    powerProducers: [
+      {
+        building: 'generatornuclear',
+        buildingAmount: 20,
+        buildingCount: 20,
+        ingredientAmount: 2,
+        ingredients: [
+          {
+            part: 'PlutoniumFuelRod',
+            perMin: 2,
+            mwPerItem: 25000,
+          },
+          {
+            part: 'Water',
+            perMin: 4800,
+            supplementalRatio: 0.096,
+          },
+        ],
+        powerAmount: 50000,
+        powerProduced: 50000,
+        recipe: 'GeneratorNuclear_PlutoniumFuelRod',
+        byproduct: {
+          part: 'PlutoniumWaste',
+          amount: 20,
+        },
+        displayOrder: 0,
+        updated: 'ingredient',
+      },
+    ],
+    power: {
+      consumed: 2720,
+      produced: 50000,
+      difference: 47280,
+    },
+    previousInputs: [
+      {
+        factoryId: 5445,
+        outputPart: 'Silica',
+        amount: 200,
+      },
+      {
+        factoryId: 6471,
+        outputPart: 'SteelPlate',
+        amount: 36,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 240,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlateReinforced',
+        amount: 20,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'ElectromagneticControlRod',
+        amount: 12,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'NitricAcid',
+        amount: 120,
+      },
+      {
+        factoryId: 3816,
+        outputPart: 'SulfuricAcid',
+        amount: 120,
+      },
+      {
+        factoryId: 2929,
+        outputPart: 'NuclearWaste',
+        amount: 400,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 216,
     name: 'Diamonds',
-    products: [{
-      id: 'Diamond',
-      amount: 400,
-      recipe: 'Alternate_Diamond_OilBased',
-      displayOrder: 0,
-      requirements: { LiquidOil: { amount: 2000 } },
-      buildingRequirements: { name: 'hadroncollider', amount: 10, powerConsumed: 3750 },
-      byProducts: [],
-    }, {
-      id: 'TimeCrystal',
-      amount: 48,
-      recipe: 'TimeCrystal',
-      displayOrder: 1,
-      requirements: { Diamond: { amount: 96 } },
-      buildingRequirements: { name: 'converter', amount: 8, powerConsumed: 1600 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'Diamond',
+        amount: 400,
+        recipe: 'Alternate_Diamond_OilBased',
+        displayOrder: 0,
+        requirements: {
+          LiquidOil: {
+            amount: 2000,
+          },
+        },
+        buildingRequirements: {
+          name: 'hadroncollider',
+          amount: 10,
+          powerConsumed: 3750,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'TimeCrystal',
+        amount: 48,
+        recipe: 'TimeCrystal',
+        displayOrder: 1,
+        requirements: {
+          Diamond: {
+            amount: 96,
+          },
+        },
+        buildingRequirements: {
+          name: 'converter',
+          amount: 8,
+          powerConsumed: 1600,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { Diamond: { id: 'Diamond', amount: 420 } },
     inputs: [],
     parts: {
       Diamond: {
@@ -5373,31 +9223,81 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      hadroncollider: { name: 'hadroncollider', amount: 10, powerConsumed: 3750 },
-      converter: { name: 'converter', amount: 8, powerConsumed: 1600 },
+      hadroncollider: {
+        name: 'hadroncollider',
+        amount: 10,
+        powerConsumed: 3750,
+      },
+      converter: {
+        name: 'converter',
+        amount: 8,
+        powerConsumed: 1600,
+      },
     },
-    totalPower: 6850,
     dependencies: {
       requests: {
-        9960: [{
-          requestingFactoryId: 9960,
-          part: 'Diamond',
-          amount: 270,
-        }, { requestingFactoryId: 9960, part: 'TimeCrystal', amount: 44 }],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'Diamond',
+            amount: 270,
+          },
+          {
+            requestingFactoryId: 9960,
+            part: 'TimeCrystal',
+            amount: 44,
+          },
+        ],
       },
       metrics: {
-        Diamond: { part: 'Diamond', request: 270, supply: 400, isRequestSatisfied: true, difference: 130 },
-        TimeCrystal: { part: 'TimeCrystal', request: 44, supply: 48, isRequestSatisfied: true, difference: 4 },
+        Diamond: {
+          part: 'Diamond',
+          request: 270,
+          supply: 400,
+          isRequestSatisfied: true,
+          difference: 130,
+        },
+        TimeCrystal: {
+          part: 'TimeCrystal',
+          request: 44,
+          supply: 48,
+          isRequestSatisfied: true,
+          difference: 4,
+        },
       },
     },
     exportCalculator: {
-      Diamond: { selected: null, factorySettings: {} },
-      TimeCrystal: { selected: null, factorySettings: {} },
+      Diamond: {
+        selected: null,
+        factorySettings: {},
+      },
+      TimeCrystal: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { LiquidOil: { id: 'LiquidOil', name: 'Crude Oil', amount: 2000 } },
+    rawResources: {
+      LiquidOil: {
+        id: 'LiquidOil',
+        name: 'Crude Oil',
+        amount: 2000,
+      },
+    },
     exports: {
-      TimeCrystal: { productId: 'TimeCrystal', surplus: 4, demands: 44, supply: 48, displayOrder: 1 },
-      Diamond: { productId: 'Diamond', surplus: 54, demands: 270, supply: 420, displayOrder: 0 },
+      TimeCrystal: {
+        productId: 'TimeCrystal',
+        surplus: 4,
+        demands: 44,
+        supply: 48,
+        displayOrder: 1,
+      },
+      Diamond: {
+        productId: 'Diamond',
+        surplus: 54,
+        demands: 270,
+        supply: 420,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -5409,36 +9309,69 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 5350, produced: 0, difference: -5350 },
+    power: {
+      consumed: 5350,
+      produced: 0,
+      difference: -5350,
+    },
     previousInputs: [],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 440,
     name: 'Ficsite',
-    products: [{
-      id: 'FicsiteIngot',
-      amount: 120,
-      recipe: 'FicsiteIngot_AL',
-      displayOrder: 0,
-      requirements: { SAMIngot: { amount: 240 }, AluminumIngot: { amount: 480 } },
-      buildingRequirements: { name: 'converter', amount: 4, powerConsumed: 800 },
-      byProducts: [],
-    }, {
-      id: 'FicsiteMesh',
-      amount: 360,
-      recipe: 'FicsiteMesh',
-      displayOrder: 1,
-      requirements: { FicsiteIngot: { amount: 120 } },
-      buildingRequirements: { name: 'constructormk1', amount: 12, powerConsumed: 48 },
-      byProducts: [],
-    }],
+    products: [
+      {
+        id: 'FicsiteIngot',
+        amount: 120,
+        recipe: 'FicsiteIngot_AL',
+        displayOrder: 0,
+        requirements: {
+          SAMIngot: {
+            amount: 240,
+          },
+          AluminumIngot: {
+            amount: 480,
+          },
+        },
+        buildingRequirements: {
+          name: 'converter',
+          amount: 4,
+          powerConsumed: 800,
+        },
+        byProducts: [],
+      },
+      {
+        id: 'FicsiteMesh',
+        amount: 360,
+        recipe: 'FicsiteMesh',
+        displayOrder: 1,
+        requirements: {
+          FicsiteIngot: {
+            amount: 120,
+          },
+        },
+        buildingRequirements: {
+          name: 'constructormk1',
+          amount: 12,
+          powerConsumed: 48,
+        },
+        byProducts: [],
+      },
+    ],
     byProducts: [],
-    internalProducts: { IronIngot: { id: 'IronIngot', amount: 2400 }, FicsiteIngot: { id: 'FicsiteIngot', amount: 100 } },
-    inputs: [{ factoryId: 4042, outputPart: 'SAMIngot', amount: 240 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumIngot',
-      amount: 480,
-    }],
+    inputs: [
+      {
+        factoryId: 4042,
+        outputPart: 'SAMIngot',
+        amount: 240,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumIngot',
+        amount: 480,
+      },
+    ],
     parts: {
       FicsiteIngot: {
         amountRequired: 120,
@@ -5498,14 +9431,33 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      converter: { name: 'converter', amount: 4, powerConsumed: 800 },
-      constructormk1: { name: 'constructormk1', amount: 12, powerConsumed: 48 },
+      converter: {
+        name: 'converter',
+        amount: 4,
+        powerConsumed: 800,
+      },
+      constructormk1: {
+        name: 'constructormk1',
+        amount: 12,
+        powerConsumed: 48,
+      },
     },
-    totalPower: 2360,
     dependencies: {
       requests: {
-        1404: [{ requestingFactoryId: 1404, part: 'FicsiteMesh', amount: 200 }],
-        9960: [{ requestingFactoryId: 9960, part: 'FicsiteMesh', amount: 60 }],
+        1404: [
+          {
+            requestingFactoryId: 1404,
+            part: 'FicsiteMesh',
+            amount: 200,
+          },
+        ],
+        9960: [
+          {
+            requestingFactoryId: 9960,
+            part: 'FicsiteMesh',
+            amount: 60,
+          },
+        ],
       },
       metrics: {
         FicsiteMesh: {
@@ -5518,16 +9470,53 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     exportCalculator: {
-      FicsiteMesh: { selected: null, factorySettings: {} },
-      Ficsonium: { selected: '1404', factorySettings: { 1404: { trainTime: 123 }, 9960: { trainTime: 123 } } },
-      FicsiteIngot: { selected: null, factorySettings: {} },
-      IronIngot: { selected: null, factorySettings: {} },
+      FicsiteMesh: {
+        selected: null,
+        factorySettings: {},
+      },
+      Ficsonium: {
+        selected: '1404',
+        factorySettings: {
+          1404: {
+            trainTime: 123,
+          },
+          9960: {
+            trainTime: 123,
+          },
+        },
+      },
+      FicsiteIngot: {
+        selected: null,
+        factorySettings: {},
+      },
+      IronIngot: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     exports: {
-      FicsiteMesh: { productId: 'FicsiteMesh', surplus: 40, demands: 260, supply: 300, displayOrder: 2 },
-      FicsiteIngot: { productId: 'FicsiteIngot', surplus: 0, demands: 0, supply: 100, displayOrder: 1 },
-      IronIngot: { productId: 'IronIngot', surplus: 0, demands: 0, supply: 2400, displayOrder: 0 },
+      FicsiteMesh: {
+        productId: 'FicsiteMesh',
+        surplus: 40,
+        demands: 260,
+        supply: 300,
+        displayOrder: 2,
+      },
+      FicsiteIngot: {
+        productId: 'FicsiteIngot',
+        surplus: 0,
+        demands: 0,
+        supply: 100,
+        displayOrder: 1,
+      },
+      IronIngot: {
+        productId: 'IronIngot',
+        surplus: 0,
+        demands: 0,
+        supply: 2400,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -5539,130 +9528,286 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 848, produced: 0, difference: -848 },
-    previousInputs: [{ factoryId: 4042, outputPart: 'SAMIngot', amount: 240 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumIngot',
-      amount: 480,
-    }],
+    power: {
+      consumed: 848,
+      produced: 0,
+      difference: -848,
+    },
+    previousInputs: [
+      {
+        factoryId: 4042,
+        outputPart: 'SAMIngot',
+        amount: 240,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumIngot',
+        amount: 480,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 9960,
     name: 'Phase 5 Intermediates',
-    products: [{
-      id: 'DarkMatter',
-      amount: 270,
-      recipe: 'DarkMatter',
-      displayOrder: 0,
-      requirements: { Diamond: { amount: 270 }, DarkEnergy: { amount: 1350 } },
-      buildingRequirements: { name: 'hadroncollider', amount: 9, powerConsumed: 6750 },
-      byProducts: [],
-    }, {
-      id: 'SingularityCell',
-      amount: 10,
-      recipe: 'SingularityCell',
-      displayOrder: 1,
-      requirements: {
-        SpaceElevatorPart_9: { amount: 1 },
-        DarkMatter: { amount: 20 },
-        IronPlate: { amount: 100 },
-        Cement: { amount: 200 },
+    products: [
+      {
+        id: 'DarkMatter',
+        amount: 270,
+        recipe: 'DarkMatter',
+        displayOrder: 0,
+        requirements: {
+          Diamond: {
+            amount: 270,
+          },
+          DarkEnergy: {
+            amount: 1350,
+          },
+        },
+        buildingRequirements: {
+          name: 'hadroncollider',
+          amount: 9,
+          powerConsumed: 6750,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 1, powerConsumed: 55 },
-      byProducts: [],
-    }, {
-      id: 'QuantumEnergy',
-      amount: 1000,
-      recipe: 'QuantumEnergy',
-      displayOrder: 2,
-      requirements: {},
-      buildingRequirements: { name: 'converter', amount: 5, powerConsumed: 1000 },
-      byProducts: [],
-    }, {
-      id: 'QuantumOscillator',
-      amount: 20,
-      recipe: 'SuperpositionOscillator',
-      displayOrder: 3,
-      requirements: {
-        DarkMatter: { amount: 120 },
-        CrystalOscillator: { amount: 20 },
-        AluminumPlate: { amount: 180 },
-        QuantumEnergy: { amount: 500 },
+      {
+        id: 'SingularityCell',
+        amount: 10,
+        recipe: 'SingularityCell',
+        displayOrder: 1,
+        requirements: {
+          SpaceElevatorPart_9: {
+            amount: 1,
+          },
+          DarkMatter: {
+            amount: 20,
+          },
+          IronPlate: {
+            amount: 100,
+          },
+          Cement: {
+            amount: 200,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 1,
+          powerConsumed: 55,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'quantumencoder', amount: 4, powerConsumed: 4000 },
-      byProducts: [{ id: 'DarkEnergy', byProductOf: 'QuantumOscillator', amount: 500 }],
-    }, {
-      id: 'TemporalProcessor',
-      amount: 4,
-      recipe: 'TemporalProcessor',
-      displayOrder: 4,
-      requirements: {
-        TimeCrystal: { amount: 20 },
-        ComputerSuper: { amount: 4 },
-        FicsiteMesh: { amount: 60 },
-        QuantumEnergy: { amount: 100 },
+      {
+        id: 'QuantumEnergy',
+        amount: 1000,
+        recipe: 'QuantumEnergy',
+        displayOrder: 2,
+        requirements: {},
+        buildingRequirements: {
+          name: 'converter',
+          amount: 5,
+          powerConsumed: 1000,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'quantumencoder', amount: 1.3333333333333333, powerConsumed: 1234.0345919896529 },
-      byProducts: [{ id: 'DarkEnergy', byProductOf: 'TemporalProcessor', amount: 100 }],
-    }, {
-      id: 'CrystalShard',
-      amount: 12,
-      recipe: 'SyntheticPowerShard',
-      displayOrder: 5,
-      requirements: {
-        TimeCrystal: { amount: 24 },
-        DarkMatter: { amount: 24 },
-        QuartzCrystal: { amount: 144 },
-        QuantumEnergy: { amount: 144 },
+      {
+        id: 'QuantumOscillator',
+        amount: 20,
+        recipe: 'SuperpositionOscillator',
+        displayOrder: 3,
+        requirements: {
+          DarkMatter: {
+            amount: 120,
+          },
+          CrystalOscillator: {
+            amount: 20,
+          },
+          AluminumPlate: {
+            amount: 180,
+          },
+          QuantumEnergy: {
+            amount: 500,
+          },
+        },
+        buildingRequirements: {
+          name: 'quantumencoder',
+          amount: 4,
+          powerConsumed: 4000,
+        },
+        byProducts: [
+          {
+            id: 'DarkEnergy',
+            byProductOf: 'QuantumOscillator',
+            amount: 500,
+          },
+        ],
       },
-      buildingRequirements: { name: 'quantumencoder', amount: 2.4, powerConsumed: 2297.81869770006 },
-      byProducts: [{ id: 'DarkEnergy', byProductOf: 'CrystalShard', amount: 144 }],
-    }, {
-      id: 'AlienPowerFuel',
-      amount: 4,
-      recipe: 'AlienPowerFuel',
-      displayOrder: 6,
-      requirements: {
-        SAMFluctuator: { amount: 20 },
-        CrystalShard: { amount: 12 },
-        QuantumOscillator: { amount: 12 },
-        QuantumEnergy: { amount: 96 },
+      {
+        id: 'TemporalProcessor',
+        amount: 4,
+        recipe: 'TemporalProcessor',
+        displayOrder: 4,
+        requirements: {
+          TimeCrystal: {
+            amount: 20,
+          },
+          ComputerSuper: {
+            amount: 4,
+          },
+          FicsiteMesh: {
+            amount: 60,
+          },
+          QuantumEnergy: {
+            amount: 100,
+          },
+        },
+        buildingRequirements: {
+          name: 'quantumencoder',
+          amount: 1.3333333333333333,
+          powerConsumed: 1234.0345919896529,
+        },
+        byProducts: [
+          {
+            id: 'DarkEnergy',
+            byProductOf: 'TemporalProcessor',
+            amount: 100,
+          },
+        ],
       },
-      buildingRequirements: { name: 'quantumencoder', amount: 1.6, powerConsumed: 1509.0165770041963 },
-      byProducts: [{ id: 'DarkEnergy', byProductOf: 'AlienPowerFuel', amount: 96 }],
-    }],
-    byProducts: [{ id: 'DarkEnergy', amount: 840, byProductOf: 'QuantumOscillator' }],
-    internalProducts: {
-      DarkMatter: { id: 'DarkMatter', amount: 270 },
-      QuantumEnergy: { id: 'QuantumEnergy', amount: 1000 },
-      CrystalShard: { id: 'CrystalShard', amount: 12 },
-      QuantumOscillator: { id: 'QuantumOscillator', amount: 20 },
-    },
-    inputs: [{ factoryId: 216, outputPart: 'Diamond', amount: 270 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlate',
-      amount: 180,
-    }, { factoryId: 5445, outputPart: 'CrystalOscillator', amount: 20 }, {
-      factoryId: 8464,
-      outputPart: 'Cement',
-      amount: 200,
-    }, { factoryId: 422, outputPart: 'IronPlate', amount: 100 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_9',
-      amount: 1,
-    }, { factoryId: 5706, outputPart: 'ComputerSuper', amount: 4 }, {
-      factoryId: 440,
-      outputPart: 'FicsiteMesh',
-      amount: 60,
-    }, { factoryId: 216, outputPart: 'TimeCrystal', amount: 44 }, {
-      factoryId: 4042,
-      outputPart: 'DarkEnergy',
-      amount: 1350,
-    }, { factoryId: 4042, outputPart: 'SAMFluctuator', amount: 20 }, {
-      factoryId: 5445,
-      outputPart: 'QuartzCrystal',
-      amount: 144,
-    }],
+      {
+        id: 'CrystalShard',
+        amount: 12,
+        recipe: 'SyntheticPowerShard',
+        displayOrder: 5,
+        requirements: {
+          TimeCrystal: {
+            amount: 24,
+          },
+          DarkMatter: {
+            amount: 24,
+          },
+          QuartzCrystal: {
+            amount: 144,
+          },
+          QuantumEnergy: {
+            amount: 144,
+          },
+        },
+        buildingRequirements: {
+          name: 'quantumencoder',
+          amount: 2.4,
+          powerConsumed: 2297.81869770006,
+        },
+        byProducts: [
+          {
+            id: 'DarkEnergy',
+            byProductOf: 'CrystalShard',
+            amount: 144,
+          },
+        ],
+      },
+      {
+        id: 'AlienPowerFuel',
+        amount: 4,
+        recipe: 'AlienPowerFuel',
+        displayOrder: 6,
+        requirements: {
+          SAMFluctuator: {
+            amount: 20,
+          },
+          CrystalShard: {
+            amount: 12,
+          },
+          QuantumOscillator: {
+            amount: 12,
+          },
+          QuantumEnergy: {
+            amount: 96,
+          },
+        },
+        buildingRequirements: {
+          name: 'quantumencoder',
+          amount: 1.6,
+          powerConsumed: 1509.0165770041963,
+        },
+        byProducts: [
+          {
+            id: 'DarkEnergy',
+            byProductOf: 'AlienPowerFuel',
+            amount: 96,
+          },
+        ],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'DarkEnergy',
+        amount: 840,
+        byProductOf: 'QuantumOscillator',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 216,
+        outputPart: 'Diamond',
+        amount: 270,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlate',
+        amount: 180,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'CrystalOscillator',
+        amount: 20,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 200,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlate',
+        amount: 100,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_9',
+        amount: 1,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'ComputerSuper',
+        amount: 4,
+      },
+      {
+        factoryId: 440,
+        outputPart: 'FicsiteMesh',
+        amount: 60,
+      },
+      {
+        factoryId: 216,
+        outputPart: 'TimeCrystal',
+        amount: 44,
+      },
+      {
+        factoryId: 4042,
+        outputPart: 'DarkEnergy',
+        amount: 1350,
+      },
+      {
+        factoryId: 4042,
+        outputPart: 'SAMFluctuator',
+        amount: 20,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'QuartzCrystal',
+        amount: 144,
+      },
+    ],
     parts: {
       DarkMatter: {
         amountRequired: 244,
@@ -5932,31 +10077,72 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      hadroncollider: { name: 'hadroncollider', amount: 9, powerConsumed: 6750 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 1, powerConsumed: 55 },
-      converter: { name: 'converter', amount: 5, powerConsumed: 1000 },
-      quantumencoder: { name: 'quantumencoder', amount: 11, powerConsumed: 9040.871 },
+      hadroncollider: {
+        name: 'hadroncollider',
+        amount: 9,
+        powerConsumed: 6750,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 1,
+        powerConsumed: 55,
+      },
+      converter: {
+        name: 'converter',
+        amount: 5,
+        powerConsumed: 1000,
+      },
+      quantumencoder: {
+        name: 'quantumencoder',
+        amount: 11,
+        powerConsumed: 9040.871,
+      },
     },
-    totalPower: 16845.86986669391,
     dependencies: {
       requests: {
-        1404: [{
-          requestingFactoryId: 1404,
-          part: 'DarkMatter',
-          amount: 80,
-        }, { requestingFactoryId: 1404, part: 'SingularityCell', amount: 10 }, {
-          requestingFactoryId: 1404,
-          part: 'QuantumOscillator',
-          amount: 8,
-        }, { requestingFactoryId: 1404, part: 'TemporalProcessor', amount: 4 }, {
-          requestingFactoryId: 1404,
-          part: 'QuantumEnergy',
-          amount: 100,
-        }],
+        1404: [
+          {
+            requestingFactoryId: 1404,
+            part: 'DarkMatter',
+            amount: 80,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'SingularityCell',
+            amount: 10,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'QuantumOscillator',
+            amount: 8,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'TemporalProcessor',
+            amount: 4,
+          },
+          {
+            requestingFactoryId: 1404,
+            part: 'QuantumEnergy',
+            amount: 100,
+          },
+        ],
       },
       metrics: {
-        DarkMatter: { part: 'DarkMatter', request: 80, supply: 270, isRequestSatisfied: true, difference: 190 },
-        SingularityCell: { part: 'SingularityCell', request: 10, supply: 10, isRequestSatisfied: true, difference: 0 },
+        DarkMatter: {
+          part: 'DarkMatter',
+          request: 80,
+          supply: 270,
+          isRequestSatisfied: true,
+          difference: 190,
+        },
+        SingularityCell: {
+          part: 'SingularityCell',
+          request: 10,
+          supply: 10,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
         QuantumOscillator: {
           part: 'QuantumOscillator',
           request: 8,
@@ -5964,30 +10150,114 @@ export const createMaelsBigBoiPlan = () => {
           isRequestSatisfied: true,
           difference: 12,
         },
-        TemporalProcessor: { part: 'TemporalProcessor', request: 4, supply: 4, isRequestSatisfied: true, difference: 0 },
-        QuantumEnergy: { part: 'QuantumEnergy', request: 100, supply: 1000, isRequestSatisfied: true, difference: 900 },
+        TemporalProcessor: {
+          part: 'TemporalProcessor',
+          request: 4,
+          supply: 4,
+          isRequestSatisfied: true,
+          difference: 0,
+        },
+        QuantumEnergy: {
+          part: 'QuantumEnergy',
+          request: 100,
+          supply: 1000,
+          isRequestSatisfied: true,
+          difference: 900,
+        },
       },
     },
     exportCalculator: {
-      DarkMatter: { selected: null, factorySettings: {} },
-      SingularityCell: { selected: null, factorySettings: {} },
-      QuantumOscillator: { selected: null, factorySettings: {} },
-      DarkEnergy: { selected: null, factorySettings: {} },
-      TemporalProcessor: { selected: null, factorySettings: {} },
-      QuantumEnergy: { selected: null, factorySettings: {} },
-      CrystalShard: { selected: null, factorySettings: {} },
-      AlienPowerFuel: { selected: null, factorySettings: {} },
+      DarkMatter: {
+        selected: null,
+        factorySettings: {},
+      },
+      SingularityCell: {
+        selected: null,
+        factorySettings: {},
+      },
+      QuantumOscillator: {
+        selected: null,
+        factorySettings: {},
+      },
+      DarkEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
+      TemporalProcessor: {
+        selected: null,
+        factorySettings: {},
+      },
+      QuantumEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
+      CrystalShard: {
+        selected: null,
+        factorySettings: {},
+      },
+      AlienPowerFuel: {
+        selected: null,
+        factorySettings: {},
+      },
     },
     rawResources: {},
     exports: {
-      AlienPowerFuel: { productId: 'AlienPowerFuel', surplus: 4, demands: 0, supply: 4, displayOrder: 6 },
-      CrystalShard: { productId: 'CrystalShard', surplus: 0, demands: 0, supply: 12, displayOrder: 5 },
-      TemporalProcessor: { productId: 'TemporalProcessor', surplus: 0, demands: 4, supply: 4, displayOrder: 4 },
-      QuantumOscillator: { productId: 'QuantumOscillator', surplus: 0, demands: 8, supply: 20, displayOrder: 3 },
-      DarkEnergy: { productId: 'DarkEnergy', surplus: 710, demands: 0, supply: 2060, displayOrder: 3 },
-      QuantumEnergy: { productId: 'QuantumEnergy', surplus: 60, demands: 100, supply: 1000, displayOrder: 2 },
-      SingularityCell: { productId: 'SingularityCell', surplus: 0, demands: 10, supply: 10, displayOrder: 1 },
-      DarkMatter: { productId: 'DarkMatter', surplus: 26, demands: 80, supply: 270, displayOrder: 0 },
+      AlienPowerFuel: {
+        productId: 'AlienPowerFuel',
+        surplus: 4,
+        demands: 0,
+        supply: 4,
+        displayOrder: 6,
+      },
+      CrystalShard: {
+        productId: 'CrystalShard',
+        surplus: 0,
+        demands: 0,
+        supply: 12,
+        displayOrder: 5,
+      },
+      TemporalProcessor: {
+        productId: 'TemporalProcessor',
+        surplus: 0,
+        demands: 4,
+        supply: 4,
+        displayOrder: 4,
+      },
+      QuantumOscillator: {
+        productId: 'QuantumOscillator',
+        surplus: 0,
+        demands: 8,
+        supply: 20,
+        displayOrder: 3,
+      },
+      DarkEnergy: {
+        productId: 'DarkEnergy',
+        surplus: 710,
+        demands: 0,
+        supply: 2060,
+        displayOrder: 3,
+      },
+      QuantumEnergy: {
+        productId: 'QuantumEnergy',
+        surplus: 60,
+        demands: 100,
+        supply: 1000,
+        displayOrder: 2,
+      },
+      SingularityCell: {
+        productId: 'SingularityCell',
+        surplus: 0,
+        demands: 10,
+        supply: 10,
+        displayOrder: 1,
+      },
+      DarkMatter: {
+        productId: 'DarkMatter',
+        surplus: 26,
+        demands: 80,
+        supply: 270,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -5999,90 +10269,215 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 16845.871, produced: 0, difference: -16845.871 },
-    previousInputs: [{ factoryId: 216, outputPart: 'Diamond', amount: 270 }, {
-      factoryId: 3685,
-      outputPart: 'AluminumPlate',
-      amount: 180,
-    }, { factoryId: 5445, outputPart: 'CrystalOscillator', amount: 20 }, {
-      factoryId: 8464,
-      outputPart: 'Cement',
-      amount: 200,
-    }, { factoryId: 422, outputPart: 'IronPlate', amount: 100 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_9',
-      amount: 1,
-    }, { factoryId: 5706, outputPart: 'ComputerSuper', amount: 4 }, {
-      factoryId: 440,
-      outputPart: 'FicsiteMesh',
-      amount: 60,
-    }, { factoryId: 216, outputPart: 'TimeCrystal', amount: 44 }, {
-      factoryId: 4042,
-      outputPart: 'DarkEnergy',
-      amount: 1350,
-    }, { factoryId: 4042, outputPart: 'SAMFluctuator', amount: 20 }, {
-      factoryId: 5445,
-      outputPart: 'QuartzCrystal',
-      amount: 144,
-    }],
+    power: {
+      consumed: 16845.871,
+      produced: 0,
+      difference: -16845.871,
+    },
+    previousInputs: [
+      {
+        factoryId: 216,
+        outputPart: 'Diamond',
+        amount: 270,
+      },
+      {
+        factoryId: 3685,
+        outputPart: 'AluminumPlate',
+        amount: 180,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'CrystalOscillator',
+        amount: 20,
+      },
+      {
+        factoryId: 8464,
+        outputPart: 'Cement',
+        amount: 200,
+      },
+      {
+        factoryId: 422,
+        outputPart: 'IronPlate',
+        amount: 100,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_9',
+        amount: 1,
+      },
+      {
+        factoryId: 5706,
+        outputPart: 'ComputerSuper',
+        amount: 4,
+      },
+      {
+        factoryId: 440,
+        outputPart: 'FicsiteMesh',
+        amount: 60,
+      },
+      {
+        factoryId: 216,
+        outputPart: 'TimeCrystal',
+        amount: 44,
+      },
+      {
+        factoryId: 4042,
+        outputPart: 'DarkEnergy',
+        amount: 1350,
+      },
+      {
+        factoryId: 4042,
+        outputPart: 'SAMFluctuator',
+        amount: 20,
+      },
+      {
+        factoryId: 5445,
+        outputPart: 'QuartzCrystal',
+        amount: 144,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }, {
+  },
+  {
     id: 1404,
     name: 'Phase 5',
-    products: [{
-      id: 'SpaceElevatorPart_10',
-      amount: 10,
-      recipe: 'SpaceElevatorPart_10',
-      displayOrder: 0,
-      requirements: { SpaceElevatorPart_7: { amount: 2.5 }, FicsiteMesh: { amount: 200 }, Water: { amount: 50 } },
-      buildingRequirements: { name: 'blender', amount: 5, powerConsumed: 375 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_11',
-      amount: 2,
-      recipe: 'SpaceElevatorPart_11',
-      displayOrder: 1,
-      requirements: {
-        SpaceElevatorPart_8: { amount: 2 },
-        SingularityCell: { amount: 10 },
-        QuantumOscillator: { amount: 4 },
-        DarkMatter: { amount: 80 },
+    products: [
+      {
+        id: 'SpaceElevatorPart_10',
+        amount: 10,
+        recipe: 'SpaceElevatorPart_10',
+        displayOrder: 0,
+        requirements: {
+          SpaceElevatorPart_7: {
+            amount: 2.5,
+          },
+          FicsiteMesh: {
+            amount: 200,
+          },
+          Water: {
+            amount: 50,
+          },
+        },
+        buildingRequirements: {
+          name: 'blender',
+          amount: 5,
+          powerConsumed: 375,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
-      byProducts: [],
-    }, {
-      id: 'SpaceElevatorPart_12',
-      amount: 4,
-      recipe: 'SpaceElevatorPart_12',
-      displayOrder: 2,
-      requirements: {
-        SpaceElevatorPart_6: { amount: 4 },
-        TemporalProcessor: { amount: 4 },
-        QuantumOscillator: { amount: 4 },
-        QuantumEnergy: { amount: 100 },
+      {
+        id: 'SpaceElevatorPart_11',
+        amount: 2,
+        recipe: 'SpaceElevatorPart_11',
+        displayOrder: 1,
+        requirements: {
+          SpaceElevatorPart_8: {
+            amount: 2,
+          },
+          SingularityCell: {
+            amount: 10,
+          },
+          QuantumOscillator: {
+            amount: 4,
+          },
+          DarkMatter: {
+            amount: 80,
+          },
+        },
+        buildingRequirements: {
+          name: 'manufacturermk1',
+          amount: 2,
+          powerConsumed: 110,
+        },
+        byProducts: [],
       },
-      buildingRequirements: { name: 'quantumencoder', amount: 1, powerConsumed: 1000 },
-      byProducts: [{ id: 'DarkEnergy', byProductOf: 'SpaceElevatorPart_12', amount: 100 }],
-    }],
-    byProducts: [{ id: 'DarkEnergy', amount: 100, byProductOf: 'SpaceElevatorPart_12' }],
-    internalProducts: {},
-    inputs: [{ factoryId: 440, outputPart: 'FicsiteMesh', amount: 200 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_7',
-      amount: 2.5,
-    }, { factoryId: 3911, outputPart: 'SpaceElevatorPart_6', amount: 4 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_8',
-      amount: 2,
-    }, { factoryId: 9960, outputPart: 'DarkMatter', amount: 80 }, {
-      factoryId: 9960,
-      outputPart: 'SingularityCell',
-      amount: 10,
-    }, { factoryId: 9960, outputPart: 'QuantumOscillator', amount: 8 }, {
-      factoryId: 9960,
-      outputPart: 'TemporalProcessor',
-      amount: 4,
-    }, { factoryId: 9960, outputPart: 'QuantumEnergy', amount: 100 }],
+      {
+        id: 'SpaceElevatorPart_12',
+        amount: 4,
+        recipe: 'SpaceElevatorPart_12',
+        displayOrder: 2,
+        requirements: {
+          SpaceElevatorPart_6: {
+            amount: 4,
+          },
+          TemporalProcessor: {
+            amount: 4,
+          },
+          QuantumOscillator: {
+            amount: 4,
+          },
+          QuantumEnergy: {
+            amount: 100,
+          },
+        },
+        buildingRequirements: {
+          name: 'quantumencoder',
+          amount: 1,
+          powerConsumed: 1000,
+        },
+        byProducts: [
+          {
+            id: 'DarkEnergy',
+            byProductOf: 'SpaceElevatorPart_12',
+            amount: 100,
+          },
+        ],
+      },
+    ],
+    byProducts: [
+      {
+        id: 'DarkEnergy',
+        amount: 100,
+        byProductOf: 'SpaceElevatorPart_12',
+      },
+    ],
+    inputs: [
+      {
+        factoryId: 440,
+        outputPart: 'FicsiteMesh',
+        amount: 200,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_7',
+        amount: 2.5,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_6',
+        amount: 4,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_8',
+        amount: 2,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'DarkMatter',
+        amount: 80,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'SingularityCell',
+        amount: 10,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'QuantumOscillator',
+        amount: 8,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'TemporalProcessor',
+        amount: 4,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'QuantumEnergy',
+        amount: 100,
+      },
+    ],
     parts: {
       SpaceElevatorPart_10: {
         amountRequired: 0,
@@ -6282,20 +10677,55 @@ export const createMaelsBigBoiPlan = () => {
       },
     },
     buildingRequirements: {
-      blender: { name: 'blender', amount: 5, powerConsumed: 375 },
-      manufacturermk1: { name: 'manufacturermk1', amount: 2, powerConsumed: 110 },
-      quantumencoder: { name: 'quantumencoder', amount: 1, powerConsumed: 1000 },
+      blender: {
+        name: 'blender',
+        amount: 5,
+        powerConsumed: 375,
+      },
+      manufacturermk1: {
+        name: 'manufacturermk1',
+        amount: 2,
+        powerConsumed: 110,
+      },
+      quantumencoder: {
+        name: 'quantumencoder',
+        amount: 1,
+        powerConsumed: 1000,
+      },
     },
-    totalPower: 1485,
-    dependencies: { requests: {}, metrics: {} },
+    dependencies: {
+      requests: {},
+      metrics: {},
+    },
     exportCalculator: {
-      SpaceElevatorPart_10: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_11: { selected: null, factorySettings: {} },
-      SpaceElevatorPart_12: { selected: null, factorySettings: {} },
-      DarkEnergy: { selected: null, factorySettings: {} },
-      QuantumEnergy: { selected: null, factorySettings: {} },
+      SpaceElevatorPart_10: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_11: {
+        selected: null,
+        factorySettings: {},
+      },
+      SpaceElevatorPart_12: {
+        selected: null,
+        factorySettings: {},
+      },
+      DarkEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
+      QuantumEnergy: {
+        selected: null,
+        factorySettings: {},
+      },
     },
-    rawResources: { Water: { id: 'Water', name: 'Water', amount: 50 } },
+    rawResources: {
+      Water: {
+        id: 'Water',
+        name: 'Water',
+        amount: 50,
+      },
+    },
     exports: {
       SpaceElevatorPart_12: {
         productId: 'SpaceElevatorPart_12',
@@ -6304,9 +10734,27 @@ export const createMaelsBigBoiPlan = () => {
         supply: 4,
         displayOrder: 2,
       },
-      DarkEnergy: { productId: 'DarkEnergy', surplus: 100, demands: 0, supply: 100, displayOrder: 2 },
-      SpaceElevatorPart_11: { productId: 'SpaceElevatorPart_11', surplus: 2, demands: 0, supply: 2, displayOrder: 1 },
-      SpaceElevatorPart_10: { productId: 'SpaceElevatorPart_10', surplus: 10, demands: 0, supply: 10, displayOrder: 0 },
+      DarkEnergy: {
+        productId: 'DarkEnergy',
+        surplus: 100,
+        demands: 0,
+        supply: 100,
+        displayOrder: 2,
+      },
+      SpaceElevatorPart_11: {
+        productId: 'SpaceElevatorPart_11',
+        surplus: 2,
+        demands: 0,
+        supply: 2,
+        displayOrder: 1,
+      },
+      SpaceElevatorPart_10: {
+        productId: 'SpaceElevatorPart_10',
+        surplus: 10,
+        demands: 0,
+        supply: 10,
+        displayOrder: 0,
+      },
     },
     requirementsSatisfied: true,
     usingRawResourcesOnly: false,
@@ -6318,24 +10766,58 @@ export const createMaelsBigBoiPlan = () => {
     tasks: [],
     notes: '',
     powerProducers: [],
-    power: { consumed: 1485, produced: 0, difference: -1485 },
-    previousInputs: [{ factoryId: 440, outputPart: 'FicsiteMesh', amount: 200 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_7',
-      amount: 2.5,
-    }, { factoryId: 3911, outputPart: 'SpaceElevatorPart_6', amount: 4 }, {
-      factoryId: 3911,
-      outputPart: 'SpaceElevatorPart_8',
-      amount: 2,
-    }, { factoryId: 9960, outputPart: 'DarkMatter', amount: 80 }, {
-      factoryId: 9960,
-      outputPart: 'SingularityCell',
-      amount: 10,
-    }, { factoryId: 9960, outputPart: 'QuantumOscillator', amount: 8 }, {
-      factoryId: 9960,
-      outputPart: 'TemporalProcessor',
-      amount: 4,
-    }, { factoryId: 9960, outputPart: 'QuantumEnergy', amount: 100 }],
+    power: {
+      consumed: 1485,
+      produced: 0,
+      difference: -1485,
+    },
+    previousInputs: [
+      {
+        factoryId: 440,
+        outputPart: 'FicsiteMesh',
+        amount: 200,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_7',
+        amount: 2.5,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_6',
+        amount: 4,
+      },
+      {
+        factoryId: 3911,
+        outputPart: 'SpaceElevatorPart_8',
+        amount: 2,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'DarkMatter',
+        amount: 80,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'SingularityCell',
+        amount: 10,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'QuantumOscillator',
+        amount: 8,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'TemporalProcessor',
+        amount: 4,
+      },
+      {
+        factoryId: 9960,
+        outputPart: 'QuantumEnergy',
+        amount: 100,
+      },
+    ],
     dataVersion: '2025-01-03',
-  }]
-}
+  },
+]
