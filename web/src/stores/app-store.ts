@@ -28,11 +28,14 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
+      if (!inited.value) {
+        // Ensure that the factories are initialized before returning them
+        initFactories(currentFactoryTab.value.factories)
+      }
       return currentFactoryTab.value.factories
     },
     set (value) {
       currentFactoryTab.value.factories = value
-      initFactories(true)
     },
   })
 
@@ -153,7 +156,7 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
-  const initFactories = (loadMode = false): void => {
+  const initFactories = (newFactories: Factory[], loadMode = false): void => {
     console.log('appStore: initFactories - load mode:', loadMode)
     let needsCalculation = false
 
@@ -163,7 +166,7 @@ export const useAppStore = defineStore('app', () => {
       alert('Error validating factories: ' + err)
     }
 
-    factories.value.forEach(factory => {
+    newFactories.forEach(factory => {
       // Patch for #222
       if (factory.inSync === undefined) {
         factory.inSync = null
@@ -220,17 +223,32 @@ export const useAppStore = defineStore('app', () => {
       if (factory.previousInputs === undefined) {
         factory.previousInputs = []
       }
+
+      // Delete keys that no longer exist
+      // @ts-ignore
+      if (factory.internalProducts) delete factory.internalProducts
+      // @ts-ignore
+      if (factory.totalPower) delete factory.totalPower
+      // @ts-ignore
+      if (factory.surplus) delete factory.surplus
+      // @ts-ignore
+      if (factory.exports) delete factory.exports
+
+      // Update data version
+      factory.dataVersion = '2025-01-03.2'
     })
 
     if (needsCalculation) {
       console.log('appStore: Forcing calculation of factories due to data migration')
-      calculateFactories(factories.value, gameDataStore.getGameData())
+      calculateFactories(newFactories, gameDataStore.getGameData())
       eventBus.emit('hideLoading')
     }
 
     console.log('appStore: initFactories - completed')
 
     inited.value = true
+    factories.value = newFactories
+    return factories.value
   }
 
   const setFactories = (newFactories: Factory[], loadMode = false) => {
@@ -242,10 +260,11 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    validateFactories(newFactories) // Ensure the data is clean
+    // Set inited to false as the new data may be invalid.
+    inited.value = false
 
-    // Run getFactories to determine if calculations are required
-    initFactories()
+    // Init factories ensuring the data is valid
+    initFactories(newFactories)
 
     // Trigger calculations
     calculateFactories(newFactories, gameData, loadMode)
@@ -255,8 +274,8 @@ export const useAppStore = defineStore('app', () => {
       factory.previousInputs = factory.inputs
     })
 
-    // Will also call the watcher.
     factories.value = newFactories
+    // Will also call the watcher, which sets the current tab data.
 
     eventBus.emit('loadingCompleted')
   }
@@ -325,6 +344,10 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
+  const getFactories = () => {
+    return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
+  }
+
   // When the loader is ready, we will receive an event saying to initiate the load.
   eventBus.on('readyForFirstLoad', () => {
     console.log('appStore: Received readyForFirstLoad event')
@@ -342,8 +365,9 @@ export const useAppStore = defineStore('app', () => {
     getLastEdit,
     setLastSave,
     setLastEdit,
-    getFactories: () => factories.value,
+    getFactories,
     setFactories,
+    initFactories,
     addFactory,
     removeFactory,
     clearFactories,
