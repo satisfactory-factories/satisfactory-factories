@@ -5,6 +5,7 @@
     opacity="1"
     persistent
     @after-enter="afterEnter"
+    data-testid="loading-overlay"
   >
     <v-card class="pa-4 text-center sub-card" width="500">
       <div v-if="toLoad > 0 && !firstLoad" class="mb-2 text-h5">Loading {{ toLoad }} factories...</div>
@@ -92,6 +93,7 @@
   }
 
   const afterEnter = () => {
+    console.log('Loader: afterEnter')
     if (firstLoad) {
       eventBus.emit('readyForFirstLoad')
       firstLoad = false
@@ -104,7 +106,7 @@
     eventBus.on('showLoading', handleShowLoading)
     eventBus.on('hideLoading', handleHideLoading)
     eventBus.on('incrementLoad', handleIncrementLoad)
-    console.log('Loader: Ready')
+    console.log('Loader: Mounted')
   })
 
   onUnmounted(() => {
