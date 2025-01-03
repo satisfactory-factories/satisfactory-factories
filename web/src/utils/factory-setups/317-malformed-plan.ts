@@ -1,7 +1,9 @@
 // This scenario contains a factory that has various errors, namely missing keys and whatnot.
 // This is effectively a mishmash of 0.2 and 0.3 data.
 // This is therefore a great candidate to test current and figure migrations on.
-export const create317Scenario = () => {
+
+// Since this template is badly malformed, we are specifying any[] here as it breaks the interface, heavily.
+export const create317Scenario = (): any[] => {
   return [{
     id: 5257,
     name: 'Iron Plate | Rod | Screw',
