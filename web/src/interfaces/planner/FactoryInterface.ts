@@ -140,6 +140,7 @@ export interface Factory {
   displayOrder: number;
   tasks: FactoryTask[]
   notes: string
+  dataVersion: string
 }
 
 export interface FactoryTab {
