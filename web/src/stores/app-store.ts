@@ -54,8 +54,8 @@ export const useAppStore = defineStore('app', () => {
       setTimeout(() => {
         currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
         inited.value = false
-        initFactories()
-        startLoad(factoryTabs.value[currentFactoryTabIndex.value].factories, true)
+        initFactories(currentFactoryTab.value.factories)
+        startLoad(currentFactoryTab.value.factories, true)
       }, 250)
     })
   })
@@ -156,12 +156,12 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
-  const initFactories = (newFactories: Factory[], loadMode = false): void => {
+  const initFactories = (newFactories: Factory[], loadMode = false): Factory[] => {
     console.log('appStore: initFactories - load mode:', loadMode)
     let needsCalculation = false
 
     try {
-      validateFactories(factories.value) // Ensure the data is clean
+      validateFactories(newFactories) // Ensure the data is clean
     } catch (err) {
       alert('Error validating factories: ' + err)
     }
