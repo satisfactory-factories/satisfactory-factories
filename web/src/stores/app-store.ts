@@ -130,11 +130,6 @@ export const useAppStore = defineStore('app', () => {
         factory.previousInputs = []
       }
 
-      // Add data version so we understand how old the data is (#317)
-      if (factory.dataVersion === undefined) {
-        factory.dataVersion = '2025-01-03.2'
-      }
-
       // Delete keys that no longer exist
       // @ts-ignore
       if (factory.internalProducts) delete factory.internalProducts
@@ -144,6 +139,9 @@ export const useAppStore = defineStore('app', () => {
       if (factory.surplus) delete factory.surplus
       // @ts-ignore
       if (factory.exports) delete factory.exports
+
+      // Update data version
+      factory.dataVersion = '2025-01-03.2'
     })
 
     if (needsCalculation) {
