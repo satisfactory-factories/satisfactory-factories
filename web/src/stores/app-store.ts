@@ -140,6 +140,10 @@ export const useAppStore = defineStore('app', () => {
       if (factory.internalProducts) delete factory.internalProducts
       // @ts-ignore
       if (factory.totalPower) delete factory.totalPower
+      // @ts-ignore
+      if (factory.surplus) delete factory.surplus
+      // @ts-ignore
+      if (factory.exports) delete factory.exports
     })
 
     if (needsCalculation) {
