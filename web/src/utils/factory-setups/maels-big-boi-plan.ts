@@ -10818,6 +10818,6 @@ const bigBoiPlan = [
         amount: 100,
       },
     ],
-    dataVersion: '2025-01-03',
+    dataVersion: '2025-01-03.2',
   },
 ]
