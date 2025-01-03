@@ -30,7 +30,6 @@ export const useAppStore = defineStore('app', () => {
     },
     set (value) {
       currentFactoryTab.value.factories = value
-      initFactories()
     },
   })
 
@@ -63,13 +62,13 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== FACTORY MANAGEMENT
   // This function is needed to ensure that data fixes are applied as we migrate things and change things around.
-  const initFactories = () => {
-    console.log('Initializing factories', factories.value)
+  const initFactories = (newFactories: Factory[]) => {
+    console.log('Initializing factories', newFactories)
     let needsCalculation = false
 
-    validateFactories(factories.value) // Ensure the data is clean
+    validateFactories(newFactories) // Ensure the data is clean
 
-    factories.value.forEach(factory => {
+    newFactories.forEach(factory => {
       // Patch for #222
       if (factory.inSync === undefined) {
         factory.inSync = null
@@ -126,15 +125,20 @@ export const useAppStore = defineStore('app', () => {
       if (factory.previousInputs === undefined) {
         factory.previousInputs = []
       }
+
+      // Add data version so we understand how old the data is (#317)
+      if (factory.dataVersion === undefined) {
+        factory.dataVersion = '2025-01-03'
+      }
     })
 
     if (needsCalculation) {
       console.log('Forcing calculation of factories due to data migration')
-      calculateFactories(factories.value, gameDataStore.getGameData())
+      calculateFactories(newFactories, gameDataStore.getGameData())
     }
 
     inited.value = true
-
+    factories.value = newFactories
     return factories.value
   }
 
@@ -147,7 +151,8 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    validateFactories(newFactories) // Ensure the data is clean
+    // Init factories ensuring the data is valid
+    initFactories(newFactories)
 
     // Trigger calculations
     calculateFactories(newFactories, gameData, loadMode)
@@ -166,7 +171,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeFactory = (id: number) => {
-    const index = initFactories().findIndex(factory => factory.id === id)
+    const index = factories.value.findIndex(factory => factory.id === id)
     if (index !== -1) {
       factories.value.splice(index, 1)
     }
@@ -225,8 +230,8 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
-  // Upon load, force the getFactories() to be ran to ensure migrations are applied
-  initFactories()
+  // Upon load, force the initFactories() to be ran to ensure migrations are applied
+  initFactories(factories.value)
 
   return {
     currentFactoryTab,
@@ -239,8 +244,9 @@ export const useAppStore = defineStore('app', () => {
     getLastEdit,
     setLastSave,
     setLastEdit,
-    getFactories: () => inited.value ? factories.value : initFactories(),
+    getFactories: () => inited.value ? factories.value : initFactories(factories.value),
     setFactories,
+    initFactories,
     addFactory,
     removeFactory,
     clearFactories,
