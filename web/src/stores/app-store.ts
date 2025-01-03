@@ -26,6 +26,10 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
+      if (!inited.value) {
+        // Ensure that the factories are initialized before returning them
+        initFactories(currentFactoryTab.value.factories)
+      }
       return currentFactoryTab.value.factories
     },
     set (value) {
@@ -126,10 +130,18 @@ export const useAppStore = defineStore('app', () => {
         factory.previousInputs = []
       }
 
-      // Add data version so we understand how old the data is (#317)
-      if (factory.dataVersion === undefined) {
-        factory.dataVersion = '2025-01-03'
-      }
+      // Delete keys that no longer exist
+      // @ts-ignore
+      if (factory.internalProducts) delete factory.internalProducts
+      // @ts-ignore
+      if (factory.totalPower) delete factory.totalPower
+      // @ts-ignore
+      if (factory.surplus) delete factory.surplus
+      // @ts-ignore
+      if (factory.exports) delete factory.exports
+
+      // Update data version
+      factory.dataVersion = '2025-01-03.2'
     })
 
     if (needsCalculation) {
@@ -151,6 +163,9 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
+    // Set inited to false as the new data may be invalid.
+    inited.value = false
+
     // Init factories ensuring the data is valid
     initFactories(newFactories)
 
@@ -163,7 +178,7 @@ export const useAppStore = defineStore('app', () => {
     })
 
     factories.value = newFactories
-    // Will also call the watcher.
+    // Will also call the watcher, which sets the current tab data.
   }
 
   const addFactory = (factory: Factory) => {
@@ -230,8 +245,9 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
-  // Upon load, force the initFactories() to be ran to ensure migrations are applied
-  initFactories(factories.value)
+  const getFactories = () => {
+    return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
+  }
 
   return {
     currentFactoryTab,
@@ -244,7 +260,7 @@ export const useAppStore = defineStore('app', () => {
     getLastEdit,
     setLastSave,
     setLastEdit,
-    getFactories: () => inited.value ? factories.value : initFactories(factories.value),
+    getFactories,
     setFactories,
     initFactories,
     addFactory,

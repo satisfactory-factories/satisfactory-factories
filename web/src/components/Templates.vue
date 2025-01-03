@@ -32,7 +32,7 @@
                   >
                     {{ template.name }}
                   </v-btn></td>
-                <td>{{ template.description }}</td>
+                <td class="py-1">{{ template.description }}</td>
               </tr>
             </template>
           </tbody>
@@ -51,6 +51,8 @@
   import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
   import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
+  import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
+  import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
 
   const { setFactories, isDebugMode } = useAppStore()
 
@@ -80,6 +82,13 @@
       isDebug: false,
     },
     {
+      name: 'Mael\'s Big Boi Plan',
+      description: 'A real-life plan created by Maelstrome. This is considered a very large plan, and makes use of all features of the planner.',
+      data: createMaelsBigBoiPlan(),
+      show: true,
+      isDebug: false,
+    },
+    {
       name: 'PowerOnlyImport',
       description: '2 factory setup where on factory is producing the a fuel and another is consuming the fuel (via import) for power generation. Related to issue #268',
       data: create268Scenraio().getFactories(),
@@ -100,10 +109,16 @@
       show: isDebugMode,
       isDebug: true,
     },
+    {
+      name: 'Invalid migration',
+      description: 'Contains a factory plan that has lots of invalid data. This was a real plan that broke the app, and was used to fix the migration code. It is expected that when you load the template, the plan operates effectively. Originally, supply for certain factories e.g. Gun Powder was broken due to missing part data (due to errors).',
+      data: create317Scenario(),
+      show: isDebugMode,
+      isDebug: true,
+    },
   ]
 
   const loadTemplate = (template: Template) => {
-    console.log('Loading template', template)
     setFactories(template.data, true)
     dialog.value = false
   }
