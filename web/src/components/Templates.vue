@@ -53,7 +53,6 @@
   import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
   import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
   import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
-  import eventBus from '@/utils/eventBus'
 
   const { startLoad, isDebugMode } = useAppStore()
 

@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
   import { config } from '@/config/config'
-  import { storeToRefs } from 'pinia'
   import { useAppStore } from '@/stores/app-store'
   import { useAuthStore } from '@/stores/auth-store'
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'

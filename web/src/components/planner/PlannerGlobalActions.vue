@@ -110,8 +110,6 @@
         const parsedPlan = JSON.parse(plan)
         emit('clear-all')
 
-        eventBus.emit('showLoading', parsedPlan.length)
-
         setTimeout(() => {
           startLoad(parsedPlan, true)
         }, 250)
