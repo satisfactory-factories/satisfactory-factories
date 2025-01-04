@@ -11,6 +11,7 @@ export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
   let loadedCount = 0
   const factoryTabs = ref<FactoryTab[]>(JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[])
+  const savedFactories = JSON.parse(localStorage.getItem('preLoadFactories') ?? '[]') as Factory[]
 
   if (factoryTabs.value.length === 0) {
     factoryTabs.value = [
@@ -28,12 +29,22 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
+      // If there is a saved copy of the user's factory data taken before the load process, replace the data with it.
+      // This is to prevent the user losing data should their page refresh mid-way of the load.
+
+      let data = currentFactoryTab.value.factories
+
+      if (savedFactories.length > 0) {
+        console.log('appStore: factories.get: Found saved factories, replacing current factories with saved data.')
+        data = savedFactories // Note, we cannot simply just set it on currentFactoryTab.value, it'll cause a loop.
+      }
+
       // Ensure that the factories are initialized before returning them on the first request
       if (!inited.value) {
         console.log('appStore: factories.get: Factories not inited, initializing')
-        initFactories(currentFactoryTab.value.factories, true)
+        initFactories(data, true)
       }
-      return currentFactoryTab.value.factories
+      return data
     },
     set (value) {
       currentFactoryTab.value.factories = value
@@ -49,13 +60,22 @@ export const useAppStore = defineStore('app', () => {
   )
   const gameDataStore = useGameDataStore()
 
+  const shownFactories = () => {
+    const data = factories.value ?? currentFactoryTab.value.factories ?? []
+    return data.filter(factory => !factory.hidden).length
+  }
+
   // Watch the tab index, if it changes we need to throw up a loading
   watch(currentFactoryTabIndex, () => {
     requestAnimationFrame(() => {
       console.log('appStore: currentFactoryTabIndex watcher: Tab index changed, starting load.')
+
       currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
       inited.value = false
-      eventBus.emit('prepareForLoad', currentFactoryTab.value.factories.length)
+
+      // Loop each factory and enumerate how many are not hidden
+      eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
+
       startLoad(currentFactoryTab.value.factories, true)
     })
   })
@@ -84,6 +104,9 @@ export const useAppStore = defineStore('app', () => {
     const factoriesToLoad = newFactories ?? currentFactoryTab.value.factories
     console.log('appStore: startLoad', factoriesToLoad, 'loadMode:', loadMode)
 
+    // Save the user's factories to ensure there is no data loss
+    localStorage.setItem('preLoadFactories', JSON.stringify(factoriesToLoad))
+
     // Set and initialize factories
     setFactories(factoriesToLoad, loadMode)
 
@@ -91,7 +114,8 @@ export const useAppStore = defineStore('app', () => {
     // await nextTick() // Wait for Vue's reactivity system to complete updating the loader
 
     // Tell loader to prepare for load
-    eventBus.emit('prepareForLoad', factories.value.length)
+    console.log('appStore: startLoad: Factories set, starting load process.')
+    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
   }
 
   const incrementalLoad = async (newFactories: Factory[], loadMode = false) => {
@@ -143,11 +167,10 @@ export const useAppStore = defineStore('app', () => {
 
   const loadingCompleted = () => {
     eventBus.emit('loadingCompleted')
-
-    // Ensure that the data written to local storage is up to date
-    localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
-
     isLoaded.value = true
+
+    // Reset the saved factories
+    localStorage.removeItem('preLoadFactories')
   }
 
   // ==== FACTORY MANAGEMENT
@@ -237,7 +260,6 @@ export const useAppStore = defineStore('app', () => {
     if (needsCalculation) {
       console.log('appStore: Forcing calculation of factories due to data migration')
       calculateFactories(newFactories, gameDataStore.getGameData())
-      eventBus.emit('hideLoading')
     }
 
     console.log('appStore: initFactories - completed')
@@ -344,10 +366,7 @@ export const useAppStore = defineStore('app', () => {
     // If the factories are not initialized, wait for a duration for the app to load then return them.
     if (!inited.value) {
       // Something wants to load these values so prepare the loader
-      eventBus.emit('prepareForLoad', currentFactoryTab.value.factories.length)
-      setTimeout(() => {
-
-      })
+      eventBus.emit('prepareForLoad', { count: currentFactoryTab.value.factories.length, shown: shownFactories() })
     }
     return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
   }
@@ -357,7 +376,12 @@ export const useAppStore = defineStore('app', () => {
     console.log('appStore: Received readyForData event, triggering load.')
 
     console.log('appStore: Informing loader of factory count')
-    eventBus.emit('prepareForLoad', factories.value.length)
+    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
+
+    if (factories.value.length === 0) {
+      loadingCompleted()
+      return
+    }
 
     incrementalLoad(factories.value, true)
   })

@@ -6,12 +6,11 @@ type Events = {
   sessionExpired: undefined;
   dataSynced: undefined;
   dataOutOfSync: undefined;
-  toast: { message: string; type?: 'success' | 'error' };
+  toast: { message: string; type?: 'success' | 'warning' | 'error' };
   loadingCompleted: undefined;
   incrementLoad: { step: string }; // Payload to denote loading or calculation step
-  prepareForLoad: number;
+  prepareForLoad: { count: number, shown: number };
   readyForData: undefined;
-  hideLoading: undefined;
   plannerShowContent: undefined
 };
 

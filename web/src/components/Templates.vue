@@ -82,7 +82,7 @@
       isDebug: false,
     },
     {
-      name: 'Mael\'s Big Boi Plan',
+      name: 'Mael\'s "MegaPlan"',
       description: 'A real-life plan created by Maelstrome. This is considered a very large plan, and makes use of all features of the planner.',
       data: createMaelsBigBoiPlan(),
       show: true,

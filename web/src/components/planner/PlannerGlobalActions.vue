@@ -15,7 +15,7 @@
         color="blue"
         prepend-icon="fas fa-expand-alt"
         variant="tonal"
-        @click="emit('show-all')"
+        @click="expandAll"
       >
         Expand all
       </v-btn>
@@ -96,6 +96,18 @@
   const confirmReplace = () => {
     if (getFactories().length === 0) return true
     return confirmDialog('This will replace your plan. Are you sure?')
+  }
+
+  const expandAll = () => {
+    if (getFactories().length > 10) {
+      eventBus.emit('toast', { message: 'You are expanding a lot of factories. Expect performance issues.', type: 'warning' })
+
+      setTimeout(() => {
+        emit('show-all')
+      }, 250)
+    } else {
+      emit('show-all')
+    }
   }
 
   const copyPlanToClipboard = () => {
