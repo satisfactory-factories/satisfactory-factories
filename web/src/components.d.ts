@@ -26,7 +26,6 @@ declare module 'vue' {
     PlannerFactoryImports: typeof import('./components/planner/PlannerFactoryImports.vue')['default']
     PlannerFactoryList: typeof import('./components/planner/PlannerFactoryList.vue')['default']
     PlannerFactoryNotes: typeof import('./components/planner/PlannerFactoryNotes.vue')['default']
-    PlannerFactoryPlaceholder: typeof import('./components/planner/Placeholders/PlannerFactoryPlaceholder.vue')['default']
     PlannerFactoryPlaceholderList: typeof import('./components/planner/Placeholders/PlannerFactoryPlaceholderList.vue')['default']
     PlannerFactorySatisfaction: typeof import('./components/planner/PlannerFactorySatisfaction.vue')['default']
     PlannerFactorySatisfactionBuildings: typeof import('./components/planner/PlannerFactorySatisfactionBuildings.vue')['default']
