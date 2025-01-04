@@ -14,10 +14,13 @@ This is the order of how things are loaded based on context:
 6. **app-store.vue**: `loadFactoriesIncrementally` pushes each factory to each 
 
 
-## Sequence Diagram text
+## Loading Sequence Diagram
+
+![Loading Sequence Diagram](./loading-sequence-diagram.png)
 
 https://sequencediagram.org/
 
+```text
 title Loading Process
 
 actor user
@@ -68,3 +71,4 @@ note over planner: Renders plan
 ==DOM Renders plan, "massive" delay==
 note over loader:Dialog hides after\nDOM catches up
 ==User sees results==
+```
