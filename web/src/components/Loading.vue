@@ -1,24 +1,24 @@
 <template>
   <v-overlay
     class="d-flex justify-center align-center"
+    data-testid="loading-overlay"
     :model-value="showLoad"
     opacity="1"
     persistent
     @after-enter="afterEnter"
-    data-testid="loading-overlay"
   >
     <v-card class="pa-4 text-center sub-card" width="500">
       <div v-if="toLoad > 0 && !firstLoad" class="mb-2 text-h5">Loading {{ toLoad }} factories...</div>
       <div v-else class="mb-2 text-h5">Loading Planner...</div>
       <v-progress-linear
         class="my-2"
-        :color="!isCalculating ? 'primary' : 'green'"
+        :color="!isRendering ? 'primary' : 'green'"
         height="8"
         :max="toLoad + 1"
         :model-value="loaded"
       />
-      <div v-if="!isCalculating && !firstLoad" class="mt-2 text-body-1">{{ loaded }} out of {{ toLoad }} loaded...</div>
-      <div v-if="isCalculating && !firstLoad" class="mt-2 text-body-1">Rendering...</div>
+      <div v-if="!isRendering" class="mt-2 text-body-1">{{ loaded }} out of {{ toLoad }} loaded...</div>
+      <div v-if="isRendering" class="mt-2 text-body-1">Rendering...</div>
       <div class="mt-2 text-body-2 text-grey">{{ calculatingMessage }}</div>
     </v-card>
   </v-overlay>
@@ -34,7 +34,8 @@
   const toLoad = ref(0) // Total factories to load
   const loaded = ref(0) // Progress bar value
   let firstLoad = true
-  const isCalculating = ref(false) // Flag to indicate calculation step
+  const isRendering = ref(false) // Flag to indicate calculation step
+  const isLoading = ref(false)
 
   const calculatingMessages = [
     'Calculating...',
@@ -60,59 +61,62 @@
     calculatingMessage = calculatingMessages[randomIndex]
   }
 
-  function handleShowLoading (count: number) {
-    console.log('Loader: Showing with factories to load:', count)
+  // This is the entrypoint for the loader, where the dialog is told to be shown and when it is shown the load process is kicked off.
+  function prepareForLoad (count: number) {
+    console.log('Loader: prepareForLoad received. Count to load:', count)
 
-    // If there's no factories to load, stop now.
-    if (count === 0) {
-      console.log('Loader: No factories to load, stopping now')
-      showLoad.value = false
-      eventBus.emit('loadingCompleted')
-      return
-    }
+    chooseRandomMessage()
     showLoad.value = true
     toLoad.value = count
     loaded.value = 0
-    chooseRandomMessage()
-    isCalculating.value = false
-    console.log('Loader: State after showLoading', { showLoad: showLoad.value, toLoad: toLoad.value, loaded: loaded.value, isCalculating: isCalculating.value })
+    isRendering.value = false
+    isLoading.value = true
+    console.log('Loader: State after showLoading', { showLoad: showLoad.value, toLoad: toLoad.value, loaded: loaded.value, isRendering: isRendering.value, isLoading: isLoading.value })
+    console.log('Loader: Waiting for v-overlay afterEnter event...')
   }
 
   function handleHideLoading () {
     console.log('Loader: Hiding')
     showLoad.value = false
-    console.log('Loader: State after hideLoading', { showLoad: showLoad.value, toLoad: toLoad.value, loaded: loaded.value, isCalculating: isCalculating.value })
+    isLoading.value = false
+    console.log('Loader: State after hideLoading', { showLoad: showLoad.value, toLoad: toLoad.value, loaded: loaded.value, isRendering: isRendering.value, isLoading: isLoading.value })
   }
 
   function handleIncrementLoad (payload: { step: string }) {
-    console.log('Loader: Incrementing load', payload)
+    // console.log('Loader: Incrementing load', payload)
     loaded.value += 1
-    if (payload.step === 'calculation') {
-      isCalculating.value = true
+    if (payload.step === 'render') {
+      console.log('Loader: setting isRendering')
+      isRendering.value = true
     }
   }
 
   const afterEnter = () => {
-    console.log('Loader: afterEnter')
+    console.log('Loader: v-overlay afterEnter received')
     if (firstLoad) {
-      eventBus.emit('readyForFirstLoad')
       firstLoad = false
-    } else {
-      eventBus.emit('readyForLoad')
     }
+    eventBus.emit('readyForData')
+  }
+
+  const loadingCompleted = () => {
+    console.log('Loader: got loadingCompleted')
+    isLoading.value = false
   }
 
   onMounted(() => {
-    eventBus.on('showLoading', handleShowLoading)
+    eventBus.on('prepareForLoad', prepareForLoad)
     eventBus.on('hideLoading', handleHideLoading)
     eventBus.on('incrementLoad', handleIncrementLoad)
+    eventBus.on('loadingCompleted', loadingCompleted)
     console.log('Loader: Mounted')
   })
 
   onUnmounted(() => {
-    eventBus.off('showLoading', handleShowLoading)
+    eventBus.off('prepareForLoad', prepareForLoad)
     eventBus.off('hideLoading', handleHideLoading)
     eventBus.off('incrementLoad', handleIncrementLoad)
+    eventBus.off('loadingCompleted', loadingCompleted)
   })
 </script>
 

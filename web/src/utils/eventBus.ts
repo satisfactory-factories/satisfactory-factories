@@ -7,13 +7,10 @@ type Events = {
   dataSynced: undefined;
   dataOutOfSync: undefined;
   toast: { message: string; type?: 'success' | 'error' };
-  loadingReady: undefined;
   loadingCompleted: undefined;
   incrementLoad: { step: string }; // Payload to denote loading or calculation step
-  nextLoad: undefined;
-  readyForLoad: undefined;
-  readyForFirstLoad: undefined;
-  showLoading: number;
+  prepareForLoad: number;
+  readyForData: undefined;
   hideLoading: undefined;
   plannerShowContent: undefined
 };

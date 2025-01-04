@@ -101,17 +101,17 @@
 
   const loadingCompleted = ref(false)
 
-  // Watch for the event that's emitted when appStore has loaded the data
-  eventBus.on('loadingCompleted', () => {
-    console.log('Planner: Got loadingCompleted event')
-    loadingCompleted.value = true
-    console.log('Planner: Factories loaded:', getFactories())
+  // When we are starting a new load we need to unload all the DOM elements
+  eventBus.on('prepareForLoad', () => {
+    loadingCompleted.value = false
+    console.log('Planner: Received prepareForLoad event, marked as unloaded, showing placeholders')
   })
 
-  // When we are starting a new load we need to unload all the DOM elements
-  eventBus.on('showLoading', () => {
-    console.log('Planner: Received showLoading event, marking as unloaded')
-    loadingCompleted.value = false
+  // When everything is loaded and ready to go, then we are ready to start loading things.
+  eventBus.on('loadingCompleted', () => {
+    console.log('Planner: Received loadingCompleted event, initializing factories...')
+    loadingCompleted.value = true
+    initializeFactories()
   })
 
   // ==== WATCHES
@@ -359,12 +359,6 @@
   const isItemRawResource = (item: string): boolean => {
     return !!gameData.items.rawResources[item]
   }
-
-  // When everything is loaded and ready to go, then we are ready to start loading things.
-  eventBus.on('loadingCompleted', () => {
-    console.log('Planner: Received loadingCompleted event, initializing factories...')
-    initializeFactories()
-  })
 
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)

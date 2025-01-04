@@ -120,7 +120,12 @@
     factoriesCopy.value = [...factories]
   }, { deep: true })
 
-  eventBus.on('showLoading', () => {
+  // "Cheat" here by when a load is requested we hide the list
+  eventBus.on('prepareForLoad', () => {
+    show.value = false
+  })
+
+  eventBus.on('incrementLoad', () => {
     show.value = true
   })
 

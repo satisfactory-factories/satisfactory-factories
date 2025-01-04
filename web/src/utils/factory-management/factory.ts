@@ -83,7 +83,7 @@ export const calculateFactory = (
   gameData: DataInterface,
   loadMode = false,
 ) => {
-  console.log('Calculating factory:', factory.name)
+  // console.log('Calculating factory:', factory.name)
 
   factory.rawResources = {}
   factory.parts = {}

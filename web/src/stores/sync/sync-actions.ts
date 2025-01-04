@@ -61,6 +61,12 @@ export class SyncActions {
       return
     }
 
+    // Ask appStore if it's ready
+    if (!this.appStore.isLoaded) {
+      console.log('syncData: appStore is not ready, aborting.')
+      return
+    }
+
     let token
     try {
       token = await this.authStore.getToken()

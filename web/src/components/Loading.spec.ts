@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { screen, fireEvent } from '@testing-library/vue'
+import { describe, expect, it, vi } from 'vitest'
+import { fireEvent, screen } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
 import Loading from '@/components/Loading.vue'
 import eventBus from '@/utils/eventBus'
@@ -33,7 +33,7 @@ describe('Loading.vue', () => {
     })
 
     // 6) Now, afterEnter should have fired, which does console.log + eventBus.emit
-    expect(spy).toHaveBeenCalledWith('readyForFirstLoad')
+    expect(spy).toHaveBeenCalledWith('readyForLoad')
 
     spy.mockRestore()
   })
