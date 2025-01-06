@@ -46,7 +46,6 @@ describe('exports', () => {
       amount: 500,
     })
     factories = [ironIngotFac, ironPlateFac, ironRodsFac]
-    calculateFactories(factories, gameData, true) // Needed otherwise all inputs get blown away
     calculateFactories(factories, gameData)
   })
   describe('getRequestsForFactory', () => {

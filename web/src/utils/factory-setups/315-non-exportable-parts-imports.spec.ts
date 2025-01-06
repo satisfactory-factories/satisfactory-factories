@@ -16,7 +16,6 @@ describe('315 Scenario Plan', () => {
     copperIngots = findFacByName('Copper Ingots Fac', factories)
     copperParts = findFacByName('Copper Parts Fac', factories)
     aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
-    calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
     calculateFactories(factories, gameData)
   })
 

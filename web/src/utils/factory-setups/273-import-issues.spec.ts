@@ -40,7 +40,7 @@ describe('273 import issue', () => {
       amount: 6,
     })
 
-    calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
+    calculateFactories(factories, gameData) // Needed to calculate part metrics, dependencies will not work otherwise.
   })
 
   it('should have added an import to factory 1', () => {

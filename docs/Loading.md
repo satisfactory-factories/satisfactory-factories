@@ -8,9 +8,9 @@ This is the order of how things are loaded based on context:
 
 1. The app is initalized, the Loading.vue component is mounted
 2. **Loader.vue**: As part of the mount, a v-dialog is shown. Once this dialog is shown, it emits an event called `afterEnter`. When that is handled, `readyForLoad` emits via the `eventBus`.
-3. **app-store.vue**: The `readyForLoad` event is listened for and the `startLoad` method is called.
+3. **app-store.vue**: The `readyForLoad` event is listened for and the `prepareLoader` method is called.
 4. **app-store.vue**: `getFactories()` is called, which also calls `initFactories()` in order to ensure the data is valid, migrated and correct.
-5. **app-store.vue**: `startLoad` then actually begins. This function wipes the current factory data (which clears the planner) and then calls `loadFactoriesIncrementally()`.
+5. **app-store.vue**: `prepareLoader` then actually begins. This function wipes the current factory data (which clears the planner) and then calls `loadFactoriesIncrementally()`.
 6. **app-store.vue**: `loadFactoriesIncrementally` pushes each factory to each 
 
 

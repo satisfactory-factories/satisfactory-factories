@@ -76,7 +76,7 @@ describe('dependencies', () => {
         amount: 900,
       })
       // Initialize the metrics
-      calculateFactories(factories, gameData, true)
+      calculateFactories(factories, gameData)
 
       // Update amount
       mockDependantFactory.inputs[0].amount = 1000
@@ -98,9 +98,6 @@ describe('dependencies', () => {
         amount: 1000,
       })
       // Initialize the metrics
-      calculateFactories(factories, gameData, true)
-
-      // Recalculate and check
       calculateFactories(factories, gameData)
       expect(mockFactory.dependencies.requests[mockDependantFactory.id][0].amount).toBe(1000)
       expect(mockFactory.dependencies.metrics.IronIngot.request).toBe(1000)
@@ -122,7 +119,7 @@ describe('dependencies', () => {
         amount: 1000,
       })
       // Initialize the metrics
-      calculateFactories(factories, gameData, true)
+      calculateFactories(factories, gameData)
 
       // Add a new input on the same part
       addInputToFactory(mockDependantFactory, {
@@ -226,8 +223,7 @@ describe('dependencies', () => {
         amount: 123,
       })
 
-      calculateFactories(factories, gameData, true) // Has to be true otherwise imports will be nuked
-      calculateFactories(factories, gameData) // Calculate again to get the dependency metrics
+      calculateFactories(factories, gameData)
 
       expect(mockFactory.dependencies.metrics.IronIngot).toEqual({
         part: 'IronIngot',
@@ -264,8 +260,7 @@ describe('dependencies', () => {
       addInputToFactory(mockDependantFactory, input)
       addInputToFactory(mockDependantFactory2, input)
 
-      calculateFactories(factories, gameData, true) // Has to be true otherwise imports will be nuked
-      calculateFactories(factories, gameData) // Calculate again to get the dependency metrics
+      calculateFactories(factories, gameData)
 
       expect(mockFactory.dependencies.metrics.IronIngot).toStrictEqual({
         part: 'IronIngot',
@@ -292,8 +287,9 @@ describe('dependencies', () => {
 
       addInputToFactory(mockDependantFactory, input)
       addInputToFactory(mockDependantFactory, input2)
-      calculateFactories(factories, gameData, true) // Has to be true otherwise imports will be nuked
-      calculateFactories(factories, gameData) // Calculate again to get the dependency metrics
+
+      calculateFactories(factories, gameData)
+
       removeFactoryDependants(mockFactory, factories)
 
       // Assume the tests work and the dependency is added
@@ -332,8 +328,7 @@ describe('dependencies', () => {
 
       factories = [factory1, factory2]
 
-      calculateFactories(factories, gameData, true) // Has to be true otherwise imports will be nuked
-      calculateFactories(factories, gameData) // Calculate again to get the dependency metrics
+      calculateFactories(factories, gameData)
 
       expect(factory1.parts.IronIngot).toBe(undefined) // This ensures that we haven't got it as an import anymore
       expect(factory1.parts.CopperIngot.exportable).toBe(true)

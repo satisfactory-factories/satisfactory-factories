@@ -86,7 +86,6 @@ describe('inputs', () => {
         amount: 500,
       })
       factories = [ironIngotFac, ironRodsFac, screwsFac]
-      calculateFactories(factories, gameData, true) // Needed otherwise all inputs get blown away
       calculateFactories(factories, gameData)
     })
 
@@ -151,7 +150,6 @@ describe('inputs', () => {
           amount: 500,
         })
         factories.push(ironRodsFac2)
-        calculateFactories(factories, gameData, true)
         calculateFactories(factories, gameData)
         screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
       })
@@ -171,7 +169,7 @@ describe('inputs', () => {
 
       it('should return empty if all possible import parts have been exhausted', () => {
         const factories = create315Scenario().getFactories()
-        calculateFactories(factories, gameData, true)
+        calculateFactories(factories, gameData)
 
         const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
 
@@ -194,7 +192,6 @@ describe('inputs', () => {
             recipe: 'ModularFrame',
           })
 
-          calculateFactories(factories, gameData, true)
           calculateFactories(factories, gameData)
           ironRodsPossibleImports = calculatePossibleImports(ironRodsFac, getExportableFactories(factories))
           screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
@@ -241,7 +238,7 @@ describe('inputs', () => {
           })
 
           // Set everything up
-          calculateFactories([fac, sourceFac], gameData, true)
+          calculateFactories([fac, sourceFac], gameData)
 
           const candidates = calculatePossibleImports(fac, getExportableFactories([sourceFac]))
 
@@ -319,7 +316,7 @@ describe('inputs', () => {
         const ironPlatesFac = findFacByName('Iron Plates', factories)
 
         // Calculate factories
-        calculateFactories(factories, gameData, true)
+        calculateFactories(factories, gameData)
 
         const importCandidates = calculatePossibleImports(factories[2], getExportableFactories(factories))
 
@@ -348,7 +345,7 @@ describe('inputs', () => {
         const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
 
         // Calculate factories
-        calculateFactories(factories, gameData, true)
+        calculateFactories(factories, gameData)
 
         // Now check that we should NOT be able to select copper ingots from the copperPartsFac within aluminiumPartsFac.
         const partResult = importPartSelections(copperParts, aluminiumPartsFac, 1)

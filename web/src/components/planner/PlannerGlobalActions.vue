@@ -77,7 +77,7 @@
   import eventBus from '@/utils/eventBus'
   import { confirmDialog } from '@/utils/helpers'
 
-  const { getFactories, startLoad } = useAppStore()
+  const { getFactories, prepareLoader } = useAppStore()
 
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
@@ -123,7 +123,7 @@
         emit('clear-all')
 
         setTimeout(() => {
-          startLoad(parsedPlan, true)
+          prepareLoader(parsedPlan)
         }, 250)
       } catch (err) {
         if (err instanceof Error) {

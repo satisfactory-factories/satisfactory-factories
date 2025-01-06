@@ -15,8 +15,7 @@ describe('Simple factory plan', () => {
     factories = templateInstance.getFactories()
     ingotFac = findFacByName('Iron Ingots', factories)
     ironPlateFac = findFacByName('Iron Plates', factories)
-    calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
-    calculateFactories(factories, gameData)
+    calculateFactories(factories, gameData) // Needed to calculate part metrics, dependencies will not work otherwise.
   })
   describe('Iron Ingots', () => {
     it('should have a name', () => {
