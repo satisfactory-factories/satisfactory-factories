@@ -11,7 +11,6 @@ export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
   let loadedCount = 0
   const factoryTabs = ref<FactoryTab[]>(JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[])
-  const savedFactories = JSON.parse(localStorage.getItem('preLoadFactories') ?? '[]') as Factory[]
 
   if (factoryTabs.value.length === 0) {
     factoryTabs.value = [
@@ -29,22 +28,12 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
-      // If there is a saved copy of the user's factory data taken before the load process, replace the data with it.
-      // This is to prevent the user losing data should their page refresh mid-way of the load.
-
-      let data = currentFactoryTab.value.factories
-
-      if (savedFactories.length > 0) {
-        console.log('appStore: factories.get: Found saved factories, replacing current factories with saved data.')
-        data = savedFactories // Note, we cannot simply just set it on currentFactoryTab.value, it'll cause a loop.
-      }
-
       // Ensure that the factories are initialized before returning them on the first request
       if (!inited.value) {
         console.log('appStore: factories.get: Factories not inited, initializing')
-        initFactories(data, true)
+        initFactories(currentFactoryTab.value.factories, true)
       }
-      return data
+      return currentFactoryTab.value.factories
     },
     set (value) {
       currentFactoryTab.value.factories = value
@@ -76,7 +65,7 @@ export const useAppStore = defineStore('app', () => {
       // Loop each factory and enumerate how many are not hidden
       eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
 
-      startLoad(currentFactoryTab.value.factories, true)
+      prepareLoader(currentFactoryTab.value.factories, true)
     })
   })
 
@@ -99,13 +88,10 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('lastSave', lastSave.value.toISOString())
   }
 
-  const startLoad = async (newFactories?: Factory[], loadMode = false) => {
+  const prepareLoader = async (newFactories?: Factory[], loadMode = false) => {
     isLoaded.value = false
-    const factoriesToLoad = newFactories ?? currentFactoryTab.value.factories
+    const factoriesToLoad = newFactories ?? factories.value
     console.log('appStore: startLoad', factoriesToLoad, 'loadMode:', loadMode)
-
-    // Save the user's factories to ensure there is no data loss
-    localStorage.setItem('preLoadFactories', JSON.stringify(factoriesToLoad))
 
     // Set and initialize factories
     setFactories(factoriesToLoad, loadMode)
@@ -118,16 +104,41 @@ export const useAppStore = defineStore('app', () => {
     eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
   }
 
-  const incrementalLoad = async (newFactories: Factory[], loadMode = false) => {
+  // When the loader is ready, we will receive an event saying to initiate the load.
+  eventBus.on('readyForData', () => {
+    console.log('appStore: Received readyForData event, triggering load.')
+
+    beginLoading(factories.value, true)
+  })
+
+  const beginLoading = async (newFactories: Factory[], loadMode = false) => {
     console.log('appStore: loadFactoriesIncrementally: start', newFactories, 'loadMode', loadMode)
     loadedCount = 0
 
     // Reset the factories currently loaded
     currentFactoryTab.value.factories = []
 
+    const attemptedFactories = JSON.parse(localStorage.getItem('preLoadFactories') ?? '[]') as Factory[]
+
+    // If there are factories saved from a previous load attempt, replace them now
+    if (attemptedFactories.length > 0) {
+      console.log('appStore: beginLoading: Found previous factories, loading them instead.')
+      newFactories = attemptedFactories
+      eventBus.emit('toast', { message: 'Unsuccessful load detected, loading previous factory data.', type: 'warning' })
+    } else {
+      // Save the user's factories to ensure there is no data loss
+      localStorage.setItem('preLoadFactories', JSON.stringify(newFactories))
+    }
+
+    // If there's nothing to load, just finish
     if (newFactories.length === 0) {
+      loadingCompleted()
       return
     }
+
+    // Inform loader of the counts. Note this will not trigger readyForData again as the v-dialog is already open at this point
+    // So the loader's value are just simply updated.
+    eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories() })
 
     const loadNextFactory = async () => {
       // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
@@ -371,21 +382,6 @@ export const useAppStore = defineStore('app', () => {
     return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
   }
 
-  // When the loader is ready, we will receive an event saying to initiate the load.
-  eventBus.on('readyForData', () => {
-    console.log('appStore: Received readyForData event, triggering load.')
-
-    console.log('appStore: Informing loader of factory count')
-    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
-
-    if (factories.value.length === 0) {
-      loadingCompleted()
-      return
-    }
-
-    incrementalLoad(factories.value, true)
-  })
-
   return {
     currentFactoryTab,
     currentFactoryTabIndex,
@@ -408,6 +404,6 @@ export const useAppStore = defineStore('app', () => {
     removeCurrentTab,
     getSatisfactionBreakdowns,
     changeSatisfactoryBreakdowns,
-    startLoad,
+    startLoad: prepareLoader,
   }
 })
