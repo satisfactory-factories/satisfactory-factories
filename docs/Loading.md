@@ -42,7 +42,7 @@ eventBus--#red>planner:recieves prepareForLoad
 eventBus--#red>factoryList:recieves prepareForLoad
 note over loader:Updates factory total
 note over planner,factoryList:Planner and list wiped\nPlanner shows placeholders
-abox left of appStore: incrementalLoad
+abox left of appStore: beginLoading
 activate appStore
 activate eventBus
 activate loader
