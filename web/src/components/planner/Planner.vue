@@ -94,7 +94,7 @@
   const { getGameData } = useGameDataStore()
   const gameData = getGameData()
 
-  const { getFactories, setFactories, clearFactories, addFactory, startLoad } = useAppStore()
+  const { getFactories, setFactories, clearFactories, addFactory, prepareLoader } = useAppStore()
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const helpText = ref(localStorage.getItem('helpText') === 'true')
@@ -351,9 +351,6 @@
   const initializeFactories = () => {
     Object.assign(worldRawResources, generateRawResources(gameData))
     updateWorldRawResources(gameData)
-
-    // Once we're fully loaded, hide the loading screen
-    eventBus.emit('hideLoading')
   }
 
   const isItemRawResource = (item: string): boolean => {
@@ -384,7 +381,7 @@
     }
     closeIntro()
     factoriesToLoad = complexDemoPlan().getFactories()
-    startLoad(factoriesToLoad)
+    prepareLoader(factoriesToLoad)
   }
 
   const closeIntro = () => {
