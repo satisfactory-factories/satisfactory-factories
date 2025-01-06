@@ -49,9 +49,8 @@ export const useAppStore = defineStore('app', () => {
   )
   const gameDataStore = useGameDataStore()
 
-  const shownFactories = () => {
-    const data = factories.value ?? currentFactoryTab.value.factories ?? []
-    return data.filter(factory => !factory.hidden).length
+  const shownFactories = (factories: Factory[]) => {
+    return factories.filter(factory => !factory.hidden).length
   }
 
   // Watch the tab index, if it changes we need to throw up a loading
@@ -63,7 +62,10 @@ export const useAppStore = defineStore('app', () => {
       inited.value = false
 
       // Loop each factory and enumerate how many are not hidden
-      eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
+      eventBus.emit('prepareForLoad', {
+        count: factories.value.length,
+        shown: shownFactories(currentFactoryTab.value.factories),
+      })
 
       prepareLoader(currentFactoryTab.value.factories, true)
     })
@@ -101,7 +103,7 @@ export const useAppStore = defineStore('app', () => {
 
     // Tell loader to prepare for load
     console.log('appStore: startLoad: Factories set, starting load process.')
-    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories() })
+    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories(factories.value) })
   }
 
   // When the loader is ready, we will receive an event saying to initiate the load.
@@ -138,7 +140,7 @@ export const useAppStore = defineStore('app', () => {
 
     // Inform loader of the counts. Note this will not trigger readyForData again as the v-dialog is already open at this point
     // So the loader's value are just simply updated.
-    eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories() })
+    eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories(newFactories) })
 
     const loadNextFactory = async () => {
       // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
@@ -377,7 +379,10 @@ export const useAppStore = defineStore('app', () => {
     // If the factories are not initialized, wait for a duration for the app to load then return them.
     if (!inited.value) {
       // Something wants to load these values so prepare the loader
-      eventBus.emit('prepareForLoad', { count: currentFactoryTab.value.factories.length, shown: shownFactories() })
+      eventBus.emit('prepareForLoad', {
+        count: currentFactoryTab.value.factories.length,
+        shown: shownFactories(currentFactoryTab.value.factories),
+      })
     }
     return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
   }
