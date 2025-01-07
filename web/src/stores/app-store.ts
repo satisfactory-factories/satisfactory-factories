@@ -57,16 +57,7 @@ export const useAppStore = defineStore('app', () => {
   watch(currentFactoryTabIndex, () => {
     requestAnimationFrame(() => {
       console.log('appStore: currentFactoryTabIndex watcher: Tab index changed, starting load.')
-
       currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
-      inited.value = false
-
-      // Loop each factory and enumerate how many are not hidden
-      eventBus.emit('prepareForLoad', {
-        count: factories.value.length,
-        shown: shownFactories(currentFactoryTab.value.factories),
-      })
-
       prepareLoader(currentFactoryTab.value.factories)
     })
   })
@@ -349,6 +340,10 @@ export const useAppStore = defineStore('app', () => {
 
     factoryTabs.value.splice(currentFactoryTabIndex.value, 1)
     currentFactoryTabIndex.value = Math.min(currentFactoryTabIndex.value, factoryTabs.value.length - 1)
+
+    // We now need to force a load of the factories, because the tab index may not change, but the factories will have.
+    console.log('appStore: removeCurrentTab: Tab removed, preparing loader.')
+    prepareLoader(factoryTabs.value[currentFactoryTabIndex.value].factories)
   }
   // ==== END TAB MANAGEMENT
 
