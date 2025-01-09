@@ -15,7 +15,7 @@ import { gameData } from '@/utils/gameData'
 import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
 import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 import { calculateDependencies } from '@/utils/factory-management/dependencies'
-import { create251Scenario } from '@/utils/factory-setups/251-redundant-import'
+import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -586,7 +586,7 @@ describe('inputs', () => {
     let factories: Factory[]
     let ironPlateFac: Factory
     beforeEach(() => {
-      factories = create251Scenario().getFactories()
+      factories = create324Scenario().getFactories()
       ironPlateFac = findFacByName('Iron Plates', factories)
     })
 

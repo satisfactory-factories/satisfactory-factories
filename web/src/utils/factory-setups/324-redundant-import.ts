@@ -3,7 +3,7 @@ import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-export const create251Scenario = (): { getFactories: () => Factory[] } => {
+export const create324Scenario = (): { getFactories: () => Factory[] } => {
   // Local variables to ensure a fresh instance on every call
   const ironIngotFac = newFactory('Iron Ingots', 0, 1)
   const ironIngotFac2 = newFactory('Iron Ingots 2', 1, 2)
