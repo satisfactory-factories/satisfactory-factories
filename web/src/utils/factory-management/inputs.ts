@@ -193,3 +193,91 @@ export const calculateAbleToImport = (factory: Factory, importCandidates: Factor
 
   return true
 }
+
+export const isImportRedundant = (importIndex: number, factory: Factory): boolean | null => {
+  const input = factory.inputs[importIndex]
+  if (!input?.outputPart) {
+    return null
+  }
+
+  if (input.amount === 0) {
+    return null // If the amount is 0, it's technically redundant, but it could also be the user hasn't chosen anything yet. They already get a chip saying no amount is set.
+  }
+
+  const partData = factory.parts[input.outputPart]
+
+  if (!partData) {
+    console.error(`inputs: isImportRedundant: Part data for part ${input.outputPart} not found in factory ${factory.id}!`)
+    return null
+  }
+
+  // If the factory is producing the products internally, and the amount that it produces exceeds the amount imported, then the import is redundant.
+
+  const required = partData.amountRequired
+  const produced = partData.amountSuppliedViaProduction
+
+  // The remainder of the part that needs to be imported
+  const importsNeeded = required - produced
+
+  // If there's no requirement, then the import is redundant.
+  if (required <= 0) {
+    return true
+  }
+
+  // If there is sufficient internal production, then all imports are redundant
+  if (importsNeeded <= 0) {
+    return true
+  }
+
+  // Now, we also need to take into account other imports. If other imports fully satisfy the requirement, then this import is redundant.
+  // Loop through all the inputs and see if the other imports fully satisfy the requirement.
+  const otherImports = factory.inputs.filter((_, index) => index !== importIndex)
+  const otherImportsValues: number[] = []
+  otherImports.forEach(input => {
+    if (!input.outputPart) return 0
+    otherImportsValues.push(input.amount ?? 0)
+  })
+  const otherImportsTotal = otherImportsValues.reduce((acc, val) => acc + val, 0)
+
+  // If there are no other imports then the import is required.
+  if (otherImports.length === 0) return false
+
+  // In a multi-input scenario, if there's an over supply, inform the user one of their imports are redundant.
+  // Try to be deterministic by favouring the largest import.
+  const largestOtherImport = Math.max(...otherImportsValues)
+
+  // If the current import is the largest, then it's not redundant.
+  // This does annoyingly mean that if they are both EXACTLY the same, both will be redundant. Can't really get around it.
+  if (input.amount >= largestOtherImport) return false
+
+  const requirementAfterOtherImports = importsNeeded - otherImportsTotal
+
+  // If the other imports don't fully satisfy the requirement, then the import is not redundant.
+  return requirementAfterOtherImports <= 0
+}
+
+export const satisfyImport = (importIndex: number, factory: Factory): void | null => {
+  const input = factory.inputs[importIndex]
+  if (!input.outputPart) {
+    console.error('updateInputToSatisfy: No output part selected for input:', input)
+    return null
+  }
+
+  // Gather all the other imports of the same part
+  const otherImports = factory.inputs.filter((_, index) =>
+    index !== importIndex &&
+    factory.inputs[index].outputPart === input.outputPart
+  )
+
+  // Calculate the total amount of the part that is being imported
+  const totalImported = otherImports.reduce((acc, input) => {
+    return acc + input.amount
+  }, 0)
+
+  // Calculate the remaining amount of the part that needs to be imported
+  const partData = factory.parts[input.outputPart]
+  const difference = partData.amountRequired -
+    partData.amountSuppliedViaProduction -
+    totalImported
+  input.amount = difference > 0 ? difference : 0 // Don't set it to negatives
+}

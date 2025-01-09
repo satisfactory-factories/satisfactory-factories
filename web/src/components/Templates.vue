@@ -53,6 +53,7 @@
   import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
   import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
   import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
+  import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
 
   const { prepareLoader, isDebugMode } = useAppStore()
 
@@ -113,6 +114,13 @@
       name: 'Invalid migration',
       description: 'Contains a factory plan that has lots of invalid data. This was a real plan that broke the app, and was used to fix the migration code. It is expected that when you load the template, the plan operates effectively. Originally, supply for certain factories e.g. Gun Powder was broken due to missing part data (due to errors).',
       data: create317Scenario(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: 'Redundant Imports',
+      description: 'Contains a factory plan where there is a redundant import (on Iron Plates Fac). The UI should show this properly as a warning.',
+      data: create324Scenario().getFactories(),
       show: isDebugMode,
       isDebug: true,
     },

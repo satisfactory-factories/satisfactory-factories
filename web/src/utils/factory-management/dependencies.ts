@@ -184,7 +184,7 @@ export const calculateFactoryDependencies = (
 
     // Check if the provider factory has the part that the dependant factory is requesting.
     if (!loadMode && !provider.parts[input.outputPart]) {
-      console.error(`Factory ${provider.name} (${provider.id}) does not have the part ${input.outputPart} requested by ${factory.name} (${factory.id}). Removing input.`)
+      console.error(`dependencies: calculateFactoryDependencies: Factory ${provider.name} (${provider.id}) does not have the part ${input.outputPart} requested by ${factory.name} (${factory.id}). Removing input.`)
       factory.inputs = factory.inputs.filter(i => i !== input)
       return
     }

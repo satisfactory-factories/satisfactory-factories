@@ -8,12 +8,14 @@ import {
   addInputToFactory, calculateAbleToImport,
   calculateImportCandidates,
   calculatePossibleImports, importFactorySelections,
-  importPartSelections,
+  importPartSelections, isImportRedundant, satisfyImport,
 } from '@/utils/factory-management/inputs'
 import { getExportableFactories } from '@/utils/factory-management/exports'
 import { gameData } from '@/utils/gameData'
 import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
 import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
+import { calculateDependencies } from '@/utils/factory-management/dependencies'
+import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -403,6 +405,251 @@ describe('inputs', () => {
         const result = calculateAbleToImport(fuelGenFactory, [fuelFactory])
         expect(result).toBe(true)
       })
+    })
+  })
+
+  describe('isImportRedundant', () => {
+    it('should return null if the input does not exist', () => {
+      expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
+    it('should return null if the input amount is set to 0', () => {
+      mockFactory.inputs[0] = {
+        amount: 0,
+        outputPart: 'foo',
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
+    it('should return null if the input output part does not exist', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: null,
+        amount: 123,
+      }
+      expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
+    it('should return null if the part data does not exist', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
+      mockFactory.parts = {}
+      expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
+    it('should return true if there is no requirement for the product', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
+      mockFactory.parts = {
+        foo: {
+          amountRequired: 0,
+          amountSuppliedViaProduction: 100,
+        },
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(true)
+    })
+    it('should return true if there is no requirement for import', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
+      mockFactory.parts = {
+        foo: {
+          amountRequired: 100,
+          amountSuppliedViaProduction: 100,
+        },
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(true)
+    })
+    describe('Internal production', () => {
+      let mockFactory2: Factory
+      beforeEach(() => {
+        mockFactory2 = newFactory('Iron Plates')
+        addProductToFactory(mockFactory, {
+          id: 'IronIngot',
+          amount: 1000,
+          recipe: 'IngotIron',
+        })
+        addInputToFactory(mockFactory2, {
+          factoryId: mockFactory.id,
+          outputPart: 'IronIngot',
+          amount: 500, // It's way too high but the function isn't checking this
+        })
+        // Create demand for Iron Ingots
+        addProductToFactory(mockFactory2, {
+          id: 'IronPlate',
+          amount: 100,
+          recipe: 'IronPlate',
+        })
+        // Add ingot internal production to factory2
+        addProductToFactory(mockFactory2, {
+          id: 'IronIngot',
+          amount: 100, // This will result in a 50 import deficit
+          recipe: 'IngotIron',
+        })
+        calculateDependencies([mockFactory, mockFactory2], gameData, true)
+        calculateFactories([mockFactory, mockFactory2], gameData)
+      })
+
+      it('should return false if there is no internal production', () => {
+        mockFactory2.products[1].amount = 0
+        calculateFactories([mockFactory, mockFactory2], gameData)
+        expect(isImportRedundant(0, mockFactory2)).toBe(false)
+      })
+      it('should return false if there is insufficient internal production', () => {
+        // Required is 150, produced is 100, should be 50 left needed from imports
+        mockFactory2.products[1].amount = 100
+        calculateFactories([mockFactory, mockFactory2], gameData)
+        expect(isImportRedundant(0, mockFactory2)).toBe(false)
+      })
+      it('should return true if there is sufficient internal production', () => {
+        mockFactory2.products[1].amount = 2000
+        calculateFactories([mockFactory, mockFactory2], gameData)
+        expect(isImportRedundant(0, mockFactory2)).toBe(true)
+      })
+
+      describe('Other imports', () => {
+        let mockFactory3: Factory
+        beforeEach(() => {
+          mockFactory3 = newFactory('Iron Ingots 2')
+          addProductToFactory(mockFactory3, {
+            id: 'IronIngot',
+            amount: 1000,
+            recipe: 'IngotIron',
+          })
+          addInputToFactory(mockFactory2, {
+            factoryId: mockFactory3.id,
+            outputPart: 'IronIngot',
+            amount: 100,
+          })
+        })
+
+        // Import favouring largest
+        it('should return false if the current import is the largest', () => {
+          mockFactory2.inputs[0].amount = 40
+          mockFactory2.inputs[1].amount = 15
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          expect(isImportRedundant(0, mockFactory2)).toBe(false)
+        })
+        it('should return true if the current import is the smallest', () => {
+          mockFactory2.inputs[0].amount = 40
+          mockFactory2.inputs[1].amount = 15
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          expect(isImportRedundant(1, mockFactory2)).toBe(false)
+        })
+
+        // Import redundancy if other imports can satisfy the requirement
+        it('should return true if there are other inputs that satisfy the requirement fully', () => {
+          mockFactory2.inputs[0].amount = 75 // Satisfies (50) fully
+          mockFactory2.inputs[1].amount = 5
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          expect(isImportRedundant(1, mockFactory2)).toBe(true)
+        })
+        it('should return false if other imports do not fully satisfy', () => {
+          // Decrease input from factory 2 to be lower than the requirement
+          mockFactory2.inputs[0].amount = 40 // Import requirement is 50
+          mockFactory2.inputs[1].amount = 24
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
+          expect(isImportRedundant(1, mockFactory2)).toBe(false)
+        })
+
+        it('should handle more than 2 inputs correctly', () => {
+          const mockFactory4 = newFactory('Iron Ingots 3')
+          addProductToFactory(mockFactory4, {
+            id: 'IronIngot',
+            amount: 1000,
+            recipe: 'IngotIron',
+          })
+          addInputToFactory(mockFactory2, {
+            factoryId: mockFactory4.id,
+            outputPart: 'IronIngot',
+            amount: 100,
+          })
+          mockFactory2.inputs[0].amount = 75
+          mockFactory2.inputs[1].amount = 25
+          mockFactory2.inputs[2].amount = 50
+
+          expect(isImportRedundant(2, mockFactory2)).toBe(true)
+        })
+      })
+    })
+  })
+  describe('satisfyImport', () => {
+    let factories: Factory[]
+    let ironPlateFac: Factory
+    beforeEach(() => {
+      factories = create324Scenario().getFactories()
+      ironPlateFac = findFacByName('Iron Plates', factories)
+    })
+
+    it('should return undefined if there is no outputPart', () => {
+      ironPlateFac.inputs[0].outputPart = null
+      expect(satisfyImport(0, ironPlateFac)).toBe(null)
+    })
+
+    it('should satisfy the import amount when there are no other factories', () => {
+      ironPlateFac.inputs[0].amount = 50
+
+      // Remove the additional import in iron plates
+      ironPlateFac.inputs = ironPlateFac.inputs.slice(0, 1)
+
+      calculateFactories(factories, gameData)
+      satisfyImport(0, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(75)
+    })
+    it('should trim the import amount when there are no other factories', () => {
+      ironPlateFac.inputs[0].amount = 100
+
+      // Remove the additional import in iron plates
+      ironPlateFac.inputs = ironPlateFac.inputs.slice(0, 1)
+
+      calculateFactories(factories, gameData)
+      satisfyImport(0, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(75)
+    })
+
+    it('should update the import based on other imports', () => {
+      // Set up the imports so import index 1 should be 25
+      ironPlateFac.inputs[0].amount = 50
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      satisfyImport(1, ironPlateFac)
+      expect(ironPlateFac.inputs[0].amount).toBe(50) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(25)
+    })
+
+    it('should do nothing if the requirements are exact', () => {
+      // Set up the imports so import index 1 should be 25
+      ironPlateFac.inputs[0].amount = 75
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      satisfyImport(1, ironPlateFac)
+      expect(ironPlateFac.inputs[0].amount).toBe(75) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(0)
+    })
+
+    it('should not set the updated amount to negative values', () => {
+      ironPlateFac.inputs[0].amount = 100
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      // Potentially this could be set to -25 for input 1
+      satisfyImport(1, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(100) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(0) // Shouldn't be -25
     })
   })
 })
