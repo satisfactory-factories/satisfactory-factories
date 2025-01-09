@@ -171,11 +171,6 @@ export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) =>
     return false
   }
 
-  if (product.amount === 0) {
-    // Product is not being produced
-    return true
-  }
-
   const partRequired = factory.parts[product.id]?.amountRequired
 
   return partRequired <= 0
