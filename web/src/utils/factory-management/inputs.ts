@@ -271,7 +271,8 @@ export const satisfyImport = (importIndex: number, factory: Factory): void => {
 
   // Calculate the remaining amount of the part that needs to be imported
   const partData = factory.parts[input.outputPart]
-  input.amount = partData.amountRequired -
+  const difference = partData.amountRequired -
     partData.amountSuppliedViaProduction -
     totalImported
+  input.amount = difference > 0 ? difference : 0 // Don't set it to negatives
 }

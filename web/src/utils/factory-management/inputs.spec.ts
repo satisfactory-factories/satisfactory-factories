@@ -582,5 +582,17 @@ describe('inputs', () => {
       expect(ironPlateFac.inputs[0].amount).toBe(75) // Shouldn't have changed
       expect(ironPlateFac.inputs[1].amount).toBe(0)
     })
+
+    it('should not set the updated amount to negative values', () => {
+      ironPlateFac.inputs[0].amount = 100
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      // Potentially this could be set to -25 for input 1
+      satisfyImport(1, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(100) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(0) // Shouldn't be -25
+    })
   })
 })
