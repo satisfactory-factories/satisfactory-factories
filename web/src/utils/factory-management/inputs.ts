@@ -241,3 +241,28 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
 
   return imported === 0 || remainingToImport < 0 || remainingToImportAfterOtherImports < 0
 }
+
+export const satisfyImport = (importIndex: number, factory: Factory): void => {
+  const input = factory.inputs[importIndex]
+  if (!input.outputPart) {
+    console.error('updateInputToSatisfy: No output part selected for input:', input)
+    return
+  }
+
+  // Gather all the other imports of the same part
+  const otherImports = factory.inputs.filter((_, index) =>
+    index !== importIndex &&
+    factory.inputs[index].outputPart === input.outputPart
+  )
+
+  // Calculate the total amount of the part that is being imported
+  const totalImported = otherImports.reduce((acc, input) => {
+    return acc + input.amount
+  }, 0)
+
+  // Calculate the remaining amount of the part that needs to be imported
+  const partData = factory.parts[input.outputPart]
+  input.amount = partData.amountRequired -
+    partData.amountSuppliedViaProduction -
+    totalImported
+}

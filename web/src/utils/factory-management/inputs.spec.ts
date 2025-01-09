@@ -8,13 +8,14 @@ import {
   addInputToFactory, calculateAbleToImport,
   calculateImportCandidates,
   calculatePossibleImports, importFactorySelections,
-  importPartSelections, isImportRedundant,
+  importPartSelections, isImportRedundant, satisfyImport,
 } from '@/utils/factory-management/inputs'
 import { getExportableFactories } from '@/utils/factory-management/exports'
 import { gameData } from '@/utils/gameData'
 import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
 import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 import { calculateDependencies } from '@/utils/factory-management/dependencies'
+import { create251Scenario } from '@/utils/factory-setups/251-redundant-import'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -510,6 +511,35 @@ describe('inputs', () => {
           expect(isImportRedundant(0, mockFactory2)).toBe(false)
         })
       })
+    })
+  })
+  describe('satisfyImport', () => {
+    let factories: Factory[]
+    let ironPlateFac: Factory
+    beforeEach(() => {
+      factories = create251Scenario().getFactories()
+      ironPlateFac = findFacByName('Iron Plates', factories)
+    })
+
+    it('should update the import amount when there are no other factories', () => {
+      // Remove the additional import in iron plates
+      ironPlateFac.inputs = ironPlateFac.inputs.slice(0, 1)
+
+      calculateFactories(factories, gameData)
+      satisfyImport(0, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(75)
+    })
+
+    it('should update the import based on other imports', () => {
+      // Set up the imports so import index 1 should be 25
+      ironPlateFac.inputs[0].amount = 50
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      satisfyImport(1, ironPlateFac)
+      expect(ironPlateFac.inputs[0].amount).toBe(50) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(25)
     })
   })
 })

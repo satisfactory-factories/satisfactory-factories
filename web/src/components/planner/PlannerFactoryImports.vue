@@ -94,7 +94,7 @@
               color="yellow"
               prepend-icon="fas fa-arrow-down"
               size="default"
-              @click="updateInputToSatisfy(factory, input)"
+              @click="updateInputToSatisfy(inputIndex, factory)"
             >Trim</v-btn>
             <v-btn
               v-show="input.outputPart && !requirementSatisfied(factory, input.outputPart)"
@@ -102,7 +102,7 @@
               color="green"
               prepend-icon="fas fa-arrow-up"
               size="default"
-              @click="updateInputToSatisfy(factory, input)"
+              @click="updateInputToSatisfy(inputIndex, factory)"
             >Satisfy</v-btn>
             <v-btn
               class="rounded"
@@ -132,7 +132,8 @@
               <span class="ml-2">Redundant!</span>
             </v-chip>
           </div>
-        </div></v-card>
+        </div>
+      </v-card>
       <div class="input-row d-flex align-center">
         <v-btn
           v-show="Object.keys(factory.parts).length > 0"
@@ -161,7 +162,7 @@
     calculateImportCandidates,
     calculatePossibleImports,
     importFactorySelections,
-    importPartSelections, isImportRedundant,
+    importPartSelections, isImportRedundant, satisfyImport,
   } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -170,7 +171,6 @@
   import { getExportableFactories } from '@/utils/factory-management/exports'
   import { calculateDependencies } from '@/utils/factory-management/dependencies'
   import { useGameDataStore } from '@/stores/game-data-store'
-  import { shouldShowNotInDemand } from '@/utils/factory-management/products'
 
   const { getFactories } = useAppStore()
   const { getGameData } = useGameDataStore()
@@ -307,14 +307,9 @@
     return requirement.amountRemaining > 0
   }
 
-  const updateInputToSatisfy = (factory: Factory, input: FactoryInput) => {
-    if (!input.outputPart) {
-      console.error('updateInputToSatisfy: No output part selected for input:', input)
-      return
-    }
-    input.amount = factory.parts[input.outputPart].amountRequired
-
-    updateFactories(factory, input)
+  const updateInputToSatisfy = (inputIndex: number, factory: Factory) => {
+    satisfyImport(inputIndex, factory)
+    updateFactories(factory, factory.inputs[inputIndex])
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
