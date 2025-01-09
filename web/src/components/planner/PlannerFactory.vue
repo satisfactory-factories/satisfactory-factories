@@ -321,18 +321,6 @@
     return Object.keys(factory.dependencies.requests).length > 0
   }
 
-  const getRequestMetricsForFactoryByPart = (
-    factory: Factory,
-    part: string
-  ): FactoryDependencyMetrics | undefined => {
-    // Requests may be empty.
-    if (!factory?.dependencies.metrics || !part || !factory.id) {
-      return undefined
-    }
-
-    return factory.dependencies?.metrics[part] ?? {}
-  }
-
   const setSync = (factory: Factory) => {
     factory.inSync = !factory.inSync
 
@@ -349,8 +337,6 @@
       })
     }
   }
-
-  provide('getRequestMetricsForFactoryByPart', getRequestMetricsForFactoryByPart)
 </script>
 
 <style lang="scss" scoped>
