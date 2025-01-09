@@ -200,6 +200,10 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
     return null
   }
 
+  if (input.amount === 0) {
+    return null // If the amount is 0, it's technically redundant, but it could also be the user hasn't chosen anything yet. They already get a chip saying no amount is set.
+  }
+
   const partData = factory.parts[input.outputPart]
 
   if (!partData) {
@@ -213,33 +217,38 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
   const produced = partData.amountSuppliedViaProduction
   const imported = partData.amountSuppliedViaInput
 
+  if (imported === 0) {
+    return false // If there's no import, then it's not redundant.
+  }
+
   const remainingToImport = required - produced
 
   // Now, we also need to take into account other imports. If other imports fully satisfy the requirement, then this import is redundant.
   // Loop through all the inputs and see if the other imports fully satisfy the requirement.
   const otherImports = factory.inputs.filter((_, index) => index !== importIndex)
-  const otherImportsTotal = otherImports.reduce((acc, input) => {
-    if (!input.outputPart) return acc
-    return acc + factory.parts[input.outputPart].amountSuppliedViaInput
-  }, 0)
-
-  // In a multi-input scenario, if there's an over supply, inform the user one of their imports are redundant.
-  // Try to be deterministic by favouring the largest import.
-  // Loop each of the imports, enter their values into an array, then check if the current import is the largest.
   const otherImportsValues: number[] = []
   otherImports.forEach(input => {
     if (!input.outputPart) return 0
     otherImportsValues.push(input.amount ?? 0)
   })
+  const otherImportsTotal = otherImportsValues.reduce((acc, val) => acc + val, 0)
+
+  // In a multi-input scenario, if there's an over supply, inform the user one of their imports are redundant.
+  // Try to be deterministic by favouring the largest import.
+  // Loop each of the imports, enter their values into an array, then check if the current import is the largest.
   const largestOtherImport = Math.max(...otherImportsValues)
 
   // If the current import is the largest, then it's not redundant.
   // This does annoyingly mean that if they are both EXACTLY the same, both will be redundant. Can't really get around it.
-  if (input.amount > largestOtherImport) return false
+  if (input.amount >= largestOtherImport) return false
 
-  const remainingToImportAfterOtherImports = required - produced - otherImportsTotal
+  const remainingToImportAfterOtherImports = remainingToImport - otherImportsTotal
 
-  return imported === 0 || remainingToImport < 0 || remainingToImportAfterOtherImports < 0
+  // If the other imports don't fully satisfy the requirement, then the import is not redundant.
+  if (remainingToImportAfterOtherImports > 0) return false
+
+  // If there is a remainder, the import is required.
+  return true
 }
 
 export const satisfyImport = (importIndex: number, factory: Factory): void => {

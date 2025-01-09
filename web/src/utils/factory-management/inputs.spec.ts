@@ -412,6 +412,12 @@ describe('inputs', () => {
     it('should return null if the input does not exist', () => {
       expect(isImportRedundant(0, mockFactory)).toBe(null)
     })
+    it('should return null if the input amount is set to 0', () => {
+      mockFactory.inputs[0] = {
+        amount: 0,
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
     it('should return null if the input output part does not exist', () => {
       mockFactory.inputs[0] = {
         factoryId: mockFactory.id,
@@ -510,6 +516,17 @@ describe('inputs', () => {
           // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
           expect(isImportRedundant(0, mockFactory2)).toBe(false)
         })
+
+        it('should return false if other imports do not fully satisfy', () => {
+          // Decrease input from factory 2 to be lower than the requirement
+          mockFactory2.inputs[0].amount = 50
+          // Set the input being tested to just under the target of 75 (would need to be 25 to satisfy)
+          mockFactory2.inputs[1].amount = 24
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
+          expect(isImportRedundant(1, mockFactory2)).toBe(false)
+        })
       })
     })
   })
@@ -521,7 +538,20 @@ describe('inputs', () => {
       ironPlateFac = findFacByName('Iron Plates', factories)
     })
 
-    it('should update the import amount when there are no other factories', () => {
+    it('should satisfy the import amount when there are no other factories', () => {
+      ironPlateFac.inputs[0].amount = 50
+
+      // Remove the additional import in iron plates
+      ironPlateFac.inputs = ironPlateFac.inputs.slice(0, 1)
+
+      calculateFactories(factories, gameData)
+      satisfyImport(0, ironPlateFac)
+
+      expect(ironPlateFac.inputs[0].amount).toBe(75)
+    })
+    it('should trim the import amount when there are no other factories', () => {
+      ironPlateFac.inputs[0].amount = 100
+
       // Remove the additional import in iron plates
       ironPlateFac.inputs = ironPlateFac.inputs.slice(0, 1)
 
@@ -540,6 +570,17 @@ describe('inputs', () => {
       satisfyImport(1, ironPlateFac)
       expect(ironPlateFac.inputs[0].amount).toBe(50) // Shouldn't have changed
       expect(ironPlateFac.inputs[1].amount).toBe(25)
+    })
+
+    it('should do nothing if the requirements are exact', () => {
+      // Set up the imports so import index 1 should be 25
+      ironPlateFac.inputs[0].amount = 75
+      ironPlateFac.inputs[1].amount = 0
+
+      calculateFactories(factories, gameData)
+      satisfyImport(1, ironPlateFac)
+      expect(ironPlateFac.inputs[0].amount).toBe(75) // Shouldn't have changed
+      expect(ironPlateFac.inputs[1].amount).toBe(0)
     })
   })
 })
