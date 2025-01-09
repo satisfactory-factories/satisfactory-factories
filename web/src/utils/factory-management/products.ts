@@ -1,4 +1,4 @@
-import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, ByProductItem, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { getRecipe } from '@/utils/factory-management/common'
 
@@ -119,45 +119,43 @@ export const calculateByProducts = (factory: Factory, gameData: DataInterface): 
   })
 }
 
-export const shouldShowTrim = (product: FactoryItem, factory: Factory) => {
+export const shouldShowFix = (product: FactoryItem, factory: Factory): string | null => {
   // Calculate whether the product should be trimmed or not by checking:
   // 1. Part requirements of the item are more than internal demand
   // 2. Exported difference is more than 0
 
-  if (!product.id) {
-    return false
+  if (!product?.id) {
+    return null
   }
 
   const part = factory.parts[product.id]
 
   if (!part) {
     console.error(`Part not found for product ID ${product.id}!`)
-    return false
+    return null
   }
 
-  if (product.amount === 1) {
-    return false // It's likely a new product, no need to show trim
+  // It's likely a new product or empty one, no need to show trim
+  if (product.amount === 0 || product.amount === 1) {
+    return null
   }
 
-  if (part.amountRemaining <= 0) {
-    return false // It's in demand internally or it's exactly right
+  // It's in demand but not enough is being produced
+  if (part.amountRemaining < 0) {
+    return 'deficit'
   }
 
-  // Must then mean there's a surplus
-  return true
-}
-
-export const trimProduct = (product: FactoryItem, factory: Factory) => {
-  // Using exports we can figure out the remaining surplus
-  const partData = factory.parts[product.id]
-
-  if (!partData) {
-    // Nothing to do
-    return
+  // If the part does not have a demand, we should show nothing as it could be an end product
+  if (part.amountRequired === 0) {
+    return null
   }
 
-  // Trim the product
-  product.amount = partData.amountRequired
+  if (part.amountRemaining > 0) {
+    return 'surplus'
+  }
+
+  // Must then mean it's exactly right at remaining 0.
+  return null
 }
 
 export const shouldShowInternal = (product: FactoryItem, factory: Factory) => {
@@ -173,12 +171,27 @@ export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) =>
     return false
   }
 
-  if (product.amount === 0) {
-    // Product is not being produced
-    return true
-  }
-
   const partRequired = factory.parts[product.id]?.amountRequired
 
   return partRequired <= 0
+}
+
+export const fixProduct = (product: FactoryItem | ByProductItem, factory: Factory): void => {
+  // If the product is not found, throw
+  if (!product.id) {
+    const error = 'products: fixPart: Product ID is missing!'
+    console.error(error)
+    throw new Error(error)
+  }
+  // If the part is not found, throw
+  if (!factory.parts[product.id]) {
+    const error = `products: fixPart: Part data for "${product.id}" is missing!`
+    console.error(error)
+    throw new Error(error)
+  }
+
+  // Update the production amount to match requirement
+  product.amount = factory.parts[product.id].amountRequired
+
+  // Whatever calls this MUST then trigger a calculation.
 }

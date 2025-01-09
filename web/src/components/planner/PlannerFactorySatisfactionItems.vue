@@ -62,9 +62,9 @@
                   class="d-block my-1"
                   color="green"
                   size="small"
-                  @click="fixProduction(factory, partId.toString())"
+                  @click="doFixProduct(partId.toString(), factory)"
                 >
-                  <i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+                  <i class="fas fa-wrench" /><span class="ml-1">Fix Product</span>
                 </v-btn>
                 <v-btn
                   v-if="getImport(factory, partId.toString()) && !part.satisfied"
@@ -174,24 +174,23 @@
   import { inject } from 'vue'
   import { getPartDisplayName } from '@/utils/helpers'
   import {
+    ByProductItem,
     Factory,
     FactoryInput,
     FactoryItem,
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
-  import { addProductToFactory } from '@/utils/factory-management/products'
+  import { addProductToFactory, fixProduct } from '@/utils/factory-management/products'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { getRequestsForFactoryByPart } from '@/utils/factory-management/exports'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useAppStore } from '@/stores/app-store'
 
-  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
-  const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
-  const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory
 
   const appStore = useAppStore()
+  const { getGameData } = useGameDataStore()
 
   const { getDefaultRecipeForPart } = useGameDataStore()
   const openedCalculator = ref('')
@@ -259,6 +258,28 @@
 
   const getSatisfactionLabel = (total: number) => {
     return total >= 0 ? 'surplus' : 'shortage'
+  }
+
+  const doFixProduct = (partId: string, factory: Factory) => {
+    const product = getProduct(factory, partId)
+
+    if (!product) {
+      alert('Could not fix the product due to there not being a product! Please report this to Discord with a share link, quoting the factory in question.')
+      console.error(`Could not find product for part ${partId}`)
+      return
+    }
+    fixProduct(product, factory)
+    updateFactory(factory)
+  }
+
+  const isItemRawResource = (item: string): boolean => {
+    return !!getGameData().items.rawResources[item]
+  }
+
+  const getProduct = (factory: Factory, productId: string): FactoryItem | ByProductItem | undefined => {
+    const product = factory.products.find(product => product.id === productId)
+    const byProduct = factory.byProducts.find(product => product.id === productId)
+    return product ?? byProduct ?? undefined
   }
 
   // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {

@@ -74,9 +74,7 @@
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
   import {
-    ByProductItem,
     Factory,
-    FactoryItem,
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
@@ -249,12 +247,6 @@
     updateWorldRawResources(gameData)
   }
 
-  const getProduct = (factory: Factory, productId: string): FactoryItem | ByProductItem | undefined => {
-    const product = factory.products.find(product => product.id === productId)
-    const byProduct = factory.byProducts.find(product => product.id === productId)
-    return product ?? byProduct ?? undefined
-  }
-
   const getBuildingDisplayName = (building: string) => {
     const buildingFriendly = new Map<string, string>([
       ['assemblermk1', 'Assembler'],
@@ -353,10 +345,6 @@
     updateWorldRawResources(gameData)
   }
 
-  const isItemRawResource = (item: string): boolean => {
-    return !!gameData.items.rawResources[item]
-  }
-
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)
@@ -364,8 +352,6 @@
   provide('getBuildingDisplayName', getBuildingDisplayName)
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
-  provide('isItemRawResource', isItemRawResource)
-  provide('getProduct', getProduct)
 
   // Grab from local storage if the user has already dismissed this popup
   // If they have, don't show it again.
