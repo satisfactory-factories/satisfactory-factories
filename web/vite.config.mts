@@ -6,6 +6,7 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -37,11 +38,9 @@ export default defineConfig(() => ({
     Vue({
       template: { transformAssetUrls },
     }),
+    vueDevTools(),
     Vuetify({
       autoImport: true,
-      styles: {
-        configFile: 'src/styles/settings.scss',
-      },
     }),
     Fonts({
       google: {
@@ -74,5 +73,6 @@ export default defineConfig(() => ({
     globals: true,
     environment: 'jsdom',
     pool: 'vmThreads',
+    setupFiles: ['src/setup-vitest.ts'],
   },
 }))

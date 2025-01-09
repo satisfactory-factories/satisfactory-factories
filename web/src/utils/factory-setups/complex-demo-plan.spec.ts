@@ -18,7 +18,7 @@ let plutoniumFac: Factory
 describe('Complex Demo Plan', () => {
   beforeEach(() => {
     factories = complexDemoPlan().getFactories()
-    calculateFactories(factories, gameData, true)
+    calculateFactories(factories, gameData)
     oilFac = findFacByName('Oil Processing', factories)
     copperIngotsFac = findFacByName('Copper Ingots', factories)
     copperBasicsFac = findFacByName('Copper Basics', factories)

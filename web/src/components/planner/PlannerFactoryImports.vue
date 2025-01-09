@@ -140,7 +140,6 @@
           @click="addEmptyInput(factory)"
         >Add Import
         </v-btn>
-        <span v-if="ableToImport(factory) === 'noProducts'" class="ml-2">(This factory does not yet have any products.)</span>
         <span v-if="ableToImport(factory) === 'rawOnly'" class="ml-2">(This factory is only using raw resources and requires no imports.)</span>
         <span v-if="ableToImport(factory) === 'noImportFacs'" class="ml-2">(There are no factories that have exports available to supply this factory.)</span>
       </div>
@@ -151,7 +150,7 @@
 
 <script setup lang="ts">
   import { defineProps } from 'vue'
-  import { Factory, FactoryInput, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryInput } from '@/interfaces/planner/FactoryInterface'
   import {
     addInputToFactory,
     calculateAbleToImport,
@@ -163,14 +162,16 @@
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useDisplay } from 'vuetify'
-  import { calculateDependencies, scanForInvalidInputs } from '@/utils/factory-management/dependencies'
   import { useAppStore } from '@/stores/app-store'
   import { getExportableFactories } from '@/utils/factory-management/exports'
+  import { calculateDependencies } from '@/utils/factory-management/dependencies'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
   const { getFactories } = useAppStore()
+  const { getGameData } = useGameDataStore()
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
+  const updateFactory = inject('updateFactory') as (factory: Factory, mode?: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: number | null) => void
 
   const props = defineProps<{
@@ -189,12 +190,14 @@
   }
 
   const deleteInput = (inputIndex: number, factory: Factory) => {
+    // Need to recalculate dependencies as we've now removed an input
+    calculateDependencies(getFactories(), getGameData())
     // Take a copy of the current input data without copying via reference
     const input: FactoryInput = JSON.parse(JSON.stringify(factory.inputs[inputIndex]))
 
     factory.inputs.splice(inputIndex, 1)
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
+
+    // Update the factory as our parts will have been changed
     updateFactory(factory)
 
     // Also update the other factory affected
@@ -250,11 +253,7 @@
     return calculateAbleToImport(factory, importCandidates.value)
   }
 
-  // Gets the products of another factory for dependencies
-
   const handleInputFactoryChange = (factory: Factory) => {
-    syncDependencyTree()
-
     // Initiate a factory update for all factories involved
     updateFactory(factory) // This factory
 
@@ -308,19 +307,12 @@
       console.error('updateInputToSatisfy: No output part selected for input:', input)
       return
     }
-    const part: PartMetrics = factory.parts[input.outputPart]
-    input.amount = part.amountRequired
+    input.amount = factory.parts[input.outputPart].amountRequired
 
-    syncDependencyTree()
-    updateFactory(factory)
-    // Also update the factory that was selected
-    if (input.factoryId) {
-      updateFactory(findFactory(input.factoryId))
-    }
+    updateFactories(factory, input)
   }
 
   const updateFactories = (factory: Factory, input: FactoryInput) => {
-    syncDependencyTree()
     // Update this factory
     updateFactory(factory)
 
@@ -328,12 +320,6 @@
       // Update the other factory
       updateFactory(findFactory(input.factoryId))
     }
-  }
-
-  const syncDependencyTree = () => {
-    console.log('syncing dependency tree')
-    calculateDependencies(getFactories())
-    scanForInvalidInputs(getFactories())
   }
 
 </script>

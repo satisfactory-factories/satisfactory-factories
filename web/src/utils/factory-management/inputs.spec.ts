@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
-import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
+import { calculateFactories, findFacByName, newFactory } from '@/utils/factory-management/factory'
 import * as factoryUtils from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
+import { addPowerProducerToFactory } from '@/utils/factory-management/power'
 import {
   addInputToFactory, calculateAbleToImport,
   calculateImportCandidates,
@@ -11,6 +12,8 @@ import {
 } from '@/utils/factory-management/inputs'
 import { getExportableFactories } from '@/utils/factory-management/exports'
 import { gameData } from '@/utils/gameData'
+import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
+import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -83,7 +86,6 @@ describe('inputs', () => {
         amount: 500,
       })
       factories = [ironIngotFac, ironRodsFac, screwsFac]
-      calculateFactories(factories, gameData, true) // Needed otherwise all inputs get blown away
       calculateFactories(factories, gameData)
     })
 
@@ -148,7 +150,6 @@ describe('inputs', () => {
           amount: 500,
         })
         factories.push(ironRodsFac2)
-        calculateFactories(factories, gameData, true)
         calculateFactories(factories, gameData)
         screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
       })
@@ -165,6 +166,18 @@ describe('inputs', () => {
         expect(result[0].name).toBe(ironRodsFac.name)
         expect(result[1]).toBeUndefined()
       })
+
+      it('should return empty if all possible import parts have been exhausted', () => {
+        const factories = create315Scenario().getFactories()
+        calculateFactories(factories, gameData)
+
+        const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
+
+        const result = calculateImportCandidates(aluminiumPartsFac, calculatePossibleImports(aluminiumPartsFac, getExportableFactories(factories)))
+
+        expect(result).toHaveLength(0)
+      })
+
       describe('Multiple import candidates', () => {
         beforeEach(() => {
           // Add RIPs to iron rods fac 2. Screws already has iron rods fac 2 selected for Iron Rods, so this factory should show up again in the list.
@@ -179,7 +192,6 @@ describe('inputs', () => {
             recipe: 'ModularFrame',
           })
 
-          calculateFactories(factories, gameData, true)
           calculateFactories(factories, gameData)
           ironRodsPossibleImports = calculatePossibleImports(ironRodsFac, getExportableFactories(factories))
           screwsPossibleImports = calculatePossibleImports(screwsFac, getExportableFactories(factories))
@@ -226,7 +238,7 @@ describe('inputs', () => {
           })
 
           // Set everything up
-          calculateFactories([fac, sourceFac], gameData, true)
+          calculateFactories([fac, sourceFac], gameData)
 
           const candidates = calculatePossibleImports(fac, getExportableFactories([sourceFac]))
 
@@ -296,34 +308,99 @@ describe('inputs', () => {
         // Clean up the spy
         findFacSpy.mockRestore()
       })
+      it('should be able to import the same product from multiple factories', () => {
+        // Import the scenario, which has two factories producing Iron Ingots, with an iron plate demanding one of each
+        const factories = create290Scenario().getFactories()
+        const ironIngotFac = findFacByName('Iron Ingots', factories)
+        const ironIngotFac2 = findFacByName('Iron Ingots 2', factories)
+        const ironPlatesFac = findFacByName('Iron Plates', factories)
+
+        // Calculate factories
+        calculateFactories(factories, gameData)
+
+        const importCandidates = calculatePossibleImports(factories[2], getExportableFactories(factories))
+
+        // Now check that we should be able to see the second iron rods fac in the list
+        const factoryResult = importFactorySelections(
+          1, // This simulates the user opening or viewing the input selection for the first input
+          importCandidates,
+          screwsFac,
+          factories
+        )
+        expect(factoryResult).toHaveLength(2)
+        expect(factoryResult[1].title).toBe('Iron Ingots 2')
+
+        // Now also check that the part for BOTH factories is showing up
+        const partResult = importPartSelections(ironIngotFac, ironPlatesFac, 0)
+        const partResult2 = importPartSelections(ironIngotFac2, ironPlatesFac, 1)
+        expect(partResult).toHaveLength(1)
+        expect(partResult2).toHaveLength(1)
+        expect(partResult[0]).toBe('IronIngot')
+        expect(partResult2[0]).toBe('IronIngot') // #290 bug was here where this was empty as it was already "selected".
+        expect(partResult[1]).toBeUndefined()
+      })
+      it('should not show parts that are not exportable', () => {
+        const factories = create315Scenario().getFactories()
+        const copperParts = findFacByName('Copper Parts Fac', factories)
+        const aluminiumPartsFac = findFacByName('Aluminium Parts Fac', factories)
+
+        // Calculate factories
+        calculateFactories(factories, gameData)
+
+        // Now check that we should NOT be able to select copper ingots from the copperPartsFac within aluminiumPartsFac.
+        const partResult = importPartSelections(copperParts, aluminiumPartsFac, 1)
+        expect(partResult[0]).toStrictEqual('CopperSheet')
+        expect(partResult[1]).toBeUndefined()
+      })
     })
     describe('calculateAbleToImport', () => {
-      let factory: Factory
+      let ingotFactory: Factory
+      let fuelFactory: Factory
+      let fuelGenFactory: Factory
       beforeEach(() => {
-        factory = newFactory('foo')
-        addProductToFactory(factory, {
+        ingotFactory = newFactory('Iron Ingots', 0, 1)
+        addProductToFactory(ingotFactory, {
           id: 'IronIngot',
           amount: 1000,
           recipe: 'IngotIron',
         })
-        factory.usingRawResourcesOnly = false
+        ingotFactory.usingRawResourcesOnly = false
+
+        fuelFactory = newFactory('Fuel Factory', 1, 2)
+        fuelGenFactory = newFactory('Fuel Gens', 2, 3)
+        addProductToFactory(fuelFactory, {
+          id: 'LiquidFuel',
+          amount: 1000,
+          recipe: 'LiquidFuel',
+        })
+        addPowerProducerToFactory(fuelGenFactory, {
+          building: 'generatorfuel',
+          ingredientAmount: 100,
+          recipe: 'GeneratorFuel_LiquidFuel',
+          updated: 'ingredient',
+        })
       })
-      it('should return noProducts if the factory has no products', () => {
-        factory.products = []
-        const result = calculateAbleToImport(factory, [])
-        expect(result).toBe('noProducts')
+      it('should return noProductsOrProducers if the factory has no products AND no power producers', () => {
+        ingotFactory.products = []
+        ingotFactory.powerProducers = []
+        const result = calculateAbleToImport(ingotFactory, [])
+        expect(result).toBe('noProductsOrProducers')
       })
       it('should return rawOnly if the factory is only using raw resources', () => {
-        factory.usingRawResourcesOnly = true
-        const result = calculateAbleToImport(factory, [])
+        ingotFactory.usingRawResourcesOnly = true
+        const result = calculateAbleToImport(ingotFactory, [])
         expect(result).toBe('rawOnly')
       })
       it('should return noImportFacs if there are no import candidates', () => {
-        const result = calculateAbleToImport(factory, [])
+        const result = calculateAbleToImport(ingotFactory, [])
         expect(result).toBe('noImportFacs')
       })
       it('should return true if there are import candidates', () => {
-        const result = calculateAbleToImport(factory, [ironIngotFac])
+        const result = calculateAbleToImport(ingotFactory, [ironIngotFac])
+        expect(result).toBe(true)
+      })
+      it('should return true if there are only power producers', () => {
+        const result = calculateAbleToImport(fuelGenFactory, [fuelFactory])
         expect(result).toBe(true)
       })
     })

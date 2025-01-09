@@ -6,7 +6,7 @@ import {
   calculateDependencies,
   calculateDependencyMetrics,
   calculateDependencyMetricsSupply,
-  scanForInvalidInputs,
+  calculateFactoryDependencies,
 } from '@/utils/factory-management/dependencies'
 import { calculateHasProblem } from '@/utils/factory-management/problems'
 import { DataInterface } from '@/interfaces/DataInterface'
@@ -23,7 +23,10 @@ export const findFac = (factoryId: string | number, factories: Factory[]): Facto
   // Ensure factoryId is parsed to a number to match factories array ids
   const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10))
   if (!factory) {
-    throw new Error(`Factory ${factoryId} not found!`)
+    console.error('Factory not found:', factoryId)
+    return {} as Factory
+
+    // throw new Error(`Factory ${factoryId} not found!`)
   }
   return factory
 }
@@ -69,6 +72,7 @@ export const newFactory = (name = 'A new factory', order?: number, id?: number):
     displayOrder: order ?? -1, // this will get set by the planner
     tasks: [],
     notes: '',
+    dataVersion: '2025-01-03',
   }
 }
 
@@ -76,9 +80,11 @@ export const newFactory = (name = 'A new factory', order?: number, id?: number):
 export const calculateFactory = (
   factory: Factory,
   allFactories: Factory[],
-  gameData: DataInterface
+  gameData: DataInterface,
+  loadMode = false,
 ) => {
-  console.log('Calculating factory:', factory.name)
+  // console.log('Calculating factory:', factory.name)
+
   factory.rawResources = {}
   factory.parts = {}
 
@@ -94,6 +100,9 @@ export const calculateFactory = (
   // Calculate the amount of buildings and power required to make the factory and any power generation.
   calculateFactoryBuildingsAndPower(factory, gameData)
 
+  // Calculate the dependencies for just this factory.
+  calculateFactoryDependencies(factory, allFactories, gameData, loadMode)
+
   // Calculate the dependency metrics for the factory.
   calculateDependencyMetrics(factory)
 
@@ -106,7 +115,7 @@ export const calculateFactory = (
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
 
-  // Finally, go through all factories and check if they have any problems.
+  // Check if the factory has any problems
   calculateHasProblem(allFactories)
 
   // Emit an event that the data has been updated so it can be synced
@@ -115,32 +124,18 @@ export const calculateFactory = (
   return factory
 }
 
-export const calculateFactories = (factories: Factory[], gameData: DataInterface, loadMode = false): void => {
-  // If we're loading via template, we need to run calculations FIRST then dependencies then calculations again.
-  // The reason why we have to do this is we generate the factories out of products and inputs configurations, which then need to be calculated first before we can calculate the dependencies.
-  // Otherwise, the part data that the invalidInputs check depends upon won't be present, and it will nuke all the import links.
-  if (loadMode) {
-    console.log('factory-management: calculateFactories: Preloading calculations')
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
-    })
-    calculateDependencies(factories)
-    scanForInvalidInputs(factories)
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
-    })
-  } else {
-    console.log('factory-management: calculateFactories')
+export const calculateFactories = (factories: Factory[], gameData: DataInterface): void => {
+  // We need to do this twice to ensure all the part dependency metrics are calculated, before we then check for invalid dependencies
+  // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
+  // This generates the Part metrics for the factories, which is then used by calculateDependencies to generate the dependency metrics.
+  // While we are running the calculations twice, they are very quick, <20ms even for the largest plans.
+  factories.forEach(factory => calculateFactory(factory, factories, gameData, true))
 
-    // Construct the dependencies between factories.
-    calculateDependencies(factories)
+  // Now calculate the dependencies for all factories, removing any invalid inputs.
+  calculateDependencies(factories, gameData)
 
-    // Check if we have any invalid inputs.
-    scanForInvalidInputs(factories)
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData)
-    })
-  }
+  // Re-run the calculations after the dependencies have been calculated as some inputs may have been deleted
+  factories.forEach(factory => calculateFactory(factory, factories, gameData))
 }
 
 export const countActiveTasks = (factory: Factory) => {

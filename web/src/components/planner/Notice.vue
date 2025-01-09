@@ -4,7 +4,7 @@
       <v-card class="factory-card">
         <v-row class="header">
           <v-col class="flex-grow-1" cols="8">
-            <h1 class="text-h5 text-md-h4"><i class="fas fa-bug" /> Top upcoming features / known bugs</h1>
+            <h1 class="text-h4 text-md-h4"><i class="fas fa-bug" /> Top upcoming features / known bugs</h1>
           </v-col>
           <v-col class="text-right" cols="4">
             <v-chip v-if="newChanges" class="changes font-weight-bold" color="green">New changes!</v-chip>

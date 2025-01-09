@@ -25,7 +25,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-card-text v-show="!hidden" class="text-body-1">
+        <v-card-text v-if="!hidden" class="text-body-1">
           <p v-show="helpText" class="mb-4">
             <i class="fas fa-info-circle" /> Showing an overview of each factory
             with the name, buildings and their production.
@@ -203,8 +203,10 @@
   const maxHeight = 750 // Max height in px
   const tableHeight = ref('tableRef')
 
+  const summaryHidden = localStorage.getItem('summaryHidden') ?? 'false'
+
   // Initialize the 'hidden' ref based on the value in localStorage
-  const hidden = ref<boolean>(localStorage.getItem('summaryHidden') === 'true')
+  const hidden = ref<boolean>(Boolean(summaryHidden))
 
   watch(hidden, newValue => {
     localStorage.setItem('summaryHidden', newValue.toString())

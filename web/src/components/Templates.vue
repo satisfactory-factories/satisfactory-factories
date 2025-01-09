@@ -5,12 +5,12 @@
     @click="dialog = true"
   >Templates</v-btn>
   <v-dialog v-model="dialog" max-width="800">
-    <v-card>
-      <v-card-title class="headline">
-        Load a template plan
+    <v-card class="pa-2">
+      <v-card-title>
+        <h4 class="text-h4">Load a template plan</h4>
       </v-card-title>
-      <v-card-text>
-        <p class="mb-4">
+      <v-card-text class="pa-4 pt-0">
+        <p>
           Clicking on a button below will load a template plan into the planner. <span class="text-red font-weight-bold">This will overwrite any existing plan WITHOUT warning.</span> You may wish to save your plan first by creating a share link.
         </p>
         <v-table>
@@ -26,12 +26,13 @@
                 <td class="text-center">
                   <v-btn
                     class="mr-2"
-                    color="green"
+                    :color="template.isDebug ? 'secondary' : 'green'"
+                    :prepend-icon="template.isDebug ? 'fas fa-bug' : 'fas fa-file'"
                     @click="loadTemplate(template)"
                   >
                     {{ template.name }}
                   </v-btn></td>
-                <td>{{ template.description }}</td>
+                <td class="py-1">{{ template.description }}</td>
               </tr>
             </template>
           </tbody>
@@ -45,10 +46,15 @@
 <script lang="ts" setup>
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { createSimple } from '@/utils/factory-setups/simple-plan'
+  import { create268Scenraio } from '@/utils/factory-setups/268-power-gen-only-import'
   import { useAppStore } from '@/stores/app-store'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct-imports'
+  import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
+  import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
+  import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
 
-  const { setFactories } = useAppStore()
+  const { prepareLoader, isDebugMode } = useAppStore()
 
   const dialog = ref(false)
 
@@ -57,25 +63,64 @@
     description: string
     data: Factory[]
     show: boolean
+    isDebug: boolean
   }
 
   const templates = [
     {
       name: 'Demo',
-      description: 'Contains 6 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
+      description: 'Contains 7 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
       data: complexDemoPlan().getFactories(),
       show: true,
+      isDebug: false,
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
       data: createSimple().getFactories(),
       show: true,
+      isDebug: false,
+    },
+    {
+      name: 'Mael\'s "MegaPlan"',
+      description: 'A real-life plan created by Maelstrome. This is considered a very large plan, and makes use of all features of the planner.',
+      data: createMaelsBigBoiPlan(),
+      show: true,
+      isDebug: false,
+    },
+    {
+      name: 'PowerOnlyImport',
+      description: '2 factory setup where on factory is producing the a fuel and another is consuming the fuel (via import) for power generation. Related to issue #268',
+      data: create268Scenraio().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: '#290 Multiple product imports',
+      description: '3 factory setup where one factory is importing the same product from two different factories. Related to issue #290. The Imports on Iron Plates should render correctly with the correct part name, and NOT be called "IronPlate", rather "Iron Plate".',
+      data: create290Scenario().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: '#315 Import exportable parts',
+      description: '#315 - For testing import candidate code. Aluminium factory in this example should not be able to import Copper Ingots from Copper Parts',
+      data: create315Scenario().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: 'Invalid migration',
+      description: 'Contains a factory plan that has lots of invalid data. This was a real plan that broke the app, and was used to fix the migration code. It is expected that when you load the template, the plan operates effectively. Originally, supply for certain factories e.g. Gun Powder was broken due to missing part data (due to errors).',
+      data: create317Scenario(),
+      show: isDebugMode,
+      isDebug: true,
     },
   ]
 
   const loadTemplate = (template: Template) => {
-    setFactories(template.data, true)
+    console.log('Template loaded:', template.name, 'starting load')
+    prepareLoader(template.data)
     dialog.value = false
   }
 </script>

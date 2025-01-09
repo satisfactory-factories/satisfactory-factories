@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
   import { config } from '@/config/config'
-  import { storeToRefs } from 'pinia'
   import { useAppStore } from '@/stores/app-store'
   import { useAuthStore } from '@/stores/auth-store'
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
@@ -31,9 +30,8 @@
   import eventBus from '@/utils/eventBus'
 
   // Get user auth stuff from the app store
-  const appStore = useAppStore()
+  const { currentFactoryTab } = useAppStore()
   const authStore = useAuthStore()
-  const { currentFactoryTab } = storeToRefs(appStore)
 
   const apiUrl = config.apiUrl
   const creating = ref(false)
@@ -41,13 +39,13 @@
   const showCopyDialog = ref(false)
 
   const createShareLink = async () => {
-    if (!currentFactoryTab.value.factories || currentFactoryTab.value.factories.length === 0) {
+    if (!currentFactoryTab.factories || currentFactoryTab.factories.length === 0) {
       alert('No factory data to share!')
       return
     }
 
     creating.value = true
-    link.value = await handleCreation(currentFactoryTab.value) ?? ''
+    link.value = await handleCreation(currentFactoryTab) ?? ''
     creating.value = false
 
     // If no link was returned assume server errors

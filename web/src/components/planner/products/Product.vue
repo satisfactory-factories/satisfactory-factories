@@ -50,6 +50,7 @@
           label="Qty /min"
           :max-width="smAndDown ? undefined : '110px'"
           :min-width="smAndDown ? undefined : '100px'"
+          :name="`${product.id}.amount`"
           type="number"
           variant="outlined"
           @input="updateFactory(factory)"
@@ -121,13 +122,30 @@
         >
           <game-asset :subject="byProduct.id" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(byProduct.id) }}</b>: {{ formatNumber(byProduct.amount) }}/min
+            <b>{{ getPartDisplayName(byProduct.id) }}</b>:
+          </span>
+
+          <v-text-field
+            v-model.number="byProduct.amount"
+            class="inline-inputs product-secondary-input"
+            flat
+            hide-details
+            hide-spin-buttons
+            min="0"
+            :name="`${product.id}.byProducts.${byProduct.id}`"
+            :product="product.id"
+            type="number"
+            width="60px"
+            @input="setProductQtyByByproduct(product, byProduct.id)"
+          />
+          <span>
+            /min
           </span>
         </v-chip>
       </div>
       <div
         v-if="Object.keys(product.requirements).length > 0 || product.buildingRequirements"
-        class="d-flex align-center"
+        class="d-flex flex-sm-wrap align-center"
       >
         <p class="mr-2">Requires:</p>
         <v-chip
@@ -138,8 +156,22 @@
         >
           <game-asset :subject="part.toString()" type="item" />
           <span class="ml-2">
-            <b>{{ getPartDisplayName(part.toString()) }}</b>: {{ formatNumber(requirement.amount) }}/min
+            <b>{{ getPartDisplayName(part.toString()) }}</b>:
           </span>
+          <v-text-field
+            v-model.number="requirement.amount"
+            class="inline-inputs product-secondary-input"
+            flat
+            hide-details
+            hide-spin-buttons
+            min="0"
+            :name="`${product.id}.ingredients.${part}`"
+            :product="product.id"
+            type="number"
+            width="60px"
+            @input="setProductQtyByRequirement(product, part.toString())"
+          />
+          <span>/min</span>
         </v-chip>
         <v-chip
           class="sf-chip orange"
@@ -156,6 +188,7 @@
             hide-details
             hide-spin-buttons
             min="0"
+            :name="`${product.id}.buildingAmount`"
             :product="product.id"
             type="number"
             width="60px"
@@ -183,7 +216,7 @@
     trimProduct,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
-  import { formatNumber, formatPower } from '@/utils/numberFormatter'
+  import { formatPower } from '@/utils/numberFormatter'
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { useDisplay } from 'vuetify'
@@ -239,6 +272,66 @@
   // Enables the user to move the order of the byproduct up or down
   const updateProductOrder = (direction: 'up' | 'down', product: FactoryItem) => {
     updateOrder(props.factory.products, direction, product)
+  }
+
+  type Recipe = NonNullable<ReturnType<typeof getRecipeById>>
+
+  const recipeIngredientPerMinGetter = (part: string) => {
+    return (recipe: Recipe) => {
+      const ingredient = recipe.ingredients.find(i => i.part === part)
+      if (!ingredient) {
+        console.error('No ingredient found for part', part, ' in recipe ', recipe)
+        throw new Error('No ingredient found for part!')
+      }
+      return ingredient.perMin
+    }
+  }
+  const recipeByproductPerMinGetter = (part: string) => {
+    return (recipe: Recipe) => {
+      // Seems byproduct is used in power recipes
+      const byproduct = [...recipe.products, ...(recipe.byproduct ?? [])].find(bp => bp.part === part)
+      if (!byproduct) {
+        console.error('No byproduct found for part', part, ' in recipe ', recipe)
+        throw new Error('No byproduct found for part!')
+      }
+      return byproduct.perMin
+    }
+  }
+
+  const getProductQtyByAmount = (product: FactoryItem, getAmountFromRecipe: (recipe: Recipe) => number, newAmount: number | undefined) => {
+    if (!newAmount || newAmount < 0) {
+      return 0
+    }
+    const recipe = getRecipeById(product.recipe)
+    if (!recipe) {
+      console.error('No recipe found for product!', product)
+      throw new Error('No recipe found for product!')
+    }
+    const recipeAmount = getAmountFromRecipe(recipe)
+    if (!recipeAmount) {
+      return 0
+    }
+    return recipe.products[0].perMin * newAmount / recipeAmount
+  }
+
+  const setProductQtyByByproduct = (product: FactoryItem, part: string) => {
+    const byProduct = product.byProducts?.find(bp => bp.id === part)
+    if (!byProduct) {
+      console.error('No byproduct ', part, ' found for product ', product)
+      throw new Error('No byproduct found for product!')
+    }
+    product.amount = getProductQtyByAmount(product, recipeByproductPerMinGetter(part), byProduct.amount)
+    updateFactory(props.factory)
+  }
+
+  const setProductQtyByRequirement = (product: FactoryItem, part: string) => {
+    const ingredient = product.requirements[part]
+    if (!ingredient) {
+      console.error('No ingredient ', part, ' found for product ', product)
+      throw new Error('No ingredient found for product!')
+    }
+    product.amount = getProductQtyByAmount(product, recipeIngredientPerMinGetter(part), ingredient.amount)
+    updateFactory(props.factory)
   }
 
   const increaseProductQtyByBuilding = (product: FactoryItem) => {
@@ -302,5 +395,9 @@
 <style lang="scss" scoped>
   .product {
     border-left: 5px solid #2196f3 !important
+  }
+  div.product-secondary-input:deep(input) {
+    // Match input's font size to the rest of the requirement chip
+    font-size: 0.875rem;
   }
 </style>

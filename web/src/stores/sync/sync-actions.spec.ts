@@ -24,6 +24,7 @@ const mockAppStore = {
   getLastEdit: vi.fn(() => new Date(Date.now() - 1000 * 60)), // 1 minute ago
   getFactories: vi.fn(),
   setFactories: vi.fn(),
+  isLoaded: true,
 }
 
 const mockServerData = {
@@ -170,6 +171,9 @@ describe('SyncActions', () => {
         ok: true,
         json: vi.fn().mockResolvedValue({ message: 'All is good' }),
       })
+
+      // Mock that the app store is ready
+      mockAppStore.isLoaded = true
 
       const result = await syncActions.syncData(false, true)
 

@@ -2,7 +2,7 @@
   <v-card class="factory-card sub-card">
     <v-card-title>
       <i class="fas fa-tasks" />
-      <span class="ml-3">Tasks</span>
+      <span class="ml-3 text-h5">Tasks</span>
     </v-card-title>
     <v-card-text>
       <v-text-field

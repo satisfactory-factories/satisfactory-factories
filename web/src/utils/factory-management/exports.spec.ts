@@ -46,7 +46,6 @@ describe('exports', () => {
       amount: 500,
     })
     factories = [ironIngotFac, ironPlateFac, ironRodsFac]
-    calculateFactories(factories, gameData, true) // Needed otherwise all inputs get blown away
     calculateFactories(factories, gameData)
   })
   describe('getRequestsForFactory', () => {
@@ -71,8 +70,10 @@ describe('exports', () => {
     })
   })
   describe('getRequestsForFactoryByPart', () => {
-    it('should return requests', () => {
-      // Drop one of the requests so we're not doing the exact same test as getRequestsForFactory
+    it('should detect that an input has been dropped', () => {
+      // Drop ironRodsFac inputs to simulate the user deleting it.
+      // Note that since the metrics were calculated in the beforeEach, we need to recalculate them again.
+      // The code should then remove the input that has been dropped from the factory it was previously requested from.
       ironRodsFac.inputs = []
       calculateFactories(factories, gameData)
       const requests = getRequestsForFactoryByPart(ironIngotFac, 'IronIngot')

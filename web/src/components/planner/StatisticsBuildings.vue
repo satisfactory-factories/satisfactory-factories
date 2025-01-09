@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-h5 mb-4">
+  <h1 class="text-h5">
     <i class="fas fa-building" />
     <span class="ml-3">Building Summary</span>
   </h1>

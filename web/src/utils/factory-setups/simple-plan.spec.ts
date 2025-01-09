@@ -1,21 +1,21 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
-import { calculateFactories, findFacByName } from '@/utils/factory-management/factory'
+import { calculateFactories, calculateFactory, findFacByName } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
 import { createSimple } from '@/utils/factory-setups/simple-plan'
+import { calculateDependencies } from '@/utils/factory-management/dependencies'
 
 let factories: Factory[]
 let ingotFac: Factory
 let ironPlateFac: Factory
 
 describe('Simple factory plan', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     const templateInstance = createSimple()
     factories = templateInstance.getFactories()
     ingotFac = findFacByName('Iron Ingots', factories)
     ironPlateFac = findFacByName('Iron Plates', factories)
-    calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
-    calculateFactories(factories, gameData)
+    calculateFactories(factories, gameData) // Needed to calculate part metrics, dependencies will not work otherwise.
   })
   describe('Iron Ingots', () => {
     it('should have a name', () => {
@@ -159,6 +159,102 @@ describe('Simple factory plan', () => {
     })
     it('should be marked as not using only raw resources', () => {
       expect(ironPlateFac.usingRawResourcesOnly).toBe(false)
+    })
+  })
+
+  describe('Import updates', () => {
+    it('should update the dependency metrics within Iron Ingots when Iron Plate has changed an input quantity', () => {
+      // This is basically running `updateFactories` within PlannerFactoryImports.vue.
+
+      // Change the input quantity of Iron Ingots in Iron Plates Fac
+      ironPlateFac.inputs[0].amount = 151
+
+      // So we simulate what the PlannerFactoryImports component calls here.
+      // I know this is naughty. We are creating an implementation here, but in the absence of vue component tests it's the best we have.
+      // TODO: Refactor this into a vue component test.
+      calculateDependencies(factories, gameData)
+      calculateFactory(ironPlateFac, factories, gameData)
+      if (!ironPlateFac.inputs[0].factoryId) {
+        throw new Error('ingotFac should have an input factory')
+      }
+      calculateFactory(ingotFac, factories, gameData)
+
+      // Ingots should now show increased demand for IronIngot
+      expect(ingotFac.dependencies.metrics.IronIngot).toEqual({
+        part: 'IronIngot',
+        request: 151,
+        supply: 100,
+        isRequestSatisfied: false,
+        difference: -51,
+      })
+
+      // It should also update itself with supply changes
+      expect(ironPlateFac.parts.IronIngot).toEqual({
+        amountRequired: 150,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 150,
+        amountRequiredPower: 0,
+        amountSupplied: 151,
+        amountSuppliedViaInput: 151,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: 1,
+        satisfied: true,
+        isRaw: false,
+        exportable: false,
+      })
+    })
+    it('should properly update the dependency and part metrics when an input has been deleted', () => {
+      // This is basically running `deleteInput` within PlannerFactoryImports.vue.
+
+      // Remove the input from Iron Plates
+      ironPlateFac.inputs = []
+
+      // Simulate what the PlannerFactoryImports component calls here, which is telling it to calculate both factories.
+      // This is slightly naughty as it's an implementation of sorts, but it's the best we have in the absence of vue component tests.
+      calculateDependencies(factories, gameData)
+      calculateFactory(ironPlateFac, factories, gameData)
+      calculateFactory(ingotFac, factories, gameData)
+
+      // Ingots should now show decreased demand for IronIngot
+      expect(ingotFac.dependencies.metrics.IronIngot).toBeUndefined()
+      expect(ingotFac.dependencies.requests).toEqual({})
+      expect(ironPlateFac.parts.IronIngot).toEqual({
+        amountRequired: 150,
+        amountRequiredExports: 0,
+        amountRequiredProduction: 150,
+        amountRequiredPower: 0,
+        amountSupplied: 0,
+        amountSuppliedViaInput: 0,
+        amountSuppliedViaProduction: 0,
+        amountSuppliedViaRaw: 0,
+        amountRemaining: -150,
+        satisfied: false,
+        isRaw: false,
+        exportable: false,
+      })
+    })
+    it('should properly update the problem on Iron Ingots fac when demand from Iron Plates increases', () => {
+      // This is basically running `updateFactories` within PlannerFactoryImports.vue.
+
+      // In the plan iron plates fac is importing ingots from Iron Ingots, we need to detect if the hasProblem is true in the other factory.
+
+      // Ingots should not have a problem at the start, Iron Plate should
+      expect(ingotFac.hasProblem).toBe(false)
+      expect(ironPlateFac.hasProblem).toBe(true)
+
+      // Increase the demand upon IngotFac
+      ironPlateFac.inputs[0].amount = 150 // Satisfies Iron Plate
+
+      // Calculate the Iron Plate factory, as that's what is called from the UI upon changing input values
+      calculateFactory(ironPlateFac, factories, gameData)
+
+      // Check that the Iron Ingot factory now has a problem
+      expect(ingotFac.hasProblem).toBe(true)
+      expect(ingotFac.requirementsSatisfied).toBe(false)
+      // And that Iron Plate does not have a problem anymore
+      expect(ironPlateFac.hasProblem).toBe(false)
+      expect(ironPlateFac.requirementsSatisfied).toBe(true)
     })
   })
 })
