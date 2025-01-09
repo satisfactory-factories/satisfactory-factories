@@ -7,9 +7,8 @@ export const validateFactories = (factories: Factory[]) => {
 
   factories.forEach(factory => {
     factory.inputs.forEach(input => {
-      try {
-        findFac(Number(input.factoryId), factories)
-      } catch (err) {
+      const inputFac = findFac(Number(input.factoryId), factories)
+      if (!inputFac?.id) {
         hasErrors = true
         console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has an input for ${input.factoryId} with part ${input.outputPart} where which the factory does not exist!`)
 
@@ -23,9 +22,9 @@ export const validateFactories = (factories: Factory[]) => {
 
     // Check the dependencies to ensure the factories they're requesting exist
     Object.keys(factory.dependencies.requests).forEach(depFacId => {
-      try {
-        findFac(depFacId, factories)
-      } catch (error) {
+      const inputFac = findFac(depFacId, factories)
+
+      if (!inputFac.id) {
         hasErrors = true
         console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a dependency for factory ID ${depFacId} which does not exist!`)
 

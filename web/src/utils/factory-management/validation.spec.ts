@@ -9,12 +9,14 @@ describe('validation', () => {
     const mockFactory: Factory = newFactory('Iron Ingots')
 
     mockFactory.inputs.push({
-      factoryId: 2346,
+      factoryId: 123456,
       outputPart: 'IronOre',
       amount: 123,
     })
 
-    validateFactories([mockFactory])
+    expect(() => {
+      validateFactories([mockFactory])
+    }).toThrow()
     expect(mockFactory.inputs.length).toBe(0)
   })
 
@@ -27,7 +29,9 @@ describe('validation', () => {
       part: 'Foo',
     }]
 
-    validateFactories([mockFactory])
+    expect(() => {
+      validateFactories([mockFactory])
+    }).toThrow()
     expect(mockFactory.dependencies.requests).toEqual({})
   })
 
@@ -47,7 +51,9 @@ describe('validation', () => {
       amount: 123,
     })
 
-    validateFactories([mockFactory, validFactory])
+    expect(() => {
+      validateFactories([mockFactory, validFactory])
+    }).toThrow()
     expect(mockFactory.inputs.length).toBe(1)
     expect(mockFactory.inputs[0].factoryId).toBe(validFactory.id)
   })
@@ -69,7 +75,9 @@ describe('validation', () => {
       amount: 123,
     })
 
-    validateFactories([mockFactory, validFactory])
+    expect(() => {
+      validateFactories([mockFactory, validFactory])
+    }).toThrow()
 
     expect(mockFactory.dependencies.requests[validFactory.id]).toBeDefined()
     expect(mockFactory.dependencies.requests[123456]).toBeUndefined()
