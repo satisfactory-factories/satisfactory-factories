@@ -64,7 +64,7 @@
                   size="small"
                   @click="doFixProduct(partId.toString(), factory)"
                 >
-                  <i class="fas fa-wrench" /><span class="ml-1">Fix Production</span>
+                  <i class="fas fa-wrench" /><span class="ml-1">Fix Product</span>
                 </v-btn>
                 <v-btn
                   v-if="getImport(factory, partId.toString()) && !part.satisfied"
