@@ -174,6 +174,7 @@
   import { inject } from 'vue'
   import { getPartDisplayName } from '@/utils/helpers'
   import {
+    ByProductItem,
     Factory,
     FactoryInput,
     FactoryItem,
@@ -185,12 +186,11 @@
   import { formatNumber } from '@/utils/numberFormatter'
   import { useAppStore } from '@/stores/app-store'
 
-  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem | undefined
-  const isItemRawResource = inject('isItemRawResource') as (part: string) => boolean
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory
 
   const appStore = useAppStore()
+  const { getGameData } = useGameDataStore()
 
   const { getDefaultRecipeForPart } = useGameDataStore()
   const openedCalculator = ref('')
@@ -270,6 +270,16 @@
     }
     fixProduct(product, factory)
     updateFactory(factory)
+  }
+
+  const isItemRawResource = (item: string): boolean => {
+    return !!getGameData().items.rawResources[item]
+  }
+
+  const getProduct = (factory: Factory, productId: string): FactoryItem | ByProductItem | undefined => {
+    const product = factory.products.find(product => product.id === productId)
+    const byProduct = factory.byProducts.find(product => product.id === productId)
+    return product ?? byProduct ?? undefined
   }
 
   // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {

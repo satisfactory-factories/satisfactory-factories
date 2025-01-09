@@ -1,4 +1,4 @@
-import { BuildingRequirement, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+import { BuildingRequirement, ByProductItem, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { getRecipe } from '@/utils/factory-management/common'
 
@@ -181,7 +181,7 @@ export const shouldShowNotInDemand = (product: FactoryItem, factory: Factory) =>
   return partRequired <= 0
 }
 
-export const fixProduct = (product: FactoryItem, factory: Factory): void => {
+export const fixProduct = (product: FactoryItem | ByProductItem, factory: Factory): void => {
   // If the product is not found, throw
   if (!product.id) {
     const error = 'products: fixPart: Product ID is missing!'
