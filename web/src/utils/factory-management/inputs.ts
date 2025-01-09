@@ -223,7 +223,21 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
     return acc + factory.parts[input.outputPart].amountSuppliedViaInput
   }, 0)
 
+  // In a multi-input scenario, if there's an over supply, inform the user one of their imports are redundant.
+  // Try to be deterministic by favouring the largest import.
+  // Loop each of the imports, enter their values into an array, then check if the current import is the largest.
+  const otherImportsValues: number[] = []
+  otherImports.forEach(input => {
+    if (!input.outputPart) return 0
+    otherImportsValues.push(input.amount ?? 0)
+  })
+  const largestOtherImport = Math.max(...otherImportsValues)
+
+  // If the current import is the largest, then it's not redundant.
+  // This does annoyingly mean that if they are both EXACTLY the same, both will be redundant. Can't really get around it.
+  if (input.amount > largestOtherImport) return false
+
   const remainingToImportAfterOtherImports = required - produced - otherImportsTotal
 
-  return imported === 0 || remainingToImport < 0 || remainingToImportAfterOtherImports <= 0
+  return imported === 0 || remainingToImport < 0 || remainingToImportAfterOtherImports < 0
 }

@@ -127,6 +127,10 @@
               <i class="fas fa-exclamation-triangle" />
               <span class="ml-2">No amount set!</span>
             </v-chip>
+            <v-chip v-if="isImportRedundant(inputIndex, factory)" class="sf-chip small orange">
+              <i class="fas fa-exclamation-triangle" />
+              <span class="ml-2">Redundant!</span>
+            </v-chip>
           </div>
         </div></v-card>
       <div class="input-row d-flex align-center">
@@ -157,7 +161,7 @@
     calculateImportCandidates,
     calculatePossibleImports,
     importFactorySelections,
-    importPartSelections,
+    importPartSelections, isImportRedundant,
   } from '@/utils/factory-management/inputs'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -166,6 +170,7 @@
   import { getExportableFactories } from '@/utils/factory-management/exports'
   import { calculateDependencies } from '@/utils/factory-management/dependencies'
   import { useGameDataStore } from '@/stores/game-data-store'
+  import { shouldShowNotInDemand } from '@/utils/factory-management/products'
 
   const { getFactories } = useAppStore()
   const { getGameData } = useGameDataStore()
