@@ -193,3 +193,37 @@ export const calculateAbleToImport = (factory: Factory, importCandidates: Factor
 
   return true
 }
+
+export const isImportRedundant = (importIndex: number, factory: Factory): boolean | null => {
+  const input = factory.inputs[importIndex]
+  if (!input?.outputPart) {
+    return null
+  }
+
+  const partData = factory.parts[input.outputPart]
+
+  if (!partData) {
+    console.error(`inputs: isImportRedundant: Part data for part ${input.outputPart} not found in factory ${factory.id}!`)
+    return null
+  }
+
+  // If the factory is producing the products internally, and the amount that it produces exceeds the amount imported, then the import is redundant.
+
+  const required = partData.amountRequired
+  const produced = partData.amountSuppliedViaProduction
+  const imported = partData.amountSuppliedViaInput
+
+  const remainingToImport = required - produced
+
+  // Now, we also need to take into account other imports. If other imports fully satisfy the requirement, then this import is redundant.
+  // Loop through all the inputs and see if the other imports fully satisfy the requirement.
+  const otherImports = factory.inputs.filter((_, index) => index !== importIndex)
+  const otherImportsTotal = otherImports.reduce((acc, input) => {
+    if (!input.outputPart) return acc
+    return acc + factory.parts[input.outputPart].amountSuppliedViaInput
+  }, 0)
+
+  const remainingToImportAfterOtherImports = required - produced - otherImportsTotal
+
+  return imported === 0 || remainingToImport < 0 || remainingToImportAfterOtherImports <= 0
+}
