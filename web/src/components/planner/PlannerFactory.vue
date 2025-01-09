@@ -283,7 +283,7 @@
 
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
-  import { Factory, FactoryDependencyMetrics, FactoryItem } from '@/interfaces/planner/FactoryInterface'
+  import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
   import { differenceClass, getPartDisplayName, hasMetricsForPart } from '@/utils/helpers'
   import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'
@@ -291,12 +291,10 @@
   import ProductsAndPower from '@/components/planner/products/ProductsAndPower.vue'
 
   const findFactory = inject('findFactory') as (id: string | number) => Factory
-  const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const copyFactory = inject('copyFactory') as (factory: Factory) => void
   const deleteFactory = inject('deleteFactory') as (factory: Factory) => void
   const moveFactory = inject('moveFactory') as (factory: Factory, direction: string) => void
   const navigateToFactory = inject('navigateToFactory') as (id: string | number, subsection?: string) => void
-  const getProduct = inject('getProduct') as (factory: Factory, productId: string) => FactoryItem
 
   defineProps<{
     factory: Factory
