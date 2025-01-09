@@ -453,7 +453,7 @@ describe('inputs', () => {
         // Add ingot internal production to factory2
         addProductToFactory(mockFactory2, {
           id: 'IronIngot',
-          amount: 100,
+          amount: 100, // This will result in a 50 import deficit
           recipe: 'IngotIron',
         })
         calculateDependencies([mockFactory, mockFactory2], gameData, true)
@@ -492,40 +492,58 @@ describe('inputs', () => {
             amount: 100,
           })
         })
-        it('should return false if there other inputs do NOT satisfy the requirement', () => {
-          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
-
-          // The total requirement is 150, and we have 100 from the other import. So this import is NOT redundant.
-          expect(isImportRedundant(1, mockFactory2)).toBe(true)
-        })
-        it('should return true if there are other inputs that satisfy the requirement', () => {
-          // Increase the input from factory 3 to be higher than the requirement
-          mockFactory2.inputs[0].amount = 1000
-          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
-
-          // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
-          expect(isImportRedundant(1, mockFactory2)).toBe(true)
-        })
 
         // Import favouring largest
         it('should return false if the current import is the largest', () => {
-          // Increase the input from factory 3 to be higher than the requirement
-          mockFactory2.inputs[0].amount = 500
+          mockFactory2.inputs[0].amount = 40
+          mockFactory2.inputs[1].amount = 15
           calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
 
-          // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
           expect(isImportRedundant(0, mockFactory2)).toBe(false)
         })
+        it('should return true if the current import is the smallest', () => {
+          mockFactory2.inputs[0].amount = 40
+          mockFactory2.inputs[1].amount = 15
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
 
+          expect(isImportRedundant(1, mockFactory2)).toBe(false)
+        })
+
+        // Import redundancy if other imports can satisfy the requirement
+        it('should return true if there are other inputs that satisfy the requirement fully', () => {
+          mockFactory2.inputs[0].amount = 75 // Satisfies (50) fully
+          mockFactory2.inputs[1].amount = 5
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          expect(isImportRedundant(1, mockFactory2)).toBe(true)
+        })
         it('should return false if other imports do not fully satisfy', () => {
           // Decrease input from factory 2 to be lower than the requirement
-          mockFactory2.inputs[0].amount = 50
-          // Set the input being tested to just under the target of 75 (would need to be 25 to satisfy)
+          mockFactory2.inputs[0].amount = 40 // Import requirement is 50
           mockFactory2.inputs[1].amount = 24
           calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
 
           // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
           expect(isImportRedundant(1, mockFactory2)).toBe(false)
+        })
+
+        it('should handle more than 2 inputs correctly', () => {
+          const mockFactory4 = newFactory('Iron Ingots 3')
+          addProductToFactory(mockFactory4, {
+            id: 'IronIngot',
+            amount: 1000,
+            recipe: 'IngotIron',
+          })
+          addInputToFactory(mockFactory2, {
+            factoryId: mockFactory4.id,
+            outputPart: 'IronIngot',
+            amount: 100,
+          })
+          mockFactory2.inputs[0].amount = 75
+          mockFactory2.inputs[1].amount = 25
+          mockFactory2.inputs[2].amount = 50
+
+          expect(isImportRedundant(2, mockFactory2)).toBe(true)
         })
       })
     })

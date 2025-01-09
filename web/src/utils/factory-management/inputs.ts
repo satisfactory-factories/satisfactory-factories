@@ -215,13 +215,19 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
 
   const required = partData.amountRequired
   const produced = partData.amountSuppliedViaProduction
-  const imported = partData.amountSuppliedViaInput
 
-  if (imported === 0) {
-    return false // If there's no import, then it's not redundant.
+  // The remainder of the part that needs to be imported
+  const importsNeeded = required - produced
+
+  // If there's no requirement, then the import is redundant.
+  if (required <= 0) {
+    return true
   }
 
-  const remainingToImport = required - produced
+  // If there is sufficient internal production, then all imports are redundant
+  if (importsNeeded <= 0) {
+    return true
+  }
 
   // Now, we also need to take into account other imports. If other imports fully satisfy the requirement, then this import is redundant.
   // Loop through all the inputs and see if the other imports fully satisfy the requirement.
@@ -233,21 +239,22 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
   })
   const otherImportsTotal = otherImportsValues.reduce((acc, val) => acc + val, 0)
 
+  // If there are no other imports then the import is required.
+  if (otherImports.length === 0) return false
+
   // In a multi-input scenario, if there's an over supply, inform the user one of their imports are redundant.
   // Try to be deterministic by favouring the largest import.
-  // Loop each of the imports, enter their values into an array, then check if the current import is the largest.
   const largestOtherImport = Math.max(...otherImportsValues)
 
   // If the current import is the largest, then it's not redundant.
   // This does annoyingly mean that if they are both EXACTLY the same, both will be redundant. Can't really get around it.
   if (input.amount >= largestOtherImport) return false
 
-  const remainingToImportAfterOtherImports = remainingToImport - otherImportsTotal
+  const requirementAfterOtherImports = importsNeeded - otherImportsTotal
 
   // If the other imports don't fully satisfy the requirement, then the import is not redundant.
-  if (remainingToImportAfterOtherImports > 0) return false
+  if (requirementAfterOtherImports > 0) return false
 
-  // If there is a remainder, the import is required.
   return true
 }
 
