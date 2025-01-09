@@ -415,6 +415,7 @@ describe('inputs', () => {
     it('should return null if the input amount is set to 0', () => {
       mockFactory.inputs[0] = {
         amount: 0,
+        outputPart: 'foo',
       } as any
       expect(isImportRedundant(0, mockFactory)).toBe(null)
     })
@@ -422,13 +423,46 @@ describe('inputs', () => {
       mockFactory.inputs[0] = {
         factoryId: mockFactory.id,
         outputPart: null,
-        amount: 900,
+        amount: 123,
       }
       expect(isImportRedundant(0, mockFactory)).toBe(null)
     })
     it('should return null if the part data does not exist', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
       mockFactory.parts = {}
       expect(isImportRedundant(0, mockFactory)).toBe(null)
+    })
+    it('should return true if there is no requirement for the product', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
+      mockFactory.parts = {
+        foo: {
+          amountRequired: 0,
+          amountSuppliedViaProduction: 100,
+        },
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(true)
+    })
+    it('should return true if there is no requirement for import', () => {
+      mockFactory.inputs[0] = {
+        factoryId: mockFactory.id,
+        outputPart: 'foo',
+        amount: 123,
+      }
+      mockFactory.parts = {
+        foo: {
+          amountRequired: 100,
+          amountSuppliedViaProduction: 100,
+        },
+      } as any
+      expect(isImportRedundant(0, mockFactory)).toBe(true)
     })
     describe('Internal production', () => {
       let mockFactory2: Factory

@@ -253,9 +253,7 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
   const requirementAfterOtherImports = importsNeeded - otherImportsTotal
 
   // If the other imports don't fully satisfy the requirement, then the import is not redundant.
-  if (requirementAfterOtherImports > 0) return false
-
-  return true
+  return requirementAfterOtherImports <= 0
 }
 
 export const satisfyImport = (importIndex: number, factory: Factory): void => {
