@@ -256,11 +256,11 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
   return requirementAfterOtherImports <= 0
 }
 
-export const satisfyImport = (importIndex: number, factory: Factory): void => {
+export const satisfyImport = (importIndex: number, factory: Factory): void | null => {
   const input = factory.inputs[importIndex]
   if (!input.outputPart) {
     console.error('updateInputToSatisfy: No output part selected for input:', input)
-    return
+    return null
   }
 
   // Gather all the other imports of the same part

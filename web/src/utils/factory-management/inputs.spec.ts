@@ -590,6 +590,11 @@ describe('inputs', () => {
       ironPlateFac = findFacByName('Iron Plates', factories)
     })
 
+    it('should return undefined if there is no outputPart', () => {
+      ironPlateFac.inputs[0].outputPart = null
+      expect(satisfyImport(0, ironPlateFac)).toBe(null)
+    })
+
     it('should satisfy the import amount when there are no other factories', () => {
       ironPlateFac.inputs[0].amount = 50
 
