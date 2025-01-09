@@ -283,7 +283,7 @@
 
 <script setup lang="ts">
   import { defineProps, inject } from 'vue'
-  import { Factory, FactoryDependencyMetrics } from '@/interfaces/planner/FactoryInterface'
+  import { Factory } from '@/interfaces/planner/FactoryInterface'
   import { differenceClass, getPartDisplayName, hasMetricsForPart } from '@/utils/helpers'
   import { countActiveTasks } from '@/utils/factory-management/factory'
   import { formatNumber } from '@/utils/numberFormatter'

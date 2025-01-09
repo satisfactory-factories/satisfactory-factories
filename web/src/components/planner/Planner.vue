@@ -74,9 +74,7 @@
 
   import PlannerGlobalActions from '@/components/planner/PlannerGlobalActions.vue'
   import {
-    ByProductItem,
     Factory,
-    FactoryItem,
     WorldRawResource,
   } from '@/interfaces/planner/FactoryInterface'
   import { DataInterface } from '@/interfaces/DataInterface'
