@@ -499,6 +499,16 @@ describe('inputs', () => {
           // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
           expect(isImportRedundant(1, mockFactory2)).toBe(true)
         })
+
+        // Import favouring largest
+        it('should return false if the current import is the largest', () => {
+          // Increase the input from factory 3 to be higher than the requirement
+          mockFactory2.inputs[0].amount = 500
+          calculateFactories([mockFactory, mockFactory2, mockFactory3], gameData)
+
+          // The total requirement is 150, and we have 1000 from the other import. So this import IS redundant.
+          expect(isImportRedundant(0, mockFactory2)).toBe(false)
+        })
       })
     })
   })
