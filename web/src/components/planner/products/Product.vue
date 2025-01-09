@@ -58,19 +58,19 @@
       </div>
       <div class="input-row d-flex align-center">
         <v-btn
-          v-if="!isProductionSatisfied(factory, product.id) || !isExportSatisfied(factory, product.id)"
+          v-show="shouldShowFix(product, factory) == 'deficit'"
           class="rounded mr-2"
           color="green"
-          @click="onClickFixProduction(factory, product.id)"
-        ><i class="fas fa-wrench" /><span class="ml-1">Fix</span>
-        </v-btn>
+          prepend-icon="fas fa-arrow-up"
+          @click="doFixProduct(product, factory)"
+        >Satisfy</v-btn>
         <v-btn
-          v-show="shouldShowTrim(product, factory)"
+          v-show="shouldShowFix(product, factory) == 'surplus'"
           class="rounded mr-2"
           color="yellow"
           prepend-icon="fas fa-arrow-down"
           size="default"
-          @click="doTrimProduct(product, factory)"
+          @click="doFixProduct(product, factory)"
         >Trim</v-btn>
         <v-btn
           class="rounded mr-2"
@@ -210,10 +210,10 @@
 
 <script setup lang="ts">
   import {
+    fixProduct,
+    shouldShowFix,
     shouldShowInternal,
     shouldShowNotInDemand,
-    shouldShowTrim,
-    trimProduct,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatPower } from '@/utils/numberFormatter'
@@ -222,8 +222,6 @@
   import { useDisplay } from 'vuetify'
   import { inject } from 'vue'
 
-  const fixProduction = inject('fixProduction') as (factory: Factory, partIndex: string) => void
-  const fixExport = inject('fixExport') as (factory: Factory, productId: string) => void
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const updateOrder = inject('updateOrder') as (list: any[], direction: string, item: any) => void
   const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
@@ -357,22 +355,9 @@
     updateFactory(props.factory)
   }
 
-  const doTrimProduct = (product: FactoryItem, factory: Factory) => {
-    trimProduct(product, factory)
+  const doFixProduct = (product: FactoryItem, factory: Factory) => {
+    fixProduct(product, factory)
     updateFactory(factory)
-  }
-
-  const isProductionSatisfied = (factory: Factory, id: string) => factory.parts[id]?.satisfied
-  const isExportSatisfied = (factory: Factory, id: string) => factory.dependencies.metrics[id]?.difference >= 0
-
-  const onClickFixProduction = (factory: Factory, id: string) => {
-    if (!isProductionSatisfied(factory, id)) {
-      fixProduction(factory, id)
-    }
-
-    if (!isExportSatisfied(factory, id)) {
-      fixExport(factory, id)
-    }
   }
 
   const autocompletePartItemsGenerator = () => {

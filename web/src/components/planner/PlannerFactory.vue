@@ -323,41 +323,6 @@
     return Object.keys(factory.dependencies.requests).length > 0
   }
 
-  const fixProduction = (factory: Factory, productId: string): void => {
-    const product = getProduct(factory, productId)
-
-    // If the product is not found, return
-    if (!product) {
-      console.error(`Could not find product for ${productId} to fix!`)
-      return
-    }
-
-    // Update the production amount to match requirement
-    product.amount = factory.parts[productId].amountRequired
-    updateFactory(factory)
-  }
-
-  const fixExport = (factory: Factory, productId: string) => {
-    const product = getProduct(factory, productId)
-
-    // If the product is not found, return
-    if (!product) {
-      console.error(`Could not find product for ${productId} to fix!`)
-      return
-    }
-
-    const metric = getRequestMetricsForFactoryByPart(factory, product.id)
-
-    if (!metric) {
-      console.error(`Could not get request metric to fix shortage for ${product.id}`)
-      return
-    }
-
-    const partData = factory.parts[product.id]
-    product.amount = partData.amountRequired // Fix both exports and production at the same time
-    updateFactory(factory)
-  }
-
   const getRequestMetricsForFactoryByPart = (
     factory: Factory,
     part: string
@@ -387,8 +352,6 @@
     }
   }
 
-  provide('fixProduction', fixProduction)
-  provide('fixExport', fixExport)
   provide('getRequestMetricsForFactoryByPart', getRequestMetricsForFactoryByPart)
 </script>
 
