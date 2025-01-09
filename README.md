@@ -12,6 +12,7 @@ ___
 ## Local Development
 This project has the following requirements. We highly recommend you use `nvm` to manage your node and p(npm) versions.
 - Node.js version >20.17.0 `nvm install 20.17 && nvm use 20.17`
+  - You may want to make 20.17 the default version with `nvm alias default 20.17`
 - pnpm version >9.14.4 `npm install -g pnpm`
 - Docker (for the backend) [Docker install docs](https://docs.docker.com/engine/install/)
 

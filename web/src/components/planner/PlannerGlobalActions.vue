@@ -15,7 +15,7 @@
         color="blue"
         prepend-icon="fas fa-expand-alt"
         variant="tonal"
-        @click="emit('show-all')"
+        @click="expandAll"
       >
         Expand all
       </v-btn>
@@ -63,7 +63,7 @@
         color="secondary"
         prepend-icon="fas fa-clipboard"
         variant="tonal"
-        @click="confirmDialog('This will replace your plan. Are you sure? For large plans the page may hang for several seconds.') && pastePlanFromClipboard()"
+        @click="confirmReplace() && pastePlanFromClipboard()"
       >
         Paste plan
       </v-btn>
@@ -77,7 +77,7 @@
   import eventBus from '@/utils/eventBus'
   import { confirmDialog } from '@/utils/helpers'
 
-  const { getFactories, setFactories } = useAppStore()
+  const { getFactories, prepareLoader } = useAppStore()
 
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
@@ -93,6 +93,23 @@
     return confirm(message)
   }
 
+  const confirmReplace = () => {
+    if (getFactories().length === 0) return true
+    return confirmDialog('This will replace your plan. Are you sure?')
+  }
+
+  const expandAll = () => {
+    if (getFactories().length > 10) {
+      eventBus.emit('toast', { message: 'You are expanding a lot of factories. Expect performance issues.', type: 'warning' })
+
+      setTimeout(() => {
+        emit('show-all')
+      }, 250)
+    } else {
+      emit('show-all')
+    }
+  }
+
   const copyPlanToClipboard = () => {
     const plan = JSON.stringify(getFactories())
     navigator.clipboard.writeText(plan)
@@ -104,7 +121,10 @@
       try {
         const parsedPlan = JSON.parse(plan)
         emit('clear-all')
-        setFactories(parsedPlan, true)
+
+        setTimeout(() => {
+          prepareLoader(parsedPlan)
+        }, 250)
       } catch (err) {
         if (err instanceof Error) {
           alert(`Invalid plan. Error: ${err.message}`)

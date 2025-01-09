@@ -42,7 +42,10 @@
         </v-container>
       </v-col>
       <!-- Main Content Area -->
-      <v-col class="border-s-lg pa-3 main-content">
+      <v-col v-if="!loadingCompleted" class="border-s-lg pa-3 main-content">
+        <planner-factory-placeholder-list />
+      </v-col>
+      <v-col v-if="loadingCompleted" class="border-s-lg pa-3 main-content">
         <notice />
         <statistics v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
         <statistics-factory-summary v-if="getFactories().length !== 0" :factories="getFactories()" :help-text="helpText" />
@@ -85,15 +88,31 @@
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { useDisplay } from 'vuetify'
   import { useGameDataStore } from '@/stores/game-data-store'
+  import eventBus from '@/utils/eventBus'
 
   const { mdAndDown } = useDisplay()
   const { getGameData } = useGameDataStore()
   const gameData = getGameData()
 
-  const { getFactories, setFactories, clearFactories, addFactory } = useAppStore()
+  const { getFactories, setFactories, clearFactories, addFactory, prepareLoader } = useAppStore()
 
   const worldRawResources = reactive<{ [key: string]: WorldRawResource }>({})
   const helpText = ref(localStorage.getItem('helpText') === 'true')
+
+  const loadingCompleted = ref(false)
+
+  // When we are starting a new load we need to unload all the DOM elements
+  eventBus.on('prepareForLoad', () => {
+    loadingCompleted.value = false
+    console.log('Planner: Received prepareForLoad event, marked as unloaded, showing placeholders')
+  })
+
+  // When everything is loaded and ready to go, then we are ready to start loading things.
+  eventBus.on('loadingCompleted', () => {
+    console.log('Planner: Received loadingCompleted event, initializing factories...')
+    loadingCompleted.value = true
+    initializeFactories()
+  })
 
   // ==== WATCHES
   watch(helpText, newValue => {
@@ -338,9 +357,6 @@
     return !!gameData.items.rawResources[item]
   }
 
-  // Initialize during setup
-  initializeFactories()
-
   provide('findFactory', findFactory)
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)
@@ -355,17 +371,17 @@
   // If they have, don't show it again.
   const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
 
+  let factoriesToLoad: Factory[] = []
+
   const setupDemo = () => {
-    closeIntro()
     if (getFactories().length > 0) {
-      if (confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
-        console.log('Replacing factories with Demo')
-        setFactories(complexDemoPlan().getFactories(), true)
+      if (!confirm('Showing the demo will clear the current plan. Are you sure you wish to do this?')) {
+        return // User cancelled
       }
-    } else {
-      console.log('Adding demo factories')
-      setFactories(complexDemoPlan().getFactories(), true)
     }
+    closeIntro()
+    factoriesToLoad = complexDemoPlan().getFactories()
+    prepareLoader(factoriesToLoad)
   }
 
   const closeIntro = () => {

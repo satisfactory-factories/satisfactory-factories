@@ -100,7 +100,6 @@ describe('parts', () => {
         amount: 50,
       })
 
-      calculateFactories([mockFactory, otherMockFactory], gameData, true) // Part metrics need to be calculated before dependencies
       calculateFactories([mockFactory, otherMockFactory], gameData)
 
       expect(mockFactory.parts.CompactedCoal.amountSupplied).toBe(50)

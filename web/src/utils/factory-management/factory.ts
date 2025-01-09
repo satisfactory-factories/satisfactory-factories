@@ -23,7 +23,10 @@ export const findFac = (factoryId: string | number, factories: Factory[]): Facto
   // Ensure factoryId is parsed to a number to match factories array ids
   const factory = factories.find(fac => fac.id === parseInt(factoryId.toString(), 10))
   if (!factory) {
-    throw new Error(`Factory ${factoryId} not found!`)
+    console.error('Factory not found:', factoryId)
+    return {} as Factory
+
+    // throw new Error(`Factory ${factoryId} not found!`)
   }
   return factory
 }
@@ -80,7 +83,7 @@ export const calculateFactory = (
   gameData: DataInterface,
   loadMode = false,
 ) => {
-  console.log('Calculating factory:', factory.name)
+  // console.log('Calculating factory:', factory.name)
 
   factory.rawResources = {}
   factory.parts = {}
@@ -121,22 +124,17 @@ export const calculateFactory = (
   return factory
 }
 
-export const calculateFactories = (factories: Factory[], gameData: DataInterface, loadMode = false): void => {
-  // If we're loading via template, we need to run calculations FIRST then dependencies then calculations again.
-  // The reason why we have to do this is we generate the factories out of products and inputs configurations, which then need to be calculated first before we can calculate the dependencies.
-  // Otherwise, the part data that the invalidInputs check depends upon won't be present, and it will nuke all the import links.
-  if (loadMode) {
-    console.log('factory-management: calculateFactories: Preloading calculations')
-    // We need to do this twice to ensure all the parts are calculated, before we then check for invalid dependencies
-    factories.forEach(factory => {
-      calculateFactory(factory, factories, gameData, true) // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
-    })
-  }
+export const calculateFactories = (factories: Factory[], gameData: DataInterface): void => {
+  // We need to do this twice to ensure all the part dependency metrics are calculated, before we then check for invalid dependencies
+  // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
+  // This generates the Part metrics for the factories, which is then used by calculateDependencies to generate the dependency metrics.
+  // While we are running the calculations twice, they are very quick, <20ms even for the largest plans.
+  factories.forEach(factory => calculateFactory(factory, factories, gameData, true))
 
-  // Construct the dependencies between factories.
+  // Now calculate the dependencies for all factories, removing any invalid inputs.
   calculateDependencies(factories, gameData)
 
-  // Do the calculations again after the dependencies have been calculated (if loaded)
+  // Re-run the calculations after the dependencies have been calculated as some inputs may have been deleted
   factories.forEach(factory => calculateFactory(factory, factories, gameData))
 }
 

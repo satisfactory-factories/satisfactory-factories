@@ -9,7 +9,7 @@
 
   export interface ToastData {
     message: string
-    type?: 'success' | 'info' | 'error'
+    type?: 'success' | 'warning' | 'error'
   }
 
   const showToast = ref(false)
@@ -19,8 +19,8 @@
   const showToastMessage = (data: ToastData) => {
     if (data.type === 'error') {
       toastType.value = 'red'
-    } else if (data.type === 'info') {
-      toastType.value = 'blue'
+    } else if (data.type === 'warning') {
+      toastType.value = 'amber'
     } else {
       toastType.value = 'success'
     }

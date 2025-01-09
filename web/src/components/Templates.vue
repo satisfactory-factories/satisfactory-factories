@@ -54,7 +54,7 @@
   import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
   import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
 
-  const { setFactories, isDebugMode } = useAppStore()
+  const { prepareLoader, isDebugMode } = useAppStore()
 
   const dialog = ref(false)
 
@@ -82,7 +82,7 @@
       isDebug: false,
     },
     {
-      name: 'Mael\'s Big Boi Plan',
+      name: 'Mael\'s "MegaPlan"',
       description: 'A real-life plan created by Maelstrome. This is considered a very large plan, and makes use of all features of the planner.',
       data: createMaelsBigBoiPlan(),
       show: true,
@@ -119,7 +119,8 @@
   ]
 
   const loadTemplate = (template: Template) => {
-    setFactories(template.data, true)
+    console.log('Template loaded:', template.name, 'starting load')
+    prepareLoader(template.data)
     dialog.value = false
   }
 </script>

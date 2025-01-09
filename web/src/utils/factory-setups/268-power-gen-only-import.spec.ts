@@ -12,7 +12,6 @@ describe('268 Scenario Plan', () => {
     const templateInstance = create268Scenraio()
     factories = templateInstance.getFactories()
     fuelFac = findFacByName('Fuel Factory', factories)
-    calculateFactories(factories, gameData, true) // Needed to calculate part metrics, dependencies will not work otherwise.
     calculateFactories(factories, gameData)
   })
 
