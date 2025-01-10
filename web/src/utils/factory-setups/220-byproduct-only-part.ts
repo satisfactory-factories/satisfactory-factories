@@ -1,49 +1,35 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
-import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-// https://github.com/satisfactory-factories/application/issues/251
-// Share link: https://satisfactory-factories.app/share/microscopic-gifted-vase
-export const create251Scenario = (): { getFactories: () => Factory[] } => {
-  const factoryA = newFactory('Factory A', 0, 1)
-  const factoryB = newFactory('Factory B', 1, 2)
-  const factoryC = newFactory('Factory C', 2, 3)
+// https://github.com/satisfactory-factories/application/issues/220
+// Share link: https://satisfactory-factories.app/share/beautiful-important-man // Love it :D
+export const create220Scenario = (): { getFactories: () => Factory[] } => {
+  const mockFactory = newFactory('Oil', 0, 1)
 
   // Store factories in an array
-  const factories = [factoryA, factoryB, factoryC]
+  const factories = [mockFactory]
 
   // Add products and imports
-  addProductToFactory(factoryA, {
-    id: 'CompactedCoal',
-    amount: 540,
-    recipe: 'Alternate_EnrichedCoal',
+  addProductToFactory(mockFactory, {
+    id: 'Plastic',
+    amount: 840,
+    recipe: 'Plastic',
   })
-  addProductToFactory(factoryB, {
-    id: 'CompactedCoal',
-    amount: 450,
-    recipe: 'Alternate_EnrichedCoal',
+  addProductToFactory(mockFactory, {
+    id: 'Rubber',
+    amount: 240,
+    recipe: 'Rubber',
   })
-  addProductToFactory(factoryC, {
+  addProductToFactory(mockFactory, {
     id: 'LiquidFuel',
-    amount: 1200,
-    recipe: 'LiquidFuel',
+    amount: 473,
+    recipe: 'ResidualFuel',
   })
-  addProductToFactory(factoryC, {
-    id: 'LiquidTurboFuel',
-    amount: 1000,
-    recipe: 'Alternate_Turbofuel',
-  })
-
-  addInputToFactory(factoryC, {
-    factoryId: factoryA.id,
-    outputPart: 'CompactedCoal',
-    amount: 540,
-  })
-  addInputToFactory(factoryC, {
-    factoryId: factoryB.id,
-    outputPart: 'CompactedCoal',
-    amount: 450,
+  addProductToFactory(mockFactory, {
+    id: 'SteelPlateReinforced',
+    amount: 30,
+    recipe: 'EncasedIndustrialBeam',
   })
 
   // Return an object with a method to access the factories

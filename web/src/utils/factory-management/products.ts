@@ -203,12 +203,15 @@ export const fixProduct = (product: FactoryItem | ByProductItem, factory: Factor
   product.amount = diff + product.amount
 }
 
-export const getProduct = (factory: Factory, productId: string, productOnly = false): FactoryItem | ByProductItem | undefined => {
+export const getProduct = (factory: Factory, productId: string, productOnly = false, byProductOnly = false): FactoryItem | ByProductItem | undefined => {
   const product = factory.products.find(product => product.id === productId)
   const byProduct = factory.byProducts.find(product => product.id === productId)
 
   if (productOnly) {
     return product ?? undefined
+  }
+  if (byProductOnly) {
+    return byProduct ?? undefined
   }
   return product ?? byProduct ?? undefined
 }

@@ -43,7 +43,23 @@
                 <span v-else class="ml-2">
                   <v-icon icon="fas fa-times" />
                 </span>
-                <span class="ml-2 text-body-1"><b>{{ getPartDisplayName(partId.toString()) }}</b></span>
+                <div class="ml-2 text-body-1">
+                  <div>
+                    <b>{{ getPartDisplayName(partId.toString()) }}</b>
+                  </div>
+                  <v-chip v-if="showProductChip(factory, partId.toString())" class="sf-chip blue x-small mr-2">
+                    Product
+                  </v-chip>
+                  <v-chip v-if="showByProductChip(factory, partId.toString())" class="sf-chip gray x-small mr-2">
+                    Byproduct
+                  </v-chip>
+                  <v-chip v-if="showImportedChip(factory, partId.toString())" class="sf-chip gray x-small mr-2">
+                    Imported
+                  </v-chip>
+                  <v-chip v-if="showRawChip(factory, partId.toString())" class="sf-chip cyan x-small mr-2">
+                    Raw
+                  </v-chip>
+                </div>
               </div>
               <!-- Action buttons -->
               <div class="align-self-center text-right">
@@ -80,7 +96,7 @@
                         <i class="fas fa-exclamation-circle" /><span class="ml-1">CORRECT MANUALLY</span>
                       </div>
                     </template>
-                    <span>This needs to be corrected manually. Since you can produce this item via <b>both</b> product and byproduct production, <br>the planner does not know how to automatically resolve this for you.</span>
+                    <span>This item is a byproduct, currently the planner does not know how to scale byproducts correctly<br> as there could be a number of ways to do it that the user may not want.<br> Please scale it manually.</span>
                   </v-tooltip>
                 </v-btn>
                 <v-btn
@@ -136,7 +152,7 @@
               >
                 <b>{{ formatNumber(part.amountRemaining) }}/min {{ getSatisfactionLabel(part.amountRemaining) }}</b>
               </v-chip>
-              <template v-if="part.isRaw">
+              <template v-if="showRawChip(factory, partId.toString())">
                 <v-tooltip bottom>
                   <template #activator="{ props }">
                     <v-chip v-bind="props" class="sf-chip cyan small">
@@ -208,7 +224,12 @@
   import { getRequestsForFactoryByPart } from '@/utils/factory-management/exports'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useAppStore } from '@/stores/app-store'
-  import { showSatisfactionItemButton } from '@/utils/factory-management/satisfaction'
+  import {
+    showByProductChip,
+    showImportedChip,
+    showProductChip, showRawChip,
+    showSatisfactionItemButton,
+  } from '@/utils/factory-management/satisfaction'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory

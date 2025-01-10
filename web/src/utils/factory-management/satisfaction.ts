@@ -9,7 +9,7 @@ export const showSatisfactionItemButton = (
   const part = factory.parts[partId]
   if (!part) {
     console.error(`satisfaction: showSatisfactionItemButton: Part ${partId} not found in factory.`)
-    return false
+    return null
   }
 
   switch (type) {
@@ -35,10 +35,30 @@ export const showFixProduct = (factory: Factory, part: PartMetrics, partId: stri
 }
 
 export const showCorrectManually = (factory: Factory, part: PartMetrics, partId: string) => {
-  return !getProduct(factory, partId, true) && !part.isRaw && !part.satisfied
+  const isByProduct = factory.byProducts.find(byProduct => byProduct.id === partId)
+  // If the product is already a byproduct, isn't raw and isn't satisfied, show it
+  if (isByProduct && !part.isRaw && !part.satisfied) {
+    return true
+  }
+
+  // Beyond a byproduct, we don't care about it's state
+  return false
 }
 
 export const showFixImport = (factory: Factory, part: PartMetrics, partId: string) => {
   const input = factory.inputs.find(input => input.outputPart === partId)
   return input?.outputPart && !part.satisfied
+}
+
+export const showProductChip = (factory: Factory, partId: string) => {
+  return getProduct(factory, partId, true)
+}
+export const showByProductChip = (factory: Factory, partId: string) => {
+  return getProduct(factory, partId, false, true)
+}
+export const showImportedChip = (factory: Factory, partId: string) => {
+  return factory.inputs.find(input => input.outputPart === partId)
+}
+export const showRawChip = (factory: Factory, partId: string) => {
+  return factory.parts[partId].isRaw
 }
