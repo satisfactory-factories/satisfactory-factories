@@ -23,7 +23,7 @@ export const showSatisfactionItemButton = (
     case 'fixImport':
       return showFixImport(factory, part, partId)
     default:
-      return false
+      return null
   }
 }
 
@@ -52,13 +52,13 @@ export const showFixImport = (factory: Factory, part: PartMetrics, partId: strin
 }
 
 export const showProductChip = (factory: Factory, partId: string) => {
-  return getProduct(factory, partId, true)
+  return !!getProduct(factory, partId, true)
 }
 export const showByProductChip = (factory: Factory, partId: string) => {
-  return getProduct(factory, partId, false, true)
+  return !!getProduct(factory, partId, false, true)
 }
 export const showImportedChip = (factory: Factory, partId: string) => {
-  return factory.inputs.find(input => input.outputPart === partId)
+  return getInput(factory, partId) !== undefined
 }
 export const showRawChip = (factory: Factory, partId: string) => {
   return factory.parts[partId].isRaw
