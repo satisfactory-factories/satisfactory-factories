@@ -151,7 +151,8 @@
         <v-chip
           v-for="(requirement, part) in product.requirements"
           :key="`ingredients-${part}`"
-          class="sf-chip blue"
+          class="sf-chip"
+          :class="factory.parts[part].isRaw ? 'cyan': 'blue'"
           variant="tonal"
         >
           <game-asset :subject="part.toString()" type="item" />

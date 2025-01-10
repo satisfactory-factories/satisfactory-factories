@@ -136,6 +136,16 @@
               >
                 <b>{{ formatNumber(part.amountRemaining) }}/min {{ getSatisfactionLabel(part.amountRemaining) }}</b>
               </v-chip>
+              <template v-if="part.isRaw">
+                <v-tooltip bottom>
+                  <template #activator="{ props }">
+                    <v-chip v-bind="props" class="sf-chip cyan small">
+                      <i class="fas fa-info-circle" /><span class="ml-1">Raw</span>
+                    </v-chip>
+                  </template>
+                  <span>Raw parts are always satisfied. Expand the Satisfaction Breakdowns or look at the Inputs section for details of how much is needed.</span>
+                </v-tooltip>
+              </template>
             </div>
           </td>
           <td :class="satisfactionShading(part)">
