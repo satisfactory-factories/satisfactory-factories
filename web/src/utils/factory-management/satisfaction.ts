@@ -1,5 +1,6 @@
 import { Factory, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
 import { getProduct, shouldShowInternal } from '@/utils/factory-management/products'
+import { getInput } from '@/utils/factory-management/inputs'
 
 export const showSatisfactionItemButton = (
   factory: Factory,
@@ -46,7 +47,7 @@ export const showCorrectManually = (factory: Factory, part: PartMetrics, partId:
 }
 
 export const showFixImport = (factory: Factory, part: PartMetrics, partId: string) => {
-  const input = factory.inputs.find(input => input.outputPart === partId)
+  const input = getInput(factory, partId)
   return input?.outputPart && !part.satisfied
 }
 

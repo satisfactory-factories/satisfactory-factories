@@ -6,7 +6,7 @@ import {
   removeFactoryDependants,
   updateDependency,
 } from '@/utils/factory-management/dependencies'
-import { addInputToFactory } from '@/utils/factory-management/inputs'
+import { addInputToFactory, getInput } from '@/utils/factory-management/inputs'
 import { gameData } from '@/utils/gameData'
 import { addProductToFactory } from '@/utils/factory-management/products'
 
@@ -79,7 +79,7 @@ describe('dependencies', () => {
       calculateFactories(factories, gameData)
 
       // Update amount
-      mockDependantFactory.inputs[0].amount = 1000
+      getInput(mockDependantFactory, 'IronIngot').amount = 1000
 
       // Recalculate and check
       calculateFactories(factories, gameData)
@@ -334,9 +334,9 @@ describe('dependencies', () => {
       expect(factory1.parts.CopperIngot.exportable).toBe(true)
       expect(factory1.products.length).toBe(1)
       expect(factory2.inputs.length).toBe(1) // NOT 2
-      expect(factory2.inputs[0].outputPart).toBe('CopperIngot')
+      expect(getInput(factory2, 'CopperIngot').outputPart).toBe('CopperIngot')
 
-      const foundInvalidInput = factory2.inputs.find(input => input.outputPart === 'IronIngot')
+      const foundInvalidInput = getInput(factory2, 'IronIngot')
       expect(foundInvalidInput).not.toBeDefined()
     })
 
