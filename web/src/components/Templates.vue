@@ -135,7 +135,7 @@
     },
     {
       name: '#321: Product byproduct balancing',
-      description: 'Contains a factory that produces a byproduct, and then consumes that byproduct. Trimming the products should correctly take other byproducts and products into account. Target to hit is HOR at 120/min. Trimming HOR product itself should result in 40.',
+      description: 'Contains a factory that produces a byproduct, and then consumes that byproduct. Trimming the products should correctly take other byproducts and products into account. Target to hit is HOR at 120/min. Trimming HOR product itself should result in 40. Setting Rubber to then use 280 resin should create an equilibrium.',
       data: JSON.stringify(create321Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
