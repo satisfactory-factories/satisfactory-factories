@@ -231,7 +231,10 @@ export const isImportRedundant = (importIndex: number, factory: Factory): boolea
 
   // Now, we also need to take into account other imports. If other imports fully satisfy the requirement, then this import is redundant.
   // Loop through all the inputs and see if the other imports fully satisfy the requirement.
-  const otherImports = factory.inputs.filter((_, index) => index !== importIndex)
+  const otherImports = factory.inputs.filter((_, index) =>
+    index !== importIndex &&
+    factory.inputs[index].outputPart === input.outputPart
+  )
   const otherImportsValues: number[] = []
   otherImports.forEach(input => {
     if (!input.outputPart) return 0

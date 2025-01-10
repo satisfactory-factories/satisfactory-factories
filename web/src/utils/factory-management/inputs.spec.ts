@@ -17,6 +17,7 @@ import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-par
 import { calculateDependencies } from '@/utils/factory-management/dependencies'
 import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
 import { create321Scenario } from '@/utils/factory-setups/321-inputs-byproducts'
+import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -465,6 +466,15 @@ describe('inputs', () => {
       } as any
       expect(isImportRedundant(0, mockFactory)).toBe(true)
     })
+    it('should not show for singular imports', () => {
+      const factories = complexDemoPlan().getFactories()
+      const computerFac = findFacByName('Computers (end product)', factories)
+      calculateFactories(factories, gameData)
+
+      // Cables should not be redundant
+      expect(isImportRedundant(1, computerFac)).toBe(false)
+    })
+
     describe('Internal production', () => {
       let mockFactory2: Factory
       beforeEach(() => {
