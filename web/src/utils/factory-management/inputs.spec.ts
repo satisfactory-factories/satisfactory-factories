@@ -16,7 +16,7 @@ import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct
 import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 import { calculateDependencies } from '@/utils/factory-management/dependencies'
 import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
-import { create321Scenario } from '@/utils/factory-setups/321-inputs-byproducts'
+import { create242Scenario } from '@/utils/factory-setups/242-inputs-byproducts'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -656,7 +656,7 @@ describe('inputs', () => {
     describe('Byproduct handling', () => {
       let factories: Factory[]
       beforeEach(() => {
-        factories = create321Scenario().getFactories()
+        factories = create242Scenario().getFactories()
         calculateDependencies(factories, gameData, true)
         calculateFactories(factories, gameData)
       })

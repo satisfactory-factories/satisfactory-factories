@@ -3,7 +3,7 @@ import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
-export const create321Scenario = (): { getFactories: () => Factory[] } => {
+export const create242Scenario = (): { getFactories: () => Factory[] } => {
   const issueFactory = newFactory('DMR trimming issue', 0, 1)
   const dmrProducer = newFactory('DMR producer', 1, 2)
 
