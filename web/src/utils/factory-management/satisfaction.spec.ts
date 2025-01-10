@@ -48,7 +48,7 @@ describe('satisfaction', () => {
       })
       it('should NOT show for a part that is satisfied', () => {
         // Add import to satisfy the part
-        const steelFac = newFactory('Steel')
+        const steelFac = newFactory('Steel 2')
         addProductToFactory(steelFac, {
           id: 'SteelPlate',
           amount: 1000,
@@ -137,6 +137,24 @@ describe('satisfaction', () => {
         steelPlateInput.amount = 1
         calculateFactories(factories, gameData)
         expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe(true)
+      })
+      it('#339L should return "multiple" for multiple imports', () => {
+        // Add another factory of copper and add it as an import
+        const steelFac2 = newFactory('Steel 2')
+        addProductToFactory(steelFac2, {
+          id: 'SteelPlate',
+          amount: 1000,
+          recipe: 'SteelPlate',
+        })
+        factories.push(steelFac2)
+        addInputToFactory(mockFactory, {
+          factoryId: steelFac2.id,
+          outputPart: 'SteelPlate',
+          amount: 100,
+        })
+        calculateFactories(factories, gameData)
+
+        expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe('multiple')
       })
     })
   })

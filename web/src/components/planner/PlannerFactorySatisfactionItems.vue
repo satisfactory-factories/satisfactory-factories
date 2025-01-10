@@ -103,13 +103,30 @@
                   </v-tooltip>
                 </v-btn>
                 <v-btn
-                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'fixImport')"
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'fixImport') === true"
                   class="d-block mt-1"
                   color="green"
                   size="small"
                   @click="fixSatisfactionImport(factory, partId.toString())"
                 >
                   &nbsp;<i class="fas fa-arrow-up" /><span class="ml-1">Fix Import</span>
+                </v-btn>
+                <v-btn
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'fixImport') === 'multiple'"
+                  class="d-block my-1"
+                  color="grey"
+                  :ripple="false"
+                  size="small"
+                  variant="outlined"
+                >
+                  <v-tooltip bottom>
+                    <template #activator="{ props }">
+                      <div v-bind="props">
+                        <i class="fas fa-exclamation-circle" /><span class="ml-1">Fix Import</span>
+                      </div>
+                    </template>
+                    <span>There are multiple Imports for this Item. The planner doesn't know which one you would want to be fixed.<br>Please correct manually by using the Satisfy buttons in the Imports section.</span>
+                  </v-tooltip>
                 </v-btn>
               </div>
             </div>
@@ -233,6 +250,7 @@
     showProductChip, showRawChip,
     showSatisfactionItemButton,
   } from '@/utils/factory-management/satisfaction'
+  import { getInput } from '@/utils/factory-management/inputs'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory
@@ -273,7 +291,7 @@
   }
 
   const fixSatisfactionImport = (factory: Factory, partIndex: string) => {
-    const itemImport = factory.inputs.find(input => input.outputPart === partIndex)
+    const itemImport = getInput(factory, partIndex)
 
     // If the import is not found
     if (!itemImport) {

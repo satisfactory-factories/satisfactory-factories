@@ -1,6 +1,6 @@
 import { Factory, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
 import { getProduct, shouldShowInternal } from '@/utils/factory-management/products'
-import { getInput } from '@/utils/factory-management/inputs'
+import { getAllInputs } from '@/utils/factory-management/inputs'
 
 export const showSatisfactionItemButton = (
   factory: Factory,
@@ -47,10 +47,14 @@ export const showCorrectManually = (factory: Factory, part: PartMetrics, partId:
 }
 
 export const showFixImport = (factory: Factory, part: PartMetrics, partId: string) => {
-  const input = getInput(factory, partId)
-  return input?.outputPart && !part.satisfied
+  const input = getAllInputs(factory, partId)
+  if (input.length > 1) {
+    return 'multiple'
+  }
+  return input[0]?.outputPart && !part.satisfied
 }
 
+// Satisfaction item chips
 export const showProductChip = (factory: Factory, partId: string) => {
   return !!getProduct(factory, partId, true)
 }
@@ -58,7 +62,7 @@ export const showByProductChip = (factory: Factory, partId: string) => {
   return !!getProduct(factory, partId, false, true)
 }
 export const showImportedChip = (factory: Factory, partId: string) => {
-  return getInput(factory, partId) !== undefined
+  return getAllInputs(factory, partId) !== undefined
 }
 export const showRawChip = (factory: Factory, partId: string) => {
   return factory.parts[partId].isRaw
