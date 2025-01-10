@@ -62,7 +62,7 @@ export const showByProductChip = (factory: Factory, partId: string) => {
   return !!getProduct(factory, partId, false, true)
 }
 export const showImportedChip = (factory: Factory, partId: string) => {
-  return getAllInputs(factory, partId) !== undefined
+  return getAllInputs(factory, partId).length > 0
 }
 export const showRawChip = (factory: Factory, partId: string) => {
   return factory.parts[partId].isRaw
