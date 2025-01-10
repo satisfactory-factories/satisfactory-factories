@@ -48,7 +48,7 @@
               <!-- Action buttons -->
               <div class="align-self-center text-right">
                 <v-btn
-                  v-if="!getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'addProduct')"
                   class="d-block mb-1"
                   color="primary"
                   size="small"
@@ -58,7 +58,7 @@
                   +&nbsp;<i class="fas fa-cube" /><span class="ml-1">Product</span>
                 </v-btn>
                 <v-btn
-                  v-if="getProduct(factory, partId.toString()) && !isItemRawResource(partId.toString()) && !part.satisfied"
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'fixProduct')"
                   class="d-block my-1"
                   color="green"
                   size="small"
@@ -67,7 +67,24 @@
                   <i class="fas fa-wrench" /><span class="ml-1">Fix Product</span>
                 </v-btn>
                 <v-btn
-                  v-if="getImport(factory, partId.toString()) && !part.satisfied"
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'addManually')"
+                  class="d-block my-1"
+                  color="grey"
+                  :ripple="false"
+                  size="small"
+                  variant="outlined"
+                >
+                  <v-tooltip bottom>
+                    <template #activator="{ props }">
+                      <div v-bind="props">
+                        <i class="fas fa-exclamation-circle" /><span class="ml-1">ADD MANUALLY</span>
+                      </div>
+                    </template>
+                    <span>This needs to be corrected manually. Since you can produce this item via <b>both</b> product and byproduct production, <br>the planner does not know how to automatically resolve this for you.</span>
+                  </v-tooltip>
+                </v-btn>
+                <v-btn
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'fixImport')"
                   class="d-block mt-1"
                   color="green"
                   size="small"
@@ -77,7 +94,6 @@
                 </v-btn>
               </div>
             </div>
-
           </td>
           <td class="border-e-md satisfaction" :class="satisfactionShading(part)">
             <div v-if="satisfactionBreakdowns">
@@ -174,23 +190,20 @@
   import { inject } from 'vue'
   import { getPartDisplayName } from '@/utils/helpers'
   import {
-    ByProductItem,
     Factory,
-    FactoryInput,
-    FactoryItem,
     PartMetrics,
   } from '@/interfaces/planner/FactoryInterface'
-  import { addProductToFactory, fixProduct } from '@/utils/factory-management/products'
+  import { addProductToFactory, fixProduct, getProduct } from '@/utils/factory-management/products'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { getRequestsForFactoryByPart } from '@/utils/factory-management/exports'
   import { formatNumber } from '@/utils/numberFormatter'
   import { useAppStore } from '@/stores/app-store'
+  import { showSatisfactionItemButton } from '@/utils/factory-management/satisfaction'
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const findFactory = inject('findFactory') as (factoryId: string | number) => Factory
 
   const appStore = useAppStore()
-  const { getGameData } = useGameDataStore()
 
   const { getDefaultRecipeForPart } = useGameDataStore()
   const openedCalculator = ref('')
@@ -225,13 +238,8 @@
     updateFactory(factory)
   }
 
-  const getImport = (factory: Factory, partIndex: string): FactoryInput | undefined => {
-    // Search the inputs array for the outputPart using the part index
-    return factory.inputs.find(input => input.outputPart === partIndex)
-  }
-
   const fixSatisfactionImport = (factory: Factory, partIndex: string) => {
-    const itemImport = getImport(factory, partIndex)
+    const itemImport = factory.inputs.find(input => input.outputPart === partIndex)
 
     // If the import is not found
     if (!itemImport) {
@@ -270,16 +278,6 @@
     }
     fixProduct(product, factory)
     updateFactory(factory)
-  }
-
-  const isItemRawResource = (item: string): boolean => {
-    return !!getGameData().items.rawResources[item]
-  }
-
-  const getProduct = (factory: Factory, productId: string): FactoryItem | ByProductItem | undefined => {
-    const product = factory.products.find(product => product.id === productId)
-    const byProduct = factory.byProducts.find(product => product.id === productId)
-    return product ?? byProduct ?? undefined
   }
 
   // const getCalculatorSettings = (factory: Factory, part: string | null): ExportCalculatorSettings | undefined => {
