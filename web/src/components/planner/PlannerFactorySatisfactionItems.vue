@@ -67,7 +67,7 @@
                   <i class="fas fa-wrench" /><span class="ml-1">Fix Product</span>
                 </v-btn>
                 <v-btn
-                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'addManually')"
+                  v-if="showSatisfactionItemButton(factory, partId.toString(), 'correctManually')"
                   class="d-block my-1"
                   color="grey"
                   :ripple="false"
@@ -77,7 +77,7 @@
                   <v-tooltip bottom>
                     <template #activator="{ props }">
                       <div v-bind="props">
-                        <i class="fas fa-exclamation-circle" /><span class="ml-1">ADD MANUALLY</span>
+                        <i class="fas fa-exclamation-circle" /><span class="ml-1">CORRECT MANUALLY</span>
                       </div>
                     </template>
                     <span>This needs to be corrected manually. Since you can produce this item via <b>both</b> product and byproduct production, <br>the planner does not know how to automatically resolve this for you.</span>

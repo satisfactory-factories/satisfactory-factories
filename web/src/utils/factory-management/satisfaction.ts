@@ -17,8 +17,8 @@ export const showSatisfactionItemButton = (
       return showAddProduct(factory, part, partId)
     case 'fixProduct':
       return showFixProduct(factory, part, partId)
-    case 'addManually':
-      return showAddManually(factory, part, partId)
+    case 'correctManually':
+      return showCorrectManually(factory, part, partId)
     case 'fixImport':
       return showFixImport(factory, part, partId)
     default:
@@ -34,7 +34,7 @@ export const showFixProduct = (factory: Factory, part: PartMetrics, partId: stri
   return getProduct(factory, partId, true) && !part.isRaw && !part.satisfied
 }
 
-export const showAddManually = (factory: Factory, part: PartMetrics, partId: string) => {
+export const showCorrectManually = (factory: Factory, part: PartMetrics, partId: string) => {
   return !getProduct(factory, partId, true) && !part.isRaw && !part.satisfied
 }
 
