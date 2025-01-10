@@ -48,7 +48,7 @@ export const showCorrectManually = (factory: Factory, part: PartMetrics, partId:
 
 export const showFixImport = (factory: Factory, part: PartMetrics, partId: string) => {
   const input = getAllInputs(factory, partId)
-  if (input.length > 1) {
+  if (input.length > 1 && !part.satisfied) {
     return 'multiple'
   }
   return input[0]?.outputPart && !part.satisfied

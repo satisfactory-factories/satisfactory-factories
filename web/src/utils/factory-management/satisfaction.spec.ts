@@ -10,7 +10,7 @@ import {
 } from '@/utils/factory-management/satisfaction'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import { gameData } from '@/utils/gameData'
-import { addInputToFactory, getInput } from '@/utils/factory-management/inputs'
+import { addInputToFactory, getAllInputs, getInput } from '@/utils/factory-management/inputs'
 import { create338Scenario } from '@/utils/factory-setups/338-satisfaction-chips'
 
 describe('satisfaction', () => {
@@ -138,23 +138,42 @@ describe('satisfaction', () => {
         calculateFactories(factories, gameData)
         expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe(true)
       })
-      it('#339L should return "multiple" for multiple imports', () => {
-        // Add another factory of copper and add it as an import
-        const steelFac2 = newFactory('Steel 2')
-        addProductToFactory(steelFac2, {
-          id: 'SteelPlate',
-          amount: 1000,
-          recipe: 'SteelPlate',
+      describe('#339: multiple imports', () => {
+        let steelFac2: Factory
+        beforeEach(() => {
+          steelFac2 = newFactory('Steel 2')
+          addProductToFactory(steelFac2, {
+            id: 'SteelPlate',
+            amount: 1000,
+            recipe: 'SteelPlate',
+          })
+          factories.push(steelFac2)
+          addInputToFactory(mockFactory, {
+            factoryId: steelFac2.id,
+            outputPart: 'SteelPlate',
+            amount: 1,
+          })
         })
-        factories.push(steelFac2)
-        addInputToFactory(mockFactory, {
-          factoryId: steelFac2.id,
-          outputPart: 'SteelPlate',
-          amount: 100,
-        })
-        calculateFactories(factories, gameData)
+        it('should return "multiple" for multiple imports', () => {
+          // Force all steelplate inputs to be low
+          const steelPlateInputs = getAllInputs(mockFactory, 'SteelPlate')
+          steelPlateInputs.forEach(input => {
+            input.amount = 1
+          })
+          calculateFactories(factories, gameData)
 
-        expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe('multiple')
+          expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe('multiple')
+        })
+        it('should NOT return "multiple" for multiple imports when unsatisfied', () => {
+          // Force all steelplate inputs to be satisfied
+          const steelPlateInputs = getAllInputs(mockFactory, 'SteelPlate')
+          steelPlateInputs.forEach(input => {
+            input.amount = 1000
+          })
+          calculateFactories(factories, gameData)
+
+          expect(showSatisfactionItemButton(mockFactory, 'SteelPlate', 'fixImport')).toBe(false)
+        })
       })
     })
   })
