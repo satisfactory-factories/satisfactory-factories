@@ -3,6 +3,8 @@ import { newFactory } from '@/utils/factory-management/factory'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 
+// https://github.com/satisfactory-factories/application/issues/242
+// https://satisfactory-factories.app/share/helpful-sweet-crowd
 export const create242Scenario = (): { getFactories: () => Factory[] } => {
   const issueFactory = newFactory('DMR trimming issue', 0, 1)
   const dmrProducer = newFactory('DMR producer', 1, 2)
