@@ -148,6 +148,13 @@
       show: isDebugMode,
       isDebug: true,
     },
+    {
+      name: '#220: Byproduct only parts handling',
+      description: 'Contains a factory that contains a byproduct only part. The planner used to show "Fix Production" for it, but it did nothing as it does not know how to correct the issue. Now, it shows a "Correct Manually" "button" which instructs the user to correct it manually.',
+      data: JSON.stringify(create251Scenario().getFactories()),
+      show: isDebugMode,
+      isDebug: true,
+    },
   ]
 
   const loadTemplate = (template: Template) => {
