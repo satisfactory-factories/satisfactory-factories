@@ -159,7 +159,7 @@
     },
     {
       name: '#338: Satisfaction Chips',
-      description: 'Contains an oil factory configured with a variety of products in different states.',
+      description: 'Contains an oil factory configured with a variety of parts in different states.',
       data: JSON.stringify(create338Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
