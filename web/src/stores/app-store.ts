@@ -23,7 +23,7 @@ export const useAppStore = defineStore('app', () => {
     ]
   }
 
-  const currentFactoryTabIndex = ref(0)
+  const currentFactoryTabIndex = ref<number>(parseInt(localStorage.getItem('currentFactoryTabIndex') ?? '0'))
   const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
 
   const factories = computed({
@@ -58,6 +58,10 @@ export const useAppStore = defineStore('app', () => {
     requestAnimationFrame(() => {
       console.log('appStore: currentFactoryTabIndex watcher: Tab index changed, starting load.')
       currentFactoryTab.value = factoryTabs.value[currentFactoryTabIndex.value]
+
+      // Update localstorage with the tab index
+      localStorage.setItem('currentFactoryTabIndex', currentFactoryTabIndex.value.toString())
+
       prepareLoader(currentFactoryTab.value.factories)
     })
   })
