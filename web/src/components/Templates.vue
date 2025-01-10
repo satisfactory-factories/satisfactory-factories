@@ -55,6 +55,7 @@
   import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
   import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
   import { create242Scenario } from '@/utils/factory-setups/242-inputs-byproducts'
+  import { create321Scenario } from '@/utils/factory-setups/321-product-byproduct-trimming'
 
   const { prepareLoader, isDebugMode } = useAppStore()
 
@@ -63,7 +64,7 @@
   interface Template {
     name: string
     description: string
-    data: Factory[]
+    data: string
     show: boolean
     isDebug: boolean
   }
@@ -72,63 +73,70 @@
     {
       name: 'Demo',
       description: 'Contains 7 factories with a mix of fluids, solids and multiple dependencies, along with power generation. Has a purposeful bottleneck on Copper Basics to demonstrate the bottleneck feature, and multiple missing resources for the Uranium Power.',
-      data: complexDemoPlan().getFactories(),
+      data: JSON.stringify(complexDemoPlan().getFactories()),
       show: true,
       isDebug: false,
     },
     {
       name: 'Simple',
       description: 'Very simple Iron Ingot and Iron Plate factory setup, with a single dependency link.',
-      data: createSimple().getFactories(),
+      data: JSON.stringify(createSimple().getFactories()),
       show: true,
       isDebug: false,
     },
     {
       name: 'Mael\'s "MegaPlan"',
       description: 'A real-life plan created by Maelstrome. This is considered a very large plan, and makes use of all features of the planner.',
-      data: createMaelsBigBoiPlan(),
+      data: JSON.stringify(createMaelsBigBoiPlan()),
       show: true,
       isDebug: false,
     },
     {
       name: 'PowerOnlyImport',
       description: '2 factory setup where on factory is producing the a fuel and another is consuming the fuel (via import) for power generation. Related to issue #268',
-      data: create268Scenraio().getFactories(),
+      data: JSON.stringify(create268Scenraio().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
     {
       name: '#290 Multiple product imports',
       description: '3 factory setup where one factory is importing the same product from two different factories. Related to issue #290. The Imports on Iron Plates should render correctly with the correct part name, and NOT be called "IronPlate", rather "Iron Plate".',
-      data: create290Scenario().getFactories(),
+      data: JSON.stringify(create290Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
     {
       name: '#315 Import exportable parts',
       description: '#315 - For testing import candidate code. Aluminium factory in this example should not be able to import Copper Ingots from Copper Parts',
-      data: create315Scenario().getFactories(),
+      data: JSON.stringify(create315Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
     {
       name: 'Invalid migration',
       description: 'Contains a factory plan that has lots of invalid data. This was a real plan that broke the app, and was used to fix the migration code. It is expected that when you load the template, the plan operates effectively. Originally, supply for certain factories e.g. Gun Powder was broken due to missing part data (due to errors).',
-      data: create317Scenario(),
+      data: JSON.stringify(create317Scenario()),
       show: isDebugMode,
       isDebug: true,
     },
     {
-      name: 'Redundant Imports',
+      name: '#324: Redundant Imports',
       description: 'Contains a factory plan where there is a redundant import (on Iron Plates Fac). The UI should show this properly as a warning.',
-      data: create324Scenario().getFactories(),
+      data: JSON.stringify(create324Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
     {
-      name: 'Byproduct Imports miscalculations',
+      name: '#242: Byproduct Imports miscalculations',
       description: 'Contains a factory that also contains an import as a byproduct of the same factory. When you hit TRIM on the Dark Matter import in Issue Factory, it should trim the import to 5, as 25 of DMR is produced locally.',
-      data: create242Scenario().getFactories(),
+      data: JSON.stringify(create242Scenario().getFactories()),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: '#321: Product byproduct balancing',
+      description: 'Contains a factory that produces a byproduct, and then consumes that byproduct. Trimming the products should correctly take other byproducts and products into account. Target to hit is HOR at 120/min. Trimming HOR product itself should result in 80.',
+      data: JSON.stringify(create321Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
@@ -136,7 +144,10 @@
 
   const loadTemplate = (template: Template) => {
     console.log('Template loaded:', template.name, 'starting load')
-    prepareLoader(template.data)
+
+    // This is a workaround for the templating bug where the data was passed as a reference, and would refuse to load the same template until the page is refreshed.
+    const data = JSON.parse(template.data) as Factory[]
+    prepareLoader(data)
     dialog.value = false
   }
 </script>
