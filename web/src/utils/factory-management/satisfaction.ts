@@ -1,5 +1,5 @@
-import { Factory, PartMetrics } from '@/interfaces/planner/FactoryInterface'
-import { getProduct } from '@/utils/factory-management/products'
+import { Factory, FactoryItem, PartMetrics } from '@/interfaces/planner/FactoryInterface'
+import { getProduct, shouldShowInternal } from '@/utils/factory-management/products'
 
 export const showSatisfactionItemButton = (
   factory: Factory,
@@ -61,4 +61,11 @@ export const showImportedChip = (factory: Factory, partId: string) => {
 }
 export const showRawChip = (factory: Factory, partId: string) => {
   return factory.parts[partId].isRaw
+}
+export const showInternalChip = (factory: Factory, partId: string) => {
+  const product = getProduct(factory, partId, true) as FactoryItem
+  if (!product) {
+    return false
+  }
+  return shouldShowInternal(product, factory)
 }

@@ -59,6 +59,9 @@
                   <v-chip v-if="showRawChip(factory, partId.toString())" class="sf-chip cyan x-small mr-2">
                     Raw
                   </v-chip>
+                  <v-chip v-if="showInternalChip(factory, partId.toString())" class="sf-chip green x-small mr-2">
+                    Internal
+                  </v-chip>
                 </div>
               </div>
               <!-- Action buttons -->
@@ -226,7 +229,7 @@
   import { useAppStore } from '@/stores/app-store'
   import {
     showByProductChip,
-    showImportedChip,
+    showImportedChip, showInternalChip,
     showProductChip, showRawChip,
     showSatisfactionItemButton,
   } from '@/utils/factory-management/satisfaction'
