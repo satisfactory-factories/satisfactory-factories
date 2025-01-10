@@ -54,6 +54,7 @@
   import { create317Scenario } from '@/utils/factory-setups/317-malformed-plan'
   import { createMaelsBigBoiPlan } from '@/utils/factory-setups/maels-big-boi-plan'
   import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
+  import { create321Scenario } from '@/utils/factory-setups/321-inputs-byproducts'
 
   const { prepareLoader, isDebugMode } = useAppStore()
 
@@ -121,6 +122,13 @@
       name: 'Redundant Imports',
       description: 'Contains a factory plan where there is a redundant import (on Iron Plates Fac). The UI should show this properly as a warning.',
       data: create324Scenario().getFactories(),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: 'Byproduct Imports miscalculations',
+      description: 'Contains a factory that also contains an import as a byproduct of the same factory. When you hit TRIM on the Dark Matter import in Issue Factory, it should trim the import to 5, as 25 of DMR is produced locally.',
+      data: create321Scenario().getFactories(),
       show: isDebugMode,
       isDebug: true,
     },

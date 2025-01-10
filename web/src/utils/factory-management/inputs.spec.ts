@@ -16,6 +16,7 @@ import { create290Scenario } from '@/utils/factory-setups/290-multiple-byproduct
 import { create315Scenario } from '@/utils/factory-setups/315-non-exportable-parts-imports'
 import { calculateDependencies } from '@/utils/factory-management/dependencies'
 import { create324Scenario } from '@/utils/factory-setups/324-redundant-import'
+import { create321Scenario } from '@/utils/factory-setups/321-inputs-byproducts'
 
 describe('inputs', () => {
   let mockFactory: Factory
@@ -650,6 +651,28 @@ describe('inputs', () => {
 
       expect(ironPlateFac.inputs[0].amount).toBe(100) // Shouldn't have changed
       expect(ironPlateFac.inputs[1].amount).toBe(0) // Shouldn't be -25
+    })
+
+    describe('Byproduct handling', () => {
+      let factories: Factory[]
+      beforeEach(() => {
+        factories = create321Scenario().getFactories()
+        calculateDependencies(factories, gameData, true)
+        calculateFactories(factories, gameData)
+      })
+
+      it('should correctly calculate the import amount for an internally produced import', () => {
+        const issueFactory = findFacByName('DMR trimming issue', factories)
+
+        // We should have 40 DarkEnergy in the issue factory as per the template
+        expect(issueFactory.inputs[0].amount).toBe(40)
+
+        // Now we should be able to satisfy the import
+        satisfyImport(0, issueFactory)
+
+        // The import should now be 5, as 25 is produced internally.
+        expect(issueFactory.inputs[0].amount).toBe(5)
+      })
     })
   })
 })
