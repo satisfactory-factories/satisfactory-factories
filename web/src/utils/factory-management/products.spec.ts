@@ -10,6 +10,7 @@ import {
 import { gameData } from '@/utils/gameData'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 import { calculatePartMetrics } from '@/utils/factory-management/parts'
+import { create321Scenario } from '@/utils/factory-setups/321-product-byproduct-trimming'
 
 const mockIngotIron = {
   id: 'IronIngot',
@@ -475,6 +476,30 @@ describe('products', () => {
       // It should now be in sync with parts
       expect(mockFactory.parts.CopperIngot.amountRequired).toBe(123)
       expect(mockFactory.products[1].amount).toBe(123)
+    })
+
+    describe('fixProduct byproduct handling', () => {
+      let factories: Factory[]
+      let mockFactory: Factory
+      beforeEach(() => {
+        factories = create321Scenario().getFactories()
+        mockFactory = factories[0]
+        calculateFactories(factories, gameData)
+      })
+      it('should balance HOR correctly when told to trim', () => {
+        fixProduct(mockFactory.products[1], mockFactory)
+
+        expect(mockFactory.products[1].amount).toBe(40) // HOR should trim to this, 40 is made by polymer resin, 20 made by plastic
+      })
+
+      it('should balance HOR correctly when told to satisfy', () => {
+        mockFactory.products[1].amount = 5
+        calculateFactories([mockFactory], gameData)
+
+        fixProduct(mockFactory.products[1], mockFactory)
+
+        expect(mockFactory.products[1].amount).toBe(40) // HOR should be satisfied to 40
+      })
     })
   })
 })

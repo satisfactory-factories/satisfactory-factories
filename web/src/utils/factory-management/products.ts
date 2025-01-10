@@ -9,13 +9,14 @@ export const addProductToFactory = (
     amount?: number,
     recipe?: string,
     requirements?: { [key: string]: { amount: number } },
+    displayOrder?: number,
   }
 ) => {
   factory.products.push({
     id: options.id ?? '',
     amount: options.amount ?? 1,
     recipe: options.recipe ?? '',
-    displayOrder: factory.products.length,
+    displayOrder: options.displayOrder ?? factory.products.length,
     requirements: options.requirements ?? {},
     buildingRequirements: {} as BuildingRequirement,
     byProducts: [],
@@ -190,8 +191,14 @@ export const fixProduct = (product: FactoryItem | ByProductItem, factory: Factor
     throw new Error(error)
   }
 
-  // Update the production amount to match requirement
-  product.amount = factory.parts[product.id].amountRequired
+  const partData = factory.parts[product.id]
+
+  // If the factory is producing byproducts, we need to handle that properly. Using the part data we should be able to achieve this regardless of the product type.
+
+  const produced = partData.amountSuppliedViaProduction
+  const required = partData.amountRequired
+  const diff = required - produced
 
   // Whatever calls this MUST then trigger a calculation.
+  product.amount = diff + product.amount
 }
