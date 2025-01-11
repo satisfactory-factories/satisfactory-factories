@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
 import { SyncActions } from '@/stores/sync/sync-actions'
+import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 // Overrides used for dependency injecting mocks into the store when under test.
 interface SyncStoreOverrides {
@@ -111,6 +112,37 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     }
 
     await handleDataLoad()
+  }
+
+  const migrateToTabSync = () => {
+    if (!data.tabs) {
+      // Migration is required
+      console.log('migrateToTabs: Migration required.')
+      // @ts-ignore
+      let factories = data.data as Factory[] | undefined
+
+      if (!factories) {
+        console.error('migrateToTabs: No factories found to migrate.')
+        factories = []
+      }
+
+      // Migrate factories to tabs
+
+      const defaultTab: FactoryTab = {
+        id: 'default',
+        name: 'Default',
+        factories,
+      }
+
+      const newData = {
+        user: data.user,
+        tabs: [defaultTab],
+        lastSaved: data.lastSaved,
+      }
+
+      // Set the new data to the planner
+      this.appStore.setTabs(newData)
+    }
   }
 
   eventBus.on('factoryUpdated', detectedChange)
