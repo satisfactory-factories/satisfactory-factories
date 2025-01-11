@@ -2,6 +2,22 @@
 import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { findFac } from '@/utils/factory-management/factory'
 
+export const getInput = (factory: Factory, part: string, factoryId?: number) => {
+  // Returns a SINGULAR input object by the outputPart. If multiple are detected, throw.
+  const inputs = getAllInputs(factory, part, factoryId)
+  if (inputs.length > 1) {
+    throw new Error(`inputs: getInputByPart: Multiple inputs found for part ${part} in factory ${factory.id} detected!`)
+  }
+  return inputs[0]
+}
+
+export const getAllInputs = (factory: Factory, part: string, factoryId?: number) => {
+  return factory.inputs.filter(input =>
+    input.outputPart === part &&
+      (factoryId ? input.factoryId === factoryId : true)
+  )
+}
+
 export const addInputToFactory = (
   factory: Factory, options: {
     factoryId: number | null,
@@ -9,9 +25,12 @@ export const addInputToFactory = (
     amount: number,
   }
 ) => {
-  // Find any factory that has the same factoryId, outputPart combo as we're trying to add, if there is any throw an error
-  if (factory.inputs.find(input => input.factoryId === options.factoryId && input.outputPart === options.outputPart)) {
-    throw new Error(`addInputToFactory: Input with factoryId ${options.factoryId} and outputPart ${options.outputPart} already exists in factory ${factory.id}`)
+  if (options.factoryId && options.outputPart) {
+    // Find any factory that has the same factoryId, outputPart combo as we're trying to add, if there is any throw an error
+    const existingInput = getInput(factory, options.outputPart, options.factoryId)
+    if (existingInput) {
+      throw new Error(`addInputToFactory: Input with factoryId ${options.factoryId} and outputPart ${options.outputPart} already exists in factory ${factory.id}`)
+    }
   }
 
   factory.inputs.push({

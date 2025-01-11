@@ -10,7 +10,7 @@
   </p>
   <div v-if="allFactoryRawResources.length > 0">
     <span v-for="(resource, id) in allFactoryRawResources" :key="id">
-      <v-chip class="sf-chip blue" variant="tonal">
+      <v-chip class="sf-chip cyan" variant="tonal">
         <game-asset :subject="resource.id.toString()" type="item" />
         <span class="ml-2">
           <b>{{ getPartDisplayName(resource.id.toString()) }}</b>: {{ formatNumber(resource.totalAmount) }}/min

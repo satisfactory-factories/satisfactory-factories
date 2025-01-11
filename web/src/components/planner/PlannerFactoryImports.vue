@@ -19,7 +19,7 @@
           <v-chip
             v-for="(resource, resourceKey) in factory.rawResources"
             :key="resourceKey"
-            class="sf-chip blue"
+            class="sf-chip cyan"
           >
             <game-asset :subject="resourceKey.toString() ?? 'unknown'" type="item" />
             <span class="ml-2">

@@ -12,7 +12,7 @@
     <v-chip
       v-for="(product) in allFactoryProducts"
       :key="product.id"
-      class="sf-chip"
+      class="sf-chip blue"
     >
       <span class="mr-2">
         <game-asset :subject="product.id" type="item" />
