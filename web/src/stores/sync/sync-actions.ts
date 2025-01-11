@@ -1,5 +1,6 @@
 import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 import { config } from '@/config/config'
+import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 export class SyncActions {
   private readonly authStore: any
@@ -39,7 +40,7 @@ export class SyncActions {
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
       console.log('loadServerData: Forcing data load.')
-      this.appStore.setFactories(dataObject.data)
+      this.appStore.setTabs(dataObject.tabs)
       return true
     }
 
@@ -81,7 +82,7 @@ export class SyncActions {
       }
     }
 
-    const data = this.appStore.getFactories()
+    const data = this.appStore.getTabs()
     if (!data || !Object.keys(data).length) {
       console.warn('syncData: No data to save!')
       return
@@ -138,6 +139,12 @@ export class SyncActions {
       if (!data) {
         throw new Error('Data load responded weirdly!')
       }
+
+      // Check the data object, ensure we have loaded factory tabs not just a factory object
+      if (!data.tabs) {
+        return object
+      }
+
       return object
     } else {
       console.error('Data load failed:', object)

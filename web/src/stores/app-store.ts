@@ -1,11 +1,12 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryPower, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
+import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 
 export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
@@ -383,6 +384,47 @@ export const useAppStore = defineStore('app', () => {
     return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
   }
 
+  const getPlannerState = () => {
+    // Return all factory tabs
+    return factoryTabs.value
+  }
+
+  const setPlannerState = (tabs: PlannerState[]) => {
+    console.log('appStore: setting tabs', tabs)
+    factoryTabs.value = tabs
+  }
+
+  const migrateToPlannerTabs = (data: BackendFactoryDataResponse): void => {
+    if (!data.tabs) {
+      // Migration is required
+      console.log('migrateToTabs: Migration required.')
+      // @ts-ignore
+      let factories = data.data as Factory[] | undefined
+
+      if (!factories) {
+        console.error('migrateToTabs: No factories found to migrate.')
+        factories = []
+      }
+
+      // Migrate factories to tabs
+
+      const defaultTab: FactoryTab = {
+        id: 'default',
+        name: 'Default',
+        factories,
+      }
+
+      const newData = {
+        user: data.user,
+        tabs: [defaultTab],
+        lastSaved: data.lastSaved,
+      }
+
+      // Set the new data to the planner
+      this.appStore.setTabs(newData)
+    }
+  }
+
   return {
     currentFactoryTab,
     currentFactoryTabIndex,
@@ -403,6 +445,8 @@ export const useAppStore = defineStore('app', () => {
     clearFactories,
     addTab,
     removeCurrentTab,
+    getTabs: getPlannerState,
+    setTabs: setPlannerState,
     getSatisfactionBreakdowns,
     changeSatisfactoryBreakdowns,
     prepareLoader,

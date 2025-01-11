@@ -1,7 +1,7 @@
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 export interface BackendFactoryDataResponse {
   user: string;
-  data: Factory[];
+  tabs: FactoryTab[];
   lastSaved: Date
 }

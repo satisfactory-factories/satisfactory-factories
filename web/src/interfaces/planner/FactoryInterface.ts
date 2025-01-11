@@ -148,3 +148,9 @@ export interface FactoryTab {
   name: string;
   factories: Factory[];
 }
+
+export interface PlannerState {
+  currentTabIndex: number;
+  tabs: {[key: string]: FactoryTab};
+  lastSaved: Date;
+}

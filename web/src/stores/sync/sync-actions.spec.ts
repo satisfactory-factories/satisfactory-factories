@@ -95,6 +95,10 @@ describe('SyncActions', () => {
         },
       })
     })
+
+    it('should accept the old format of the data and convert it into the new tab based system', async () => {
+
+    })
   })
 
   describe('loadServerData', () => {
