@@ -43,6 +43,7 @@ export const useAppStore = defineStore('app', () => {
     }
     currentFactoryTabIndex.value = 0
     localStorage.setItem('currentFactoryTabIndex', currentFactoryTabIndex.value.toString())
+    alert('Your planner has been reverted to SAFE MODE. This is because your factory tab data was heavily corrupted. You are recommended to log into your account and force download the previously saved tabs. If you have not done this, the data has been lost, unless you have copied it to a file.')
   }
 
   const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
