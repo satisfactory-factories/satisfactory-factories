@@ -28,6 +28,10 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
+      if (!currentFactoryTab?.value) {
+        console.error('appStore: factories.get: No current factory tab set!')
+        return []
+      }
       // Ensure that the factories are initialized before returning them on the first request
       if (!inited.value) {
         console.log('appStore: factories.get: Factories not inited, initializing')
@@ -372,6 +376,10 @@ export const useAppStore = defineStore('app', () => {
   // ==== END MISC
 
   const getFactories = () => {
+    if (!currentFactoryTab?.value) {
+      console.error('appStore: getFactories: No current factory tab set!')
+      return []
+    }
     // If the factories are not initialized, wait for a duration for the app to load then return them.
     if (!inited.value) {
       // Something wants to load these values so prepare the loader
