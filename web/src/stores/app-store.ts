@@ -23,7 +23,11 @@ export const useAppStore = defineStore('app', () => {
     ]
   }
 
+  console.log('appStore: factoryTabs', factoryTabs.value)
+
   const currentFactoryTabIndex = ref<number>(parseInt(localStorage.getItem('currentFactoryTabIndex') ?? '0'))
+
+  console.log('appStore: factoryTabs', currentFactoryTabIndex.value)
   const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
 
   const factories = computed({
