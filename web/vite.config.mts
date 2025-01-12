@@ -16,6 +16,10 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig(() => ({
   build: {
     minify: false,
+    terserOptions: {
+      compress: false,
+      mangle: false,
+    },
   },
   plugins: [
     VueRouter({
