@@ -28,6 +28,23 @@ export const useAppStore = defineStore('app', () => {
   const currentFactoryTabIndex = ref<number>(parseInt(localStorage.getItem('currentFactoryTabIndex') ?? '0'))
 
   console.log('appStore: factoryTabs', currentFactoryTabIndex.value)
+
+  // Ensure the tab index actually exists
+  if (currentFactoryTabIndex.value >= factoryTabs.value.length) {
+    if (!factoryTabs.value[0]) {
+      // User is screwed, blow the tabs away and make a new one
+      factoryTabs.value = [
+        {
+          id: crypto.randomUUID(),
+          name: 'SAFE MODE!',
+          factories: [],
+        },
+      ]
+    }
+    currentFactoryTabIndex.value = 0
+    localStorage.setItem('currentFactoryTabIndex', currentFactoryTabIndex.value.toString())
+  }
+
   const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
 
   const factories = computed({
