@@ -1,0 +1,55 @@
+import { Factory, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryInterface'
+
+interface PlannerStateOptions {
+  user?: string,
+  currentTabId?: string;
+  tabs?: FactoryTab[],
+  userOptions?: string[]
+}
+
+interface FactoryTabOptions {
+  tabId?: string
+  name?: string
+  factories?: Factory[]
+  displayOrder?: number
+}
+
+export const newState = (options: PlannerStateOptions): PlannerState => {
+  const newTabData = newTab({
+    displayOrder: 0,
+  })
+  return {
+    user: options.user ?? null,
+    currentTabId: options.currentTabId ?? newTabData.id,
+    tabs: options.tabs ?? [newTabData],
+    userOptions: options.userOptions ?? [],
+    lastSaved: null,
+  }
+}
+
+export const newTab = (options?: FactoryTabOptions): FactoryTab => {
+  return {
+    id: options?.tabId ?? crypto.randomUUID(),
+    name: options?.name ?? 'Default',
+    // Fill the tabs from the legacy factories array if present so no data gets lost
+    factories: options?.factories ?? [],
+    displayOrder: options?.displayOrder ?? 0,
+  }
+}
+
+export const addTab = (state: PlannerState, tab: FactoryTab): void => {
+  tab.displayOrder = state.tabs.length
+  state.tabs.push(tab)
+}
+
+export const getCurrentTab = (state: PlannerState): FactoryTab => {
+  return getTab(state, state.currentTabId)
+}
+
+export const getTab = (state: PlannerState, tabId: string): FactoryTab => {
+  const tab = state.tabs.find(tab => tab.id === tabId)
+  if (!tab) {
+    throw new Error(`Tab with id ${tabId} not found`)
+  }
+  return tab
+}

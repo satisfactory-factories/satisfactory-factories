@@ -37,7 +37,7 @@
 
       if (loadedFactoryData.value) {
         loadedFactoryData.value.name = `${loadedFactoryData.value.name} (shared)`
-        appStore.addTab(loadedFactoryData.value)
+        appStore.createNewTab(loadedFactoryData.value)
       }
     }
 

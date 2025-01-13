@@ -7,7 +7,7 @@
           color="deep-orange"
         >
           <v-tab
-            v-for="(item, index) in appStore.factoryTabs"
+            v-for="(item, index) in appStore.plannerState"
             :key="item.id"
             class="text-none"
             :ripple="!isCurrentTab(index)"
@@ -39,14 +39,14 @@
           icon="fas fa-plus"
           size="x-small"
           variant="flat"
-          @click="appStore.addTab()"
+          @click="appStore.createNewTab()"
         />
       </div>
 
       <div class="d-flex align-center h-100 ga-2 mr-1">
         <ShareButton />
         <v-btn
-          v-if="appStore.factoryTabs.length > 1"
+          v-if="appStore.plannerState.length > 1"
           color="red rounded"
           icon="fas fa-trash"
           size="small"

@@ -252,7 +252,7 @@ app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestB
       { new: true, upsert: true }
     );
 
-    // Delete any data that is in the old FactoryData collection
+    // Delete any data that is in the old FactoryData collection. This will prevent /needsStateMigration being true
     await FactoryData.deleteOne({ user: username });
 
     console.log(`Planner State saved for ${username}`);
@@ -338,6 +338,23 @@ app.get('/share/:id', async (req, res) => {
   }
 });
 
+app.post('/needsStateMigration', optionalAuthenticate, shareRateLimit, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {  try {
+    const { username } = req.user as jwt.JwtPayload & { username: string };
+
+    const dataPresent = await FactoryData.findOne(
+      { user: username },
+    );
+
+    if (dataPresent) {
+      console.log(`User ${username} needs state migration`);
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Unable to determine state migration', error });
+  }
+});
 // *************************************************
 // Add 404 handler
 // *************************************************
