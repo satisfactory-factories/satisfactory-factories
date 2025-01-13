@@ -27,15 +27,12 @@
   } from '@/interfaces/planner/FactoryInterface'
   import { formatNumber } from '@/utils/numberFormatter'
   import { calculateTotalBuildingsByType } from '@/utils/statistics'
+  import { getBuildingDisplayName } from '@/utils/factory-management/common'
 
   const props = defineProps<{
     factories: Factory[];
     helpText: boolean;
   }>()
-
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (
-    part: string
-  ) => string
 
   const totalBuildingsByType = computed(() => calculateTotalBuildingsByType(props.factories))
 </script>

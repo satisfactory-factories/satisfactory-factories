@@ -247,29 +247,6 @@
     updateWorldRawResources(gameData)
   }
 
-  const getBuildingDisplayName = (building: string) => {
-    const buildingFriendly = new Map<string, string>([
-      ['assemblermk1', 'Assembler'],
-      ['blender', 'Blender'],
-      ['constructormk1', 'Constructor'],
-      ['converter', 'Converter'],
-      ['foundrymk1', 'Foundry'],
-      ['hadroncollider', 'Particle Accelerator'],
-      ['generatorbiomass', 'Biomass Burner'],
-      ['generatorcoal', 'Coal-Powered Generator'],
-      ['generatorfuel', 'Fuel-Powered Generator'],
-      ['generatornuclear', 'Nuclear Power Plant'],
-      ['manufacturermk1', 'Manufacturer'],
-      ['oilrefinery', 'Oil Refinery'],
-      ['packager', 'Packager'],
-      ['quantumencoder', 'Quantum Encoder'],
-      ['smeltermk1', 'Smelter'],
-      ['waterExtractor', 'Water Extractor'],
-    ])
-
-    return buildingFriendly.get(building) || `UNKNOWN BUILDING: ${building}`
-  }
-
   const showHideAll = (mode: 'show' | 'hide') => {
     getFactories().forEach(factory => factory.hidden = mode === 'hide')
   }
@@ -349,7 +326,6 @@
   provide('updateFactory', updateFactory)
   provide('copyFactory', copyFactory)
   provide('deleteFactory', deleteFactory)
-  provide('getBuildingDisplayName', getBuildingDisplayName)
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
 

@@ -1,42 +1,42 @@
-import { describe, expect, it } from 'vitest'
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { validateFactories } from '@/utils/factory-management/validation'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
+import { gameData } from '@/utils/gameData'
 
 describe('validation', () => {
-  it('should successfully detect and delete an invalid factory input', () => {
-    const mockFactory: Factory = newFactory('Iron Ingots')
+  const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
+  let mockFactory: Factory
+  beforeEach(() => {
+    mockFactory = newFactory('Iron Ingots')
+  })
 
+  it('should successfully detect and delete an invalid factory input', () => {
     mockFactory.inputs.push({
       factoryId: 123456,
       outputPart: 'IronOre',
       amount: 123,
     })
 
-    expect(() => {
-      validateFactories([mockFactory])
-    }).toThrow()
+    validateFactories([mockFactory], gameData)
     expect(mockFactory.inputs.length).toBe(0)
+    expect(alertMock).toHaveBeenCalled()
   })
 
   it('should successfully detect and delete an invalid dependency', () => {
-    const mockFactory: Factory = newFactory('Iron Ingots')
-
     mockFactory.dependencies.requests[2346] = [{
       requestingFactoryId: 123456,
       amount: 123,
       part: 'Foo',
     }]
 
-    expect(() => {
-      validateFactories([mockFactory])
-    }).toThrow()
+    validateFactories([mockFactory], gameData)
     expect(mockFactory.dependencies.requests).toEqual({})
+    expect(alertMock).toHaveBeenCalled()
   })
 
   it('should not inadvertently delete valid factory inputs', () => {
-    const mockFactory: Factory = newFactory('Iron Ingots')
     const validFactory: Factory = newFactory('Some Factory')
 
     addInputToFactory(mockFactory, {
@@ -51,15 +51,13 @@ describe('validation', () => {
       amount: 123,
     })
 
-    expect(() => {
-      validateFactories([mockFactory, validFactory])
-    }).toThrow()
+    validateFactories([mockFactory, validFactory], gameData)
     expect(mockFactory.inputs.length).toBe(1)
     expect(mockFactory.inputs[0].factoryId).toBe(validFactory.id)
+    expect(alertMock).toHaveBeenCalled()
   })
 
   it('should not inadvertently delete valid dependencies', () => {
-    const mockFactory: Factory = newFactory('Iron Ingots')
     const validFactory: Factory = newFactory('Some Factory')
 
     mockFactory.dependencies.requests[validFactory.id] = []
@@ -75,11 +73,44 @@ describe('validation', () => {
       amount: 123,
     })
 
-    expect(() => {
-      validateFactories([mockFactory, validFactory])
-    }).toThrow()
-
+    validateFactories([mockFactory, validFactory], gameData)
     expect(mockFactory.dependencies.requests[validFactory.id]).toBeDefined()
     expect(mockFactory.dependencies.requests[123456]).toBeUndefined()
+    expect(alertMock).toHaveBeenCalled()
+  })
+
+  it('should run validation on products when they contain a null array', () => {
+    // @ts-ignore
+    mockFactory.products = [null]
+    validateFactories([mockFactory], gameData)
+
+    expect(mockFactory.products).toEqual([])
+    expect(alertMock).toHaveBeenCalled()
+  })
+
+  it('should run validation on products when they contain a <1 amount', () => {
+    const mockInvalidProduct = {
+      id: 'IronIngot',
+      amount: 0,
+      recipe: 'IngotIron',
+    } as FactoryItem
+    mockFactory.products = [mockInvalidProduct]
+    validateFactories([mockFactory], gameData)
+
+    expect(mockFactory.products[0].amount).toBe(0.1)
+    expect(alertMock).toHaveBeenCalled()
+  })
+
+  it('should NOT run validation on products when they contain a >1 amount', () => {
+    const mockInvalidProduct = {
+      id: 'IronIngot',
+      amount: 2,
+      recipe: 'IngotIron',
+    } as FactoryItem
+    mockFactory.products = [mockInvalidProduct]
+    validateFactories([mockFactory], gameData)
+
+    expect(mockFactory.products[0].amount).toBe(2)
+    expect(alertMock).toHaveBeenCalled()
   })
 })

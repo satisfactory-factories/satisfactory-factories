@@ -1,6 +1,7 @@
 import { BuildingRequirement, ByProductItem, Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { DataInterface } from '@/interfaces/DataInterface'
 import { getRecipe } from '@/utils/factory-management/common'
+import eventBus from '@/utils/eventBus'
 
 export const addProductToFactory = (
   factory: Factory,
@@ -22,6 +23,8 @@ export const addProductToFactory = (
     byProducts: [],
   })
 }
+
+type Recipe = NonNullable<ReturnType<typeof getRecipe>>
 
 // Loops through all products and figures out what they produce and what they require, then adds it to the factory.parts object.
 export const calculateProducts = (factory: Factory, gameData: DataInterface) => {
@@ -201,4 +204,121 @@ export const fixProduct = (product: FactoryItem | ByProductItem, factory: Factor
 
   // Whatever calls this MUST then trigger a calculation.
   product.amount = diff + product.amount
+}
+
+export const getProduct = (
+  factory: Factory,
+  productId: string,
+  productOnly = false,
+  byProductOnly = false
+): FactoryItem | ByProductItem | undefined => {
+  const product = factory.products.find(product => product.id === productId)
+  const byProduct = factory.byProducts.find(product => product.id === productId)
+
+  if (productOnly) {
+    return product ?? undefined
+  }
+  if (byProductOnly) {
+    return byProduct ?? undefined
+  }
+  return product ?? byProduct ?? undefined
+}
+
+export const updateProductAmountViaByproduct = (product: FactoryItem, part: string, gameData: DataInterface) => {
+  const byProduct = product.byProducts?.find(bp => bp.id === part)
+
+  if (!byProduct) {
+    const error = `products: updateProductAmountViaByproduct: No byproduct part ${part} found for product ${product.id}!`
+    console.error(error)
+    throw new Error(error)
+  }
+
+  product.amount = getProductAmountByPart(product, part, 'byproduct', byProduct.amount, gameData)
+
+  if (product.amount <= 0) {
+    console.warn('product: setProductQtyByByproduct: product amount is less than 0, force setting to 0.1')
+    eventBus.emit('toast', {
+      message: 'You cannot set a byproduct to be 0. Setting product amount to 0.1 to prevent calculation errors. <br>If you need to enter 0.x of numbers, use your cursor to do so.',
+      type: 'warning',
+    })
+    product.amount = 0.1
+  }
+
+  // Must call update factory!
+}
+
+export const updateProductAmountViaRequirement = (product: FactoryItem, part: string, gameData: DataInterface) => {
+  const ingredient = product.requirements[part]
+
+  if (!ingredient) {
+    const error = `products: updateProductAmountByRequirement: No ingredient part ${part} found for product ${product.id}!`
+    console.error(error)
+    throw new Error(error)
+  }
+
+  product.amount = getProductAmountByPart(product, part, 'requirement', ingredient.amount, gameData)
+
+  if (product.amount <= 0) {
+    console.warn('product: setProductQtyByRequirement: product amount is less than 0, force setting to 0.1')
+    eventBus.emit('toast', {
+      message: 'You cannot set an ingredient to be 0. Setting product amount to 0.1 to prevent calculation errors. <br>If you need to enter 0.x of numbers, use your cursor to do so.',
+      type: 'warning',
+    })
+    product.amount = 0.1
+  }
+
+  // Must call update factory!
+}
+
+export const getProductAmountByPart = (
+  product: FactoryItem,
+  part: string,
+  type: 'byproduct' | 'requirement',
+  newAmount: number | undefined,
+  gameData: DataInterface
+) => {
+  if (!newAmount || newAmount < 0) {
+    return 0
+  }
+  const recipe = getRecipe(product.recipe, gameData)
+  if (!recipe) {
+    const error = `products: getProductQtyByAmount: No recipe found for product ${product.id}!`
+    console.error(error)
+    throw new Error(error)
+  }
+
+  let recipeAmount: number
+
+  if (type === 'byproduct') {
+    recipeAmount = recipeByproductPerMin(part, recipe)
+  } else {
+    recipeAmount = recipeIngredientPerMin(part, recipe)
+  }
+
+  if (!recipeAmount || recipeAmount <= 0) {
+    return 0.1
+  }
+
+  return recipe.products[0].perMin * newAmount / recipeAmount
+}
+
+export const recipeByproductPerMin = (part: string, recipe: Recipe) => {
+  // Seems byproduct is used in power recipes
+  const byproduct = [...recipe.products, ...(recipe.byproduct ?? [])].find(bp => bp.part === part)
+  if (!byproduct) {
+    const error = `products: recipeByproductPerMin: No byproduct found for part ${part} in recipe ${recipe.id}!`
+    console.error(error)
+    throw new Error(error)
+  }
+  return byproduct.perMin
+}
+
+export const recipeIngredientPerMin = (ingredientPart: string, recipe: Recipe) => {
+  const ingredient = recipe.ingredients.find(i => i.part === ingredientPart)
+  if (!ingredient) {
+    const error = `products: recipeIngredientPerMin: No ingredient found for part ${ingredientPart} in recipe ${recipe.id}!`
+    console.error(error)
+    throw new Error(error)
+  }
+  return ingredient.perMin
 }

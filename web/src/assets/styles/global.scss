@@ -15,6 +15,7 @@
   }
 
   &.x-small {
+    height: 26px !important;
     padding: 0 8px !important;
     font-size: 12px !important;
   }
@@ -31,6 +32,11 @@
   &.blue {
     color: rgb(33, 150, 243) !important;
     border-color: rgb(1, 111, 204) !important;
+  }
+
+  &.cyan {
+    color: rgb(163, 206, 255) !important;
+    border-color: rgb(75, 151, 223) !important;
   }
 
   &.orange {

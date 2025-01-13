@@ -9,6 +9,9 @@ import eventBus from '@/utils/eventBus'
 import { addTab, getCurrentTab, getTab, newState, newTab } from '@/utils/plannerStateManagement'
 
 export const useAppStore = defineStore('app', () => {
+  const gameDataStore = useGameDataStore()
+  const gameData = gameDataStore.getGameData()
+
   const inited = ref(false)
   let loadedCount = 0
   const plannerState = ref<PlannerState>(JSON.parse(<string>localStorage.getItem('plannerState')) as PlannerState)
@@ -41,6 +44,10 @@ export const useAppStore = defineStore('app', () => {
 
   const factories = computed({
     get () {
+      if (!currentTab.value) {
+        console.error('appStore: factories.get: No current factory tab set!')
+        return []
+      }
       // Ensure that the factories are initialized before returning them on the first request
       if (!inited.value) {
         console.log('appStore: factories.get: Factories not inited, initializing')
@@ -60,7 +67,6 @@ export const useAppStore = defineStore('app', () => {
   const showSatisfactionBreakdowns = ref<boolean>(
     (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
   )
-  const gameDataStore = useGameDataStore()
 
   const shownFactories = (factories: Factory[]) => {
     return factories.filter(factory => !factory.hidden).length
@@ -195,7 +201,7 @@ export const useAppStore = defineStore('app', () => {
     let needsCalculation = false
 
     try {
-      validateFactories(newFactories) // Ensure the data is clean
+      validateFactories(newFactories, gameData) // Ensure the data is clean
     } catch (err) {
       alert('Error validating factories: ' + err)
     }
@@ -343,10 +349,6 @@ export const useAppStore = defineStore('app', () => {
   const removeCurrentTab = async () => {
     if (plannerState.value.tabs.length === 1) return
 
-    if (factories.value.length && !window.confirm('Are you sure you want to delete this tab? This will delete all factories in it.')) {
-      return
-    }
-
     const tabToRemoveIndex = plannerState.value.tabs.findIndex(tab => tab.id === currentTabId.value)
 
     plannerState.value.tabs.splice(tabToRemoveIndex, 1)
@@ -380,6 +382,10 @@ export const useAppStore = defineStore('app', () => {
   // ==== END MISC
 
   const getFactories = () => {
+    if (!currentTab.value) {
+      console.error('appStore: getFactories: No current factory tab set!')
+      return []
+    }
     // If the factories are not initialized, wait for a duration for the app to load then return them.
     if (!inited.value) {
       // Something wants to load these values so prepare the loader
