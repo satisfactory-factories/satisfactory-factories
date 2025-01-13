@@ -11,6 +11,7 @@ type Events = {
   incrementLoad: { step: string }; // Payload to denote loading or calculation step
   prepareForLoad: { count: number, shown: number };
   readyForData: undefined;
+  plannerHideContent: undefined
   plannerShowContent: undefined
 };
 

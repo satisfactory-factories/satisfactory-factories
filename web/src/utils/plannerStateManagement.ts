@@ -64,7 +64,7 @@ export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
 
   // Regenerate display orders
   state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index + 1
+    tab.displayOrder = index
   })
 
   // Reset the current tab ID to be the last tab ID
@@ -80,7 +80,7 @@ export const migrateFactoryTabsToState = (oldState: FactoryTab[]): PlannerState 
 
   // Generate the tab display order
   state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index + 1
+    tab.displayOrder = index
   })
 
   return state

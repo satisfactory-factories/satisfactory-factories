@@ -2,9 +2,8 @@
   <div>
     <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between w-100">
       <div class="d-flex align-center" style="min-width: 0">
-        {{ appStore.currentTabId }}
         <v-tabs
-          v-model="appStore.currentTabId"
+          v-model="selectedTab"
           color="deep-orange"
         >
           <v-tab
@@ -22,7 +21,7 @@
               @keyup.enter="onClickEditTabName"
             >
             <span v-else>
-              {{ tab.name }}
+              {{ tab.name }} {{ tab.id }}
             </span>
             <v-btn
               v-if="isCurrentTab(tab)"
@@ -57,9 +56,7 @@
       </div>
     </div>
   </div>
-  <pre>
-  {{ appStore.plannerState }}
-  </pre>
+  {{ selectedTab }}
 </template>
 
 <script setup lang="ts">
@@ -68,6 +65,9 @@
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
   const appStore = useAppStore()
+
+  // Take a shallow copy of the current tab ID
+  const selectedTab = ref(JSON.parse(JSON.stringify(appStore.currentTabId)))
 
   const isEditingName = ref(false)
   const currentTabName = ref(appStore.currentTab.name)
@@ -84,6 +84,11 @@
   watch(() => appStore.currentTabId, () => {
     isEditingName.value = false
     currentTabName.value = appStore.currentTab.name
+  })
+
+  watch(() => selectedTab.value, () => {
+    console.log('TabNavigation: selectedTab: Changing selected tab:', selectedTab.value)
+    appStore.changeCurrentTab(selectedTab.value)
   })
 
   const confirmDelete = () => {

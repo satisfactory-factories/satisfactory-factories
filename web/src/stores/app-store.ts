@@ -26,8 +26,8 @@ export const useAppStore = defineStore('app', () => {
   const oldState = JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[] | null
 
   // If the new state doesn't exist and the old one does, migrate it.
-  if (!plannerState.value && oldState) {
-    console.log('appStore: Found old factory state, migrating.')
+  if (!plannerState.value && oldState && oldState.length > 0) {
+    console.log('appStore: INIT: Found old factory state, migrating.')
 
     plannerState.value = migrateFactoryTabsToState(oldState)
 
@@ -41,22 +41,26 @@ export const useAppStore = defineStore('app', () => {
 
   // If the state is not set, create a new one now
   if (!plannerState.value) {
-    console.log('appStore: plannerState not found, creating new state.')
+    console.log('appStore: INIT: plannerState not found, creating new state.')
     plannerState.value = newState({})
   }
 
+  // The current tab is the actual data we'll be working with.
+  // The displayedTab is changed as and when the loader deems it ready to be changed.
+  // Otherwise, if we are dependent on the currentTabId, we'll be swapping the data before the loader is ready due to reactivity.
+  const currentTabId = ref(plannerState.value.currentTabId)
   const currentTab = ref(getCurrentTab(plannerState.value))
-  const currentTabId = ref(currentTab.value.id)
+  const pendingTabId = ref('')
 
-  const factories = computed({
+  const displayedFactories = computed({
     get () {
       if (!currentTab.value) {
-        console.error('appStore: factories.get: No current factory tab set!')
+        console.error('appStore: displayedFactories.get: No displayed tab not set!')
         return []
       }
       // Ensure that the factories are initialized before returning them on the first request
       if (!inited.value) {
-        console.log('appStore: factories.get: Factories not inited, initializing')
+        console.log('appStore: displayedFactories.get: Factories not inited, initializing')
         initFactories(currentTab.value.factories)
       }
       return currentTab.value.factories
@@ -84,17 +88,6 @@ export const useAppStore = defineStore('app', () => {
     setLastEdit() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
-  // Watch the tab index, if it changes we need to throw up a loading
-  watch(currentTabId, () => {
-    requestAnimationFrame(() => {
-      console.log('appStore: currentFactoryTabIndex watcher: Tab index changed, starting load.')
-      currentTab.value = getTab(plannerState.value, currentTabId.value)
-      plannerState.value.currentTabId = currentTabId.value
-
-      prepareLoader(currentTab.value.factories)
-    })
-  })
-
   const getLastEdit = (): Date => {
     return lastEdit.value
   }
@@ -109,23 +102,31 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const prepareLoader = async (newFactories?: Factory[]) => {
+    console.log('==== CURRENT TAB ID ====', currentTabId.value)
+    console.log('==== PENDING TAB ID ====', pendingTabId.value)
     isLoaded.value = false
-    const factoriesToLoad = newFactories ?? factories.value
+    const factoriesToLoad = newFactories ?? displayedFactories.value
     console.log('appStore: prepareLoader', factoriesToLoad)
+
+    // Tell planner to hide to remove all rendered content
+    eventBus.emit('plannerHideContent')
+
+    // Wait a bit for the planner to comply
+    await new Promise(resolve => setTimeout(resolve, 50))
 
     // Set and initialize factories
     setFactories(factoriesToLoad)
 
     // Tell loader to prepare for load
     console.log('appStore: prepareLoader: Factories set, starting load process.')
-    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories(factories.value) })
+    eventBus.emit('prepareForLoad', { count: displayedFactories.value.length, shown: shownFactories(displayedFactories.value) })
   }
 
   // When the loader is ready, we will receive an event saying to initiate the load.
   eventBus.on('readyForData', () => {
     console.log('appStore: Received readyForData event, triggering load.')
 
-    beginLoading(factories.value, true)
+    beginLoading(displayedFactories.value, true)
   })
 
   const beginLoading = async (newFactories: Factory[], loadMode = false) => {
@@ -133,7 +134,7 @@ export const useAppStore = defineStore('app', () => {
     loadedCount = 0
 
     // Reset the factories currently loaded
-    currentTab.value.factories = []
+    displayedFactories.value = []
 
     const attemptedFactories = JSON.parse(localStorage.getItem('preLoadFactories') ?? '[]') as Factory[]
 
@@ -199,6 +200,12 @@ export const useAppStore = defineStore('app', () => {
 
     // Reset the saved factories
     localStorage.removeItem('preLoadFactories')
+
+    // Resync the current tabId
+    currentTabId.value = pendingTabId.value
+
+    console.log('appStore: ============= LOADING COMPLETED =============', plannerState.value)
+    console.log('current', currentTab.value)
   }
 
   // ==== FACTORY MANAGEMENT
@@ -286,23 +293,23 @@ export const useAppStore = defineStore('app', () => {
     })
 
     if (needsCalculation) {
-      console.log('appStore: Forcing calculation of factories due to data migration')
+      console.log('appStore: initFactories: Forcing calculation of factories due to data migration')
       calculateFactories(newFactories, gameDataStore.getGameData())
     }
 
     console.log('appStore: initFactories - completed')
 
     inited.value = true
-    factories.value = newFactories // Also calls the watcher, which sets the current tab data.
-    return factories.value
+    displayedFactories.value = newFactories // Also calls the watcher, which sets the current tab data.
+    return displayedFactories.value
   }
 
   const setFactories = (newFactories: Factory[]) => {
-    console.log('Setting factories', newFactories)
+    console.log('appStore: setFactories: Setting factories', newFactories)
 
     const gameData = gameDataStore.getGameData()
     if (!gameData) {
-      console.error('Unable to load game data!')
+      console.error('appStore: setFactories: Unable to load game data!')
       return
     }
 
@@ -320,26 +327,36 @@ export const useAppStore = defineStore('app', () => {
       factory.previousInputs = factory.inputs
     })
 
-    factories.value = newFactories
-    // Will also call the watcher, which sets the current tab data.
+    // If there's a pending tabId, swap the tabs round now. Otherwise, we delete the data on the tab we're swapping from.
+    if (pendingTabId.value) {
+      console.log('appStore: setFactories: Setting new tabId:', pendingTabId.value)
+      currentTabId.value = pendingTabId.value
+      currentTab.value = getTab(plannerState.value, pendingTabId.value)
+      pendingTabId.value = ''
+    } else {
+      console.log('appStore: setFactories: No pending tabId, sticking with:', currentTabId.value)
+    }
 
-    console.log('appStore: setFactories: Factories set.', factories.value)
+    // Will also call the watcher, which sets the current tab data.
+    displayedFactories.value = newFactories
+
+    console.log('appStore: setFactories: Factories set.', displayedFactories.value)
   }
 
   const addFactory = (factory: Factory) => {
-    factories.value.push(factory)
+    displayedFactories.value.push(factory)
   }
 
   const removeFactory = (id: number) => {
-    const index = factories.value.findIndex(factory => factory.id === id)
+    const index = displayedFactories.value.findIndex(factory => factory.id === id)
     if (index !== -1) {
-      factories.value.splice(index, 1)
+      displayedFactories.value.splice(index, 1)
     }
   }
 
   const clearFactories = () => {
-    factories.value.length = 0
-    factories.value = []
+    displayedFactories.value.length = 0
+    displayedFactories.value = []
   }
   // ==== END FACTORY MANAGEMENT
 
@@ -399,7 +416,7 @@ export const useAppStore = defineStore('app', () => {
         shown: shownFactories(currentTab.value.factories),
       })
     }
-    return inited.value ? factories.value : initFactories(currentTab.value.factories)
+    return inited.value ? displayedFactories.value : initFactories(currentTab.value.factories)
   }
 
   const getTabs = () => {
@@ -412,11 +429,17 @@ export const useAppStore = defineStore('app', () => {
     currentTabId.value = plannerState.value.tabs[0].id
   }
 
+  const changeCurrentTab = (tabId: string) => {
+    console.log('appStore: === CHANGING TAB ===:', tabId)
+    pendingTabId.value = tabId
+    prepareLoader(getTab(plannerState.value, tabId).factories)
+  }
+
   return {
     currentTab,
     currentTabId,
     plannerState,
-    factories,
+    factories: displayedFactories,
     lastSave,
     lastEdit,
     isDebugMode,
@@ -434,6 +457,7 @@ export const useAppStore = defineStore('app', () => {
     removeCurrentTab,
     getTabs,
     setTabs,
+    changeCurrentTab,
     getSatisfactionBreakdowns,
     changeSatisfactoryBreakdowns,
     prepareLoader,

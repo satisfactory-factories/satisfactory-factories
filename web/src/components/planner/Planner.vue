@@ -99,10 +99,9 @@
 
   const loadingCompleted = ref(false)
 
-  // When we are starting a new load we need to unload all the DOM elements
-  eventBus.on('prepareForLoad', () => {
+  eventBus.on('plannerHideContent', () => {
     loadingCompleted.value = false
-    console.log('Planner: Received prepareForLoad event, marked as unloaded, showing placeholders')
+    console.log('Planner: Received plannerHideContent event, marked as unloaded, showing placeholders')
   })
 
   // When everything is loaded and ready to go, then we are ready to start loading things.

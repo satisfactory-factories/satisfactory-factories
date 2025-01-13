@@ -157,8 +157,8 @@ describe('plannerStateManagement', () => {
       deleteTab(state, tab2)
 
       expect(state.tabs).toEqual([tab1, tab3])
-      expect(tab1.displayOrder).toBe(1)
-      expect(tab3.displayOrder).toBe(2)
+      expect(tab1.displayOrder).toBe(0)
+      expect(tab3.displayOrder).toBe(1)
     })
 
     it('should throw an error if the tab does not exist', () => {
@@ -200,13 +200,13 @@ describe('plannerStateManagement', () => {
           {
             id: '1',
             name: 'Tab 1',
-            displayOrder: 1,
+            displayOrder: 0,
             factories: [mockFactory],
           },
           {
             id: '2',
             name: 'Tab 2',
-            displayOrder: 2,
+            displayOrder: 1,
             factories: [],
           },
         ],
