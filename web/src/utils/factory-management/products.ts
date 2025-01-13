@@ -247,7 +247,7 @@ export const updateProductAmountViaByproduct = (product: FactoryItem, part: stri
   // Must call update factory!
 }
 
-export const updateProductAmountByRequirement = (product: FactoryItem, part: string, gameData: DataInterface) => {
+export const updateProductAmountViaRequirement = (product: FactoryItem, part: string, gameData: DataInterface) => {
   const ingredient = product.requirements[part]
 
   if (!ingredient) {

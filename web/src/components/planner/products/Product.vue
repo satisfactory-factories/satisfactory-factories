@@ -215,8 +215,8 @@
     shouldShowFix,
     shouldShowInternal,
     shouldShowNotInDemand,
-    updateProductAmountByRequirement,
     updateProductAmountViaByproduct,
+    updateProductAmountViaRequirement,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatPower } from '@/utils/numberFormatter'
@@ -283,7 +283,7 @@
   }
 
   const setProductQtyByRequirement = (product: FactoryItem, part: string) => {
-    updateProductAmountByRequirement(product, part, gameData)
+    updateProductAmountViaRequirement(product, part, gameData)
     updateFactory(props.factory)
   }
 
