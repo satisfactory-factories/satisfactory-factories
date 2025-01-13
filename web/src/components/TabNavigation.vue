@@ -51,7 +51,7 @@
           icon="fas fa-trash"
           size="small"
           variant="flat"
-          @click="appStore.removeCurrentTab()"
+          @click="confirmDelete() && appStore.removeCurrentTab()"
         />
       </div>
     </div>
@@ -60,6 +60,7 @@
 
 <script setup lang="ts">
   import { useAppStore } from '@/stores/app-store'
+  import { confirmDialog } from '@/utils/helpers'
 
   const appStore = useAppStore()
 
@@ -79,4 +80,11 @@
     isEditingName.value = false
     currentTabName.value = appStore.currentFactoryTab.name
   })
+
+  const confirmDelete = () => {
+    if (appStore.getFactories().length > 0) {
+      return confirmDialog('Are you sure you wish to delete this tab? This action is irreversible!')
+    }
+    return true
+  }
 </script>

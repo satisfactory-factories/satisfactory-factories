@@ -366,10 +366,6 @@ export const useAppStore = defineStore('app', () => {
   const removeCurrentTab = async () => {
     if (factoryTabs.value.length === 1) return
 
-    if (factories.value.length && !window.confirm('Are you sure you want to delete this tab? This will delete all factories in it.')) {
-      return
-    }
-
     factoryTabs.value.splice(currentFactoryTabIndex.value, 1)
     currentFactoryTabIndex.value = Math.min(currentFactoryTabIndex.value, factoryTabs.value.length - 1)
 
