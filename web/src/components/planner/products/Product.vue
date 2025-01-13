@@ -214,7 +214,9 @@
     fixProduct,
     shouldShowFix,
     shouldShowInternal,
-    shouldShowNotInDemand, updateProductAmountByRequirement, updateProductAmountViaByproduct,
+    shouldShowNotInDemand,
+    updateProductAmountByRequirement,
+    updateProductAmountViaByproduct,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatPower } from '@/utils/numberFormatter'
