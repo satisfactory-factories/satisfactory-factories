@@ -53,3 +53,19 @@ export const getTab = (state: PlannerState, tabId: string): FactoryTab => {
   }
   return tab
 }
+
+export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
+  const index = state.tabs.findIndex(t => t.id === tab.id)
+  if (index === -1) {
+    throw new Error(`Tab with id ${tab.id} not found`)
+  }
+  state.tabs.splice(index, 1)
+
+  // Regenerate display orders
+  state.tabs.forEach((tab, index) => {
+    tab.displayOrder = index
+  })
+
+  // Reset the current tab ID to be the last tab ID
+  state.currentTabId = state.tabs[state.tabs.length - 1].id
+}

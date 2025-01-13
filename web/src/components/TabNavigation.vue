@@ -3,28 +3,28 @@
     <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between w-100">
       <div class="d-flex align-center" style="min-width: 0">
         <v-tabs
-          v-model="appStore.currentFactoryTabIndex"
+          v-model="appStore.currentTabId"
           color="deep-orange"
         >
           <v-tab
-            v-for="(item, index) in appStore.plannerState"
-            :key="item.id"
+            v-for="(tab) in appStore.plannerState.tabs"
+            :key="tab.id"
             class="text-none"
-            :ripple="!isCurrentTab(index)"
-            :slim="isCurrentTab(index)"
-            :value="index"
+            :ripple="!isCurrentTab(tab)"
+            :slim="isCurrentTab(tab)"
+            :value="tab.id"
           >
             <input
-              v-if="isCurrentTab(index) && isEditingName"
+              v-if="isCurrentTab(tab) && isEditingName"
               v-model="currentTabName"
               class="pa-1 rounded border bg-grey-darken-2"
               @keyup.enter="onClickEditTabName"
             >
             <span v-else>
-              {{ item.name }}
+              {{ tab.name }}
             </span>
             <v-btn
-              v-if="isCurrentTab(index)"
+              v-if="isCurrentTab(tab)"
               :key="`${isEditingName}`"
               color="grey-darken-3"
               :icon="`fas ${isEditingName ? 'fa-check': 'fa-pen'}`"
@@ -46,7 +46,7 @@
       <div class="d-flex align-center h-100 ga-2 mr-1">
         <ShareButton />
         <v-btn
-          v-if="appStore.plannerState.length > 1"
+          v-if="appStore.plannerState.tabs.length > 1"
           color="red rounded"
           icon="fas fa-trash"
           size="small"
@@ -56,29 +56,34 @@
       </div>
     </div>
   </div>
+  <pre>
+  {{ appStore.plannerState }}
+
+  </pre>
 </template>
 
 <script setup lang="ts">
   import { useAppStore } from '@/stores/app-store'
   import { confirmDialog } from '@/utils/helpers'
+  import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
   const appStore = useAppStore()
 
   const isEditingName = ref(false)
-  const currentTabName = ref(appStore.currentFactoryTab.name)
+  const currentTabName = ref(appStore.currentTab.name)
 
-  const isCurrentTab = (index:number) => index === appStore.currentFactoryTabIndex
+  const isCurrentTab = (tab: FactoryTab) => tab.id === appStore.currentTabId
 
   const onClickEditTabName = () => {
     isEditingName.value = !isEditingName.value
     if (!isEditingName.value) {
-      appStore.currentFactoryTab.name = currentTabName.value
+      appStore.currentTab.name = currentTabName.value
     }
   }
 
-  watch(() => appStore.currentFactoryTabIndex, () => {
+  watch(() => appStore.currentTabId, () => {
     isEditingName.value = false
-    currentTabName.value = appStore.currentFactoryTab.name
+    currentTabName.value = appStore.currentTab.name
   })
 
   const confirmDelete = () => {

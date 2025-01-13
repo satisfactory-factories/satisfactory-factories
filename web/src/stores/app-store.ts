@@ -6,7 +6,7 @@ import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
-import { addTab, getCurrentTab, getTab, newState, newTab } from '@/utils/plannerStateManagement'
+import { addTab, deleteTab, getCurrentTab, getTab, newState, newTab } from '@/utils/plannerStateManagement'
 
 export const useAppStore = defineStore('app', () => {
   const gameDataStore = useGameDataStore()
@@ -349,11 +349,9 @@ export const useAppStore = defineStore('app', () => {
   const removeCurrentTab = async () => {
     if (plannerState.value.tabs.length === 1) return
 
-    const tabToRemoveIndex = plannerState.value.tabs.findIndex(tab => tab.id === currentTabId.value)
-
-    plannerState.value.tabs.splice(tabToRemoveIndex, 1)
+    deleteTab(plannerState.value, currentTab.value)
     // Get the new tab index by looking at the last tab in the list
-    currentTabId.value = plannerState.value.tabs[plannerState.value.tabs.length - 1].id
+    currentTabId.value = plannerState.value.currentTabId
 
     // We now need to force a load of the factories
     console.log('appStore: removeCurrentTab: Tab removed, preparing loader.')
@@ -409,6 +407,7 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     currentTab,
+    currentTabId,
     plannerState,
     factories,
     lastSave,
