@@ -51,14 +51,12 @@
 </template>
 <script setup lang="ts">
   import { formatNumber, formatPower } from '@/utils/numberFormatter'
-  import { inject } from 'vue'
   import { Factory } from '@/interfaces/planner/FactoryInterface'
+  import { getBuildingDisplayName } from '@/utils/factory-management/common'
 
   defineProps<{
     factory: Factory;
     helpText: boolean;
   }>()
-
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
 
 </script>
