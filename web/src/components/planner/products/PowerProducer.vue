@@ -184,8 +184,8 @@
   import { Factory, FactoryPowerProducer } from '@/interfaces/planner/FactoryInterface'
   import { PowerRecipe } from '@/interfaces/Recipes'
   import { inject } from 'vue'
+  import { getBuildingDisplayName } from '@/utils/factory-management/common'
 
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const updateOrder = inject('updateOrder') as (list: any[], direction: string, item: any) => void
 
