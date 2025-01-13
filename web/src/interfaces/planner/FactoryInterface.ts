@@ -151,6 +151,6 @@ export interface FactoryTab {
 
 export interface PlannerState {
   currentTabIndex: number;
-  tabs: {[key: string]: FactoryTab};
+  tabs: FactoryTab[];
   lastSaved: Date;
 }

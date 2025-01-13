@@ -12,9 +12,10 @@ import rateLimit from 'express-rate-limit';
 import { generateSlug } from "random-word-slugs";
 
 import {FactoryData} from "./models/FactoyDataSchema";
+import {PlannerState as PlannerStateSchema} from "./models/PlannerState";
 import {User} from "./models/UsersSchema";
 import {Share, ShareDataSchema} from "./models/ShareSchema";
-import {Factory} from "./interfaces/FactoryInterface";
+import {Factory, FactoryTab, PlannerState} from "./interfaces/FactoryInterface";
 
 dotenv.config();
 
@@ -198,46 +199,65 @@ app.post('/validate-token', (req: TypedRequestBody<{ token: string }>, res: Expr
 app.post('/save', authenticate, async (req: AuthenticatedRequest & TypedRequestBody<{ data: any }>, res: Express.Response) => {
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
-    const factoryData: Factory[] = req.body;
+    const plannerState: PlannerState = req.body;
+
+    const tabs = plannerState.tabs;
+
+    // Limit the number of tabs to prevent abuse
+    if (tabs.length > 25) {
+      console.warn(`User ${username} tried to save a planner state with too many tabs!`);
+      plannerState.tabs = tabs.slice(0, 25);
+    }
 
     // Check users are not doing naughty things with the notes and task fields
-    factoryData.forEach((factory) => {
-      if (factory.name.length > 200) {
-        console.warn(`User ${username} tried to save a factory name that was too long!`);
-        factory.name = factory.name.substring(0, 200);
+    tabs.forEach((tab: FactoryTab) => {
+      // Limit the number of factories in a tab to prevent abuse
+      if (tab.factories.length > 50) {
+        console.warn(`User ${username} tried to save a tab with too many factories!`);
+        tab.factories = tab.factories.slice(0, 50);
       }
 
-      if (factory.notes && factory.notes.length > 1000) {
-        console.warn(`User ${username} tried to save a notes field that was too long!`);
-        factory.notes = factory.notes.substring(0, 1000);
-      }
-
-      if (factory.tasks) {
-        // Make sure it doesn't exceed a certain character limit
-        factory.tasks.forEach((task) => {
-          if (task.title.length > 200) {
-            console.warn(`User ${username} tried to save a factory task that was way too long!`);
-            task.title = task.title.substring(0, 200);
-          }
-        });
-
-        // Make sure they can't take the piss with a stupid number of tasks
-        if (factory.tasks.length > 50) {
-          console.warn(`User ${username} tried to save a factory with too many tasks!`);
-          factory.tasks = factory.tasks.slice(0, 50);
+      tab.factories.forEach((factory: Factory) => {
+        if (factory.name.length > 200) {
+          console.warn(`User ${username} tried to save a factory name that was too long!`);
+          factory.name = factory.name.substring(0, 200);
         }
-      }
+
+        if (factory.notes && factory.notes.length > 1000) {
+          console.warn(`User ${username} tried to save a notes field that was too long!`);
+          factory.notes = factory.notes.substring(0, 1000);
+        }
+
+        if (factory.tasks) {
+          // Make sure it doesn't exceed a certain character limit
+          factory.tasks.forEach((task) => {
+            if (task.title.length > 200) {
+              console.warn(`User ${username} tried to save a factory task that was way too long!`);
+              task.title = task.title.substring(0, 200);
+            }
+          });
+
+          // Make sure they can't take the piss with a stupid number of tasks
+          if (factory.tasks.length > 50) {
+            console.warn(`User ${username} tried to save a factory with too many tasks!`);
+            factory.tasks = factory.tasks.slice(0, 50);
+          }
+        }
+      })
     })
 
-    await FactoryData.findOneAndUpdate(
+    await PlannerStateSchema.findOneAndUpdate(
       { user: username },
-      { data: factoryData, lastSaved: new Date() },
+      { data: plannerState, lastSaved: new Date() },
       { new: true, upsert: true }
     );
 
-    console.log(`Data saved for ${username}`);
+    // Delete any data that is in the old FactoryData collection
+    await FactoryData.deleteOne({ user: username });
 
-    res.json({ message: 'Data saved successfully', userData: factoryData });
+    console.log(`Planner State saved for ${username}`);
+
+    res.json({ message: 'Planner State saved successfully', userData: plannerState });
   } catch (error) {
     console.error(`Data save failed: ${error}`);
     res.status(500).json({ message: 'Data save failed', error });
@@ -249,7 +269,7 @@ app.get('/load', authenticate, async (req: AuthenticatedRequest & TypedRequestBo
   try {
     const { username } = req.user as jwt.JwtPayload & { username: string };
 
-    const data = await FactoryData.findOne(
+    const data = await PlannerStateSchema.findOne(
       { user: username },
     );
 
