@@ -186,7 +186,9 @@
   } from '@/utils/helpers'
   import { calculateTotalDependencies, calculateTotalDependencyRequests } from '@/utils/summary'
   import { formatNumber } from '@/utils/numberFormatter'
+  import { getBuildingDisplayName } from '@/utils/factory-management/common'
   const navigateToFactory = inject('navigateToFactory') as (id: string | number) => void
+
   const props = defineProps<{
     factories: Factory[];
     helpText: boolean;
@@ -223,10 +225,6 @@
   const toggleVisibility = () => {
     hidden.value = !hidden.value
   }
-
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (
-    part: string
-  ) => string
 
   const factoryClass = (factory: Factory) => {
     return {
