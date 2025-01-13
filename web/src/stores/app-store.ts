@@ -15,20 +15,27 @@ export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
   let loadedCount = 0
   const plannerState = ref<PlannerState>(JSON.parse(<string>localStorage.getItem('plannerState')) as PlannerState)
-  const oldState = localStorage.getItem('factoryTabs') as FactoryTab[] | null
+  const oldState = JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[] | null
 
-  // If the old factory state still exists, do a migration now.
-  if (oldState) {
+  // If the new state doesn't exist and the old one does, migrate it.
+  if (!plannerState.value && oldState) {
     console.log('appStore: Found old factory state, migrating.')
     const oldActiveTab = oldState[0] // We're going to assume it's the first one.
     plannerState.value = newState({
-      user: 'foo',
       currentTabId: oldActiveTab.id,
       tabs: oldState,
     })
-    localStorage.removeItem('factoryTabs')
+
+    // Generate the tab display order
+    plannerState.value.tabs.forEach((tab, index) => {
+      tab.displayOrder = index
+    })
+
+    // Don't delete the factoryTab data just yet to ensure people have a revert option.
+    // localStorage.removeItem('factoryTabs')
     localStorage.removeItem('currentFactoryTabIndex')
     localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
+    alert('Your planner data has just been migrated to a new format. Please report any issues to Discord.')
   }
 
   // If the state is not set, create a new one now

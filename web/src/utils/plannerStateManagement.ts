@@ -3,8 +3,8 @@ import { Factory, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryI
 interface PlannerStateOptions {
   user?: string,
   currentTabId?: string;
-  tabs?: FactoryTab[],
   userOptions?: string[]
+  tabs?: FactoryTab[],
 }
 
 interface FactoryTabOptions {
@@ -21,9 +21,9 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
   return {
     user: options.user ?? null,
     currentTabId: options.currentTabId ?? newTabData.id,
-    tabs: options.tabs ?? [newTabData],
-    userOptions: options.userOptions ?? [],
     lastSaved: null,
+    userOptions: options.userOptions ?? [],
+    tabs: options.tabs ?? [newTabData],
   }
 }
 

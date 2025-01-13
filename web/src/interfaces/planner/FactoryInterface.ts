@@ -153,7 +153,7 @@ export interface FactoryTab {
 export interface PlannerState {
   user: string | null;
   currentTabId: string;
-  tabs: FactoryTab[];
-  userOptions: string[];
   lastSaved: Date | null;
+  userOptions: string[];
+  tabs: FactoryTab[];
 }
