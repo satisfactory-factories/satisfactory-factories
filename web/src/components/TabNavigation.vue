@@ -2,12 +2,13 @@
   <div>
     <div class="border-t-md d-flex bg-grey-darken-3 align-center justify-space-between w-100">
       <div class="d-flex align-center" style="min-width: 0">
+        {{ appStore.currentTabId }}
         <v-tabs
           v-model="appStore.currentTabId"
           color="deep-orange"
         >
           <v-tab
-            v-for="(tab) in appStore.plannerState.tabs"
+            v-for="(tab) in appStore.getTabs()"
             :key="tab.id"
             class="text-none"
             :ripple="!isCurrentTab(tab)"
@@ -46,7 +47,7 @@
       <div class="d-flex align-center h-100 ga-2 mr-1">
         <ShareButton />
         <v-btn
-          v-if="appStore.plannerState.tabs.length > 1"
+          v-if="appStore.getTabs().length > 1"
           color="red rounded"
           icon="fas fa-trash"
           size="small"
@@ -58,7 +59,6 @@
   </div>
   <pre>
   {{ appStore.plannerState }}
-
   </pre>
 </template>
 

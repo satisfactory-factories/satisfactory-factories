@@ -83,6 +83,7 @@ export const useAppStore = defineStore('app', () => {
     requestAnimationFrame(() => {
       console.log('appStore: currentFactoryTabIndex watcher: Tab index changed, starting load.')
       currentTab.value = getTab(plannerState.value, currentTabId.value)
+      plannerState.value.currentTabId = currentTabId.value
 
       prepareLoader(currentTab.value.factories)
     })
@@ -396,7 +397,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const getTabs = () => {
-    return plannerState.value
+    return plannerState.value.tabs
   }
 
   const setTabs = (tabs: FactoryTab[]) => {
