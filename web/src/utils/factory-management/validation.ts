@@ -1,8 +1,9 @@
 // Check for invalid factory data e.g. inputs without factories etc
-import { findFac } from '@/utils/factory-management/factory'
+import { calculateFactory, findFac } from '@/utils/factory-management/factory'
 import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { DataInterface } from '@/interfaces/DataInterface'
 
-export const validateFactories = (factories: Factory[]) => {
+export const validateFactories = (factories: Factory[], gameData: DataInterface) => {
   let hasErrors = false
 
   factories.forEach(factory => {
@@ -38,9 +39,34 @@ export const validateFactories = (factories: Factory[]) => {
         delete factory.dependencies.requests[depFacId]
       }
     })
+
+    // Check for invalid products and remove them from factories
+    // For instance if somehow a product has an amount of 0, which should not be possible, remove the product and recalculate.
+    factory.products.forEach((product, productIndex) => {
+      if (product === null) {
+        console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a product that is somehow null. Removing the product.`)
+        factory.products.splice(productIndex, 1)
+      }
+
+      if (product && product.amount <= 0) {
+        hasErrors = true
+        console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a product with an amount of 0 or less. Setting to 1.`)
+
+        product.amount = 1
+      }
+
+      if (factory.products.length === 0) {
+        factory.products = [] // Ensure there's no lurking bad data
+      }
+
+      // Recalculate right now
+      calculateFactory(factory, factories, gameData)
+    })
+
+    console.log('FACTORY PRODUCTS', factory.products)
   })
 
   if (hasErrors) {
-    throw new Error('There were errors loading your factory data. Please check the browser console for more details. Firefox: Control + Shift + K, Chrome: Control + Shift + J. Look for "VALIDATION ERROR:".')
+    alert('There were errors loading your factory data. Please check the browser console for more details. Firefox: Control + Shift + K, Chrome: Control + Shift + J. Look for "VALIDATION ERROR:".\n\nThe planner has made corrections so you can continue planning.')
   }
 }

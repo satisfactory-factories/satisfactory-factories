@@ -329,7 +329,14 @@
       console.error('No ingredient ', part, ' found for product ', product)
       throw new Error('No ingredient found for product!')
     }
-    product.amount = getProductQtyByAmount(product, recipeIngredientPerMinGetter(part), ingredient.amount)
+    const amount = getProductQtyByAmount(product, recipeIngredientPerMinGetter(part), ingredient.amount)
+
+    if (amount >= 0) {
+      product.amount = amount
+    } else {
+      console.warn('product: setProductQtyByRequirement: amount is less than 0, force setting to 1')
+      product.amount = 1
+    }
     updateFactory(props.factory)
   }
 
