@@ -149,7 +149,10 @@ export interface FactoryTab {
 }
 
 export interface PlannerState {
-  currentTabIndex: number;
-  tabs: FactoryTab[];
+  user: string;
+  currentTabId: string;
   lastSaved: Date;
+  lastEdited: Date;
+  userOptions: string[];
+  tabs: FactoryTab[];
 }

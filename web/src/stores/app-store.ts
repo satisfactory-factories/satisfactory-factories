@@ -6,7 +6,15 @@ import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
-import { addTab, deleteTab, getCurrentTab, getTab, newState, newTab } from '@/utils/plannerStateManagement'
+import {
+  addTab,
+  deleteTab,
+  getCurrentTab,
+  getTab,
+  migrateFactoryTabsToState,
+  newState,
+  newTab,
+} from '@/utils/plannerStateManagement'
 
 export const useAppStore = defineStore('app', () => {
   const gameDataStore = useGameDataStore()
@@ -20,22 +28,15 @@ export const useAppStore = defineStore('app', () => {
   // If the new state doesn't exist and the old one does, migrate it.
   if (!plannerState.value && oldState) {
     console.log('appStore: Found old factory state, migrating.')
-    const oldActiveTab = oldState[0] // We're going to assume it's the first one.
-    plannerState.value = newState({
-      currentTabId: oldActiveTab.id,
-      tabs: oldState,
-    })
 
-    // Generate the tab display order
-    plannerState.value.tabs.forEach((tab, index) => {
-      tab.displayOrder = index
-    })
+    plannerState.value = migrateFactoryTabsToState(oldState)
 
     // Don't delete the factoryTab data just yet to ensure people have a revert option.
+    // This will be removed in a future update.
     // localStorage.removeItem('factoryTabs')
     localStorage.removeItem('currentFactoryTabIndex')
     localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
-    alert('Your planner data has just been migrated to a new format. Please report any issues to Discord.')
+    alert('Your planner data has just been migrated to the new format. You will need to re-log in if you were backing up your data with an account.\n\nPlease report any issues with missing data etc to Discord, where we can help you restore any lost data.')
   }
 
   // If the state is not set, create a new one now
@@ -43,8 +44,6 @@ export const useAppStore = defineStore('app', () => {
     console.log('appStore: plannerState not found, creating new state.')
     plannerState.value = newState({})
   }
-
-  console.log('appStore: plannerState', plannerState.value)
 
   const currentTab = ref(getCurrentTab(plannerState.value))
   const currentTabId = ref(currentTab.value.id)

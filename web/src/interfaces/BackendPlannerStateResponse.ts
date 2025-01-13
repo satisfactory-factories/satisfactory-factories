@@ -6,4 +6,5 @@ export interface BackendPlannerStateResponse {
   tabs: FactoryTab[];
   userOptions: string[];
   lastSaved: Date;
+  lastEdited: Date;
 }

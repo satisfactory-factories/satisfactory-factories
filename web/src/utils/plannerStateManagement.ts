@@ -22,6 +22,7 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
     user: options.user ?? null,
     currentTabId: options.currentTabId ?? newTabData.id,
     lastSaved: null,
+    lastEdited: new Date(),
     userOptions: options.userOptions ?? [],
     tabs: options.tabs ?? [newTabData],
   }
@@ -68,4 +69,19 @@ export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
 
   // Reset the current tab ID to be the last tab ID
   state.currentTabId = state.tabs[state.tabs.length - 1].id
+}
+
+export const migrateFactoryTabsToState = (oldState: FactoryTab[]): PlannerState => {
+  const oldActiveTab = oldState[0] // We're going to assume it's the first one.
+  const state = newState({
+    currentTabId: oldActiveTab.id,
+    tabs: oldState,
+  })
+
+  // Generate the tab display order
+  state.tabs.forEach((tab, index) => {
+    tab.displayOrder = index
+  })
+
+  return state
 }
