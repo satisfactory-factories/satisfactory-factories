@@ -54,23 +54,17 @@ export const validateFactories = (factories: Factory[], gameData: DataInterface)
         hasErrors = true
         console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a product with an amount of 0 or less. Setting to 1.`)
 
-        product.amount = 1
-        needsRecalc = true
-      }
-
-      if (factory.products.length === 0) {
-        factory.products = [] // Ensure there's no lurking bad data
+        product.amount = 0.1
         needsRecalc = true
       }
 
       if (needsRecalc) {
-        console.warn(`validation: Recalculating factory "${factory.name}" (${factory.id}) due to product validation errors.`)
+        console.warn(`validation: Recalculating Factory "${factory.name}" (${factory.id}) due to product validation errors.`)
         // Recalculate right now
         calculateFactory(factory, factories, gameData)
+        hasErrors = true
       }
     })
-
-    console.log('FACTORY PRODUCTS', factory.products)
   })
 
   if (hasErrors) {
