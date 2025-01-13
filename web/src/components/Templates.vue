@@ -166,7 +166,7 @@
       isDebug: true,
     },
     {
-      name: '#314: Fissible Uranium low requirements bug',
+      name: '#314: Byproduct / Requirements <=0 breakage',
       description: 'Setting the requirement ingredients of the product to 0 used to break the UI.',
       data: JSON.stringify(create341Scenario().getFactories()),
       show: isDebugMode,
