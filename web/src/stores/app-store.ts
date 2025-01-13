@@ -8,6 +8,9 @@ import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
 
 export const useAppStore = defineStore('app', () => {
+  const gameDataStore = useGameDataStore()
+  const gameData = gameDataStore.getGameData()
+
   const inited = ref(false)
   let loadedCount = 0
   const factoryTabs = ref<FactoryTab[]>(JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[])
@@ -73,7 +76,6 @@ export const useAppStore = defineStore('app', () => {
   const showSatisfactionBreakdowns = ref<boolean>(
     (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
   )
-  const gameDataStore = useGameDataStore()
 
   const shownFactories = (factories: Factory[]) => {
     return factories.filter(factory => !factory.hidden).length
@@ -211,7 +213,7 @@ export const useAppStore = defineStore('app', () => {
     let needsCalculation = false
 
     try {
-      validateFactories(newFactories) // Ensure the data is clean
+      validateFactories(newFactories, gameData) // Ensure the data is clean
     } catch (err) {
       alert('Error validating factories: ' + err)
     }

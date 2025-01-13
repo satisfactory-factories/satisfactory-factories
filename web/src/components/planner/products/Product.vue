@@ -215,6 +215,8 @@
     shouldShowFix,
     shouldShowInternal,
     shouldShowNotInDemand,
+    updateProductAmountViaByproduct,
+    updateProductAmountViaRequirement,
   } from '@/utils/factory-management/products'
   import { getPartDisplayName } from '@/utils/helpers'
   import { formatPower } from '@/utils/numberFormatter'
@@ -222,6 +224,8 @@
   import { useGameDataStore } from '@/stores/game-data-store'
   import { useDisplay } from 'vuetify'
   import { inject } from 'vue'
+
+  const gameData = useGameDataStore().getGameData()
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const updateOrder = inject('updateOrder') as (list: any[], direction: string, item: any) => void
@@ -273,63 +277,13 @@
     updateOrder(props.factory.products, direction, product)
   }
 
-  type Recipe = NonNullable<ReturnType<typeof getRecipeById>>
-
-  const recipeIngredientPerMinGetter = (part: string) => {
-    return (recipe: Recipe) => {
-      const ingredient = recipe.ingredients.find(i => i.part === part)
-      if (!ingredient) {
-        console.error('No ingredient found for part', part, ' in recipe ', recipe)
-        throw new Error('No ingredient found for part!')
-      }
-      return ingredient.perMin
-    }
-  }
-  const recipeByproductPerMinGetter = (part: string) => {
-    return (recipe: Recipe) => {
-      // Seems byproduct is used in power recipes
-      const byproduct = [...recipe.products, ...(recipe.byproduct ?? [])].find(bp => bp.part === part)
-      if (!byproduct) {
-        console.error('No byproduct found for part', part, ' in recipe ', recipe)
-        throw new Error('No byproduct found for part!')
-      }
-      return byproduct.perMin
-    }
-  }
-
-  const getProductQtyByAmount = (product: FactoryItem, getAmountFromRecipe: (recipe: Recipe) => number, newAmount: number | undefined) => {
-    if (!newAmount || newAmount < 0) {
-      return 0
-    }
-    const recipe = getRecipeById(product.recipe)
-    if (!recipe) {
-      console.error('No recipe found for product!', product)
-      throw new Error('No recipe found for product!')
-    }
-    const recipeAmount = getAmountFromRecipe(recipe)
-    if (!recipeAmount) {
-      return 0
-    }
-    return recipe.products[0].perMin * newAmount / recipeAmount
-  }
-
   const setProductQtyByByproduct = (product: FactoryItem, part: string) => {
-    const byProduct = product.byProducts?.find(bp => bp.id === part)
-    if (!byProduct) {
-      console.error('No byproduct ', part, ' found for product ', product)
-      throw new Error('No byproduct found for product!')
-    }
-    product.amount = getProductQtyByAmount(product, recipeByproductPerMinGetter(part), byProduct.amount)
+    updateProductAmountViaByproduct(product, part, gameData)
     updateFactory(props.factory)
   }
 
   const setProductQtyByRequirement = (product: FactoryItem, part: string) => {
-    const ingredient = product.requirements[part]
-    if (!ingredient) {
-      console.error('No ingredient ', part, ' found for product ', product)
-      throw new Error('No ingredient found for product!')
-    }
-    product.amount = getProductQtyByAmount(product, recipeIngredientPerMinGetter(part), ingredient.amount)
+    updateProductAmountViaRequirement(product, part, gameData)
     updateFactory(props.factory)
   }
 
