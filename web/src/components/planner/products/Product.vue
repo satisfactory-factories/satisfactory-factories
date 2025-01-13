@@ -223,13 +223,13 @@
   import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
   import { useGameDataStore } from '@/stores/game-data-store'
   import { useDisplay } from 'vuetify'
+  import { getBuildingDisplayName } from '@/utils/factory-management/common'
   import { inject } from 'vue'
 
   const gameData = useGameDataStore().getGameData()
 
   const updateFactory = inject('updateFactory') as (factory: Factory) => void
   const updateOrder = inject('updateOrder') as (list: any[], direction: string, item: any) => void
-  const getBuildingDisplayName = inject('getBuildingDisplayName') as (part: string) => string
 
   const { smAndDown } = useDisplay()
   const {
