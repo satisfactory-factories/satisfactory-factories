@@ -59,6 +59,7 @@
   import { create251Scenario } from '@/utils/factory-setups/251-multiple-imports'
   import { create220Scenario } from '@/utils/factory-setups/220-byproduct-only-part'
   import { create338Scenario } from '@/utils/factory-setups/338-satisfaction-chips'
+  import { create341Scenario } from '@/utils/factory-setups/341-fissible-uranium-issues'
 
   const { prepareLoader, isDebugMode } = useAppStore()
 
@@ -161,6 +162,13 @@
       name: '#338: Satisfaction Chips',
       description: 'Contains an oil factory configured with a variety of parts in different states.',
       data: JSON.stringify(create338Scenario().getFactories()),
+      show: isDebugMode,
+      isDebug: true,
+    },
+    {
+      name: '#314: Byproduct / Requirements <=0 breakage',
+      description: 'Setting the requirement ingredients of the product to 0 used to break the UI.',
+      data: JSON.stringify(create341Scenario().getFactories()),
       show: isDebugMode,
       isDebug: true,
     },
