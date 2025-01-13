@@ -43,9 +43,11 @@ export const validateFactories = (factories: Factory[], gameData: DataInterface)
     // Check for invalid products and remove them from factories
     // For instance if somehow a product has an amount of 0, which should not be possible, remove the product and recalculate.
     factory.products.forEach((product, productIndex) => {
+      let needsRecalc = false
       if (product === null) {
         console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a product that is somehow null. Removing the product.`)
         factory.products.splice(productIndex, 1)
+        needsRecalc = true
       }
 
       if (product && product.amount <= 0) {
@@ -53,14 +55,19 @@ export const validateFactories = (factories: Factory[], gameData: DataInterface)
         console.error(`VALIDATION ERROR: Factory "${factory.name}" (${factory.id}) has a product with an amount of 0 or less. Setting to 1.`)
 
         product.amount = 1
+        needsRecalc = true
       }
 
       if (factory.products.length === 0) {
         factory.products = [] // Ensure there's no lurking bad data
+        needsRecalc = true
       }
 
-      // Recalculate right now
-      calculateFactory(factory, factories, gameData)
+      if (needsRecalc) {
+        console.warn(`validation: Recalculating factory "${factory.name}" (${factory.id}) due to product validation errors.`)
+        // Recalculate right now
+        calculateFactory(factory, factories, gameData)
+      }
     })
 
     console.log('FACTORY PRODUCTS', factory.products)
