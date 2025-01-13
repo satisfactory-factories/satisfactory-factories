@@ -1,12 +1,11 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { Factory, FactoryPower, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryInterface'
+import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
-import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 
 export const useAppStore = defineStore('app', () => {
   const inited = ref(false)
@@ -384,18 +383,12 @@ export const useAppStore = defineStore('app', () => {
     return inited.value ? factories.value : initFactories(currentFactoryTab.value.factories)
   }
 
-  const getPlannerState = () => {
-    // Return all factory tabs
+  const getTabs = () => {
     return factoryTabs.value
   }
 
-  const setPlannerState = (tabs: PlannerState[]) => {
-    console.log('appStore: setting tabs', tabs)
+  const setTabs = (tabs: FactoryTab[]) => {
     factoryTabs.value = tabs
-  }
-
-  const migrateToPlannerTabs = (data: BackendFactoryDataResponse): void => {
-
   }
 
   return {
@@ -418,8 +411,8 @@ export const useAppStore = defineStore('app', () => {
     clearFactories,
     addTab,
     removeCurrentTab,
-    getTabs: getPlannerState,
-    setTabs: setPlannerState,
+    getTabs,
+    setTabs,
     getSatisfactionBreakdowns,
     changeSatisfactoryBreakdowns,
     prepareLoader,

@@ -118,30 +118,9 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     if (!data.tabs) {
       // Migration is required
       console.log('migrateToTabs: Migration required.')
-      // @ts-ignore
-      let factories = data.data as Factory[] | undefined
 
-      if (!factories) {
-        console.error('migrateToTabs: No factories found to migrate.')
-        factories = []
-      }
-
-      // Migrate factories to tabs
-
-      const defaultTab: FactoryTab = {
-        id: 'default',
-        name: 'Default',
-        factories,
-      }
-
-      const newData = {
-        user: data.user,
-        tabs: [defaultTab],
-        lastSaved: data.lastSaved,
-      }
-
-      // Set the new data to the planner
-      this.appStore.setTabs(newData)
+      // Delete the data on the remote server
+      syncActions.deleteServerData()
     }
   }
 

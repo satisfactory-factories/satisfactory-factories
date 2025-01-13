@@ -1,6 +1,6 @@
 import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
 import { config } from '@/config/config'
-import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
+import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 export class SyncActions {
   private readonly authStore: any
@@ -68,21 +68,23 @@ export class SyncActions {
       return
     }
 
-    let token
     try {
-      token = await this.authStore.getToken()
-      if (!token) {
-        console.error('syncData: No token found!')
-        return
-      }
+      const data = this.appStore.getTabs()
+      await this.performSave(data)
     } catch (error) {
       if (error instanceof Error) {
         console.error('syncData: Token error:', error.message)
-        return
       }
     }
+  }
 
-    const data = this.appStore.getTabs()
+  async performSave (data: FactoryTab[]): Promise<boolean | void> {
+    const token = await this.authStore.getToken()
+
+    if (!token) {
+      console.error('syncData: No token found!')
+    }
+
     if (!data || !Object.keys(data).length) {
       console.warn('syncData: No data to save!')
       return
