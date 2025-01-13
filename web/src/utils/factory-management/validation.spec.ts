@@ -3,6 +3,7 @@ import { Factory } from '@/interfaces/planner/FactoryInterface'
 import { newFactory } from '@/utils/factory-management/factory'
 import { validateFactories } from '@/utils/factory-management/validation'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
+import { gameData } from '@/utils/gameData'
 
 describe('validation', () => {
   it('should successfully detect and delete an invalid factory input', () => {
@@ -15,7 +16,7 @@ describe('validation', () => {
     })
 
     expect(() => {
-      validateFactories([mockFactory])
+      validateFactories([mockFactory], gameData)
     }).toThrow()
     expect(mockFactory.inputs.length).toBe(0)
   })
@@ -30,7 +31,7 @@ describe('validation', () => {
     }]
 
     expect(() => {
-      validateFactories([mockFactory])
+      validateFactories([mockFactory], gameData)
     }).toThrow()
     expect(mockFactory.dependencies.requests).toEqual({})
   })
@@ -52,7 +53,7 @@ describe('validation', () => {
     })
 
     expect(() => {
-      validateFactories([mockFactory, validFactory])
+      validateFactories([mockFactory, validFactory], gameData)
     }).toThrow()
     expect(mockFactory.inputs.length).toBe(1)
     expect(mockFactory.inputs[0].factoryId).toBe(validFactory.id)
@@ -76,7 +77,7 @@ describe('validation', () => {
     })
 
     expect(() => {
-      validateFactories([mockFactory, validFactory])
+      validateFactories([mockFactory, validFactory], gameData)
     }).toThrow()
 
     expect(mockFactory.dependencies.requests[validFactory.id]).toBeDefined()

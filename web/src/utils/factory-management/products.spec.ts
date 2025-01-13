@@ -1,16 +1,29 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addProductToFactory,
-  fixProduct, shouldShowFix,
+  fixProduct, getProduct,
+  getProductAmountByPart, recipeByproductPerMin, recipeIngredientPerMin,
+  shouldShowFix,
   shouldShowInternal,
   shouldShowNotInDemand,
+  updateProductAmountByRequirement,
+  updateProductAmountViaByproduct,
 } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
 import { addInputToFactory } from '@/utils/factory-management/inputs'
 import { calculatePartMetrics } from '@/utils/factory-management/parts'
 import { create321Scenario } from '@/utils/factory-setups/321-product-byproduct-trimming'
+import { create341Scenario } from '@/utils/factory-setups/341-fissible-uranium-issues'
+import eventBus from '@/utils/eventBus'
+import { getRecipe } from '@/utils/factory-management/common'
+
+vi.mock('@/utils/eventBus', () => ({
+  default: {
+    emit: vi.fn(),
+  },
+}))
 
 const mockIngotIron = {
   id: 'IronIngot',
@@ -500,6 +513,210 @@ describe('products', () => {
 
         expect(mockFactory.products[1].amount).toBe(40) // HOR should be satisfied to 40
       })
+    })
+  })
+
+  describe('getProduct', () => {
+    it('should return a product', () => {
+      const result = getProduct(mockFactory, 'IronIngot')
+      expect(result).toBeDefined()
+      expect(result?.id).toBe('IronIngot')
+    })
+    it('should return a byproduct even when not told to', () => {
+      addProductToFactory(mockFactory, {
+        id: 'NonFissibleUranium',
+        amount: 1,
+        recipe: 'NonFissileUranium',
+      })
+      calculateFactories([mockFactory], gameData)
+      const result = getProduct(mockFactory, 'Water')
+      expect(result).toBeDefined()
+      expect(result?.id).toBe('Water')
+    })
+    it('should return a byproduct when explicitly told to', () => {
+      addProductToFactory(mockFactory, {
+        id: 'NonFissibleUranium',
+        amount: 1,
+        recipe: 'NonFissileUranium',
+      })
+      calculateFactories([mockFactory], gameData)
+      const result = getProduct(mockFactory, 'Water', false, true)
+      expect(result).toBeDefined()
+      expect(result?.id).toBe('Water')
+    })
+    it('should return undefined when the part cannot be found amongst factory products or byproducts', () => {
+      expect(getProduct(mockFactory, 'FooBar')).toBeUndefined()
+    })
+  })
+
+  describe('Update product via byproduct / requirement amounts', () => {
+    let factory: Factory
+    let product: FactoryItem
+    const eventSpy = vi.spyOn(eventBus, 'emit')
+    beforeEach(() => {
+      const factories = create341Scenario().getFactories()
+      factory = factories[0]
+      product = factory.products[0] // Non-Fissile Uranium, note has byproduct of water
+
+      calculateFactories(factories, gameData)
+    })
+
+    describe('updateProductAmountViaByproduct', () => {
+      const toastEvent = {
+        message: 'You cannot set a byproduct to be 0. Setting product amount to 0.1 to prevent calculation errors. <br>If you need to enter 0.x of numbers, use your cursor to do so.',
+        type: 'warning',
+      }
+      it('should throw if byproduct is missing', () => {
+        expect(() => {
+          updateProductAmountViaByproduct(product, 'NotAByproduct', gameData)
+        }).toThrow(`products: updateProductAmountViaByproduct: No byproduct part NotAByproduct found for product ${product.id}!`)
+      })
+      it('should correctly update the product amount via byproduct', () => {
+        if (!product.byProducts) throw new Error('Product has no byproducts')
+        product.byProducts[0].amount = 48
+        updateProductAmountViaByproduct(product, 'Water', gameData)
+        calculateFactories([factory], gameData)
+
+        expect(product.amount).toBe(160)
+        expect(product.byProducts[0].amount).toBe(48)
+        expect(product.requirements.NuclearWaste.amount).toBe(120)
+      })
+
+      it('should prevent negative values', () => {
+        if (!product.byProducts) throw new Error('Product has no byproducts')
+        product.byProducts[0].amount = -1
+        updateProductAmountViaByproduct(product, 'Water', gameData)
+        calculateFactories([factory], gameData)
+
+        // Ensure the event bus fired
+        expect(eventSpy).toHaveBeenCalledWith('toast', toastEvent)
+
+        // Should correct the product amount to 0.1
+        expect(product.amount).toBe(0.1)
+        expect(product.byProducts[0].amount).toBe(0.03)
+        expect(product.requirements.NuclearWaste.amount).toBe(0.075)
+      })
+
+      it('should prevent zero values', () => {
+        if (!product.byProducts) throw new Error('Product has no byproducts')
+        product.byProducts[0].amount = 0
+        updateProductAmountViaByproduct(product, 'Water', gameData)
+        calculateFactories([factory], gameData)
+
+        // Ensure the event bus fired
+        expect(eventSpy).toHaveBeenCalledWith('toast', toastEvent)
+
+        // Should correct the product amount to 0.1
+        expect(product.amount).toBe(0.1)
+        expect(product.byProducts[0].amount).toBe(0.03)
+        expect(product.requirements.NuclearWaste.amount).toBe(0.075)
+      })
+    })
+    describe('updateProductAmountByRequirement', () => {
+      const toastEvent = {
+        message: 'You cannot set an ingredient to be 0. Setting product amount to 0.1 to prevent calculation errors. <br>If you need to enter 0.x of numbers, use your cursor to do so.',
+        type: 'warning',
+      }
+      it('should throw if ingredient is missing', () => {
+        expect(() => {
+          updateProductAmountByRequirement(product, 'NotAnIngredient', gameData)
+        }).toThrow(`products: updateProductAmountByRequirement: No ingredient part NotAnIngredient found for product ${product.id}!`)
+      })
+      it('should correctly update the product amount via requirement', () => {
+        product.requirements.Silica.amount = 100
+        updateProductAmountByRequirement(product, 'Silica', gameData)
+        calculateFactories([factory], gameData)
+
+        expect(product.amount).toBe(200)
+        expect(product.requirements.Silica.amount).toBe(100)
+        expect(product.requirements.NitricAcid.amount).toBe(60)
+      })
+      it('should prevent negative values', () => {
+        product.requirements.Silica.amount = -123
+        updateProductAmountByRequirement(product, 'Silica', gameData)
+        calculateFactories([factory], gameData)
+
+        // Ensure the event bus fired
+        expect(eventSpy).toHaveBeenCalledWith('toast', toastEvent)
+
+        // Should correct the product amount to 0.1
+        expect(product.amount).toBe(0.1)
+        expect(product.requirements.NuclearWaste.amount).toBe(0.075)
+        expect(product.requirements.Silica.amount).toBe(0.05)
+      })
+
+      it('should prevent zero values', () => {
+      // Reset the mock to ensure a clean slate
+        if (!product.byProducts) throw new Error('Product has no byproducts')
+        product.requirements.Silica.amount = 0
+        updateProductAmountByRequirement(product, 'Silica', gameData)
+        calculateFactories([factory], gameData)
+
+        // Ensure the event bus fired
+        expect(eventSpy).toHaveBeenCalledWith('toast', toastEvent)
+
+        // Should correct the product amount to 0.1
+        expect(product.amount).toBe(0.1)
+        expect(product.requirements.NuclearWaste.amount).toBe(0.075)
+        expect(product.requirements.Silica.amount).toBe(0.05)
+      })
+    })
+  })
+
+  describe('getProductQtyByAmount', () => {
+    let mockProduct: FactoryItem
+    let mockGameData = JSON.parse(JSON.stringify(gameData))
+    beforeEach(() => {
+      mockProduct = { id: 'Cement', amount: 100, recipe: 'Concrete' } as FactoryItem
+      mockGameData = JSON.parse(JSON.stringify(gameData))
+    })
+    it('should throw if no recipe is found', () => {
+      const mockProduct = { id: 'IronIngot', amount: 100, recipe: 'ThisDoesNotExist' } as FactoryItem
+      expect(() => {
+        getProductAmountByPart(mockProduct, 'ThisDoesNotExist', 'requirement', 1234, gameData)
+      }).toThrow(`products: getProductQtyByAmount: No recipe found for product ${mockProduct.id}`)
+    })
+
+    it('should return the correct product quantity for a requirement', () => {
+      expect(getProductAmountByPart(mockProduct, 'Stone', 'requirement', 600, gameData)).toBe(200)
+    })
+
+    it('should return the correct product quantity for a byproduct', () => {
+      mockProduct = {
+        id: 'NonFissibleUranium',
+        amount: 1,
+        recipe: 'NonFissileUranium',
+      } as FactoryItem
+      expect(getProductAmountByPart(mockProduct, 'Water', 'byproduct', 12, gameData)).toBe(40)
+    })
+
+    it('should return 0.1 if no recipe amount could be found or is negative', () => {
+      // Change the recipe perMin to be 0
+      const concreteRecipe = getRecipe('Concrete', mockGameData)
+      if (!concreteRecipe) throw new Error('Recipe not found')
+      concreteRecipe.ingredients[0].perMin = 0
+
+      expect(getProductAmountByPart(mockProduct, 'Stone', 'requirement', 1234, mockGameData)).toBe(0.1)
+    })
+  })
+
+  describe('recipeByProductPerMin', () => {
+    it('should throw when a byproduct is not present in a recipe', () => {
+      const recipe = getRecipe('Concrete', gameData)
+      if (!recipe) throw new Error('Recipe not found')
+      expect(() =>
+        recipeByproductPerMin('FooPart', recipe)
+      ).toThrow(`products: recipeByproductPerMin: No byproduct found for part FooPart in recipe ${recipe.id}`)
+    })
+  })
+
+  describe('recipeIngredientPerMin', () => {
+    it('should throw when a ingredient is not present in a recipe', () => {
+      const recipe = getRecipe('Concrete', gameData)
+      if (!recipe) throw new Error('Recipe not found')
+      expect(() =>
+        recipeIngredientPerMin('FooPart', recipe)
+      ).toThrow(`products: recipeIngredientPerMin: No ingredient found for part FooPart in recipe ${recipe.id}!`)
     })
   })
 })
