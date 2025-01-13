@@ -7,13 +7,6 @@ interface PlannerStateOptions {
   tabs?: FactoryTab[],
 }
 
-interface FactoryTabOptions {
-  tabId?: string
-  name?: string
-  factories?: Factory[]
-  displayOrder?: number
-}
-
 export const newState = (options: PlannerStateOptions): PlannerState => {
   const newTabData = newTab({
     displayOrder: 0,
@@ -26,6 +19,13 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
     userOptions: options.userOptions ?? [],
     tabs: options.tabs ?? [newTabData],
   }
+}
+
+interface FactoryTabOptions {
+  tabId?: string
+  name?: string
+  factories?: Factory[]
+  displayOrder?: number
 }
 
 export const newTab = (options?: FactoryTabOptions): FactoryTab => {
@@ -64,7 +64,7 @@ export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
 
   // Regenerate display orders
   state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index
+    tab.displayOrder = index + 1
   })
 
   // Reset the current tab ID to be the last tab ID
@@ -80,7 +80,7 @@ export const migrateFactoryTabsToState = (oldState: FactoryTab[]): PlannerState 
 
   // Generate the tab display order
   state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index
+    tab.displayOrder = index + 1
   })
 
   return state
