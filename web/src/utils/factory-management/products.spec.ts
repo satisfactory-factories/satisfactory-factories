@@ -3,8 +3,11 @@ import { Factory, FactoryItem } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactories, newFactory } from '@/utils/factory-management/factory'
 import {
   addProductToFactory,
-  fixProduct, getProduct,
-  getProductAmountByPart, recipeByproductPerMin, recipeIngredientPerMin,
+  fixProduct,
+  getProduct,
+  getProductAmountByPart,
+  recipeByproductPerMin,
+  recipeIngredientPerMin,
   shouldShowFix,
   shouldShowInternal,
   shouldShowNotInDemand,
