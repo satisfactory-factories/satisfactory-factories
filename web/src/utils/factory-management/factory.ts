@@ -125,17 +125,26 @@ export const calculateFactory = (
 }
 
 export const calculateFactories = (factories: Factory[], gameData: DataInterface): void => {
+  console.log('factory: calculateFactories', factories)
   // We need to do this twice to ensure all the part dependency metrics are calculated, before we then check for invalid dependencies
   // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
   // This generates the Part metrics for the factories, which is then used by calculateDependencies to generate the dependency metrics.
   // While we are running the calculations twice, they are very quick, <20ms even for the largest plans.
+  console.log('factory: calculateFactories calculateFactory #1')
   factories.forEach(factory => calculateFactory(factory, factories, gameData, true))
+  console.log('factory: calculateFactories calculateFactory #1 end')
 
   // Now calculate the dependencies for all factories, removing any invalid inputs.
+  console.log('factory: calculateFactories calculateDependencies start')
   calculateDependencies(factories, gameData)
+  console.log('factory: calculateFactories calculateDependencies end')
 
   // Re-run the calculations after the dependencies have been calculated as some inputs may have been deleted
+  console.log('factory: calculateFactories calculateFactory #2')
   factories.forEach(factory => calculateFactory(factory, factories, gameData))
+  console.log('factory: calculateFactories calculateFactory #2')
+
+  console.log('factory: calculateFactories done')
 }
 
 export const countActiveTasks = (factory: Factory) => {
