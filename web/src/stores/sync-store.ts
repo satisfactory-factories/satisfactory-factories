@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth-store'
 import { useAppStore } from '@/stores/app-store'
 import { SyncActions } from '@/stores/sync/sync-actions'
-import { Factory, FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 // Overrides used for dependency injecting mocks into the store when under test.
 interface SyncStoreOverrides {
@@ -112,16 +111,6 @@ export const useSyncStore = (overrides?: SyncStoreOverrides) => {
     }
 
     await handleDataLoad()
-  }
-
-  const migrateToTabSync = () => {
-    if (!data.tabs) {
-      // Migration is required
-      console.log('migrateToTabs: Migration required.')
-
-      // Delete the data on the remote server
-      syncActions.deleteServerData()
-    }
   }
 
   eventBus.on('factoryUpdated', detectedChange)
