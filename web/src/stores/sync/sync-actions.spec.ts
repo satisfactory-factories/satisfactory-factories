@@ -1,8 +1,7 @@
 import { SyncActions } from '@/stores/sync/sync-actions'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { newFactory } from '@/utils/factory-management/factory'
-import { PlannerState } from '@/interfaces/planner/FactoryInterface'
 import { newTab } from '@/utils/plannerStateManagement'
+import { BackendPlannerStateResponse } from '@/interfaces/BackendPlannerStateResponse'
 
 const apiUrl = 'http://mock.com'
 const mockData = { data: 'mock-data' }
@@ -31,13 +30,14 @@ const mockAppStore = {
   isLoaded: true,
 }
 
-const mockTab = newTab({ tabName: 'Foo1' })
-const mockServerData: PlannerState = {
+const mockTab = newTab({ name: 'Foo1' })
+const mockServerData: BackendPlannerStateResponse = {
   user: 'foo',
   currentTabId: mockTab.id,
   tabs: [mockTab],
   userOptions: [],
   lastSaved: new Date(),
+  lastEdited: new Date(),
 }
 
 describe('SyncActions', () => {
@@ -139,7 +139,7 @@ describe('SyncActions', () => {
       expect(mockAppStore.setFactories).not.toHaveBeenCalled()
     })
     it('should fetch and do nothing when no data detected', async () => {
-      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(false)
+      vi.spyOn(syncActions, 'getServerData').mockRejectedValue(new Error('No data'))
 
       expect(await syncActions.loadServerData()).toBe(undefined)
       expect(mockAppStore.setFactories).not.toHaveBeenCalled()
@@ -163,18 +163,21 @@ describe('SyncActions', () => {
     it('should correctly force load the factory tabs into appStore', async () => {
       const mockData = {
         user: 'foo',
+        currentTabId: 'foo',
         tabs: [
-          newFactory('Foo1'),
-          newFactory('Foo2'),
+          newTab({ name: 'Foo1' }),
+          newTab({ name: 'Foo2' }),
         ],
         lastSaved: new Date(),
+        lastEdited: new Date(),
+        userOptions: [],
       }
 
       vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
       vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
       expect(await syncActions.loadServerData(true)).toBe(true)
-      expect(mockAppStore.setTabs).toHaveBeenCalledWith(mockData.data)
+      expect(mockAppStore.setTabs).toHaveBeenCalledWith(mockData.tabs)
     })
   })
 

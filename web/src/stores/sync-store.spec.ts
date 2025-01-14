@@ -189,11 +189,4 @@ describe('useSyncStore', () => {
       expect(syncStore.stopSyncing.value).toBe(true)
     })
   })
-
-  describe('migrateToTabSync', () => {
-    it('should handle migration to tab sync', () => {
-      const data = { data: 'mock-data' }
-      syncStore.migrateToTabSync(data)
-    }
-  })
 })
