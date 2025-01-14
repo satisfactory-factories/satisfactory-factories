@@ -56,7 +56,10 @@
       </div>
     </div>
   </div>
-  {{ selectedTab }}
+  <pre>
+    SELECTED TAB: {{ selectedTab }}
+    CURRENT TAB: {{ appStore.currentTabId }}
+  </pre>
 </template>
 
 <script setup lang="ts">

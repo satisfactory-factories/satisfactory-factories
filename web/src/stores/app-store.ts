@@ -49,7 +49,7 @@ export const useAppStore = defineStore('app', () => {
   // The displayedTab is changed as and when the loader deems it ready to be changed.
   // Otherwise, if we are dependent on the currentTabId, we'll be swapping the data before the loader is ready due to reactivity.
   const currentTabId = ref(plannerState.value.currentTabId)
-  const currentTab = ref(getCurrentTab(plannerState.value))
+  const currentTab = ref(getTab(plannerState.value, currentTabId.value))
   const pendingTabId = ref('')
 
   const displayedFactories = computed({
@@ -201,9 +201,6 @@ export const useAppStore = defineStore('app', () => {
     // Reset the saved factories
     localStorage.removeItem('preLoadFactories')
 
-    // Resync the current tabId
-    currentTabId.value = pendingTabId.value
-
     console.log('appStore: ============= LOADING COMPLETED =============', plannerState.value)
     console.log('current', currentTab.value)
   }
@@ -316,6 +313,18 @@ export const useAppStore = defineStore('app', () => {
     // Set inited to false as the new data may be invalid.
     inited.value = false
 
+    // If there's a pending tabId, swap the tabs round now. Otherwise, we delete the data on the tab we're swapping from.
+    if (pendingTabId.value) {
+      console.log('appStore: setFactories: Setting new tabId:', pendingTabId.value)
+      currentTabId.value = pendingTabId.value
+      plannerState.value.currentTabId = pendingTabId.value
+      currentTab.value = getCurrentTab(plannerState.value)
+      // This therefore should change the current tab as it's referenced
+      pendingTabId.value = ''
+    } else {
+      console.log('appStore: setFactories: No pending tabId, sticking with:', currentTabId.value)
+    }
+
     // Init factories ensuring the data is valid
     initFactories(newFactories)
 
@@ -327,18 +336,7 @@ export const useAppStore = defineStore('app', () => {
       factory.previousInputs = factory.inputs
     })
 
-    // If there's a pending tabId, swap the tabs round now. Otherwise, we delete the data on the tab we're swapping from.
-    if (pendingTabId.value) {
-      console.log('appStore: setFactories: Setting new tabId:', pendingTabId.value)
-      currentTabId.value = pendingTabId.value
-      currentTab.value = getTab(plannerState.value, pendingTabId.value)
-      pendingTabId.value = ''
-    } else {
-      console.log('appStore: setFactories: No pending tabId, sticking with:', currentTabId.value)
-    }
-
-    // Will also call the watcher, which sets the current tab data.
-    displayedFactories.value = newFactories
+    currentTab.value.factories = newFactories
 
     console.log('appStore: setFactories: Factories set.', displayedFactories.value)
   }
@@ -432,7 +430,9 @@ export const useAppStore = defineStore('app', () => {
   const changeCurrentTab = (tabId: string) => {
     console.log('appStore: === CHANGING TAB ===:', tabId)
     pendingTabId.value = tabId
-    prepareLoader(getTab(plannerState.value, tabId).factories)
+
+    const factories = getTab(plannerState.value, tabId).factories
+    prepareLoader(factories)
   }
 
   return {
