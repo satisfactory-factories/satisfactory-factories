@@ -66,10 +66,12 @@
 
         // This is for legacy reasons, as previously created share links may contain an array of factories instead of a factory tab
         if (Array.isArray(data.data)) {
+          const currentTabs = useAppStore().getTabs()
           return {
             id: crypto.randomUUID(),
             name: 'Shared Data',
             factories: data.data,
+            displayOrder: currentTabs.length + 1,
           }
         }
 
