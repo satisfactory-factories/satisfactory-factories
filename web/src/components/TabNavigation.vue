@@ -62,6 +62,7 @@
   import { useAppStore } from '@/stores/app-store'
   import { confirmDialog } from '@/utils/helpers'
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
+  import eventBus from '@/utils/eventBus'
 
   const appStore = useAppStore()
 
@@ -88,6 +89,10 @@
   watch(() => selectedTab.value, () => {
     console.log('TabNavigation: selectedTab: Changing selected tab:', selectedTab.value)
     appStore.changeCurrentTab(selectedTab.value)
+  })
+
+  eventBus.on('switchTab', (tabId: string) => {
+    selectedTab.value = tabId
   })
 
   const confirmDelete = () => {

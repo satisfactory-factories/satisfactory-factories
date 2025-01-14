@@ -13,6 +13,7 @@ type Events = {
   readyForData: undefined;
   plannerHideContent: undefined
   plannerShowContent: undefined
+  switchTab: string;
 };
 
 const eventBus = mitt<Events>()

@@ -368,6 +368,9 @@ export const useAppStore = defineStore('app', () => {
     const newTabData = newTab({ name, factories })
     addTab(plannerState.value, newTabData)
     currentTabId.value = newTabData.id
+
+    // Tell Tab Navigation of the new tab and to switch to it
+    eventBus.emit('switchTab', newTabData.id)
   }
 
   const removeCurrentTab = async () => {
@@ -377,9 +380,9 @@ export const useAppStore = defineStore('app', () => {
     // Get the new tab index by looking at the last tab in the list
     currentTabId.value = plannerState.value.currentTabId
 
-    // We now need to force a load of the factories
-    console.log('appStore: removeCurrentTab: Tab removed, preparing loader.')
-    prepareLoader(getCurrentTab(plannerState.value).factories)
+    // Swap to the last tab remaining
+    console.log('appStore: removeCurrentTab: Tab removed, informing Tab Navigator so we can can commence switching and reload last tab')
+    eventBus.emit('switchTab', getCurrentTab(plannerState.value).id)
   }
   // ==== END TAB MANAGEMENT
 
