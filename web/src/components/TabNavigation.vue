@@ -21,7 +21,7 @@
               @keyup.enter="onClickEditTabName"
             >
             <span v-else>
-              {{ tab.name }} {{ tab.id }}
+              {{ tab.name }}
             </span>
             <v-btn
               v-if="isCurrentTab(tab)"
@@ -56,10 +56,6 @@
       </div>
     </div>
   </div>
-  <pre>
-    SELECTED TAB: {{ selectedTab }}
-    CURRENT TAB: {{ appStore.currentTabId }}
-  </pre>
 </template>
 
 <script setup lang="ts">

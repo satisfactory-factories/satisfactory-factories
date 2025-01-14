@@ -310,9 +310,6 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    // Set inited to false as the new data may be invalid.
-    inited.value = false
-
     // If there's a pending tabId, swap the tabs round now. Otherwise, we delete the data on the tab we're swapping from.
     if (pendingTabId.value) {
       console.log('appStore: setFactories: Setting new tabId:', pendingTabId.value)
@@ -324,6 +321,9 @@ export const useAppStore = defineStore('app', () => {
     } else {
       console.log('appStore: setFactories: No pending tabId, sticking with:', currentTabId.value)
     }
+
+    // Set inited to false as the new data may be invalid.
+    inited.value = false
 
     // Init factories ensuring the data is valid
     initFactories(newFactories)
