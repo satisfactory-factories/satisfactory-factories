@@ -101,7 +101,7 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('lastSave', lastSave.value.toISOString())
   }
 
-  const prepareLoader = async (newFactories?: Factory[]) => {
+  const prepareLoader = async (newFactories?: Factory[], forceRecalc = false) => {
     console.log('==== CURRENT TAB ID ====', currentTabId.value)
     console.log('==== PENDING TAB ID ====', pendingTabId.value)
     isLoaded.value = false
@@ -115,7 +115,7 @@ export const useAppStore = defineStore('app', () => {
     await new Promise(resolve => setTimeout(resolve, 50))
 
     // Set and initialize factories
-    setFactories(factoriesToLoad)
+    setFactories(factoriesToLoad, forceRecalc)
 
     // Tell loader to prepare for load
     console.log('appStore: prepareLoader: Factories set, starting load process.')
@@ -301,7 +301,7 @@ export const useAppStore = defineStore('app', () => {
     return displayedFactories.value
   }
 
-  const setFactories = (newFactories: Factory[]) => {
+  const setFactories = (newFactories: Factory[], forceRecalc = false) => {
     console.log('appStore: setFactories: Setting factories', newFactories)
 
     const gameData = gameDataStore.getGameData()
@@ -328,8 +328,10 @@ export const useAppStore = defineStore('app', () => {
     // Init factories ensuring the data is valid
     initFactories(newFactories)
 
-    // Trigger calculations
-    calculateFactories(newFactories, gameData)
+    if (forceRecalc) {
+      // Trigger calculations
+      calculateFactories(newFactories, gameData)
+    }
 
     // For each factory, set the previous inputs to the current inputs.
     newFactories.forEach(factory => {
