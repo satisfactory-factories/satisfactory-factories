@@ -298,15 +298,12 @@
 
   const regenerateSortOrders = () => {
     // Sort now, which may have sorted them weirdly
-    setFactories(getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
+    const factories = getFactories().sort((a, b) => a.displayOrder - b.displayOrder)
 
-    // Ensure that the display order is correct
-    getFactories().forEach((factory, index) => {
+    // Ensure that the display order is in the correct order numerically
+    factories.forEach((factory, index) => {
       factory.displayOrder = index
     })
-
-    // Now re-sort
-    setFactories(getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
   }
 
   const forceSort = () => {
