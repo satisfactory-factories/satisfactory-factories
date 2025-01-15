@@ -259,7 +259,7 @@
 
   const { getDefaultRecipeForPart } = useGameDataStore()
   const openedCalculator = ref('')
-  const satisfactionBreakdowns = appStore.getSatisfactionBreakdowns()
+  const satisfactionBreakdowns = appStore.getUserOptions().satisfactionBreakdowns
 
   defineProps<{
     factory: Factory;

@@ -150,11 +150,15 @@ export interface FactoryTab {
   displayOrder: number;
 }
 
+export interface PlannerUserOptions {
+  satisfactionBreakdowns: boolean
+}
+
 export interface PlannerState {
   user: string | null;
   currentTabId: string;
   lastSaved: Date | null;
   lastEdited: Date;
-  userOptions: string[];
+  userOptions: PlannerUserOptions;
   tabs: FactoryTab[];
 }
