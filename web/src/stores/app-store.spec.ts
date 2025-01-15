@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { Factory } from '@/interfaces/planner/FactoryInterface'
+import { Factory, PlannerState } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactory, newFactory } from '@/utils/factory-management/factory'
 import * as FactoryManager from '@/utils/factory-management/factory'
 import { useAppStore } from '@/stores/app-store'
@@ -15,6 +15,33 @@ describe('app-store', () => {
 
     // Initialize the auth store with the mocked fetch
     appStore = useAppStore()
+  })
+
+  // Things it does upon execution
+  describe('initialization', () => {
+    it('should initialize the store with the correct default values', () => {
+      expect(appStore.factories).toEqual([])
+
+      const defaultTab = {
+        id: expect.any(String),
+        name: 'Default',
+        displayOrder: 0,
+        factories: [],
+      }
+      expect(appStore.currentTab).toEqual(defaultTab)
+
+      const defaultState: PlannerState = {
+        currentTabId: defaultTab.id,
+        lastEdited: expect.any(Date),
+        lastSaved: null,
+        tabs: [defaultTab],
+        user: null,
+        userOptions: {
+          satisfactionBreakdowns: false,
+        },
+      }
+      expect(appStore.plannerState).toEqual(defaultState)
+    })
   })
 
   describe('initFactories', () => {

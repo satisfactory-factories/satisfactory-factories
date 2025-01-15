@@ -1,6 +1,12 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { Factory, FactoryPower, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryInterface'
+import {
+  Factory,
+  FactoryPower,
+  FactoryTab,
+  PlannerState,
+  PlannerUserOptions,
+} from '@/interfaces/planner/FactoryInterface'
 import { ref, watch } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
@@ -70,13 +76,9 @@ export const useAppStore = defineStore('app', () => {
     },
   })
 
-  const lastSave = ref<Date>(new Date(localStorage.getItem('lastSave') ?? ''))
-  const lastEdit = ref<Date>(new Date(localStorage.getItem('lastEdit') ?? ''))
   const isDebugMode = ref<boolean>(false)
   const isLoaded = ref<boolean>(false)
-  const showSatisfactionBreakdowns = ref<boolean>(
-    (localStorage.getItem('showSatisfactionBreakdowns') ?? 'false') === 'true'
-  )
+  const trackEdits = ref<boolean>(true)
 
   const shownFactories = (factories: Factory[]) => {
     return factories.filter(factory => !factory.hidden).length
@@ -84,27 +86,19 @@ export const useAppStore = defineStore('app', () => {
 
   // Watch the state and save changes to local storage
   watch(plannerState.value, () => {
-    localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
-    setLastEdit() // Update last edit time whenever the data changes, from any source.
+    if (trackEdits.value) {
+      console.log('appStore: plannerState changed, saving to local storage.')
+      localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
+      setLastEdited() // Update last edit time whenever the data changes, from any source.
+    }
   }, { deep: true })
-
-  const getLastEdit = (): Date => {
-    return lastEdit.value
-  }
-
-  const setLastEdit = () => {
-    lastEdit.value = new Date()
-    localStorage.setItem('lastEdit', lastEdit.value.toISOString())
-  }
-  const setLastSave = () => {
-    lastSave.value = new Date()
-    localStorage.setItem('lastSave', lastSave.value.toISOString())
-  }
 
   const prepareLoader = async (newFactories?: Factory[], forceRecalc = false) => {
     console.log('==== CURRENT TAB ID ====', currentTabId.value)
     console.log('==== PENDING TAB ID ====', pendingTabId.value)
     isLoaded.value = false
+    trackEdits.value = false
+
     const factoriesToLoad = newFactories ?? displayedFactories.value
     console.log('appStore: prepareLoader', factoriesToLoad)
 
@@ -132,6 +126,7 @@ export const useAppStore = defineStore('app', () => {
   const beginLoading = async (newFactories: Factory[], loadMode = false) => {
     console.log('appStore: loadFactoriesIncrementally: start', newFactories, 'loadMode', loadMode)
     loadedCount = 0
+    trackEdits.value = false // Prevent setting the edit times as it causes a recursive loop
 
     // Reset the factories currently loaded
     displayedFactories.value = []
@@ -154,7 +149,8 @@ export const useAppStore = defineStore('app', () => {
       return
     }
 
-    // Inform loader of the counts. Note this will not trigger readyForData again as the v-dialog is already open at this point
+    // Inform loader of the counts.
+    // Note this will not trigger readyForData again as the v-dialog is already open at this point
     // So the loader's value are just simply updated.
     eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories(newFactories) })
 
@@ -180,14 +176,9 @@ export const useAppStore = defineStore('app', () => {
       eventBus.emit('incrementLoad', { step: 'increment' })
       loadedCount++
 
-      // This enables the bar to actually grow properly
-      requestAnimationFrame(async () => {
-        await nextTick() // Wait for Vue's reactivity system to complete updating the loader
-        // Add a small delay to allow the DOM to catch up fully before initiating the next load
-        setTimeout(() => {
-          loadNextFactory() // Recursively load the next factory
-        }, 50)
-      })
+      // Wait a bit before loading the next factory so the bar can update
+      await new Promise(resolve => setTimeout(resolve, 50))
+      loadNextFactory()
     }
 
     // Register the event that's emitted when the next factory should be loaded
@@ -195,14 +186,13 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const loadingCompleted = () => {
+    console.log('appStore: ============= LOADING COMPLETED =============', plannerState.value)
     eventBus.emit('loadingCompleted')
     isLoaded.value = true
+    trackEdits.value = true
 
     // Reset the saved factories
     localStorage.removeItem('preLoadFactories')
-
-    console.log('appStore: ============= LOADING COMPLETED =============', plannerState.value)
-    console.log('current', currentTab.value)
   }
 
   // ==== FACTORY MANAGEMENT
@@ -338,7 +328,7 @@ export const useAppStore = defineStore('app', () => {
       factory.previousInputs = factory.inputs
     })
 
-    currentTab.value.factories = newFactories
+    displayedFactories.value = newFactories
 
     console.log('appStore: setFactories: Factories set.', displayedFactories.value)
   }
@@ -386,14 +376,6 @@ export const useAppStore = defineStore('app', () => {
   }
   // ==== END TAB MANAGEMENT
 
-  const getSatisfactionBreakdowns = () => {
-    return showSatisfactionBreakdowns
-  }
-  const changeSatisfactoryBreakdowns = () => {
-    showSatisfactionBreakdowns.value = !showSatisfactionBreakdowns.value
-    localStorage.setItem('showSatisfactionBreakdowns', showSatisfactionBreakdowns.value ? 'true' : 'false')
-  }
-
   // ==== MISC
   const debugMode = () => {
     if (window.location.hostname !== 'satisfactory-factories.app') {
@@ -440,18 +422,32 @@ export const useAppStore = defineStore('app', () => {
     prepareLoader(factories)
   }
 
+  const getLastEdited = (): Date => {
+    return plannerState.value.lastEdited
+  }
+  const setLastEdited = () => {
+    plannerState.value.lastEdited = new Date()
+  }
+  const getLastSaved = (): Date | null => {
+    return plannerState.value.lastSaved
+  }
+  const setLastSaved = () => {
+    plannerState.value.lastSaved = new Date()
+  }
+  const getUserOptions = () => {
+    return plannerState.value.userOptions
+  }
+  const setUserOptions = (options: PlannerUserOptions) => {
+    plannerState.value.userOptions = options
+  }
+
   return {
     currentTab,
     currentTabId,
     plannerState,
     factories: displayedFactories,
-    lastSave,
-    lastEdit,
     isDebugMode,
     isLoaded,
-    getLastEdit,
-    setLastSave,
-    setLastEdit,
     getFactories,
     setFactories,
     initFactories,
@@ -463,8 +459,12 @@ export const useAppStore = defineStore('app', () => {
     getTabs,
     setTabs,
     changeCurrentTab,
-    getSatisfactionBreakdowns,
-    changeSatisfactoryBreakdowns,
+    getLastEdited,
+    setLastEdited,
+    getLastSaved,
+    setLastSaved,
+    getUserOptions,
+    setUserOptions,
     prepareLoader,
   }
 })
