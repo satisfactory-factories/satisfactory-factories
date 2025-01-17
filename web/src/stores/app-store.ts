@@ -128,8 +128,10 @@ export const useAppStore = defineStore('app', () => {
     loadedCount = 0
     trackEdits.value = false // Prevent setting the edit times as it causes a recursive loop
 
-    // Reset the factories currently loaded
-    displayedFactories.value = []
+    // Reset the factories currently loaded, if there is any
+    if (displayedFactories.value.length > 0) {
+      displayedFactories.value = []
+    }
 
     const attemptedFactories = JSON.parse(localStorage.getItem('preLoadFactories') ?? '[]') as Factory[]
 
