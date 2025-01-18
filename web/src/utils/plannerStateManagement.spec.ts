@@ -36,7 +36,9 @@ describe('plannerStateManagement', () => {
       const result = newState({
         user: 'test',
         currentTabId: '255',
-        userOptions: ['test'],
+        userOptions: {
+          satisfactionBreakdowns: false
+        },
         tabs: [
           {
             id: '255',
