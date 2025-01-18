@@ -32,7 +32,6 @@ describe('app-store', () => {
 
       const defaultState: PlannerState = {
         currentTabId: defaultTab.id,
-        lastEdited: expect.any(Date),
         lastSaved: null,
         tabs: [defaultTab],
         user: null,

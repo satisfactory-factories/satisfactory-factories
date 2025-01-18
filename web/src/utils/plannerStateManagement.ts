@@ -18,7 +18,6 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
     user: options.user ?? null,
     currentTabId: options.currentTabId ?? newTabData.id,
     lastSaved: null,
-    lastEdited: new Date(),
     userOptions: options.userOptions ?? defaultUserOptions,
     tabs: options.tabs ?? [newTabData],
   }
