@@ -81,13 +81,13 @@ import {defineEmits, ref} from 'vue'
   }
 
   const open = () => {
-    console.log('Opening introduction')
+    console.log('Introduction: Opening introduction')
     showDialog.value = true
     localStorage.setItem('dismissed-introduction', 'false')
   }
 
   const close = () => {
-    console.log('Closing introduction')
+    console.log('Introduction: Closing introduction')
     showDialog.value = false
     localStorage.setItem('dismissed-introduction', 'true')
   }
