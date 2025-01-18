@@ -156,35 +156,32 @@ export const useAppStore = defineStore('app', () => {
     // So the loader's value are just simply updated.
     eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories(newFactories) })
 
-    const loadNextFactory = async () => {
-      // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
-      if (loadedCount >= newFactories.length) {
-        console.log('appStore: loadNextFactory: Finished loading factories. Requesting render.')
-        eventBus.emit('incrementLoad', { step: 'render' })
+    // Wait 50ms to allow the loader to update
+    await new Promise(resolve => setTimeout(resolve, 50))
 
-        requestAnimationFrame(() => {
-          // Add a small delay to allow the DOM to catch up fully before initiating the big render
-          setTimeout(() => {
-            loadingCompleted()
-          }, 100)
-        })
+    // Start loading the factories
+    await loadNextFactory(newFactories)
+  }
 
-        return // Stop here otherwise it'll recurse infinitely
-      }
+  const loadNextFactory = async (newFactories: Factory[]) => {
+    // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
+    if (loadedCount >= newFactories.length) {
+      console.log('appStore: loadNextFactory: Finished loading factories. Requesting render.')
+      eventBus.emit('incrementLoad', { step: 'render' })
 
-      // Add the factory to the current tab's factories
-      console.log('appStore: loadNextFactory: Adding factory to tab', newFactories[loadedCount])
-      currentTab.value.factories.push(newFactories[loadedCount])
-      eventBus.emit('incrementLoad', { step: 'increment' })
-      loadedCount++
-
-      // Wait a bit before loading the next factory so the bar can update
-      await new Promise(resolve => setTimeout(resolve, 50))
-      loadNextFactory()
+      await new Promise(resolve => setTimeout(resolve, 75)) // Wait a bit for the DOM to fully catch up
+      return loadingCompleted()
     }
 
-    // Register the event that's emitted when the next factory should be loaded
-    loadNextFactory() // Purposefully not async
+    // Add the factory to the current tab's factories
+    console.log('appStore: loadNextFactory: Adding factory to tab', newFactories[loadedCount])
+    currentTab.value.factories.push(newFactories[loadedCount])
+    eventBus.emit('incrementLoad', { step: 'increment' })
+    loadedCount++
+
+    // Wait a bit before loading the next factory so the bar can update
+    await new Promise(resolve => setTimeout(resolve, 75))
+    await loadNextFactory(newFactories) // Recursively load the next factory
   }
 
   const loadingCompleted = () => {
