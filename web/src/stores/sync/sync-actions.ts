@@ -40,7 +40,7 @@ export class SyncActions {
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
       console.log('loadServerData: Forcing data load.')
-      this.appStore.setTabs(dataObject.tabs)
+      this.appStore.setState(dataObject)
       return true
     }
 
