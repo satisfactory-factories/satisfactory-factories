@@ -175,7 +175,7 @@ export const useAppStore = defineStore('app', () => {
       console.log('appStore: loadNextFactory: Finished loading factories. Requesting render.')
       eventBus.emit('incrementLoad', { step: 'render' })
 
-      await new Promise(resolve => setTimeout(resolve, 100)) // Wait a bit for the DOM to fully catch up
+      await new Promise(resolve => setTimeout(resolve, 75)) // Wait a bit for the DOM to fully catch up
       return loadingCompleted()
     }
 
@@ -185,7 +185,7 @@ export const useAppStore = defineStore('app', () => {
     eventBus.emit('incrementLoad', { step: 'increment' })
     loadedCount++
 
-    await new Promise(resolve => setTimeout(resolve, 50)) // Wait 50ms before loading the next factory for the Loader bar to progress.
+    await new Promise(resolve => setTimeout(resolve, 75)) // Wait before loading the next factory for the Loader bar to progress.
 
     await loadNextFactory(newFactories) // Recursively load the next factory
   }
