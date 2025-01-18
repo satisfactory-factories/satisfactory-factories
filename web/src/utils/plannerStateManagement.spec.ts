@@ -37,7 +37,7 @@ describe('plannerStateManagement', () => {
         user: 'test',
         currentTabId: '255',
         userOptions: {
-          satisfactionBreakdowns: false
+          satisfactionBreakdowns: false,
         },
         tabs: [
           {
