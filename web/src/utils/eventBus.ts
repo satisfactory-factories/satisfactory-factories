@@ -14,6 +14,8 @@ type Events = {
   plannerHideContent: undefined
   plannerShowContent: undefined
   switchTab: string;
+
+  introShow: boolean
 };
 
 const eventBus = mitt<Events>()

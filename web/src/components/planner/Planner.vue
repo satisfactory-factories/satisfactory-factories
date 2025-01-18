@@ -1,5 +1,5 @@
 <template>
-  <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
+  <introduction @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
     <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
@@ -325,9 +325,6 @@
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
 
-  // Grab from local storage if the user has already dismissed this popup
-  // If they have, don't show it again.
-  const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
 
   let factoriesToLoad: Factory[] = []
 
@@ -343,14 +340,13 @@
   }
 
   const closeIntro = () => {
-    console.log('closing intro')
-    introShow.value = false
-    localStorage.setItem('dismissed-introduction', 'true')
+    console.log('Planner: Closing intro')
+    eventBus.emit('introShow', false)
   }
 
   const showIntro = () => {
-    console.log('showing intro')
-    introShow.value = true
+    console.log('Planner: Showing intro')
+    eventBus.emit('introShow', true)
   }
 </script>
 
