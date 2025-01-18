@@ -158,7 +158,6 @@ export interface PlannerState {
   user: string | null;
   currentTabId: string;
   lastSaved: Date | null;
-  lastEdited: Date;
   userOptions: PlannerUserOptions;
   tabs: FactoryTab[];
 }

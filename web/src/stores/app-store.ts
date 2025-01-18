@@ -80,17 +80,18 @@ export const useAppStore = defineStore('app', () => {
   const isLoaded = ref<boolean>(false)
   const trackEdits = ref<boolean>(true)
 
+  const lastEdited = ref<Date>(new Date(localStorage.getItem('plannerLastEdited') ?? ''))
+  const lastSaved = ref<Date>(new Date(localStorage.getItem('plannerLastSaved') ?? ''))
+
   const shownFactories = (factories: Factory[]) => {
     return factories.filter(factory => !factory.hidden).length
   }
 
   // Watch the state and save changes to local storage
   watch(plannerState.value, () => {
-    if (trackEdits.value) {
-      console.log('appStore: plannerState changed, saving to local storage.')
-      localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
-      setLastEdited() // Update last edit time whenever the data changes, from any source.
-    }
+    console.log('appStore: plannerState changed, saving to local storage.')
+    localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
+    setLastEdited() // Update last edit time whenever the data changes, from any source.
   }, { deep: true })
 
   const prepareLoader = async (newFactories?: Factory[], forceRecalc = false) => {
@@ -422,16 +423,18 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const getLastEdited = (): Date => {
-    return plannerState.value.lastEdited
+    return lastEdited.value
   }
   const setLastEdited = () => {
-    plannerState.value.lastEdited = new Date()
+    lastEdited.value = new Date()
+    localStorage.setItem('plannerLastEdited', lastEdited.value.toISOString())
   }
   const getLastSaved = (): Date | null => {
-    return plannerState.value.lastSaved
+    return lastSaved.value
   }
   const setLastSaved = () => {
-    plannerState.value.lastSaved = new Date()
+    lastSaved.value = new Date()
+    localStorage.setItem('plannerLastSaved', lastEdited.value.toISOString())
   }
   const getUserOptions = () => {
     return plannerState.value.userOptions
