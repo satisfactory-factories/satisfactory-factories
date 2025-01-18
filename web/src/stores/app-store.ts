@@ -1,10 +1,10 @@
 // Utilities
-import {defineStore} from 'pinia'
-import {Factory, FactoryPower, FactoryTab} from '@/interfaces/planner/FactoryInterface'
-import {ref, watch} from 'vue'
-import {calculateFactories} from '@/utils/factory-management/factory'
-import {useGameDataStore} from '@/stores/game-data-store'
-import {validateFactories} from '@/utils/factory-management/validation'
+import { defineStore } from 'pinia'
+import { Factory, FactoryPower, FactoryTab } from '@/interfaces/planner/FactoryInterface'
+import { ref, watch } from 'vue'
+import { calculateFactories } from '@/utils/factory-management/factory'
+import { useGameDataStore } from '@/stores/game-data-store'
+import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
 
 export const useAppStore = defineStore('app', () => {
@@ -52,7 +52,7 @@ export const useAppStore = defineStore('app', () => {
   const currentFactoryTab = ref(factoryTabs.value[currentFactoryTabIndex.value])
 
   const factories = computed({
-    get() {
+    get () {
       if (!currentFactoryTab?.value) {
         console.error('appStore: factories.get: No current factory tab set!')
         return []
@@ -64,7 +64,7 @@ export const useAppStore = defineStore('app', () => {
       }
       return currentFactoryTab.value.factories
     },
-    set(value) {
+    set (value) {
       currentFactoryTab.value.factories = value
     },
   })
@@ -98,7 +98,7 @@ export const useAppStore = defineStore('app', () => {
   watch(factoryTabs.value, () => {
     localStorage.setItem('factoryTabs', JSON.stringify(factoryTabs.value))
     setLastEdit() // Update last edit time whenever the data changes, from any source.
-  }, {deep: true})
+  }, { deep: true })
 
   const getLastEdit = (): Date => {
     return lastEdit.value
@@ -123,7 +123,7 @@ export const useAppStore = defineStore('app', () => {
 
     // Tell loader to prepare for load
     console.log('appStore: prepareLoader: Factories set, starting load process.')
-    eventBus.emit('prepareForLoad', {count: factories.value.length, shown: shownFactories(factories.value)})
+    eventBus.emit('prepareForLoad', { count: factories.value.length, shown: shownFactories(factories.value) })
   }
 
   // When the loader is ready, we will receive an event saying to initiate the load.
@@ -146,7 +146,7 @@ export const useAppStore = defineStore('app', () => {
     if (attemptedFactories.length > 0) {
       console.log('appStore: beginLoading: Found previous factories, loading them instead.')
       newFactories = attemptedFactories
-      eventBus.emit('toast', {message: 'Unsuccessful load detected, loading previous factory data.', type: 'warning'})
+      eventBus.emit('toast', { message: 'Unsuccessful load detected, loading previous factory data.', type: 'warning' })
     } else {
       // Save the user's factories to ensure there is no data loss
       localStorage.setItem('preLoadFactories', JSON.stringify(newFactories))
@@ -160,7 +160,7 @@ export const useAppStore = defineStore('app', () => {
 
     // Inform loader of the counts. Note this will not trigger readyForData again as the v-dialog is already open at this point
     // So the loader's value are just simply updated.
-    eventBus.emit('prepareForLoad', {count: newFactories.length, shown: shownFactories(newFactories)})
+    eventBus.emit('prepareForLoad', { count: newFactories.length, shown: shownFactories(newFactories) })
 
     // Wait 50ms to allow the loader to update
     await new Promise(resolve => setTimeout(resolve, 50))
@@ -173,16 +173,16 @@ export const useAppStore = defineStore('app', () => {
     // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
     if (loadedCount >= newFactories.length) {
       console.log('appStore: loadNextFactory: Finished loading factories. Requesting render.')
-      eventBus.emit('incrementLoad', {step: 'render'})
+      eventBus.emit('incrementLoad', { step: 'render' })
 
-      await new Promise(resolve => setTimeout(resolve, 10)) // Wait a bit for the DOM to fully catch up
+      await new Promise(resolve => setTimeout(resolve, 100)) // Wait a bit for the DOM to fully catch up
       return loadingCompleted()
     }
 
     // Add the factory to the current tab's factories
     console.log('appStore: loadNextFactory: Adding factory to tab', newFactories[loadedCount])
     currentFactoryTab.value.factories.push(newFactories[loadedCount])
-    eventBus.emit('incrementLoad', {step: 'increment'})
+    eventBus.emit('incrementLoad', { step: 'increment' })
     loadedCount++
 
     await new Promise(resolve => setTimeout(resolve, 50)) // Wait 50ms before loading the next factory for the Loader bar to progress.
@@ -342,10 +342,10 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== TAB MANAGEMENT
   const addTab = ({
-                    id = crypto.randomUUID(),
-                    name = 'New Tab',
-                    factories = [],
-                  } = {} as Partial<FactoryTab>) => {
+    id = crypto.randomUUID(),
+    name = 'New Tab',
+    factories = [],
+  } = {} as Partial<FactoryTab>) => {
     factoryTabs.value.push({
       id,
       name,
