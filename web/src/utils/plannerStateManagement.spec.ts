@@ -54,7 +54,9 @@ describe('plannerStateManagement', () => {
         currentTabId: '255',
         lastSaved: null,
         lastEdited: expect.any(Date),
-        userOptions: ['test'],
+        userOptions: {
+          satisfactionBreakdowns: false,
+        },
         tabs: [
           {
             id: '255',
