@@ -5,6 +5,7 @@ import * as FactoryManager from '@/utils/factory-management/factory'
 import { useAppStore } from '@/stores/app-store'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
+import { getCurrentTab } from '@/utils/plannerStateManagement'
 
 describe('app-store', () => {
   let appStore: ReturnType<typeof useAppStore>
@@ -28,12 +29,13 @@ describe('app-store', () => {
         displayOrder: 0,
         factories: [],
       }
-      expect(appStore.currentTab).toEqual(defaultTab)
+      const currentTab = getCurrentTab(appStore.getState())
+      expect(currentTab).toEqual(defaultTab)
 
       const defaultState: PlannerState = {
-        currentTabId: defaultTab.id,
+        currentTabId: currentTab.id,
         lastSaved: null,
-        tabs: { [defaultTab.id]: defaultTab },
+        tabs: { [currentTab.id]: currentTab },
         user: null,
         userOptions: {
           satisfactionBreakdowns: false,
