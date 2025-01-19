@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
   import { useDisplay } from 'vuetify'
-  import eventBus from "@/utils/eventBus";
+  import eventBus from '@/utils/eventBus'
   const { mdAndDown } = useDisplay()
 
   const toolbarDensity = computed(() => mdAndDown.value ? 'compact' : undefined)

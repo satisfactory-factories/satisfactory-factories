@@ -2,13 +2,13 @@
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
-    <Teleport defer to="#navigationDrawer" v-if="navigationReady">
+    <Teleport v-if="navigationReady" defer to="#navigationDrawer">
       <planner-factory-list
         :factories="getFactories()"
+        loaded-from="navigation"
         :total-factories="getFactories().length"
         @create-factory="createFactory"
         @update-factories="updateFactoriesList"
-        loadedFrom="navigation"
       />
       <planner-global-actions
         class="py-4"
@@ -26,10 +26,10 @@
         <v-container class="pa-0">
           <planner-factory-list
             :factories="getFactories()"
+            loaded-from="planner"
             :total-factories="getFactories().length"
             @create-factory="createFactory"
             @update-factories="updateFactoriesList"
-            loadedFrom="planner"
           />
           <v-divider color="#ccc" thickness="2px" />
           <planner-global-actions
