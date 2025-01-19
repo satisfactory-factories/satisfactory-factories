@@ -12,6 +12,8 @@ type Events = {
   prepareForLoad: { count: number, shown: number };
   readyForData: undefined;
   plannerShowContent: undefined
+
+  navigationReady: undefined;
 };
 
 const eventBus = mitt<Events>()
