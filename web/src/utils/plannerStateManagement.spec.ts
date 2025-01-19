@@ -39,14 +39,14 @@ describe('plannerStateManagement', () => {
         userOptions: {
           satisfactionBreakdowns: false,
         },
-        tabs: [
-          {
+        tabs: {
+          255: {
             id: '255',
             name: 'Test Tab',
             displayOrder: 0,
             factories: [],
           },
-        ],
+        },
       })
 
       expect(result).toEqual({

@@ -7,7 +7,7 @@ import {
   PlannerState,
   PlannerUserOptions,
 } from '@/interfaces/planner/FactoryInterface'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { calculateFactories } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
@@ -17,6 +17,7 @@ import {
   deleteTab,
   getCurrentTab,
   getTab,
+  getTabsCount,
   migrateFactoryTabsToState,
   newState,
   newTab,
@@ -41,7 +42,7 @@ export const useAppStore = defineStore('app', () => {
     // This will be removed in a future update.
     // localStorage.removeItem('factoryTabs')
     localStorage.removeItem('currentFactoryTabIndex')
-    localStorage.setItem('plannerState', JSON.stringify(plannerState.value))
+    localStorage.setItem('plannerState', JSON.stringify(plannerState))
     alert('Your planner data has just been migrated to the new format. You will need to re-log in if you were backing up your data with an account.\n\nPlease report any issues with missing data etc to Discord, where we can help you restore any lost data.')
   }
 
@@ -78,7 +79,6 @@ export const useAppStore = defineStore('app', () => {
 
   const isDebugMode = ref<boolean>(false)
   const isLoaded = ref<boolean>(false)
-  const trackEdits = ref<boolean>(true)
 
   const lastEdited = ref<Date>(new Date(localStorage.getItem('plannerLastEdited') ?? ''))
   const lastSaved = ref<Date>(new Date(localStorage.getItem('plannerLastSaved') ?? ''))
@@ -98,7 +98,6 @@ export const useAppStore = defineStore('app', () => {
     console.log('==== CURRENT TAB ID ====', currentTabId.value)
     console.log('==== PENDING TAB ID ====', pendingTabId.value)
     isLoaded.value = false
-    trackEdits.value = false
 
     const factoriesToLoad = newFactories ?? displayedFactories.value
     console.log('appStore: prepareLoader', factoriesToLoad)
@@ -127,7 +126,6 @@ export const useAppStore = defineStore('app', () => {
   const beginLoading = async (newFactories: Factory[], loadMode = false) => {
     console.log('appStore: loadFactoriesIncrementally: start', newFactories, 'loadMode', loadMode)
     loadedCount = 0
-    trackEdits.value = false // Prevent setting the edit times as it causes a recursive loop
 
     // Reset the factories currently loaded, if there is any
     if (displayedFactories.value.length > 0) {
@@ -165,31 +163,24 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const loadNextFactory = async (newFactories: Factory[]) => {
-    // console.log('loadFactoriesIncrementally: Loading factory', loadedCount + 1, '/', newFactories.length)
-    if (loadedCount >= newFactories.length) {
-      console.log('appStore: loadNextFactory: Finished loading factories. Requesting render.')
-      eventBus.emit('incrementLoad', { step: 'render' })
+    while (loadedCount < newFactories.length) {
+      currentTab.value.factories.push(newFactories[loadedCount])
+      eventBus.emit('incrementLoad', { step: 'increment' })
+      loadedCount++
 
-      await new Promise(resolve => setTimeout(resolve, 75)) // Wait a bit for the DOM to fully catch up
-      return loadingCompleted()
+      await new Promise(resolve => setTimeout(resolve, 75)) // Pause between loads
     }
 
-    // Add the factory to the current tab's factories
-    console.log('appStore: loadNextFactory: Adding factory to tab', newFactories[loadedCount])
-    currentTab.value.factories.push(newFactories[loadedCount])
-    eventBus.emit('incrementLoad', { step: 'increment' })
-    loadedCount++
-
-    // Wait a bit before loading the next factory so the bar can update
-    await new Promise(resolve => setTimeout(resolve, 75))
-    await loadNextFactory(newFactories) // Recursively load the next factory
+    console.log('appStore: loadNextFactory: Finished loading factories.')
+    eventBus.emit('incrementLoad', { step: 'render' })
+    await new Promise(resolve => setTimeout(resolve, 75)) // Wait for DOM updates
+    loadingCompleted()
   }
 
   const loadingCompleted = () => {
-    console.log('appStore: ============= LOADING COMPLETED =============', plannerState.value)
+    console.log('appStore: ============= LOADING COMPLETED =============', plannerState)
     eventBus.emit('loadingCompleted')
     isLoaded.value = true
-    trackEdits.value = true
 
     // Reset the saved factories
     localStorage.removeItem('preLoadFactories')
@@ -364,7 +355,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const removeCurrentTab = async () => {
-    if (plannerState.value.tabs.length === 1) return
+    if (getTabsCount(plannerState.value) === 1) return
 
     deleteTab(plannerState.value, currentTab.value)
     // Get the new tab index by looking at the last tab in the list
@@ -388,6 +379,13 @@ export const useAppStore = defineStore('app', () => {
   isDebugMode.value = debugMode()
   // ==== END MISC
 
+  const getState = () => {
+    return plannerState.value
+  }
+  const setState = (state: PlannerState) => {
+    plannerState.value = state
+  }
+
   const getFactories = () => {
     if (!currentTab.value) {
       console.error('appStore: getFactories: No current factory tab set!')
@@ -408,10 +406,11 @@ export const useAppStore = defineStore('app', () => {
     return plannerState.value.tabs
   }
 
-  const setTabs = (tabs: FactoryTab[]) => {
+  const setTabs = (tabs: { [key: string]: FactoryTab }) => {
     plannerState.value.tabs = tabs
     // Get the first tab in the list
-    currentTabId.value = plannerState.value.tabs[0].id
+    const firstTab = Object.keys(plannerState.value.tabs)[0]
+    currentTabId.value = plannerState.value.tabs[firstTab].id
   }
 
   const changeCurrentTab = (tabId: string) => {
@@ -443,6 +442,12 @@ export const useAppStore = defineStore('app', () => {
     plannerState.value.userOptions = options
   }
 
+  eventBus.on('factoryUpdated', () => {
+    console.log('appStore: factoryUpdated: Factory updated, setting last edited')
+    setLastEdited()
+    console.log(currentTab.value)
+  })
+
   return {
     currentTab,
     currentTabId,
@@ -458,6 +463,8 @@ export const useAppStore = defineStore('app', () => {
     clearFactories,
     createNewTab,
     removeCurrentTab,
+    getState,
+    setState,
     getTabs,
     setTabs,
     changeCurrentTab,

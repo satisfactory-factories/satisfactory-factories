@@ -203,6 +203,9 @@
   // Proxy method so we don't have to pass the gameData and getFactories() around to every single subcomponent
   const updateFactory = (factory: Factory) => {
     calculateFactory(factory, getFactories(), gameData)
+
+    // Emit an event that the data has been updated so it can be synced
+    eventBus.emit('factoryUpdated')
   }
 
   const copyFactory = (originalFactory: Factory) => {
@@ -331,7 +334,6 @@
   provide('deleteFactory', deleteFactory)
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
-
 
   let factoriesToLoad: Factory[] = []
 

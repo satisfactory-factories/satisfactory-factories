@@ -4,7 +4,7 @@ interface PlannerStateOptions {
   user?: string,
   currentTabId?: string;
   userOptions?: PlannerUserOptions
-  tabs?: FactoryTab[],
+  tabs?: { [key: string ]: FactoryTab },
 }
 
 export const newState = (options: PlannerStateOptions): PlannerState => {
@@ -19,7 +19,7 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
     currentTabId: options.currentTabId ?? newTabData.id,
     lastSaved: null,
     userOptions: options.userOptions ?? defaultUserOptions,
-    tabs: options.tabs ?? [newTabData],
+    tabs: options.tabs ?? { [newTabData.id]: newTabData },
   }
 }
 
@@ -41,8 +41,8 @@ export const newTab = (options?: FactoryTabOptions): FactoryTab => {
 }
 
 export const addTab = (state: PlannerState, tab: FactoryTab): void => {
-  tab.displayOrder = state.tabs.length
-  state.tabs.push(tab)
+  tab.displayOrder = getTabsCount(state)
+  state.tabs[tab.id] = tab
 }
 
 export const getCurrentTab = (state: PlannerState): FactoryTab => {
@@ -50,7 +50,7 @@ export const getCurrentTab = (state: PlannerState): FactoryTab => {
 }
 
 export const getTab = (state: PlannerState, tabId: string): FactoryTab => {
-  const tab = state.tabs.find(tab => tab.id === tabId)
+  const tab = state.tabs[tabId]
   if (!tab) {
     throw new Error(`Tab with id ${tabId} not found`)
   }
@@ -58,31 +58,42 @@ export const getTab = (state: PlannerState, tabId: string): FactoryTab => {
 }
 
 export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
-  const index = state.tabs.findIndex(t => t.id === tab.id)
-  if (index === -1) {
-    throw new Error(`Tab with id ${tab.id} not found`)
-  }
-  state.tabs.splice(index, 1)
-
+  delete state.tabs[tab.id]
   // Regenerate display orders
-  state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index
+  const tabKeys = Object.keys(state.tabs)
+  tabKeys.forEach((tabId, index) => {
+    state.tabs[tabId].displayOrder = index
   })
 
   // Reset the current tab ID to be the last tab ID
-  state.currentTabId = state.tabs[state.tabs.length - 1].id
+  state.currentTabId = state.tabs[tabKeys.length - 1].id
+}
+
+export const getTabsCount = (state: PlannerState): number => {
+  return Object.keys(state.tabs).length
 }
 
 export const migrateFactoryTabsToState = (oldState: FactoryTab[]): PlannerState => {
   const oldActiveTab = oldState[0] // We're going to assume it's the first one.
+
+  const newTabs: { [key: string]: FactoryTab } = {}
+  oldState.forEach((oldTab, index) => {
+    newTabs[oldTab.id] = {
+      id: oldTab.id,
+      name: oldTab.name,
+      factories: oldTab.factories,
+      displayOrder: index,
+    }
+  })
+
   const state = newState({
     currentTabId: oldActiveTab.id,
-    tabs: oldState,
+    tabs: newTabs,
   })
 
   // Generate the tab display order
-  state.tabs.forEach((tab, index) => {
-    tab.displayOrder = index
+  Object.keys(state.tabs).forEach((tabId, index) => {
+    state.tabs[tabId].displayOrder = index
   })
 
   return state

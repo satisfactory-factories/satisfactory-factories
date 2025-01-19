@@ -67,6 +67,16 @@
       >
         Paste plan
       </v-btn>
+      <v-btn
+        v-if="isDebugMode"
+        class="ma-1"
+        color="amber"
+        prepend-icon="fas fa-calculator-alt"
+        variant="tonal"
+        @click="forceRecalculation"
+      >
+        Force Recalc
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -76,8 +86,10 @@
   import { useAppStore } from '@/stores/app-store'
   import eventBus from '@/utils/eventBus'
   import { confirmDialog } from '@/utils/helpers'
+  import { calculateFactories } from '@/utils/factory-management/factory'
+  import { useGameDataStore } from '@/stores/game-data-store'
 
-  const { getFactories, prepareLoader } = useAppStore()
+  const { getFactories, prepareLoader, isDebugMode } = useAppStore()
 
   defineProps<{ helpTextShown: boolean }>()
   // eslint-disable-next-line func-call-spacing
@@ -131,6 +143,16 @@
         }
       }
     })
+  }
+
+  const forceRecalculation = () => {
+    const gameDataStore = useGameDataStore()
+    const gameData = gameDataStore.getGameData()
+    eventBus.emit('toast', { message: 'Recalculating...', type: 'warning' })
+
+    setTimeout(() => {
+      calculateFactories(getFactories(), gameData)
+    }, 50)
   }
 </script>
 

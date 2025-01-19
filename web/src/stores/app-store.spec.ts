@@ -33,7 +33,7 @@ describe('app-store', () => {
       const defaultState: PlannerState = {
         currentTabId: defaultTab.id,
         lastSaved: null,
-        tabs: [defaultTab],
+        tabs: { [defaultTab.id]: defaultTab },
         user: null,
         userOptions: {
           satisfactionBreakdowns: false,

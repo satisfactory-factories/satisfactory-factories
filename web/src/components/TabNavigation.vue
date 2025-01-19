@@ -46,7 +46,7 @@
       <div class="d-flex align-center h-100 ga-2 mr-1">
         <ShareButton />
         <v-btn
-          v-if="appStore.getTabs().length > 1"
+          v-if="getTabsCount(appStore.getState())"
           color="red rounded"
           icon="fas fa-trash"
           size="small"
@@ -63,6 +63,7 @@
   import { confirmDialog } from '@/utils/helpers'
   import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
   import eventBus from '@/utils/eventBus'
+  import { getTabsCount } from '@/utils/plannerStateManagement'
 
   const appStore = useAppStore()
 

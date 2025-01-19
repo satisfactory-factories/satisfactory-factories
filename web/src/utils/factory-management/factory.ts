@@ -83,68 +83,82 @@ export const calculateFactory = (
   gameData: DataInterface,
   loadMode = false,
 ) => {
-  // console.log('Calculating factory:', factory.name)
+  // Create a shallow copies of the data so we don't cause a vue reactivity storm
+  const factoryCopy = toRaw(factory)
+  const allFactoriesCopy = toRaw(allFactories)
 
-  factory.rawResources = {}
-  factory.parts = {}
+  // console.log('Calculating factory:', factoryCopy.name)
 
   // Calculate what is produced and required by the products.
-  calculateProducts(factory, gameData)
+  calculateProducts(factoryCopy, gameData)
 
   // Calculate if there have been any changes the player needs to enact.
-  calculateSyncState(factory)
+  calculateSyncState(factoryCopy)
 
   // Calculate the generation of power for the factory
-  calculatePowerProducers(factory, gameData)
+  calculatePowerProducers(factoryCopy, gameData)
 
   // Calculate the amount of buildings and power required to make the factory and any power generation.
-  calculateFactoryBuildingsAndPower(factory, gameData)
+  calculateFactoryBuildingsAndPower(factoryCopy, gameData)
 
   // Calculate the dependencies for just this factory.
-  calculateFactoryDependencies(factory, allFactories, gameData, loadMode)
+  calculateFactoryDependencies(factoryCopy, allFactoriesCopy, gameData, loadMode)
 
   // Calculate the dependency metrics for the factory.
-  calculateDependencyMetrics(factory)
+  calculateDependencyMetrics(factoryCopy)
 
   // Then we calculate the satisfaction of the factory. This requires Dependencies to be calculated first.
-  calculateParts(factory, gameData)
+  calculateParts(factoryCopy, gameData)
 
   // After now knowing what our supply is, we need to recalculate the dependency metrics.
-  calculateDependencyMetricsSupply(factory)
+  calculateDependencyMetricsSupply(factoryCopy)
 
   // Export Calculator stuff
   // configureExportCalculator(allFactories)
 
-  // Check if the factory has any problems
-  calculateHasProblem(allFactories)
+  // Check if the factory has any problems.
+  calculateHasProblem(allFactoriesCopy)
 
-  // Emit an event that the data has been updated so it can be synced
-  eventBus.emit('factoryUpdated')
+  // Reassign the data.
+  factory = factoryCopy
+  allFactories = allFactoriesCopy
+
+  // "Use" the variables to stop typescript and the linter complaining.
+  console.log('Factory calculations complete:', factory.name, allFactories)
 
   return factory
 }
 
 export const calculateFactories = (factories: Factory[], gameData: DataInterface): void => {
-  console.log('factory: calculateFactories', factories)
+  // Take a copy of the data to ensure we don't mutate the original data causing reactivity storm.
+  const factoriesCopy = toRaw(factories)
+
+  console.log('factory: calculateFactories', factoriesCopy)
   // We need to do this twice to ensure all the part dependency metrics are calculated, before we then check for invalid dependencies
   // loadMode flag passed here to ensure we don't nuke inputs due to no part data.
   // This generates the Part metrics for the factories, which is then used by calculateDependencies to generate the dependency metrics.
   // While we are running the calculations twice, they are very quick, <20ms even for the largest plans.
   console.log('factory: calculateFactories calculateFactory #1')
-  factories.forEach(factory => calculateFactory(factory, factories, gameData, true))
+  factoriesCopy.forEach(factory => calculateFactory(factory, factoriesCopy, gameData, true))
   console.log('factory: calculateFactories calculateFactory #1 end')
 
   // Now calculate the dependencies for all factories, removing any invalid inputs.
   console.log('factory: calculateFactories calculateDependencies start')
-  calculateDependencies(factories, gameData)
+  calculateDependencies(factoriesCopy, gameData)
   console.log('factory: calculateFactories calculateDependencies end')
 
   // Re-run the calculations after the dependencies have been calculated as some inputs may have been deleted
   console.log('factory: calculateFactories calculateFactory #2')
-  factories.forEach(factory => calculateFactory(factory, factories, gameData))
+  factoriesCopy.forEach(factory => calculateFactory(factory, factoriesCopy, gameData))
   console.log('factory: calculateFactories calculateFactory #2')
 
   console.log('factory: calculateFactories done')
+
+  // Reassign the factories to the store
+  factories = factoriesCopy
+
+  // Emit an event that the data has been updated so it can be synced
+  eventBus.emit('factoryUpdated')
 }
 
 export const countActiveTasks = (factory: Factory) => {

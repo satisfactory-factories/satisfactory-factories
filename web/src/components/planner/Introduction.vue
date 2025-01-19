@@ -60,8 +60,8 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import {defineEmits, ref} from 'vue'
-  import eventBus from "@/utils/eventBus";
+  import { defineEmits, ref } from 'vue'
+  import eventBus from '@/utils/eventBus'
 
   const showDialog = ref<boolean>(false)
 
@@ -96,7 +96,6 @@ import {defineEmits, ref} from 'vue'
     console.log('Introduction: Got introShow event', show)
     show ? open() : close()
   })
-
 
   if (introShow.value) {
     open()
