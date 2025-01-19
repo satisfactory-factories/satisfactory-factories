@@ -113,18 +113,21 @@ export const useAppStore = defineStore('app', () => {
 
     // Tell loader to prepare for load
     console.log('appStore: prepareLoader: Factories set, starting load process.')
-    eventBus.emit('prepareForLoad', { count: displayedFactories.value.length, shown: shownFactories(displayedFactories.value) })
+    eventBus.emit('prepareForLoad', {
+      // Purposefully not factoriesToLoad, as it should be set by setFactories
+      count: displayedFactories.value.length,
+      shown: shownFactories(displayedFactories.value),
+    })
   }
 
   // When the loader is ready, we will receive an event saying to initiate the load.
   eventBus.on('readyForData', () => {
     console.log('appStore: Received readyForData event, triggering load.')
-
     beginLoading(displayedFactories.value, true)
   })
 
   const beginLoading = async (newFactories: Factory[], loadMode = false) => {
-    console.log('appStore: loadFactoriesIncrementally: start', newFactories, 'loadMode', loadMode)
+    console.log('appStore: beginLoading', newFactories, 'loadMode', loadMode)
     loadedCount = 0
 
     // Reset the factories currently loaded, if there is any
@@ -464,6 +467,7 @@ export const useAppStore = defineStore('app', () => {
     currentTab,
     currentTabId,
     plannerState,
+    isInitialized: inited,
     isDebugMode,
     isLoaded,
     getFactories,
@@ -486,5 +490,9 @@ export const useAppStore = defineStore('app', () => {
     getUserOptions,
     setUserOptions,
     prepareLoader,
+
+    // Testing purposes only
+    beginLoading,
+    loadNextFactory,
   }
 })

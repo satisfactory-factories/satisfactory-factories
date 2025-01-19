@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Factory, FactoryTab, PlannerState } from '@/interfaces/planner/FactoryInterface'
 import { calculateFactory, newFactory } from '@/utils/factory-management/factory'
 import * as FactoryManager from '@/utils/factory-management/factory'
@@ -376,6 +376,159 @@ describe('app-store', () => {
       })
       expect(appStore.getUserOptions()).toEqual({
         satisfactionBreakdowns: true,
+      })
+    })
+  })
+
+  describe('loading process', () => {
+    beforeEach(() => {
+      vi.spyOn(eventBus, 'emit')
+      appStore.getFactories() // Init the state
+    })
+    describe('prepareLoader', () => {
+      it('set the isLoaded value to false', async () => {
+        await appStore.prepareLoader()
+        expect(appStore.isLoaded).toBe(false)
+      })
+
+      it('should emit the plannerHideContent event', async () => {
+        await appStore.prepareLoader()
+        expect(eventBus.emit).toHaveBeenCalledWith('plannerHideContent')
+      })
+
+      it('should set the factories as expected if supplied', async () => {
+        const factory = newFactory('Foo')
+        const factory2 = newFactory('Foo2')
+
+        await appStore.prepareLoader([factory, factory2])
+
+        expect(appStore.getFactories()).toEqual([factory, factory2])
+      })
+
+      it('should emit the prepareForLoad event with the correct info', async () => {
+        const factory = newFactory('Foo')
+        const factory2 = newFactory('Foo2')
+        factory2.hidden = true
+
+        await appStore.prepareLoader([factory, factory2])
+
+        expect(eventBus.emit).toHaveBeenCalledWith('prepareForLoad', {
+          count: 2,
+          shown: 1,
+        })
+      })
+
+      describe('beginLoading', () => {
+        let factories: Factory[]
+
+        beforeEach(async () => {
+          vi.spyOn(eventBus, 'emit')
+          const factory = newFactory('Foo')
+          const factory2 = newFactory('Foo2')
+          factories = [factory, factory2]
+          await appStore.prepareLoader(factories)
+        })
+        afterEach(() => {
+          localStorage.removeItem('preLoadFactories')
+        })
+
+        it('should load another list of factories if preLoadFactories contains them', async () => {
+          // Set up prepareForLoad event spy
+          const mockFailedFactories = [
+            newFactory('Bar'),
+          ]
+          localStorage.setItem('preLoadFactories', JSON.stringify(mockFailedFactories))
+
+          // Re-call the loading process as we've set the localStorage above.
+          await appStore.beginLoading(factories)
+
+          expect(eventBus.emit).toHaveBeenCalledWith('toast', {
+            message: 'Unsuccessful load detected, loading previous factory data.',
+            type: 'warning',
+          })
+          expect(eventBus.emit).toHaveBeenCalledWith('prepareForLoad', {
+            count: 1, // Not 2 as per the beforeEach
+            shown: 1,
+          })
+        })
+
+        it('should emit the prepareForLoad event with the correct info', async () => {
+          eventBus.emit('readyForData') // Which calls beginLoading
+
+          expect(eventBus.emit).toHaveBeenCalledWith('prepareForLoad', {
+            count: 2,
+            shown: 2,
+          })
+        })
+
+        // Tried doing this but the spy won't work.
+        // it('should call loadNextFactory', async () => {
+        //   const spy = vi.spyOn(appStore, 'loadNextFactory')
+        //
+        //   await appStore.beginLoading(factories)
+        //
+        //   expect(spy).toHaveBeenCalled()
+        // })
+      })
+
+      describe('loadNextFactory', () => {
+        let factories: Factory[]
+        const mockFailedFactories = [
+          newFactory('Bar'),
+        ]
+        beforeEach(async () => {
+          // Set up incrementLoad event spy
+          vi.spyOn(eventBus, 'emit')
+
+          const factory = newFactory('Foo')
+          const factory2 = newFactory('Foo2')
+          factories = [factory, factory2]
+        })
+        afterEach(() => {
+          // Reset the spy
+          vi.resetAllMocks()
+          localStorage.removeItem('preLoadFactories')
+        })
+
+        it('should have loaded the correct number of factories', async () => {
+          await appStore.prepareLoader(factories)
+
+          await appStore.beginLoading(factories)
+
+          expect(appStore.getFactories()).toEqual(factories)
+        })
+
+        it('should have loaded the correct number of factories given preLoadFactories', async () => {
+          localStorage.setItem('preLoadFactories', JSON.stringify(mockFailedFactories))
+          await appStore.prepareLoader(factories)
+
+          await appStore.beginLoading(factories)
+
+          // Check the resulting data
+          expect(appStore.getFactories()).toEqual(mockFailedFactories)
+
+          // Check if the local storage item was removed
+          expect(localStorage.getItem('preLoadFactories')).toBe(null)
+        })
+
+        it('should have emitted the incrementLoad,increment event the correct number of times', async () => {
+          await appStore.prepareLoader(factories)
+
+          await appStore.beginLoading(factories)
+
+          expect(eventBus.emit).toHaveBeenCalledTimes(7) // 5 other times, annoyingly we can't check the payload
+          expect(eventBus.emit).toHaveBeenCalledWith('incrementLoad', {
+            step: 'increment',
+          })
+        })
+
+        it('should have emitted the loadingCompleted event', async () => {
+          await appStore.prepareLoader(factories)
+
+          await appStore.beginLoading(factories)
+
+          expect(eventBus.emit).toHaveBeenCalledWith('loadingCompleted')
+        })
       })
     })
   })
