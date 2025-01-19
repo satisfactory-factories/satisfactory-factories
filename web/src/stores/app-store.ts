@@ -29,11 +29,11 @@ export const useAppStore = defineStore('app', () => {
 
   const inited = ref(false)
   let loadedCount = 0
-  const plannerState = ref<PlannerState>(JSON.parse(<string>localStorage.getItem('plannerState')) as PlannerState)
+  const plannerState = ref<PlannerState>(JSON.parse(<string>localStorage.getItem('plannerState') ?? '{}') as PlannerState)
   const oldState = JSON.parse(localStorage.getItem('factoryTabs') ?? '[]') as FactoryTab[] | null
 
   // If the new state doesn't exist and the old one does, migrate it.
-  if (!plannerState.value && oldState && oldState.length > 0) {
+  if (!plannerState.value.tabs && oldState && oldState.length > 0) {
     console.log('appStore: INIT: Found old factory state, migrating.')
 
     plannerState.value = migrateFactoryTabsToState(oldState)
@@ -43,11 +43,14 @@ export const useAppStore = defineStore('app', () => {
     // localStorage.removeItem('factoryTabs')
     localStorage.removeItem('currentFactoryTabIndex')
     localStorage.setItem('plannerState', JSON.stringify(plannerState))
-    alert('Your planner data has just been migrated to the new format. You will need to re-log in if you were backing up your data with an account.\n\nPlease report any issues with missing data etc to Discord, where we can help you restore any lost data.')
+    eventBus.emit('toast', {
+      message: 'Your planner data has just been migrated to the new format. You will need to re-log in if you were backing up your data with an account.\n\nPlease report any issues with missing data etc to Discord, where we can help you restore any lost data.',
+      type: 'success',
+    })
   }
 
   // If the state is not set, create a new one now
-  if (!plannerState.value) {
+  if (!plannerState.value.tabs) {
     console.log('appStore: INIT: plannerState not found, creating new state.')
     plannerState.value = newState({})
   }
@@ -79,9 +82,6 @@ export const useAppStore = defineStore('app', () => {
 
   const isDebugMode = ref<boolean>(false)
   const isLoaded = ref<boolean>(false)
-
-  const lastEdited = ref<Date>(new Date(localStorage.getItem('plannerLastEdited') ?? ''))
-  const lastSaved = ref<Date>(new Date(localStorage.getItem('plannerLastSaved') ?? ''))
 
   const shownFactories = (factories: Factory[]) => {
     return factories.filter(factory => !factory.hidden).length
@@ -422,18 +422,30 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const getLastEdited = (): Date => {
-    return lastEdited.value
+    const lastEdited = localStorage.getItem('plannerLastEdited')
+    if (!lastEdited) {
+      // Set it now
+      setLastEdited()
+      return getLastEdited()
+    }
+
+    return new Date(lastEdited)
   }
-  const setLastEdited = () => {
-    lastEdited.value = new Date()
-    localStorage.setItem('plannerLastEdited', lastEdited.value.toISOString())
+  const setLastEdited = (override?: Date) => {
+    const value = override?.toISOString() ?? new Date().toISOString()
+    localStorage.setItem('plannerLastEdited', value)
   }
   const getLastSaved = (): Date | null => {
-    return lastSaved.value
+    const lastSaved = localStorage.getItem('plannerLastSaved')
+
+    if (!lastSaved) {
+      return null
+    }
+    return new Date(lastSaved)
   }
-  const setLastSaved = () => {
-    lastSaved.value = new Date()
-    localStorage.setItem('plannerLastSaved', lastEdited.value.toISOString())
+  const setLastSaved = (override?: Date) => {
+    const value = override?.toISOString() ?? new Date().toISOString()
+    localStorage.setItem('plannerLastSaved', value)
   }
   const getUserOptions = () => {
     return plannerState.value.userOptions
