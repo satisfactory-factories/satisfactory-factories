@@ -20,7 +20,7 @@ describe('app-store', () => {
   // Things it does upon execution
   describe('initialization', () => {
     it('should initialize the store with the correct default values', () => {
-      expect(appStore.factories).toEqual([])
+      expect(appStore.getFactories()).toEqual([])
 
       const defaultTab = {
         id: expect.any(String),

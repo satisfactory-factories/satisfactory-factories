@@ -452,7 +452,6 @@ export const useAppStore = defineStore('app', () => {
     currentTab,
     currentTabId,
     plannerState,
-    factories: displayedFactories,
     isDebugMode,
     isLoaded,
     getFactories,

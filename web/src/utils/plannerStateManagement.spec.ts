@@ -5,43 +5,47 @@ import {
   addTab, deleteTab,
   getCurrentTab,
   getTab,
+  getTabAtIndex,
   migrateFactoryTabsToState,
   newState,
   newTab,
+  regenerateOrders,
 } from '@/utils/plannerStateManagement'
 
 describe('plannerStateManagement', () => {
   describe('newState', () => {
     it('should create a new state with default values', () => {
       const result = newState({})
+      const firstTab = Object.values(result.tabs)[0]
 
       expect(result).toEqual({
         user: null,
-        currentTabId: expect.any(String),
+        currentTabId: firstTab.id,
         lastSaved: null,
-        lastEdited: expect.any(Date),
-        userOptions: [],
-        tabs: [
-          {
-            id: expect.any(String),
+        userOptions: {
+          satisfactionBreakdowns: false,
+        },
+        tabs: {
+          [firstTab.id]: {
+            id: firstTab.id,
             name: 'Default',
             displayOrder: 0,
             factories: [],
           },
-        ],
+        },
       })
     })
 
     it('should create a new state with custom values', () => {
       const result = newState({
         user: 'test',
-        currentTabId: '255',
+        currentTabId: '1234',
         userOptions: {
           satisfactionBreakdowns: false,
         },
         tabs: {
-          255: {
-            id: '255',
+          1234: {
+            id: '1234',
             name: 'Test Tab',
             displayOrder: 0,
             factories: [],
@@ -51,20 +55,19 @@ describe('plannerStateManagement', () => {
 
       expect(result).toEqual({
         user: 'test',
-        currentTabId: '255',
+        currentTabId: '1234',
         lastSaved: null,
-        lastEdited: expect.any(Date),
         userOptions: {
           satisfactionBreakdowns: false,
         },
-        tabs: [
-          {
-            id: '255',
+        tabs: {
+          1234: {
+            id: '1234',
             name: 'Test Tab',
             displayOrder: 0,
             factories: [],
           },
-        ],
+        },
       })
     })
   })
@@ -83,14 +86,14 @@ describe('plannerStateManagement', () => {
 
     it('should create a new tab using custom values', () => {
       const result = newTab({
-        tabId: '255',
+        tabId: '12345',
         name: 'Test Tab',
         displayOrder: 0,
         factories: [],
       })
 
       expect(result).toEqual({
-        id: '255',
+        id: '12345',
         name: 'Test Tab',
         displayOrder: 0,
         factories: [],
@@ -101,19 +104,22 @@ describe('plannerStateManagement', () => {
   describe('addTab', () => {
     it('should add a tab to the state', () => {
       const state = newState({})
-      const existingTab = state.tabs[0]
+      const existingTab = state.tabs[Object.keys(state.tabs)[0]]
       const tab = newTab()
 
       addTab(state, tab)
 
-      expect(state.tabs).toEqual([existingTab, tab])
+      expect(state.tabs).toEqual({
+        [existingTab.id]: existingTab,
+        [tab.id]: tab,
+      })
       expect(tab.displayOrder).toBe(1)
     })
   })
 
   describe('getCurrentTab', () => {
     const state = newState({})
-    const tab1 = state.tabs[0]
+    const tab1 = state.tabs[Object.keys(state.tabs)[0]]
     addTab(state, newTab({ tabId: '1' }))
 
     it('should select the original tab', () => {
@@ -124,7 +130,7 @@ describe('plannerStateManagement', () => {
 
   describe('getTab', () => {
     const state = newState({})
-    const tab1 = state.tabs[0]
+    const tab1 = state.tabs[Object.keys(state.tabs)[0]]
     addTab(state, newTab({ tabId: '1' }))
 
     it('should return the expected tab', () => {
@@ -144,14 +150,16 @@ describe('plannerStateManagement', () => {
 
     beforeEach(() => {
       state = newState({})
-      tab1 = state.tabs[0]
-      tab2 = newTab({ tabId: '1' })
+      tab1 = state.tabs[Object.keys(state.tabs)[0]]
+      tab2 = newTab({ tabId: '1337' })
       addTab(state, tab2)
     })
 
     it('should delete the correct tab from the state', () => {
       deleteTab(state, tab1)
-      expect(state.tabs).toEqual([tab2])
+      expect(state.tabs).toEqual({
+        [tab2.id]: tab2,
+      })
     })
 
     it('should re-order the display order of the tabs correctly', () => {
@@ -160,14 +168,35 @@ describe('plannerStateManagement', () => {
       const tab3 = getTab(state, 'foo')
       deleteTab(state, tab2)
 
-      expect(state.tabs).toEqual([tab1, tab3])
+      expect(state.tabs).toEqual({
+        [tab1.id]: tab1,
+        [tab3.id]: tab3,
+      })
       expect(tab1.displayOrder).toBe(0)
       expect(tab3.displayOrder).toBe(1)
     })
 
-    it('should throw an error if the tab does not exist', () => {
-      const tabNotInState = newTab({ tabId: '2' })
-      expect(() => deleteTab(state, tabNotInState)).toThrowError('Tab with id 2 not found')
+    it('should select the last tab after deletion', () => {
+      deleteTab(state, tab1)
+      expect(state.currentTabId).toBe(tab2.id)
+    })
+  })
+
+  describe('regenerateOrders', () => {
+    // Ensure that the object properties are not returning the tabs in the wrong order.
+    it('should regenerate the tab display orders correctly', () => {
+      const state = newState({})
+      const tab1 = getTabAtIndex(state, 0)
+      const tab2 = newTab({ tabId: '1234545' })
+      addTab(state, tab2)
+      const tab3 = newTab({ tabId: 'foo' })
+      addTab(state, tab3)
+
+      regenerateOrders(state)
+
+      expect(tab1.displayOrder).toBe(0)
+      expect(tab2.displayOrder).toBe(1)
+      expect(tab3.displayOrder).toBe(2)
     })
   })
 
@@ -178,15 +207,15 @@ describe('plannerStateManagement', () => {
     beforeEach(() => {
       oldState = [
         {
-          id: '1',
+          id: 'foobar1',
           name: 'Tab 1',
           displayOrder: 0,
           factories: [mockFactory],
         },
         {
-          id: '2',
+          id: 'foobar1337',
           name: 'Tab 2',
-          displayOrder: 1,
+          displayOrder: 3, // Purposefully make this wrong
           factories: [],
         },
       ]
@@ -196,24 +225,25 @@ describe('plannerStateManagement', () => {
 
       expect(newState).toEqual({
         user: null,
-        currentTabId: '1',
+        currentTabId: 'foobar1',
         lastSaved: null,
-        lastEdited: expect.any(Date),
-        userOptions: [],
-        tabs: [
-          {
-            id: '1',
+        userOptions: {
+          satisfactionBreakdowns: false,
+        },
+        tabs: {
+          foobar1: {
+            id: 'foobar1',
             name: 'Tab 1',
             displayOrder: 0,
             factories: [mockFactory],
           },
-          {
-            id: '2',
+          foobar1337: {
+            id: 'foobar1337',
             name: 'Tab 2',
             displayOrder: 1,
             factories: [],
           },
-        ],
+        },
       })
     })
   })

@@ -58,19 +58,36 @@ export const getTab = (state: PlannerState, tabId: string): FactoryTab => {
 }
 
 export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
-  delete state.tabs[tab.id]
-  // Regenerate display orders
-  const tabKeys = Object.keys(state.tabs)
-  tabKeys.forEach((tabId, index) => {
-    state.tabs[tabId].displayOrder = index
-  })
+  if (state.tabs[tab.id]) {
+    delete state.tabs[tab.id]
+  }
+  regenerateOrders(state)
 
   // Reset the current tab ID to be the last tab ID
-  state.currentTabId = state.tabs[tabKeys.length - 1].id
+  const lastTabIndex = Object.keys(state.tabs).length - 1
+  state.currentTabId = Object.values(state.tabs)[lastTabIndex].id
 }
 
 export const getTabsCount = (state: PlannerState): number => {
   return Object.keys(state.tabs).length
+}
+
+export const getTabAtIndex = (state: PlannerState, index: number): FactoryTab => {
+  const key = Object.keys(state.tabs)[index]
+  return state.tabs[key]
+}
+
+export const regenerateOrders = (state: PlannerState): void => {
+  // Regenerate display orders
+  const tabVals = Object.values(state.tabs)
+
+  // Sort the tabs by display order
+  tabVals.sort((a, b) => a.displayOrder - b.displayOrder)
+
+  // Reassign the display order
+  tabVals.forEach((tab, index) => {
+    tab.displayOrder = index
+  })
 }
 
 export const migrateFactoryTabsToState = (oldState: FactoryTab[]): PlannerState => {
