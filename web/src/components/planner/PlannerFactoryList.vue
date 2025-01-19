@@ -106,14 +106,18 @@
 
   const navigateToFactory = inject('navigateToFactory') as (id: number, subsection?: string) => void
 
-  const show = ref(false)
-
   // eslint-disable-next-line func-call-spacing
   const emit = defineEmits<{
     (event: 'createFactory'): void;
     (event: 'updateFactories', factories: Factory[]): void;
   }>()
-  const compProps = defineProps<{ factories: Factory[], totalFactories: number }>()
+  const compProps = defineProps<{
+    factories: Factory[],
+    totalFactories: number,
+    loadedFrom: string
+  }>()
+  const show = ref(compProps.loadedFrom !== 'planner')
+
   const factoriesCopy = ref([...compProps.factories])
 
   watch(() => compProps.factories, factories => {

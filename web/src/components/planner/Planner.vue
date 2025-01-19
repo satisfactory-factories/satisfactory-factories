@@ -2,12 +2,13 @@
   <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
-    <Teleport v-if="mdAndDown" defer to="#navigationDrawer">
+    <Teleport defer to="#navigationDrawer" v-if="navigationReady">
       <planner-factory-list
         :factories="getFactories()"
         :total-factories="getFactories().length"
         @create-factory="createFactory"
         @update-factories="updateFactoriesList"
+        loadedFrom="navigation"
       />
       <planner-global-actions
         class="py-4"
@@ -28,6 +29,7 @@
             :total-factories="getFactories().length"
             @create-factory="createFactory"
             @update-factories="updateFactoriesList"
+            loadedFrom="planner"
           />
           <v-divider color="#ccc" thickness="2px" />
           <planner-global-actions
@@ -84,11 +86,9 @@
   } from '@/utils/factory-management/dependencies'
   import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
-  import { useDisplay } from 'vuetify'
   import { useGameDataStore } from '@/stores/game-data-store'
   import eventBus from '@/utils/eventBus'
 
-  const { mdAndDown } = useDisplay()
   const { getGameData } = useGameDataStore()
   const gameData = getGameData()
 
@@ -115,6 +115,13 @@
   // ==== WATCHES
   watch(helpText, newValue => {
     localStorage.setItem('helpText', JSON.stringify(newValue))
+  })
+
+  const navigationReady = ref(false)
+
+  eventBus.on('navigationReady', () => {
+    console.log('Planner: Received navigationReady event, teleporting factory list')
+    navigationReady.value = true
   })
 
   const createFactory = () => {
