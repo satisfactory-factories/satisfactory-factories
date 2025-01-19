@@ -13,9 +13,14 @@ type Events = {
   readyForData: undefined;
   plannerHideContent: undefined
   plannerShowContent: undefined
+
+  // Introduction events
+  introShow: boolean
+
+  // Navigation events
+  navigationReady: undefined;
   switchTab: string;
 
-  introShow: boolean
 };
 
 const eventBus = mitt<Events>()
