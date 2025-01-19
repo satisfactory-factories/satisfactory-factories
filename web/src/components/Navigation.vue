@@ -61,6 +61,16 @@
     isDrawerOpen.value = !isDrawerOpen.value
   }
 
+  watch(mdAndDown, () => {
+    isDrawerOpen.value = false
+  })
+  watch(isDrawerOpen, () => {
+    // Force close the drawer when it's not mobile
+    if (isDrawerOpen.value && !mdAndDown.value) {
+      isDrawerOpen.value = false
+    }
+  })
+
   const tabItems = [
     { title: 'Planner', icon: 'fas fa-ruler-triangle', href: '/' },
     { title: 'Graph (WIP)', icon: 'fas fa-project-diagram', href: '/graph' },
