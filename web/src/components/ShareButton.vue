@@ -30,7 +30,7 @@
   import eventBus from '@/utils/eventBus'
 
   // Get user auth stuff from the app store
-  const { currentFactoryTab } = useAppStore()
+  const { currentTab, getFactories } = useAppStore()
   const authStore = useAuthStore()
 
   const apiUrl = config.apiUrl
@@ -39,13 +39,14 @@
   const showCopyDialog = ref(false)
 
   const createShareLink = async () => {
-    if (!currentFactoryTab.factories || currentFactoryTab.factories.length === 0) {
+    const factories = getFactories()
+    if (!factories || factories.length === 0) {
       alert('No factory data to share!')
       return
     }
 
     creating.value = true
-    link.value = await handleCreation(currentFactoryTab) ?? ''
+    link.value = await handleCreation(currentTab) ?? ''
     creating.value = false
 
     // If no link was returned assume server errors

@@ -1,6 +1,7 @@
 import { SyncActions } from '@/stores/sync/sync-actions'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { newFactory } from '@/utils/factory-management/factory'
+import { newTab } from '@/utils/plannerStateManagement'
+import { BackendPlannerStateResponse } from '@/interfaces/BackendPlannerStateResponse'
 
 const apiUrl = 'http://mock.com'
 const mockData = { data: 'mock-data' }
@@ -24,15 +25,19 @@ const mockAppStore = {
   getLastEdit: vi.fn(() => new Date(Date.now() - 1000 * 60)), // 1 minute ago
   getFactories: vi.fn(),
   setFactories: vi.fn(),
+  getTabs: vi.fn(),
+  setTabs: vi.fn(),
   isLoaded: true,
 }
 
-const mockServerData = {
+const mockTab = newTab({ name: 'Foo1' })
+const mockServerData: BackendPlannerStateResponse = {
   user: 'foo',
-  data: [
-    newFactory('Foo1'),
-  ],
+  currentTabId: mockTab.id,
+  tabs: [mockTab],
+  userOptions: [],
   lastSaved: new Date(),
+  lastEdited: new Date(),
 }
 
 describe('SyncActions', () => {
@@ -84,15 +89,37 @@ describe('SyncActions', () => {
       })
 
       await expect(syncActions.getServerData()).rejects.toThrowError(
-        'Backend server unreachable for data load!'
+        'Backend server unreachable for migration check!'
       )
 
-      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/load`, {
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/needsStateMigration`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer mock-token',
         },
+      })
+    })
+
+    it('should perform a state migration', async () => {
+      vi.spyOn(syncActions, 'checkIfNeedsMigration').mockResolvedValue(true)
+      vi.spyOn(mockAppStore, 'getTabs').mockReturnValue({ someData: 'foo' })
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockData),
+      })
+
+      const result = await syncActions.getServerData()
+
+      expect(result).toStrictEqual(mockData)
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer mock-token`,
+        },
+        body: JSON.stringify({ someData: 'foo' }),
       })
     })
   })
@@ -112,7 +139,7 @@ describe('SyncActions', () => {
       expect(mockAppStore.setFactories).not.toHaveBeenCalled()
     })
     it('should fetch and do nothing when no data detected', async () => {
-      vi.spyOn(syncActions, 'getServerData').mockResolvedValue(false)
+      vi.spyOn(syncActions, 'getServerData').mockRejectedValue(new Error('No data'))
 
       expect(await syncActions.loadServerData()).toBe(undefined)
       expect(mockAppStore.setFactories).not.toHaveBeenCalled()
@@ -133,21 +160,24 @@ describe('SyncActions', () => {
       expect(result).toBeUndefined()
     })
 
-    it('should correctly force load the factory data into appStore', async () => {
+    it('should correctly force load the factory tabs into appStore', async () => {
       const mockData = {
         user: 'foo',
-        data: [
-          newFactory('Foo1'),
-          newFactory('Foo2'),
+        currentTabId: 'foo',
+        tabs: [
+          newTab({ name: 'Foo1' }),
+          newTab({ name: 'Foo2' }),
         ],
         lastSaved: new Date(),
+        lastEdited: new Date(),
+        userOptions: [],
       }
 
       vi.spyOn(syncActions, 'getServerData').mockResolvedValue(mockData)
       vi.spyOn(syncActions, 'checkForOOS').mockReturnValue(true)
 
       expect(await syncActions.loadServerData(true)).toBe(true)
-      expect(mockAppStore.setFactories).toHaveBeenCalledWith(mockData.data)
+      expect(mockAppStore.setTabs).toHaveBeenCalledWith(mockData.tabs)
     })
   })
 
@@ -230,6 +260,79 @@ describe('SyncActions', () => {
 
       const result = syncActions.checkForOOS(mockData as any)
       expect(result).toBe(true)
+    })
+  })
+  describe('performSave', () => {
+    let data: any
+    beforeEach(() => {
+      data = { someData: 'foo' }
+      mockAuthStore.getToken.mockResolvedValueOnce('foo')
+    })
+    it('should throw if there is no token', () => {
+      mockAuthStore.getToken.mockResolvedValueOnce(null)
+      expect(syncActions.performSave({} as any)).rejects.toThrowError('syncData: performSave: No token!')
+    })
+
+    it('should abort if there is no data', () => {
+      expect(syncActions.performSave({} as any)).resolves.toBe(undefined)
+    })
+
+    it('should perform a save with proper data', async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue({ message: 'All is good' }),
+      })
+
+      await syncActions.performSave(data as any)
+
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer foo`,
+        },
+        body: JSON.stringify(data),
+      })
+    })
+
+    it('should handle server exceptions', async () => {
+      mockFetch.mockImplementation(() => {
+        throw new Error('Network error')
+      })
+
+      await expect(
+        syncActions.performSave(data as any)
+      ).rejects.toThrow(`syncData: performSave: Unexpected Response - Network error`)
+
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer foo`,
+        },
+        body: JSON.stringify(data),
+      })
+    })
+
+    it('should handle not ok responses', async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: vi.fn().mockResolvedValue({ message: 'Something went bang' }),
+      })
+
+      await expect(
+        syncActions.performSave(data as any)
+      ).rejects.toThrow(`syncData: performSave: Server 5xx error`)
+
+      expect(mockFetch).toHaveBeenCalledWith(`${apiUrl}/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer foo`,
+        },
+        body: JSON.stringify(data),
+      })
     })
   })
 })

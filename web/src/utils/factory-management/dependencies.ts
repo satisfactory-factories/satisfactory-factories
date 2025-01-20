@@ -62,7 +62,7 @@ export const flushInvalidRequests = (factories: Factory[]): void => {
       if (!dependantFactory?.id || !dependantFactory?.inputs) {
         console.error(`flushInvalidRequests: Requested factory ${requestedFactoryId} not found!`)
         delete factory.dependencies.requests[requestedFactoryId]
-        alert(`The factory ${factory.name} has corrupted data and has been cleaned up. Please refresh the page.`)
+        console.warn(`The factory ${factory.name} has corrupted data and has been cleaned up.`)
         return // Nothing to do as the factory doesn't exist.
       }
 

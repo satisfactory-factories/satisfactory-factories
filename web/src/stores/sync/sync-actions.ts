@@ -1,5 +1,6 @@
-import { BackendFactoryDataResponse } from '@/interfaces/BackendFactoryDataResponse'
+import { BackendPlannerStateResponse } from '@/interfaces/BackendPlannerStateResponse'
 import { config } from '@/config/config'
+import { FactoryTab } from '@/interfaces/planner/FactoryInterface'
 
 export class SyncActions {
   private readonly authStore: any
@@ -20,7 +21,7 @@ export class SyncActions {
       return
     }
 
-    let dataObject: BackendFactoryDataResponse | false
+    let dataObject: BackendPlannerStateResponse | false
     try {
       dataObject = await this.getServerData()
 
@@ -39,7 +40,7 @@ export class SyncActions {
     // Don't care about sync state if we're forcing a load
     if (forceLoad) {
       console.log('loadServerData: Forcing data load.')
-      this.appStore.setFactories(dataObject.data)
+      this.appStore.setState(dataObject)
       return true
     }
 
@@ -67,24 +68,26 @@ export class SyncActions {
       return
     }
 
-    let token
     try {
-      token = await this.authStore.getToken()
-      if (!token) {
-        console.error('syncData: No token found!')
-        return
-      }
+      const data = this.appStore.getTabs()
+      await this.performSave(data)
     } catch (error) {
       if (error instanceof Error) {
         console.error('syncData: Token error:', error.message)
-        return
       }
     }
+  }
 
-    const data = this.appStore.getFactories()
+  async performSave (data: FactoryTab[]): Promise<boolean | void> {
+    const token = await this.authStore.getToken()
+
+    if (!token) {
+      throw new Error('syncData: performSave: No token!')
+    }
+
     if (!data || !Object.keys(data).length) {
       console.warn('syncData: No data to save!')
-      return
+      return false
     }
 
     let response: Response
@@ -99,8 +102,9 @@ export class SyncActions {
       })
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Data save failed:', error)
-        throw new Error(`syncData: Unexpected Response - ${error.message}`)
+        const errorMessage = `syncData: performSave: Unexpected Response - ${error.message}`
+        console.error(errorMessage, error)
+        throw new Error(errorMessage)
       }
       return false
     }
@@ -114,12 +118,20 @@ export class SyncActions {
       console.log('syncData: Data saved:', object)
       return true
     } else if (response.status === 500 || response.status === 502) {
-      throw new Error('syncData: Server 5xx error')
+      throw new Error('syncData: performSave: Server 5xx error')
     }
   }
 
-  async getServerData (): Promise<BackendFactoryDataResponse | false> {
+  async getServerData (): Promise<BackendPlannerStateResponse> {
     const token = await this.authStore.getToken()
+
+    // Check if we need to do a migration, if so don't load the data as it's old.
+    const needsMigration = await this.checkIfNeedsMigration()
+    if (needsMigration) {
+      console.log('syncData: getServerData: Migration required, doing it now.')
+      await this.performSave(this.appStore.getTabs())
+    }
+
     const response = await fetch(`${this.apiUrl}/load`, {
       method: 'GET',
       headers: {
@@ -138,6 +150,7 @@ export class SyncActions {
       if (!data) {
         throw new Error('Data load responded weirdly!')
       }
+
       return object
     } else {
       console.error('Data load failed:', object)
@@ -145,7 +158,7 @@ export class SyncActions {
     }
   }
 
-  checkForOOS (data: BackendFactoryDataResponse): boolean {
+  checkForOOS (data: BackendPlannerStateResponse): boolean {
     const serverSaved = new Date(data.lastSaved)
     const clientEdited = this.appStore.getLastEdit()
     if (clientEdited < serverSaved) {
@@ -155,5 +168,28 @@ export class SyncActions {
     console.debug('Server data is behind client data, assuming local is correct.')
 
     return false
+  }
+
+  async checkIfNeedsMigration () {
+    const token = await this.authStore.getToken()
+    const response = await fetch(`${this.apiUrl}/needsStateMigration`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const data = await response.json()
+    if (response.ok) {
+      if (data === true) {
+        console.log('Migration required.')
+        return true
+      }
+      console.log('No migration required.')
+      return false
+    } else {
+      console.error('Migration check failed:', data)
+      throw new Error('Backend server unreachable for migration check!')
+    }
   }
 }

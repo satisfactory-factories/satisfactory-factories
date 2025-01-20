@@ -128,7 +128,7 @@
     // Handle issues with Edge browser breaking reactivity.
     setTimeout(() => {
       showEdgeWarning.value = true
-    }, 5000)
+    }, 30000)
   }
 
   onMounted(() => {

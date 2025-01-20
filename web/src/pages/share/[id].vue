@@ -11,6 +11,7 @@
   import { useAppStore } from '@/stores/app-store'
   import { useRoute } from 'vue-router'
   import router from '@/router'
+  import { getTabsCount } from '@/utils/plannerStateManagement'
 
   const data = ref<DataInterface | null>({} as DataInterface)
 
@@ -37,7 +38,7 @@
 
       if (loadedFactoryData.value) {
         loadedFactoryData.value.name = `${loadedFactoryData.value.name} (shared)`
-        appStore.addTab(loadedFactoryData.value)
+        appStore.createNewTab(loadedFactoryData.value)
       }
     }
 
@@ -70,6 +71,7 @@
             id: crypto.randomUUID(),
             name: 'Shared Data',
             factories: data.data,
+            displayOrder: getTabsCount(appStore.getState()) + 1,
           }
         }
 

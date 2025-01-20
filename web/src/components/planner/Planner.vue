@@ -1,5 +1,5 @@
 <template>
-  <introduction :intro-show="introShow" @close-intro="closeIntro" @show-demo="setupDemo" />
+  <introduction @show-demo="setupDemo" />
   <planner-too-many-factories-open :factories="getFactories()" @hide-all="showHideAll('hide')" />
   <div class="planner-container">
     <Teleport v-if="navigationReady" defer to="#navigationDrawer">
@@ -84,7 +84,14 @@
   import {
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
+  import {
+    calculateFactories,
+    calculateFactory,
+    findFac,
+    newFactory,
+    regenerateSortOrders,
+    reorderFactory,
+  } from '@/utils/factory-management/factory'
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { useGameDataStore } from '@/stores/game-data-store'
   import eventBus from '@/utils/eventBus'
@@ -99,10 +106,9 @@
 
   const loadingCompleted = ref(false)
 
-  // When we are starting a new load we need to unload all the DOM elements
-  eventBus.on('prepareForLoad', () => {
+  eventBus.on('plannerHideContent', () => {
     loadingCompleted.value = false
-    console.log('Planner: Received prepareForLoad event, marked as unloaded, showing placeholders')
+    console.log('Planner: Received plannerHideContent event, marked as unloaded, showing placeholders')
   })
 
   // When everything is loaded and ready to go, then we are ready to start loading things.
@@ -204,6 +210,9 @@
   // Proxy method so we don't have to pass the gameData and getFactories() around to every single subcomponent
   const updateFactory = (factory: Factory) => {
     calculateFactory(factory, getFactories(), gameData)
+
+    // Emit an event that the data has been updated so it can be synced
+    eventBus.emit('factoryUpdated')
   }
 
   const copyFactory = (originalFactory: Factory) => {
@@ -225,7 +234,7 @@
     // Now call calculateFactories in case the clone's imports cause a deficit
     calculateFactories(getFactories(), gameData)
 
-    regenerateSortOrders()
+    regenerateSortOrders(getFactories())
     navigateToFactory(newId)
   }
 
@@ -243,7 +252,7 @@
       calculateFactories(getFactories(), gameData)
 
       // Regenerate the sort orders
-      regenerateSortOrders()
+      regenerateSortOrders(getFactories())
     } else {
       console.error('Factory not found to delete?!')
     }
@@ -283,38 +292,7 @@
   }
 
   const moveFactory = (factory: Factory, direction: string) => {
-    const currentOrder = factory.displayOrder
-    let targetOrder
-
-    if (direction === 'up' && currentOrder > 0) {
-      targetOrder = currentOrder - 1
-    } else if (direction === 'down' && currentOrder < getFactories().length - 1) {
-      targetOrder = currentOrder + 1
-    } else {
-      return // Invalid move
-    }
-
-    // Find the target factory and swap display orders
-    const targetFactory = getFactories().find(fac => fac.displayOrder === targetOrder)
-    if (targetFactory) {
-      targetFactory.displayOrder = currentOrder
-      factory.displayOrder = targetOrder
-    }
-
-    regenerateSortOrders()
-  }
-
-  const regenerateSortOrders = () => {
-    // Sort now, which may have sorted them weirdly
-    setFactories(getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
-
-    // Ensure that the display order is correct
-    getFactories().forEach((factory, index) => {
-      factory.displayOrder = index
-    })
-
-    // Now re-sort
-    setFactories(getFactories().sort((a, b) => a.displayOrder - b.displayOrder))
+    reorderFactory(factory, direction, getFactories())
   }
 
   const forceSort = () => {
@@ -336,10 +314,6 @@
   provide('navigateToFactory', navigateToFactory)
   provide('moveFactory', moveFactory)
 
-  // Grab from local storage if the user has already dismissed this popup
-  // If they have, don't show it again.
-  const introShow = ref<boolean>(!localStorage.getItem('dismissed-introduction'))
-
   let factoriesToLoad: Factory[] = []
 
   const setupDemo = () => {
@@ -354,14 +328,13 @@
   }
 
   const closeIntro = () => {
-    console.log('closing intro')
-    introShow.value = false
-    localStorage.setItem('dismissed-introduction', 'true')
+    console.log('Planner: Closing intro')
+    eventBus.emit('introShow', false)
   }
 
   const showIntro = () => {
-    console.log('showing intro')
-    introShow.value = true
+    console.log('Planner: Showing intro')
+    eventBus.emit('introShow', true)
   }
 </script>
 
