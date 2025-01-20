@@ -61,7 +61,7 @@ export const deleteTab = (state: PlannerState, tab: FactoryTab): void => {
   if (state.tabs[tab.id]) {
     delete state.tabs[tab.id]
   }
-  regenerateOrders(state)
+  regenerateTabOrders(state)
 
   // Reset the current tab ID to be the last tab ID
   const lastTabIndex = Object.keys(state.tabs).length - 1
@@ -77,7 +77,7 @@ export const getTabAtIndex = (state: PlannerState, index: number): FactoryTab =>
   return state.tabs[key]
 }
 
-export const regenerateOrders = (state: PlannerState): void => {
+export const regenerateTabOrders = (state: PlannerState): void => {
   // Regenerate display orders
   const tabVals = Object.values(state.tabs)
 

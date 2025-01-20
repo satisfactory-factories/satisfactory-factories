@@ -9,7 +9,7 @@ import {
   migrateFactoryTabsToState,
   newState,
   newTab,
-  regenerateOrders,
+  regenerateTabOrders,
 } from '@/utils/plannerStateManagement'
 
 describe('plannerStateManagement', () => {
@@ -192,7 +192,7 @@ describe('plannerStateManagement', () => {
       const tab3 = newTab({ tabId: 'foo' })
       addTab(state, tab3)
 
-      regenerateOrders(state)
+      regenerateTabOrders(state)
 
       expect(tab1.displayOrder).toBe(0)
       expect(tab2.displayOrder).toBe(1)

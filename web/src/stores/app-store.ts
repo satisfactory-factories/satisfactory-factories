@@ -8,7 +8,7 @@ import {
   PlannerUserOptions,
 } from '@/interfaces/planner/FactoryInterface'
 import { ref } from 'vue'
-import { calculateFactories } from '@/utils/factory-management/factory'
+import { calculateFactories, regenerateSortOrders } from '@/utils/factory-management/factory'
 import { useGameDataStore } from '@/stores/game-data-store'
 import { validateFactories } from '@/utils/factory-management/validation'
 import eventBus from '@/utils/eventBus'
@@ -285,6 +285,21 @@ export const useAppStore = defineStore('app', () => {
     return displayedFactories.value
   }
 
+  const getFactories = () => {
+    if (!currentTab.value) {
+      console.error('appStore: getFactories: No current factory tab set!')
+      return []
+    }
+    // If the factories are not initialized, prepare for them to be loaded
+    if (!inited.value) {
+      eventBus.emit('prepareForLoad', {
+        count: currentTab.value.factories.length,
+        shown: shownFactories(currentTab.value.factories),
+      })
+    }
+    return inited.value ? displayedFactories.value : initFactories(currentTab.value.factories)
+  }
+
   const setFactories = (newFactories: Factory[], forceRecalc = false) => {
     console.log('appStore: setFactories: Setting factories', newFactories)
 
@@ -328,7 +343,10 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const addFactory = (factory: Factory) => {
+    // Ensure the factory has the correct display order
+    factory.displayOrder = displayedFactories.value.length
     displayedFactories.value.push(factory)
+    console.log('appStore: addFactory: Factory added', displayedFactories.value)
   }
 
   const removeFactory = (id: number) => {
@@ -336,6 +354,8 @@ export const useAppStore = defineStore('app', () => {
     if (index !== -1) {
       displayedFactories.value.splice(index, 1)
     }
+
+    regenerateSortOrders(getFactories())
   }
 
   const clearFactories = () => {
@@ -355,19 +375,23 @@ export const useAppStore = defineStore('app', () => {
     currentTabId.value = newTabData.id
 
     // Tell Tab Navigation of the new tab and to switch to it
+    console.log('appStore: createNewTab: Tab created, switching tab to:', newTabData.id)
     eventBus.emit('switchTab', newTabData.id)
   }
 
-  const removeCurrentTab = async () => {
+  const removeCurrentTab = () => {
     if (getTabsCount(plannerState.value) === 1) return
+
+    console.log('appStore: removeCurrentTab: Removing current tab:', currentTab.value.id)
 
     deleteTab(plannerState.value, currentTab.value)
     // Get the new tab index by looking at the last tab in the list
     currentTabId.value = plannerState.value.currentTabId
 
     // Swap to the last tab remaining
-    console.log('appStore: removeCurrentTab: Tab removed, informing Tab Navigator so we can can commence switching and reload last tab')
-    eventBus.emit('switchTab', getCurrentTab(plannerState.value).id)
+    const switchToTabId = getCurrentTab(plannerState.value).id
+    console.log('appStore: removeCurrentTab: Tab removed, switching tab to:', switchToTabId)
+    eventBus.emit('switchTab', switchToTabId)
   }
   // ==== END TAB MANAGEMENT
 
@@ -376,22 +400,8 @@ export const useAppStore = defineStore('app', () => {
     return plannerState.value
   }
   const setState = (state: PlannerState) => {
+    console.log('appStore: setState', state)
     plannerState.value = state
-  }
-
-  const getFactories = () => {
-    if (!currentTab.value) {
-      console.error('appStore: getFactories: No current factory tab set!')
-      return []
-    }
-    // If the factories are not initialized, prepare for them to be loaded
-    if (!inited.value) {
-      eventBus.emit('prepareForLoad', {
-        count: currentTab.value.factories.length,
-        shown: shownFactories(currentTab.value.factories),
-      })
-    }
-    return inited.value ? displayedFactories.value : initFactories(currentTab.value.factories)
   }
 
   const getTabs = () => {

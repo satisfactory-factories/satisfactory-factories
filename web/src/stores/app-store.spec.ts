@@ -5,13 +5,22 @@ import * as FactoryManager from '@/utils/factory-management/factory'
 import { useAppStore } from '@/stores/app-store'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
-import { getCurrentTab, newState } from '@/utils/plannerStateManagement'
+import { getCurrentTab, getTab, newState } from '@/utils/plannerStateManagement'
 import { createPinia, setActivePinia } from 'pinia'
 import eventBus from '@/utils/eventBus'
 
-describe('app-store', () => {
-  let appStore: ReturnType<typeof useAppStore>
+let appStore: ReturnType<typeof useAppStore>
 
+const resetAppStore = (keepLocalStorage = false) => {
+  if (!keepLocalStorage) {
+    localStorage.removeItem('plannerState')
+    localStorage.removeItem('factoryTabs')
+  }
+  setActivePinia(createPinia())
+  appStore = useAppStore()
+}
+
+describe('app-store', () => {
   beforeEach(() => {
     // Reset mocks before each test
     vi.resetAllMocks()
@@ -60,9 +69,8 @@ describe('app-store', () => {
         localStorage.setItem('factoryTabs', JSON.stringify([mockFactoryTab]))
         vi.spyOn(eventBus, 'emit')
 
-        // Nullify the previously initialized store
-        setActivePinia(createPinia())
-        appStore = useAppStore()
+        // Reset the app store each time
+        resetAppStore(true)
       })
 
       it('should properly handle a factoryTab migration', () => {
@@ -117,158 +125,6 @@ describe('app-store', () => {
         const plannerLastEdited = localStorage.getItem('plannerLastEdited')
         expect(plannerLastEdited).not.toEqual(editTime)
       }, 50)
-    })
-  })
-
-  describe('initFactories', () => {
-    let factories: Factory[]
-    let factory: Factory
-    beforeEach(() => {
-      factory = newFactory('Foo')
-
-      addProductToFactory(factory, {
-        id: 'CopperIngot',
-        amount: 1337,
-        recipe: 'IngotCopper',
-      })
-
-      factories = [factory]
-      calculateFactory(factory, factories, gameData)
-    })
-    // #317 - broken plan loading from v0.2 data
-    it('should initialize factories with missing powerProducer keys', () => {
-      // Malform the object to remove the powerProducers key for test
-      // @ts-ignore
-      delete factory.powerProducers
-      expect(factory.powerProducers).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.powerProducers).toBeDefined()
-    })
-    it('#222: should initialize factories with missing sync data', () => {
-      // @ts-ignore
-      delete factory.inSync
-      // @ts-ignore
-      delete factory.syncState
-      expect(factory.inSync).not.toBeDefined()
-      expect(factory.syncState).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.inSync).toBe(null)
-      expect(factory.syncState).toBeDefined()
-    })
-
-    it('#244: should initialize factories with missing part data, and should recalculate it', () => {
-      // Malform the part data
-      // @ts-ignore
-      factory.parts.CopperIngot.amountRequiredExports = undefined
-      // @ts-ignore
-      factory.parts.CopperIngot.amountRequiredProduction = undefined
-
-      expect(factory.parts.CopperIngot.amountRequiredExports).not.toBeDefined()
-      expect(factory.parts.CopperIngot.amountRequiredProduction).not.toBeDefined()
-
-      // Initialize the factories
-      appStore.initFactories(factories)
-
-      // Should now be there
-      expect(factory.parts.CopperIngot.amountRequiredExports).toBeDefined()
-      expect(factory.parts.CopperIngot.amountRequiredProduction).toBeDefined()
-    })
-
-    it('#180: should initialize factories with missing part power and exportability data', () => {
-      // @ts-ignore
-      factory.parts.CopperIngot.amountRequiredPower = undefined
-      // @ts-ignore
-      factory.parts.CopperIngot.amountSuppliedViaRaw = undefined
-      // @ts-ignore
-      factory.parts.CopperIngot.exportable = undefined
-
-      expect(factory.parts.CopperIngot.amountRequiredPower).not.toBeDefined()
-      expect(factory.parts.CopperIngot.amountSuppliedViaRaw).not.toBeDefined()
-      expect(factory.parts.CopperIngot.exportable).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.parts.CopperIngot.amountRequiredPower).toBe(0)
-      expect(factory.parts.CopperIngot.amountSuppliedViaRaw).toBe(0)
-      expect(factory.parts.CopperIngot.exportable).toBe(true)
-    })
-
-    it('#180: should initialize factories with missing power data', () => {
-      // @ts-ignore
-      delete factory.powerProducers
-      expect(factory.powerProducers).not.toBeDefined()
-
-      // @ts-ignore
-      delete factory.power
-      expect(factory.power).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.powerProducers).toBeDefined()
-      expect(factory.power).toBeDefined()
-    })
-
-    it('should initialize factories with missing previous inputs data', () => {
-      // @ts-ignore
-      delete factory.previousInputs
-      expect(factory.previousInputs).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.previousInputs).toBeDefined()
-    })
-
-    it('#250: should initialize factories with missing note data', () => {
-      // @ts-ignore
-      delete factory.notes
-      expect(factory.notes).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.notes).toBeDefined()
-    })
-
-    it('#250: should initialize factories with missing task data', () => {
-      // @ts-ignore
-      delete factory.tasks
-      expect(factory.tasks).not.toBeDefined()
-
-      appStore.initFactories(factories)
-
-      expect(factory.tasks).toBeDefined()
-    })
-
-    it('should generate a data version', () => {
-      appStore.initFactories(factories)
-      expect(factory.dataVersion).toBeDefined()
-    })
-
-    it('should call calculateFactories when required', () => {
-      // Trigger a recalculation
-      // @ts-ignore
-      factory.power = undefined
-
-      // Spy on the calculateFactories function
-      const spy = vi.spyOn(FactoryManager, 'calculateFactories')
-
-      appStore.initFactories(factories)
-
-      expect(spy).toHaveBeenCalled()
-    })
-    it('should NOT call calculateFactories when not required', () => {
-      // @ts-ignore
-      factory.tasks = undefined
-
-      // Spy on the calculateFactories function
-      const spy = vi.spyOn(FactoryManager, 'calculateFactories')
-
-      appStore.initFactories(factories)
-
-      expect(spy).not.toHaveBeenCalled()
     })
   })
 
@@ -402,6 +258,15 @@ describe('app-store', () => {
         const factory2 = newFactory('Foo2')
 
         await appStore.prepareLoader([factory, factory2])
+
+        expect(appStore.getFactories()).toEqual([factory, factory2])
+      })
+
+      it('should set the factories as expected if supplied with force load', async () => {
+        const factory = newFactory('Foo')
+        const factory2 = newFactory('Foo2')
+
+        await appStore.prepareLoader([factory, factory2], true)
 
         expect(appStore.getFactories()).toEqual([factory, factory2])
       })
@@ -580,6 +445,40 @@ describe('app-store', () => {
         expect(appStore.getState().tabs).toEqual(newTabs)
       })
     })
+
+    describe('removeCurrentTab', () => {
+      beforeEach(() => {
+        // Reset the app store each time
+        resetAppStore()
+      })
+      it('should NOT remove the current tab if it is the only one', () => {
+        const currentTabId = appStore.getState().currentTabId
+        appStore.removeCurrentTab()
+        expect(appStore.getState().tabs[currentTabId]).toBeDefined()
+      })
+
+      it('should remove the current tab if there is more than one and emit the switchTab event', () => {
+        const currentTabId = appStore.getState().currentTabId
+        appStore.createNewTab({
+          id: '12345',
+          name: 'New Tab',
+          factories: [],
+        })
+        vi.spyOn(eventBus, 'emit')
+
+        appStore.removeCurrentTab()
+
+        // Remember, we do NOT switch the tab in the actual code, we emit an event to do so which is done outside of this sequence.
+        // This means we are deleting the original tab.
+        const state = appStore.getState()
+        expect(state.tabs[currentTabId]).not.toBeDefined()
+        // Expect the one we just made to be deleted
+        expect(getTab(state, '12345')).toBeDefined()
+
+        // Expect the switchTab event to be emitted
+        expect(eventBus.emit).toHaveBeenCalledWith('switchTab', state.currentTabId)
+      })
+    })
   })
 
   describe('state management', () => {
@@ -596,15 +495,165 @@ describe('app-store', () => {
         expect(appStore.getState()).toEqual(stateToSet)
       })
     })
+  })
+
+  describe('factory management', () => {
+    describe('initFactories', () => {
+      let factories: Factory[]
+      let factory: Factory
+      beforeEach(() => {
+        factory = newFactory('Foo')
+
+        addProductToFactory(factory, {
+          id: 'CopperIngot',
+          amount: 1337,
+          recipe: 'IngotCopper',
+        })
+
+        factories = [factory]
+        calculateFactory(factory, factories, gameData)
+      })
+      // #317 - broken plan loading from v0.2 data
+      it('should initialize factories with missing powerProducer keys', () => {
+      // Malform the object to remove the powerProducers key for test
+      // @ts-ignore
+        delete factory.powerProducers
+        expect(factory.powerProducers).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.powerProducers).toBeDefined()
+      })
+      it('#222: should initialize factories with missing sync data', () => {
+      // @ts-ignore
+        delete factory.inSync
+        // @ts-ignore
+        delete factory.syncState
+        expect(factory.inSync).not.toBeDefined()
+        expect(factory.syncState).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.inSync).toBe(null)
+        expect(factory.syncState).toBeDefined()
+      })
+
+      it('#244: should initialize factories with missing part data, and should recalculate it', () => {
+      // Malform the part data
+      // @ts-ignore
+        factory.parts.CopperIngot.amountRequiredExports = undefined
+        // @ts-ignore
+        factory.parts.CopperIngot.amountRequiredProduction = undefined
+
+        expect(factory.parts.CopperIngot.amountRequiredExports).not.toBeDefined()
+        expect(factory.parts.CopperIngot.amountRequiredProduction).not.toBeDefined()
+
+        // Initialize the factories
+        appStore.initFactories(factories)
+
+        // Should now be there
+        expect(factory.parts.CopperIngot.amountRequiredExports).toBeDefined()
+        expect(factory.parts.CopperIngot.amountRequiredProduction).toBeDefined()
+      })
+
+      it('#180: should initialize factories with missing part power and exportability data', () => {
+      // @ts-ignore
+        factory.parts.CopperIngot.amountRequiredPower = undefined
+        // @ts-ignore
+        factory.parts.CopperIngot.amountSuppliedViaRaw = undefined
+        // @ts-ignore
+        factory.parts.CopperIngot.exportable = undefined
+
+        expect(factory.parts.CopperIngot.amountRequiredPower).not.toBeDefined()
+        expect(factory.parts.CopperIngot.amountSuppliedViaRaw).not.toBeDefined()
+        expect(factory.parts.CopperIngot.exportable).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.parts.CopperIngot.amountRequiredPower).toBe(0)
+        expect(factory.parts.CopperIngot.amountSuppliedViaRaw).toBe(0)
+        expect(factory.parts.CopperIngot.exportable).toBe(true)
+      })
+
+      it('#180: should initialize factories with missing power data', () => {
+      // @ts-ignore
+        delete factory.powerProducers
+        expect(factory.powerProducers).not.toBeDefined()
+
+        // @ts-ignore
+        delete factory.power
+        expect(factory.power).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.powerProducers).toBeDefined()
+        expect(factory.power).toBeDefined()
+      })
+
+      it('should initialize factories with missing previous inputs data', () => {
+      // @ts-ignore
+        delete factory.previousInputs
+        expect(factory.previousInputs).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.previousInputs).toBeDefined()
+      })
+
+      it('#250: should initialize factories with missing note data', () => {
+      // @ts-ignore
+        delete factory.notes
+        expect(factory.notes).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.notes).toBeDefined()
+      })
+
+      it('#250: should initialize factories with missing task data', () => {
+      // @ts-ignore
+        delete factory.tasks
+        expect(factory.tasks).not.toBeDefined()
+
+        appStore.initFactories(factories)
+
+        expect(factory.tasks).toBeDefined()
+      })
+
+      it('should generate a data version', () => {
+        appStore.initFactories(factories)
+        expect(factory.dataVersion).toBeDefined()
+      })
+
+      it('should call calculateFactories when required', () => {
+      // Trigger a recalculation
+      // @ts-ignore
+        factory.power = undefined
+
+        // Spy on the calculateFactories function
+        const spy = vi.spyOn(FactoryManager, 'calculateFactories')
+
+        appStore.initFactories(factories)
+
+        expect(spy).toHaveBeenCalled()
+      })
+      it('should NOT call calculateFactories when not required', () => {
+      // @ts-ignore
+        factory.tasks = undefined
+
+        // Spy on the calculateFactories function
+        const spy = vi.spyOn(FactoryManager, 'calculateFactories')
+
+        appStore.initFactories(factories)
+
+        expect(spy).not.toHaveBeenCalled()
+      })
+    })
 
     describe('getFactories', () => {
-      let appStore: ReturnType<typeof useAppStore>
       beforeEach(async () => {
         // Reset the app store each time
-        localStorage.removeItem('plannerState')
-        localStorage.removeItem('factoryTabs')
-        setActivePinia(createPinia())
-        appStore = useAppStore()
+        resetAppStore()
 
         // Initialize the state or things go terribly wrong
         appStore.getFactories()
@@ -613,9 +662,12 @@ describe('app-store', () => {
         vi.resetAllMocks()
       })
       it('should return empty if the current tab is empty / not present', async () => {
-        const state = appStore.getState()
-        // Blow the tabs away
-        state.tabs = {}
+        // Change the currentTabId to trigger a reactive state change
+        const currentState = appStore.getState()
+        appStore.setState({
+          ...currentState,
+          currentTabId: '12345',
+        })
 
         // Wait for reactivity
         await new Promise(resolve => setTimeout(resolve, 100))
@@ -658,6 +710,78 @@ describe('app-store', () => {
       it('should return the factories from the current tab', () => {
         const factories = appStore.getState().tabs[appStore.getState().currentTabId].factories
         expect(appStore.getFactories()).toEqual(factories)
+      })
+    })
+
+    // In effect, setFactories is already fully tested by the various other tests.
+    // describe('setFactories', () => {
+    // })
+
+    describe('addFactory', () => {
+      beforeEach(() => {
+        // Reset the app store each time
+        resetAppStore()
+
+        // Init the factories
+        appStore.getFactories()
+      })
+      it('should add a factory to the current tab', async () => {
+        // The current tab is empty
+        const factory = newFactory('Foobarbaz')
+        appStore.addFactory(factory)
+
+        expect(getCurrentTab(appStore.getState()).factories).toEqual([factory])
+      })
+
+      it('should add a factory to the current tab with the correct display order', async () => {
+        // The current tab is empty, populate it with factories
+        const factory = newFactory('Foobarbaz')
+        const factory2 = newFactory('Foobarbaz2')
+        appStore.addFactory(factory)
+        appStore.addFactory(factory2)
+
+        const tab = getCurrentTab(appStore.getState())
+        expect(tab.factories).toEqual([factory, factory2])
+        expect(tab.factories[0].displayOrder).toEqual(0)
+        expect(tab.factories[1].displayOrder).toEqual(1)
+      })
+    })
+
+    describe('removeFactory', () => {
+      beforeEach(() => {
+        // Reset the app store each time
+        resetAppStore()
+
+        // Init the factories
+        appStore.getFactories()
+      })
+      it('should remove a factory from the current tab', async () => {
+        // The current tab is empty
+        const factory = newFactory('Foobarbaz')
+        appStore.addFactory(factory)
+
+        // Remove the factory
+        appStore.removeFactory(factory.id)
+
+        expect(getCurrentTab(appStore.getState()).factories).toEqual([])
+      })
+
+      it('should remove a factory from the current tab and maintain display orders', async () => {
+      // Add 3 factories
+        const factory = newFactory('Dont delete me 1')
+        const factory2 = newFactory('Delete me 2')
+        const factory3 = newFactory('Dont delete me 3')
+        appStore.addFactory(factory)
+        appStore.addFactory(factory2)
+        appStore.addFactory(factory3)
+
+        // Remove factory 2 so the orders are out of sync
+        appStore.removeFactory(factory2.id)
+
+        // Check the display orders
+        const tab = getCurrentTab(appStore.getState())
+        expect(tab.factories[0].displayOrder).toEqual(0)
+        expect(tab.factories[1].displayOrder).toEqual(1)
       })
     })
   })
