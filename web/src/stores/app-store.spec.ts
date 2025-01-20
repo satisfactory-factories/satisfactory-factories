@@ -5,7 +5,7 @@ import * as FactoryManager from '@/utils/factory-management/factory'
 import { useAppStore } from '@/stores/app-store'
 import { addProductToFactory } from '@/utils/factory-management/products'
 import { gameData } from '@/utils/gameData'
-import { getCurrentTab } from '@/utils/plannerStateManagement'
+import { getCurrentTab, newState } from '@/utils/plannerStateManagement'
 import { createPinia, setActivePinia } from 'pinia'
 import eventBus from '@/utils/eventBus'
 
@@ -385,6 +385,7 @@ describe('app-store', () => {
       vi.spyOn(eventBus, 'emit')
       appStore.getFactories() // Init the state
     })
+
     describe('prepareLoader', () => {
       it('set the isLoaded value to false', async () => {
         await appStore.prepareLoader()
@@ -529,6 +530,134 @@ describe('app-store', () => {
 
           expect(eventBus.emit).toHaveBeenCalledWith('loadingCompleted')
         })
+      })
+    })
+
+    describe('changeCurrentTab', () => {
+      it('should change the current tab and load it', async () => {
+        // Add a new tab to switch to
+        const mockFactory = newFactory('This should be loaded')
+        const newTab = {
+          id: '12345',
+          name: 'New Tab',
+          factories: [mockFactory],
+        }
+
+        // Add the new tab
+        appStore.createNewTab(newTab)
+
+        // Act
+        await appStore.changeCurrentTab(newTab.id)
+
+        // Check if the new factories were loaded
+        expect(appStore.getFactories()).toStrictEqual([mockFactory])
+
+        // Check if the planner state current tab is correct
+        expect(appStore.getState().currentTabId).toEqual(newTab.id)
+      })
+    })
+  })
+
+  describe('tab management', () => {
+    describe('getTabs', () => {
+      it('should return the tabs from the state', () => {
+        const tabs = appStore.getState().tabs
+        expect(appStore.getTabs()).toEqual(tabs)
+      })
+    })
+
+    describe('setTabs', () => {
+      it('should set the tabs in the state', () => {
+        const newTabs: { [key: string]: FactoryTab } = {
+          12345: {
+            id: '12345',
+            name: 'New Tab',
+            factories: [],
+            displayOrder: 0,
+          },
+        }
+        appStore.setTabs(newTabs)
+        expect(appStore.getState().tabs).toEqual(newTabs)
+      })
+    })
+  })
+
+  describe('state management', () => {
+    describe('getState', () => {
+      it('should return the state', () => {
+        expect(appStore.getState()).toEqual(appStore.plannerState)
+      })
+    })
+
+    describe('setState', () => {
+      it('should set and get the state', () => {
+        const stateToSet = newState({})
+        appStore.setState(stateToSet)
+        expect(appStore.getState()).toEqual(stateToSet)
+      })
+    })
+
+    describe('getFactories', () => {
+      let appStore: ReturnType<typeof useAppStore>
+      beforeEach(async () => {
+        // Reset the app store each time
+        localStorage.removeItem('plannerState')
+        localStorage.removeItem('factoryTabs')
+        setActivePinia(createPinia())
+        appStore = useAppStore()
+
+        // Initialize the state or things go terribly wrong
+        appStore.getFactories()
+      })
+      afterEach(() => {
+        vi.resetAllMocks()
+      })
+      it('should return empty if the current tab is empty / not present', async () => {
+        const state = appStore.getState()
+        // Blow the tabs away
+        state.tabs = {}
+
+        // Wait for reactivity
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        expect(appStore.getFactories()).toEqual([])
+      })
+
+      it('should emit prepareForLoad if the state is not inited', async () => {
+        appStore.isInitialized = false
+        vi.spyOn(eventBus, 'emit')
+
+        appStore.getFactories()
+
+        // Wait for reactivity
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        expect(eventBus.emit).toHaveBeenCalledWith('prepareForLoad', {
+          // There should be no factories to load as it's a blank state
+          count: 0,
+          shown: 0,
+        })
+      })
+
+      it('should NOT emit prepareForLoad if the state is inited', async () => {
+        appStore.getFactories() // Init the state
+
+        // Wait a bit for the state to load
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        // Start spying
+        vi.spyOn(eventBus, 'emit')
+
+        // Call it again, at this point it should be inited
+        appStore.getFactories()
+
+        // Meaning this should not have fired
+        expect(eventBus.emit).not.toHaveBeenCalledWith('prepareForLoad', expect.any(Object))
+      })
+
+      it('should return the factories from the current tab', () => {
+        const factories = appStore.getState().tabs[appStore.getState().currentTabId].factories
+        expect(appStore.getFactories()).toEqual(factories)
       })
     })
   })

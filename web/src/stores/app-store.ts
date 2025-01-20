@@ -346,10 +346,11 @@ export const useAppStore = defineStore('app', () => {
 
   // ==== TAB MANAGEMENT
   const createNewTab = ({
+    id = crypto.randomUUID(),
     name = 'New Tab',
     factories = [],
   } = {} as Partial<FactoryTab>) => {
-    const newTabData = newTab({ name, factories })
+    const newTabData = newTab({ id, name, factories })
     addTab(plannerState.value, newTabData)
     currentTabId.value = newTabData.id
 
@@ -370,18 +371,7 @@ export const useAppStore = defineStore('app', () => {
   }
   // ==== END TAB MANAGEMENT
 
-  // ==== MISC
-  const debugMode = () => {
-    if (window.location.hostname !== 'satisfactory-factories.app') {
-      return true
-    }
-
-    return window.location.search.includes('debug')
-  }
-
-  isDebugMode.value = debugMode()
-  // ==== END MISC
-
+  // ==== STATE MANAGEMENT
   const getState = () => {
     return plannerState.value
   }
@@ -394,9 +384,8 @@ export const useAppStore = defineStore('app', () => {
       console.error('appStore: getFactories: No current factory tab set!')
       return []
     }
-    // If the factories are not initialized, wait for a duration for the app to load then return them.
+    // If the factories are not initialized, prepare for them to be loaded
     if (!inited.value) {
-      // Something wants to load these values so prepare the loader
       eventBus.emit('prepareForLoad', {
         count: currentTab.value.factories.length,
         shown: shownFactories(currentTab.value.factories),
@@ -416,12 +405,12 @@ export const useAppStore = defineStore('app', () => {
     currentTabId.value = plannerState.value.tabs[firstTab].id
   }
 
-  const changeCurrentTab = (tabId: string) => {
+  const changeCurrentTab = async (tabId: string) => {
     console.log('appStore: === CHANGING TAB ===:', tabId)
     pendingTabId.value = tabId
 
     const factories = getTab(plannerState.value, tabId).factories
-    prepareLoader(factories)
+    await prepareLoader(factories)
   }
 
   const getLastEdited = (): Date => {
@@ -456,6 +445,20 @@ export const useAppStore = defineStore('app', () => {
   const setUserOptions = (options: PlannerUserOptions) => {
     plannerState.value.userOptions = options
   }
+
+  // ==== END STATE MANAGEMENT
+
+  // ==== MISC
+  const debugMode = () => {
+    if (window.location.hostname !== 'satisfactory-factories.app') {
+      return true
+    }
+
+    return window.location.search.includes('debug')
+  }
+
+  isDebugMode.value = debugMode()
+  // ==== END MISC
 
   eventBus.on('factoryUpdated', () => {
     console.log('appStore: factoryUpdated: Factory updated, setting last edited')

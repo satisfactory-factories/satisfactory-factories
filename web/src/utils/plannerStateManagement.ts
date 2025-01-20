@@ -24,7 +24,7 @@ export const newState = (options: PlannerStateOptions): PlannerState => {
 }
 
 interface FactoryTabOptions {
-  tabId?: string
+  id?: string
   name?: string
   factories?: Factory[]
   displayOrder?: number
@@ -32,7 +32,7 @@ interface FactoryTabOptions {
 
 export const newTab = (options?: FactoryTabOptions): FactoryTab => {
   return {
-    id: options?.tabId ?? crypto.randomUUID(),
+    id: options?.id ?? crypto.randomUUID(),
     name: options?.name ?? 'Default',
     // Fill the tabs from the legacy factories array if present so no data gets lost
     factories: options?.factories ?? [],
