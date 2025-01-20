@@ -120,11 +120,10 @@ export const calculateFactory = (
   calculateHasProblem(allFactoriesCopy)
 
   // Reassign the data.
-  factory = factoryCopy
-  allFactories = allFactoriesCopy
+  Object.assign(factory, factoryCopy)
+  Object.assign(allFactories, allFactoriesCopy)
 
-  // "Use" the variables to stop typescript and the linter complaining.
-  console.log('Factory calculations complete:', factory.name, allFactories)
+  console.log('Factory calculations complete:', factory.name)
 
   return factory
 }
@@ -155,7 +154,7 @@ export const calculateFactories = (factories: Factory[], gameData: DataInterface
   console.log('factory: calculateFactories done')
 
   // Reassign the factories to the store
-  factories = factoriesCopy
+  Object.assign(factories, factoriesCopy)
 
   // Emit an event that the data has been updated so it can be synced
   eventBus.emit('factoryUpdated')
@@ -163,4 +162,42 @@ export const calculateFactories = (factories: Factory[], gameData: DataInterface
 
 export const countActiveTasks = (factory: Factory) => {
   return factory.tasks.filter(task => !task.completed).length
+}
+
+export const reorderFactory = (factory: Factory, direction: string, allFactories: Factory[]) => {
+  const currentOrder = factory.displayOrder
+  let targetOrder
+
+  if (direction === 'up' && currentOrder > 1) {
+    targetOrder = currentOrder - 1
+  } else if (direction === 'down' && currentOrder < allFactories.length) {
+    targetOrder = currentOrder + 1
+  } else {
+    return // Invalid move
+  }
+
+  // Find the target factory and swap display orders
+  const targetFactory = allFactories.find(fac => fac.displayOrder === targetOrder)
+  if (targetFactory) {
+    targetFactory.displayOrder = currentOrder
+    factory.displayOrder = targetOrder
+  }
+
+  regenerateSortOrders(allFactories)
+}
+
+export const regenerateSortOrders = (factories: Factory[]) => {
+  // Shallow copy the factories to ensure we don't cause a reactivity storm.
+  const factoriesCopy = toRaw(factories)
+
+  // Sort the factories by their display order should they for some reason be out of sync in the object.
+  factoriesCopy.sort((a, b) => a.displayOrder - b.displayOrder)
+
+  // Ensure that the display order is in the correct order numerically.
+  factoriesCopy.forEach((factory, index) => {
+    factory.displayOrder = index + 1
+  })
+
+  // Reassign the factories to the store
+  Object.assign(factories, factoriesCopy)
 }

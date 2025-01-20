@@ -84,7 +84,14 @@
   import {
     removeFactoryDependants,
   } from '@/utils/factory-management/dependencies'
-  import { calculateFactories, calculateFactory, findFac, newFactory } from '@/utils/factory-management/factory'
+  import {
+    calculateFactories,
+    calculateFactory,
+    findFac,
+    newFactory,
+    regenerateSortOrders,
+    reorderFactory,
+  } from '@/utils/factory-management/factory'
   import { complexDemoPlan } from '@/utils/factory-setups/complex-demo-plan'
   import { useGameDataStore } from '@/stores/game-data-store'
   import eventBus from '@/utils/eventBus'
@@ -227,7 +234,7 @@
     // Now call calculateFactories in case the clone's imports cause a deficit
     calculateFactories(getFactories(), gameData)
 
-    regenerateSortOrders()
+    regenerateSortOrders(getFactories())
     navigateToFactory(newId)
   }
 
@@ -245,7 +252,7 @@
       calculateFactories(getFactories(), gameData)
 
       // Regenerate the sort orders
-      regenerateSortOrders()
+      regenerateSortOrders(getFactories())
     } else {
       console.error('Factory not found to delete?!')
     }
@@ -285,35 +292,7 @@
   }
 
   const moveFactory = (factory: Factory, direction: string) => {
-    const currentOrder = factory.displayOrder
-    let targetOrder
-
-    if (direction === 'up' && currentOrder > 0) {
-      targetOrder = currentOrder - 1
-    } else if (direction === 'down' && currentOrder < getFactories().length - 1) {
-      targetOrder = currentOrder + 1
-    } else {
-      return // Invalid move
-    }
-
-    // Find the target factory and swap display orders
-    const targetFactory = getFactories().find(fac => fac.displayOrder === targetOrder)
-    if (targetFactory) {
-      targetFactory.displayOrder = currentOrder
-      factory.displayOrder = targetOrder
-    }
-
-    regenerateSortOrders()
-  }
-
-  const regenerateSortOrders = () => {
-    // Sort now, which may have sorted them weirdly
-    const factories = getFactories().sort((a, b) => a.displayOrder - b.displayOrder)
-
-    // Ensure that the display order is in the correct order numerically
-    factories.forEach((factory, index) => {
-      factory.displayOrder = index
-    })
+    reorderFactory(factory, direction, getFactories())
   }
 
   const forceSort = () => {
